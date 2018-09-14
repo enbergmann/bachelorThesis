@@ -1,1 +1,7 @@
 proGit.pdf
+*.aux
+*.log
+*.fls
+*.bbl
+*.blg
+*.fdb_latexmk
