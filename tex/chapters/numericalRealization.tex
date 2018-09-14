@@ -23,45 +23,117 @@ and computed with the following algorithm with input $(u_0,\Lambda_0)$.
 \begin{algorithm}[primal-dual iteration]\label{alg:PrimalDualIteration}
 \begin{algorithmic}\\
   \Require $u_0\in\textup{CR}_0^1(\mathcal{T}),$
-  $v_0\coloneqq 0$ in $\textup{CR}^1_0(\mathcal T)$,
   $\Lambda_0\in P_0(\mathcal{T};
-  \overline{B(0,1)}),\tau>0$  
+  \overline{B(0,1)}),\tau>0$  \\
+  Initialize $v_0\coloneqq 0$ in $\textup{CR}^1_0(\mathcal T)$.
   \For{$j = 1,2,\dots$}
-  \State $\tilde{u}_j\coloneqq u_{j-1}+\tau v_{j-1}$,
-  \State $\Lambda_j\coloneqq
-  (\Lambda_{j-1}+\tau\nabla_{\textup{NC}} \tilde{u}_j)/
-      (\operatorname{max}\{1,|\Lambda_{j-1}+\tau\nabla_{\textup{NC}}\tilde{u}_j|\})$.
+  \begin{equation}
+    \label{equ:PrimalDualAlgUj}
+    \tilde{u}_j\coloneqq u_{j-1}+\tau v_{j-1},
+  \end{equation}
+  \begin{equation}
+    \label{equ:PrimalDualAlgLambdaJ}
+    \Lambda_j\coloneqq
+    (\Lambda_{j-1}+\tau\nabla_{\textup{NC}} \tilde{u}_j)/
+      (\operatorname{max}\{1,|\Lambda_{j-1}+\tau\nabla_{\textup{NC}}\tilde{u}_j|\}),
+  \end{equation}
       \State
-  \State Solve linear system of equations
-$$
-\frac{1}{\tau}a_{\textup{NC}}(u_j,\bullet)+\alpha(u_j,\bullet)_{L^2(\Omega)}
-=
-\frac{1}{\tau}a_{\textup{NC}}(u_{j-1},\bullet) + (f,\bullet)_{L^2(\Omega)}
-- (\Lambda_j,\nabla_{\textup{NC}}\bullet)_{L^2(\Omega)}
-$$
-in $\textup{CR}^1_0(\mathcal{T})$ for solution $u_j\in\textup{CR}^1_0(\mathcal{T})$.
-\State
-  \State $v_j\coloneqq\frac{1}{\tau}(u_j-u_{j-1})$\\
+  \State solve linear system of equations
+  \begin{align}
+    \label{equ:linSysPrimalDualAlg}
+    \frac{1}{\tau}&a_{\textup{NC}}(u_j,\bullet)+\alpha(u_j,\bullet)_{L^2(\Omega)}
+    \notag \\
+    &=
+    \frac{1}{\tau}a_{\textup{NC}}(u_{j-1},\bullet) + (f,\bullet)_{L^2(\Omega)}
+    - (\Lambda_j,\nabla_{\textup{NC}}\bullet)_{L^2(\Omega)} 
+  \end{align}
+in $\textup{CR}^1_0(\mathcal{T})$ for $u_j\in\textup{CR}^1_0(\mathcal{T})$
+with the abbreviation
+$v_j\coloneqq(u_j-u_{j-1})/\tau$.\\
   \EndFor
   \Ensure sequence $(u_j,\Lambda_j)_{j\in\mathbb N}$ in $\textup{CR}^1_0(\mathcal{T})\times
   P_0(\mathcal{T};\overline{B(0,1)})$   
   \end{algorithmic}
 \end{algorithm}
 
+\subsection{Convergence analysis}
 
+\begin{theorem}[convergence]
+  Let $u_{\textup{CR}}\in \textup{CR}^1_0(\mathcal T)$ solve \eqref{eqLambda}.
+  If $0 < \tau \leq 1$, then the iterates of Algorithm
+  \ref{alg:PrimalDualIteration} converge to $u_{\textup{CR}}$.
+\end{theorem}
+
+\begin{proof}
+  Set $e_j \coloneqq u_{\textup{CR}}-u_j$, $E_j\coloneqq \Lambda_0-\Lambda_j$.\\
+  Test \eqref{equ:linSysPrimalDualAlg} with $e_j$ for
+  \begin{align*}
+    a_\textup{NC}(v_j,e_j) + \alpha(u_j,e_j)_{L^2(\Omega)} 
+    + (\Lambda_j,\nabla_\textup{NC}e_j)_{L^2(\Omega)}
+    = 
+    (f,e_j)_{L^2(\Omega)}.
+  \end{align*}
+  Since $u_{\textup{CR}}$ solves \eqref{eqLambda} this is equivalent to
+  \begin{align}
+    a_\textup{NC}(v_j,e_j) &= 
+    \alpha(u_\textup{CR}-u_j,e_j)_{L^2(\Omega)} 
+    + (\Lambda_0-\Lambda_j,\nabla_\textup{NC}e_j)_{L^2(\Omega)} \notag\\
+    &= 
+    \alpha\Vert e_j\Vert_{L^2(\Omega)}^2
+    + (E_j,\nabla_\textup{NC}e_j)_{L^2(\Omega)}.
+  \end{align}
+  Abbreviate $\mu_j\coloneqq \max\{1,|\Lambda_{j-1}+\tau
+  \nabla_\textup{NC}\tilde{u}_j|\}$.
+  Utilize \eqref{equ:PrimalDualAlgLambdaJ} to compute
+  \begin{align}
+    \label{equ:convProofA}
+    \Lambda_{j-1}-\Lambda_j+\tau \nabla_\textup{NC}\tilde{u}_j 
+    = (\mu_j-1)\Lambda_j \quad\text{ a.e. in }\Omega.
+  \end{align}
+  For all $x\in\Omega$ the Cauchy-Schwarz inequality yields
+  $\Lambda_j(x)\cdot\Lambda_0(x)\leq|\Lambda_j(x)|$ 
+  and by definition of $\Lambda_j$ a simple case distinction leads to
+  $(1-|\Lambda_j(x)|)(\mu_j(x)-1)=0$.
+  Test \eqref{equ:convProofA} with $E_j$ to compute
+  \begin{align*}
+    ( (\Lambda_{j-1}-\Lambda_j)/\tau+\nabla_\textup{NC}\tilde{u}_j,
+    E_j)_{L^2(\Omega)}
+    &= 
+    1/\tau ( (\mu_j-1)\Lambda_j,\Lambda_0-\Lambda_j)_{L^2(\Omega)}\\
+    &\leq
+    1/\tau \int_\Omega (\mu_j-1)(|\Lambda_j|-|\Lambda_j|^2)\,\mathrm dx\\
+    &=
+    1/\tau \int_\Omega |\Lambda_j|
+    \underbrace{(1-|\Lambda_j|)(\mu_j-1)}_{=0}\,\mathrm dx =0.
+  \end{align*}
+  With $\Lambda_{j-1}-\Lambda_j=E_j-E_{j-1}$, 
+  $ $
+  for $j\geq 2$ and for $j=1$ the convention $e_{-1}\coloneqq e_0$
+  this leads for all $j\in \mathbb N$ to
+  \begin{align}
+    \label{equ:convProofB}
+    ( (E_j-E_{j-1})/\tau-\nabla_\textup{NC}(e_{j-1}-e_{j-2})+
+    \nabla_\textup{NC}u_{j-1},E_j)_{L^2(\Omega)}\leq 0.
+  \end{align}
+
+  
+
+\end{proof}
 
 \subsection{Data structures }
-To realize Algorithm \ref{alg:PrimalDualIteration} numerically the data structures \texttt{c4n}, 
+The realization of Algorithm \ref{alg:PrimalDualIteration} utilizes the data
+structures \texttt{c4n}, 
 \texttt{n4e}, \texttt{s4e}, \texttt{n4s}, \texttt{n4sDb}, \texttt{n4sNb}, \texttt{s4n},
 and \texttt{area4e}
-are recapitulated, 
-see also \cite{Carstensen2017script} and section 7.8 of \cite{CarstensenBrennerFEM}.\\
-Let $\mathcal{T}$ be a regular triangulation of the polyhedral bounded
-Lipschitz domain $\Omega$ into triangles with set of nodes $\mathcal{N}$ and set of edges
+from \cite{Carstensen2017script} and Section 7.8 of \cite{CarstensenBrennerFEM}.\\
+Let $\mathcal{T}$ be a regular triangulation of the polygonal bounded
+Lipschitz domain $\Omega$ into triangles with set of nodes $\mathcal{N}$ and
+set of edges
 $\mathcal{E}$, and the set of inner nodes $\mathcal{N}(\Omega)$ and set of inner edges
 $\mathcal{E}(\Omega)$. The data structure of $\mathcal T$ and $\mathcal E$ is described
 as follows.\\
-The $j$-th row \texttt{c4n(j,:)=[$x$ $y$]} of \texttt{c4n} contains the coordinates of the $j$-th 
+The $j$-th row \texttt{c4n(j,:)=[$x$ $y$]} of \texttt{c4n} contains the
+coordinates of the $j$-th 
 node $z_j=(x,y)$  
 of $\mathcal T$.
 \texttt{n4e(j,:)=[$\alpha$ $\beta$ $\gamma$]} contains
