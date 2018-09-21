@@ -9,6 +9,7 @@
 \usepackage[caption=false]{subfig}
 
 \usepackage{pgfplots}
+\usepackage{mathabx} %for \vvvert
 
 \makeatletter
 \pgfplotsset{
@@ -204,8 +205,8 @@ my filter/.style args={every#1between#2and#3}{%
 %%% Beginn Makros %%%
 
 \newcommand{\R}{\mathbb{R}}
-\newcommand{\dx}{\,dx}
-\newcommand{\ds}{\,ds}
+\newcommand{\dx}{\,\mathrm dx}
+\newcommand{\ds}{\,\mathrm ds}
 
 \newcommand{\ddiv}{\operatorname{div}}
 \def\mint{-\kern-1.00em\int}
