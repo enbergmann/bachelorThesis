@@ -296,51 +296,51 @@ $\mathcal{N}$,
 set of edges
 $\mathcal{E}$, and the set of inner nodes $\mathcal{N}(\Omega)$, and set of
 inner edges
-$\mathcal{E}(\Omega)$. 
-The data structure of $\mathcal T$ and $\mathcal E$ is described
-as follows.\\
+$\mathcal{E}(\Omega)$. \\
 The $j$-th row \texttt{c4n(j,:)=[$x$ $y$]} of \texttt{c4n} contains the
 coordinates of the $j$-th 
 node $z_j=(x,y)$  
 of $\mathcal T$.
 \texttt{n4e(j,:)=[$\alpha$ $\beta$ $\gamma$]} contains
-the three node numbers of the $j$-th triangle 
+the three node numbers $\alpha$, $\beta$ and $\gamma$ of the $j$-th triangle 
 $T_j=\operatorname{conv}\{P_\alpha,P_\beta,P_\gamma\}$
 in counterclockwise order with the refinement edge
 $E_\textup{Ref}=\operatorname{conv}
 \{P_\alpha,P_\beta\}$
 of
 $T_j$.
-Similar  for
+For the set
 $\mathcal E(T_j) = \{ E_\alpha,E_\beta,E_\gamma\}$
-the $j$-th row 
+of edges of $T_j$ the $j$-th row 
 \texttt{s4e(j,:)=[$\alpha$ $\beta$ $\gamma$]} 
 of \texttt{s4e}
 contains
 the three side numbers of the $j$-th triangle $T_j$
-in counterclockwise order 
+in counterclockwise order,
 where
-$E_\textup{Ref}=E_\alpha$
+$E_\alpha=E_\textup{Ref}(T_j)$
 is the refinement edge of
 $T_j$. 
+Given the edge $E_j=\operatorname{conv}\{P_\alpha,P_\beta\}$ in $\mathcal T$,
 \texttt{n4s(j,:):=[$\alpha$ $\beta$]} contains
-the two node numbers of the \(j\)-th edge 
-$E_j = \operatorname*{conv} \{ P_\alpha, P_\beta \}$
-of $\mathcal T$.
+the two node numbers of it.
 For a boundary edge
 \(E_j = \operatorname*{conv} \{ P_\alpha, P_\beta \}\in\mathcal{E}\setminus\mathcal{E}(\Omega)\)
-choose $\alpha$ and $\beta$ such that the domain \(\Omega\) is on the left hand side
+choose $\alpha$ and $\beta$ such that the domain \(\Omega\) is on the left-hand side
 of the vector from \(P_\alpha\) to \(P_\beta\).
-The following three lines of Matlab code compute \texttt{n4s}.
+The following three lines of Matlab compute \texttt{n4s}.
 \begin{lstlisting}[frame=single,numbers=none]
 allSides=[n4e(:,[1 2]); n4e(:,[2 3]); n4e(:,[3 1])];
 [b,ind]=unique(sort(allSides,2),'rows','first');
 n4s=allSides(sort(ind),:);
 \end{lstlisting}
-\texttt{n4sDb} contains the numbers of the edges with Dirichlet boundary data and 
-\texttt{n4sNb} contains those of the edges with Neumann boundary data.
-With \texttt{n4s} the computation of the data
-structure \texttt{s4n} is possible which satisfies
+%
+%\texttt{n4sDb} contains the numbers of the edges with Dirichlet boundary data and 
+%\texttt{n4sNb} contains those of the edges with Neumann boundary data.
+%With \texttt{n4s} the computation of the data
+%structure \texttt{s4n} is possible which satisfies
+%
+For any given nodes $\alpha,\beta\in\mathcal{N}$
 \begin{align*}
 \texttt{s4n($\alpha$,$\beta$)} =
 \texttt{s4n($\beta$,$\alpha$)} =
@@ -349,18 +349,7 @@ structure \texttt{s4n} is possible which satisfies
     0 & \text{else}
 \end{cases}
 \end{align*}
-for any given nodes $\alpha,\beta\in\mathcal{N}$.
-\texttt{s4n=sparse(n4s(:,1),n4s(:,2),1:S,N,N)}
-creates a sparse matrix with
-\begin{equation*}
-  \texttt{s4n(n4s(j,1),n4s(j,2))} = \texttt j \quad \text{ for } j = 1,\ldots,M := \lvert 
-  \mathcal{E} \rvert
-\end{equation*}
-and the last two parameters ensure that the resulting
-Matrix is \(N \times N\) with
-$
-\texttt N = \lvert \mathcal{N} \rvert
-$. 
+for the sparse matrix \texttt{s4n}.
 \begin{lstlisting}[frame=single,numbers=none]
 M=size(n4s,1); N=size(c4n,1);
 s4n=sparse(n4s(:,1),n4s(:,2),1:M,N,N);
@@ -370,12 +359,15 @@ The AFEM function \texttt{computeArea4e.m} computes the
 array \texttt{area4e} that contains the area of the $j$-th 
 triangle of $\mathcal T$ 
 in its $j$-th row.
+
+
 \subsection{Basis of Crouzeix-Raviart functions \cite{Carstensen2017script}}
-Given an edge $E\in\mathcal E$, the associated edge-oriented basis function
-$\psi_E\in\textup{CR}^1(\mathcal T)$ is characterized by
-\[
-\psi_E(\operatorname{mid}(F))=\delta_{EF} \text{ for all } F\in\mathcal E.
-\]
+For an edge $E\in\mathcal E$ the edge-oriented basis function
+$\psi_E\in\textup{CR}^1(\mathcal T)$ is defined by
+$\psi_E\in P_1(\mathcal T)$ and
+$
+\psi_E(\operatorname{mid}(F))=\delta_{EF} 
+$ for all $F\in\mathcal E$.
 Then $(\psi_j)_{j=1,\dots,|\mathcal{E}|}$ is a basis of $\textup{CR}^1(\Omega)$
 and $(\psi_j \, | \, E_j\in\mathcal{E}(\Omega))$ is a basis of $\textup{CR}^1_0(\Omega)$.
 It is established that on a triangle $T\in\mathcal T$ with $E\in\mathcal E (T)$ the
