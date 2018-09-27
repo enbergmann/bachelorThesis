@@ -328,7 +328,7 @@ For a boundary edge
 \(E_j = \operatorname*{conv} \{ P_\alpha, P_\beta \}\in\mathcal{E}\setminus\mathcal{E}(\Omega)\)
 choose $\alpha$ and $\beta$ such that the domain \(\Omega\) is on the left-hand side
 of the vector from \(P_\alpha\) to \(P_\beta\).
-The following three lines of Matlab compute \texttt{n4s}.
+The following three lines of MATLAB compute \texttt{n4s}.
 \begin{lstlisting}[frame=single,numbers=none]
 allSides=[n4e(:,[1 2]); n4e(:,[2 3]); n4e(:,[3 1])];
 [b,ind]=unique(sort(allSides,2),'rows','first');
@@ -346,17 +346,17 @@ For any given nodes $\alpha,\beta\in\mathcal{N}$
 \texttt{s4n($\beta$,$\alpha$)} =
 \begin{cases}
  \ell & \text{if there exist } E_\ell = \operatorname*{conv} \{ P_\alpha, P_\beta \},\\
-    0 & \text{else}
+    0 & \text{else.}
 \end{cases}
 \end{align*}
-for the sparse matrix \texttt{s4n}.
+The following lines of MATLAB compute the sparse matrix \texttt{s4n}.
 \begin{lstlisting}[frame=single,numbers=none]
 M=size(n4s,1); N=size(c4n,1);
 s4n=sparse(n4s(:,1),n4s(:,2),1:M,N,N);
 s4n=s4n + s4n';
 \end{lstlisting}
 The AFEM function \texttt{computeArea4e.m} computes the 
-array \texttt{area4e} that contains the area of the $j$-th 
+aray \texttt{area4e} that contains the area of the $j$-th 
 triangle of $\mathcal T$ 
 in its $j$-th row.
 
