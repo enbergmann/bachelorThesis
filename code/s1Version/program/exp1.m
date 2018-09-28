@@ -4,7 +4,8 @@ function exp1(red,terminate)
   alpha = 1;
   delta = 1;
 
-  initalU = 'zero'; % 'f'
+  initalU = 'zero'; 
+  % initalU = 'f'; 
 
   if strcmp(initalU,'zero')
     message = sprintf('on unit circle, inital u = 0');
@@ -15,7 +16,7 @@ function exp1(red,terminate)
   end
   
   tic;
-  [corrVec,energyVec,c4n,u] = ...
+  [corrVec,energyVec,c4n,n4e,u] = ...
     tv_reg_primal_dual(red,terminate,alpha,delta);
   time = toc;
   
@@ -26,6 +27,7 @@ function exp1(red,terminate)
   mkdir(dirName);
   warning('on','MATLAB:MKDIR:DirectoryExists');
   
+
   name = sprintf('%s/workspace.mat',dirName);
   save(name);
 
@@ -69,7 +71,7 @@ function exp1(red,terminate)
   
   % further plots  
   enFig = figure('visible',figVisible); 
-  loglog(energy_vec);
+  loglog(energyVec);
   hold on;
   plot(-2.05802391003896*ones(1,length(energyVec)));
   legend(sprintf('red = %d (%0.2fs)',red,time),sprintf('E_u=-2.05802391003896'));
@@ -83,7 +85,7 @@ function exp1(red,terminate)
   saveas(enFig,fName);
   
   enDiffExactFig = figure('visible',figVisible);
-  loglog(abs(energy_vec+2.05802391003896));
+  loglog(abs(energyVec+2.05802391003896));
   ftitle=sprintf('|E_{NC}(u_{NC})-E_u| for red=%d, \\alpha =%d, \\beta =%d',...
       red,alpha,delta);
   title(ftitle);
@@ -93,7 +95,7 @@ function exp1(red,terminate)
   saveas(enDiffExactFig,fName);
   
   corrFig = figure('visible',figVisible);
-  loglog(corr_vec);
+  loglog(corrVec);
   ftitle=sprintf('loglog plot - corr for red=%d, \\alpha =%d, \\beta =%d',...
       red,alpha,delta);
   title(ftitle);

@@ -6,3 +6,4 @@ proGit.pdf
 *.blg
 *.fdb_latexmk
 *.swp
+results/*
