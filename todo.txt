@@ -1,0 +1,4 @@
+adapt style of conforming code to nonconforming
+adapt termination criterion of conf to nonconf code
+take a look at  how prolongation code from nando works
+

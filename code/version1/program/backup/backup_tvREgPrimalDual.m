@@ -1,6 +1,9 @@
 function  [u,corr,corrVec,energyVec,errorExactVec] = ...
     tvRegPrimalDual(c4n,n4e,n4sDb,n4sNb,u,Lambda,f,alpha,epsStop,uExact) 
-
+    % Input red: Number of starting triangulations
+    
+    %% Initialisation
+  
     tau = 1/2;
 
     nrElems = size(n4e,1);
@@ -30,8 +33,7 @@ function  [u,corr,corrVec,energyVec,errorExactVec] = ...
         M = Lambda + tau*(du + tau*dv);
         Lambda = bsxfun(@rdivide,M,max(1,sqrt(sum(M.^2,2))));
         
-        [b,temp] = computeRHS(c4n,n4e,s4e,nrSides,area4e, ...
-          du,tau,Lambda,nrElems,temp1,temp2,temp3);     
+        [b,temp] = computeRHS(c4n,n4e,s4e,nrSides,area4e,du,tau,Lambda,nrElems,temp1,temp2,temp3);     
 
         %% Solve System
         uNew = zeros(nrSides,1);
