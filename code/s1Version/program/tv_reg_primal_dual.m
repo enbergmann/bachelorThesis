@@ -1,10 +1,5 @@
-function [corrVec,energyVec,c4n,n4e,u]=...
-  tv_reg_primal_dual(red,terminate,alpha,delta)
-
-  h = 2^(-red); 
-  tau = h^(1/2)/10; 
-  
-  [c4n,n4e,n4sDb,n4sNb] = computeGeometryPolygon(red); 
+function [corrVec,energyVec,u]=...
+  tvRegPrimalDual(c4n,n4e,n4sDb,n4sNb,h,tau,red,terminate,alpha,f,u)
   
   [s,m] = fe_matrices(c4n,n4e);
   ms = mixed_matrix(c4n,n4e);
@@ -13,12 +8,6 @@ function [corrVec,energyVec,c4n,n4e,u]=...
   nC = size(c4n,1); 
   nE = size(n4e,1); 
   
-  f = @(x)g(x,alpha,delta);  
-  uExact = @(x)gUexact(x,alpha,delta);
-
-  % u = zeros(nC,1); 
-  u = f(c4n);
-
   u_tilde = u; 
   p = zeros(nE,2); 
 
@@ -73,6 +62,6 @@ function [corrVec,energyVec,c4n,n4e,u]=...
       energyVec=cat(2,energyVec,ENew);
 
       u = u_new;
-      show_p1(c4n,n4e,n4sDb,n4sNb,u);
+      % show_p1(c4n,n4e,n4sDb,n4sNb,u);
   end
 end

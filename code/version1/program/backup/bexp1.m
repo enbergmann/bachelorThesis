@@ -5,6 +5,17 @@ function example(initalRed,terminate)
   
   alpha = 1; 
   delta = 1;     
+
+  initalU = 'zero'; 
+  % initalU = 'f'; 
+
+  if strcmp(initalU,'zero')
+    message = sprintf('on unit circle, inital u = 0');
+    dirInfoName = sprintf('zeroInitial');
+  elseif strcmp(initalU,'f')
+    message = sprintf('on unit circle, inital u = I_NC(f)');
+    dirInfoName = sprintf('fInitial');
+  end
   
   [c4n,n4e,n4sDb,n4sNb] = computeGeometryPolygon(initalRed);
   
@@ -13,7 +24,7 @@ function example(initalRed,terminate)
   %% given analytic example
 
   f=@(x)g(x,alpha,delta);  
-  uExact=@(x)gUexact(x,alpha,delta);  
+  % uExact=@(x)gUexact(x,alpha,delta);  
   
   %% f = 0
   %f=@(x)0;  
@@ -32,7 +43,7 @@ function example(initalRed,terminate)
   
   %  Lambda = zeros(size(n4e,1),2);
   %  u = zeros(size(n4s,1),1);
-  message = sprintf('on unit circle, inital u = 0');
+  % message = sprintf('on unit circle, inital u = 0');
   % message = sprintf('on unit circle, inital u = I_NC(f)');
       
   % dirInfoName = sprintf('zeroInitial');
@@ -44,12 +55,12 @@ function example(initalRed,terminate)
   %%
   
   %% Main
-  
-  for red = initalRed : 1 : 8
+  red = initalRed;
+  % for red = initalRed : 1 : 8
     tic;
-    [u,corr,corrVec,energyVec,errorExactVec] = ...
-      tvRegPrimalDual(c4n,n4e,n4sDb,n4sNb,u,Lambda,f,alpha,...
-      terminate,uExact);
+    [u,corr,corrVec,energyVec] = ...
+      tvRegPrimalDual(red,c4n,n4e,n4sDb,n4sNb,u,Lambda,f,alpha,...
+      terminate);
     time = toc; 
     
 
@@ -61,7 +72,7 @@ function example(initalRed,terminate)
     % dirName = sprintf('../../tex/results/nonconforming/%s/%s',...
     %   dirInfoName,datestr(now,'yy_mm_dd_HH_MM_SS'));
     
-    dirName = sprintf('../../tex/results/nonconforming/initalRed%d/red%d',...
+    dirName = sprintf('../../../results/nonconforming/initalRed%d/red%d',...
       initalRed,red);
     
     warning('off','MATLAB:MKDIR:DirectoryExists');
@@ -105,11 +116,6 @@ function example(initalRed,terminate)
     fprintf(file, '%.8g\n',energyVec);
     fclose(file);
     
-    name = sprintf('%s/errorExactVec.txt',dirName);
-    file = fopen(name,'w');
-    fprintf(file, '%.8e\n',errorExactVec);
-    fclose(file);
-    
     name = sprintf('%s/exactAbsoluteEnergyDifference.txt',dirName);
     file = fopen(name,'w');
     fprintf(file, '%.8g\n',abs(energyVec+2.05802391003896));
@@ -129,17 +135,6 @@ function example(initalRed,terminate)
     xlabel('number of iterations');
     ylabel('energy');
     saveas(enFig,fName);
-    
-    errExactFig = figure('visible',figVisible);
-    loglog(errorExactVec);
-    ftitle=sprintf('Exact error for inital red=%d, \\alpha =%d, \\beta =%d',...
-    red,alpha,delta);
-    title(ftitle);
-    xlabel('number of iterations');
-    ylabel('exact Error');
-    legend(sprintf('red = %d (%0.2fs)',red,time));
-    fName = sprintf('%s/exactError.png',dirName);
-    saveas(gcf,fName);
     
     enDiffExactFig = figure('visible',figVisible);
     loglog(abs(energyVec+2.05802391003896));
@@ -175,5 +170,5 @@ function example(initalRed,terminate)
     Lambda = bsxfun(@rdivide,du,sqrt(sum(du.^2,2))); 
     Lambda(isinf(Lambda)) = 0;
     Lambda(isnan(Lambda)) = 0;
-  end
+  % end
 end

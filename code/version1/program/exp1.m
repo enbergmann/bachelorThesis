@@ -1,59 +1,92 @@
-function exp1(red,terminate)
+function example(red,terminate)
+
   addpath(genpath(pwd));
-
-  alpha = 1;
-  delta = 1;
-
-  h = 2^(-red); 
-  tau = h^(1/2)/10; 
   
-  [c4n,n4e,n4sDb,n4sNb] = computeGeometryPolygon(red); 
+  alpha = 1; 
+  delta = 1;     
 
-  f = @(x)g(x,alpha,delta);  
-  uExact = @(x)gUexact(x,alpha,delta);
-
-  % initalU = 'zero'; 
-  initalU = 'f'; 
+  initalU = 'zero'; 
+  % initalU = 'f'; 
 
   if strcmp(initalU,'zero')
-    nC = size(c4n,1);
-    u = zeros(nC,1); 
     message = sprintf('on unit circle, inital u = 0');
     dirInfoName = sprintf('zeroInitial');
   elseif strcmp(initalU,'f')
-    u = f(c4n);
     message = sprintf('on unit circle, inital u = I_NC(f)');
     dirInfoName = sprintf('fInitial');
   end
   
-  tic;
-  [corrVec,energyVec,u] = ...
-    tv_reg_primal_dual(c4n,n4e,n4sDb,n4sNb,h,tau,red,terminate,alpha,f,u);
-  time = toc;
+  [c4n,n4e,n4sDb,n4sNb] = computeGeometryPolygon(red);
   
-  dirName = sprintf('../../../results/conforming/%s/%s',...
-    dirInfoName,datestr(now,'yy_mm_dd_HH_MM_SS'));
+  n4s = computeN4s(n4e);
+
+  %% given analytic example
+
+  f=@(x)g(x,alpha,delta);  
+  % uExact=@(x)gUexact(x,alpha,delta);  
+  
+  %% f = 0
+  %f=@(x)0;  
+  %uExact=@(x)0;  
+  
+  %mid4s = computeMid4s(c4n,n4s);
+  %
+  
+  u = zeros(size(n4s,1),1);
+  % u = interpolationNC(f,c4n,n4e,n4s);
+
+  du = computeGradientNC(c4n,n4e,u);
+  Lambda = bsxfun(@rdivide,du,sqrt(sum(du.^2,2))); 
+  Lambda(isinf(Lambda)) = 0;
+  Lambda(isnan(Lambda)) = 0;
+  
+  %  Lambda = zeros(size(n4e,1),2);
+  %  u = zeros(size(n4s,1),1);
+  % message = sprintf('on unit circle, inital u = 0');
+  % message = sprintf('on unit circle, inital u = I_NC(f)');
+      
+  % dirInfoName = sprintf('zeroInitial');
+  % dirInfoName = sprintf('fInitial');
+
+  figVisible = 'off';
+  % set(0,'DefaultFigureVisible','off');
+  
+  %%
+  
+  %% Main
+
+  tic;
+  [u,corr,corrVec,energyVec] = ...
+    tvRegPrimalDual(red,c4n,n4e,n4sDb,n4sNb,u,Lambda,f,alpha,...
+    terminate);
+  time = toc; 
+  
+
+  %% Prepare saving of results
+  
+  dirName = sprintf('../../../results/nonconforming/red%d',...
+    red);
   
   warning('off','MATLAB:MKDIR:DirectoryExists');
   mkdir(dirName);
   warning('on','MATLAB:MKDIR:DirectoryExists');
   
-
   name = sprintf('%s/workspace.mat',dirName);
   save(name);
-
+   
   % plot approximations
-  figVisible = 'on'; approxFig = figure('visible',figVisible); trisurf(n4e,c4n(:,1),c4n(:,2),u);
-  ftitle=sprintf('approximation for red=%d, \\alpha =%d, \\beta =%d, \\epsilon_{stop}=%2.3f',...
-      red,alpha,delta,terminate);
+  approxFig = figure('visible',figVisible); 
+  plotCR(c4n,n4e,u);
+  ftitle=sprintf('approximation for red=%d, \\alpha =%d, \\beta =%d',...
+  red,alpha,delta);
   title(ftitle);
   fName = sprintf('%s/solution_red_%d.png',dirName,red);
   saveas(approxFig,fName);
   
   approxFigAxis = figure('visible',figVisible); 
-  plotAxis(c4n,u);
-  ftitle=sprintf('approximation along axis for red=%d, \\alpha =%d, \\beta =%d, \\epsilon_{stop}=%2.3f',...
-      red,alpha,delta,terminate);
+  plotAxisNC(c4n,n4e,u);
+  ftitle=sprintf('approximation along axis for red=%d, \\alpha =%d, \\beta =%d',...
+  red,alpha,delta);
   title(ftitle);
   fName = sprintf('%s/solution_red_%d_axis.png',dirName,red);
   saveas(approxFigAxis,fName);
@@ -114,4 +147,19 @@ function exp1(red,terminate)
   ylabel('corr');
   fName = sprintf('%s/corr_red_%d_loglog.png',dirName,red);
   saveas(corrFig,fName);
+
+
+  [c4nNew,n4eNew,n4sDbNew,n4sNbNew] = refineUniformRed(c4n,n4e,n4sDb,n4sNb);
+  u = computeRefinementExtension(c4n,n4e,c4nNew,n4eNew,u);
+  c4n = c4nNew;
+  n4e = n4eNew;
+  n4sDb = n4sDbNew;
+  n4sNb = n4sNbNew;
+  temp=unique(n4sDb);
+  c4n(temp,:)=c4n(temp,:)./repmat(sqrt(c4n(temp,1).^2+c4n(temp,2).^2),1,2);
+
+  du = computeGradientNC(c4n,n4e,u);
+  Lambda = bsxfun(@rdivide,du,sqrt(sum(du.^2,2))); 
+  Lambda(isinf(Lambda)) = 0;
+  Lambda(isnan(Lambda)) = 0;
 end
