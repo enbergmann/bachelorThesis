@@ -1,8 +1,5 @@
-function  [u,corr,corrVec,energyVec] = ...
-    tvRegPrimalDual(red,c4n,n4e,n4sDb,n4sNb,u,Lambda,f,alpha,epsStop) 
-
-    tau = 1/2;
-    h = 2^(-red);
+function  [u,corrVec,energyVec] = ...
+    tvRegPrimalDual(c4n,n4e,n4sDb,n4sNb,h,tau,red,epsStop,alpha,f,u,Lambda) 
 
     nrElems = size(n4e,1);
     area4e = computeArea4e(c4n,n4e);
@@ -40,8 +37,8 @@ function  [u,corr,corrVec,energyVec] = ...
         v=(uNew-u)/tau;        
 
         %% Check Termination
-        du = computeGradientNC(c4n,n4e,u);
-        ENew = computeEnergy(area4e,u,du,alpha,temp,MAMANC);
+        du = computeGradientNC(c4n,n4e,uNew);
+        ENew = computeEnergy(area4e,uNew,du,alpha,temp,MAMANC);
 
         dt_u = (u-uNew)/tau; 
         corr = sqrt(dt_u'*C*dt_u); % Bartels termination criterion
@@ -49,7 +46,7 @@ function  [u,corr,corrVec,energyVec] = ...
         format long;
         fprintf('E = %f, E_exact = %f\n', E, -2.05802391003896);
         format short;
-        fprintf('===============================================\n');
+        fprintf('============================== \n');
 
         u = uNew;
         E = ENew;

@@ -28,9 +28,11 @@ function exp1(red,terminate)
   
   tic;
   [corrVec,energyVec,u] = ...
-    tv_reg_primal_dual(c4n,n4e,n4sDb,n4sNb,h,tau,red,terminate,alpha,f,u);
+    tvRegPrimalDual(c4n,n4e,n4sDb,n4sNb,h,tau,red,terminate,alpha,f,u);
   time = toc;
   
+  saveResults();
+
   dirName = sprintf('../../../results/conforming/%s/%s',...
     dirInfoName,datestr(now,'yy_mm_dd_HH_MM_SS'));
   
@@ -82,7 +84,7 @@ function exp1(red,terminate)
   
   % further plots  
   enFig = figure('visible',figVisible); 
-  loglog(energyVec);
+  plot(energyVec);
   hold on;
   plot(-2.05802391003896*ones(1,length(energyVec)));
   legend(sprintf('red = %d (%0.2fs)',red,time),sprintf('E_u=-2.05802391003896'));

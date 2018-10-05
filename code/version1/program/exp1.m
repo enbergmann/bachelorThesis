@@ -1,25 +1,14 @@
-function example(red,terminate)
+function exp1(red,terminate)
 
-  addpath(genpath(pwd));
+  addpath(genpath(pwd),'../../utils/');
   
   alpha = 1; 
   delta = 1;     
-
-  initalU = 'zero'; 
-  % initalU = 'f'; 
-
-  if strcmp(initalU,'zero')
-    message = sprintf('on unit circle, inital u = 0');
-    dirInfoName = sprintf('zeroInitial');
-  elseif strcmp(initalU,'f')
-    message = sprintf('on unit circle, inital u = I_NC(f)');
-    dirInfoName = sprintf('fInitial');
-  end
   
   [c4n,n4e,n4sDb,n4sNb] = computeGeometryPolygon(red);
   
   n4s = computeN4s(n4e);
-
+  
   %% given analytic example
 
   f=@(x)g(x,alpha,delta);  
@@ -31,10 +20,20 @@ function example(red,terminate)
   
   %mid4s = computeMid4s(c4n,n4s);
   %
-  
-  u = zeros(size(n4s,1),1);
-  % u = interpolationNC(f,c4n,n4e,n4s);
 
+  % initalU = 'zero'; 
+  initalU = 'f'; 
+
+  if strcmp(initalU,'zero')
+    u = zeros(size(n4s,1),1);
+    message = sprintf('on unit circle, inital u = 0');
+    dirInfoName = sprintf('zeroInitial');
+  elseif strcmp(initalU,'f')
+    u = interpolationNC(f,c4n,n4e,n4s);
+    message = sprintf('on unit circle, inital u = I_NC(f)');
+    dirInfoName = sprintf('fInitial');
+  end
+  
   du = computeGradientNC(c4n,n4e,u);
   Lambda = bsxfun(@rdivide,du,sqrt(sum(du.^2,2))); 
   Lambda(isinf(Lambda)) = 0;
@@ -42,11 +41,7 @@ function example(red,terminate)
   
   %  Lambda = zeros(size(n4e,1),2);
   %  u = zeros(size(n4s,1),1);
-  % message = sprintf('on unit circle, inital u = 0');
-  % message = sprintf('on unit circle, inital u = I_NC(f)');
       
-  % dirInfoName = sprintf('zeroInitial');
-  % dirInfoName = sprintf('fInitial');
 
   figVisible = 'off';
   % set(0,'DefaultFigureVisible','off');
@@ -54,14 +49,16 @@ function example(red,terminate)
   %%
   
   %% Main
+  
+  tau = 1/2;
+  h = 2^(-red);
 
   tic;
-  [u,corr,corrVec,energyVec] = ...
-    tvRegPrimalDual(red,c4n,n4e,n4sDb,n4sNb,u,Lambda,f,alpha,...
-    terminate);
+  [u,corrVec,energyVec] = ...
+    tvRegPrimalDual(c4n,n4e,n4sDb,n4sNb,h,tau,red,terminate,alpha,f,u,Lambda);
   time = toc; 
   
-
+  saveResults();
   %% Prepare saving of results
   
   dirName = sprintf('../../../results/nonconforming/red%d',...
@@ -115,7 +112,7 @@ function example(red,terminate)
   
   % further plots  
   enFig = figure('visible',figVisible); 
-  loglog(energyVec);
+  plot(energyVec);
   hold on;
   plot(-2.05802391003896*ones(1,length(energyVec)));
   legend(sprintf('red = %d (%0.2fs)',red,time),sprintf('E_u=-2.05802391003896'));
@@ -147,19 +144,4 @@ function example(red,terminate)
   ylabel('corr');
   fName = sprintf('%s/corr_red_%d_loglog.png',dirName,red);
   saveas(corrFig,fName);
-
-
-  [c4nNew,n4eNew,n4sDbNew,n4sNbNew] = refineUniformRed(c4n,n4e,n4sDb,n4sNb);
-  u = computeRefinementExtension(c4n,n4e,c4nNew,n4eNew,u);
-  c4n = c4nNew;
-  n4e = n4eNew;
-  n4sDb = n4sDbNew;
-  n4sNb = n4sNbNew;
-  temp=unique(n4sDb);
-  c4n(temp,:)=c4n(temp,:)./repmat(sqrt(c4n(temp,1).^2+c4n(temp,2).^2),1,2);
-
-  du = computeGradientNC(c4n,n4e,u);
-  Lambda = bsxfun(@rdivide,du,sqrt(sum(du.^2,2))); 
-  Lambda(isinf(Lambda)) = 0;
-  Lambda(isnan(Lambda)) = 0;
 end
