@@ -4,8 +4,7 @@ function exp1(red,terminate)
 
   figVisible = 'off';
 
-  % initalU = 'zero'; 
-  initalU = 'f'; 
+  initalU = 'zero'; %f, zero
 
   alpha = 1;
   delta = 1;
