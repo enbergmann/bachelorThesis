@@ -62,6 +62,6 @@ function [corrVec,energyVec,u]=...
       energyVec=cat(2,energyVec,ENew);
 
       u = u_new;
-      % show_p1(c4n,n4e,n4sDb,n4sNb,u);
+      show_p1(c4n,n4e,u);
   end
 end
