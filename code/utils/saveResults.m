@@ -1,10 +1,10 @@
-function saveResults(fe,dirInfoName,figVisible,message,c4n,n4e,u,red,alpha,delta,...
+function saveResults(fe,experiment,dirInfoName,figVisible,message,c4n,n4e,u,red,alpha,delta,...
     terminate,time,corrVec,energyVec)
 
   warning('off','MATLAB:MKDIR:DirectoryExists');
   if strcmp(fe,'S1')
-    dirName = sprintf('../../../results/conforming/%s/%s',...
-      dirInfoName,datestr(now,'yy_mm_dd_HH_MM_SS'));
+    dirName = sprintf('../../../../results/%s/conforming/%s/%s',...
+      experiment,dirInfoName,datestr(now,'yy_mm_dd_HH_MM_SS'));
     mkdir(dirName);
     approxFig = figure('visible',figVisible); 
     show_p1(c4n,n4e,u);
@@ -22,8 +22,8 @@ function saveResults(fe,dirInfoName,figVisible,message,c4n,n4e,u,red,alpha,delta
     fName = sprintf('%s/solution_red_%d_axis.png',dirName,red);
     saveas(approxFigAxis,fName);
   elseif strcmp(fe,'CR')
-    dirName = sprintf('../../../results/nonconforming/%s/%s',...
-      dirInfoName,datestr(now,'yy_mm_dd_HH_MM_SS'));
+    dirName = sprintf('../../../../results/%s/nonconforming/%s/%s',...
+      experiment,dirInfoName,datestr(now,'yy_mm_dd_HH_MM_SS'));
     mkdir(dirName);
     approxFig = figure('visible',figVisible); 
     plotCR(c4n,n4e,u);

@@ -1,6 +1,6 @@
 function exp1(red,terminate)
 
-  addpath(genpath(pwd),'../../utils/');
+  addpath(genpath('../'),genpath('../../../utils/'));
 
   figVisible = 'off';
   % set(0,'DefaultFigureVisible','off');
@@ -58,6 +58,6 @@ function exp1(red,terminate)
     tvRegPrimalDual(c4n,n4e,n4sDb,n4sNb,h,tau,red,terminate,alpha,f,u,Lambda);
   time = toc; 
   
-  saveResults('CR',dirInfoName,figVisible,message,c4n,n4e,u,red,alpha,delta,...
+  saveResults('CR','exp1',dirInfoName,figVisible,message,c4n,n4e,u,red,alpha,delta,...
     terminate,time,corrVec,energyVec);
 end
