@@ -2,11 +2,17 @@ function exp1(red,terminate)
 
   addpath(genpath('../'),genpath('../../../utils/'));
 
-  figVisible = 'off';
+  figVisible = 'on';
   % set(0,'DefaultFigureVisible','off');
   
   initalU = 'zero'; %f, zero
+
+  miscMsg = 'tau NOT in termination criteria';
   
+  % tau = 1/2;
+  tau = .1;
+  h = 2^(-red);
+
   alpha = 1; 
   delta = 1;     
   
@@ -50,8 +56,6 @@ function exp1(red,terminate)
   
   %% Main
   
-  tau = 1/2;
-  h = 2^(-red);
 
   tic;
   [u,corrVec,energyVec] = ...
@@ -59,5 +63,5 @@ function exp1(red,terminate)
   time = toc; 
   
   saveResults('CR','exp1',dirInfoName,figVisible,message,c4n,n4e,u,red,alpha,delta,...
-    terminate,time,corrVec,energyVec);
+    terminate,time,corrVec,energyVec,tau,miscMsg);
 end

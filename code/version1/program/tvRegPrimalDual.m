@@ -41,7 +41,8 @@ function  [u,corrVec,energyVec] = ...
         ENew = computeEnergy(area4e,uNew,du,alpha,temp,MAMANC);
 
         dt_u = (u-uNew)/tau; 
-        corr = sqrt(dt_u'*C*dt_u); % Bartels termination criterion
+        %corr = sqrt(dt_u'*C*dt_u); % Bartels termination criterion
+        corr = sqrt(dt_u'*STIMANC*dt_u); % Only gradients
         fprintf('corr/epsStop: %e / %e\n',corr,epsStop);
         format long;
         fprintf('E = %f, E_exact = %f\n', E, -2.05802391003896);

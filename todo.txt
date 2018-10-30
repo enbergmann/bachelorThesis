@@ -3,4 +3,9 @@ take a look at  how prolongation code from nando works
 let the programs run for a fixed period of time and compare the obtained results
 (since CR seems to yield better results but take a much longer time)
 
+implement L^2 norm
+might also be comparable termination criterion
 
+termination only gradient
+
+parfor in computeFeMatrices

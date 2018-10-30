@@ -44,7 +44,8 @@ function [corrVec,energyVec,u]=...
       dt_u = (u-u_new)/tau; 
       u_tilde = 2*u_new-u; 
       
-      corr = sqrt(dt_u'*A*dt_u); % Bartels termination criterion
+      % corr = sqrt(dt_u'*A*dt_u); % Bartels termination criterion
+      corr = sqrt(dt_u'*s*dt_u); % Only gradients
       
       uNC = convertS1toCR(n4s,u);
       duNC = computeGradientNC(c4n,n4e,uNC);
