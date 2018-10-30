@@ -85,11 +85,11 @@ for all $\vcr\in \CR(\T)$.
 \\
 (c) The minimizer $\ucr\in \CR(\T)$ is equivalently characterized by 
 the existence of some
-$\Lambda_0\in P_0(\T; \overline{ B(0,1)})$ with 
-$\Lambda_0\cdot\nabla_\nc \ucr=|\nabla_\nc\ucr|$ a.e. in $\Omega$ and 
+$\Lambda\in P_0(\T; \overline{ B(0,1)})$ with 
+$\Lambda\cdot\nabla_\nc \ucr=|\nabla_\nc\ucr|$ a.e. in $\Omega$ and 
 \begin{equation}
 \label{eqLambda} \tag{1.2a}
-(f-\alpha\ucr, \vcr)_{L^2(\Omega)}=(\Lambda_0,\nabla_\nc \vcr)_{L^2(\Omega)}
+(f-\alpha\ucr, \vcr)_{L^2(\Omega)}=(\Lambda,\nabla_\nc \vcr)_{L^2(\Omega)}
 \,\text{ for all }\vcr\in \CR(\T).
 \end{equation}
 \end{theorem}
@@ -130,43 +130,45 @@ with the abbreviation
 \end{equation} 
 The test with $\vcr=\ucrvarepsilon $ and standard arguments reveal that $\ucrvarepsilon \in \CR(\T)$ is bounded 
 (in any norm for the fixed finite-dimensional vector space  $\CR(\T)$) as $\varepsilon \to 0^+$. 
-Any accumulation point $(\ucr,\Lambda_0)\in \CR(\T)\times P_0(\T;\R^n)$ of bounded subsequences 
+Any accumulation point $(\ucr,\Lambda)\in \CR(\T)\times P_0(\T;\R^n)$ of bounded subsequences 
 $(\ucrvarepsilon,\Lambda_\varepsilon)$  as $\varepsilon \to 0^+$ satisfies 
 \begin{align}
 \label{e:limitidentityforp0}
 % \text{ and } \text{ }  \\ 
-(f-\alpha\ucr, \vcr)_{L^2(\Omega)} &=   \int_\Omega \Lambda_0 \cdot \nabla_\nc \vcr \dx
+(f-\alpha\ucr, \vcr)_{L^2(\Omega)} &=   \int_\Omega \Lambda \cdot \nabla_\nc \vcr \dx
 \,\text{ for all }\vcr\in \CR(\T) ; \\
 \label{e:limitboundednessetalforp0}
-|\Lambda_0|\le 1  \quad \text{and}&\quad
-\Lambda_0\cdot \nabla_\nc\ucr=| \nabla_\nc\ucr| \quad\text{  a.e. in }\Omega.
+|\Lambda|\le 1  \quad \text{and}&\quad
+\Lambda\cdot \nabla_\nc\ucr=| \nabla_\nc\ucr| \quad\text{  a.e. in }\Omega.
 \end{align}
 Substitute the test function $\vcr\in \CR(\T)$ in  \eqref{e:limitidentityforp0} by  $\vcr-\ucr$ (for some fixed limit $\ucr$
 and) any  $\vcr\in \CR(\T)$ to obtain with \eqref{e:limitboundednessetalforp0}
 the identity 
 \[
-(f-\alpha\ucr, \vcr-\ucr)_{L^2(\Omega)}=  \int_\Omega \Lambda_0 \cdot \nabla_\nc \vcr \dx - | \ucr |_{1,1,\nc }.
+(f-\alpha\ucr, \vcr-\ucr)_{L^2(\Omega)}=  \int_\Omega \Lambda \cdot \nabla_\nc \vcr \dx - | \ucr |_{1,1,\nc }.
 \]
-Since    $|\Lambda_0|\le 1$  a.e. in $\Omega$ implies
-$   \int_\Omega \Lambda_0 \cdot \nabla_\nc \vcr \dx\le  | \vcr |_{1,1,\nc }$, this becomes  the discrete variational inequality
+Since    $|\Lambda|\le 1$  a.e. in $\Omega$ implies
+$   \int_\Omega \Lambda \cdot \nabla_\nc \vcr \dx\le  | \vcr |_{1,1,\nc }$,
+this becomes  the discrete variational inequality
 (b). In other words, any selected accumulation point  $\ucr$ of the discrete solutions $\ucrvarepsilon \in \CR(\T)$
 as $\varepsilon \to 0^+$ is equal to the unique solution $\ucr$  in (b). This implies convergence 
 $\ucrvarepsilon \to \ucr$  as $\varepsilon \to 0^+$ but in general not for $\Lambda_\varepsilon$  from
-\eqref{e:definepvarepsilon}. However,  any  accumulation point $\Lambda_0$ (of the possibly many choices) 
+\eqref{e:definepvarepsilon}. However,  any  accumulation point $\Lambda$ (of the possibly many choices) 
  leads to  \eqref{e:limitidentityforp0}-\eqref{e:limitboundednessetalforp0}.
 \end{proof}
 
 \begin{remark}[dual variable]
-The condition \eqref{e:limitboundednessetalforp0} equivalently reads $\Lambda_0\in  \sign \nabla_\nc \ucr$
+The condition \eqref{e:limitboundednessetalforp0} equivalently reads
+$\Lambda\in  \sign \nabla_\nc \ucr$
 for the discrete minimizer $\ucr$. If $\nabla_\nc\ucr \ne 0$ on $T\in\T$, then the dual 
-variable $\Lambda_0=\nabla_\nc\ucr /|\nabla_\nc\ucr |$ is unique on $T$.  
+variable $\Lambda=\nabla_\nc\ucr /|\nabla_\nc\ucr |$ is unique on $T$.  
 \end{remark}
 
 \begin{example}[nonuniquenss of dual variable]
 Given $f\equiv 0$, the unique minimizer vanishes $\ucr\equiv 0$ a.e. in $\Omega$,
 while any 
 $v_C\in S^1(\T)$ with $|\text{Curl } v_C|\le 1$ a.e. in $\Omega$  leads to
-$\Lambda_0:= \text{Curl } v_C\in P_0(\T; \overline{ B(0,1)})$ with \eqref{eqLambda}.
+$\Lambda:= \text{Curl } v_C\in P_0(\T; \overline{ B(0,1)})$ with \eqref{eqLambda}.
 \end{example}
 
 
