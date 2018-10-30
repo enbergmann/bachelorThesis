@@ -1,5 +1,5 @@
 function saveResults(fe,experiment,dirInfoName,figVisible,message,c4n,n4e,u,red,alpha,delta,...
-    terminate,time,corrVec,energyVec)
+    terminate,time,corrVec,energyVec,tau,miscMsg)
 
   warning('off','MATLAB:MKDIR:DirectoryExists');
   if strcmp(fe,'S1')
@@ -54,8 +54,8 @@ function saveResults(fe,experiment,dirInfoName,figVisible,message,c4n,n4e,u,red,
   name = sprintf('%s/setting.txt',dirName);
   file = fopen(name,'w');
   fprintf(file,...
-    '%s\nalpha = %.8g \nbeta = %.8g \nred = %d \nepsStop = %.2e\ntime = %0.2fs\n'...
-    ,message,alpha, delta, red, terminate, time);
+    '%s\nalpha = %.8g \nbeta = %.8g \nred = %d \nepsStop = %.2e\ntime = %0.2fs\ntau = %.8g\n\nmisc: %s\n'...
+    ,message,alpha, delta, red, terminate, time, tau, miscMsg);
   fclose(file);
   
   name = sprintf('%s/corrVec.txt',dirName);
