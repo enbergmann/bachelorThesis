@@ -1,4 +1,4 @@
-function du = comp_gradient_NC(c4n,n4e,u)
+function du = compGradientNC(c4n,n4e,u)
   nrElems = size(n4e,1); 
   s4e = computeS4e(n4e);
   du = zeros(nrElems,2);
