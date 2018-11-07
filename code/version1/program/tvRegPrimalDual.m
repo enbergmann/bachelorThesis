@@ -22,9 +22,23 @@ function  [u,corrVec,energyVec] = ...
     corrVec = [];
     energyVec = [];
     E = 1;
+
+
+
+    nrElems = size(n4e,1); 
+    s4e = computeS4e(n4e);
+    grads4e = zeros(3,2,nrElems);
+    for elem = 1:nrElems
+        grads_T = [ones(1,3);c4n(n4e(elem,:),:)']\[zeros(1,2);-2*eye(2)];
+        grads_T = grads_T([3 1 2],:);
+        grads4e(:,:,elem) = grads_T;
+    end
+
+
+
     
     while corr > epsStop
-        dv = computeGradientNC(c4n,n4e,v);
+        dv = computeGradientNCnew(c4n,n4e,v,grads4e);
         M = Lambda + tau*(du + tau*dv);
         Lambda = bsxfun(@rdivide,M,max(1,sqrt(sum(M.^2,2))));
         
@@ -37,7 +51,7 @@ function  [u,corrVec,energyVec] = ...
         v=(uNew-u)/tau;        
 
         %% Check Termination
-        du = computeGradientNC(c4n,n4e,uNew);
+        du = computeGradientNCnew(c4n,n4e,uNew,grads4e);
         ENew = computeEnergy(area4e,uNew,du,alpha,temp,MAMANC);
 
         dt_u = (u-uNew)/tau; 
@@ -54,8 +68,8 @@ function  [u,corrVec,energyVec] = ...
         energyVec(end+1) = E;
         corrVec(end+1) = corr;
 
-        plotCR(c4n,n4e,uNew);
-        clf('reset');
-        fprintf('\n')
+        % plotCR(c4n,n4e,uNew);
+        % clf('reset');
+        % fprintf('\n')
     end
 end

@@ -1,11 +1,12 @@
+readd general part of experiments section into documentation
+
+compute gradient of exact solution, transform back from absolute value
+presentation for that, add energy exact error
+
 take a look at  how prolongation code from nando works
 
 let the programs run for a fixed period of time and compare the obtained results
 (since CR seems to yield better results but take a much longer time)
 
-implement L^2 norm
-might also be comparable termination criterion
-
-termination only gradient
-
-parfor in computeFeMatrices
+start experiment with much 1e-2 or sth not to big, such that there will be more
+data points for the convergence graph
