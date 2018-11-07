@@ -7,10 +7,11 @@ function exp1(red,terminate)
   
   initalU = 'zero'; %f, zero
 
-  miscMsg = 'tau NOT in termination criteria';
+  miscMsg = 'tau in termination criteria';
+  expName = 'forPlot_h=1e-6';
   
-  % tau = 1/2;
-  tau = .1;
+  tau = 1/2;
+  % tau = .1;
   h = 2^(-red);
 
   alpha = 1; 
@@ -62,6 +63,6 @@ function exp1(red,terminate)
     tvRegPrimalDual(c4n,n4e,n4sDb,n4sNb,h,tau,red,terminate,alpha,f,u,Lambda);
   time = toc; 
   
-  saveResults('CR','exp1',dirInfoName,figVisible,message,c4n,n4e,u,red,alpha,delta,...
+  saveResults('CR',expName,dirInfoName,figVisible,message,c4n,n4e,u,red,alpha,delta,...
     terminate,time,corrVec,energyVec,tau,miscMsg);
 end
