@@ -10,3 +10,40 @@ let the programs run for a fixed period of time and compare the obtained results
 
 start experiment with much 1e-2 or sth not to big, such that there will be more
 data points for the convergence graph
+
+
+
+Fragen an CC:
+Titel der Arbeit
+Weiter Experimente
+
+
+
+
+
+
+
+Zur Bachelorarbeit:
+
+2 Seiten Einführung, Lebesgue Räume, 
+theoretische grundlagen
+--> basically an bartels halten und dann aufpassen, ab wann CR/CC Stoff greift
+
+
+Lagrangsche Funktional aufstellen =, herleiten, argumentieren damit
+für die Energie geht nur Subgradient (weil Gradient schon vorkommt)
+
+zentraler Satz: Existenz der Lösung (mittels Variationsrechnug)
+wohlgestelltheit
+approximation mit diskreten Räumen
+Ergebnisse
+(mit Bartels vergleichen, aber von Bartels nur mit welchen Räümen approximiert
+werden)
+
+
+
+
+blankes Afem Paket, um Fehlerquelle da auszuschließen
+  franz lsfem paket repo, nochmal AFEM
+
+abbruchbed einfach klein genug (1e-5?)

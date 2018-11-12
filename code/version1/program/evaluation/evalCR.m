@@ -1,7 +1,7 @@
 function evalCR(path)
 
   if nargin < 1
-    path = '../../../../results/forPlot_h=1e-4/nonconforming/zeroInitial/';
+    path = '../../../../results/forPlot_h=1e-3/nonconforming/zeroInitial/';
   end
 
   addpath(genpath('../'),genpath('../../../utils/'));
@@ -40,11 +40,11 @@ function evalCR(path)
   loglog(nDofVec,l2ErrorVec);
   xlabel('nDof');
   ylabel('exact L2 error');
-  saveas(errorL2Fig,'l2Test1e-6.png');
+  saveas(errorL2Fig,'l2Test1e-3.png');
 
   energyErrorFig = figure('visible','on'); 
   loglog(nDofVec,l2EnergyErrorVec);
   xlabel('nDof');
   ylabel('exact energy error');
-  saveas(energyErrorFig,'energyTest1e-6.png');
+  saveas(energyErrorFig,'energyTest1e-3.png');
  end
