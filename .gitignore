@@ -8,3 +8,4 @@ proGit.pdf
 *.fdb_latexmk
 *.swp
 results/*
+ccTo/*
