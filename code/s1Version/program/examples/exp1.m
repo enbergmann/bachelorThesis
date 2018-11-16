@@ -6,11 +6,15 @@ function exp1(red,terminate)
 
   initalU = 'zero'; %f, zero
 
+  miscMsg = '';
+  expName = 'comparisonS1andCR';
+
   alpha = 1;
   delta = 1;
 
   h = 2^(-red); 
   tau = h^(1/2)/10; 
+  % tau = 1/2;
   
   [c4n,n4e,n4sDb,n4sNb] = computeGeometryPolygon(red); 
 
@@ -29,10 +33,10 @@ function exp1(red,terminate)
   end
   
   tic;
-  [corrVec,energyVec,u] = ...
+  [u,corrVec,energyVec] = ...
     tvRegPrimalDual(c4n,n4e,n4sDb,n4sNb,h,tau,red,terminate,alpha,f,u);
   time = toc;
   
-  saveResults('S1','exp1',dirInfoName,figVisible,message,c4n,n4e,u,red,alpha,delta,...
-    terminate,time,corrVec,energyVec);
+  saveResults('S1',expName,dirInfoName,figVisible,message,c4n,n4e,u,red,alpha,delta,...
+    terminate,time,corrVec,energyVec,tau,miscMsg);
 end

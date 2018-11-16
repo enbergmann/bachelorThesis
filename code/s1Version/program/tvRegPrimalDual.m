@@ -1,4 +1,4 @@
-function [corrVec,energyVec,u]=...
+function [u,corrVec,energyVec]=...
   tvRegPrimalDual(c4n,n4e,n4sDb,n4sNb,h,tau,red,terminate,alpha,f,u)
   
   [s,m] = fe_matrices(c4n,n4e);
@@ -44,8 +44,8 @@ function [corrVec,energyVec,u]=...
       dt_u = (u-u_new)/tau; 
       u_tilde = 2*u_new-u; 
       
-      % corr = sqrt(dt_u'*A*dt_u); % Bartels termination criterion
-      corr = sqrt(dt_u'*s*dt_u); % Only gradients
+      corr = sqrt(dt_u'*A*dt_u); % Bartels termination criterion
+      % corr = sqrt(dt_u'*s*dt_u); % Only gradients
       
       uNC = convertS1toCR(n4s,u);
       duNC = computeGradientNC(c4n,n4e,uNC);
@@ -59,10 +59,9 @@ function [corrVec,energyVec,u]=...
       fprintf('============================== \n');
 
       corrVec=cat(2,corrVec,corr);
-      
       energyVec=cat(2,energyVec,ENew);
 
       u = u_new;
-      show_p1(c4n,n4e,u);
+      % show_p1(c4n,n4e,u);
   end
 end
