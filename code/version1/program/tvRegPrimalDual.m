@@ -9,7 +9,7 @@ function  [u,corrVec,energyVec] = ...
     dof = computeDof(n4e,nrSides,n4sDb,n4sNb);
 
     [STIMANC,MAMANC] = computeFeMatrices(c4n,n4e,s4e,area4e,nrElems);
-    A = STIMANC/tau+alpha*MAMANC; 
+    A = STIMANC/tau+alpha*MAMANC; %TODO here could be an h in front of STIMANC
     C = MAMANC + h*STIMANC;
 
     [temp1,temp2,temp3] = computeIntegrals(f,c4n,n4e,200,area4e);
@@ -44,6 +44,9 @@ function  [u,corrVec,energyVec] = ...
         
         [b,temp] = computeRHS(c4n,n4e,s4e,nrSides,area4e, ...
           du,tau,Lambda,nrElems,temp1,temp2,temp3);     
+        %TODO here could be an h in RHS
+        % [b,temp] = computeRHSwithH(c4n,n4e,s4e,nrSides,area4e, ...
+        %   du,tau,Lambda,nrElems,temp1,temp2,temp3,h);     
 
         %% Solve System
         uNew = zeros(nrSides,1);

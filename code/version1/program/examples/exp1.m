@@ -7,8 +7,8 @@ function exp1(red,terminate)
   
   initalU = 'zero'; %f, zero
 
-  miscMsg = 'tau in termination criteria';
-  expName = 'forPlot_h=1e-6';
+  miscMsg = 'weighter energy scalar product';
+  expName = 'weighter_energy';
   
   tau = 1/2;
   % tau = .1;
@@ -50,13 +50,8 @@ function exp1(red,terminate)
   
   %  Lambda = zeros(size(n4e,1),2);
   %  u = zeros(size(n4s,1),1);
-      
-
-  
-  %%
   
   %% Main
-  
 
   tic;
   [u,corrVec,energyVec] = ...
