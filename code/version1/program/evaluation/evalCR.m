@@ -1,7 +1,7 @@
 function evalCR(path)
 
   if nargin < 1
-    hString = 'h_in_termination';
+    hString = 'fromServerComparison';
     path = sprintf('../../../../results/%s/nonconforming/zeroInitial/',...
       hString);
   end
@@ -36,7 +36,7 @@ function evalCR(path)
   l2ErrorVec = l2ErrorVec(I);
   % l2EnergyErrorVec = l2EnergyErrorVec(I);
    
-  name = sprintf('%s.txt',hString);
+  name = sprintf('%s../../%sCR.txt',path,hString);
   file = fopen(name,'w');
   fprintf(file,'%s %s\n','nDof','l2Error');
   fprintf(file,'%d %.8e\n',[nDofVec;l2ErrorVec]);
@@ -46,7 +46,7 @@ function evalCR(path)
   loglog(nDofVec,l2ErrorVec);
   xlabel('nDof');
   ylabel('exact L2 error');
-  name = sprintf('%s.png',hString);
+  name = sprintf('%s../../%sCR.png',path,hString);
   saveas(l2ErrorFig,name);
 
   % energyErrorFig = figure('visible','on'); 
