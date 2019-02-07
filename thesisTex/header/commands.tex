@@ -1,14 +1,63 @@
-% ============================================================
-% === USER-DEFINED COMMANDS ==================================
-% ============================================================
+% --- CALIGRAPHIC LETTERS ------------------------------------------------------
 
-\usepackage{amssymb,mathabx,textcomp,bm}
+\newcommand\Acal{\mathcal{A}}
+\newcommand\Bcal{\mathcal{B}}
+\newcommand\Ccal{\mathcal{C}}
+\newcommand\Dcal{\mathcal{D}}
+\newcommand\Ecal{\mathcal{E}}
+\newcommand\Fcal{\mathcal{F}}
+\newcommand\Gcal{\mathcal{G}}
+\newcommand\Hcal{\mathcal{H}}
+\newcommand\Ical{\mathcal{I}}
+\newcommand\Jcal{\mathcal{J}}
+\newcommand\Kcal{\mathcal{K}}
+\newcommand\Lcal{\mathcal{L}}
+\newcommand\Mcal{\mathcal{M}}
+\newcommand\Ncal{\mathcal{N}}
+\newcommand\Ocal{\mathcal{O}}
+\newcommand\Pcal{\mathcal{P}}
+\newcommand\Qcal{\mathcal{Q}}
+\newcommand\Rcal{\mathcal{R}}
+\newcommand\Scal{\mathcal{S}}
+\newcommand\Tcal{\mathcal{T}}
+\newcommand\Ucal{\mathcal{U}}
+\newcommand\Vcal{\mathcal{V}}
+\newcommand\Wcal{\mathcal{W}}
+\newcommand\Xcal{\mathcal{X}}
+\newcommand\Ycal{\mathcal{Y}}
+\newcommand\Zcal{\mathcal{Z}}
 
-\newcommand{\mathbox}[2]{\makebox[#1]{$\displaystyle #2$}}
-\newcommand{\Stackrel}[2]{\mathbox{1.25em}{\stackrel{#1}{#2}}}
+% --- MATHBB LETTERS -----------------------------------------------------------
+
+\newcommand\Abb{\mathbb{A}}
+\newcommand\Bbb{\mathbb{B}}
+\newcommand\Cbb{\mathbb{C}}
+\newcommand\Dbb{\mathbb{D}}
+\newcommand\Ebb{\mathbb{E}}
+\newcommand\Fbb{\mathbb{F}}
+\newcommand\Gbb{\mathbb{G}}
+\newcommand\Hbb{\mathbb{H}}
+\newcommand\Ibb{\mathbb{I}}
+\newcommand\Jbb{\mathbb{J}}
+\newcommand\Kbb{\mathbb{K}}
+\newcommand\Lbb{\mathbb{L}}
+\newcommand\Mbb{\mathbb{M}}
+\newcommand\Nbb{\mathbb{N}}
+\newcommand\Obb{\mathbb{O}}
+\newcommand\Pbb{\mathbb{P}}
+\newcommand\Qbb{\mathbb{Q}}
+\newcommand\Rbb{\mathbb{R}}
+\newcommand\Sbb{\mathbb{S}}
+\newcommand\Tbb{\mathbb{T}}
+\newcommand\Ubb{\mathbb{U}}
+\newcommand\Vbb{\mathbb{V}}
+\newcommand\Wbb{\mathbb{W}}
+\newcommand\Xbb{\mathbb{X}}
+\newcommand\Ybb{\mathbb{Y}}
+\newcommand\Zbb{\mathbb{Z}}
 
 
-% === INTEGRAL MEAN ==========================================
+% --- INTEGRAL MEAN -----------------------------------------------------------
 
 \def\Xint#1{\mathchoice
 {\XXint\displaystyle\textstyle{#1}}%
@@ -19,145 +68,3 @@
 \def\XXint#1#2#3{{\setbox0=\hbox{$#1{#2#3}{\int}$}
 \vcenter{\hbox{$#2#3$}}\kern-.5\wd0}}
 \newcommand{\intmean}{\Xint-}
-
-% === PERFECT BULLET =========================================
-
-\let\oldbullet\bullet
-\newlength{\raisebulletlen}
-\setbox1=\hbox{$\bullet$}\setbox2=\hbox{\tiny$\bullet$}
-\setlength{\raisebulletlen}{\dimexpr0.5\ht1-0.5\ht2}
-\renewcommand\bullet{\raisebox{\raisebulletlen}{\,\tiny$\oldbullet$}\,}
-
-% === ORTHOGONAL SUM =========================================
-
-\newcommand\orthsum{
-\tikz[baseline=(A.base),font=\small]
-     \node[draw,ellipse,inner sep=0.15ex] (A){$\perp$};
-}
-
-% === CALIGRAPHIC LETTERS ====================================
-
-\newcommand\Acal{\mathcal{A}}
-\newcommand\Bcal{\mathcal{B}}
-\newcommand\Ccal{\mathcal{C}}
-\newcommand\Dcal{\mathcal{D}}
-\newcommand\Ecal{\mathcal{E}}
-\newcommand\Fcal{\mathcal{F}}
-\newcommand\Jcal{\mathcal{J}}
-\newcommand\Kcal{\mathcal{K}}
-\newcommand\Lcal{\mathcal{L}}
-\newcommand\Mcal{\mathcal{M}}
-\newcommand\Ncal{\mathcal{N}}
-\newcommand\Ocal{\mathcal{O}}
-\newcommand\Pcal{\mathcal{P}}
-\newcommand\Rcal{\mathcal{R}}
-\newcommand\Tcal{\mathcal{T}}
-
-% === MATHBB LETTERS =========================================
-
-\newcommand\C{\mathbb{C}}
-\newcommand\N{\mathbb{N}}
-\newcommand\R{\mathbb{R}}
-\newcommand\T{\mathbb{T}}
-\newcommand\K{\mathbb{K}}
-
-% === MATH OPERATORS =========================================
-
-\DeclareMathOperator*{\argmin}{argmin} % the * adjusts MathOperator for indizes beneath
-\DeclareMathOperator{\bisec}{bisec}
-\DeclareMathOperator{\cond}{cond}
-\DeclareMathOperator{\Conv}{conv}
-\DeclareMathOperator{\Curl}{Curl}
-\DeclareMathOperator{\curl}{curl}
-\DeclareMathOperator{\dev}{dev}
-\DeclareMathOperator{\diag}{diag}
-\DeclareMathOperator{\diam}{diam}
-\DeclareMathOperator{\Dim}{dim}
-\DeclareMathOperator{\Div}{div}
-\DeclareMathOperator{\Dist}{dist}
-\DeclareMathOperator{\esssup}{ess\ supp}
-\DeclareMathOperator{\grad}{\nabla}
-\DeclareMathOperator{\Int}{int}
-\DeclareMathOperator{\Ker}{ker}
-\DeclareMathOperator{\Mid}{mid}
-\DeclareMathOperator{\Osc}{osc}
-\DeclareMathOperator{\Red}{red}
-\DeclareMathOperator{\Ref}{Ref}
-\DeclareMathOperator{\Res}{Res}
-\DeclareMathOperator{\sign}{sgn}
-\DeclareMathOperator{\Span}{span}
-\DeclareMathOperator{\supp}{supp}
-\DeclareMathOperator{\tr}{tr}
-\DeclareMathOperator{\Width}{width}
-\DeclareMathOperator*{\arginf}{arginf}
-
-% === COMMANDS WITH INPUT ARGUMENTS ==========================
-
-\newcommand\abs[1]{\lvert #1 \rvert}
-\newcommand\average[1]{\langle #1 \rangle}
-\newcommand\jump[1]{\lbrack #1 \rbrack}
-\newcommand\NormEnergy[1]{\big\vvvert #1 \big\vvvert}
-\newcommand\Norm[2]{\lVert #1 \rVert_{#2}}
-\newcommand\scal[2]{\left\langle #1 , #2 \right\rangle}
-
-% === SPACES WITH NAMES ======================================
-
-\newcommand{\CONF}{\textup{C}}
-\newcommand{\NC}{\textup{NC}}
-\newcommand{\CR}{\textup{CR}}
-\newcommand{\RT}{\textup{RT}}
-
-% === GENERAL STUFF ==========================================
-
-\newcommand{\splitter}{\,:\,} % split for definition of sets
-\renewcommand{\d}{\, \textup{d}} % d for differentials, i.e., \d x
-
-
-% === JUST TO COMPILE CHAPTERS 4  AND 5 ==========================================
-
-\newcommand{\LO}[0]{L^2(\Omega)}
-\newcommand{\restrict}[2]{\left. #1 \right\lvert_{#2}}
-\DeclareMathOperator{\mPkt}{mid}
-\newcommand{\nnorm}[2]{\left\lVert #1 \right\rVert_{#2}}
-\newcommand{\volf}[2]{\nnorm{h_{#1}f}{#2}}
-\newcommand{\volO}[1]{\nnorm{h_{#1}f}{\LO}}
-\DeclareMathOperator\Kern{ker}
-\DeclareMathOperator\setspan{span}
-
-% === JUST TO COMPILE CHAPTER 6 ==========================================
-
-
-\newcommand\NormL[3]{\Norm{#1}{L^{#2}\left( { #3 } \right)}}
- \newcommand\NormH[3]{\Norm{#1}{H^{#2}\left( { #3 } \right)}}
- \newcommand\NormHdiv[1]{\Norm{#1}{H(\div)}}
- \newcommand\NormW[3]{\Norm{#1}{W^{#2}\left( { #3 } \right)}}
-\newcommand\NormLDom[2]{\NormL{#1}{#2}{\Omega}}
- \newcommand\NormHDom[2]{\NormH{#1}{#2}{\Omega}}
- \newcommand\NormHdivDom[1]{\NormHdiv{#1}}
- \newcommand\NormWDom[2]{\NormW{#1}{#2}{\Omega}}
- \newcommand\NormLz[2]{\NormL{#1}{2}{#2}}
- \newcommand\NormHz[2]{\NormH{#1}{2}{#2}}
- \newcommand\NormWkp[4]{\NormW{#1}{{#2,#3}}{#4}}
- \newcommand\NormWkpDom[3]{\NormWDom{#1}{{#2,#3}}}
- \newcommand\NormLzDom[1]{\NormLDom{#1}{2}}
- \newcommand\NormHzDom[1]{\NormHDom{#1}{2}}
-\newcommand\NormMax[2]{\Norm{#1}{\C({#2})}}
-
-
-% === JUST TO COMPILE CHAPTER 0 ==========================================
-
-\newcommand{\dist}{\mathrm{dist}}
-\newcommand{\fa}{\;\forall\;}
-\newcommand{\Lra}{\Leftrightarrow}
-\newcommand{\id}{\mathrm{id}}
-
-% === JUST TO COMPILE EXERCISES ==========================================
-
-\newcommand{\al}{\alpha}
-\newcommand{\be}{\beta}
-\newcommand{\ga}{\gamma}
-\newcommand{\de}{\delta}
-\newcommand{\eps}{\varepsilon}
-\newcommand{\vphi}{\varphi}
-\newcommand{\la}{\lambda}
-\newcommand{\om}{\omega}
