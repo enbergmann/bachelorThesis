@@ -1,0 +1,164 @@
+%
+% USER-DEFINED OPTIONS FOR AFEM SCRIPT
+%
+\usepackage[utf8]{inputenc}
+\usepackage{scrhack} % Fix problems of other packages with KOMA script.
+
+%%% KOMA OPTIONS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\KOMAoptions{%
+  paper=a4,%
+  fontsize=14pt,%
+  DIV=14,%
+  twoside=false,%
+  titlepage=false,%
+  abstract=true,%
+  pagesize=pdftex,%
+  parskip=half,%
+  headings=small,%
+  numbers=noendperiod,%
+  chapterprefix=true,%
+  listof=totoc,%
+  bibliography=totoc,%
+  index=totoc%
+}
+% floating captions
+\addtokomafont{captionlabel}{\bfseries}
+\renewcommand\captionformat{.\ }
+\setcapindent{0em}
+\setlength{\belowcaptionskip}{.5\baselineskip}
+
+%%% HEAD- AND FOOTLINE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{scrpage2} % [headsepline]
+\addtokomafont{pagefoot}{\upshape}
+\pagestyle{scrplain}
+
+%%% LANGUAGE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[utf8]{inputenc}
+\usepackage[UKenglish]{babel}
+\usepackage{csquotes}
+% British date format
+\renewcommand\dateUKenglish{\def\today{\number\day~%
+  \ifcase \month \or January\or February\or March\or April\or May\or June\or
+    July\or August\or September\or October\or November\or December\fi\space
+  \number\year}}
+
+%%% MATH %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{stmaryrd}
+\usepackage{mathtools}
+\usepackage{bbm}
+
+%%% BREAK HUGE ALIGN ENVIRONMENTS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\allowdisplaybreaks
+
+%%% COLORS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[pdftex,cmy,svgnames,table,hyperref]{xcolor}
+\definecolor{structure}{rgb}{.475,0,0} % darkred
+% \definecolor{structure}{rgb}{0,0,0} % black
+\definecolor{HUblue}{rgb}{0,0.2157,0.4235}
+\definecolor{HUred}{rgb}{0.5412,0.0588,0.0784}
+\definecolor{HUsand}{rgb}{0.8235,0.7529,0.4039}
+\definecolor{HUgreen}{rgb}{0,0.3412,0.1725}
+\definecolor{bgcolor}{rgb}{.95,.95,.95}
+% Matlab-like syntax high-lighting
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+%%% FONT %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[T1]{fontenc}
+% Latin modern
+\usepackage{lmodern}
+% Times
+% \usepackage{newtxtext,newtxmath}
+% \usepackage{mathpazo}
+% Libertine
+% \usepackage[ttscale=.875]{libertine}
+% \usepackage[type1]{libertine}
+% \usepackage[libertine]{newtxmath}
+% \renewcommand{\ttdefault}{cmtt}
+
+%%% MICRO-TYPOGRAPHY %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{microtype}
+\microtypesetup{%
+  final,%
+  babel=true,%
+  % character protrusion
+  protrusion=true,%
+  factor=1100,%
+  % font expansion
+  expansion=true,%
+  stretch=20,%
+  shrink=20%
+  step=4,%
+  % tracking
+  tracking=true,% only for pdftex >= 1.40.4
+  letterspace=20,%
+  % kerning
+  kerning=true,%
+  % spacing
+  spacing=true,%
+}
+
+%%% HYPERLINKS AND REFERENCES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{hyperref}
+\hypersetup{%
+  colorlinks=true,%
+  linkcolor=structure,%
+  citecolor=structure,%
+  urlcolor=structure,%
+}
+\usepackage[noabbrev, capitalise]{cleveref}
+\crefname{equation}{}{}
+\crefrangeformat{equation}{(#3#1#4)--(#5#2#6)}
+
+%%% ENUMERATIONS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{enumitem}
+\newlist{alphenum}{enumerate}{1}
+\setlist[alphenum]{fullwidth,label={(\alph*)}}
+
+%%% GRAPHICAL ELEMENTS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{graphicx}
+\makeatletter\g@addto@macro\@floatboxreset\centering\makeatother
+
+%%% TABLES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{longtable}
+\usepackage{booktabs}
+
+%%% FLOATS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{subcaption}
+\usepackage{float}
+\numberwithin{figure}{chapter}
+\numberwithin{equation}{chapter}
+\numberwithin{table}{chapter}
+
+%%% INDEX %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{appendix}
+\usepackage{makeidx}
+\makeindex
+
+%%% ADDITIONAL TOOLS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand\circled[1]{\tikz[baseline=(X.base)]\node[inner sep=.6pt,minimum width=1.1em,shape=ellipse,draw](X){#1};}
+
+%%% BIBLIOGRAPHY %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage[%
+  backend=bibtex,
+  style=alphabetic,
+  sorting=nty,%
+  maxbibnames=50,%
+  maxcitenames=4,%
+]{biblatex}
+
+% customized bibliography style
+  \renewbibmacro{in:}{}                             % no 'In:' before journal
+% \DeclareFieldFormat[article]{pages}{#1}           % no 'pp.' before pages in ARTICLE-type
+% \DeclareFieldFormat[article]{volume}{\textbf{#1}} % volume printed bold
+  \DeclareFieldFormat[article]{title}{#1}            % title always emphasized and without apostrophies before and after title
+  \DeclareFieldFormat[unpublished]{title}{#1} 
+\bibliography{Literature.bib}
+
+% Distances
+\setlength{\bibitemsep}{1em}
+\setlength{\bibhang}{1em}
