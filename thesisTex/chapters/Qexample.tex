@@ -1,0 +1,169 @@
+\documentclass[draft=false]{scrreprt}
+
+%%% LOAD SETTINGS FILES (STATIC HEADER) %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\input{header/main}
+\input{header/tikz}
+\input{header/environments}
+\input{header/commands} 
+%\renewcommand\bibname{Recommended Literature}
+
+%%% END OF HEADER FOR PRE-COMPILATION %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% this command marks the end of the static header part
+% \csname endofdump \endcsname
+
+%%% META INFORMATION %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\titlehead{%
+  \begin{minipage}{.7\textwidth}%
+  Humboldt-Universit\"at zu Berlin\\
+  Mathematisch-Naturwissenschaftliche Fakult\"at\\
+  Institut f\"ur Mathematik
+  \end{minipage}
+  \begin{minipage}{.29\textwidth}%
+    \begin{flushright}
+      \includegraphics*[scale=.6]{pictures/logos/husiegel_bw.pdf}%
+    \end{flushright}
+  \end{minipage}
+}
+\title{Functional Analysis}
+\author{Prof. C. Carstensen\\
+Wintersemester 2017/2018}
+\date{Version:~\today}
+
+
+
+\tikzstyle{trinode}=[draw, circle, inner sep=0pt, font=\footnotesize, minimum width=1em, fill=white]
+\tikzstyle{trilabel}=[draw, inner sep=0pt, outer sep=.1em, font=\footnotesize, minimum width=1em, minimum height=.8em, fill=white]
+\tikzstyle{normalSide}=[]
+\tikzstyle{DbSide}=[thick, postaction={draw, decorate, decoration={border,
+angle=-45, amplitude=.35em, segment length=.4em}}]
+\tikzstyle{NbSide}=[thick]
+
+\newcommand\placenode[3]{
+  \node (n#1)  at (#2,#3) [trinode] {#1};
+}
+\newcommand\placetrilabel[4]{
+  \node[trilabel] at (barycentric cs:n#2=0.3,n#3=0.3,n#4=0.3) {#1};
+}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{empty}
+\cleardoublepage
+
+\tableofcontents
+\cleardoublepage
+
+\input{chapters/introduction.tex}
+% \setcounter{chapter}{-1}
+
+\chapter{Metric Spaces}
+\input{chapters/metricSpaces.tex}
+
+\chapter{Normed Linear Spaces}
+\input{chapters/normedLinearSpaces.tex}
+
+\chapter{Hilbert Spaces}
+\input{chapters/hilbertSpaces.tex}
+
+\chapter{Continuous Linear Mappings}
+\input{chapters/continuousLinearMappings.tex}
+
+\chapter{Extension and Separation}
+\input{chapters/hahnBanach.tex}
+
+\chapter{Dual Spaces}
+\input{chapters/dualSpaces.tex}
+
+\chapter{Uniform Boundedness}
+\input{chapters/uniformBoundedness.tex}
+
+\chapter{Open Maps and Closed Graphs}
+\input{chapters/openMapsAndClosedGraphs.tex}
+
+\chapter{Closed Range}
+\input{chapters/adjoints.tex}
+
+\chapter{Compactness}
+\input{chapters/compactness}
+
+\chapter{Spectral Theory of Compact Operators}
+\input{chapters/spectralTheoryOfCompactOperators}
+
+\clearpage
+\begin{thebibliography}{10}
+
+
+
+  \bibitem{1}\label{bib:hWalt}
+Hans Wilhelm Alt,  Lineare
+Funktionalanalysis. 6. Auflage. Springer-Verlag, Berlin Heidelberg 2012,
+
+\bibitem{} J. Appell and M. V\"ath. Elemente der Funktionalanalysis . Vieweg, Wiesbaden, 2005.
+
+\bibitem{} K. Atkinson and W. Han. Theoretical Numerical Analysis. A Functional Analysis
+Framework , volume
+39 of Texts in Applied Mathematics . Springer-Verlag, New York – Berlin –
+Heidelberg, 2001.
+
+\bibitem{} H. Attouch, G. Buttazzo, and G. Michaille. Variational Analysis in Sobolev and BV
+Spaces: Applications
+to PDEs and Optimization . MPS-SIAM Series on Optimization. Society for Industrial and
+Applied Mathematics, Philadelphia, 2006.
+
+\bibitem{} J.-P. Aubin. Applied Functional Analysis . J. Wiley and Sons, New York, 1979.
+
+
+\bibitem{}H. Brezis. Functional Analysis, Sobolev Spaces and Partial Differential Equations .
+Universitext
+Series. Springer, New York, 2010.
+
+\bibitem{} R. Dautray and J.-L. Lions. Mathematical Analysis and Numerical Methods for Science
+and Technology,
+Vol. 2: Functional and Variational Methods.  Springer-Verlag, Berlin – Heidelberg –
+New York,
+2000.
+
+
+\bibitem{} J. Dieudonn\'e. Grundzüge der modernen Analysis 1 . Deutscher Verlag der
+Wissenschaften, Berlin,
+1985. 3., berichtigte und erg\"anzte Auflage.
+
+\bibitem{}M. Dobrowolski. Angewandte Funktionalanalysis. Funktionalanalysis, Sobolev-R\"aume
+und elliptische
+Differentialgleichungen . Springer, Berlin – Heidelberg, 2006.
+
+\bibitem{} A. Göpfert, T. Riedrich, and C. Tammer. Angewandte Funktionalanalysis:
+Motivationen und Methoden
+für Mathematiker und Wirtschaftswissenschaftler . Teubner Studienbücher
+Wirtschaftsmathematik.
+vieweg+teubner Verlag, 2009.
+
+\bibitem{} E. Hewitt and K. Stromberg. Real and Abstract Analysis. A Modern Treatment of the
+Theory of
+Functions of a Real Variable . Springer-Verlag, Berlin – Heidelberg – New York,
+1969.
+
+\bibitem{}W. Rudin, Functional Analysis, McGraw-Hill, 2nd ed. (1991).
+  \label{bib:rudin}
+
+\bibitem{} M. Ruzicka. Nichtlineare Funktionalanalysis. Eine Einf\"uhrung . Springer-Verlag,
+Berlin – Heidelberg –
+New York, 2004.
+
+\bibitem{}D. Werner. Funktionalanalysis . Springer-Verlag, Berlin – Heidelberg, 2007.
+
+\bibitem{} J. Wloka. Funktionalanalysis und Anwendungen: . De Gruyter, 1971.
+
+\bibitem{} E. Zeidler. Applied Functional Analysis. Applications to Mathematical Physics ,
+volume 108 of Applied
+Mathematical Sciences . Springer-Verlag, New York – Berlin – Heidelberg, 1995.
+
+\bibitem{} E. Zeidler. Applied Functional Analysis. Main Principles and Their Applications ,
+volume 109 of
+Applied Mathematical Sciences . Springer-Verlag, New York – Berlin – Heidelberg,
+1995.
+
+
+\end{thebibliography}
+\end{document}
