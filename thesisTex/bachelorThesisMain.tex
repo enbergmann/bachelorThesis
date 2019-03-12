@@ -1,0 +1,89 @@
+% --- SETTINGS -----------------------------------------------------------------
+
+\documentclass[draft=false,twoside,12pt]{scrreprt}
+\newcommand{\lang}{ngerman}
+\usepackage[\lang]{babel}
+\usepackage[a4paper, 
+            width = 150mm, top = 25mm, bottom = 25mm,
+            bindingoffset = 6mm]
+            {geometry}
+% \usepackage{fancyhdr}
+\pagestyle{headings}
+
+\setlength{\parindent}{0pt}
+
+\input{header/main}
+%\input{header/tikz}
+\input{header/environments}
+\input{header/commands} 
+
+
+% --- META INFORMATION --------------------------------------------------------
+
+
+\titlehead{%
+  \begin{minipage}{.7\textwidth}%
+  Humboldt-Universit\"at zu Berlin\\
+  Mathematisch-Naturwissenschaftliche Fakult\"at\\
+  Institut f\"ur Mathematik
+  \end{minipage}
+  \begin{minipage}{.29\textwidth}%
+    \begin{flushright}
+      \includegraphics*[scale=.6]{pictures/logos/husiegel_bw.pdf}%
+    \end{flushright}
+  \end{minipage}
+}
+\title{Non-Conforming Methods for Functions of Bounded Variation\\
+Bachelor Thesis}
+\author{Enrico Bergmann}
+\date{Version:~\today}
+
+% --- DOCUMENT -----------------------------------------------------------------
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+\chapter{Einleitung}
+\input{chapters/introduction.tex}
+
+\chapter{Theoretische Grundlagen}
+\input{chapters/theoreticalBasics.tex}
+
+\chapter{Functions of Bounded Variation}
+
+\begin{definition}[Functions of bounded variation.]
+ $f$ is said to be of bounded variation if 
+ \begin{align*}
+   f=2
+ \end{align*}
+\end{definition}
+
+\chapter{Chapter Number two}
+
+\begin{theorem}[first thm in chaoter 2]
+  dat it is
+\end{theorem}
+
+\begin{proof}
+  trivial
+\end{proof}
+
+% --- APPENDIX -------------------------------------------------------------
+
+\appendix
+\chapter{Appendix}
+bla
+
+% --- BIBLIOGRAPHY -------------------------------------------------------------
+
+\chapter*{Selbständigkeitserklärung}
+Ich erkläre, dass ich die vorliegende Arbeit selbständig verfasst und noch nicht 
+für andere Prüfungen eingereicht habe. Sämtliche Quellen, einschließlich
+Internetquellen, die unverändert oder abgewandelt wiedergegeben werden,
+insbesondere Quellen für Texte, Grafiken, Tabellen und Bilder, sind als solche
+kenntlich gemacht. Mir ist bekannt, dass bei Verstößen gegen diese Grundsätze ein
+Verfahren wegen Täuschungsversuchs bzw.\ Täuschung eingeleitet wird. \\
+
+Berlin, den \today, 
+\end{document}

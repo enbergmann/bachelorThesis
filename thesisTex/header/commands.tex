@@ -1,3 +1,13 @@
+% --- OPERATORS ----------------------------------------------------------------
+
+\DeclareMathOperator{\interior}{int}
+\DeclareMathOperator{\closure}{cl}
+%\DeclareMathOperator*{\liminf}{lim\,inf} % lim inf
+
+% --- RELATIONS ----------------------------------------------------------------
+
+\newcommand{\ssubset}{\subset\joinrel\subset}
+
 % --- CALIGRAPHIC LETTERS ------------------------------------------------------
 
 \newcommand\Acal{\mathcal{A}}
@@ -30,7 +40,7 @@
 % --- MATHBB LETTERS -----------------------------------------------------------
 
 \newcommand\Abb{\mathbb{A}}
-\newcommand\Bbb{\mathbb{B}}
+%\newcommand\Bbb{\mathbb{B}}
 \newcommand\Cbb{\mathbb{C}}
 \newcommand\Dbb{\mathbb{D}}
 \newcommand\Ebb{\mathbb{E}}
@@ -75,4 +85,3 @@
 \setbox1=\hbox{$\bullet$}\setbox2=\hbox{\tiny$\bullet$}
 \setlength{\raisebulletlen}{\dimexpr0.5\ht1-0.5\ht2}
 \renewcommand\bullet{\raisebox{\raisebulletlen}{\,\tiny$\oldbullet$}\,}
-
