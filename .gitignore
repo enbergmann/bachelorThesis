@@ -1,4 +1,5 @@
 proGit.pdf
+sources/additionalSources
 code/version1/program/evaluation/*.txt
 code/s1Version/program/evaluation/*.txt
 *.out
