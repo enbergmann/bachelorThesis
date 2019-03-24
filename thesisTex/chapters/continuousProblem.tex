@@ -1,0 +1,131 @@
+Betrachte für gegebenes $\alpha>0$ und rechte Seite $f\in L^2(\Omega)$ das 
+folgende Minimierungsproblem. 
+
+\begin{problem}\label{prob:continuousProblem}
+  Finde $u\in \BV(\Omega)\cap L^2(\Omega)$, sodass
+  $u$ das Funktional
+  \begin{align}\label{eq:continuousProblem}
+    E(v)\coloneqq \frac{\alpha}{2}\Vert v\Vert_{L^2(\Omega)} + |v|_{\BV(\Omega)}
+    +\Vert v\Vert_{L^1(\partial\Omega)}-\int_\Omega fv\dx
+  \end{align}
+  unter allen $v\in V\coloneqq\BV(\Omega)\cap L^2(\Omega)$ minimiert.
+\end{problem}
+
+\begin{theorem}[Existenz einer Lösung]
+  \label{thm:contProblemExistence}
+  \Cref{prob:continuousProblem} besitzt eine Lösung \\$u\in\BV(\Omega)\cap
+  L^2(\Omega)$.
+\end{theorem}
+
+\begin{proof}
+  Das Funktional $E$ in \eqref{eq:continuousProblem} ist nach unten beschränkt,
+  denn für alle $v\in \BV(\Omega)\cap L^2(\Omega)$ gilt mit der Cauchy-Schwarzschen
+  Ungleichung und der Youngschen Ungleichung
+  \begin{equation}
+    \label{eq:contProbBddFromBelow}
+    \begin{aligned}
+      E(v)&=\frac{\alpha}{2}\Vert v\Vert_{L^2(\Omega)} + |v|_{\BV(\Omega)}
+      +\Vert v\Vert_{L^1(\partial\Omega)}-\int_\Omega fv\dx\\
+      &\geq 
+      \frac{\alpha}{4}\Vert v\Vert_{L^2(\Omega)} + |v|_{\BV(\Omega)}
+      +\Vert v\Vert_{L^1(\partial\Omega)}-\frac{1}{\alpha}\Vert
+      f\Vert_{L^2(\Omega)}^2\\
+      &\geq -\Vert f\Vert_{L^2(\Omega)}^2.
+    \end{aligned}
+  \end{equation}
+  Somit existiert eine infimierende Folge
+  $(u_n)_{n\in\Nbb}\subset\BV(\Omega)\cap
+  L^2(\Omega)$ von $E$, d.h.\ $(u_n)_{n\in\Nbb}$ erfüllt
+  $\lim_{n\rightarrow\infty}E(u_n) =
+  \inf_{v\in\BV(\Omega)\cap
+    L^2(\Omega)}E(v)$. 
+    % bezüglich der Normen $\Vert\bullet\Vert_{BV(\Omega)}$ 
+    % und $\Vert\bullet\Vert_{L^2(\Omega)}$.
+
+  \Cref{eq:contProbBddFromBelow} impliziert außerdem, dass
+  $E(v)\rightarrow\infty$, falls
+  $\Vert v\Vert_{\BV(\Omega)}\rightarrow\infty$.
+  Die Folge $(u_n)_{n\in\Nbb}$ muss also insbesondere beschränkt sein.
+
+  \medbreak
+  Nun garantiert \cref{thm:compactness} die Existenz einer schwach konvergenten
+  Teilfolge $(u_{n_k})_{k\in\Nbb}$ von $(u_n)_{n\in\Nbb}$ mit schwachem Grenzwert
+  $u\in\BV(\Omega)$. O.B.d.A.\ ist $(u_{n_k})_{k\in\Nbb}=(u_n)_{n\in\Nbb}$.
+
+  Analog ist $(u_n)_{n\in\Nbb}$ nach \cref{eq:contProbBddFromBelow} ebenfalls
+  beschränkt bezüglich der Norm $\Vert\bullet\Vert_{L^2(\Omega)}$, besitzt also
+  eine Teilfolge (O.B.d.A.\ weiterhin bezeichnet mit $(u_n)_{n\in\Nbb}$), die
+  in $L^2(\Omega)$ schwach gegen ein $\tilde{u}\in L^2(\Omega)$ konvergiert.
+  Da die Einbettung $L^2(\Omega)\hookrightarrow L^1(\Omega)$ kompakt ist, 
+  %TODO besser zitieren, Rellich Kondrachov erwähnen oder sogar nachrechnen?
+  existiert eine Teilfolge (O.B.d.A\ $(u_n)_{n\in\Nbb}$), die stark gegen
+  $\tilde u$ konvergiert bezüglich der Norm $\Vert\bullet\Vert_{L^1(\Omega)}$.
+
+  Allerdings bedeutet die schwache Konvergenz $u_n\rightharpoonup u$ in
+  $\BV(\Omega)$  
+  insbesondere, dass $u_n\rightarrow u$ in $L^1(\Omega)$.
+  Es gilt also $u=\tilde u \in L^2(\Omega)$, d.h.\ $u\in\BV(\Omega)\cap
+  L^2(\Omega)$.
+
+  \medbreak
+  \cref{thm:wlsc} liefert die schwache Unterhalbstetigkeit der Seminorm
+  $|\bullet|_{\BV(\Omega)}$ \\
+  bezüglich schwacher Konvergenz in $\BV(\Omega)$.
+  %und $\Vert\bullet\Vert_{L^2(\Omega)}$ und $-\int_\Omega f\bullet\dx$ sind 
+  %stetig (d.h.\ insbesondere 
+  \bigbreak
+  todo: Randterm sufs? Die beiden verbleibenden Terme sind ufs, aber auch sufs?
+  \bigbreak
+  Damit gilt insgesamt
+  \begin{align*}
+    \inf_{v\in\BV(\Omega)\cap L^2(\Omega)}E(v)\leq
+    E(u)\leq\liminf_{n\rightarrow\infty} E(u_n) =
+    \lim_{n\rightarrow\infty}E(u_n) = \inf_{v\in\BV(\Omega)\cap
+    L^2(\Omega)}E(v),
+  \end{align*}
+  d.h.\ $\min_{v\in\BV(\Omega)\cap L^2(\Omega)} E(v) = E(u)$.
+\end{proof}
+
+\begin{theorem}[Stabilität und Eindeutigkeit]
+  \label{thm:contProbStabAndUniqu}
+  Seien $u_1,u_2\in \BV(\Omega)\cap L^2(\Omega)$ die Minimierer des Problems
+  \ref{prob:continuousProblem} mit $f_1,f_2\in L^2(\Omega)$ anstelle von $f$.
+
+  Dann gilt 
+  \begin{align*}
+    \Vert u_1 - u_2\Vert_{L^2(\Omega)} \leq \Vert f_1-f_2\Vert_{L^2(\Omega)}.
+  \end{align*}
+\end{theorem}
+
+\begin{proof}
+  Definiere die konvexen Funktionale $F:\BV(\Omega)\to \Rbb$ und 
+  $G_\ell:L^2(\Omega)\to \Rbb$, $\ell=1,2$, durch
+  \begin{align*}
+    F(u) &\coloneqq |u|_{\BV(\Omega)} + \Vert u \Vert_{L^1(\partial\Omega)},&
+    G_\ell(u)\coloneqq \frac{\alpha}{2}\Vert u\Vert_{L^2(\Omega)}^2 -
+    \int_\Omega fu\dx.
+  \end{align*}
+  Bezeichne $E_\ell\coloneqq F+E_\ell$ und setze $F$ auf $L^2(\Omega)$
+  durch $\infty$ fort.
+
+  $G_\ell$ ist Fr\'echet-differenzierbar mit Fr\'echet-Ableitung
+  \begin{align*}
+    \delta G_\ell(u)[v] = \alpha (u,v)_{L^2(\Omega)} - \int_\Omega fv\dx 
+    = (\alpha u-f,v)_{L^2(\Omega)} \quad \text{ für alle } v\in L^2(\Omega).
+  \end{align*}
+
+  Das Funktional $F$ ist konvex, deshalb (TODO quote Rf) ist das Subdifferential
+  %TODO quote
+  $\partial F$ von $F$ monoton, d.h.\ für alle $\mu_\ell\in \partial F(u_\ell)$,
+  $\ell=1,2$, gilt
+  \begin{align*}
+    (\mu_1-\mu_2,u_1-u_2)_{L^2(\Omega)}\geq 0.
+  \end{align*}
+
+  Für $\ell=1,2$ wird $E_\ell$ von $u_\ell$ minimiert, 
+  deshalb gilt $0\in\partial E_\ell(u_\ell)
+  = \partial F(u_\ell)+\partial G_\ell(u_\ell)=\partial F(u_\ell)+
+  \{\delta G_\ell(u_\ell)\}$ (TODO quote) und somit folgt
+  $-\delta G_\ell(u_\ell)\in\partial F(u_\ell)$.
+  Daraus folgt
+\end{proof}

@@ -10,7 +10,7 @@
 % \usepackage{fancyhdr}
 \pagestyle{headings}
 
-\setlength{\parindent}{0pt}
+% \setlength{\parindent}{0pt}
 
 \input{header/main}
 %\input{header/tikz}
@@ -33,16 +33,18 @@
     \end{flushright}
   \end{minipage}
 }
-\title{Non-Conforming Methods for Functions of Bounded Variation\\
-Bachelor Thesis}
+\title{Die Crouzeix-Raviart Finite-Elemente Methode Für Eine Minimierung Im Raum
+Der Funktionen Von Beschränkter Variation}
 \author{Enrico Bergmann}
 \date{Version:~\today}
 
 % --- DOCUMENT -----------------------------------------------------------------
 
 \begin{document}
+\hypersetup{pageanchor=false}
 \maketitle
 \tableofcontents
+\hypersetup{pageanchor=true}
 
 \chapter{Einleitung}
 \input{chapters/introduction.tex}
@@ -50,30 +52,20 @@ Bachelor Thesis}
 \chapter{Theoretische Grundlagen}
 \input{chapters/theoreticalBasics.tex}
 
-\chapter{Functions of Bounded Variation}
+\chapter{Das Kontinuierliche Problem}
+\input{chapters/continuousProblem.tex}
 
-\begin{definition}[Functions of bounded variation.]
- $f$ is said to be of bounded variation if 
- \begin{align*}
-   f=2
- \end{align*}
-\end{definition}
+\chapter{Das Diskrete Problem}
+\input{chapters/discreteProblem.tex}
 
-\chapter{Chapter Number two}
-
-\begin{theorem}[first thm in chaoter 2]
-  dat it is
-\end{theorem}
-
-\begin{proof}
-  trivial
-\end{proof}
+\chapter{Numerische Realisierung}
+\input{chapters/numericalRealization.tex}
 
 % --- APPENDIX -------------------------------------------------------------
 
 \appendix
 \chapter{Appendix}
-bla
+\input{chapters/appendix.tex}
 
 % --- BIBLIOGRAPHY -------------------------------------------------------------
 
@@ -83,7 +75,7 @@ für andere Prüfungen eingereicht habe. Sämtliche Quellen, einschließlich
 Internetquellen, die unverändert oder abgewandelt wiedergegeben werden,
 insbesondere Quellen für Texte, Grafiken, Tabellen und Bilder, sind als solche
 kenntlich gemacht. Mir ist bekannt, dass bei Verstößen gegen diese Grundsätze ein
-Verfahren wegen Täuschungsversuchs bzw.\ Täuschung eingeleitet wird. \\
-
-Berlin, den \today, 
+Verfahren wegen Täuschungsversuchs bzw.\ Täuschung eingeleitet wird. 
+\bigbreak
+\noindent Berlin, den \today, 
 \end{document}
