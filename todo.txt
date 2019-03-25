@@ -1,3 +1,8 @@
+CSU, Young etc einmal aufschreiben --> Appendix?
+
+
+
+
 readd general part of experiments section into documentation
 
 compute gradient of exact solution, transform back from absolute value
