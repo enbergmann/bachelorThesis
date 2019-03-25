@@ -1,0 +1,110 @@
+Betrachte für gegebenes $\alpha>0$ und rechte Seite $f\in L^2(\Omega)$ 
+folgende Diskretisierung von \Cref{prob:continuousProblem}. 
+
+\begin{problem}\label{prob:discreteProblem}
+  Finde $\ucr\in \Vnc(\Tcal) \coloneqq \CR^1_0(\Tcal)$,
+  sodass $\ucr$ das Funktional
+  \begin{align}\label{eq:discreteProblem}
+    \Enc(\vcr)\coloneqq \frac{\alpha}{2}\Vert \vcr\Vert_{L^2(\Omega)} 
+    +\Vert \gradnc\vcr\Vert_{L^1(\Omega)}-\int_\Omega f\vcr\dx
+  \end{align}
+  unter allen $\vcr\in \Vnc(\Tcal)$ minimiert.
+\end{problem}
+
+\noindent Für $\vcr\in\Vnc(\Tcal)$, $\Lambda\in\Pbb_0(\Tcal;\Rbb^n)$,
+\begin{align*}
+  K_1(0)
+  &\coloneqq 
+  \{\Lambda\in L^\infty(\Omega;\Rbb^n)\ | \ |\Lambda(\bullet)|
+  \leq 1 \text{ fast überall in }\Omega\},\\
+  I_{K_1(0)}(\Lambda)
+  &\coloneqq
+  \begin{cases}
+    -\infty, & \text{falls } \Lambda\notin K_1(0) \text{ und}\\
+    0,       & \text{falls } \Lambda\in K_1(0),
+  \end{cases}
+\end{align*}
+ist das
+dazugehörige Lagrange-Funktional definert als
+\begin{align}\label{eq:discreteProblemLagrangeFunctional}
+  \Lcal_h(\vcr,\Lambda) \coloneqq \int_\Omega\Lambda\cdot\gradnc\vcr\dx +
+  \frac{\alpha}{2}\Vert \vcr\Vert^2_{L^2(\Omega)} -\int_\Omega f\vcr\dx
+  - I_{K_1(0)}(\Lambda)
+\end{align}
+und das Sattelpunktsproblem dem entsprechend wie folgt.
+\begin{problem}\label{prob:discreteSaddlepointProblem}
+  Löse
+  \begin{align*}
+    \inf_{\vcr\in\Vnc(\Tcal)}\sup_{\Lambda\in\Pbb_0(\Tcal;\Rbb^n)} 
+    \Lcal_h(\vcr,\Lambda).
+  \end{align*}
+\end{problem}
+
+\begin{theorem}[Charakterisierung diskreter Lösungen]
+  \label{thm:discProbCharacterizationOfDiscreteSolutions}
+  Es existiert eine eindeutiges Lösung $\ucr\in\Vnc(\Tcal)$ von
+  \Cref{prob:discreteProblem}. Außerdem gelten folgende äquivalente 
+  Charakterisierungen von $\ucr$.
+  \begin{itemize}
+    \item[(i)] Es existiert ein $\Lambda\in\Pbb_0(\Tcal;\Rbb^n)$ mit
+      $|\Lambda(\bullet)|\leq 1$ fast überall in $\Omega$, sodass
+      \begin{align*}
+        \big(\Lambda(\bullet),\gradnc\ucr(\bullet)\big)
+        &=
+        |\gradnc\ucr(\bullet)| \quad\text{ fast überall in } \Omega \text{ und}\\
+        \left(\Lambda,\gradnc\vcr\right)_{L^2(\Omega)}
+        &= \left(f-\alpha\ucr,
+        \vcr\right)_{L^2(\Omega)}
+        \quad\text{ für alle } \vcr\in\Vnc(\Tcal).
+      \end{align*}
+    \item[(ii)] Für alle $\vcr\in\Vnc$ gilt die Variationsungleichung
+      \begin{align*}
+        (f-\alpha\ucr,\vcr-\ucr)_{L^2(\Omega)}\leq
+        \Vert\gradnc\vcr\Vert_{L^1(\Omega)} -
+        \Vert\gradnc\ucr\Vert_{L^1(\Omega)}.
+      \end{align*}
+  \end{itemize}
+\end{theorem}
+
+\begin{proof}
+  In der ersten Komponente ist das Lagrange-Funktional
+  Fr\'echet-\\
+  differenzierbar mit 
+  \begin{align*}
+    \delta_{\ucr}\Lcal_h(\ucr,\Lambda)[\vcr]=
+    \int_\Omega\Lambda\cdot \gradnc\vcr\dx
+    +\alpha (\ucr,\vcr)_{L^2(\Omega)} - \int_\Omega f\vcr\dx.
+  \end{align*}
+  Die Karush-Kuhn-Tucker-Bedingungen lauten damit
+  \begin{align*}
+    0 
+    &= 
+    \delta_{\ucr}\Lcal_h(\ucr,\Lambda)[\vcr]\\
+    &=
+    \int_\Omega\Lambda\cdot \gradnc\vcr\dx
+    +\alpha (\ucr,\vcr)_{L^2(\Omega)} - \int_\Omega f\vcr\dx \quad\text{ für 
+    alle } \vcr\in\Vnc\quad\text{ und}\\
+    0&\in \partial_\Lambda \Lcal_h(\ucr,\Lambda) 
+    =
+    (\gradnc\ucr,\bullet)_{L^2(\Omega)}-\partial I_{K_1(0)}(\Lambda).
+  \end{align*}
+
+  Des Weiteren ist ein $\xi_h\in \Pbb_0(\Tcal;\Rbb^n)\cap
+  \partial I_{K_1(0)}(\Lambda)$, wenn für alle $q_0\in \Pbb(\Tcal;\Rbb^n)$ gilt
+  \begin{align*}
+    (\xi_h,q_0-\Lambda)_{L^2(\Omega)} 
+    \leq 
+    I_{K_1(0)}(q_0) - I_{K_1(0)(\Lambda)}
+    =
+    I_{K_1(0)}(q_0). 
+  \end{align*}
+  Für $q_0\in \Pbb_0(\Tcal;\Rbb^n)\cap K_1(0)$ folgt insbesondere
+  \begin{align*}
+    (\xi_h,q_0-\Lambda)_{L^2(\Tcal;\Rbb^n)}&\leq 0, \quad\text{ also}\\
+    (\xi_h,q_0)_{L^2(\Tcal;\Rbb^n)}&\leq(\xi_h,\Lambda)_{L^2(\Tcal;\Rbb^n)}.
+  \end{align*}
+  Mit der Wahl $q_0\coloneqq \sign\gradnc\ucr$ ergibt das
+
+
+
+\end{proof}

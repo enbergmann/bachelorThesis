@@ -118,14 +118,32 @@ folgende Minimierungsproblem.
   %TODO quote
   $\partial F$ von $F$ monoton, d.h.\ für alle $\mu_\ell\in \partial F(u_\ell)$,
   $\ell=1,2$, gilt
-  \begin{align*}
+  \begin{align}\label{eq:stabilityAndUniqueness:monotonicityOfSubdifferential}
     (\mu_1-\mu_2,u_1-u_2)_{L^2(\Omega)}\geq 0.
-  \end{align*}
+  \end{align}
 
   Für $\ell=1,2$ wird $E_\ell$ von $u_\ell$ minimiert, 
   deshalb gilt $0\in\partial E_\ell(u_\ell)
   = \partial F(u_\ell)+\partial G_\ell(u_\ell)=\partial F(u_\ell)+
-  \{\delta G_\ell(u_\ell)\}$ (TODO quote) und somit folgt
+  \{\delta G_\ell(u_\ell)\}$ (TODO quote) und es folgt
   $-\delta G_\ell(u_\ell)\in\partial F(u_\ell)$.
-  Daraus folgt
+  Daraus folgt zusammen mit
+  \eqref{eq:stabilityAndUniqueness:monotonicityOfSubdifferential}
+  \begin{align*}
+    \big( -(\alpha u_1 - f_1) + (\alpha u_2 - f_2), u_1 - u_2\big)_{L^2(\Omega)}
+    \geq 0.
+  \end{align*}
+  Umformen und Anwenden der Cauchy-Schwarzschen Ungleichung impliziert
+  \begin{align*}
+    \alpha \Vert u_1 - u_2 \Vert_{L^2(\Omega)}^2
+    &\leq
+    \big(f_1 -f_2, u_1-u_2 \big)_{L^2(\Omega)}\\
+    &\leq
+    \Vert f_1-f_2\Vert_{L^2(\Omega)}\Vert u_1 - u_2\Vert_{L^2(\Omega)}.
+  \end{align*}
+
+  Falls $\Vert u_1 - u_2 \Vert_{L^2(\Omega)} = 0$, gilt der Satz.
+  Ansonsten führt Division durch \\
+  $\Vert u_1 - u_2 \Vert_{L^2(\Omega)}\neq 0$ den 
+  Beweis zum Abschluss.
 \end{proof}
