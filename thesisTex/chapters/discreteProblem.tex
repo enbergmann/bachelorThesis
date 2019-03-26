@@ -49,7 +49,7 @@ und das Sattelpunktsproblem dem entsprechend wie folgt.
     \item[(i)] Es existiert ein $\Lambda\in\Pbb_0(\Tcal;\Rbb^n)$ mit
       $|\Lambda(\bullet)|\leq 1$ fast überall in $\Omega$, sodass
       \begin{align*}
-        \big(\Lambda(\bullet),\gradnc\ucr(\bullet)\big)
+        \Lambda(\bullet)\cdot\gradnc\ucr(\bullet)
         &=
         |\gradnc\ucr(\bullet)| \quad\text{ fast überall in } \Omega \text{ und}\\
         \left(\Lambda,\gradnc\vcr\right)_{L^2(\Omega)}
@@ -75,7 +75,9 @@ und das Sattelpunktsproblem dem entsprechend wie folgt.
     \int_\Omega\Lambda\cdot \gradnc\vcr\dx
     +\alpha (\ucr,\vcr)_{L^2(\Omega)} - \int_\Omega f\vcr\dx.
   \end{align*}
-  Die Karush-Kuhn-Tucker-Bedingungen lauten damit
+  Die Karush-Kuhn-Tucker-Bedingungen für eine Lösung \\
+  $(\ucr,\Lambda)\in\Vnc\times(\Pbb_0(\Tcal;\Rbb^n)\cap K_1(0))$
+  des Sattelpunktsproblems \ref{prob:discreteSaddlepointProblem} lauten damit
   \begin{align*}
     0 
     &= 
@@ -86,25 +88,50 @@ und das Sattelpunktsproblem dem entsprechend wie folgt.
     alle } \vcr\in\Vnc\quad\text{ und}\\
     0&\in \partial_\Lambda \Lcal_h(\ucr,\Lambda) 
     =
-    (\gradnc\ucr,\bullet)_{L^2(\Omega)}-\partial I_{K_1(0)}(\Lambda).
+    \{(\gradnc\ucr,\bullet)_{L^2(\Omega)}\}-\partial I_{K_1(0)}(\Lambda).
   \end{align*}
 
-  Des Weiteren ist ein $\xi_h\in \Pbb_0(\Tcal;\Rbb^n)\cap
-  \partial I_{K_1(0)}(\Lambda)$, wenn für alle $q_0\in \Pbb(\Tcal;\Rbb^n)$ gilt
+  Die erste Bedingung ist für alle $\vcr\in\Vnc(\Tcal)$ äquivalent zu
   \begin{align*}
-    (\xi_h,q_0-\Lambda)_{L^2(\Omega)} 
+    (\Lambda,\gradnc\vcr)_{L^2(\Omega)}
+    =
+    (f-\alpha \ucr,\vcr)_{L^2(\Omega)}.
+  \end{align*}
+
+  Die zweite Bedingung bedeutet, dass $(\gradnc\ucr,\bullet)_{L^2(\Omega)}\in -\partial
+  I_{K_1(0)}(\Lambda)$, d.h.\ für
+  alle $q_0\in \Pbb_0(\Tcal;\Rbb^n)$ gilt
+  \begin{align*}
+    (\gradnc\ucr,q_0-\Lambda)_{L^2(\Omega)} 
     \leq 
-    I_{K_1(0)}(q_0) - I_{K_1(0)(\Lambda)}
+    I_{K_1(0)}(q_0) - I_{K_1(0)}(\Lambda)
     =
     I_{K_1(0)}(q_0). 
   \end{align*}
   Für $q_0\in \Pbb_0(\Tcal;\Rbb^n)\cap K_1(0)$ folgt insbesondere
   \begin{align*}
-    (\xi_h,q_0-\Lambda)_{L^2(\Tcal;\Rbb^n)}&\leq 0, \quad\text{ also}\\
-    (\xi_h,q_0)_{L^2(\Tcal;\Rbb^n)}&\leq(\xi_h,\Lambda)_{L^2(\Tcal;\Rbb^n)}.
+    (\gradnc\ucr,q_0-\Lambda)_{L^2(\Omega)}&\leq 0, \quad\text{ also}\\
+    (\gradnc\ucr,q_0)_{L^2(\Omega)}&\leq(\gradnc\ucr,\Lambda)_{L^2(\Omega)}.
   \end{align*}
-  Mit der Wahl $q_0\coloneqq \sign\gradnc\ucr$ ergibt das
-
-
-
+  Mit der Wahl $q_0\coloneqq \sign\gradnc\ucr$, der Cauchy-Schwarzschen
+  Ungleichung und $\Lambda\in K_1(0)$ impliziert das
+  \begin{align*}
+    \int_\Omega|\gradnc\ucr|\dx
+    &\leq
+    (\gradnc\ucr,\Lambda)_{L^2(\Omega)}\\
+    &\leq 
+    \int_\Omega|\gradnc\ucr|\,|\Lambda|\dx
+    \leq
+    \int_\Omega|\gradnc\ucr|\dx\quad\text{ bzw. }\\
+    \sum_{T\in\Tcal}|T|\,\left|(\gradnc\ucr)_{|_{T}}\right|
+    &=
+    \sum_{T\in\Tcal}|T|\,(\gradnc\ucr\cdot \Lambda)_{|_T}
+  \end{align*}
+  Außerdem gilt mit der Cauchy-Schwarzschen Ungleichung auf allen $T\in\Tcal$,
+  dass $(\gradnc\ucr\cdot \Lambda)_{|_T}\leq(\gradnc\ucr)_{|_{T}}$.
+  Dementsprechend muss sogar für alle $T\in\Tcal$ gelten, dass
+  $(\gradnc\ucr\cdot \Lambda)_{|_T}=(\gradnc\ucr)_{|_{T}}$, d.h.\ fast überall
+  in $\Omega$ gilt $\Lambda(\bullet)\cdot\gradnc\ucr(\bullet)
+  =|\gradnc\ucr(\bullet)|$.
 \end{proof}
+
