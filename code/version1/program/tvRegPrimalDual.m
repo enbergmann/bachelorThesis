@@ -1,4 +1,4 @@
-function  [u,corrVec,energyVec] = ...
+function  [u,corrVec,energyVec,nrDof] = ...
     tvRegPrimalDual(c4n,n4e,n4sDb,n4sNb,h,tau,red,epsStop,alpha,f,u,Lambda) 
 
     nrElems = size(n4e,1);
@@ -7,6 +7,7 @@ function  [u,corrVec,energyVec] = ...
     nrSides = max(max(s4e));
 
     dof = computeDof(n4e,nrSides,n4sDb,n4sNb);
+    nrDof = length(dof);
 
     [STIMANC,MAMANC] = computeFeMatrices(c4n,n4e,s4e,area4e,nrElems);
     A = STIMANC/tau+alpha*MAMANC; %TODO here could be an h in front of STIMANC
