@@ -57,7 +57,7 @@ und das Sattelpunktsproblem dem entsprechend wie folgt.
         \vcr\right)_{L^2(\Omega)}
         \quad\text{ für alle } \vcr\in\Vnc(\Tcal).
       \end{align*}
-    \item[(ii)] Für alle $\vcr\in\Vnc$ gilt die Variationsungleichung
+    \item[(ii)] Für alle $\vcr\in\Vnc(\Tcal)$ gilt die Variationsungleichung
       \begin{align*}
         (f-\alpha\ucr,\vcr-\ucr)_{L^2(\Omega)}\leq
         \Vert\gradnc\vcr\Vert_{L^1(\Omega)} -
@@ -67,6 +67,12 @@ und das Sattelpunktsproblem dem entsprechend wie folgt.
 \end{theorem}
 
 \begin{proof}
+  %TODO Existenzbeweis für eindeutige Lösbarkeit des diskreten Problems.
+  \textit{(i).} Es existiert eine eindeutige Lösung
+  $\ucr\in\Vnc(\Tcal)$ von \Cref{prob:discreteProblem}, deshalb besitzt
+  das Sattelpunktsproblem \ref{prob:discreteSaddlepointProblem} eine 
+  Lösung $(\ucr,\Lambda)\in \Vnc(\Tcal)\times(\Pbb_0(\Tcal;\Rbb^n)\cap
+  K_1(0)$. 
   In der ersten Komponente ist das Lagrange-Funktional
   Fr\'echet-\\
   differenzierbar mit 

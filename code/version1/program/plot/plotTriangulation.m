@@ -1,4 +1,4 @@
-function plotTriangulation ( c4n, n4e )
+function triang = plotTriangulation ( c4n, n4e )
 %% Draw a triangular grid into a new figure.
 %   plotTriangulation(c4n, n4e) draws the grid defined by c4n and n4e into
 %                               a figure.
@@ -20,9 +20,9 @@ function plotTriangulation ( c4n, n4e )
     C = 'white';
 
     % Draw everything, make sides blue (looks more like triplot).
-    patch(X,Y,C,'EdgeColor','blue');
+    triang = patch(X,Y,C,'EdgeColor','blue');
     axis equal tight;
-    drawnow;
+    % drawnow;
 
 end
 

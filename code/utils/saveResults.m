@@ -1,5 +1,6 @@
-function saveResults(fe,experiment,dirInfoName,figVisible,message,c4n,n4e,u,red,alpha,delta,...
-    terminate,time,corrVec,energyVec,tau,miscMsg)
+function saveResults(fe,experiment,dirInfoName,figVisible, ...
+    message,c4n,n4e,u,red,alpha,delta,...
+    terminate,time,corrVec,energyVec,tau,miscMsg,nrDof)
 
   warning('off','MATLAB:MKDIR:DirectoryExists');
   if strcmp(fe,'S1')
@@ -48,14 +49,17 @@ function saveResults(fe,experiment,dirInfoName,figVisible,message,c4n,n4e,u,red,
   end
   warning('on','MATLAB:MKDIR:DirectoryExists');
     
+  % TODO exclude exploding data structures like c4n
+
   name = sprintf('%s/workspace.mat',dirName);
-  save(name);
+  save(name,'-regexp','^(?!(c4n|n4e)$).');
+  % save all except for the listed in the end
    
   name = sprintf('%s/setting.txt',dirName);
   file = fopen(name,'w');
   fprintf(file,...
-    '%s\nalpha = %.8g \nbeta = %.8g \nred = %d \nepsStop = %.2e\ntime = %0.2fs\ntau = %.8g\n\nmisc: %s\n'...
-    ,message,alpha, delta, red, terminate, time, tau, miscMsg);
+    '%s\nalpha = %.8g \nbeta = %.8g \nred = %d \nnrDof = %d \nepsStop = %.2e\ntime = %0.2fs\ntau = %.8g\n\nmisc: %s\n'...
+    ,message,alpha, delta, red, nrDof, terminate, time, tau, miscMsg);
   fclose(file);
   
   name = sprintf('%s/corrVec.txt',dirName);
@@ -107,4 +111,12 @@ function saveResults(fe,experiment,dirInfoName,figVisible,message,c4n,n4e,u,red,
   ylabel('corr');
   fName = sprintf('%s/corr_red_%d_loglog.png',dirName,red);
   saveas(corrFig,fName);
+
+  triangFig = figure('visible',figVisible);
+  plotTriangulation(c4n,n4e);
+  ftitle = sprintf('Triangulation for red=%d, \\alpha =%d, \\beta =%d',...
+      red,alpha,delta);
+  title(ftitle);
+  fName = sprintf('%s/triangulation.png',dirName);
+  saveas(triangFig,fName);
 end

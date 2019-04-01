@@ -54,7 +54,7 @@ function adaptiv(red,terminate)
   %% MAIN AFEM LOOP
 
   minNrDoF = 1000;
-  eta4nrDoF = sparse(1,1);
+  eta4nrDoF = [];
 
   while( true )
     % SOLVE
@@ -62,15 +62,14 @@ function adaptiv(red,terminate)
     [u,corrVec,energyVec,nrDof] = ...
       tvRegPrimalDual(c4n,n4e,n4sDb,n4sNb,h,tau,red,terminate,alpha,f,u,Lambda);
     time = toc; 
-      % [x,nrDoF] = solveCRPoisson(@f,@g,@u4Db,c4n,n4e,n4sDb,n4sNb);
    
     saveResults('CR',expName,dirInfoName,figVisible,message,c4n,n4e,u,red,alpha,delta,...
       terminate,time,corrVec,energyVec,tau,miscMsg);
 
-    %TODO
     % ESTIMATE
-    [eta4s,n4s] = estimateCREtaSides(@f,@g,@u4Db,x,c4n,n4e,n4sDb,n4sNb);
-    eta4nrDoF(nrDoF) = sqrt(sum(eta4s));
+    % TODO
+    [eta4s,n4s] = estimateError4e(@f,@g,@u4Db,x,c4n,n4e,n4sDb,n4sNb);
+    eta4nrDoF(end+1) = sqrt(sum(eta4s));
     disp(['nodes/dofs: ',num2str(size(c4n,1)),'/',num2str(nrDoF),...
         '; estimator = ',num2str(eta4nrDoF(nrDoF))]);
 
@@ -78,7 +77,7 @@ function adaptiv(red,terminate)
     if nrDoF >= minNrDoF, break, end;
 
     % MARK
-    n4sMarked = markBulk(n4s,eta4s);
+    n4sMarked = markBulk(n4s,eta4s,0.5);
 
     % REFINE
     [c4n,n4e,n4sDb,n4sNb] = refineRGB(c4n,n4e,n4sDb,n4sNb,n4sMarked);
