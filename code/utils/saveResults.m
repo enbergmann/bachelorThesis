@@ -1,6 +1,7 @@
 function saveResults(fe,experiment,dirInfoName,figVisible, ...
-    message,c4n,n4e,u,red,alpha,delta,...
-    terminate,time,corrVec,energyVec,tau,miscMsg,nrDof)
+    message,c4n,n4e,u,red,alpha,delta, ...
+    terminate,time,corrVec,energyVec,tau,miscMsg,nrDof,...
+    useAdaptivity,nrDoF4lvl,eta4lvl,l2Error4lvl)
 
   warning('off','MATLAB:MKDIR:DirectoryExists');
   if strcmp(fe,'S1')
@@ -27,7 +28,8 @@ function saveResults(fe,experiment,dirInfoName,figVisible, ...
       experiment,dirInfoName,datestr(now,'yy_mm_dd_HH_MM_SS'));
     mkdir(dirName);
     approxFig = figure('visible',figVisible); 
-    plotCR(c4n,n4e,u);
+%    plotCR(c4n,n4e,u);
+    plotCR(c4n,n4e,u,{'CR Solution'; [num2str(nrDof) ' degrees of freedom']});
     ftitle=sprintf('approximation for red=%d, \\alpha =%d, \\beta =%d',...
     red,alpha,delta);
     title(ftitle);
@@ -49,10 +51,8 @@ function saveResults(fe,experiment,dirInfoName,figVisible, ...
   end
   warning('on','MATLAB:MKDIR:DirectoryExists');
     
-  % TODO exclude exploding data structures like c4n
-
   name = sprintf('%s/workspace.mat',dirName);
-  save(name,'-regexp','^(?!(c4n|n4e)$).');
+  save(name,'-regexp','^(?!(c4n|n4e|approxFig|approxFigAxis)$).');
   % save all except for the listed in the end
    
   name = sprintf('%s/setting.txt',dirName);
@@ -119,4 +119,35 @@ function saveResults(fe,experiment,dirInfoName,figVisible, ...
   title(ftitle);
   fName = sprintf('%s/triangulation.png',dirName);
   saveas(triangFig,fName);
+
+  if useAdaptivity
+    estimatorAndL2ErrorFig = figure('visible',figVisible);
+    % plotConvergence(nrDoF4lvl,eta4lvl,'\eta_l');
+    loglog(nrDoF4lvl,eta4lvl);
+    hold on
+    loglog(nrDoF4lvl,l2Error4lvl);
+    legend(sprintf('\\eta'),sprintf('||u-u_{CR}||_{L^2}'));
+    ftitle = sprintf('Error and Estimator for red=%d, \\alpha =%d, \\beta =%d',...
+        red,alpha,delta);
+    title(ftitle);
+    xlabel('number of iterations');
+    ylabel('corr');
+    fName = sprintf('%s/estimator.png',dirName);
+    saveas(estimatorAndL2ErrorFig,fName);
+
+    name = sprintf('%s/nrDoF4lvl.txt',dirName);
+    file = fopen(name,'w');
+    fprintf(file, '%.8g\n',nrDoF4lvl);
+    fclose(file);
+
+    name = sprintf('%s/eta4lvl.txt',dirName);
+    file = fopen(name,'w');
+    fprintf(file, '%.8g\n',eta4lvl);
+    fclose(file);
+
+    name = sprintf('%s/l2Error4lvl.txt',dirName);
+    file = fopen(name,'w');
+    fprintf(file, '%.8g\n',l2Error4lvl);
+    fclose(file);
+  end
 end
