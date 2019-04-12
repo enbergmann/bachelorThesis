@@ -47,7 +47,7 @@ function adaptiv(red,terminate)
   
   %% MAIN AFEM LOOP
 
-  minNrDoF = 1000;
+  minNrDoF = 10000000;
   eta4lvl = [];
   nrDoF4lvl = [];
   l2Error4lvl = [];
