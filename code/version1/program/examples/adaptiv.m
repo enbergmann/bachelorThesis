@@ -69,7 +69,8 @@ function adaptiv(red,terminate)
     Lambda(isnan(Lambda)) = 0;
     
     %  Lambda = zeros(size(n4e,1),2);
-    %  u = zeros(size(n4s,1),1); tic;
+    %  u = zeros(size(n4s,1),1); 
+    tic;
     [u,corrVec,energyVec,nrDof] = ...
       tvRegPrimalDual(c4n,n4e,n4sDb,n4sNb,h,tau,red,terminate,alpha,f,u,Lambda);
     time = toc; 
