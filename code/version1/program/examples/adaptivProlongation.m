@@ -28,14 +28,16 @@ function adaptivProlongation(red,terminate)
   alpha = 1; 
   delta = 1;     
   
-  [c4n,n4e,n4sDb,n4sNb] = computeGeometryPolygon(red);
-  polygonGeometry = true;
+  % [c4n,n4e,n4sDb,n4sNb] = computeGeometryPolygon(red);
+  [c4n,n4e,n4sDb,n4sNb] = loadGeometry('BigSquare');
+  polygonGeometry = false;
   
   
   %% given analytic example
 
   % f=@(x)0;  
   f=@(x)g(x,alpha,delta);  
+  %f=@(x)1;  
   uExact=@(x)gUexact(x,alpha,delta);  
   
 
@@ -55,7 +57,7 @@ function adaptivProlongation(red,terminate)
   
   %% MAIN AFEM LOOP
 
-  minNrDoF = 10000000;
+  minNrDoF = 10000;
   eta4lvl = [];
   nrDoF4lvl = [];
   l2Error4lvl = [];
