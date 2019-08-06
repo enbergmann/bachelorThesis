@@ -1,0 +1,3 @@
+'conforming' contains all files for the conforming algorithm (cf. Bartels).
+'nonConforming' contains all files for the non conforming algorithm (cf. C. Carstensen).
+'utils' contains all files that can be used by both versions (e.g. refinement procedures).
