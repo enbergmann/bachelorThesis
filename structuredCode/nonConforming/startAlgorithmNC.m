@@ -1,15 +1,14 @@
 function [params, output] = startAlgorithmNC(benchmark)
 
-  addpath(genpath(pwd),genpath('../../utils/'));
+  addpath(genpath(pwd),genpath('../utils/'));
 
   if nargin < 1
     benchmark = 'editable';
   end
 
   params = str2func(benchmark);
+  % contains INITIAL data for the experiment
   
-  params = editable
-
   % TODO make this work
   
   if params.showPlots

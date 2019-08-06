@@ -7,21 +7,24 @@ function params = editable
 
   % AFEM parameters
   geometry               = 'BigSquare';
-  theta                  = 0.5;  % bulk param. (1 for uniform)
+  parTheta                  = 0.5;  % bulk param. (1 for uniform)
   initalRefinementLevel  = 0;
 
   % algorithm parameters
   minNrDoF               = 1e6;
   epsStop                = 1e-3;
   stopCrit               = 'Exact Error Difference';
-  prolongation           = false;
+  useProlongation        = false;
   exactSolutionKnown     = false;
-  tau                    = 1/2;
+  parTau                 = 1/2;
 
   % experiment parameters
-  alpha                  = 1;
-  delta                  = 1;
+  parAlph                = 1;
+  parBeta                = 1;
   errorNorm              = 'L2'; % TODO list options (likewise for some other params (think))
+  saveScreenshots        = 0; % save screenshots every saveScreenshots
+                              % iterations during algorithm, e.g. for the case it doesn't finish
+                              % 0 means no screenshots will be saved
 
   % misc. parameters (can affect performance)
   showPlots              = false; % Show plots during computation?

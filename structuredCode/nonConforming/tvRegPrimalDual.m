@@ -1,15 +1,23 @@
-function  [u,corrVec,energyVec,nrDof] = ...
-  tvRegPrimalDual(c4n,n4e,n4sDb,n4sNb,h,tau,red,epsStop,alpha,f,u,Lambda, ...
-                  saveScreenshots) 
+function  [u,corrVec,energyVec,nrDoF] = ...
+    tvRegPrimalDual(params, c4n, n4e, n4sDb, n4sNb, u, varLambda,...
+    epsStop, h, red) 
 
-  %saveScreenshots: integer x bigger (save results every x iterations)
+  
+%function  [u,corrVec,energyVec,nrDoF] = ...
+%  tvRegPrimalDual(c4n,n4e,n4sDb,n4sNb,h,parTau,red,epsStop,parAlpha,f,u,varLambda, ...
+%                  saveScreenshots) 
+
+  %saveScreenshots: integer x bigger than zero (save results every x iterations)
   %                 or equal to zero (don't save screenshots)
 
+  % unpack params
+  parTau = params.parTau;
+  parAlpha = params.parAlpha;
+  f = params.f;
+  saveScreenshots = params.saveScreenshots;
+ 
+  
   firstScreenshot = datestr(now,'yy_mm_dd_HH_MM_SS');
-
-  if nargin<13
-    saveScreenshots = 0;
-  end
 
   nrElems = size(n4e,1);
   area4e = computeArea4e(c4n,n4e);
@@ -17,13 +25,13 @@ function  [u,corrVec,energyVec,nrDof] = ...
   nrSides = max(max(s4e));
 
   dof = computeDof(n4e,nrSides,n4sDb,n4sNb);
-  nrDof = length(dof);
+  nrDoF = length(dof);
 
-  [STIMANC,MAMANC] = computeFeMatrices(c4n,n4e,s4e,area4e,nrElems);
-  A = STIMANC/tau+alpha*MAMANC; %TODO here could be an h in front of STIMANC
-  C = MAMANC + h*STIMANC;
+  [stiMaNC,maMaNC] = computeFeMatrices(c4n,n4e,s4e,area4e,nrElems);
+  A = stiMaNC/parTau+parAlpha*maMaNC; %TODO here could be an h in front of stiMaNC
+  C = maMaNC + h*stiMaNC;
 
-  [temp1,temp2,temp3] = computeIntegrals(f,c4n,n4e,200,area4e);
+  [rhsInt1,rhsInt2,rhsInt3] = computeIntegrals(f,c4n,n4e,200,area4e);
 
   du = computeGradientNC(c4n,n4e,u);
 
@@ -40,9 +48,9 @@ function  [u,corrVec,energyVec,nrDof] = ...
   s4e = computeS4e(n4e);
   grads4e = zeros(3,2,nrElems);
   for elem = 1:nrElems
-      grads_T = [ones(1,3);c4n(n4e(elem,:),:)']\[zeros(1,2);-2*eye(2)];
-      grads_T = grads_T([3 1 2],:);
-      grads4e(:,:,elem) = grads_T;
+      gradsT = [ones(1,3);c4n(n4e(elem,:),:)']\[zeros(1,2);-2*eye(2)];
+      gradsT = gradsT([3 1 2],:);
+      grads4e(:,:,elem) = gradsT;
   end
 
 
@@ -50,27 +58,27 @@ function  [u,corrVec,energyVec,nrDof] = ...
   
   while corr > epsStop
       dv = computeGradientNCnew(c4n,n4e,v,grads4e);
-      M = Lambda + tau*(du + tau*dv);
-      Lambda = bsxfun(@rdivide,M,max(1,sqrt(sum(M.^2,2))));
+      M = varLambda + parTau*(du + parTau*dv);
+      varLambda = bsxfun(@rdivide,M,max(1,sqrt(sum(M.^2,2))));
       
-      [b,temp] = computeRHS(c4n,n4e,s4e,nrSides,area4e, ...
-        du,tau,Lambda,nrElems,temp1,temp2,temp3);     
+      [b,rhsInt] = computeRHS(c4n,n4e,s4e,nrSides,area4e, ...
+        du,parTau,varLambda,nrElems,rhsInt1,rhsInt2,rhsInt3);     
       %TODO here could be an h in RHS
       % [b,temp] = computeRHSwithH(c4n,n4e,s4e,nrSides,area4e, ...
-      %   du,tau,Lambda,nrElems,temp1,temp2,temp3,h);     
+      %   du,parTau,varLambda,nrElems,temp1,temp2,temp3,h);     
 
       %% Solve System
       uNew = zeros(nrSides,1);
       uNew(dof) = A(dof,dof)\b(dof);
-      v=(uNew-u)/tau;        
+      v=(uNew-u)/parTau;        
 
       %% Check Termination
       du = computeGradientNCnew(c4n,n4e,uNew,grads4e);
-      ENew = computeEnergy(area4e,uNew,du,alpha,temp,MAMANC);
+      ENew = computeEnergy(area4e,uNew,du,parAlpha,rhsInt,maMaNC);
 
-      dt_u = (u-uNew)/tau; 
+      dt_u = (u-uNew)/parTau; 
       %corr = sqrt(dt_u'*C*dt_u); % Bartels termination criterion
-      corr = sqrt(dt_u'*STIMANC*dt_u); % Only gradients
+      corr = sqrt(dt_u'*stiMaNC*dt_u); % Only gradients
       fprintf('corr/epsStop: %e / %e\n',corr,epsStop);
       format long;
       fprintf('E = %f, E_exact = %f\n', E, -2.05802391003896);
