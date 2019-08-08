@@ -6,11 +6,17 @@ function [params, output] = startAlgorithmNC(benchmark)
     benchmark = 'editable';
   end
 
-  params = str2func(benchmark);
+  params = feval(benchmark);
+  
+  c4n = params.c4n;
+  n4e = params.n4e;
+  n4sDb = params.n4sDb;
+  n4sNb = params.n4sNb;
+  f = params.f;
+  exactSolutionKnown = params.exactSolutionKnown; 
   % contains INITIAL data for the experiment
   
   % TODO make this work
-  
   if params.showPlots
     figVisible = 'off';
   else
@@ -34,32 +40,34 @@ function [params, output] = startAlgorithmNC(benchmark)
     u = interpolationNC(f,c4n,n4e,n4s);
     
     du = computeGradientNC(c4n,n4e,u);
-    Lambda = bsxfun(@rdivide,du,sqrt(sum(du.^2,2))); 
-    Lambda(isinf(Lambda)) = 0;
-    Lambda(isnan(Lambda)) = 0;
+    varLambda = bsxfun(@rdivide,du,sqrt(sum(du.^2,2))); 
+    varLambda(isinf(varLambda)) = 0;
+    varLambda(isnan(varLambda)) = 0;
     
-    %  Lambda = zeros(size(n4e,1),2);
+    %  varLambda = zeros(size(n4e,1),2);
     %  u = zeros(size(n4s,1),1); 
     tic;
     [u,corrVec,energyVec,nrDoF] = ...
-      tvRegPrimalDual(c4n,n4e,n4sDb,n4sNb,h,tau,red,terminate,alpha,f,u,Lambda);
+      tvRegPrimalDual(params,c4n, n4e, n4sDb, n4sNb, u, varLambda,...
+      params.epsStop, h, params.initalRefinementLevel);
     time = toc; 
     nrDoF4lvl(end+1) = nrDoF;
    
     % ESTIMATE
-    eta4e = estimateError4e(u,f,c4n,n4e,n4sDb,n4sNb,alpha,delta)
+    eta4e = estimateError4e(u,f,c4n,n4e,n4sDb,n4sNb,1,1)
     eta4lvl(end+1) = sum(eta4e);
-    disp(['nodes/dofs: ',num2str(size(c4n,1)),'/',num2str(nrDof),...
+    disp(['nodes/dofs: ',num2str(size(c4n,1)),'/',num2str(nrDoF),...
       '; estimator = ',num2str(eta4lvl(end))]); 
 
+    if
     error4lvl(end+1) = sqrt(sum(error4eCRL2(c4n,n4e,uExact,u)));
 
     saveResults('CR',expName,dirInfoName,figVisible,message,c4n,n4e,u,red,alpha,delta,...
-      terminate,time,corrVec,energyVec,tau,miscMsg,nrDof,...
+      terminate,time,corrVec,energyVec,tau,miscMsg,nrDoF,...
       true,nrDoF4lvl,eta4lvl,error4lvl);
 
     % Check Termination
-    if nrDof >= minNrDoF, break, end;
+    if nrDoF >= minNrDoF, break, end;
 
     % MARK
     n4sMarked = markBulk(n4e,eta4e,0.5);
