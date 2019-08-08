@@ -19,22 +19,23 @@ function params = editable
   parTau                 = 1/2;
 
   % experiment parameters
-  parAlph                = 1;
+  parAlpha               = 1;
   parBeta                = 1;
-  errorNorm              = 'L2'; % TODO list options (likewise for some other params (think))
+  errorNorm              = ["L2", "energy"]; % TODO list options (likewise for some other params (think))
+                                              %strArr
   saveScreenshots        = 0; % save screenshots every saveScreenshots
                               % iterations during algorithm, e.g. for the case it doesn't finish
                               % 0 means no screenshots will be saved
 
-  % misc. parameters (can affect performance)
+  % misc. parameters (will affect performance)
   showPlots              = false; % Show plots during computation?
   showProgress           = true; % Print output during computation?
 
   % Information about experiment for saving and documentation.
-  expName = 'testForBenchmark'
+  expName                = 'testForBenchmark';
   dirInfoName = datestr(now,'yy_mm_dd_HH_MM_SS');
-  miscMsg = sprintf('this\nis\nan\nexample');
-  miscMsg = sprintf('%s\non\nhow\nthis\ncould\nlook');
+  miscMsg                = sprintf(['this\nis\nan\nexample',...
+                           '\non\nhow\nthis\ncould\nlook']);
 
   % necessary function handles
   function val = rightHandSide(x)
@@ -51,22 +52,12 @@ function params = editable
   end
 
 
-
   %%% BUILD STRUCT %%%
   % should not be of interest for mere usage of the program
   
   params = struct;
 
   params.geometry = geometry;
-  params.theta = theta
-  params.initalRefinementLevel = initalRefinementLevel  
-  params.f = @(x) rightHandSide(x);
-  params.u0 = @(x) initalValue(x);
-  if exactSolutionKnown
-    params.uExact = @(x) exactSolution(x);
-  else
-    params.uExact = @(x) NaN;
-  end
 
   if strcmp(geometry, 'Polygon')
     [params.c4n, params.n4e, params.n4sDb, params.n4sNb] = ...
@@ -78,5 +69,35 @@ function params = editable
     params.polygonMesh = false;
   end
 
+  params.parTheta = parTheta;
+  params.initalRefinementLevel = initalRefinementLevel;
+
+  params.minNrDoF = minNrDoF;
+  params.epsStop = epsStop;
+  params.stopCrit = stopCrit;              
+  params.useProlongation = useProlongation;      
+  params.exactSolutionKnown = exactSolutionKnown; 
+
+  if exactSolutionKnown
+    params.uExact = @(x) exactSolution(x);
+  else
+    params.uExact = @(x) NaN;
+  end
+
+  params.parTau = parTau; 
+
+  params.parAlpha = parAlpha;
+  params.parBeta = parBeta;
+  params.errorNorm = errorNorm;             
+  params.saveScreenshots = saveScreenshots;       
+
+  params.showPlots = showPlots;              
+  params.showProgress = showProgress;          
+
+  params.expName = expName;
+  params.dirInfoName = dirInfoName;
   params.miscMsg = miscMsg;
+
+  params.f = @(x) rightHandSide(x);
+  params.u0 = @(x) initalValue(x);
 end
