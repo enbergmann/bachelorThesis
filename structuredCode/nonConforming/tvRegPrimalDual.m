@@ -1,22 +1,24 @@
-function  [u,corrVec,energyVec,nrDoF] = ...
+function  [u,corrVec,energyVec,nrDof] = ...
     tvRegPrimalDual(params, c4n, n4e, n4sDb, n4sNb, u, varLambda,...
-    epsStop, h, red) 
+    epsStop, red) 
 
   
-%function  [u,corrVec,energyVec,nrDoF] = ...
+%function  [u,corrVec,energyVec,nrDof] = ...
 %  tvRegPrimalDual(c4n,n4e,n4sDb,n4sNb,h,parTau,red,epsStop,parAlpha,f,u,varLambda, ...
 %                  saveScreenshots) 
 
-  %saveScreenshots: integer x bigger than zero (save results every x iterations)
-  %                 or equal to zero (don't save screenshots)
+  %% INITIALIZATION
 
-  % unpack params
+  % extract parameters from params
   parTau = params.parTau;
   parAlpha = params.parAlpha;
   f = params.f;
+  stopCrit = params.stopCrit;
   saveScreenshots = params.saveScreenshots;
- 
+  showProgress = params.showProgress; 
+  showPlots = params.showPlots;
   
+  % initialize remaing parameters
   firstScreenshot = datestr(now,'yy_mm_dd_HH_MM_SS');
 
   nrElems = size(n4e,1);
@@ -24,8 +26,15 @@ function  [u,corrVec,energyVec,nrDoF] = ...
   s4e = computeS4e(n4e);
   nrSides = max(max(s4e));
 
+  if ismember(1,...
+      ismember(["weighted","weighted energy difference"], stopCrit))
+    n4s = computeN4s(n4e);
+    length4s = computeLength4s(c4n, n4s);
+    h = max(length4s);
+  end
+
   dof = computeDof(n4e,nrSides,n4sDb,n4sNb);
-  nrDoF = length(dof);
+  nrDof = length(dof);
 
   [stiMaNC,maMaNC] = computeFeMatrices(c4n,n4e,s4e,area4e,nrElems);
   A = stiMaNC/parTau+parAlpha*maMaNC; %TODO here could be an h in front of stiMaNC
@@ -145,8 +154,10 @@ function  [u,corrVec,energyVec,nrDoF] = ...
         saveas(energyRateFigSemilog,fName);
       end
 
-      % plotCR(c4n,n4e,uNew);
-      % clf('reset');
-      % fprintf('\n')
+      if showPlots
+        plotCR(c4n,n4e,uNew);
+        clf('reset');
+        fprintf('\n')
+      end
   end
 end

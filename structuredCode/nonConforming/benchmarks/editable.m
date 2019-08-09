@@ -13,7 +13,7 @@ function params = editable
   % algorithm parameters
   minNrDoF               = 1e6;
   epsStop                = 1e-3;
-  stopCrit               = 'Exact Error Difference';
+  stopCrit               = ["Exact Error Difference", "weighted energy difference"];
   useProlongation        = false;
   exactSolutionKnown     = false;
   parTau                 = 1/2;
