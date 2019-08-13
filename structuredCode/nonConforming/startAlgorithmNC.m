@@ -1,4 +1,4 @@
-function [params, output] = startAlgorithmNC(benchmark)
+function [params, output] = startAlgorithmCR(benchmark)
 
   %% INITIALIZATION
 
@@ -38,9 +38,11 @@ function [params, output] = startAlgorithmNC(benchmark)
     
     n4s = computeN4s(n4e);
 
-    u = interpolationNC(f,c4n,n4e,n4s);
-    du = gradientNC(c4n,n4e,u);
+    u = interpolationCR(f,c4n,n4e,n4s);
+    du = gradientCR(c4n,n4e,u);
    %TODO 
+   %compare to AFEM BV
+   %also needs to change according to whether prolongation is used or not
     varLambda = bsxfun(@rdivide,du,sqrt(sum(du.^2,2))); 
     varLambda(isinf(varLambda)) = 0;
     varLambda(isnan(varLambda)) = 0;

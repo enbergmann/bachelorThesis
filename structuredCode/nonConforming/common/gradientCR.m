@@ -1,9 +1,9 @@
-function du = gradientNC(c4n,n4e,u)
+function du = gradientCR(c4n,n4e,u)
 % Computes the piecewise gradient of the Crouzeix-Raviart function u (vanishing
 % in the midpoints of boundary edges) with respect to the triangulation given
 % by [c4n, n4e].
 %
-% gradientNC.m
+% gradientCR.m
 % input:  c4n - coordinates for nodes
 %         n4e - nodes for elements
 %         u   - 'function handle' of the function whose piecewise gradient is
