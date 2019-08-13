@@ -38,17 +38,12 @@ function [params, output] = startAlgorithmNC(benchmark)
     
     n4s = computeN4s(n4e);
 
-    %TODO
     u = interpolationNC(f,c4n,n4e,n4s);
-    
-    du = computeGradientNC(c4n,n4e,u);
+    du = gradientNC(c4n,n4e,u);
+   %TODO 
     varLambda = bsxfun(@rdivide,du,sqrt(sum(du.^2,2))); 
     varLambda(isinf(varLambda)) = 0;
     varLambda(isnan(varLambda)) = 0;
-
-    
-    %  varLambda = zeros(size(n4e,1),2);
-    %  u = zeros(size(n4s,1),1); 
     
     tic;
     [u,corrVec,energyVec,nrDof] = ...
