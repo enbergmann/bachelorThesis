@@ -1,7 +1,8 @@
 function [params, output] = startAlgorithmNC(benchmark)
 
   %% INITIALIZATION
-  addpath(genpath(pwd),genpath('../utils/'));
+
+  addpath(genpath(pwd), genpath('../utils/'));
 
   if nargin < 1
     benchmark = 'editable';
@@ -32,11 +33,12 @@ function [params, output] = startAlgorithmNC(benchmark)
 
   %% MAIN AFEM LOOP
   
-  while( true )
+  while(true)
     % SOLVE
     
     n4s = computeN4s(n4e);
 
+    %TODO
     u = interpolationNC(f,c4n,n4e,n4s);
     
     du = computeGradientNC(c4n,n4e,u);
