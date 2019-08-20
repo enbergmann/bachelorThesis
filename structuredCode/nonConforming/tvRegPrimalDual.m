@@ -18,13 +18,14 @@ function  [u,corrVec,energyVec,nrDof] = ...
   showProgress = params.showProgress; 
   showPlots = params.showPlots;
   
+
+
+
   % initialize remaing parameters
   firstScreenshot = datestr(now,'yy_mm_dd_HH_MM_SS');
 
   nrElems = size(n4e,1);
   area4e = computeArea4e(c4n,n4e);
-  s4e = computeS4e(n4e);
-  nrSides = max(max(s4e));
 
   if ismember(1,...
       ismember(["weighted","weighted energy difference"], stopCrit))
@@ -32,9 +33,6 @@ function  [u,corrVec,energyVec,nrDof] = ...
     length4s = computeLength4s(c4n, n4s);
     h = max(length4s);
   end
-
-  dof = computeDof(n4e,nrSides,n4sDb,n4sNb);
-  nrDof = length(dof);
 
   [stiMaNC,maMaNC] = computeFeMatrices(c4n,n4e,s4e,area4e,nrElems);
   A = stiMaNC/parTau+parAlpha*maMaNC; %TODO here could be an h in front of stiMaNC
@@ -51,8 +49,6 @@ function  [u,corrVec,energyVec,nrDof] = ...
   energyVec = [];
   E = 1;
 
-
-
   nrElems = size(n4e,1); 
   s4e = computeS4e(n4e);
   grads4e = zeros(3,2,nrElems);
@@ -62,9 +58,6 @@ function  [u,corrVec,energyVec,nrDof] = ...
       grads4e(:,:,elem) = gradsT;
   end
 
-
-
-  
   while corr > epsStop
       dv = computeGradientNCnew(c4n,n4e,v,grads4e);
       M = varLambda + parTau*(du + parTau*dv);

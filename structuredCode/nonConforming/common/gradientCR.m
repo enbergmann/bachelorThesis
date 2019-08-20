@@ -6,11 +6,11 @@ function du = gradientCR(c4n,n4e,u)
 % gradientCR.m
 % input:  c4n - coordinates for nodes
 %         n4e - nodes for elements
-%         u   - 'function handle' of the function whose piecewise gradient is
+%         u   - 'function_handle' of the function whose piecewise gradient is
 %               to be computed
 %
-% output: du  - (number of elements x 2)-dimensional array where the j-th row
-%               contains the gradient of u on the j-th triangle 
+% output: du  - '(number of elements x 2)-dimensional double array' where the
+%               j-th row contains the gradient of u on the j-th triangle 
 
   nrElems = size(n4e,1); 
   s4e = computeS4e(n4e);

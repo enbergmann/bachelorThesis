@@ -1,4 +1,15 @@
 function [params, output] = startAlgorithmCR(benchmark)
+% Loads a benchmark and starts the corresponding experiment with the
+% nonconforming algorithm.
+%
+% startAlgorithmCR.m
+% input:  benchmark - 'string'/'char array' containing the name of the
+%                     benchmark the user wants to use (optional parameter,
+%                     default value is 'editable').
+%
+% output: params    - 'struct' containing the parameters obtained from the
+%                     benchmark.
+%         output    - 'struct' containing the results of the experiment.
 
   %% INITIALIZATION
 
@@ -31,28 +42,47 @@ function [params, output] = startAlgorithmCR(benchmark)
   nrDof4lvl = [];
   error4lvl = [];
 
+  n4s = computeN4s(n4e);
+
+  u = interpolationCR(f,c4n,n4e,n4s);
+  du = gradientCR(c4n,n4e,u);
+
   %% MAIN AFEM LOOP
   
   while(true)
     % SOLVE
     
-    n4s = computeN4s(n4e);
-
-    u = interpolationCR(f,c4n,n4e,n4s);
-    du = gradientCR(c4n,n4e,u);
-   %TODO 
-   %compare to AFEM BV
-   %also needs to change according to whether prolongation is used or not
-    varLambda = bsxfun(@rdivide,du,sqrt(sum(du.^2,2))); 
+    % varLambda = bsxfun(@rdivide,du,sqrt(sum(du.^2,2))); 
+    % varLambda(isnan(varLambda)) = 0;
+    varLambda = du./repmat(sqrt(sum(du.^2,2)),1,2);
     varLambda(isinf(varLambda)) = 0;
-    varLambda(isnan(varLambda)) = 0;
+    %TODO compute necessary information for algorithm that has further use,
+    %e.g. information about the mesh (nrDof), i.e. everything that is not 
+    %just used in tvReg but also after that
+    %
+    %should probably be saved in a 'current' struct to minimize number
+    %of input for tvReg
     
+    s4e = computeS4e(n4e);
+    nrSides = max(max(s4e));
+    dof = computeDof(n4e,nrSides,n4sDb,n4sNb);
+
+    nrDof = length(dof);
+    nrDof4lvl(end+1) = nrDof;
+
+    % TODO
+    % compute epsStop dependend on information given in benchmark
+    % e.g. scaled with meshsize
+
+    %TODO
     tic;
-    [u,corrVec,energyVec,nrDof] = ...
-      tvRegPrimalDual(params,c4n, n4e, n4sDb, n4sNb, u, varLambda,...
+    % [u,corrVec,energyVec,nrDof] = ...
+    %   tvRegPrimalDual(params,c4n, n4e, n4sDb, n4sNb, u, varLambda,...
+    %   epsStop, initalRefinementLevel);
+    output = ...
+      tvRegPrimalDual(params, c4n, n4e, n4sDb, n4sNb, u, varLambda,...
       epsStop, initalRefinementLevel);
     time = toc; 
-    nrDof4lvl(end+1) = nrDof;
    
     % ESTIMATE
     eta4e = estimateError4e(u,f,c4n,n4e,n4sDb,n4sNb,1,1)
@@ -81,6 +111,16 @@ function [params, output] = startAlgorithmCR(benchmark)
       temp=unique(n4sDb);
       c4n(temp,:)=c4n(temp,:)./repmat(sqrt(c4n(temp,1).^2+c4n(temp,2).^2),1,2);
     end
+    
+    n4s = computeN4s(n4e);
+
+    u = interpolationCR(f,c4n,n4e,n4s);
+    du = gradientCR(c4n,n4e,u);
+    %TODO consider prolongation and stuff
+    %n4s = computeN4s(n4e);
+    %the mesh should be update here c4n, n4e, n4sDb, n4sNb
+    %so should u and du, pretty much everything that was known before the
+    %'while' loop began
   end
 
   output = struct;

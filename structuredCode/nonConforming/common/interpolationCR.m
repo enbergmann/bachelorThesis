@@ -4,12 +4,12 @@ function uNC = interpolationCR(u, c4n, n4e, n4s)
 % of the function u.
 %
 % interpolationCR.m
-% input:  u   - 'function handle' of the function to be interpolated
+% input:  u   - 'function_handle' of the function to be interpolated
 %         c4n - coordinates for nodes
 %         n4e - nodes for elements
 %         n4s - nodes for sides
 %
-% output: uNC - 'function handle' of the interpolation of u
+% output: uNC - 'function_handle' of the interpolation of u
 
   length4s = computeLength4s(c4n,n4s);
 
