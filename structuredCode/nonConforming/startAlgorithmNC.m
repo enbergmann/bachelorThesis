@@ -11,6 +11,10 @@ function [params, output] = startAlgorithmCR(benchmark)
 %                     benchmark.
 %         output    - 'struct' containing the results of the experiment.
 
+% TODO for all my functions (dont want to touch afem stuff) compute all
+% necessary stuff (in particular that is dependend on geometry) before and pass
+% it to the functions i.e. my mentality will be efficiency >> memory usage
+
   %% INITIALIZATION
 
   addpath(genpath(pwd), genpath('../utils/'));
@@ -44,6 +48,9 @@ function [params, output] = startAlgorithmCR(benchmark)
 
   n4s = computeN4s(n4e);
 
+  %TODO compute gradients4e before, use them to compute du e.g. and also
+  %pass them to tvReg etc. Already did this, see computeGradientsNCnew vs 
+  %gradientCR (basically, replace gradientCr by this new thing)
   u = interpolationCR(f,c4n,n4e,n4s);
   du = gradientCR(c4n,n4e,u);
 

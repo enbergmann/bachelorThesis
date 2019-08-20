@@ -36,7 +36,7 @@ function  [u,corrVec,energyVec,nrDof] = ...
 
   [stiMaNC,maMaNC] = computeFeMatrices(c4n,n4e,s4e,area4e,nrElems);
   A = stiMaNC/parTau+parAlpha*maMaNC; %TODO here could be an h in front of stiMaNC
-  C = maMaNC + h*stiMaNC;
+  %C = maMaNC + h*stiMaNC;
 
   [rhsInt1,rhsInt2,rhsInt3] = computeIntegrals(f,c4n,n4e,200,area4e);
 
