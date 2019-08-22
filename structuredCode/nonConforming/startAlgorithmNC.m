@@ -11,11 +11,27 @@ function [params, output] = startAlgorithmCR(benchmark)
 %                     benchmark.
 %         output    - 'struct' containing the results of the experiment.
 
+
+
+
+
+
 % TODO for all my functions (dont want to touch afem stuff) compute all
 % necessary stuff (in particular that is dependend on geometry) before and pass
 % it to the functions i.e. my mentality will be efficiency >> memory usage
+%
+%TODO save all current geometry stuff in a 'current' struct
+%comments then should read sth like
+%current: struct, must contain the following fields
+%            c4n - [copy allready existing comments]
+%            n4e -
+%            ... -
 
   %% INITIALIZATION
+
+%TODO REMEMBER MATLAB ist copyOnWrite, so try not to change structs in functions
+%to avoid the struct being copied
+%might be necessary to use 'clear' to delete data later (e.g. after saving c4n in current)
 
   addpath(genpath(pwd), genpath('../utils/'));
 
@@ -26,6 +42,8 @@ function [params, output] = startAlgorithmCR(benchmark)
   params = feval(benchmark);
   
   % extract parameters from params
+  % TODO this might have to be shortenend later, because some stuff just gets
+  % copied to currGeom
   
   showPlots = params.showPlots;
   initalRefinementLevel = params.initalRefinementLevel;
@@ -40,19 +58,30 @@ function [params, output] = startAlgorithmCR(benchmark)
   polygonMesh = params.polygonMesh;
   expName = params.expName;
   
-  % initialize remaining parameters 
+  % initialize remaining parameters and struct with information dependend solely
+  % on the current geometry
   
   eta4lvl = [];
   nrDof4lvl = [];
   error4lvl = [];
 
-  n4s = computeN4s(n4e);
+  currData = struct;
 
-  %TODO compute gradients4e before, use them to compute du e.g. and also
-  %pass them to tvReg etc. Already did this, see computeGradientsNCnew vs 
-  %gradientCR (basically, replace gradientCr by this new thing)
-  u = interpolationCR(f,c4n,n4e,n4s);
-  du = gradientCR(c4n,n4e,u);
+  currData.c4n = c4n;
+  currData.n4e = n4e;
+  currData.n4sDb = n4sDb;
+  currData.n4sNb = n4sNb;
+  currData.nrElems = size(n4e, 1);
+  currData.gradsCR4e = computeGradsCR4e(currData);
+  n4s = computeN4s(n4e);
+  currData.n4s = n4s;
+  currData.length4s = computeLength4s(c4n, n4s);
+  s4e = computeS4e(n4e);
+  currData.s4e = s4e;
+
+  u = interpolationCR(currData, f);
+  %TODO continue here (might want to rename du to sth like gradientCR4e (maybe, idk))
+  du = gradientCR(currData, u);
 
   %% MAIN AFEM LOOP
   
@@ -70,7 +99,6 @@ function [params, output] = startAlgorithmCR(benchmark)
     %should probably be saved in a 'current' struct to minimize number
     %of input for tvReg
     
-    s4e = computeS4e(n4e);
     nrSides = max(max(s4e));
     dof = computeDof(n4e,nrSides,n4sDb,n4sNb);
 
