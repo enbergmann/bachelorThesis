@@ -1,6 +1,17 @@
-function  [u,corrVec,energyVec,nrDof] = ...
-    tvRegPrimalDual(params, c4n, n4e, n4sDb, n4sNb, u, varLambda,...
-    epsStop, red) 
+%TODO what is the name of this
+function  [u,corrVec,energyVec] = ...
+    tvRegPrimalDual(params, currData, u, varLambda) 
+% Computes the degrees of freedom for the CR_0^1 FEM of the triangulation given
+% by [n4e, n4sDb, n4sNb].
+%
+% tvRegPrimalDual.m
+% input:  currData - struct with fields:
+%                        n4sDb: nodes for Dirichlet boundary sides
+%                          s4n: sides for nodes
+%                      nrSides: number of sides
+%
+% output: dof      - '(1 x nrDof)-dimensional double array' where the j-th row 
+%                    contains the number of the j-th degree of freedom
 
   
 %function  [u,corrVec,energyVec,nrDof] = ...
@@ -9,7 +20,12 @@ function  [u,corrVec,energyVec,nrDof] = ...
 
   %% INITIALIZATION
 
-  % extract parameters from params
+  % extract necessary data
+  n4sDb = currData.n4sDb;
+  s4n = currData.s4n;
+  nrSides = currData.nrSides;
+
+  %%%% extract parameters from params
   parTau = params.parTau;
   parAlpha = params.parAlpha;
   f = params.f;
@@ -17,9 +33,6 @@ function  [u,corrVec,energyVec,nrDof] = ...
   saveScreenshots = params.saveScreenshots;
   showProgress = params.showProgress; 
   showPlots = params.showPlots;
-  
-
-
 
   % initialize remaing parameters
   firstScreenshot = datestr(now,'yy_mm_dd_HH_MM_SS');

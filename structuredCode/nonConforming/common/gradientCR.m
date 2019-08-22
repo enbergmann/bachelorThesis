@@ -1,4 +1,4 @@
-function dv = gradientCR(currData, v)
+function gradCRv = gradientCR(currData, v)
 % Computes the piecewise gradient of the Crouzeix-Raviart function v (vanishing
 % in the midpoints of boundary edges) with respect to the triangulation given
 % by [c4n, n4e].
@@ -12,18 +12,18 @@ function dv = gradientCR(currData, v)
 %         v        - 'function_handle' of the function whose piecewise gradient 
 %                     is to be computed
 %
-% output: dv        - '(number of elements x 2)-dimensional double array' where 
+% output: gradCRv  - '(number of elements x 2)-dimensional double array' where 
 %                     the j-th row contains the gradient of v on the j-th
 %                     triangle 
 
   % extract necessary data
   nrElems = currData.nrElems;
   s4e = currData.s4e;
-  gradsCR4e = currData.length4s;
+  gradsCR4e = currData.gradsCR4e;
 
   % compute uCR
-  dv = zeros(nrElems,2);
+  gradCRv = zeros(nrElems,2);
   for elem = 1:nrElems
-      dv(elem,:) = v(s4e(elem,:))'*gradsCR4e(:,:,elem);          
+    gradCRv(elem,:) = v(s4e(elem,:))'*gradsCR4e(:,:,elem);          
   end
 end

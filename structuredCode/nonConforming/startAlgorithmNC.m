@@ -11,28 +11,7 @@ function [params, output] = startAlgorithmCR(benchmark)
 %                     benchmark.
 %         output    - 'struct' containing the results of the experiment.
 
-
-
-
-
-
-% TODO for all my functions (dont want to touch afem stuff) compute all
-% necessary stuff (in particular that is dependend on geometry) before and pass
-% it to the functions i.e. my mentality will be efficiency >> memory usage
-%
-%TODO save all current geometry stuff in a 'current' struct
-%comments then should read sth like
-%current: struct, must contain the following fields
-%            c4n - [copy allready existing comments]
-%            n4e -
-%            ... -
-
-  %% INITIALIZATION
-
-%TODO REMEMBER MATLAB ist copyOnWrite, so try not to change structs in functions
-%to avoid the struct being copied
-%might be necessary to use 'clear' to delete data later (e.g. after saving c4n in current)
-
+%% INITIALIZATION
   addpath(genpath(pwd), genpath('../utils/'));
 
   if nargin < 1
@@ -41,16 +20,18 @@ function [params, output] = startAlgorithmCR(benchmark)
 
   params = feval(benchmark);
   
-  % extract parameters from params
   % TODO this might have to be shortenend later, because some stuff just gets
   % copied to currGeom
   
+  % extract parameters from params
   showPlots = params.showPlots;
   initalRefinementLevel = params.initalRefinementLevel;
+
   c4n = params.c4n;
   n4e = params.n4e;
   n4sDb = params.n4sDb;
   n4sNb = params.n4sNb;
+
   f = params.f;
   epsStop = params.epsStop;
   exactSolutionKnown = params.exactSolutionKnown; 
@@ -60,10 +41,10 @@ function [params, output] = startAlgorithmCR(benchmark)
   
   % initialize remaining parameters and struct with information dependend solely
   % on the current geometry
-  
   eta4lvl = [];
   nrDof4lvl = [];
   error4lvl = [];
+
 
   currData = struct;
 
@@ -71,52 +52,52 @@ function [params, output] = startAlgorithmCR(benchmark)
   currData.n4e = n4e;
   currData.n4sDb = n4sDb;
   currData.n4sNb = n4sNb;
-  currData.nrElems = size(n4e, 1);
-  currData.gradsCR4e = computeGradsCR4e(currData);
+
+  currData.s4n = computeS4n(n4e);
+
   n4s = computeN4s(n4e);
   currData.n4s = n4s;
-  currData.length4s = computeLength4s(c4n, n4s);
+
   s4e = computeS4e(n4e);
   currData.s4e = s4e;
 
-  u = interpolationCR(currData, f);
-  %TODO continue here (might want to rename du to sth like gradientCR4e (maybe, idk))
-  du = gradientCR(currData, u);
+  currData.nrElems = size(n4e, 1);
+  currData.nrSides = max(max(s4e));
 
-  %% MAIN AFEM LOOP
-  
+  currData.length4s = computeLength4s(c4n, n4s);
+
+  currData.gradsCR4e = computeGradsCR4e(currData);
+
+  currData.epsStop = params.epsStop;
+
+  u = interpolationCR(currData, f);
+  gradCRu = gradientCR(currData, u);
+
+%% MAIN AFEM LOOP
   while(true)
-    % SOLVE
     
-    % varLambda = bsxfun(@rdivide,du,sqrt(sum(du.^2,2))); 
-    % varLambda(isnan(varLambda)) = 0;
-    varLambda = du./repmat(sqrt(sum(du.^2,2)),1,2);
+    varLambda = gradCRu./repmat(sqrt(sum(gradCRu.^2,2)),1,2);
     varLambda(isinf(varLambda)) = 0;
-    %TODO compute necessary information for algorithm that has further use,
-    %e.g. information about the mesh (nrDof), i.e. everything that is not 
-    %just used in tvReg but also after that
-    %
-    %should probably be saved in a 'current' struct to minimize number
-    %of input for tvReg
-    
-    nrSides = max(max(s4e));
-    dof = computeDof(n4e,nrSides,n4sDb,n4sNb);
+
+    dof = computeDofCR(currData);
+    currData.dof = dof;
 
     nrDof = length(dof);
+    currData.nrDof = nrDof;
     nrDof4lvl(end+1) = nrDof;
 
     % TODO
     % compute epsStop dependend on information given in benchmark
     % e.g. scaled with meshsize
+    %
+    % RIGHT NOW its just the inital epsStop as termination crit.!!!!
 
-    %TODO
+    % SOLVE
     tic;
-    % [u,corrVec,energyVec,nrDof] = ...
-    %   tvRegPrimalDual(params,c4n, n4e, n4sDb, n4sNb, u, varLambda,...
-    %   epsStop, initalRefinementLevel);
-    output = ...
-      tvRegPrimalDual(params, c4n, n4e, n4sDb, n4sNb, u, varLambda,...
-      epsStop, initalRefinementLevel);
+%TODO continue here
+    [u, corrVec, energyVec] = ...
+      % TODO might change name later
+      tvRegPrimalDual(params, currData, u, varLambda);
     time = toc; 
    
     % ESTIMATE
@@ -150,7 +131,7 @@ function [params, output] = startAlgorithmCR(benchmark)
     n4s = computeN4s(n4e);
 
     u = interpolationCR(f,c4n,n4e,n4s);
-    du = gradientCR(c4n,n4e,u);
+    gradCRu = gradientCR(c4n,n4e,u);
     %TODO consider prolongation and stuff
     %n4s = computeN4s(n4e);
     %the mesh should be update here c4n, n4e, n4sDb, n4sNb
@@ -164,3 +145,19 @@ function [params, output] = startAlgorithmCR(benchmark)
   output.nrDof4lvl = nrDof4lvl;
   output.error4lvl = error4lvl;
 end
+
+
+%TODO REMEMBER MATLAB ist copyOnWrite, so try not to change structs in functions
+%to avoid the struct being copied
+%might be necessary to use 'clear' to delete data later (e.g. after saving c4n in current)
+
+% TODO for all my functions (dont want to touch afem stuff) compute all
+% necessary stuff (in particular that is dependend on geometry) before and pass
+% it to the functions i.e. my mentality will be efficiency >> memory usage
+
+%TODO save all current geometry stuff in a 'current' struct
+%comments then should read sth like
+%current: struct, must contain the following fields
+%            c4n - [copy allready existing comments]
+%            n4e -
+%            ... -
