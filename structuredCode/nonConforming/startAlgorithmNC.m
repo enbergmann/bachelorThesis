@@ -64,7 +64,12 @@ function [params, output] = startAlgorithmCR(benchmark)
   currData.nrElems = size(n4e, 1);
   currData.nrSides = max(max(s4e));
 
-  currData.length4s = computeLength4s(c4n, n4s);
+  currData.area4e = computeArea4e(c4n,n4e);
+
+  length4s = computeLength4s(c4n, n4s);
+  currData.length4s = length4s;
+
+  currData.hMax = max(length4s);
 
   currData.gradsCR4e = computeGradsCR4e(currData);
 
@@ -72,6 +77,11 @@ function [params, output] = startAlgorithmCR(benchmark)
 
   u = interpolationCR(currData, f);
   gradCRu = gradientCR(currData, u);
+
+%TODO is now here for a moment
+  [currData.stiMaNC, currData.maMaNC] = computeFeMatrices(currData);
+
+%%%%%%%%%%%%%%%
 
 %% MAIN AFEM LOOP
   while(true)
@@ -96,8 +106,8 @@ function [params, output] = startAlgorithmCR(benchmark)
     tic;
 %TODO continue here
     [u, corrVec, energyVec] = ...
-      % TODO might change name later
       tvRegPrimalDual(params, currData, u, varLambda);
+      % TODO might change name later
     time = toc; 
    
     % ESTIMATE
@@ -161,3 +171,5 @@ end
 %            c4n - [copy allready existing comments]
 %            n4e -
 %            ... -
+% TODO might want a 'never quit modus' to termination (just do the algorithm until
+% manual termination by the user)

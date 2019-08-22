@@ -1,56 +1,32 @@
 %TODO what is the name of this
 function  [u,corrVec,energyVec] = ...
     tvRegPrimalDual(params, currData, u, varLambda) 
-% Computes the degrees of freedom for the CR_0^1 FEM of the triangulation given
-% by [n4e, n4sDb, n4sNb].
+% TODO 
 %
 % tvRegPrimalDual.m
-% input:  currData - struct with fields:
-%                        n4sDb: nodes for Dirichlet boundary sides
-%                          s4n: sides for nodes
-%                      nrSides: number of sides
+% input: 
 %
-% output: dof      - '(1 x nrDof)-dimensional double array' where the j-th row 
-%                    contains the number of the j-th degree of freedom
+% output:
+%        
 
+%TODO write function to save all the stuff from the screenshot, just so this 
+%code gets only half as long (and gets more readable + gt)
   
 %function  [u,corrVec,energyVec,nrDof] = ...
 %  tvRegPrimalDual(c4n,n4e,n4sDb,n4sNb,h,parTau,red,epsStop,parAlpha,f,u,varLambda, ...
 %                  saveScreenshots) 
 
-  %% INITIALIZATION
+  % INITIALIZATION
 
   % extract necessary data
-  n4sDb = currData.n4sDb;
-  s4n = currData.s4n;
-  nrSides = currData.nrSides;
-
-  %%%% extract parameters from params
-  parTau = params.parTau;
-  parAlpha = params.parAlpha;
-  f = params.f;
-  stopCrit = params.stopCrit;
-  saveScreenshots = params.saveScreenshots;
-  showProgress = params.showProgress; 
-  showPlots = params.showPlots;
 
   % initialize remaing parameters
   firstScreenshot = datestr(now,'yy_mm_dd_HH_MM_SS');
 
-  nrElems = size(n4e,1);
-  area4e = computeArea4e(c4n,n4e);
 
-  if ismember(1,...
-      ismember(["weighted","weighted energy difference"], stopCrit))
-    n4s = computeN4s(n4e);
-    length4s = computeLength4s(c4n, n4s);
-    h = max(length4s);
-  end
 
-  [stiMaNC,maMaNC] = computeFeMatrices(c4n,n4e,s4e,area4e,nrElems);
   A = stiMaNC/parTau+parAlpha*maMaNC; %TODO here could be an h in front of stiMaNC
   %C = maMaNC + h*stiMaNC;
-
   [rhsInt1,rhsInt2,rhsInt3] = computeIntegrals(f,c4n,n4e,200,area4e);
 
   du = computeGradientNC(c4n,n4e,u);

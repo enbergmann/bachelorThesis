@@ -20,7 +20,7 @@ function gradsCR4e = computeGradsCR4e(currData)
   % compute gradsCR4e
   gradsCR4e = zeros(3, 2, nrElems);
   for elem = 1:nrElems
-      gradsT = [ones(1,3);c4n(n4e(elem,:),:)']\[zeros(1,2);-2*eye(2)];
-      gradsT = gradsT([3 1 2],:);
-      gradsCR4e(:,:,elem) = gradsT;
+      gradsT = [ones(1, 3); c4n(n4e(elem, :), :)']\[zeros(1, 2); -2*eye(2)];
+      gradsT = gradsT([3 1 2], :);
+      gradsCR4e(:, :, elem) = gradsT;
   end
