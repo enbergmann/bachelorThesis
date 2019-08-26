@@ -8,52 +8,51 @@ function  [u,corrVec,energyVec] = ...
 %
 % output:
 %        
-
-%TODO write function to save all the stuff from the screenshot, just so this 
-%code gets only half as long (and gets more readable + gt)
   
 %function  [u,corrVec,energyVec,nrDof] = ...
 %  tvRegPrimalDual(c4n,n4e,n4sDb,n4sNb,h,parTau,red,epsStop,parAlpha,f,u,varLambda, ...
 %                  saveScreenshots) 
 
-  % INITIALIZATION
+  % extract necessary data
+  parTau = params.parTau;
+  parAlpha = params.parAlpha;
+  c4n = currData.c4n;
+  n4e = currData.n4e;
+  nrSides = currData.nrSides;
+  epsStop = currData.epsStop;
+  gradsCR4e = currData.gradsCR4e;  
 
+  % INITIALIZATION 
+  
   % extract necessary data
 
   % initialize remaing parameters
-  firstScreenshot = datestr(now,'yy_mm_dd_HH_MM_SS');
+  firstScreenshot = datestr(now, 'yy_mm_dd_HH_MM_SS');
 
+  [stiMaCR, maMaCR] = computeFeMatricesCR(currData);
 
+  A = stiMaCR/parTau+parAlpha*maMaCR; %TODO here could be an h in front of stiMaCR
+  %C = maMaCR + h*stiMaCR;
 
-  A = stiMaNC/parTau+parAlpha*maMaNC; %TODO here could be an h in front of stiMaNC
-  %C = maMaNC + h*stiMaNC;
-  [rhsInt1,rhsInt2,rhsInt3] = computeIntegrals(f,c4n,n4e,200,area4e);
+  gradCRu = gradientCR(currData, u);
 
-  du = computeGradientNC(c4n,n4e,u);
-
-  v = zeros(nrSides,1);    
+  v = zeros(nrSides, 1);    
 
   corr = epsStop+1; 
   corrVec = [];
   energyVec = [];
   E = 1;
 
-  nrElems = size(n4e,1); 
-  s4e = computeS4e(n4e);
-  grads4e = zeros(3,2,nrElems);
-  for elem = 1:nrElems
-      gradsT = [ones(1,3);c4n(n4e(elem,:),:)']\[zeros(1,2);-2*eye(2)];
-      gradsT = gradsT([3 1 2],:);
-      grads4e(:,:,elem) = gradsT;
-  end
-
   while corr > epsStop
-      dv = computeGradientNCnew(c4n,n4e,v,grads4e);
-      M = varLambda + parTau*(du + parTau*dv);
-      varLambda = bsxfun(@rdivide,M,max(1,sqrt(sum(M.^2,2))));
+      gradCRv = gradientCR(currData, v);
+      M = varLambda + parTau*(gradCRu + parTau*gradCRv);
+
+      varLambda = M./repmat(sqrt(sum(M.^2,2)),1,2);
+      varLambda(isinf(varLambda)) = 0;
       
+      % TODO continue here
       [b,rhsInt] = computeRHS(c4n,n4e,s4e,nrSides,area4e, ...
-        du,parTau,varLambda,nrElems,rhsInt1,rhsInt2,rhsInt3);     
+        gradCRu,parTau,varLambda,nrElems,rhsInt1,rhsInt2,rhsInt3);     
       %TODO here could be an h in RHS
       % [b,temp] = computeRHSwithH(c4n,n4e,s4e,nrSides,area4e, ...
       %   du,parTau,varLambda,nrElems,temp1,temp2,temp3,h);     
@@ -64,12 +63,12 @@ function  [u,corrVec,energyVec] = ...
       v=(uNew-u)/parTau;        
 
       %% Check Termination
-      du = computeGradientNCnew(c4n,n4e,uNew,grads4e);
-      ENew = computeEnergy(area4e,uNew,du,parAlpha,rhsInt,maMaNC);
+      gradCRu = gradientCR(currData, u);
+      ENew = computeEnergy(area4e,uNew,gradCRu,parAlpha,rhsInt,maMaNC);
 
       dt_u = (u-uNew)/parTau; 
       %corr = sqrt(dt_u'*C*dt_u); % Bartels termination criterion
-      corr = sqrt(dt_u'*stiMaNC*dt_u); % Only gradients
+      corr = sqrt(dt_u'*stiMaCR*dt_u); % Only gradients
       fprintf('corr/epsStop: %e / %e\n',corr,epsStop);
       format long;
       fprintf('E = %f, E_exact = %f\n', E, -2.05802391003896);
@@ -81,7 +80,10 @@ function  [u,corrVec,energyVec] = ...
       energyVec(end+1) = E;
       corrVec(end+1) = corr;
 
+
       if saveScreenshots > 0 & mod(length(energyVec),saveScreenshots) == 0
+%TODO write function to save all the stuff from the screenshot, just so this 
+%code gets only half as long (and gets more readable + gt)
         dirName = sprintf(...
           '../../../../results/tvRegPrimalDualScreenshots/%s/%s',...
           firstScreenshot,datestr(now,'yy_mm_dd_HH_MM_SS'));

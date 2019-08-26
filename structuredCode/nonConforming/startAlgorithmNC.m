@@ -53,40 +53,39 @@ function [params, output] = startAlgorithmCR(benchmark)
   currData.n4sDb = n4sDb;
   currData.n4sNb = n4sNb;
 
-  currData.s4n = computeS4n(n4e);
 
   n4s = computeN4s(n4e);
   currData.n4s = n4s;
 
-  s4e = computeS4e(n4e);
-  currData.s4e = s4e;
-
-  currData.nrElems = size(n4e, 1);
-  currData.nrSides = max(max(s4e));
-
-  currData.area4e = computeArea4e(c4n,n4e);
-
   length4s = computeLength4s(c4n, n4s);
   currData.length4s = length4s;
 
-  currData.hMax = max(length4s);
-
-  currData.gradsCR4e = computeGradsCR4e(currData);
+  % TODO this could have a flag for different options
+  u0 = interpolationCR(currData, f);
 
   currData.epsStop = params.epsStop;
-
-  u = interpolationCR(currData, f);
-  gradCRu = gradientCR(currData, u);
-
-%TODO is now here for a moment
-  [currData.stiMaNC, currData.maMaNC] = computeFeMatrices(currData);
 
 %%%%%%%%%%%%%%%
 
 %% MAIN AFEM LOOP
   while(true)
     
-    varLambda = gradCRu./repmat(sqrt(sum(gradCRu.^2,2)),1,2);
+    currData.hMax = max(length4s);
+    currData.area4e = computeArea4e(c4n,n4e);
+
+    currData.s4n = computeS4n(n4e);
+
+    s4e = computeS4e(n4e);
+    currData.s4e = s4e;
+
+    currData.nrElems = size(n4e, 1);
+    currData.nrSides = max(max(s4e));
+
+    currData.gradsCR4e = computeGradsCR4e(currData);
+    gradCRu0 = gradientCR(currData, u0);
+
+    % TODO could have an option for different inital lambda
+    varLambda = gradCRu0./repmat(sqrt(sum(gradCRu0.^2,2)),1,2);
     varLambda(isinf(varLambda)) = 0;
 
     dof = computeDofCR(currData);
@@ -95,6 +94,10 @@ function [params, output] = startAlgorithmCR(benchmark)
     nrDof = length(dof);
     currData.nrDof = nrDof;
     nrDof4lvl(end+1) = nrDof;
+
+    [currData.int1RHS4e, currData.int2RHS4e, currData.int3RHS4e] = ...
+      computeIntegrals(currData, f, 200);
+    %needed here and in error estimate function
 
     % TODO
     % compute epsStop dependend on information given in benchmark
@@ -106,7 +109,7 @@ function [params, output] = startAlgorithmCR(benchmark)
     tic;
 %TODO continue here
     [u, corrVec, energyVec] = ...
-      tvRegPrimalDual(params, currData, u, varLambda);
+      tvRegPrimalDual(params, currData, u0, varLambda);
       % TODO might change name later
     time = toc; 
    
@@ -140,13 +143,20 @@ function [params, output] = startAlgorithmCR(benchmark)
     
     n4s = computeN4s(n4e);
 
-    u = interpolationCR(f,c4n,n4e,n4s);
-    gradCRu = gradientCR(c4n,n4e,u);
     %TODO consider prolongation and stuff
+    u0 = interpolationCR(f,c4n,n4e,n4s);
+    gradCRu = gradientCR(c4n,n4e,u);
+    % TODO
     %n4s = computeN4s(n4e);
     %the mesh should be update here c4n, n4e, n4sDb, n4sNb
     %so should u and du, pretty much everything that was known before the
     %'while' loop began
+    %TODO stuff below has to be done here
+    n4s = computeN4s(n4e);
+    currData.n4s = n4s;
+  
+    length4s = computeLength4s(c4n, n4s);
+    currData.length4s = length4s;
   end
 
   output = struct;

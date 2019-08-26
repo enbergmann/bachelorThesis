@@ -1,0 +1,44 @@
+function [stiMaCR, maMaCR] = computeFeMatricesCR(currData)
+% Assemble the Crouzeix-Raviart stiffness and mass matrix with respect to the
+% triangulation given by [c4n, n4e].
+% 
+% computeFeMatricesCR.m
+% input:  currData - 'struct' with fields:
+%                        nrElems: number of elements
+%                         area4e: areas for elements
+%                      gradsCR4e: gradients of CR basis functions of elements
+%                            s4e: sides for elements
+%
+% output: stiMaCR  - '(nrSides x nrSides)-dimensional sparse double array' where 
+%                    the k-th entry in the j-th row is the L2-scalar product of
+%                    the piecewise gradient of the CR-basis function wrt.  k-th
+%                    edge with the piecewise gradient of the CR-basis function
+%                    wrt. j-th edge
+%         maMaCR   - '(nrSides x nrSides)-dimensional sparse double array' where 
+%                    the k-th entry in the j-th row is the L2-scalar product
+%                    of the CR-basis function wrt. k-th edge with the CR-basis
+%                    function wrt. j-th edge
+  
+  % extract necessary data
+  nrElems = currData.nrElems;
+  area4e = currData.area4e;
+  gradsCR4e = currData.gradsCR4e;
+  s4e = currData.s4e;
+
+  % compute local stiffness and mass matrices
+  stiMaCRlocal = zeros(3, 3, nrElems);
+  maMaCRlocal = zeros(3, 3, nrElems);
+  for elem = 1:nrElems
+    stiMaCRlocal(:, :, elem) = ...
+      area4e(elem)*(gradsCR4e(:, :, elem)*gradsCR4e(:, :, elem)'); 
+      % local stiffness matrix
+    maMaCRlocal(:, :, elem) = area4e(elem)*eye(3)/3; % local mass matrix
+  end
+  
+  % assembly of the global stiffness matrix and global mass matrix
+  s4eT = s4e';
+  I = [s4eT; s4eT; s4eT];
+  J = [s4eT(:), s4eT(:), s4eT(:)]';
+  stiMaCR = sparse(I(:), J(:), stiMaCRlocal(:));
+  maMaCR = sparse(I(:), J(:), maMaCRlocal(:));
+end
