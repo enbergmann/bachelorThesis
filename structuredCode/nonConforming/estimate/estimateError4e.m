@@ -1,5 +1,5 @@
 function eta4e = estimateError4e(u,f,c4n,n4e,n4sDb,n4sNb,alpha,delta)
-
+% TODO name should contain CR 
   area4e = computeArea4e(c4n,n4e);
   n4s = computeN4s(n4e);
   s4e = computeS4e(n4e);

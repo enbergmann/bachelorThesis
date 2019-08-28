@@ -60,7 +60,7 @@ function [params, output] = startAlgorithmCR(benchmark)
   length4s = computeLength4s(c4n, n4s);
   currData.length4s = length4s;
 
-  % TODO this could have a flag for different options
+  % TODO this could have a flag for different options for initial u0
   u0 = interpolationCR(currData, f);
 
   currData.epsStop = params.epsStop;
@@ -96,7 +96,7 @@ function [params, output] = startAlgorithmCR(benchmark)
     nrDof4lvl(end+1) = nrDof;
 
     [currData.int1RHS4e, currData.int2RHS4e, currData.int3RHS4e] = ...
-      computeIntegrals(currData, f, 200);
+      integralsWithF4e(currData, f, 200);
     %needed here and in error estimate function
 
     % TODO
@@ -109,8 +109,7 @@ function [params, output] = startAlgorithmCR(benchmark)
     tic;
 %TODO continue here
     [u, corrVec, energyVec] = ...
-      tvRegPrimalDual(params, currData, u0, varLambda);
-      % TODO might change name later
+      solvePrimalDualFormulation(params, currData, u0, varLambda);
     time = toc; 
    
     % ESTIMATE
@@ -183,3 +182,9 @@ end
 %            ... -
 % TODO might want a 'never quit modus' to termination (just do the algorithm until
 % manual termination by the user)
+
+% TODO think about when do I want to write functions for stuff
+%  - multiple use
+%  - e.g. saveScreenshot stuff (to shorten code and not comment it since it's
+%    not necesary at all for the code, so just put it somewhere where nobody
+%    needs to see it)

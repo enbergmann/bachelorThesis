@@ -1,4 +1,5 @@
 function plotAxisNC(c4n,n4e,u)
+% TODO change to plotAxisCR
 n4s = computeN4s(n4e);
 nrSides = size(n4s,1);
 mid4s = computeMid4s(c4n, n4s);
