@@ -5,7 +5,7 @@ function adaptivProlongation(red,terminate)
   figVisible = 'off';
   % set(0,'DefaultFigureVisible','off');
   
-  initalU = 'zero'; %f, zero
+  initalU = 'f'; %f, zero
 
   if strcmp(initalU,'zero')
     message = sprintf('on unit circle, inital u = 0');
@@ -57,7 +57,7 @@ function adaptivProlongation(red,terminate)
   
   %% MAIN AFEM LOOP
 
-  minNrDoF = 10000;
+  minNrDoF = 1e6;
   eta4lvl = [];
   nrDoF4lvl = [];
   l2Error4lvl = [];

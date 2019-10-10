@@ -44,9 +44,6 @@ function  [u,corrVec,energyVec,nrDof] = ...
       grads_T = grads_T([3 1 2],:);
       grads4e(:,:,elem) = grads_T;
   end
-
-
-
   
   while corr > epsStop
       dv = computeGradientNCnew(c4n,n4e,v,grads4e);
