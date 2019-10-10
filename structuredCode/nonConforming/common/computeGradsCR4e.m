@@ -3,10 +3,10 @@ function gradsCR4e = computeGradsCR4e(currData)
 % triangle with respect to the triangulation given by [c4n, n4e].
 %
 % computeGradsCR4e.m
-% input:  currData  - struct with fields:
-%                           c4n: coordinates for nodes
-%                           n4e: nodes for elements
-%                       nrElems: number of elements
+% input:  currData  - 'struct' with fields:
+%                            c4n: coordinates for nodes
+%                            n4e: nodes for elements
+%                        nrElems: number of elements
 %
 % output: gradsCR4e - '(3 x 2 x nrElems)-dimensional double array' where the 
 %                     j-th row of the k-th matrix contains the gradient of the

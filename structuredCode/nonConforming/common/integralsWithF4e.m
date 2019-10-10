@@ -1,7 +1,8 @@
-function [int1RHS4e, int2RHS4e, int3RHS4e] = ...
+function [int1RHS4e, int2RHS4e, int3RHS4e, intRHS4s] = ...
     integralsWithF4e(currData, f, degree)
 % Computes the integrals of a function f times a Crouzeix-Raviart-basis
-% function with respect to the triangulation given by [c4n, n4e].
+% function, both global and local, with respect to the triangulation given by
+% [c4n, n4e].
 % 
 % integralsWithF4e.m
 % input:  currData   - 'struct' with fields:
@@ -19,12 +20,17 @@ function [int1RHS4e, int2RHS4e, int3RHS4e] = ...
 %                      triangle
 %         int2RHS4e  - as int1RHS4e for the second local CR-basis function
 %         int3RHS4e  - as int1RHS4e for the third local CR-basis function
+%         intRHS4s   - '(nrSides x 1)-dimensional double array' where 
+%                      the j-th entry is the integral of f times the CR-basis
+%                      function wrt. j-th edge
 
-
-  % extract necessary data
+  % extract necessary dCR-basis function wrt. the first local edge of the j-thata
   c4n = currData.c4n;
   n4e = currData.n4e;
   area4e = currData.area4e;
+  nrSides = currData.nrSides;
+  nrElems = currData.nrElems;
+  s4e = currData.s4e;
 
   %TODO might just replace that with defining barCoords on Tref and using
   %Gpts4ref for integrate 
@@ -50,11 +56,18 @@ function [int1RHS4e, int2RHS4e, int3RHS4e] = ...
                                            (z(:, 2)-a3(:, 2)));
   varLambda3 = @(z)(1 - varLambda1(z) - varLambda2(z));
 
-  % compute integrals
+  % compute integrals \int_\Omega f*\psi_j dx
   int1RHS4e = integrate(@(n4p, Gpts4p, Gpts4ref)(...
     f(Gpts4p).*(1 - 2*varLambda3(Gpts4p))), c4n, n4e, degree+1, area4e);
   int2RHS4e = integrate(@(n4p, Gpts4p, Gpts4ref)(...
     f(Gpts4p).*(1 - 2*varLambda1(Gpts4p))), c4n, n4e, degree+1, area4e);
   int3RHS4e = integrate(@(n4p, Gpts4p, Gpts4ref)(...
     f(Gpts4p).*(1 - 2*varLambda2(Gpts4p))), c4n, n4e, degree+1, area4e);
+  
+  % compute integrals
+  intRHS4s = zeros(nrSides, 1); % int_\Omega f*u dx
+  for elem = 1 : nrElems
+    intRHS4s(s4e(elem, :)) = intRHS4s(s4e(elem,:)) + ...
+      [int1RHS4e(elem), int2RHS4e(elem), int3RHS4e(elem)]';
+  end
 end

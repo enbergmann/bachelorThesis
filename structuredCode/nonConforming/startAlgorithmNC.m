@@ -38,6 +38,8 @@ function [params, output] = startAlgorithmCR(benchmark)
   uExact = params.uExact;
   polygonMesh = params.polygonMesh;
   expName = params.expName;
+  minNrDof = params.minNrDof;
+  parTheta = params.parTheta;
   
   % initialize remaining parameters and struct with information dependend solely
   % on the current geometry
@@ -84,6 +86,8 @@ function [params, output] = startAlgorithmCR(benchmark)
     currData.gradsCR4e = computeGradsCR4e(currData);
     gradCRu0 = gradientCR(currData, u0);
 
+    [currData.stiMaCR, currData.maMaCR] = computeFeMatricesCR(currData);
+
     % TODO could have an option for different inital lambda
     varLambda = gradCRu0./repmat(sqrt(sum(gradCRu0.^2,2)),1,2);
     varLambda(isinf(varLambda)) = 0;
@@ -95,7 +99,8 @@ function [params, output] = startAlgorithmCR(benchmark)
     currData.nrDof = nrDof;
     nrDof4lvl(end+1) = nrDof;
 
-    [currData.int1RHS4e, currData.int2RHS4e, currData.int3RHS4e] = ...
+    [currData.int1RHS4e, currData.int2RHS4e, currData.int3RHS4e, ...
+      currData.intRHS4s] = ...
       integralsWithF4e(currData, f, 200);
     %needed here and in error estimate function
 
@@ -107,37 +112,47 @@ function [params, output] = startAlgorithmCR(benchmark)
 
     % SOLVE
     tic;
-%TODO continue here
+% TODO not done yet (subfunctions, documentation)
     [u, corrVec, energyVec] = ...
       solvePrimalDualFormulation(params, currData, u0, varLambda);
     time = toc; 
-   
+
     % ESTIMATE
-    eta4e = estimateError4e(u,f,c4n,n4e,n4sDb,n4sNb,1,1)
+
+    %TODO still need to commen and some other stuff
+    eta4e = estimateErrorCR4e(params, currData, u);
     eta4lvl(end+1) = sum(eta4e);
     disp(['nodes/dofs: ',num2str(size(c4n,1)),'/',num2str(nrDof),...
       '; estimator = ',num2str(eta4lvl(end))]); 
 
-    if exactSolutionKnown
-      error4lvl(end+1) = sqrt(sum(error4eCRL2(c4n,n4e,uExact,u)));
-    end
+    %%%%%%%%%%%%%%%%%%%%%TODO needs to be done
+ %   if exactSolutionKnown
+ %     error4lvl(end+1) = sqrt(sum(error4eCRL2(c4n,n4e,uExact,u)));
+ %   end
 
-    saveResults('CR',expName,dirInfoName,figVisible,message,c4n,n4e,u,red,alpha,delta,...
-      terminate,time,corrVec,energyVec,tau,miscMsg,nrDof,...
-      true,nrDof4lvl,eta4lvl,error4lvl);
+ %   saveResults('CR',expName,dirInfoName,figVisible,message,c4n,n4e,u,red,alpha,delta,...
+ %     terminate,time,corrVec,energyVec,tau,miscMsg,nrDof,...
+ %     true,nrDof4lvl,eta4lvl,error4lvl);
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     % Check Termination
+%TODO continue here
     if nrDof >= minNrDof, break, end;
 
     % MARK
-    n4sMarked = markBulk(n4e,eta4e,0.5);
+    n4sMarked = markBulk(n4e, eta4e, parTheta);
 
     % REFINE
-    [c4n,n4e,n4sDb,n4sNb] = refineRGB(c4n,n4e,n4sDb,n4sNb,n4sMarked);
+    [c4n, n4e, n4sDb, n4sNb] = refineRGB(c4n,n4e,n4sDb,n4sNb,n4sMarked);
+    currData.c4n = c4n;
+    currData.n4e = n4e;
+    currData.n4sDb = n4sDb;
+    currData.n4sNb = n4sNb;
 
     if polygonMesh
-      temp=unique(n4sDb);
-      c4n(temp,:)=c4n(temp,:)./repmat(sqrt(c4n(temp,1).^2+c4n(temp,2).^2),1,2);
+      temp = unique(n4sDb);
+      c4n(temp, :) = ...
+        c4n(temp, :)./repmat(sqrt(c4n(temp, 1).^2 + c4n(temp, 2).^2), 1, 2);
     end
     
     n4s = computeN4s(n4e);

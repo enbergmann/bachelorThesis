@@ -7,15 +7,20 @@ function params = editable
 
   % AFEM parameters
   geometry               = 'BigSquare';
-  parTheta                  = 0.5;  % bulk param. (1 for uniform)
+  parTheta               = 0.5;  % bulk param. (1 for uniform)
   initalRefinementLevel  = 0;
 
   % algorithm parameters
-  minNrDoF               = 1e6;
+  minNrDof               = 1e6;
+  alpha4Estimate         = 1;
+  beta4Estimate          = 1;   
   epsStop                = 1e-3;
   stopCrit               = ["Exact Error Difference", "weighted energy difference"];
   useProlongation        = false;
   exactSolutionKnown     = false;
+  useExactEnergy         = false; % only effective if exactSolutionKnown == true
+  %TODO compute exact energy here and use it e.g. in showProgress instead of
+  %-2.0580......
   parTau                 = 1/2;
 
   % experiment parameters
@@ -72,7 +77,9 @@ function params = editable
   params.parTheta = parTheta;
   params.initalRefinementLevel = initalRefinementLevel;
 
-  params.minNrDoF = minNrDoF;
+  params.minNrDof = minNrDof;
+  params.alpha4Estimate = alpha4Estimate;
+  params.beta4Estimate = beta4Estimate;
   params.epsStop = epsStop;
   params.stopCrit = stopCrit;              
   params.useProlongation = useProlongation;      
@@ -82,6 +89,11 @@ function params = editable
     params.uExact = @(x) exactSolution(x);
   else
     params.uExact = @(x) NaN;
+  end
+
+  if exactSolutionKnown 
+    params.useExactEnergy = useExactEnergy;
+    %TODO probably compute it here
   end
 
   params.parTau = parTau; 
