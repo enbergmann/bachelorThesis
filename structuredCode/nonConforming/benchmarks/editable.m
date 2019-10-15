@@ -8,7 +8,7 @@ function params = editable
   % AFEM parameters
   geometry               = 'BigSquare';
   parTheta               = 0.5;  % bulk param. (1 for uniform)
-  initalRefinementLevel  = 0;
+  initialRefinementLevel  = 0;
 
   % algorithm parameters
   minNrDof               = 1e6;
@@ -19,14 +19,13 @@ function params = editable
   useProlongation        = false;
   exactSolutionKnown     = false;
   useExactEnergy         = false; % only effective if exactSolutionKnown == true
-  %TODO compute exact energy here and use it e.g. in showProgress instead of
-  %-2.0580......
   parTau                 = 1/2;
 
   % experiment parameters
   parAlpha               = 1;
   parBeta                = 1;
-  errorNorm              = ["L2", "energy"]; % TODO list options (likewise for some other params (think))
+  errorNorm              = ["L2", "energy"]; % TODO list options (likewise for
+                                             % some other params (think))
                                               %strArr
   saveScreenshots        = 0; % save screenshots every saveScreenshots
                               % iterations during algorithm, e.g. for the case it doesn't finish
@@ -43,6 +42,8 @@ function params = editable
                            '\non\nhow\nthis\ncould\nlook']);
 
   % necessary function handles
+  
+    % TODO rename the funtions at some time to more suitable names
   function val = rightHandSide(x)
     val =  g(x,1,1);
   end
@@ -66,16 +67,16 @@ function params = editable
 
   if strcmp(geometry, 'Polygon')
     [params.c4n, params.n4e, params.n4sDb, params.n4sNb] = ...
-      computeGeometryPolygon(initalRefinementLevel);
+      computeGeometryPolygon(initialRefinementLevel);
     params.polygonMesh = true;
   else
     [params.c4n, params.n4e, params.n4sDb, params.n4sNb] = ...
-      loadGeometry(geometry, initalRefinementLevel);
+      loadGeometry(geometry, initialRefinementLevel);
     params.polygonMesh = false;
   end
 
   params.parTheta = parTheta;
-  params.initalRefinementLevel = initalRefinementLevel;
+  params.initialRefinementLevel = initialRefinementLevel;
 
   params.minNrDof = minNrDof;
   params.alpha4Estimate = alpha4Estimate;
@@ -94,6 +95,18 @@ function params = editable
   if exactSolutionKnown 
     params.useExactEnergy = useExactEnergy;
     %TODO probably compute it here
+    %TODO compute exact energy here and use it e.g. in showProgress instead of
+    % drop useExactEnergy and just use exactEnergy = 3 type params
+    % use insan(exactEnergy) to find out whether exact energy is know or not, 
+    % i.e. exactEnergy = NaN, if it is not known
+    %
+    % function that coputes exact energy should simply refine the mesh mesh
+    % uniformly until it has a million dofs or something and then compute the 
+    % energy and use it for here (might take some time, but only once, hence 
+    % who cares)
+    % this functions must prob. be written without struct s.t. it can be called
+    % from here
+    %-2.0580......
   end
 
   params.parTau = parTau; 

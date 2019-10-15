@@ -20,24 +20,16 @@ function [params, output] = startAlgorithmCR(benchmark)
 
   params = feval(benchmark);
   
-  % TODO this might have to be shortenend later, because some stuff just gets
-  % copied to currGeom
-  
   % extract parameters from params
-  showPlots = params.showPlots;
-  initalRefinementLevel = params.initalRefinementLevel;
-
   c4n = params.c4n;
   n4e = params.n4e;
   n4sDb = params.n4sDb;
   n4sNb = params.n4sNb;
 
   f = params.f;
-  epsStop = params.epsStop;
   exactSolutionKnown = params.exactSolutionKnown; 
   uExact = params.uExact;
   polygonMesh = params.polygonMesh;
-  expName = params.expName;
   minNrDof = params.minNrDof;
   parTheta = params.parTheta;
   
@@ -88,7 +80,7 @@ function [params, output] = startAlgorithmCR(benchmark)
 
     [currData.stiMaCR, currData.maMaCR] = computeFeMatricesCR(currData);
 
-    % TODO could have an option for different inital lambda
+    % TODO could have an option for different initial lambda
     varLambda = gradCRu0./repmat(sqrt(sum(gradCRu0.^2,2)),1,2);
     varLambda(isinf(varLambda)) = 0;
 
@@ -108,7 +100,7 @@ function [params, output] = startAlgorithmCR(benchmark)
     % compute epsStop dependend on information given in benchmark
     % e.g. scaled with meshsize
     %
-    % RIGHT NOW its just the inital epsStop as termination crit.!!!!
+    % RIGHT NOW its just the initial epsStop as termination crit.!!!!
 
     % SOLVE
     tic;
