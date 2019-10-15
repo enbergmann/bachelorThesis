@@ -106,7 +106,14 @@ function params = editable
     % who cares)
     % this functions must prob. be written without struct s.t. it can be called
     % from here
-    %-2.0580......
+    %
+    % OR
+    % compute exact energy in results where it is needed, but where
+    % meshes are already computed to a certain degree (con: might still need
+    % exact energy during programm (maybe in a termination criterion, even
+    % though this might be stupid since there likely won't be results guaranteen 
+    % sth))
+    %-2.0580.....
   end
 
   params.parTau = parTau; 
