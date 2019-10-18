@@ -53,7 +53,7 @@ function params = editable
   end
 
   function exactSolution(x)
-    % can be ignored if exact solution is unknown
+    % can be ignored if exactSolutionKnown == false
     val = gUexact(x,1,1);
   end
 
@@ -114,6 +114,16 @@ function params = editable
     % though this might be stupid since there likely won't be results guaranteen 
     % sth))
     %-2.0580.....
+    %
+    %TODO
+    %best solution: first time on mesh and given solution compute it very well
+    %and save it (compute until some timer runs out, with message, saying that
+    %it's computed at the moment)
+    %
+    %use struct [geometry, structInner] with structInner [exactSolutionName,
+    %intArray] with 1x2 intArray [nrDof, Error]
+    %
+    %use significant decimals at termination criterion
   end
 
   params.parTau = parTau; 
