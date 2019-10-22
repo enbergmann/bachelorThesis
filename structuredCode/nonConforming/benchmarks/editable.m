@@ -32,6 +32,8 @@ function params = editable
                               % 0 means no screenshots will be saved
 
   % misc. parameters (will affect performance)
+  degree4Integrate       = 20; % Algebraic degree of exactness for integrate
+                               % from the AFEM package
   showPlots              = false; % Show plots during computation?
   showProgress           = true; % Print output during computation?
 
@@ -43,7 +45,8 @@ function params = editable
 
   % necessary function handles
   
-    % TODO rename the funtions at some time to more suitable names
+  % TODO rename the funtions at some time to more suitable names
+
   function val = rightHandSide(x)
     val =  g(x,1,1);
   end
@@ -94,6 +97,11 @@ function params = editable
 
   if exactSolutionKnown 
     params.useExactEnergy = useExactEnergy;
+    % just compute it extrenalyy and only set the flag to true, if the energy is
+    % given (read really exact valye from file)
+    % TODO continue here, when the function is great
+
+
     %TODO probably compute it here
     %TODO compute exact energy here and use it e.g. in showProgress instead of
     % drop useExactEnergy and just use exactEnergy = 3 type params
@@ -120,7 +128,8 @@ function params = editable
     %and save it (compute until some timer runs out, with message, saying that
     %it's computed at the moment)
     %
-    %use struct [geometry, structInner] with structInner [exactSolutionName,
+    %use struct [field = geometry, structInner] with structInner [field
+    % = exactSolutionName,
     %intArray] with 1x2 intArray [nrDof, Error]
     %
     %use significant decimals at termination criterion
@@ -133,6 +142,7 @@ function params = editable
   params.errorNorm = errorNorm;             
   params.saveScreenshots = saveScreenshots;       
 
+  params.degree4Integrate = degree4Integrate;
   params.showPlots = showPlots;              
   params.showProgress = showProgress;          
 
