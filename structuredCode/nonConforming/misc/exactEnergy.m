@@ -1,6 +1,7 @@
-function exactEnergy(geometry, rightHandSide, paramsRHS, exactSolution, paramsSol, ...
-    minNrDof, degree4Integrate, parAlpha, parBeta)
-  % TODO
+function exactEnergy(geometry, fStr, fStrParams, uStr, uStrParams, ...
+    gradUStr, gradUStrParams, minNrDof, degree4Integrate, parAlpha, parBeta)
+  % TODO write interface documentation
+  % compute all energies until at least minNrDof
 % Computes the degrees of freedom for the CR_0^1 FEM of the triangulation given
 % by [n4e, n4sDb, n4sNb].
 %
@@ -12,45 +13,53 @@ function exactEnergy(geometry, rightHandSide, paramsRHS, exactSolution, paramsSo
 %
 % output: dof      - '(1 x nrDof)-dimensional double array' where the j-th row 
 %                    contains the number of the j-th degree of freedom
-  % compute all energies until at least minNrDof
 
-  %TODO idea feval function names with strArray paramsList and later
-  %use func2str to create a folder for the results
-  %TODO splice param list and insert params in feval (and think about what to do
-  %when it's empty)
-  %TODO test if the naming with func2str yields sth like @(x)g(x,1,1)
-  addpath(genpath('../'),genpath('../../../utils/'));
-  %f = @(x) g(x,alpha,delta);  
-  %u = @(x) gUexact(x,alpha,delta);
-  %gradU = @(x) gradGuExact(x,delta);
-  f = feval(rightHandSide, paramsRHS) %TODO this is just a sketch
 
-  % TODO cut
+% TODO mode parameter? either compute until at least minNrDofs Dofs or
+% until at least significantDigits significant digits (change from one mesh 
+% to next smaller than 1e-'significant digits' or sth)
 
-  [c4n,n4e,n4sDb,n4sNb] = computeGeometryPolygon(0);
-  % [c4n,n4e] = computeGeometryCriss(red);
-  % [c4n,n4e,n4sDb,n4sNb] = computeGeometryBigSquare(0);
+  %TODO func2str useless, probably just build string myself (%[rhs]_%[param1]_..._%paramN)
 
-  %dirName = sprintf(...
-  %  '../../../../results/exactEnergy/nonconforming/%s/%s',...
-  %  geometry,datestr(now,'yy_mm_dd_HH_MM_SS'));
-  warning('off','MATLAB:MKDIR:DirectoryExists');
+  addpath(genpath('../'), genpath('../../../utils/'));
+
+  f = @(x) feval(fStr, x, fStrParams); 
+  u = @(x) feval(uStr, x, uStrParams); 
+  gradU = @(x) feval(gradUStr ,x, gradUStrParams);
+
+  if strcmp(geometry, 'Polygon')
+    [c4n, n4e, n4sDb, n4sNb] = ...
+      computeGeometryPolygon(0);
+    polygonMesh = true;
+  else
+    [c4n, n4e, n4sDb, n4sNb] = ...
+      loadGeometry(geometry, 0);
+    polygonMesh = false;
+  end
+
+  %TODO build str rhsStr here
+
+  warning('off', 'MATLAB:MKDIR:DirectoryExists');
   dirName = sprintf(...
-    'knownExactEnergies/%s/%s',...
-    geometry,func2str(f));
+    'knownExactEnergies/%s/%s', ...
+    geometry, rhsStr);
   mkdir(dirName);
-  warning('on','MATLAB:MKDIR:DirectoryExists');
-  name = sprintf('%s/%s.txt',minNrDof); %TODO maybe write highest used nrDofs
+  warning('on',' MATLAB:MKDIR:DirectoryExists');
+  name = sprintf('%s/%s.txt', minNrDof); %TODO  Write highest used nrDofs
                                           % specifically
-  file = fopen(name,'w');
+        %TODO that means save everything to nrDofVec and energyVec and save 
+        %those in the end (to be able to write highest nrDofs in the title)
+  file = fopen(name, 'w');
   fprintf(file, 'nDoF   energy\n');
 
   for level = 0:red
-    [c4n,n4e,n4sDb,n4sNb] = refineUniformRed(c4n,n4e,n4sDb,n4sNb);
-    if strcmp(geometry,'polygon')
-      temp=unique(n4sDb);
-      c4n(temp,:)=c4n(temp,:)./repmat(sqrt(c4n(temp,1).^2+c4n(temp,2).^2),1,2);
+    [c4n, n4e, n4sDb, n4sNb] = refineUniformRed(c4n, n4e, n4sDb, n4sNb);
+    if polygonMesh
+      temp = unique(n4sDb);
+      c4n(temp, :) = ...
+        c4n(temp, :)./repmat(sqrt(c4n(temp, 1).^2 + c4n(temp, 2).^2), 1, 2);
     end
+
     area4e = computeArea4e(c4n,n4e);
     
     energy = sum(...
