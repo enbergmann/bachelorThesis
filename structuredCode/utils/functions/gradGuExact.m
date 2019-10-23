@@ -1,4 +1,6 @@
-function val = gradGuExact(x,delta)
+function val = gradGuExact(x, params)
+
+delta = params(1, 1);
 
 nP=size(x,1);
 val = zeros(nP,2);

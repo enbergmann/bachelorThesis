@@ -1,4 +1,7 @@
-function val = g(x,alpha,delta)
+function val = g(x, params)
+
+alpha = params(1, 1);
+delta = params(1, 2);
 
 nP=size(x,1);
 val = zeros(nP,1);

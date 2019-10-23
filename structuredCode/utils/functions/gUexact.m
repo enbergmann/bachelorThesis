@@ -1,5 +1,8 @@
 function val = gUexact(x,alpha,delta)
 
+alpha = params(1, 1);
+delta = params(1, 2);
+
 nP=size(x,1);
 val = zeros(nP,1);
 r=sqrt(sum(x.^2,2));
