@@ -1,4 +1,4 @@
-function val = gUexact(x,alpha,delta)
+function val = gUexact(x, params)
 
 alpha = params(1, 1);
 delta = params(1, 2);
