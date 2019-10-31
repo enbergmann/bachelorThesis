@@ -1,6 +1,7 @@
 function computeExactEnergyBV(geometry, fStr, fStrParams, uStr, uStrParams, ...
     gradUStr, gradUStrParams, parAlpha, parBeta, ...
     minNrDof, minSignificantDigits, degree4Integrate)
+
 % optional  minNrDof, significantDigits degree4Integratke,
   % TODO write interface documentation
   % compute all energies until at least minNrDof
@@ -46,7 +47,7 @@ function computeExactEnergyBV(geometry, fStr, fStrParams, uStr, uStrParams, ...
     polygonMesh = false;
   end
 
-  rhsStr = sprintf('%s%s', fStr, sprintf('_%s', fStrParams));
+  rhsStr = sprintf('%s%s', fStr, sprintf('_%.30g', fStrParams));
   warning('off', 'MATLAB:MKDIR:DirectoryExists');
   dirName = sprintf(...
     'knownExactEnergies/%s/%s', ...
@@ -73,6 +74,7 @@ function computeExactEnergyBV(geometry, fStr, fStrParams, uStr, uStrParams, ...
       - f(Gpts4p).*u(Gpts4p)), ...
       c4n, n4e, degree4Integrate+1, area4e));
     
+    %TODO compute significant digits 
 
     s4e = computeS4e(n4e);
     n4s = computeN4s(n4e);
@@ -83,16 +85,17 @@ function computeExactEnergyBV(geometry, fStr, fStrParams, uStr, uStrParams, ...
     dof = computeDofCR(tempStruct);
     nrDofVec(end+1) = length(dof);
     if nrDofVec(end) > minNrDof
+      %TODO also compare to minSignDigits and just terminate, if both are
+      %satisfied
       break
     end
   end
 
-  name = sprintf('%d/%d.txt', minSignificantDigits, nrDofVec(end));
+  name = sprintf('%s/%d_%d.txt', dirName, minSignificantDigits, nrDofVec(end));
   %TODO use actual number of significant digits (will have those in the end
   %after checking them every time)
 
   file = fopen(name, 'w');
-  keyboard
   fprintf(file, 'nrDof   energy\n');
   fprintf(file, '%d   %.30g\n', [nrDofVec; energyVec]);
   fclose(file);
