@@ -1,4 +1,4 @@
-function exactEnergy(geometry, fStr, fStrParams, uStr, uStrParams, ...
+function computeExactEnergyBV(geometry, fStr, fStrParams, uStr, uStrParams, ...
     gradUStr, gradUStrParams, parAlpha, parBeta, ...
     minNrDof, minSignificantDigits, degree4Integrate)
 % optional  minNrDof, significantDigits degree4Integratke,
@@ -30,7 +30,7 @@ function exactEnergy(geometry, fStr, fStrParams, uStr, uStrParams, ...
     minNrDof = 1e4;
   end
 
-  addpath(genpath('../'), genpath('../../../utils/'));
+  addpath(genpath(pwd), genpath('../utils/'));
 
   f = @(x) feval(fStr, x, fStrParams); 
   u = @(x) feval(uStr, x, uStrParams); 
