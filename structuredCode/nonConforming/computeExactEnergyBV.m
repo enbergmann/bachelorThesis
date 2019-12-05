@@ -2,14 +2,18 @@ function computeExactEnergyBV(geometry, fStr, fStrParams, uStr, uStrParams, ...
     gradUStr, gradUStrParams, parAlpha, parBeta, ...
     minNrDof, minPrecision, degree4Integrate)
 
-% Computes the degrees of freedom for the CR_0^1 FEM of the triangulation given
-% by [n4e, n4sDb, n4sNb].
+% Computes an approximation (up to precision minPrecision and minNrDof dofs) of
+% the exact BV energy of a function u for a right-hand side f on a mesh given
+% by geometry.
 %
 % computeExactEnergyBV.m
-% input:  geometry         - 'str'
-%         fStr             -
-%         fStrParams       -
-%         uStr             -
+% input:  geometry         - 'char array' containing the name of the geometry
+%                            the user wants to approximate the exact energy on
+%         fStr             - 'char array' containing the name of the right-hand
+%                            side
+%         fStrParams       - 'double array' %TODO
+%         uStr             - 'char array' containing the name of the function
+%                            whose exact BV energy is to be apprximated
 %         uStrParams       -
 %         gradUSr          -
 %         gradUStrParams   -
