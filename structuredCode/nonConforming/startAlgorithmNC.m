@@ -64,7 +64,7 @@ function [params, output] = startAlgorithmCR(benchmark)
   while(true)
     
     currData.hMax = max(length4s);
-    currData.area4e = computeArea4e(c4n,n4e);
+    currData.area4e = computeArea4e(c4n, n4e);
 
     currData.s4n = computeS4n(n4e);
 
@@ -74,6 +74,10 @@ function [params, output] = startAlgorithmCR(benchmark)
     currData.nrElems = size(n4e, 1);
     currData.nrSides = max(max(s4e));
 
+    currData.mid4e = computeMid4e(c4n, n4e);
+    currData.s4n = computeS4n(n4e,n4s);
+    currData.e4s = computeE4s(n4e);
+
     currData.gradsCR4e = computeGradsCR4e(currData);
     gradCRu0 = gradientCR(currData, u0);
 
@@ -82,7 +86,10 @@ function [params, output] = startAlgorithmCR(benchmark)
     % TODO could have an option for different initial lambda
     % which would also have to be in benchmark (initialVarLambda)
     varLambda = gradCRu0./repmat(sqrt(sum(gradCRu0.^2, 2)), 1, 2);
-    varLambda(isinf(varLambda)) = 0;
+    varLambda(isinf(varLambda)) = 0; % this is prob. unnecessary, since only
+                                     %0/0=NaN happens by definition
+                                     %leave it just to be save? doesn't hurt
+    varLambda(isnan(varLambda)) = 0;
 
     dof = computeDofCR(currData);
     currData.dof = dof;
@@ -104,7 +111,7 @@ function [params, output] = startAlgorithmCR(benchmark)
 
     % SOLVE
     tic;
-% TODO not done yet (subfunctions, documentation)
+    % TODO not done yet (subfunctions, documentation)
     [u, corrVec, energyVec] = ...
       solvePrimalDualFormulation(params, currData, u0, varLambda);
     time = toc; 
@@ -114,6 +121,7 @@ function [params, output] = startAlgorithmCR(benchmark)
     %TODO still need to comment and some other stuff
     eta4e = estimateErrorCR4e(params, currData, u);
     eta4lvl(end+1) = sum(eta4e);
+
     disp(['nodes/dofs: ',num2str(size(c4n,1)),'/',num2str(nrDof),...
       '; estimator = ',num2str(eta4lvl(end))]); 
 
@@ -128,14 +136,13 @@ function [params, output] = startAlgorithmCR(benchmark)
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     % Check Termination
-%TODO continue here
     if nrDof >= minNrDof, break, end;
 
     % MARK
     n4sMarked = markBulk(n4e, eta4e, parTheta);
 
     % REFINE
-    [c4n, n4e, n4sDb, n4sNb] = refineRGB(c4n,n4e,n4sDb,n4sNb,n4sMarked);
+    [c4n, n4e, n4sDb, n4sNb] = refineRGB(c4n, n4e, n4sDb, n4sNb, n4sMarked);
     currData.c4n = c4n;
     currData.n4e = n4e;
     currData.n4sDb = n4sDb;
@@ -148,21 +155,16 @@ function [params, output] = startAlgorithmCR(benchmark)
     end
     
     n4s = computeN4s(n4e);
-
-    %TODO consider prolongation and stuff
-    u0 = interpolationCR(f,c4n,n4e,n4s);
-    gradCRu = gradientCR(c4n,n4e,u);
-    % TODO
-    %n4s = computeN4s(n4e);
-    %the mesh should be update here c4n, n4e, n4sDb, n4sNb
-    %so should u and du, pretty much everything that was known before the
-    %'while' loop began
-    %TODO stuff below has to be done here
-    n4s = computeN4s(n4e);
     currData.n4s = n4s;
   
     length4s = computeLength4s(c4n, n4s);
     currData.length4s = length4s;
+
+    %TODO consider prolongation and stuff, choices for start values of u0
+    u0 = interpolationCR(currData, f);
+
+    %TODO epsStop should probably be updated right here and now
+    %Are we doing it Reiner? Right here?
   end
 
   output = struct;

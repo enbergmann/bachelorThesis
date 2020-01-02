@@ -2,6 +2,7 @@ function  [u,corrVec,energyVec] = ...
     solvePrimalDualFormulation(params, currData, u, varLambda) 
   % TODO think about how the output should be handled, then think about 
   % documentation
+
 % Computes the piecewise gradient of the Crouzeix-Raviart function v (vanishing
 % in the midpoints of boundary edges) with respect to the triangulation given
 % by [c4n, n4e].
