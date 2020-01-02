@@ -9,7 +9,7 @@ function [int1RHS4e, int2RHS4e, int3RHS4e, intRHS4s] = ...
 %                           c4n: coordinates for nodes
 %                           n4e: nodes for elements
 %                        area4e: area for elements
-%         degree     - 'integer' up to which the integration in integrate must 
+%         degree     - 'uint64' up to which the integration in integrate must 
 %                      be exact
 %         f          - 'function_handle' of the function f in the integral
 %

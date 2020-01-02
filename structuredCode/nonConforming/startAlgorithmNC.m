@@ -3,9 +3,9 @@ function [params, output] = startAlgorithmCR(benchmark)
 % nonconforming algorithm.
 %
 % startAlgorithmCR.m
-% input:  benchmark - 'string'/'char array' containing the name of the
-%                     benchmark the user wants to use (optional parameter,
-%                     default value is 'editable').
+% input:  benchmark - 'string'/'char array with exactly one row' containing the 
+%                     name of the benchmark the user wants to use (optional
+%                     parameter, default value is 'editable').
 %
 % output: params    - 'struct' containing the parameters obtained from the
 %                     benchmark.
@@ -55,11 +55,10 @@ function [params, output] = startAlgorithmCR(benchmark)
   currData.length4s = length4s;
 
   % TODO this could have a flag for different options for initial u0
+  % which would also have to be in benchmark (initialU0)
   u0 = interpolationCR(currData, f);
 
   currData.epsStop = params.epsStop;
-
-%%%%%%%%%%%%%%%
 
 %% MAIN AFEM LOOP
   while(true)
@@ -81,7 +80,8 @@ function [params, output] = startAlgorithmCR(benchmark)
     [currData.stiMaCR, currData.maMaCR] = computeFeMatricesCR(currData);
 
     % TODO could have an option for different initial lambda
-    varLambda = gradCRu0./repmat(sqrt(sum(gradCRu0.^2,2)),1,2);
+    % which would also have to be in benchmark (initialVarLambda)
+    varLambda = gradCRu0./repmat(sqrt(sum(gradCRu0.^2, 2)), 1, 2);
     varLambda(isinf(varLambda)) = 0;
 
     dof = computeDofCR(currData);
@@ -111,7 +111,7 @@ function [params, output] = startAlgorithmCR(benchmark)
 
     % ESTIMATE
 
-    %TODO still need to commen and some other stuff
+    %TODO still need to comment and some other stuff
     eta4e = estimateErrorCR4e(params, currData, u);
     eta4lvl(end+1) = sum(eta4e);
     disp(['nodes/dofs: ',num2str(size(c4n,1)),'/',num2str(nrDof),...
