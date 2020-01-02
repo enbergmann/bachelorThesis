@@ -1,30 +1,54 @@
 function computeExactEnergyBV(geometry, fStr, fStrParams, uStr, uStrParams, ...
-    gradUStr, gradUStrParams, parAlpha, parBeta, ...
+    gradUStr, gradUStrParams, parAlpha, ...,
     minNrDof, minPrecision, degree4Integrate)
 
-% Computes an approximation (up to precision minPrecision and minNrDof dofs) of
-% the exact BV energy of a function u for a right-hand side f on a mesh given
-% by geometry.
+% Computes and saves an approximation (at least up to precision minPrecision
+% and minNrDof dofs) of the exact BV energy of a function u, whose pointwise
+% gradient is known, for a right-hand side f on a mesh given by geometry.
 %
 % computeExactEnergyBV.m
-% input:  geometry         - 'char array' containing the name of the geometry
-%                            the user wants to approximate the exact energy on
-%         fStr             - 'char array' containing the name of the right-hand
-%                            side
-%         fStrParams       - 'double array' %TODO
-%         uStr             - 'char array' containing the name of the function
-%                            whose exact BV energy is to be apprximated
-%         uStrParams       -
-%         gradUSr          -
-%         gradUStrParams   -
-%         parAlpha         -
-%         parBeta          - 
-%         minNrDof         - 
-%         minPrecision     -
-%         degree4Integrate -
+% input:  geometry         - 'char array with exactly one row' containing the 
+%                            name of the geometry the user wants to approximate
+%                            the exact energy on
+%         fStr             - 'string'/'char array with exactly one row' 
+%                            containing the name of the right-hand side f
+%         fStrParams       - 'double array with exactly one row' containing the 
+%                            necessary parameters to produce a function handle
+%                            of f (0x0 is possible if f needs no further
+%                            parameters)
+%         uStr             - 'string'/'char array with exactly one row' 
+%                            containing the name of the function u whose exact
+%                            BV energy is to be approximated 
+%         uStrParams       - 'double array with exactly one row' containing the 
+%                            necessary parameters to produce a function handle
+%                            of u (0x0 is possible if u needs no further
+%                            parameters)
+%         gradUStr         - 'string'/'char array with exactly one row' 
+%                            containing the name of the gradient of the
+%                            function u whose exact BV energy is to be
+%                            approximated
+%         gradUStrParams   - 'double array with exactly one row' containing the 
+%                            necessary parameters to produce a function handle 
+%                            of the gradient of u (0x0 is possible if the 
+%                            gradient of u needs no further parameters)
+%         parAlpha         - 'double' parameter alpha necessary for the 
+%                            computation of the energy
+%         minNrDof         - 'uint64' minimal number of dofs of the finest, red 
+%                            refined, mesh on which the energy is approximated
+%         minPrecision     - 'uint64' minimal number of significant digits the 
+%                            approximation of the energy should possess
+%         degree4Integrate - 'uint64' up to which the integration in integrate
+%                            must be exact
 %
 % output: -
 %         
+
+%TODO (maybe)
+%save every step in file, but then it's hard to fix the problem that the names
+%of incomplete runs might coincide with complete, and therefore, better runs
+%
+%for now this is fine, but it needs to complete the computation to yield a 
+%result, which isn't optimale but the servers might be able to handle it
 
   addpath(genpath(pwd), genpath('../utils/'));
 
@@ -102,6 +126,8 @@ function computeExactEnergyBV(geometry, fStr, fStrParams, uStr, uStrParams, ...
   fprintf(file, '%d   %.30g\n', [nrDofVec; energyVec(2:end)]);
   fclose(file);
    
+
+
   % nrElems = size(n4e,1);
   % nrSides = max(max(s4e));
   % [temp1,temp2,temp3] = computeIntegrals(f,c4n,n4e,200,area4e);
