@@ -48,7 +48,7 @@ function params = editable
   % TODO rename the funtions at some time to more suitable names
 
   function val = rightHandSide(x)
-    val =  g(x,1,1);
+    val =  g(x, [1,1]);
   end
 
   function initalValue(x)
@@ -57,7 +57,7 @@ function params = editable
 
   function exactSolution(x)
     % can be ignored if exactSolutionKnown == false
-    val = gUexact(x,1,1);
+    val = gUexact(x, [1,1]);
   end
 
 
