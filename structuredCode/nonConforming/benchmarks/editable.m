@@ -11,7 +11,7 @@ function params = editable
   initialRefinementLevel  = 0;
 
   % algorithm parameters
-  minNrDof               = 1e6;
+  minNrDof               = 1e2;
   alpha4Estimate         = 1;
   beta4Estimate          = 1;   
   epsStop                = 1e-3;
