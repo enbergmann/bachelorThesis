@@ -164,7 +164,6 @@ function [params, output] = startAlgorithmCR(benchmark)
     u0 = interpolationCR(currData, f);
 
     %TODO epsStop should probably be updated right here and now
-    %Are we doing it Reiner? Right here?
   end
 
   output = struct;

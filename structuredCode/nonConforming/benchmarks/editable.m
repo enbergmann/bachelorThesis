@@ -19,6 +19,9 @@ function params = editable
   useProlongation        = false;
   exactSolutionKnown     = false;
   useExactEnergy         = false; % only effective if exactSolutionKnown == true
+                           % TODO how should the exactEnergy be written into the programm
+			   % just write it in from the file per hand, with like 10 digits or 
+			   % sth.. Think about it.
   parTau                 = 1/2;
 
   % experiment parameters
