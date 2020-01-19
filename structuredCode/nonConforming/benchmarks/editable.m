@@ -2,20 +2,22 @@ function params = editable
   % Editable prototype for benchmark files.
   % Execute program/startAlgorithmNC.m to run algorithm.
 
+  %TODO next thing must be exactSolutionKnown = true and useExactEnergy
 
   %%% PARAMETERS %%%
 
   % AFEM parameters
   geometry               = 'BigSquare';
   parTheta               = 0.5;  % bulk param. (1 for uniform)
-  initialRefinementLevel  = 0;
+  initialRefinementLevel = 0;
 
   % algorithm parameters
   minNrDof               = 1e2;
   alpha4Estimate         = 1;
   beta4Estimate          = 1;   
   epsStop                = 1e-3;
-  stopCrit               = ["Exact Error Difference", "weighted energy difference"];
+  stopCrit               = ["Exact Error Difference", ...
+                            "weighted energy difference"];
   useProlongation        = false;
   exactSolutionKnown     = false;
   useExactEnergy         = false; % only effective if exactSolutionKnown == true
@@ -37,18 +39,18 @@ function params = editable
   % misc. parameters (will affect performance)
   degree4Integrate       = 20; % Algebraic degree of exactness for integrate
                                % from the AFEM package
-  showPlots              = false; % Show plots during computation?
+  showPlots              = true; % Show plots during computation?
   showProgress           = true; % Print output during computation?
 
   % Information about experiment for saving and documentation.
   expName                = 'testForBenchmark';
-  dirInfoName = datestr(now,'yy_mm_dd_HH_MM_SS');
-  miscMsg                = sprintf(['this\nis\nan\nexample',...
-                           '\non\nhow\nthis\ncould\nlook']);
+  dirInfoName            = datestr(now, 'yy_mm_dd_HH_MM_SS');
+  miscMsg                = sprintf(['this\nis\nan\nexample', ...
+                                    '\non\nhow\nthis\ncould\nlook']);
 
   % necessary function handles
   
-  % TODO rename the funtions at some time to more suitable names
+  % TODO rename the called funtions at some time to more suitable names
 
   function val = rightHandSide(x)
     val =  g(x, [1,1]);
@@ -147,6 +149,10 @@ function params = editable
 
   params.degree4Integrate = degree4Integrate;
   params.showPlots = showPlots;              
+  params.figVisible = 'off';
+  if showPlots
+    params.figVisible = 'on';
+  end
   params.showProgress = showProgress;          
 
   params.expName = expName;
