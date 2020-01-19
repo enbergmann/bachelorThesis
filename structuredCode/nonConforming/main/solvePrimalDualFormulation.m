@@ -107,7 +107,7 @@ function  [u,corrVec,energyVec] = ...
     corrVec(end+1) = corr;
 
     if saveScreenshots > 0 & mod(length(energyVec), saveScreenshots) == 0
-      % TODO this function is not written yet
+      % TODO this function is not written yet, do it next time it's needed
       saveScreenshot();
     end
 

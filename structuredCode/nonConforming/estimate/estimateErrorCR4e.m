@@ -48,6 +48,7 @@ function eta4e = estimateErrorCR4e(params, currData, u)
   %  +length4s(s4e(:,3))'*sum(absNodeJumps4s(s4e(:,3)),2)); %Sprunganteil
 
   n=2; % TODO should probably in params, think about a suiting name and do it
+        % it's a param for the estimator, hence its destined place is in params
 
   eta4e = area4e.^(2/n).*(termFSquared - 2*alpha4Estimate*termMixed + ...
     alpha4Estimate^2*termU)...

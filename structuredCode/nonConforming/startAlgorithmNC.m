@@ -7,6 +7,7 @@ function [params, output] = startAlgorithmCR(benchmark)
 %                     name of the benchmark the user wants to use (optional
 %                     parameter, default value is 'editable').
 %
+% TODO
 % output: params    - 'struct' containing the parameters obtained from the
 %                     benchmark.
 %         output    - 'struct' containing the results of the experiment.
@@ -125,14 +126,15 @@ function [params, output] = startAlgorithmCR(benchmark)
     disp(['nodes/dofs: ',num2str(size(c4n,1)),'/',num2str(nrDof),...
       '; estimator = ',num2str(eta4lvl(end))]); 
 
-    %%%%%%%%%%%%%%%%%%%%%TODO needs to be done
- %   if exactSolutionKnown
- %     error4lvl(end+1) = sqrt(sum(error4eCRL2(c4n,n4e,uExact,u)));
- %   end
+    % TODO implement flag for different errors
+    if exactSolutionKnown
+      error4lvl(end+1) = sqrt(sum(error4eCRL2(c4n,n4e,uExact,u)));
+    end
 
- %   saveResults('CR',expName,dirInfoName,figVisible,message,c4n,n4e,u,red,alpha,delta,...
- %     terminate,time,corrVec,energyVec,tau,miscMsg,nrDof,...
- %     true,nrDof4lvl,eta4lvl,error4lvl);
+    %%%%%%%%%%%%%%%%%%%%%TODO needs to be done
+    saveResults('CR',expName,dirInfoName,figVisible,message,c4n,n4e,u,red,alpha,delta,...
+      terminate,time,corrVec,energyVec,tau,miscMsg,nrDof,...
+      true,nrDof4lvl,eta4lvl,error4lvl);
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     % Check Termination
