@@ -1,10 +1,10 @@
 function params = editable
-  % Editable prototype for benchmark files.
-  % Execute program/startAlgorithmNC.m to run algorithm.
+% Editable prototype for benchmark files.
+% Execute program/startAlgorithmNC.m to run algorithm.
 
-  %TODO next thing must be exactSolutionKnown = true and useExactEnergy
+  % TODO next thing must be useExactEnergy == true
 
-  %%% PARAMETERS %%%
+%% PARAMETERS
 
   % AFEM parameters
   geometry               = 'BigSquare';
@@ -19,7 +19,7 @@ function params = editable
   stopCrit               = ["Exact Error Difference", ...
                             "weighted energy difference"];
   useProlongation        = false;
-  exactSolutionKnown     = false;
+  exactSolutionKnown     = true;
   useExactEnergy         = false; % only effective if exactSolutionKnown == true
                            % TODO how should the exactEnergy be written into the programm
 			   % just write it in from the file per hand, with like 10 digits or 
@@ -39,7 +39,7 @@ function params = editable
   % misc. parameters (will affect performance)
   degree4Integrate       = 20; % Algebraic degree of exactness for integrate
                                % from the AFEM package
-  showPlots              = true; % Show plots during computation?
+  showPlots              = false; % Show plots during computation?
   showProgress           = true; % Print output during computation?
 
   % Information about experiment for saving and documentation.
@@ -56,17 +56,16 @@ function params = editable
     val =  g(x, [1,1]);
   end
 
-  function initalValue(x)
+  function val = initalValue(x)
     val = 0;
   end
 
-  function exactSolution(x)
+  function val = exactSolution(x)
     % can be ignored if exactSolutionKnown == false
     val = gUexact(x, [1,1]);
   end
 
-
-  %%% BUILD STRUCT %%%
+%% BUILD STRUCT
   % should not be of interest for mere usage of the program
   
   params = struct;

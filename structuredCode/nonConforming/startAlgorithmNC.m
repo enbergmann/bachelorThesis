@@ -21,6 +21,9 @@
 %    not necesary at all for the code, so just put it somewhere where nobody
 %    needs to see it)
 
+% TODO look into how one can set the HOME directory for the current execution
+%      so all the paths are correct (like cd to the directory where 
+%      startAlgorithmNC is before anything else)
 function [params, output] = startAlgorithmCR(benchmark)
 % Loads a benchmark and starts the corresponding experiment with the
 % nonconforming algorithm.
@@ -43,7 +46,8 @@ function [params, output] = startAlgorithmCR(benchmark)
   end
 
   params = feval(benchmark);
-  
+  params.benchmark = benchmark;
+
   % extract necessary parameters from params
   c4n = params.c4n;
   n4e = params.n4e;
@@ -59,12 +63,13 @@ function [params, output] = startAlgorithmCR(benchmark)
   
   % initialize remaining parameters and struct with information dependend solely
   % on the current geometry
-  output = struct;
 
+  outputLvl = struct;
+
+  outputLvl.lvl = [0];
   eta4lvl = [];
-  output.nrDof4lvl = [];
+  outputLvl.nrDof4lvl = [];
   error4lvl = [];
-  output.error4lvl = error4lvl;
 
 
   currData = struct;
@@ -123,7 +128,7 @@ function [params, output] = startAlgorithmCR(benchmark)
 
     nrDof = length(dof);
     currData.nrDof = nrDof;
-    output.nrDof4lvl(end+1) = nrDof;
+    outputLvl.nrDof4lvl(end+1, 1) = nrDof;
 
     [currData.int1RHS4e, currData.int2RHS4e, currData.int3RHS4e, ...
       currData.intRHS4s] = ...
@@ -148,30 +153,29 @@ function [params, output] = startAlgorithmCR(benchmark)
 
     %TODO still need to comment and some other stuff
     eta4e = estimateErrorCR4e(params, currData, u);
-    eta4lvl(end+1) = sum(eta4e);
-    output.eta4lvl = eta4lvl;
-
-    % TODO make it more beautiful (think philipps output)
-    % TODO showProgress applies also here or not? (maybe not, since this is
-    %      not much and also very important)
-    disp(['nodes/dofs: ', num2str(size(c4n,1)), '/', num2str(nrDof), ...
-      '; estimator = ', num2str(eta4lvl(end))]); 
+    eta4lvl(end+1, 1) = sum(eta4e);
+    outputLvl.eta4lvl = eta4lvl;
 
     % TODO implement flag for different errors
     if exactSolutionKnown
-      error4lvl(end+1) = sqrt(sum(error4eCRL2(c4n,n4e,uExact,u)));
-      output.error4lvl = error4lvl;
+      error4lvl(end+1, 1) = sqrt(sum(error4eCRL2(c4n,n4e,uExact,u)));
+      outputLvl.error4lvl = error4lvl;
     end
+
+    % % TODO showProgress applies also here or not? (maybe not, since this is
+    disp(struct2table(outputLvl));
 
     % TODO maybe allow only a fixed amounts of different errors, like only two,
     % so one can choose L2 and H1 for example
     % so sth like error4lvl, errorAlt4lvl
     
     %TODO needs to be done
-    saveResultsCR(params, currData, output);
+    saveResultsCR(params, currData, outputLvl, output);
 
     % Check Termination
     if nrDof >= minNrDof, break, end;
+
+    outputLvl.lvl(end+1, 1) = outputLvl.lvl(end, 1)+1;
 
     % MARK
     n4sMarked = markBulk(n4e, eta4e, parTheta);
