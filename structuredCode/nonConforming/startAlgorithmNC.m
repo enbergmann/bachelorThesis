@@ -24,6 +24,7 @@
 % TODO look into how one can set the HOME directory for the current execution
 %      so all the paths are correct (like cd to the directory where 
 %      startAlgorithmNC is before anything else)
+
 function [params, output] = startAlgorithmCR(benchmark)
 % Loads a benchmark and starts the corresponding experiment with the
 % nonconforming algorithm.

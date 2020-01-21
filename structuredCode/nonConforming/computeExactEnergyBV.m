@@ -1,3 +1,10 @@
+%TODO (maybe)
+%save every step in file, but then it's hard to fix the problem that the names
+%of incomplete runs might coincide with complete, and therefore, better runs
+%
+%for now this is fine, but it needs to complete the computation to yield a 
+%result, which isn't optimale but the servers might be able to handle it
+
 function computeExactEnergyBV(geometry, fStr, fStrParams, uStr, uStrParams, ...
     gradUStr, gradUStrParams, parAlpha, ...,
     minNrDof, minPrecision, degree4Integrate)
@@ -41,22 +48,14 @@ function computeExactEnergyBV(geometry, fStr, fStrParams, uStr, uStrParams, ...
 %                            must be exact
 %
 % output: -
-%         
-
-%TODO (maybe)
-%save every step in file, but then it's hard to fix the problem that the names
-%of incomplete runs might coincide with complete, and therefore, better runs
-%
-%for now this is fine, but it needs to complete the computation to yield a 
-%result, which isn't optimale but the servers might be able to handle it
 
   addpath(genpath(pwd), genpath('../utils/'));
 
-  if nargin < 12
+  if nargin < 11
     degree4Integrate = 20;
-    if nargin < 11
-      minPrecision = 3;
-      if nargin < 10
+    if nargin < 10
+      minPrecision = 2;
+      if nargin < 9
         minNrDof = 1e4;
       end
     end
@@ -76,7 +75,8 @@ function computeExactEnergyBV(geometry, fStr, fStrParams, uStr, uStrParams, ...
     polygonMesh = false;
   end
 
-  rhsStr = sprintf('%s%s', fStr, sprintf('_%.30g', fStrParams));
+  rhsStr = sprintf('alpha_%.30g_with_rhs_%s%s', ...
+    parAlpha, fStr, sprintf('_%.30g', fStrParams));
   warning('off', 'MATLAB:MKDIR:DirectoryExists');
   dirName = sprintf(...
     'knownExactEnergies/%s/%s', ...
@@ -84,10 +84,14 @@ function computeExactEnergyBV(geometry, fStr, fStrParams, uStr, uStrParams, ...
   mkdir(dirName);
   warning('on', 'MATLAB:MKDIR:DirectoryExists');
 
-  nrDofVec = [];
-  energyVec = [0];
+  output = struct;
 
+  nrDof = [];
+  energy = [];
+  significantDigits = [0];
+  
   while true
+    % compute geometry
     [c4n, n4e, n4sDb, n4sNb] = refineUniformRed(c4n, n4e, n4sDb, n4sNb);
     if polygonMesh
       temp = unique(n4sDb);
@@ -97,33 +101,56 @@ function computeExactEnergyBV(geometry, fStr, fStrParams, uStr, uStrParams, ...
 
     area4e  = computeArea4e(c4n, n4e);
     
-    energyVec(end+1) = sum(...
-        integrate(@(n4p, Gpts4p, Gpts4ref)(...
-      parAlpha/2*u(Gpts4p).^2 + sqrt(sum(gradU(Gpts4p).^2, 2)) ...
-      - f(Gpts4p).*u(Gpts4p)), ...
-      c4n, n4e, degree4Integrate+1, area4e));
-    
+    % compute nrDof
     s4e = computeS4e(n4e);
     n4s = computeN4s(n4e);
     tempStruct.n4sDb = n4sDb;
     tempStruct.s4n = computeS4n(n4e, n4s);
     tempStruct.nrSides = max(max(s4e));
     dof = computeDofCR(tempStruct);
-    nrDofVec(end+1) = length(dof);
-    if nrDofVec(end) > minNrDof ...
-        && abs(energyVec(end)-energyVec(end-1)) < 10^(-minPrecision)
+    nrDof(end+1,1) = length(dof);
+    output.nrDof = nrDof;
+
+    % compute energy
+    energy(end+1,1) = sum(...
+        integrate(@(n4p, Gpts4p, Gpts4ref)(...
+      parAlpha/2*u(Gpts4p).^2 + sqrt(sum(gradU(Gpts4p).^2, 2)) ...
+      - f(Gpts4p).*u(Gpts4p)), ...
+      c4n, n4e, degree4Integrate+1, area4e));
+    output.energy = energy;
+
+    % compute significant digits
+    if length(energy) > 1 && fix(energy(end-1)) == fix(energy(end))
+      % 20 is too precise, so it's sufficient
+      dec1 = extractAfter(num2str(energy(end-1), 20), '.');
+      dec2 = extractAfter(num2str(energy(end), 20), '.');
+      for j = 1:min(length(dec1), length(dec2))
+        if ~strcmp(dec1(j), dec2(j))
+          break
+        end
+      end
+      % in MATLAB j is known even after the loop ends
+      significantDigits(end+1,1) = j-1;
+    end
+    output.significantDigits = significantDigits;
+
+    % display status of computation
+    fprintf([repmat('\n',1,50), ...
+      '    minNrDof = %d\n    minPrecision = %d\n\n'], minNrDof, minPrecision);
+    disp(struct2table(output));
+
+    % check termination
+    if nrDof(end) > minNrDof && significantDigits(end) >=minPrecision
       break
     end
 
-    fprintf('---------------------------------------\nenergy  nrDof\n');
-    fprintf('%.20g  %d\n', energyVec(end), nrDofVec(end));
   end
 
-  name = sprintf('%s/minPrecision_%d_nrDof_%d.txt', dirName, minPrecision, nrDofVec(end));
+  name = sprintf('%s/minPrecision_%d_nrDof_%d.txt', dirName, minPrecision, nrDof(end));
 
   file = fopen(name, 'w');
-  fprintf(file, 'nrDof   energy\n');
-  fprintf(file, '%d   %.30g\n', [nrDofVec; energyVec(2:end)]);
+  fprintf(file, 'nrDof   energy   significantDigits\n');
+  fprintf(file, '%d   %.30g   %d\n', [nrDof, energy, significantDigits]');
   fclose(file);
    
 
