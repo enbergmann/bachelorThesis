@@ -1,14 +1,6 @@
-%TODO (maybe)
-%save every step in file, but then it's hard to fix the problem that the names
-%of incomplete runs might coincide with complete, and therefore, better runs
-%
-%for now this is fine, but it needs to complete the computation to yield a 
-%result, which isn't optimale but the servers might be able to handle it
-
 function computeExactEnergyBV(geometry, fStr, fStrParams, uStr, uStrParams, ...
     gradUStr, gradUStrParams, parAlpha, ...,
     minNrDof, minPrecision, degree4Integrate)
-
 % Computes and saves an approximation (at least up to precision minPrecision
 % and minNrDof dofs) of the exact BV energy of a function u, whose pointwise
 % gradient is known, for a right-hand side f on a mesh given by geometry.
@@ -122,8 +114,8 @@ function computeExactEnergyBV(geometry, fStr, fStrParams, uStr, uStrParams, ...
     % compute significant digits
     if length(energy) > 1 && fix(energy(end-1)) == fix(energy(end))
       % 20 is too precise, so it's sufficient
-      dec1 = extractAfter(num2str(energy(end-1), 20), '.');
-      dec2 = extractAfter(num2str(energy(end), 20), '.');
+      dec1 = extractAfter(num2str(energy(end-1), '%.20f'), '.');
+      dec2 = extractAfter(num2str(energy(end), '%.20f'), '.');
       for j = 1:min(length(dec1), length(dec2))
         if ~strcmp(dec1(j), dec2(j))
           break
@@ -136,23 +128,29 @@ function computeExactEnergyBV(geometry, fStr, fStrParams, uStr, uStrParams, ...
 
     % display status of computation
     fprintf([repmat('\n',1,50), ...
-      '    minNrDof = %d\n    minPrecision = %d\n\n'], minNrDof, minPrecision);
+      '    minNrDof = %e\n    minPrecision = %d\n\n'], minNrDof, minPrecision);
     disp(struct2table(output));
 
+    % save results
+    name = sprintf('%s/nrDof_%d_significantDigits_%d.txt', ...
+      dirName, nrDof(end), significantDigits(end));
+
+    file = fopen(name, 'w');
+    fprintf(file, 'nrDof   energy   significantDigits\n');
+    fprintf(file, '%d   %.30g   %d\n', [nrDof, energy, significantDigits]');
+    fclose(file);
+
     % check termination
-    if nrDof(end) > minNrDof && significantDigits(end) >=minPrecision
+    if nrDof(end) > minNrDof && significantDigits(end)>=minPrecision
       break
     end
-
   end
 
-  name = sprintf('%s/minPrecision_%d_nrDof_%d.txt', dirName, minPrecision, nrDof(end));
-
-  file = fopen(name, 'w');
-  fprintf(file, 'nrDof   energy   significantDigits\n');
-  fprintf(file, '%d   %.30g   %d\n', [nrDof, energy, significantDigits]');
-  fclose(file);
-   
+  % TODO maybe delete all but the best file with the name
+  %  sprintf('%s/minPrecision_%d_nrDof_%d.txt', ...
+  %    dirName, significantDigits(end), nrDof(end));
+  %
+  %    but this is really unimportant and probably not worth the effort
 
 
   % nrElems = size(n4e,1);
@@ -160,7 +158,8 @@ function computeExactEnergyBV(geometry, fStr, fStrParams, uStr, uStrParams, ...
   % [temp1,temp2,temp3] = computeIntegrals(f,c4n,n4e,200,area4e);
   % temp = zeros(nrSides,1);
   % for elem = 1 : nrElems
-  %   temp(s4e(elem,:)) = temp(s4e(elem,:)) + [temp1(elem),temp2(elem),temp3(elem)]';
+  %   temp(s4e(elem,:)) = ...
+  %     temp(s4e(elem,:)) + [temp1(elem),temp2(elem),temp3(elem)]';
   % end
   % [~,MAMANC] = computeFeMatrices(c4n,n4e,s4e,area4e,nrElems);
 
