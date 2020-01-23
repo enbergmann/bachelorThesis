@@ -21,14 +21,15 @@ function  [u,corrVec,energyVec] = ...
 %                     the j-th row contains the gradient of v on the j-th
 %                     triangle 
 
-  % extract necessary data
+  % extract necessary parameters from params
   parTau = params.parTau;
   parAlpha = params.parAlpha;
   showProgress = params.showProgress;
+  exactEnergy = params.exactEnergy;
   saveScreenshots = params.saveScreenshots;
   showPlots = params.showPlots;
 
-  
+  % extract necessary data from currData
   stiMaCR = currData.stiMaCR;
   maMaCR = currData.maMaCR;
   c4n = currData.c4n;
@@ -94,9 +95,10 @@ function  [u,corrVec,energyVec] = ...
     corr = sqrt(dtU'*stiMaCR*dtU); % Only gradients
 
     if showProgress
+      % TODO make this prettier
       fprintf('corr/epsStop: %e / %e\n',corr,epsStop);
-      format long;
-      fprintf('E = %f, E_exact = %f\n', E, -2.05802391003896);
+      format long; % TODO change that in the fprintf %.8g or something
+      fprintf('E = %f, E_exact = %f\n', E, exactEnergy);
       format short;
       fprintf('============================== \n');
     end

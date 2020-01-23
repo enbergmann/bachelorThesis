@@ -1,8 +1,9 @@
 function params = editable
 % Editable prototype for benchmark files.
 % Execute program/startAlgorithmNC.m to run algorithm.
+% Execute program/computeExactEnergyBV(...) to approximate the exact energy.
 
-  % TODO next thing must be useExactEnergy == true
+  % TODO useProlongation = true
 
 %% PARAMETERS
 
@@ -12,16 +13,15 @@ function params = editable
   initialRefinementLevel = 0;
 
   % algorithm parameters
-  minNrDof               = 1e2;
+  minNrDof               = 1e3;
   alpha4Estimate         = 1;
   beta4Estimate          = 1;   
-  epsStop                = 1e-3;
+  epsStop                = 1e-2;
   stopCrit               = ["Exact Error Difference", ...
                             "weighted energy difference"];
-  useProlongation        = false;
+  useProlongation        = false; % TODO
   exactSolutionKnown     = true;
-  useExactEnergy         = false; % only effective if exactSolutionKnown == true
-                           % TODO how should the exactEnergy be written into the programm
+  useExactEnergy         = true; % only effective if exactSolutionKnown == true
 			   % just write it in from the file per hand, with like 10 digits or 
 			   % sth.. Think about it.
   parTau                 = 1/2;
@@ -48,10 +48,8 @@ function params = editable
   miscMsg                = sprintf(['this\nis\nan\nexample', ...
                                     '\non\nhow\nthis\ncould\nlook']);
 
-  % necessary function handles
-  
   % TODO rename the called funtions at some time to more suitable names
-
+  % necessary function handles
   function val = rightHandSide(x)
     val =  g(x, [1,1]);
   end
@@ -64,6 +62,9 @@ function params = editable
     % can be ignored if exactSolutionKnown == false
     val = gUexact(x, [1,1]);
   end
+
+  % TODO how should the exactEnergy be written into the programm
+  exactEnergy = -2.05805109; % four significant digits
 
 %% BUILD STRUCT
   % should not be of interest for mere usage of the program
@@ -101,6 +102,7 @@ function params = editable
 
   if exactSolutionKnown 
     params.useExactEnergy = useExactEnergy;
+    params.exactEnergy = exactEnergy;
     % just compute it extrenalyy and only set the flag to true, if the energy is
     % given (read really exact valye from file)
     % TODO continue here, when the function is great
@@ -137,6 +139,9 @@ function params = editable
     %intArray] with 1x2 intArray [nrDof, Error]
     %
     %use significant decimals at termination criterion
+  else
+    params.useExactEnergy = false;
+    params.exactEnergy = NaN;
   end
 
   params.parTau = parTau; 
@@ -148,9 +153,10 @@ function params = editable
 
   params.degree4Integrate = degree4Integrate;
   params.showPlots = showPlots;              
-  params.figVisible = 'off';
   if showPlots
     params.figVisible = 'on';
+  else
+    params.figVisible = 'off';
   end
   params.showProgress = showProgress;          
 

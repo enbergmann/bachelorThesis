@@ -11,6 +11,8 @@ function saveResults(params, currData, outputLvl, output)
   figVisible = params.figVisible;
   parAlpha = params.parAlpha;
   parBeta = params.parBeta;
+  useExactEnergy = params.useExactEnergy;
+  exactEnergy = params.exactEnergy;
 
   % extract necessary information from currData
   nrDof = currData.nrDof; 
@@ -43,6 +45,7 @@ function saveResults(params, currData, outputLvl, output)
 %% SAVE INFORMATION ABOUT EXPERIMENT
 
   if currLvl == 0
+  % this means the benchmark-file should not be changed until level 0 is saved
     source = sprintf('benchmarks/%s.m', benchmark);
     destination = ...
       sprintf('../../results/nonconforming/%s/%s/benchmark_%s.txt', ...
@@ -101,39 +104,38 @@ function saveResults(params, currData, outputLvl, output)
   fclose(file);
   
   % TODO THIS IS ALL JUST A TEST, REWRITE AND CHANGE DETAILS AND INFOS
-  %TODO here the given (!) exact energy (if exactEnergyKnow) should be used
-  %     also from here on out every time it's used
-  %     this means it still needs to be done how the externly calculated 
-  %     energy should be communicated to the code (prob see editable)
-  name = sprintf('%s/exactAbsoluteEnergyDifference.txt', dirName);
-  file = fopen(name, 'w');
-  fprintf(file, '%.8g\n', abs(energyVec+2.05802391003896));
-  fclose(file);
-  
-  enFig = figure('visible', figVisible); 
-  plot(energyVec);
-  hold on;
-  plot(-2.05802391003896*ones(1, length(energyVec)));
-  legend(sprintf('nrDof = %d (%0.2fs)', nrDof, time), ...
-    sprintf('E_u=-2.05802391003896'));
-  hold off;
-  ftitle=sprintf('Energy for inital nrDof=%d, \\alpha =%d, \\beta =%d',...
-  nrDof, parAlpha, parBeta);
-  title(ftitle);
-  fName = sprintf('%s/energy.png', dirName);
-  xlabel('number of iterations');
-  ylabel('energy');
-  saveas(enFig, fName);
-  
-  enDiffExactFig = figure('visible',figVisible);
-  loglog(abs(energyVec+2.05802391003896));
-  ftitle = sprintf('|E_{NC}(u_{NC})-E_u| for nrDof = %d, \\alpha = %d, \\beta = %d', ...
+  if useExactEnergy
+    name = sprintf('%s/exactAbsoluteEnergyDifference.txt', dirName);
+    file = fopen(name, 'w');
+    fprintf(file, '%.8g\n', abs(energyVec-exactEnergy));
+    fclose(file);
+    
+    enFig = figure('visible', figVisible); 
+    plot(energyVec);
+    hold on;
+    plot(exactEnergy*ones(1, length(energyVec)));
+    legend(sprintf('nrDof = %d (%0.2fs)', nrDof, time), ...
+      sprintf('E_u = %.8g', exactEnergy));
+    hold off;
+    ftitle=sprintf('Energy for inital nrDof=%d, \\alpha =%d, \\beta =%d',...
     nrDof, parAlpha, parBeta);
-  title(ftitle);
-  xlabel('number of iterations');
-  ylabel('|E_{NC}(u_{NC})-E_u|');
-  fName = sprintf('%s/enDiffExact_red_%d.png', dirName, nrDof);
-  saveas(enDiffExactFig, fName);
+    title(ftitle);
+    fName = sprintf('%s/energy.png', dirName);
+    xlabel('number of iterations');
+    ylabel('energy');
+    saveas(enFig, fName);
+    
+    enDiffExactFig = figure('visible',figVisible);
+    loglog(abs(energyVec-exactEnergy));
+    ftitle = sprintf(...
+      '|E_{NC}(u_{NC})-E_u| for nrDof = %d, \\alpha = %d, \\beta = %d', ...
+      nrDof, parAlpha, parBeta);
+    title(ftitle);
+    xlabel('number of iterations');
+    ylabel('|E_{NC}(u_{NC})-E_u|');
+    fName = sprintf('%s/enDiffExact_red_%d.png', dirName, nrDof);
+    saveas(enDiffExactFig, fName);
+  end
   
   corrFig = figure('visible', figVisible);
   loglog(corrVec);
@@ -154,10 +156,10 @@ function saveResults(params, currData, outputLvl, output)
   fName = sprintf('%s/triangulation.png', dirName);
   saveas(triangFig, fName);
 
-  % convergence plots
   % % TODO careful, what error is the estimator for (this error should always
   % % be computed then (if possible), make error4lvl a alternative then)
 
+  % convergence plots
   estimatorAndErrorFig = figure('visible', figVisible);
   % plotConvergence(nrDof4lvl,eta4lvl,'\eta_l');
   loglog(nrDof4lvl, eta4lvl);
