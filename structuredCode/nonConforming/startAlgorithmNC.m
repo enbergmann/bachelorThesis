@@ -54,13 +54,13 @@ function [params, output] = startAlgorithmCR(benchmark)
   n4e = params.n4e;
   n4sDb = params.n4sDb;
   n4sNb = params.n4sNb;
-
   f = params.f;
   exactSolutionKnown = params.exactSolutionKnown; 
   uExact = params.uExact;
   polygonMesh = params.polygonMesh;
   minNrDof = params.minNrDof;
   parTheta = params.parTheta;
+  useProlongation = params.useProlongation;
   
   % initialize remaining parameters and struct with information dependend solely
   % on the current geometry
@@ -163,17 +163,17 @@ function [params, output] = startAlgorithmCR(benchmark)
       outputLvl.error4lvl = error4lvl;
     end
 
-    % % TODO showProgress applies also here or not? (maybe not, since this is
     disp(struct2table(outputLvl));
 
     % TODO maybe allow only a fixed amounts of different errors, like only two,
-    % so one can choose L2 and H1 for example
-    % so sth like error4lvl, errorAlt4lvl
+    %      so one can choose L2 and H1 for example
+    %      so sth like error4lvl, errorAlt4lvl
+    % TODO probably always have the error for which the estimator is an 
+    %      upper bound
     
-    %TODO needs to be done
     saveResultsCR(params, currData, outputLvl, output);
 
-    % Check Termination
+    % check termination
     if nrDof >= minNrDof, break, end;
 
     outputLvl.lvl(end+1, 1) = outputLvl.lvl(end, 1)+1;
@@ -182,11 +182,10 @@ function [params, output] = startAlgorithmCR(benchmark)
     n4sMarked = markBulk(n4e, eta4e, parTheta);
 
     % REFINE
+    c4nOld = c4n;
+    n4eOld = n4e;
+
     [c4n, n4e, n4sDb, n4sNb] = refineRGB(c4n, n4e, n4sDb, n4sNb, n4sMarked);
-    currData.c4n = c4n;
-    currData.n4e = n4e;
-    currData.n4sDb = n4sDb;
-    currData.n4sNb = n4sNb;
 
     if polygonMesh
       temp = unique(n4sDb);
@@ -194,14 +193,24 @@ function [params, output] = startAlgorithmCR(benchmark)
         c4n(temp, :)./repmat(sqrt(c4n(temp, 1).^2 + c4n(temp, 2).^2), 1, 2);
     end
     
+    currData.c4n = c4n;
+    currData.n4e = n4e;
+    currData.n4sDb = n4sDb;
+    currData.n4sNb = n4sNb;
+
+    % update some geometry dependent data in currData
     n4s = computeN4s(n4e);
     currData.n4s = n4s;
   
     length4s = computeLength4s(c4n, n4s);
     currData.length4s = length4s;
 
-    %TODO consider prolongation and stuff, choices for start values of u0
-    u0 = interpolationCR(currData, f);
+    % compute inital value for the iteration on the next level
+    if useProlongation
+      u0 = computeRefinementExtension(c4nOld, n4eOld, c4n, n4e, u);
+    else
+      u0 = interpolationCR(currData, f);
+    end
 
     %TODO epsStop should probably be updated right here and now
   end

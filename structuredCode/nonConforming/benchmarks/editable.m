@@ -8,7 +8,8 @@ function params = editable
 %% PARAMETERS
 
   % AFEM parameters
-  geometry               = 'BigSquare';
+  geometry               = 'Polygon'; % TODO does this work with adaptivity?
+                                      % sth goes terribly wrong
   parTheta               = 0.5;  % bulk param. (1 for uniform)
   initialRefinementLevel = 0;
 
@@ -19,7 +20,7 @@ function params = editable
   epsStop                = 1e-2;
   stopCrit               = ["Exact Error Difference", ...
                             "weighted energy difference"];
-  useProlongation        = false; % TODO
+  useProlongation        = true; % TODO
   exactSolutionKnown     = true;
   useExactEnergy         = true; % only effective if exactSolutionKnown == true
 			   % just write it in from the file per hand, with like 10 digits or 
@@ -32,6 +33,7 @@ function params = editable
   errorNorm              = ["L2", "energy"]; % TODO list options (likewise for
                                              % some other params (think))
                                               %strArr
+                              % TODO 
   saveScreenshots        = 0; % save screenshots every saveScreenshots
                               % iterations during algorithm, e.g. for the case it doesn't finish
                               % 0 means no screenshots will be saved
@@ -67,8 +69,7 @@ function params = editable
   exactEnergy = -2.05805109; % four significant digits
 
 %% BUILD STRUCT
-  % should not be of interest for mere usage of the program
-  
+% should not be of interest for mere usage of the program
   params = struct;
 
   params.geometry = geometry;
