@@ -187,6 +187,13 @@ function [params, output] = startAlgorithmCR(benchmark)
 
     [c4n, n4e, n4sDb, n4sNb] = refineRGB(c4n, n4e, n4sDb, n4sNb, n4sMarked);
 
+    % compute inital value for the iteration on the next level if
+    % useProlongation (needs to be done before projection of the nodes on the
+    % edges if polygonMesh, else getParentSide will not work)
+    if useProlongation
+      u0 = computeRefinementExtension(c4nOld, n4eOld, c4n, n4e, u);
+    end
+
     if polygonMesh
       temp = unique(n4sDb);
       c4n(temp, :) = ...
@@ -205,10 +212,9 @@ function [params, output] = startAlgorithmCR(benchmark)
     length4s = computeLength4s(c4n, n4s);
     currData.length4s = length4s;
 
-    % compute inital value for the iteration on the next level
-    if useProlongation
-      u0 = computeRefinementExtension(c4nOld, n4eOld, c4n, n4e, u);
-    else
+    % compute inital value for the iteration on the next level if not 
+    % useProlongation
+    if ~useProlongation
       u0 = interpolationCR(currData, f);
     end
 
