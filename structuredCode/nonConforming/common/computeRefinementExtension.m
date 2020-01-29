@@ -24,12 +24,10 @@ function [solNew] = computeRefinementExtension(c4nOld, n4eOld, c4nNew, ...
   nElemOld = size(n4eOld,1); nElemNew = size(n4eNew,1);
   nSidesOld = size(n4sOld,1); nSidesNew = size(n4sNew,1);
 
-  %nodesNew = [nNodesOld:nNodesNew]'; TODO never used again TODO never used
   % NOTE nodes are not sorted any longer
   sidesNew = setdiff(sort(n4sNew,2),sort(n4sOld,2),'rows');
 
-  parentSide = getParentSide(1:nNodesNew,c4nOld,c4nNew,s4nOld,n4sNew,nNodesOld);
-  % TODO until here understood, continue here
+  parentSide = getParentSide(1:nNodesNew,c4nOld,c4nNew,s4nOld,n4sNew,nNodesOld); %nodes for parent side for every node
   e4nOld = getElements4Nodes(n4eOld);
 
 
@@ -37,10 +35,11 @@ function [solNew] = computeRefinementExtension(c4nOld, n4eOld, c4nNew, ...
       valOld = [solOld(s4eOld(:,1))-solOld(s4eOld(:,2))+solOld(s4eOld(:,3)),...  
                 solOld(s4eOld(:,1))+solOld(s4eOld(:,2))-solOld(s4eOld(:,3)),...
                 - solOld(s4eOld(:,1))+solOld(s4eOld(:,2))+solOld(s4eOld(:,3))]';
-      valOld = valOld(:);
-      
-      valNew = computeP1Extension(n4eOld,n4eNew,nElemNew,valOld,...
-                                  parentSide,e4nOld);
+      valOld = valOld(:); % values in the nodes computed by formula above, every three entries are wrt to one triangle
+      % value in middlepoint is (node1-node2)/2, hence 3 equations, solve for node1, 2, 3, yields above result
+      valNew = computeP1Extension(n4eOld,n4eNew,nElemNew,valOld,... 
+                                  parentSide,e4nOld); % now possible since values in nodes are knwon
+  keyboard
       for elem = 1:nElemNew
         nodes = n4eNew(elem,:);
         sides = s4eNew(elem,:);
@@ -59,13 +58,15 @@ function vNew = computeP1Extension(n4eOld,n4eNew,nElemNew,vOld,...
   vNew = zeros(3*nElemNew,1);
   for elem = 1:nElemNew
     nodes = n4eNew(elem,:);
-    currParentSide = parentSide(nodes,:);
-    currParentElem = unique(currParentSide(:));
+    currParentSide = parentSide(nodes,:); % parent sides of all nodes in elem
+    currParentElem = unique(currParentSide(:)); % nodes of current parent element (without usual order)
     loc = e4nOld{currParentElem(1)};
-    oldElemNumber = loc(currParentElem(2),currParentElem(3));
+    oldElemNumber = loc(currParentElem(2),currParentElem(3)); % this and the line above could just be one line, (for real) e4nOld{currParentElem(1)}(currParentElem(2),currParentElem(3))
     helper = zeros(size(currParentSide));
     for k=1:3
-      I = find(currParentSide==n4eOld(oldElemNumber,k));
+  keyboard
+      I = find(currParentSide==n4eOld(oldElemNumber,k)); %get Indices (not subscripts of k-th node in the old parent element)
+      %TODO continue here
       helper(I) = vOld(3*(oldElemNumber-1)+k);
     end
     vNew(3*elem-[2 1 0]) = sum(helper,2)/2;
@@ -107,13 +108,12 @@ function parentSide = getParentSide(nodeList,c4nOld,c4nNew,s4nOld,...
 end
 
 % find all triangles in the nodepatch of a node
-function e4n = getElements4Nodes(n4e)
-  % TODO next keyboard here
+function e4n = getElements4Nodes(n4e) % e4n{j}(k,l) either yields the element with the nodes j,k,l or All zero sparse 1x1 if there is no such element
   nNodes = max(n4e(:));
   e4n = cell(nNodes,1); for j=1:nNodes; e4n{j}=sparse(nNodes,nNodes); end
   for elem = 1:size(n4e,1)
-    nodes = n4e(elem,:);
-    P = perms(nodes);
+    nodes = n4e(elem,:); % nodes of element
+    P = perms(nodes); % all permutations of nodes
     for k=1:size(P,1)
       e4n{P(k,1)}(P(k,2),P(k,3)) = elem;
     end

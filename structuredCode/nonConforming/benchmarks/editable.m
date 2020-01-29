@@ -20,7 +20,7 @@ function params = editable
   epsStop                = 1e-2;
   stopCrit               = ["Exact Error Difference", ...
                             "weighted energy difference"];
-  useProlongation        = false; % TODO
+  useProlongation        = true; % TODO
   exactSolutionKnown     = true;
   useExactEnergy         = true; % only effective if exactSolutionKnown == true
 			   % just write it in from the file per hand, with like 10 digits or 
