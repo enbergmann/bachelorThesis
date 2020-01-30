@@ -4,6 +4,7 @@ function E = computeDiscreteEnergyCR(params, currData, u, gradCRu)
 % Compute the discrete energy for the nonconforming problem of the
 % Crouzeix-Raviart function u. 
 % 
+% TODO
 % computeDiscreteEnergyCR.m
 % input:  params   - 'struct' with fields:
 %                       parAlpha: parameter alpha from the problem
@@ -12,6 +13,8 @@ function E = computeDiscreteEnergyCR(params, currData, u, gradCRu)
 %                       intRHS4s: integral of f times the CR-basis function
 %                                 wrt. j-th side in the j-th component
 %                         maMaCR: global CR mass matrix
+%         u        -
+%         gradCRu  -
 %
 % output: E        - 'double' containing the discrete energy of u
   

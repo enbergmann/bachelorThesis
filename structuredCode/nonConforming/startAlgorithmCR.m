@@ -67,10 +67,10 @@ function [params, output] = startAlgorithmCR(benchmark)
 
   outputLvl = struct;
 
-  outputLvl.lvl = [0];
-  eta4lvl = [];
-  outputLvl.nrDof4lvl = [];
-  error4lvl = [];
+  outputLvl.lvl = 0;
+  eta4lvl = []; 
+  outputLvl.nrDof4lvl = []; 
+  error4lvl = []; 
 
 
   currData = struct;
@@ -154,12 +154,13 @@ function [params, output] = startAlgorithmCR(benchmark)
 
     %TODO still need to comment and some other stuff
     eta4e = estimateErrorCR4e(params, currData, u);
-    eta4lvl(end+1, 1) = sum(eta4e);
+    eta4lvl(end+1, 1) = sum(eta4e);%#ok<AGROW>
     outputLvl.eta4lvl = eta4lvl;
 
     % TODO implement flag for different errors
     if exactSolutionKnown
-      error4lvl(end+1, 1) = sqrt(sum(error4eCRL2(c4n,n4e,uExact,u)));
+      error4lvl(end+1, 1) = sqrt(sum(error4eCRL2(c4n, n4e, uExact, u))); ...
+        %#ok<AGROW>
       outputLvl.error4lvl = error4lvl;
     end
 
@@ -174,7 +175,9 @@ function [params, output] = startAlgorithmCR(benchmark)
     saveResultsCR(params, currData, outputLvl, output);
 
     % check termination
-    if nrDof >= minNrDof, break, end;
+    if nrDof >= minNrDof 
+      break
+    end
 
     outputLvl.lvl(end+1, 1) = outputLvl.lvl(end, 1)+1;
 
