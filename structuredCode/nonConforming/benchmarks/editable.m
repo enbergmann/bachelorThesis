@@ -41,7 +41,7 @@ function params = editable
   % misc. parameters (will affect performance)
   degree4Integrate       = 20; % Algebraic degree of exactness for integrate
                                % from the AFEM package
-  showPlots              = false; % Show plots during computation?
+  showPlots              = true; % Show plots during computation?
   showProgress           = true; % Print output during computation?
 
   % Information about experiment for saving and documentation.
