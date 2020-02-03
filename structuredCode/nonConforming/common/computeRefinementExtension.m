@@ -14,7 +14,7 @@
 %                               mesh
 
 % function [uNew] = computeCRprolongation(c4n, n4e, c4nNew, n4eNew, u)
-function [uNew] = computeRefinementExtension(c4n, n4e, c4nNew, n4eNew, u)
+function uNew = computeRefinementExtension(c4n, n4e, c4nNew, n4eNew, u)
 
   %% initialization
   n4sNew = computeN4s(n4eNew);
@@ -27,6 +27,7 @@ function [uNew] = computeRefinementExtension(c4n, n4e, c4nNew, n4eNew, u)
   nrElemsNew = size(n4eNew, 1);
   nrSidesNew = size(n4sNew, 1);
 
+  keyboard
   %TODO continue here use mlint
   n4parentSides4n = getParentSide(1:nrNodesNew,c4n,c4nNew,s4n,n4sNew,nrNodes); 
   %nodes for parent side for every node
@@ -66,8 +67,8 @@ function vNew = computeP1Extension(n4e,n4eNew,nrElemsNew,vOld,...
     oldElemNumber = loc(currParentElem(2),currParentElem(3)); % this and the line above could just be one line, (for real) e4nOld{currParentElem(1)}(currParentElem(2),currParentElem(3))
     helper = zeros(size(currParentSide));
     for k=1:3
-      I = find(currParentSide==n4e(oldElemNumber,k)); 
-      %get Indices (not subscripts) of k-th node of the parent element in the parent sides
+      I = currParentSide==n4e(oldElemNumber,k); 
+      %get Indices of k-th node of the parent element in the parent sides
       helper(I) = vOld(3*(oldElemNumber-1)+k); % formula yields the k-th node in the parent element, hence helper gets those values in the right place given by I
     end
     vNew(3*elem-[2 1 0]) = sum(helper,2)/2; %middles the values of the two nodes of the parent edge in the current Parent element and writes it at the right place in vNew
