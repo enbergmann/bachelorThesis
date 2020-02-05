@@ -3,13 +3,10 @@ function params = editable
 % Execute program/startAlgorithmNC.m to run algorithm.
 % Execute program/computeExactEnergyBV(...) to approximate the exact energy.
 
-  % TODO useProlongation = true
-
 %% PARAMETERS
 
   % AFEM parameters
-  geometry               = 'Polygon'; % TODO does this work with adaptivity?
-                                      % sth goes terribly wrong
+  geometry               = 'BigSquare'; 
   parTheta               = 0.5;  % bulk param. (1 for uniform)
   initialRefinementLevel = 0;
 
@@ -20,7 +17,7 @@ function params = editable
   epsStop                = 1e-2;
   stopCrit               = ["Exact Error Difference", ...
                             "weighted energy difference"];
-  useProlongation        = true; % TODO
+  useProlongation        = true; 
   exactSolutionKnown     = true;
   useExactEnergy         = true; % only effective if exactSolutionKnown == true
 			   % just write it in from the file per hand, with like 10 digits or 

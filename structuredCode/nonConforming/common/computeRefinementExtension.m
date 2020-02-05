@@ -1,3 +1,4 @@
+function uNew = computeRefinementExtension(c4n, n4e, c4nNew, n4eNew, u)
 % TODO comment and structure and write the interface documentation
 % function computeRefinementExtension
 %
@@ -13,7 +14,6 @@
 % OUTPUT        uNew          prolongation of the old solution to the new
 %                               mesh
 
-function uNew = computeRefinementExtension(c4n, n4e, c4nNew, n4eNew, u)
   %% initialization
   n4sNew = computeN4s(n4eNew);
   s4n = computeS4n(n4e);
@@ -41,15 +41,14 @@ function uNew = computeRefinementExtension(c4n, n4e, c4nNew, n4eNew, u)
     n4parentSides4n, e4n); 
     % now possible since values in nodes are knwon
     
-    % TODO continue here
-  for elem = 1:nrElemsNew % this might be vertorizable somehow, right?
+  for elem = 1:nrElemsNew
     sides = s4eNew(elem, :);
-    val = valNew(3*elem - [2 1 0]); % values in nodes on current element
-    uNew(sides) = (val + val([2 3 1]))/2; 
-     % middle values of nodes for the current edge for value in midpoint
-     % no addition needed since CR continuous in the middle points
-     % BUT this overrides already known values for every inner edge with the same value
-     % is this fixable?
+    temp = valNew(3*elem - [2 1 0]); % values in nodes of current element
+    uNew(sides) = (temp + temp([2 3 1]))/2; 
+     % average the values in nodes of the current edge for the value in
+     % midpoint 
+     % no addition needed since CR continuous in the midpoints BUT this
+     % overrides already known values for every inner edge with the same value
   end
 end
 

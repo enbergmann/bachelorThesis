@@ -194,6 +194,7 @@ function [params, output] = startAlgorithmCR(benchmark)
     % useProlongation (needs to be done before projection of the nodes on the
     % edges if polygonMesh, else getParentSide will not work)
     if useProlongation
+      % TODO comment and interface documentation
       u0 = computeRefinementExtension(c4nOld, n4eOld, c4n, n4e, u);
     end
 
