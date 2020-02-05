@@ -80,7 +80,7 @@ function computeExactEnergyBV(geometry, fStr, fStrParams, uStr, uStrParams, ...
 
   nrDof = [];
   energy = [];
-  significantDigits = [0];
+  significantDigits = 0;
   
   while true
     % compute geometry
@@ -100,7 +100,7 @@ function computeExactEnergyBV(geometry, fStr, fStrParams, uStr, uStrParams, ...
     tempStruct.s4n = computeS4n(n4e, n4s);
     tempStruct.nrSides = max(max(s4e));
     dof = computeDofCR(tempStruct);
-    nrDof(end+1,1) = length(dof);
+    nrDof(end+1,1) = length(dof);%#ok<AGROW>
     output.nrDof = nrDof;
 
     % compute energy
@@ -108,7 +108,7 @@ function computeExactEnergyBV(geometry, fStr, fStrParams, uStr, uStrParams, ...
         integrate(@(n4p, Gpts4p, Gpts4ref)(...
       parAlpha/2*u(Gpts4p).^2 + sqrt(sum(gradU(Gpts4p).^2, 2)) ...
       - f(Gpts4p).*u(Gpts4p)), ...
-      c4n, n4e, degree4Integrate+1, area4e));
+      c4n, n4e, degree4Integrate+1, area4e));%#ok<AGROW>
     output.energy = energy;
 
     % compute significant digits
@@ -122,7 +122,7 @@ function computeExactEnergyBV(geometry, fStr, fStrParams, uStr, uStrParams, ...
         end
       end
       % in MATLAB j is known even after the loop ends
-      significantDigits(end+1,1) = j-1;
+      significantDigits(end+1,1) = j-1;%#ok<AGROW>
     end
     output.significantDigits = significantDigits;
 

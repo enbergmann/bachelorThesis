@@ -10,7 +10,7 @@ function command = c
   if strcmp(name,'bergmaen') || strcmp(name,'Enrico') || strcmp(name,'enrico')
     if feature('IsDebugMode')
       % evalin('caller','dbquit all');
-      command = 'dbquit all'
+      command = 'dbquit all';
     end
     close all
     evalin('caller', 'clear all');
