@@ -14,7 +14,8 @@ function params = editable
   minNrDof               = 1e3;
   alpha4Estimate         = 1;
   beta4Estimate          = 1;   
-  epsStop                = 1e-2;
+  epsStop                = 1e-2; % TODO sth about updating it depending on
+                                 %      mesh size
   stopCrit               = ["Exact Error Difference", ...
                             "weighted energy difference"];
   useProlongation        = true; 
@@ -22,6 +23,8 @@ function params = editable
   useExactEnergy         = true; % only effective if exactSolutionKnown == true
 			   % just write it in from the file per hand, with like 10 digits or 
 			   % sth.. Think about it.
+  % TODO how should the exactEnergy be written into here
+  exactEnergy            = -2.05805109; % four significant digits
   parTau                 = 1/2;
 
   % experiment parameters
@@ -30,13 +33,21 @@ function params = editable
   errorNorm              = ["L2", "energy"]; % TODO list options (likewise for
                                              % some other params (think))
                                               %strArr
+                                            %maybe altErrorNorm and always
+                                            %compute L2 error because it's 
+                                            %useful for the estimator (or
+                                            %always L2 and H1 error, if 
+                                            %useful, but they probably only 
+                                            %differ bei some constant hence
+                                            %one of those is sufficient (check
+                                            %this))
                               % TODO 
   saveScreenshots        = 0; % save screenshots every saveScreenshots
                               % iterations during algorithm, e.g. for the case it doesn't finish
                               % 0 means no screenshots will be saved
 
   % misc. parameters (will affect performance)
-  degree4Integrate       = 20; % Algebraic degree of exactness for integrate
+  degree4Integrate       = 20; % algebraic degree of exactness for integrate
                                % from the AFEM package
   showPlots              = true; % Show plots during computation?
   showProgress           = true; % Print output during computation?
@@ -62,8 +73,6 @@ function params = editable
     val = gUexact(x, [1,1]);
   end
 
-  % TODO how should the exactEnergy be written into the programm
-  exactEnergy = -2.05805109; % four significant digits
 
 %% BUILD STRUCT
 % should not be of interest for mere usage of the program
