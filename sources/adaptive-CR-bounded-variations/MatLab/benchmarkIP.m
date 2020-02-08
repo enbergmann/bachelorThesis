@@ -19,7 +19,6 @@ function benchmarkIP(theta, minDof, alpha, gamma, epsilon, s)
         img([j:imgSize(1)-(j-1)],imgSize(2)-(j-1)) ...
             = (j-1)*img([j:imgSize(1)-(j-1)],imgSize(2)-(j-1))/25;
     end
-    keyboard
     
     if nargin < 1
         theta = 0.5;
@@ -47,7 +46,7 @@ function benchmarkIP(theta, minDof, alpha, gamma, epsilon, s)
     
     [c4n, n4e, n4sDb, ~] = loadGeometry('Square');
     
-    folderName = ['results/ImgProcessing/alpha', num2str(alpha), 'theta', num2str(ceil(theta*100)), ...
+    folderName = ['results2/ImgProcessing/alpha', num2str(alpha), 'theta', num2str(ceil(theta*100)), ...
                   'gamma', num2str(ceil(gamma*100)), 'dof', num2str(minDof)];
     
     [meanUCR4e, c4n, n4e] = afemBV(@(x)f(x, img, imgSize), c4n, n4e, n4sDb, theta, minDof,...

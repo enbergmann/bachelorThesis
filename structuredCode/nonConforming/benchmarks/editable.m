@@ -3,26 +3,30 @@ function params = editable
 % Execute program/startAlgorithmNC.m to run algorithm.
 % Execute program/computeExactEnergyBV(...) to approximate the exact energy.
 
+% TODO mode = 'image'
+
 %% PARAMETERS
 
   % AFEM parameters
-  geometry               = 'BigSquare'; 
+  geometry               = 'BigSquare'; % not necessary if imageGiven (for now)
   parTheta               = 0.5;  % bulk param. (1 for uniform)
-  initialRefinementLevel = 0;
+  initialRefinementLevel = 5;
+  minNrDof               = 1e4;
 
   % algorithm parameters
-  minNrDof               = 1e3;
   alpha4Estimate         = 1;
   beta4Estimate          = 1;   
   epsStop                = 1e-2; % TODO sth about updating it depending on
                                  %      mesh size
   stopCrit               = ["Exact Error Difference", ...
                             "weighted energy difference"];
+  imageName              = '../utils/functions/images/cameraman.tif'; 
+    % '' if none
   useProlongation        = true; 
-  exactSolutionKnown     = true;
+  exactSolutionKnown     = false;
   useExactEnergy         = true; % only effective if exactSolutionKnown == true
-			   % just write it in from the file per hand, with like 10 digits or 
-			   % sth.. Think about it.
+		% just write it in from the file per hand, with like 10 digits or 
+		% sth.. Think about it.
   % TODO how should the exactEnergy be written into here
   exactEnergy            = -2.05805109; % four significant digits
   parTau                 = 1/2;
@@ -53,7 +57,7 @@ function params = editable
   showProgress           = true; % Print output during computation?
 
   % Information about experiment for saving and documentation.
-  expName                = 'testForBenchmark';
+  expName                = 'testForBenchmarkImage';
   dirInfoName            = datestr(now, 'yy_mm_dd_HH_MM_SS');
   miscMsg                = sprintf(['this\nis\nan\nexample', ...
                                     '\non\nhow\nthis\ncould\nlook']);
@@ -78,6 +82,14 @@ function params = editable
 % should not be of interest for mere usage of the program
   params = struct;
 
+  if length(imageName) > 0
+    imageGiven = true;
+    geometry = 'Square';
+  else
+    imageGiven = false;
+  end
+
+  params.imageGiven = imageGiven;
   params.geometry = geometry;
 
   if strcmp(geometry, 'Polygon')
@@ -171,6 +183,43 @@ function params = editable
   params.dirInfoName = dirInfoName;
   params.miscMsg = miscMsg;
 
-  params.f = @(x) rightHandSide(x);
+  if imageGiven
+    % TODO see below, probably leave everything in rhsImg
+
+    % read image and convert utf8 to double
+    img = im2double(imread(imageName));
+    imgSize = size(img);
+
+    %   % add 10 pixel frame of zeros
+    %   img = [zeros(imgSize(1),10), img, zeros(imgSize(1),10)];
+    %   img = [zeros(10,imgSize(2)+20); img; zeros(10,imgSize(2)+20)];
+    %   imgSize = imgSize + 20;
+    
+    % add fade to black on the edges for 25 pixels (0 boundary conditions)
+    for j = 1:25
+      img(j, :) = (j-1)*img(j, :)/25;
+        % first 25 rows
+      img(imgSize(1)-(j-1), :) = (j-1)*img(imgSize(1)-(j-1), :)/25;
+        % last 25 rows
+      img([j:imgSize(1)-(j-1)], j) = (j-1)*img([j:imgSize(1)-(j-1)], j)/25;
+        % first 25 columns except already done first and last j rows
+      img([j:imgSize(1)-(j-1)], imgSize(2)-(j-1)) ...
+          = (j-1)*img([j:imgSize(1)-(j-1)], imgSize(2)-(j-1))/25;
+        % last 25 columns except already done first and lastj rows
+      % always divide by 25 since j is 25 at most
+    end
+      
+    % rescale (since bartels formulates the energy slightly differently)
+    %alpha = 10000; % same as in the algorithm
+    %img = img*alpha;
+
+    params.f = @(x) rhsImg(x, img, imgSize); 
+    %TODO unnecessary, either do more in
+    % rhsImg and return a function handle OR do everything here
+    % (maybe seperate file for easier access and configurations
+    % and comments)
+  else
+    params.f = @(x) rightHandSide(x);
+  end
   params.u0 = @(x) initalValue(x);
 end

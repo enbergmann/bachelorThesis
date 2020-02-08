@@ -28,6 +28,7 @@ function  [u,corrVec,energyVec] = ...
   exactEnergy = params.exactEnergy;
   saveScreenshots = params.saveScreenshots;
   showPlots = params.showPlots;
+  imageGiven = params.imageGiven;
 
   % extract necessary data from currData
   stiMaCR = currData.stiMaCR;
@@ -95,8 +96,9 @@ function  [u,corrVec,energyVec] = ...
     corr = sqrt(dtU'*stiMaCR*dtU); % Only gradients
 
     if showProgress
-      % TODO make this prettier
-      fprintf('corr/epsStop: %e / %e\n',corr,epsStop);
+      % TODO make this prettier (also number of iteration)
+      % use structs and disp table
+      fprintf('corr/epsStop: %e / %e\n', corr, epsStop);
       format long; % TODO change that in the fprintf %.8g or something
       fprintf('E = %f, E_exact = %f\n', E, exactEnergy);
       format short;
@@ -114,7 +116,24 @@ function  [u,corrVec,energyVec] = ...
     end
 
     if showPlots
-      plotCR(c4n,n4e,uNew);
+      if imageGiven
+        colormap gray;
+        axis off;
+        axis equal;
+        % plotGreyScale(mean(u(s4e), 2), c4n, n4e)
+        X1 = c4n(n4e(:, 1), 1);
+        X2 = c4n(n4e(:, 2), 1);
+        X3 = c4n(n4e(:, 3), 1);
+        Y1 = c4n(n4e(:, 1), 2);
+        Y2 = c4n(n4e(:, 2), 2);
+        Y3 = c4n(n4e(:, 3), 2);
+        X = [X1'; X2'; X3'];
+        Y = [Y1'; Y2'; Y3'];
+        patch(X,Y,mean(u(s4e), 2)','EdgeColor','none');
+        drawnow
+      else
+        plotCR(c4n,n4e,uNew);
+      end
       clf('reset');
       fprintf('\n')
     end

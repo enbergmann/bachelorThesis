@@ -61,6 +61,7 @@ function [params, output] = startAlgorithmCR(benchmark)
   minNrDof = params.minNrDof;
   parTheta = params.parTheta;
   useProlongation = params.useProlongation;
+  imageGiven = params.imageGiven;
   
   % initialize remaining parameters and struct with information dependend solely
   % on the current geometry
@@ -71,6 +72,7 @@ function [params, output] = startAlgorithmCR(benchmark)
   eta4lvl = []; 
   outputLvl.nrDof4lvl = []; 
   error4lvl = []; 
+  outputLvl.nrIterations4lvl = [];
 
 
   currData = struct;
@@ -145,10 +147,12 @@ function [params, output] = startAlgorithmCR(benchmark)
     % SOLVE
     tic;
     % TODO not done yet (subfunctions, documentation)
-    [u, output.corrVec, output.energyVec] = ...
+    [u, corrVec, output.energyVec] = ...
       solvePrimalDualFormulation(params, currData, u0, varLambda);
+    output.corrVec = corrVec;
     output.time = toc; 
     output.u = u;
+    outputLvl.nrIterations4lvl(end+1, 1) = length(corrVec);%#ok<AGROW>
 
     % ESTIMATE
 
@@ -164,6 +168,7 @@ function [params, output] = startAlgorithmCR(benchmark)
       outputLvl.error4lvl = error4lvl;
     end
 
+    % add number of iterations needed to struct2table
     disp(struct2table(outputLvl));
 
     % TODO maybe allow only a fixed amounts of different errors, like only two,
