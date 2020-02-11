@@ -108,22 +108,7 @@ function saveResults(params, currData, outputLvl, output)
     file = fopen(name, 'w');
     fprintf(file, '%.8g\n', abs(energyVec-exactEnergy));
     fclose(file);
-    
-    enFig = figure('visible', figVisible); 
-    plot(energyVec);
-    hold on;
-    plot(exactEnergy*ones(1, length(energyVec)));
-    legend(sprintf('nrDof = %d (%0.2fs)', nrDof, time), ...
-      sprintf('E_u = %.8g', exactEnergy));
-    hold off;
-    ftitle=sprintf('Energy for inital nrDof=%d, \\alpha =%d, \\beta =%d',...
-    nrDof, parAlpha, parBeta);
-    title(ftitle);
-    fName = sprintf('%s/energy.png', dirName);
-    xlabel('number of iterations');
-    ylabel('energy');
-    saveas(enFig, fName);
-    
+
     enDiffExactFig = figure('visible',figVisible);
     loglog(abs(energyVec-exactEnergy));
     ftitle = sprintf(...
@@ -135,6 +120,27 @@ function saveResults(params, currData, outputLvl, output)
     fName = sprintf('%s/enDiffExact_red_%d.png', dirName, nrDof);
     saveas(enDiffExactFig, fName);
   end
+    
+  enFig = figure('visible', figVisible); 
+  plot(energyVec);
+  if useExactEnergy
+    hold on;
+    plot(exactEnergy*ones(1, length(energyVec)));
+    legend(sprintf('nrDof = %d (%0.2fs)', nrDof, time), ...
+      sprintf('E_u = %.8g', exactEnergy));
+    hold off;
+  else
+    legend(sprintf('nrDof = %d (%0.2fs)', nrDof, time));
+    % TODO else unnecessary, isnt there some legend Add entry
+  end
+  ftitle=sprintf('Energy for inital nrDof=%d, \\alpha =%d, \\beta =%d',...
+  nrDof, parAlpha, parBeta);
+  title(ftitle);
+  fName = sprintf('%s/energy.png', dirName);
+  xlabel('number of iterations');
+  ylabel('energy');
+  saveas(enFig, fName);
+  
   
   corrFig = figure('visible', figVisible);
   loglog(corrVec);
@@ -170,6 +176,7 @@ function saveResults(params, currData, outputLvl, output)
       nrDof, parAlpha, parBeta);
     ylabel('estimator and error');
     fName = sprintf('%s/errorAndEstimator.png', dirName);
+    hold off;
   else
     legend(sprintf('\\eta'));
     ftitle = sprintf('Estimator for nrDof = %d, \\alpha = %d, \\beta = %d', ...
