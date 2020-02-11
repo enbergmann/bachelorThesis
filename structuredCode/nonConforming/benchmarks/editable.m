@@ -10,7 +10,7 @@ function params = editable
   % AFEM parameters
   geometry               = 'BigSquare'; % not necessary if imageGiven (for now)
   parTheta               = 0.5;  % bulk param. (1 for uniform)
-  initialRefinementLevel = 5;
+  initialRefinementLevel = 3;
   minNrDof               = 1e4;
 
   % algorithm parameters
@@ -32,7 +32,7 @@ function params = editable
   parTau                 = 1/2;
 
   % experiment parameters
-  parAlpha               = 1;
+  parAlpha               = 10000;
   parBeta                = 1;
   errorNorm              = ["L2", "energy"]; % TODO list options (likewise for
                                              % some other params (think))
@@ -185,6 +185,7 @@ function params = editable
 
   if imageGiven
     % TODO see below, probably leave everything in rhsImg
+    % TODO call function image2function or sth
 
     % read image and convert utf8 to double
     img = im2double(imread(imageName));
@@ -210,8 +211,7 @@ function params = editable
     end
       
     % rescale (since bartels formulates the energy slightly differently)
-    %alpha = 10000; % same as in the algorithm
-    %img = img*alpha;
+    img = img*parAlpha;
 
     params.f = @(x) rhsImg(x, img, imgSize); 
     %TODO unnecessary, either do more in

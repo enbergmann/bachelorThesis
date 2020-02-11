@@ -194,7 +194,6 @@ function [params, output] = startAlgorithmCR(benchmark)
     n4eOld = n4e;
 
     [c4n, n4e, n4sDb, n4sNb] = refineRGB(c4n, n4e, n4sDb, n4sNb, n4sMarked);
-
     % compute inital value for the iteration on the next level if
     % useProlongation (needs to be done before projection of the nodes on the
     % edges if polygonMesh, else getParentSide will not work)

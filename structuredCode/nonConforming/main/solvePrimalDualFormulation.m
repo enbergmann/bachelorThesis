@@ -117,6 +117,7 @@ function  [u,corrVec,energyVec] = ...
 
     if showPlots
       if imageGiven
+        % TODO prob use plotGrayScale but fix it first st it works
         colormap gray;
         axis off;
         axis equal;
