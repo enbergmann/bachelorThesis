@@ -159,6 +159,7 @@ function [params, output] = startAlgorithmCR(benchmark)
 
     %TODO still need to comment and some other stuff
     [eta4e, mu4e, xi4e] = estimateErrorCR4e(params, currData, u);
+    %TODO ability to plot mu4e and xi4e (and give them better names)
     eta4lvl(end+1, 1) = sum(eta4e);%#ok<AGROW>
     outputLvl.eta4lvl = eta4lvl;
 

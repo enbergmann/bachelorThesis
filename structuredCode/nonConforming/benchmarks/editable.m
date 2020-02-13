@@ -3,12 +3,15 @@ function params = editable
 % Execute program/startAlgorithmNC.m to run algorithm.
 % Execute program/computeExactEnergyBV(...) to approximate the exact energy.
 
+% TODO after this works create denoise exampe, see if the algorithm denoises
+% TODO benchmark needs modes like (function, image, denoise)
+
 %% PARAMETERS
 
   % AFEM parameters
   geometry               = 'BigSquare'; % not necessary if imageGiven (for now)
   parTheta               = 0.5;  % bulk param. (1 for uniform)
-  initialRefinementLevel = 5;
+  initialRefinementLevel = 0;
   minNrDof               = 1e4;
 
   % algorithm parameters
@@ -17,10 +20,10 @@ function params = editable
                                  %      mesh size
   stopCrit               = ["Exact Error Difference", ...
                             "weighted energy difference"];
-  imageName              = '../utils/functions/images/cameraman.tif'; 
+  imageName              = ''; %'../utils/functions/images/cameraman.tif'; 
     % '' if none
   useProlongation        = true; 
-  exactSolutionKnown     = false;
+  exactSolutionKnown     = true;
   useExactEnergy         = true; % only effective if exactSolutionKnown == true
 		% just write it in from the file per hand, with like 10 digits or 
 		% sth.. Think about it.
@@ -29,7 +32,8 @@ function params = editable
   parTau                 = 1/2;
 
   % experiment parameters
-  parAlpha               = 10000;
+  parAlpha               = 1; %10000 for image example 
+   % TODO why does the analytic example is broken for 10000
   parBeta                = 1;
   errorNorm              = ["L2", "energy"]; % TODO list options (likewise for
                                              % some other params (think))
@@ -61,6 +65,8 @@ function params = editable
 
   % TODO rename the called funtions at some time to more suitable names
   % necessary function handles
+  % TODO pasted-graphic-2.tiff does have a calculation formula to calculate
+  % f from some given function u(r) --> other examples possible (easier even?)
   function val = rightHandSide(x)
     val =  g(x, [1,1]);
   end

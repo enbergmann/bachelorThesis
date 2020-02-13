@@ -1,8 +1,7 @@
-function y = rhsImg(x, img, imgSize)
-% TODO after this works create denoise exampe, see if the algorithm denoises
-% TODO benchmark needs modes like (function, image, denoise)
+function y = image2rhs(x, img, imgSize)
 % TODO comment this when it's beautiful
 % TODO name is prob more sth like 'projectImageToSquare'
+
   % prob only works on Square domain right now
   
   % img(1, 1),     [0, 1] top left pixel
