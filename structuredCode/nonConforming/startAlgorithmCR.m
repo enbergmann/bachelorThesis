@@ -1,6 +1,7 @@
-%TODO REMEMBER MATLAB ist copyOnWrite, so try not to change structs in functions
-%to avoid the struct being copied
-%might be necessary to use 'clear' to delete data later (e.g. after saving c4n in current)
+% NOTE REMEMBER MATLAB ist copyOnWrite, so try not to change structs in
+% functions to avoid the struct being copied 
+% might be necessary to use 'clear' to delete data later (e.g. after saving c4n
+% in current)
 
 % TODO for all my functions (dont want to touch afem stuff) compute all
 % necessary stuff (in particular that is dependend on geometry) before and pass
@@ -157,7 +158,7 @@ function [params, output] = startAlgorithmCR(benchmark)
     % ESTIMATE
 
     %TODO still need to comment and some other stuff
-    eta4e = estimateErrorCR4e(params, currData, u);
+    [eta4e, mu4e, xi4e] = estimateErrorCR4e(params, currData, u);
     eta4lvl(end+1, 1) = sum(eta4e);%#ok<AGROW>
     outputLvl.eta4lvl = eta4lvl;
 

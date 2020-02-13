@@ -3,18 +3,15 @@ function params = editable
 % Execute program/startAlgorithmNC.m to run algorithm.
 % Execute program/computeExactEnergyBV(...) to approximate the exact energy.
 
-% TODO mode = 'image'
-
 %% PARAMETERS
 
   % AFEM parameters
   geometry               = 'BigSquare'; % not necessary if imageGiven (for now)
   parTheta               = 0.5;  % bulk param. (1 for uniform)
-  initialRefinementLevel = 3;
+  initialRefinementLevel = 5;
   minNrDof               = 1e4;
 
   % algorithm parameters
-  alpha4Estimate         = 1;
   beta4Estimate          = 1;   
   epsStop                = 1e-2; % TODO sth about updating it depending on
                                  %      mesh size
@@ -106,7 +103,6 @@ function params = editable
   params.initialRefinementLevel = initialRefinementLevel;
 
   params.minNrDof = minNrDof;
-  params.alpha4Estimate = alpha4Estimate;
   params.beta4Estimate = beta4Estimate;
   params.epsStop = epsStop;
   params.stopCrit = stopCrit;              

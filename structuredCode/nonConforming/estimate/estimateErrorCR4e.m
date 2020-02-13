@@ -1,7 +1,7 @@
-function eta4e = estimateErrorCR4e(params, currData, u)
+function [eta4e, mu4e, xi4e] = estimateErrorCR4e(params, currData, u)
   %TODO interface documentation
 
-  alpha4Estimate = params.alpha4Estimate;
+  parAlpha = params.parAlpha;
   beta4Estimate = params.beta4Estimate;
   f = params.f;
 
@@ -27,13 +27,14 @@ function eta4e = estimateErrorCR4e(params, currData, u)
   int2RHS4e = currData.int2RHS4e;
   int3RHS4e = currData.int3RHS4e;
     % temp_j(elem) = \int_T psi_j *f dx
+
   termFSquared = integrate(@(n4p, Gpts4p, Gpts4ref)(f(Gpts4p).^2), ...
     c4n, n4e, 20, area4e);
     % temp(elem) = ||f||^2_{L^2(T)}
-
   termMixed = u(s4e(:, 1)).*int1RHS4e + u(s4e(:, 2)).*int2RHS4e ... 
     + u(s4e(:, 3)).*int3RHS4e;
   termU = 1/3*area4e.*sum(u(s4e).^2, 2);
+
   termJumps = 1/4*(...
               length4s(s4e(:, 1)).*sum(absNodeJumps4s(s4e(:, 1), :), 2)...
               + length4s(s4e(:, 2)).*sum(absNodeJumps4s(s4e(:, 2), :), 2)...
@@ -50,7 +51,10 @@ function eta4e = estimateErrorCR4e(params, currData, u)
   n=2; % TODO should probably in params, think about a suiting name and do it
         % it's a param for the estimator, hence its destined place is in params
 
-  eta4e = area4e.^(2/n).*(termFSquared - 2*alpha4Estimate*termMixed + ...
-    alpha4Estimate^2*termU)...
-          + area4e.^(beta4Estimate/n).*termJumps;
+        %TODO Tien has a little error, he also has n = 2, alpha = beta = 1
+  mu4e = area4e.^(2/n).*(termFSquared - 2*parAlpha*termMixed + ...
+    parAlpha^2*termU);
+  % TODO sth with the volume term is pretty wrong
+  xi4e = area4e.^(beta4Estimate/n).*termJumps;
+  eta4e = xi4e + mu4e;
 end
