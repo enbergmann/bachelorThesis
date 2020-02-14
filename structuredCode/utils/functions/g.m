@@ -1,4 +1,7 @@
 function val = g(x, params)
+  %TODO params is already name of one struct, right? rename it here and in
+  %the other functions then
+  %TODO rewrite this stuff beautifully
 
 alpha = params(1, 1);
 delta = params(1, 2);
@@ -25,7 +28,8 @@ val(temp==1) = 2*alpha+6*pi*sin(pi*(6*r_temp-2))-1./r_temp.*cos(pi*(6*r_temp-2))
 temp = zeros(nP,1);
 temp(1/2<r & r<=5/6) = 1;
 r_temp = r(temp==1);
-val(temp==1) = 2*alpha*(5/2-3*r_temp).^delta+1./r_temp;
+val(temp==1) = 2*alpha*(5/2-3*r_temp).^delta + 1./r_temp;
+% TODO fix type (+1/3 instead of +1/r) in thesis tex
 
 temp = zeros(nP,1);
 temp(5/6<r & r<=1) = 1;
