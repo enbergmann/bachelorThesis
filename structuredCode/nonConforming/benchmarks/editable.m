@@ -27,6 +27,8 @@ function params = editable
   useExactEnergy         = true; % only effective if exactSolutionKnown == true
 		% just write it in from the file per hand, with like 10 digits or 
 		% sth.. Think about it.
+    % TODO for now this is also the flag to use gradient of f to compute a
+    % guaranteed lower energy bound
   % TODO how should the exactEnergy be written into here
   exactEnergy            = -2.05805109; % four significant digits
   parTau                 = 1/2;
@@ -52,10 +54,12 @@ function params = editable
                               % 0 means no screenshots will be saved
 
   % misc. parameters (will affect performance)
+
+  % TODO make maxSpeed optin where plots and progress are automatically off
   degree4Integrate       = 20; % algebraic degree of exactness for integrate
                                % from the AFEM package
-  showPlots              = true; % Show plots during computation?
-  showProgress           = true; % Print output during computation?
+  showPlots              = false; % Show plots during computation?
+  showProgress           = false; % Print output during computation?
 
   % Information about experiment for saving and documentation.
   expName                = 'testForBenchmarkImage';
@@ -69,6 +73,10 @@ function params = editable
   % f from some given function u(r) --> other examples possible (easier even?)
   function val = rightHandSide(x)
     val =  g(x, [1,1]);
+  end
+
+  function val = GradientRightHandSide(x)
+    val =  gradGExact(x, [1,1]);
   end
 
   function val = initalValue(x)
@@ -222,6 +230,9 @@ function params = editable
     % and comments)
   else
     params.f = @(x) rightHandSide(x);
+    if useExactEnergy
+      params.gradF = @(x) GradientRightHandSide(x);
+    end
   end
   params.u0 = @(x) initalValue(x);
 end
