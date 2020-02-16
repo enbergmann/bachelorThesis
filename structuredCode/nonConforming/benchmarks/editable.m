@@ -11,7 +11,7 @@ function params = editable
   % AFEM parameters
   geometry               = 'BigSquare'; % not necessary if imageGiven (for now)
   parTheta               = 0.5;  % bulk param. (1 for uniform)
-  initialRefinementLevel = 0;
+  initialRefinementLevel = 5;
   minNrDof               = 1e4;
 
   % algorithm parameters
@@ -20,10 +20,12 @@ function params = editable
                                  %      mesh size
   stopCrit               = ["Exact Error Difference", ...
                             "weighted energy difference"];
-  imageName              = ''; %'../utils/functions/images/cameraman.tif'; 
+  imageName              = '../utils/functions/images/cameraman.tif'; 
+  %imageName              = ''; %'../utils/functions/images/cameraman.tif'; 
     % '' if none
   useProlongation        = true; 
-  exactSolutionKnown     = true;
+  exactSolutionKnown     = false;
+  % TODO this should always be false if image mode
   useExactEnergy         = true; % only effective if exactSolutionKnown == true
 		% just write it in from the file per hand, with like 10 digits or 
 		% sth.. Think about it.
@@ -34,7 +36,7 @@ function params = editable
   parTau                 = 1/2;
 
   % experiment parameters
-  parAlpha               = 1; %10000 for image example 
+  parAlpha               = 10000; %10000 for image example 
    % TODO why does the analytic example is broken for 10000
   parBeta                = 1;
   errorNorm              = ["L2", "energy"]; % TODO list options (likewise for
@@ -58,8 +60,8 @@ function params = editable
   % TODO make maxSpeed optin where plots and progress are automatically off
   degree4Integrate       = 20; % algebraic degree of exactness for integrate
                                % from the AFEM package
-  showPlots              = false; % Show plots during computation?
-  showProgress           = false; % Print output during computation?
+  showPlots              = true; % Show plots during computation?
+  showProgress           = true; % Print output during computation?
 
   % Information about experiment for saving and documentation.
   expName                = 'testForBenchmarkImage';

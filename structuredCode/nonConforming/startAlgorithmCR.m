@@ -75,6 +75,7 @@ function [params, output] = startAlgorithmCR(benchmark)
   outputLvl.nrDof4lvl = []; 
   error4lvl = []; 
   outputLvl.nrIterations4lvl = [];
+  outputLvl.energy4lvl = [];
   if useExactEnergy 
     outputLvl.Gleb4lvl = [];
   end
@@ -141,7 +142,7 @@ function [params, output] = startAlgorithmCR(benchmark)
     [currData.int1RHS4e, currData.int2RHS4e, currData.int3RHS4e, ...
       currData.intRHS4s] = ...
       integralsWithF4e(currData, f, 200);
-    %needed here and in error estimate function
+      % needed here and in error estimate function
 
     % TODO
     % compute epsStop dependend on information given in benchmark
@@ -152,13 +153,19 @@ function [params, output] = startAlgorithmCR(benchmark)
     % SOLVE
     tic;
     % TODO not done yet (subfunctions, documentation)
-    [u, corrVec, output.energyVec] = ...
+    [u, output.corrVec, energyVec] = ...
       solvePrimalDualFormulation(params, currData, u0, varLambda);
-    output.corrVec = corrVec;
+    outputLvl.energy4lvl(end+1, 1) = energyVec(end);
+    output.energyVec = energyVec;
     output.time = toc; 
     output.u = u;
-    outputLvl.nrIterations4lvl(end+1, 1) = length(corrVec);%#ok<AGROW>
+    outputLvl.nrIterations4lvl(end+1, 1) = length(energyVec);%#ok<AGROW>
+      % TODO maybe length minus 1, think about it
 
+    output.normOfDifference4e = ...
+      computeNormOfDifference4e(params, currData, output);
+
+    % compute guaranteed lower energy bound
     if useExactEnergy
       outputLvl.Gleb4lvl(end+1, 1) = ...
         computeGleb(params, currData, output);%#ok<AGROW>
@@ -167,7 +174,7 @@ function [params, output] = startAlgorithmCR(benchmark)
     % ESTIMATE
 
     %TODO still need to comment and some other stuff
-    [eta4e, mu4e, xi4e] = estimateErrorCR4e(params, currData, u);
+    [eta4e, mu4e, xi4e] = estimateErrorCR4e(params, currData, output);
     %TODO ability to plot mu4e and xi4e (and give them better names)
     eta4lvl(end+1, 1) = sum(eta4e);%#ok<AGROW>
     outputLvl.eta4lvl = eta4lvl;
