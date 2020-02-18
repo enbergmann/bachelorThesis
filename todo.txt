@@ -1,5 +1,5 @@
-CREATE USEFULL BENCHMARK FILES!!!!
-
+plot anpassen für image mode
+denoising example mode plus plots
 
 
 
