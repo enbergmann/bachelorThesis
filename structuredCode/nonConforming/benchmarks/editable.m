@@ -8,11 +8,18 @@ function params = editable
 
 %% PARAMETERS
 
+  % misc. parameters (will affect performance)
+
+  showPlots              = true; % Show plots during computation?
+  showProgress           = true; % Print output during computation?
+  degree4Integrate       = 20; % algebraic degree of exactness for integrate
+                               % from the AFEM package
+
   % AFEM parameters
   geometry               = 'BigSquare'; % not necessary if imageGiven (for now)
   parTheta               = 0.5;  % bulk param. (1 for uniform)
-  initialRefinementLevel = 5;
-  minNrDof               = 1e4;
+  initialRefinementLevel = 0;
+  minNrDof               = 1e5;
 
   % algorithm parameters
   beta4Estimate          = 1;   
@@ -20,12 +27,11 @@ function params = editable
                                  %      mesh size
   stopCrit               = ["Exact Error Difference", ...
                             "weighted energy difference"];
-  imageName              = '../utils/functions/images/cameraman.tif'; 
-  %imageName              = ''; %'../utils/functions/images/cameraman.tif'; 
+  imageName              = ''; %'../utils/functions/images/cameraman.tif'; 
+  %imageName              = '../utils/functions/images/cameraman.tif'; 
     % '' if none
   useProlongation        = true; 
-  exactSolutionKnown     = false;
-  % TODO this should always be false if image mode
+  exactSolutionKnown     = true;
   useExactEnergy         = true; % only effective if exactSolutionKnown == true
 		% just write it in from the file per hand, with like 10 digits or 
 		% sth.. Think about it.
@@ -36,8 +42,8 @@ function params = editable
   parTau                 = 1/2;
 
   % experiment parameters
-  parAlpha               = 10000; %10000 for image example 
-   % TODO why does the analytic example is broken for 10000
+  parAlpha               = 1e0; %1e4 for image example 
+   % TODO why does the analytic example is broken for 1e4
   parBeta                = 1;
   errorNorm              = ["L2", "energy"]; % TODO list options (likewise for
                                              % some other params (think))
@@ -55,16 +61,8 @@ function params = editable
                               % iterations during algorithm, e.g. for the case it doesn't finish
                               % 0 means no screenshots will be saved
 
-  % misc. parameters (will affect performance)
-
-  % TODO make maxSpeed optin where plots and progress are automatically off
-  degree4Integrate       = 20; % algebraic degree of exactness for integrate
-                               % from the AFEM package
-  showPlots              = true; % Show plots during computation?
-  showProgress           = true; % Print output during computation?
-
   % Information about experiment for saving and documentation.
-  expName                = 'testForBenchmarkImage';
+  expName                = 'testForGleb';
   dirInfoName            = datestr(now, 'yy_mm_dd_HH_MM_SS');
   miscMsg                = sprintf(['this\nis\nan\nexample', ...
                                     '\non\nhow\nthis\ncould\nlook']);
@@ -98,6 +96,8 @@ function params = editable
   if length(imageName) > 0
     imageGiven = true;
     geometry = 'Square';
+    exactSolutionKnown = false;
+
   else
     imageGiven = false;
   end

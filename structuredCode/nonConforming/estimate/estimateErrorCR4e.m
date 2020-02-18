@@ -1,4 +1,5 @@
-function [eta4e, mu4e, xi4e] = estimateErrorCR4e(params, currData, output)
+function [eta4e, etaVol4e, etaJumps4e] = ...
+    estimateErrorCR4e(params, currData, output)
   %TODO interface documentation
 
   beta4Estimate = params.beta4Estimate;
@@ -38,8 +39,8 @@ function [eta4e, mu4e, xi4e] = estimateErrorCR4e(params, currData, output)
 
         %TODO Tien has a little error, he also has n = 2, alpha = beta = 1
         %(in documentaion of his)
-  mu4e = area4e.^(2/n).*normOfDifference4e;
+  etaVol4e = area4e.^(2/n).*normOfDifference4e;
   % TODO sth with the volume term is pretty wrong
-  xi4e = area4e.^(beta4Estimate/n).*termJumps;
-  eta4e = xi4e + mu4e;
+  etaJumps4e = area4e.^(beta4Estimate/n).*termJumps;
+  eta4e = etaVol4e + etaJumps4e;
 end

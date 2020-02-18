@@ -26,7 +26,7 @@
 %      so all the paths are correct (like cd to the directory where 
 %      startAlgorithmNC is before anything else)
 
-function [params, output] = startAlgorithmCR(benchmark)
+function startAlgorithmCR(benchmark)
 % Loads a benchmark and starts the corresponding experiment with the
 % nonconforming algorithm.
 %
@@ -35,7 +35,7 @@ function [params, output] = startAlgorithmCR(benchmark)
 %                     name of the benchmark the user wants to use (optional
 %                     parameter, default value is 'editable').
 %
-% TODO
+% TODO do we even need output here, prob don't since results will be saved
 % output: params    - 'struct' containing the parameters obtained from the
 %                     benchmark.
 %         output    - 'struct' containing the results of the experiment.
@@ -62,32 +62,28 @@ function [params, output] = startAlgorithmCR(benchmark)
   minNrDof = params.minNrDof;
   parTheta = params.parTheta;
   useProlongation = params.useProlongation;
-  imageGiven = params.imageGiven;
   useExactEnergy = params.useExactEnergy;
   
   % initialize remaining parameters and struct with information dependend solely
   % on the current geometry
 
-  outputLvl = struct;
-
   outputLvl.lvl = 0;
-  eta4lvl = []; 
-  outputLvl.nrDof4lvl = []; 
-  error4lvl = []; 
-  outputLvl.nrIterations4lvl = [];
-  outputLvl.energy4lvl = [];
-  if useExactEnergy 
-    outputLvl.Gleb4lvl = [];
-  end
-
-
-  currData = struct;
+  nrDof = []; 
+  outputLvl.nrDof = nrDof; 
+  outputLvl.nrIter = [];
+  outputLvl.energy = [];
+  if useExactEnergy, outputLvl.gleb = []; end
+  if exactSolutionKnown, outputLvl.error4lvl = []; end 
+    % TODO might call this errorL2 and sth else errorAlt if there is 
+    % alternative errors at some point
+  outputLvl.eta = [];
+  outputLvl.etaVol = [];
+  outputLvl.etaJumps = [];
 
   currData.c4n = c4n;
   currData.n4e = n4e;
   currData.n4sDb = n4sDb;
   currData.n4sNb = n4sNb;
-
 
   n4s = computeN4s(n4e);
   currData.n4s = n4s;
@@ -135,9 +131,9 @@ function [params, output] = startAlgorithmCR(benchmark)
     dof = computeDofCR(currData);
     currData.dof = dof;
 
-    nrDof = length(dof);
-    currData.nrDof = nrDof;
-    outputLvl.nrDof4lvl(end+1, 1) = nrDof;
+    nrDof(end+1, 1) = length(dof);
+    currData.nrDof = nrDof(end);
+    outputLvl.nrDof = nrDof;
 
     [currData.int1RHS4e, currData.int2RHS4e, currData.int3RHS4e, ...
       currData.intRHS4s] = ...
@@ -155,11 +151,11 @@ function [params, output] = startAlgorithmCR(benchmark)
     % TODO not done yet (subfunctions, documentation)
     [u, output.corrVec, energyVec] = ...
       solvePrimalDualFormulation(params, currData, u0, varLambda);
-    outputLvl.energy4lvl(end+1, 1) = energyVec(end);
+    outputLvl.energy(end+1, 1) = energyVec(end);
     output.energyVec = energyVec;
     output.time = toc; 
     output.u = u;
-    outputLvl.nrIterations4lvl(end+1, 1) = length(energyVec);%#ok<AGROW>
+    outputLvl.nrIter(end+1, 1) = length(energyVec);
       % TODO maybe length minus 1, think about it
 
     output.normOfDifference4e = ...
@@ -167,26 +163,25 @@ function [params, output] = startAlgorithmCR(benchmark)
 
     % compute guaranteed lower energy bound
     if useExactEnergy
-      outputLvl.Gleb4lvl(end+1, 1) = ...
-        computeGleb(params, currData, output);%#ok<AGROW>
+      outputLvl.gleb(end+1, 1) = ...
+        computeGleb(params, currData, output);
     end
 
     % ESTIMATE
 
     %TODO still need to comment and some other stuff
-    [eta4e, mu4e, xi4e] = estimateErrorCR4e(params, currData, output);
-    %TODO ability to plot mu4e and xi4e (and give them better names)
-    eta4lvl(end+1, 1) = sum(eta4e);%#ok<AGROW>
-    outputLvl.eta4lvl = eta4lvl;
+    [eta4e, etaVol4e, etaJumps4e] = estimateErrorCR4e(params, currData, output);
 
     % TODO implement flag for different errors
     if exactSolutionKnown
-      error4lvl(end+1, 1) = sqrt(sum(error4eCRL2(c4n, n4e, uExact, u))); ...
-        %#ok<AGROW>
-      outputLvl.error4lvl = error4lvl;
+      outputLvl.error4lvl(end+1, 1) = ...
+        sqrt(sum(error4eCRL2(c4n, n4e, uExact, u)));
     end
 
-    % add number of iterations needed to struct2table
+    outputLvl.eta(end+1, 1) = sqrt(sum(eta4e));
+    outputLvl.etaVol(end+1, 1) = sqrt(sum(etaVol4e));
+    outputLvl.etaJumps(end+1, 1) = sqrt(sum(etaJumps4e));
+
     clc;
     disp(struct2table(outputLvl));
 
@@ -195,13 +190,10 @@ function [params, output] = startAlgorithmCR(benchmark)
     %      so sth like error4lvl, errorAlt4lvl
     % TODO probably always have the error for which the estimator is an 
     %      upper bound
-    
     saveResultsCR(params, currData, outputLvl, output);
 
     % check termination
-    if nrDof >= minNrDof 
-      break
-    end
+    if nrDof(end) >= minNrDof, break; end
 
     outputLvl.lvl(end+1, 1) = outputLvl.lvl(end, 1)+1;
 
@@ -241,9 +233,7 @@ function [params, output] = startAlgorithmCR(benchmark)
 
     % compute inital value for the iteration on the next level if not 
     % useProlongation
-    if ~useProlongation
-      u0 = interpolationCR(currData, f);
-    end
+    if ~useProlongation, u0 = interpolationCR(currData, f); end
 
     %TODO epsStop should probably be updated right here and now
   end

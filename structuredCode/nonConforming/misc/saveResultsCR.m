@@ -20,12 +20,16 @@ function saveResults(params, currData, outputLvl, output)
   n4e = currData.n4e;
 
   % extract necessary information from outputLvl
-
   currLvl = outputLvl.lvl(end);
-  nrDof4lvl = outputLvl.nrDof4lvl;
-  eta4lvl = outputLvl.eta4lvl;
+  nrDof4lvl = outputLvl.nrDof;
+  eta4lvl = outputLvl.eta;
+  etaVol4lvl = outputLvl.etaVol;
+  etaJumps4lvl = outputLvl.etaJumps;
   if exactSolutionKnown
     error4lvl = outputLvl.error4lvl;
+  end
+  if useExactEnergy
+    gleb4lvl = outputLvl.gleb;
   end
   
   % extract necessary information from output
@@ -91,6 +95,8 @@ function saveResults(params, currData, outputLvl, output)
   fName = sprintf('%s/solution_nrDof_%d_axis.png', dirName, nrDof);
   saveas(approxFigAxis, fName);
 
+  % TODO change plots for imageMode right here
+
 %% SAVE PLOTS AND RESULTS OF THE ITERATION FOR THE LEVEL
   name = sprintf('%s/corrVec.txt', dirName);
   file = fopen(name, 'w');
@@ -117,8 +123,40 @@ function saveResults(params, currData, outputLvl, output)
     title(ftitle);
     xlabel('number of iterations');
     ylabel('|E_{NC}(u_{NC})-E_u|');
-    fName = sprintf('%s/enDiffExact_red_%d.png', dirName, nrDof);
+    fName = sprintf('%s/enDiffExact_nrDof_%d.png', dirName, nrDof);
     saveas(enDiffExactFig, fName);
+
+    name = sprintf('%s/gleb.txt', dirName);
+    file = fopen(name, 'w');
+    fprintf(file, '%.8g\n', gleb4lvl);
+    fclose(file);
+
+    glebFig = figure('visible', figVisible);
+    loglog(nrDof4lvl, gleb4lvl, '-o');
+    legend(sprintf('GLEB'));
+    ftitle = sprintf('GLEB for nrDof = %d, \\alpha = %d, \\beta = %d', ...
+      nrDof, parAlpha, parBeta);
+    xlabel('nrDof');
+    ylabel('GLEB');
+    fName = sprintf('%s/gleb.png', dirName);
+    title(ftitle);
+    saveas(glebFig, fName);
+
+    name = sprintf('%s/glebExactEnergyDifference.txt', dirName);
+    file = fopen(name, 'w');
+    fprintf(file, '%.8g\n', exactEnergy-gleb4lvl);
+    fclose(file);
+
+    glebExactEnergyDiffereneFig = figure('visible',figVisible);
+    loglog(nrDof4lvl, exactEnergy-gleb4lvl, '-o');
+    ftitle = sprintf(...
+      'E_u-GLEB for nrDof = %d, \\alpha = %d, \\beta = %d', ...
+      nrDof, parAlpha, parBeta);
+    title(ftitle);
+    xlabel('nrDof');
+    ylabel('E_u-GLEB');
+    fName = sprintf('%s/gleb_nrDof_%d.png', dirName, nrDof);
+    saveas(glebExactEnergyDiffereneFig, fName);
   end
     
   enFig = figure('visible', figVisible); 
@@ -153,6 +191,7 @@ function saveResults(params, currData, outputLvl, output)
   saveas(corrFig, fName);
 
 %% SAVE AFEM RESULTS AND TRIANGULATION
+  % TODO save c4n and n4e to tikz triangulation (see tiens example)
   triangFig = figure('visible',figVisible);
   plotTriangulation(c4n,n4e);
   ftitle = sprintf('Triangulation for nrDof = %d, \\alpha = %d, \\beta = %d', ...
@@ -165,20 +204,28 @@ function saveResults(params, currData, outputLvl, output)
   % % be computed then (if possible), make error4lvl a alternative then)
 
   % convergence plots
+  % TODO mu and xi
   estimatorAndErrorFig = figure('visible', figVisible);
   % plotConvergence(nrDof4lvl,eta4lvl,'\eta_l');
-  loglog(nrDof4lvl, eta4lvl);
+  loglog(nrDof4lvl, eta4lvl, '-bo');
+  hold on
+  loglog(nrDof4lvl, etaVol4lvl, '-ms');
+  hold on
+  loglog(nrDof4lvl, etaJumps4lvl, '-rd');
   if exactSolutionKnown
     hold on
-    loglog(nrDof4lvl, error4lvl);
-    legend(sprintf('\\eta'), sprintf('||u-u_{CR}||_{L^2}'));
+    loglog(nrDof4lvl, error4lvl, '-g*');
+    legend(sprintf('\\eta'), ...
+      sprintf('\\eta_{Vol}'), sprintf('\\eta_{Jumps}'), ...
+      sprintf('||u-u_{CR}||_{L^2}'));
     ftitle = sprintf('Error and Estimator for nrDof = %d, \\alpha = %d, \\beta = %d', ...
       nrDof, parAlpha, parBeta);
     ylabel('estimator and error');
     fName = sprintf('%s/errorAndEstimator.png', dirName);
     hold off;
   else
-    legend(sprintf('\\eta'));
+    legend(sprintf('\\eta'), ...
+      sprintf('\\eta_{Vol}'), sprintf('\\eta_{Jumps}'))
     ftitle = sprintf('Estimator for nrDof = %d, \\alpha = %d, \\beta = %d', ...
       nrDof, parAlpha, parBeta);
     ylabel('estimator');
@@ -196,6 +243,16 @@ function saveResults(params, currData, outputLvl, output)
   name = sprintf('%s/eta4lvl.txt', dirName);
   file = fopen(name, 'w');
   fprintf(file, '%.8g\n', eta4lvl);
+  fclose(file);
+
+  name = sprintf('%s/etaVol4lvl.txt', dirName);
+  file = fopen(name, 'w');
+  fprintf(file, '%.8g\n', etaVol4lvl);
+  fclose(file);
+
+  name = sprintf('%s/etaJumps4lvl.txt', dirName);
+  file = fopen(name, 'w');
+  fprintf(file, '%.8g\n', etaJumps4lvl);
   fclose(file);
 
   if exactSolutionKnown
