@@ -1,7 +1,21 @@
-plot anpassen für image mode
+matlab benchmark performance of definition of gradients, which is quicker, polar
+coordinates transformation or first implementation with cartesian coordinates
+
+also check gradient for of exact solution with polar coordiantes
+
+also check functions since there are called often
+
+optimize further by profiling
+
+change saved plot in image mode
+
 denoising example mode plus plots
 
 
+
+
+
+use mlint and checkcode (what of those is better)
 
 
 CSU, Young etc einmal aufschreiben --> Appendix?
