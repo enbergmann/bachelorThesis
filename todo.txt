@@ -15,7 +15,8 @@ denoising example mode plus plots
 
 
 
-use mlint and checkcode (what of those is better)
+use checkcode to optimize code (new name for mlint)
+>edit functionname< can be used to read functions (even MATLAB functions)
 
 
 CSU, Young etc einmal aufschreiben --> Appendix?
