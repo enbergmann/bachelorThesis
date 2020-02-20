@@ -1,15 +1,10 @@
-matlab benchmark performance of definition of gradients, which is quicker, polar
-coordinates transformation or first implementation with cartesian coordinates
-
-also check gradient for of exact solution with polar coordiantes
-
-also check functions since there are called often
-
-optimize further by profiling
+right hand side for image still has to be written
 
 change saved plot in image mode
 
 denoising example mode plus plots
+
+optimize further by profiling (eg gradientsCR, see important profiles)
 
 
 
