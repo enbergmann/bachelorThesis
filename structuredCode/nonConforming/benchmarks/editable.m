@@ -10,8 +10,8 @@ function params = editable
 
   % misc. parameters (will affect performance)
 
-  showPlots              = true; % Show plots during computation?
-  showProgress           = true; % Print output during computation?
+  showPlots              = false; % Show plots during computation?
+  showProgress           = false; % Print output during computation?
   degree4Integrate       = 20; % algebraic degree of exactness for integrate
                                % from the AFEM package
 
@@ -19,7 +19,7 @@ function params = editable
   geometry               = 'BigSquare'; % not necessary if imageGiven (for now)
   parTheta               = 0.5;  % bulk param. (1 for uniform)
   initialRefinementLevel = 0;
-  minNrDof               = 1e5;
+  minNrDof               = 1e4;
 
   % algorithm parameters
   beta4Estimate          = 1;   
@@ -71,21 +71,21 @@ function params = editable
   % necessary function handles
   % TODO pasted-graphic-2.tiff does have a calculation formula to calculate
   % f from some given function u(r) --> other examples possible (easier even?)
-  function val = rightHandSide(x)
-    val =  g(x, [1,1]);
+  function y = rightHandSide(x)
+    y =  f01(x, [parAlpha, parBeta]);
   end
 
-  function val = GradientRightHandSide(x)
-    val =  gradGExact(x, [1,1]);
+  function y = GradientRightHandSide(x)
+    y =  f01Gradient(x, [parAlpha, parBeta]);
   end
 
-  function val = initalValue(x)
-    val = 0;
+  function y = initalValue(x)
+    y = 0;
   end
 
-  function val = exactSolution(x)
+  function y = exactSolution(x)
     % can be ignored if exactSolutionKnown == false
-    val = gUexact(x, [1,1]);
+    y = f01ExactSolution(x, [parAlpha]);
   end
 
 
