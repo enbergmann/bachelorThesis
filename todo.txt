@@ -4,13 +4,9 @@ change saved plot in image mode
 
 denoising example mode plus plots
 
-optimize further by profiling (eg gradientsCR, see important profiles)
 
-
-
-
-
-use checkcode to optimize code (new name for mlint)
+optimize further by profiling, this also uses checkcode
+use checkcode to optimize code (new name for mlint) and also mlintrpt
 >edit functionname< can be used to read functions (even MATLAB functions)
 
 
