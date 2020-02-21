@@ -1,6 +1,9 @@
 % TODO this is all not done yet, just changed so it functions again
+%
+% TODO similar to struct 2 table write those information in a file so
+% one can see everything in one go, also elapsed time of program and so on
 
-function saveResults(params, currData, outputLvl, output)
+function saveResults(params, currData, outputLvlInfo, outputLvl, output)
 
 %% INITIALIZATION
   % extract necessary parameters from params
@@ -19,9 +22,12 @@ function saveResults(params, currData, outputLvl, output)
   c4n = currData.c4n;
   n4e = currData.n4e;
 
-  % extract necessary information from outputLvl
-  currLvl = outputLvl.lvl(end);
-  nrDof4lvl = outputLvl.nrDof;
+  % extract necessary information from outputLvlInfo
+  currLvl = outputLvlInfo.lvl(end);
+  nrDof4lvl = outputLvlInfo.nrDof;
+  time = outputLvlInfo.time(end);
+
+  % extract necessary information from outputLvlInfo
   eta4lvl = outputLvl.eta;
   etaVol4lvl = outputLvl.etaVol;
   etaJumps4lvl = outputLvl.etaJumps;
@@ -36,7 +42,6 @@ function saveResults(params, currData, outputLvl, output)
   u = output.u;
   corrVec = output.corrVec;
   energyVec = output.energyVec;
-  time = output.time;
 
 %% CREATE DIRECTORY
   warning('off', 'MATLAB:MKDIR:DirectoryExists');

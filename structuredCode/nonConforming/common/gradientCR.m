@@ -22,8 +22,15 @@ function gradCRv = gradientCR(currData, v)
   gradsCR4e = currData.gradsCR4e;
 
   % compute uCR
-  gradCRv = zeros(nrElems,2);
-  for elem = 1:nrElems
-    gradCRv(elem,:) = v(s4e(elem,:))'*gradsCR4e(:,:,elem);          
-  end
+
+  %gradCRv = zeros(nrElems,2);
+  % for elem = 1:nrElems
+  %   gradCRv(elem,:) = v(s4e(elem,:))'*gradsCR4e(:,:,elem);          
+  % end
+
+  % TODO this is probably rewriteable less disgusting, but even this way it is
+  % 20% faster than the loop above
+  vRe = reshape(v(s4e)', 3*size(s4e, 1), 1);
+  gRe = reshape(permute(gradsCR4e, [1 3 2]), nrElems*3, 2);
+  gradCRv = reshape(sum(reshape(vRe.*gRe, 3, nrElems*2)), nrElems, 2);
 end

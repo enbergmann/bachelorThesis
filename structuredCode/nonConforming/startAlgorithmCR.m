@@ -67,10 +67,16 @@ function startAlgorithmCR(benchmark)
   % initialize remaining parameters and struct with information dependend solely
   % on the current geometry
 
-  outputLvl.lvl = 0;
+  lvl = 0;
+
+  outputLvlInfo.lvl = lvl;
   nrDof = []; 
-  outputLvl.nrDof = nrDof; 
-  outputLvl.nrIter = [];
+  outputLvlInfo.nrDof = nrDof; 
+  outputLvlInfo.nrIterations = [];
+  time = [];
+  outputLvlInfo.time = time;
+
+  outputLvl.lvl = lvl;
   outputLvl.energy = [];
   if useExactEnergy, outputLvl.gleb = []; end
   if exactSolutionKnown, outputLvl.error4lvl = []; end 
@@ -131,9 +137,9 @@ function startAlgorithmCR(benchmark)
     dof = computeDofCR(currData);
     currData.dof = dof;
 
-    nrDof(end+1, 1) = length(dof);
+    nrDof(end+1, 1) = length(dof);  %#ok<AGROW>
     currData.nrDof = nrDof(end);
-    outputLvl.nrDof = nrDof;
+    outputLvlInfo.nrDof = nrDof;
 
     [currData.int1RHS4e, currData.int2RHS4e, currData.int3RHS4e, ...
       currData.intRHS4s] = ...
@@ -151,11 +157,11 @@ function startAlgorithmCR(benchmark)
     % TODO not done yet (subfunctions, documentation)
     [u, output.corrVec, energyVec] = ...
       solvePrimalDualFormulation(params, currData, u0, varLambda);
+    outputLvlInfo.time(end+1, 1) = toc;
     outputLvl.energy(end+1, 1) = energyVec(end);
     output.energyVec = energyVec;
-    output.time = toc; 
     output.u = u;
-    outputLvl.nrIter(end+1, 1) = length(energyVec);
+    outputLvlInfo.nrIterations(end+1, 1) = length(energyVec);
       % TODO maybe length minus 1, think about it
 
     output.normOfDifference4e = ...
@@ -183,6 +189,7 @@ function startAlgorithmCR(benchmark)
     outputLvl.etaJumps(end+1, 1) = sqrt(sum(etaJumps4e));
 
     clc;
+    disp(struct2table(outputLvlInfo));
     disp(struct2table(outputLvl));
 
     % TODO maybe allow only a fixed amounts of different errors, like only two,
@@ -190,12 +197,14 @@ function startAlgorithmCR(benchmark)
     %      so sth like error4lvl, errorAlt4lvl
     % TODO probably always have the error for which the estimator is an 
     %      upper bound
-    saveResultsCR(params, currData, outputLvl, output);
+    saveResultsCR(params, currData, outputLvlInfo, outputLvl, output);
 
     % check termination
     if nrDof(end) >= minNrDof, break; end
 
-    outputLvl.lvl(end+1, 1) = outputLvl.lvl(end, 1)+1;
+    lvl(end+1, 1) = lvl(end) + 1; %#ok<AGROW>
+    outputLvlInfo.lvl = lvl;
+    outputLvl.lvl = lvl;
 
     % MARK
     n4sMarked = markBulk(n4e, eta4e, parTheta);

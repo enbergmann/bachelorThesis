@@ -19,7 +19,7 @@ function params = editable
   geometry               = 'BigSquare'; % not necessary if imageGiven (for now)
   parTheta               = 0.5;  % bulk param. (1 for uniform)
   initialRefinementLevel = 0;
-  minNrDof               = 1e4;
+  minNrDof               = 6e3;
 
   % algorithm parameters
   beta4Estimate          = 1;   
