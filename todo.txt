@@ -1,13 +1,26 @@
-right hand side for image still has to be written
+CURRENT TODOS
 
-change saved plot in image mode
+right hand side for image still has to be written
 
 denoising example mode plus plots
 
 
+
+GENERAL PROGRAM STUFF
+
 optimize further by profiling, this also uses checkcode
 use checkcode to optimize code (new name for mlint) and also mlintrpt
 >edit functionname< can be used to read functions (even MATLAB functions)
+
+maybe saveResults should save images without title and, just the plot, in
+case i want to use them later in the work, where i would do the title in 
+latex anyway, which is why having a title from matlab would be a problem
+think about it
+
+
+
+
+GENERAL THESIS TEX STUFF
 
 
 CSU, Young etc einmal aufschreiben --> Appendix?
@@ -21,8 +34,6 @@ readd general part of experiments section into documentation
 
 compute gradient of exact solution, transform back from absolute value
 presentation for that, add energy exact error
-
-take a look at  how prolongation code from nando works
 
 let the programs run for a fixed period of time and compare the obtained results
 (since CR seems to yield better results but take a much longer time)
