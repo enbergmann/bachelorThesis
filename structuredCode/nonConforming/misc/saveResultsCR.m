@@ -21,6 +21,7 @@ function saveResults(params, currData, outputLvlInfo, outputLvl, output)
   nrDof = currData.nrDof; 
   c4n = currData.c4n;
   n4e = currData.n4e;
+  s4e = currData.s4e;
 
   % extract necessary information from outputLvlInfo
   currLvl = outputLvlInfo.lvl(end);
@@ -100,7 +101,15 @@ function saveResults(params, currData, outputLvlInfo, outputLvl, output)
   fName = sprintf('%s/solution_nrDof_%d_axis.png', dirName, nrDof);
   saveas(approxFigAxis, fName);
 
-  % TODO change plots for imageMode right here
+  grayscaleFig = figure('visible', figVisible); 
+  plotGrayscale(c4n, n4e, mean(u(s4e), 2), ...
+    {'CR Solution'; [num2str(nrDof) ' degrees of freedom']});
+  ftitle = sprintf(...
+    'grayscale of approximation for nrDof = %d, \\alpha =%d, \\beta =%d', ...
+    nrDof, parAlpha, parBeta);
+  title(ftitle);
+  fName = sprintf('%s/grayscale_nrDof_%d.png', dirName, nrDof);
+  saveas(grayscaleFig, fName);
 
 %% SAVE PLOTS AND RESULTS OF THE ITERATION FOR THE LEVEL
   name = sprintf('%s/corrVec.txt', dirName);
