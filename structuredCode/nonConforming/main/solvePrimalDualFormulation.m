@@ -63,6 +63,8 @@ function  [u,corrVec,energyVec] = ...
   energyVec = [];
   E = 1;
 
+  if showPlots, figure; end
+
   while corr > epsStop
     gradCRv = gradientCR(currData, v);
     M = varLambda + parTau*(gradCRu + parTau*gradCRv);
@@ -73,6 +75,7 @@ function  [u,corrVec,energyVec] = ...
     % compute RHS
     
     % TODO recalculate this at some point, Tiens looks different (smarter prob.)
+    % TODO kill the loop maybe, we know how inefficent this stuff is
     b = zeros(nrSides, 1);
     for elem = 1 : nrElems
       bLocal = (gradCRu(elem, :)/parTau - ...
@@ -97,7 +100,7 @@ function  [u,corrVec,energyVec] = ...
 
     if showProgress
       % TODO make this prettier (also number of iteration)
-      % use structs and disp table
+      % use structs and disp table maybe
       fprintf('corr/epsStop: %e / %e\n', corr, epsStop);
       format long; % TODO change that in the fprintf %.8g or something
       fprintf('E = %f, E_exact = %f\n', E, exactEnergy);
@@ -116,27 +119,9 @@ function  [u,corrVec,energyVec] = ...
     end
 
     if showPlots
-      if imageGiven
-        % TODO prob use plotGrayScale but fix it first st it works
-        colormap gray;
-        axis off;
-        axis equal;
-        % plotGreyScale(mean(u(s4e), 2), c4n, n4e)
-        X1 = c4n(n4e(:, 1), 1);
-        X2 = c4n(n4e(:, 2), 1);
-        X3 = c4n(n4e(:, 3), 1);
-        Y1 = c4n(n4e(:, 1), 2);
-        Y2 = c4n(n4e(:, 2), 2);
-        Y3 = c4n(n4e(:, 3), 2);
-        X = [X1'; X2'; X3'];
-        Y = [Y1'; Y2'; Y3'];
-        patch(X,Y,mean(u(s4e), 2)','EdgeColor','none');
-        drawnow
-      else
-        plotCR(c4n,n4e,uNew);
-      end
       clf('reset');
-      fprintf('\n')
+      if imageGiven, plotGrayscale(c4n, n4e, mean(u(s4e), 2));
+      else, plotCR(c4n,n4e,uNew); end
     end
   end
 end

@@ -9,9 +9,8 @@ function params = editable
 %% PARAMETERS
 
   % misc. parameters (will affect performance)
-
-  showPlots              = false; % Show plots during computation?
-  showProgress           = false; % Print output during computation?
+  showPlots              = true; % Show plots during computation?
+  showProgress           = true; % Print output during computation?
   degree4Integrate       = 20; % algebraic degree of exactness for integrate
                                % from the AFEM package
 
@@ -20,17 +19,17 @@ function params = editable
   parTheta               = 0.5;  % bulk param. (1 for uniform)
   initialRefinementLevel = 0;
   minNrDof               = 6e3;
+  useProlongation        = true; 
+  beta4Estimate          = 1;   
 
   % algorithm parameters
-  beta4Estimate          = 1;   
   epsStop                = 1e-2; % TODO sth about updating it depending on
                                  %      mesh size
   stopCrit               = ["Exact Error Difference", ...
                             "weighted energy difference"];
-  imageName              = ''; %'../utils/functions/images/cameraman.tif'; 
-  %imageName              = '../utils/functions/images/cameraman.tif'; 
-    % '' if none
-  useProlongation        = true; 
+  parTau                 = 1/2;
+
+  % experiment parameters
   exactSolutionKnown     = true;
   useExactEnergy         = true; % only effective if exactSolutionKnown == true
 		% just write it in from the file per hand, with like 10 digits or 
@@ -39,9 +38,8 @@ function params = editable
     % guaranteed lower energy bound
   % TODO how should the exactEnergy be written into here
   exactEnergy            = -2.05805109; % four significant digits
-  parTau                 = 1/2;
-
-  % experiment parameters
+  imageGiven             = true;
+  imageName              = '../utils/functions/images/cameraman.tif'; 
   parAlpha               = 1e0; %1e4 for image example 
    % TODO why does the analytic example is broken for 1e4
   parBeta                = 1;
@@ -67,15 +65,13 @@ function params = editable
   miscMsg                = sprintf(['this\nis\nan\nexample', ...
                                     '\non\nhow\nthis\ncould\nlook']);
 
-  % TODO rename the called funtions at some time to more suitable names
-  % necessary function handles
   % TODO pasted-graphic-2.tiff does have a calculation formula to calculate
   % f from some given function u(r) --> other examples possible (easier even?)
   function y = rightHandSide(x)
     y =  f01(x, [parAlpha, parBeta]);
   end
 
-  function y = GradientRightHandSide(x)
+  function y = gradientRightHandSide(x)
     y =  f01Gradient(x, [parAlpha, parBeta]);
   end
 
@@ -93,14 +89,15 @@ function params = editable
 % should not be of interest for mere usage of the program
   params = struct;
 
-  if length(imageName) > 0
-    imageGiven = true;
-    geometry = 'Square';
-    exactSolutionKnown = false;
-
-  else
-    imageGiven = false;
-  end
+  %if imageGiven
+  %  geometry = 'Square'; % TODO for now only on square possible, but 
+  %                       % might be possible on rectangles in general (useful 
+  %                       % though?)
+  %  % exactSolutionKnown = false; % NOTE there won't be 
+  %  % TODO think about it, one might interpret a function as image, but for 
+  %  % real images there won't be exact solutions
+  %end
+  %TODO prob all not possible if one want to see normal functions as images
 
   params.imageGiven = imageGiven;
   params.geometry = geometry;
@@ -184,18 +181,15 @@ function params = editable
 
   params.degree4Integrate = degree4Integrate;
   params.showPlots = showPlots;              
-  if showPlots
-    params.figVisible = 'on';
-  else
-    params.figVisible = 'off';
-  end
+  if showPlots, params.figVisible = 'on';
+  else, params.figVisible = 'off'; end
   params.showProgress = showProgress;          
 
   params.expName = expName;
   params.dirInfoName = dirInfoName;
   params.miscMsg = miscMsg;
 
-  if imageGiven
+  if false%imageGiven
     % TODO see below, probably leave everything in rhsImg
     % TODO call function image2function or sth
 
@@ -233,7 +227,7 @@ function params = editable
   else
     params.f = @(x) rightHandSide(x);
     if useExactEnergy
-      params.gradF = @(x) GradientRightHandSide(x);
+      params.gradF = @(x) gradientRightHandSide(x);
     end
   end
   params.u0 = @(x) initalValue(x);
