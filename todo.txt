@@ -4,6 +4,8 @@ right hand side for image still has to be written
 
 denoising example mode plus plots
 
+save triangulation relevant data (compare to Tiens latex example on what 
+information is needed)
 
 
 GENERAL PROGRAM STUFF
