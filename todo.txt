@@ -1,6 +1,6 @@
 CURRENT TODOS
 
-right hand side for image still has to be written
+make output during iteration if showProgress prettier (look into tables)
 
 denoising example mode plus plots
 
