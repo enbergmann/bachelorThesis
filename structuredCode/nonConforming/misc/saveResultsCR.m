@@ -7,6 +7,8 @@ function saveResults(params, currData, outputLvlInfo, outputLvl, output)
 
 %% INITIALIZATION
   % extract necessary parameters from params
+  geometry = params.geometry;
+  f = params.f;
   benchmark = params.benchmark;
   exactSolutionKnown = params.exactSolutionKnown;
   expName = params.expName;
@@ -54,12 +56,42 @@ function saveResults(params, currData, outputLvlInfo, outputLvl, output)
     
 %% SAVE INFORMATION ABOUT EXPERIMENT
   if currLvl == 0
-  % this means the benchmark-file should not be changed until level 0 is saved
+    % this means the benchmark-file should not be changed until level 0 is
+    % saved
     source = sprintf('benchmarks/%s.m', benchmark);
     destination = ...
       sprintf('../../results/nonconforming/%s/%s/benchmark_%s.txt', ...
       expName, dirInfoName, benchmark);
     copyfile(source, destination);
+
+    % % plot rhs and grayscale image of rhs
+    if strcmp(geometry, 'Polygon'), geometry = 'BigSquare'; end
+    [c4nRhs, n4eRhs] = loadGeometry(geometry, 9);
+
+    rhsFig = figure('visible', figVisible); 
+    trisurf(n4eRhs, c4nRhs(:, 1), c4nRhs(:, 2), f(c4nRhs), ...
+      'EdgeColor', 'None');
+    ftitle = sprintf(...
+      'right-hand side for \\alpha =%d, \\beta =%d', parAlpha, parBeta);
+    title(ftitle);
+    fName = sprintf('../../results/nonconforming/%s/%s/rhs.png', ...
+      expName, dirInfoName);
+    saveas(rhsFig, fName);
+
+    grayscaleFig = figure('visible', figVisible); 
+    trisurf(n4eRhs, c4nRhs(:, 1), c4nRhs(:, 2), f(c4nRhs), ...
+      'EdgeColor', 'None');
+    view(0, 90);
+    axis off;
+    axis equal;
+    colormap gray;
+    ftitle = sprintf(...
+      'right-hand side grayscale for \\alpha =%d, \\beta =%d', ...
+      parAlpha, parBeta);
+    title(ftitle);
+    fName = sprintf('../../results/nonconforming/%s/%s/rhsGrayscale.png', ...
+      expName, dirInfoName);
+    saveas(grayscaleFig, fName);
   end
   % TODO think about what stuff might be relevant from the given structs and
   %      save them if there is anything useful
@@ -81,6 +113,7 @@ function saveResults(params, currData, outputLvlInfo, outputLvl, output)
   % TODO doesn't work, can it even?
   % name = sprintf('%s/parameters.txt', dirName);
   % writetable(struct2table(params, 'AsArray', true), name);
+
 
 %% SAVE PLOTS OF SOLUTION
   approxFig = figure('visible', figVisible); 

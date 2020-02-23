@@ -18,7 +18,7 @@ function params = editable
     % Show plots during iteration?
   showProgress           = true; 
     % Print output during iteration?
-  plotModeGrayscale      = true; 
+  plotModeGrayscale      = false; 
     % Use plotGrayscale instead of plotCR during iteration? Only effective if
     % showProgress.
   degree4Integrate       = 20; 
@@ -42,9 +42,9 @@ function params = editable
   parTau                 = 1/2;
 
   % experiment parameters
-  useImage               = true;
+  useImage               = false;
   imageName              = '../utils/functions/images/cameraman.tif'; 
-  parAlpha               = 1e4; %1e4 for image example 
+  parAlpha               = 1e0; %1e4 for image example 
    % TODO why does the analytic example is broken for 1e4
   parBeta                = 1;
   exactSolutionKnown     = true;
