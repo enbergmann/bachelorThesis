@@ -26,7 +26,7 @@ function params = editable
 
   % AFEM parameters
   geometry               = 'BigSquare'; 
-    % not necessary if imageGiven (for now)
+    % not necessary if useImage (for now)
   parTheta               = 0.5;  
     % bulk param. (1 for uniform)
   initialRefinementLevel = 0;
@@ -77,6 +77,13 @@ function params = editable
   miscMsg                = sprintf(['this\nis\nan\nexample', ...
                                     '\non\nhow\nthis\ncould\nlook']);
 
+
+  % function handles 
+  function y = initalValue(x)
+    y = 0;
+  end
+
+  % function handles that can be ignored if useImage
   % TODO pasted-graphic-2.tiff does have a calculation formula to calculate
   % f from some given function u(r) --> other examples possible (easier even?)
   function y = rightHandSide(x)
@@ -85,10 +92,6 @@ function params = editable
 
   function y = gradientRightHandSide(x)
     y =  f01Gradient(x, [parAlpha, parBeta]);
-  end
-
-  function y = initalValue(x)
-    y = 0;
   end
 
   function y = exactSolution(x)
@@ -195,40 +198,7 @@ function params = editable
 
   params.u0 = @(x) initalValue(x);
   if useImage
-    % TODO see below, probably leave everything in rhsImg
-    % TODO call function image2function or sth
-
-    % read image and convert utf8 to double
-    img = im2double(imread(imageName));
-    imgSize = size(img);
-
-    %   % add 10 pixel frame of zeros
-    %   img = [zeros(imgSize(1),10), img, zeros(imgSize(1),10)];
-    %   img = [zeros(10,imgSize(2)+20); img; zeros(10,imgSize(2)+20)];
-    %   imgSize = imgSize + 20;
-    
-    % add fade to black on the edges for 25 pixels (0 boundary conditions)
-    for j = 1:25
-      img(j, :) = (j-1)*img(j, :)/25;
-        % first 25 rows
-      img(imgSize(1)-(j-1), :) = (j-1)*img(imgSize(1)-(j-1), :)/25;
-        % last 25 rows
-      img([j:imgSize(1)-(j-1)], j) = (j-1)*img([j:imgSize(1)-(j-1)], j)/25;
-        % first 25 columns except already done first and last j rows
-      img([j:imgSize(1)-(j-1)], imgSize(2)-(j-1)) ...
-          = (j-1)*img([j:imgSize(1)-(j-1)], imgSize(2)-(j-1))/25;
-        % last 25 columns except already done first and lastj rows
-      % always divide by 25 since j is 25 at most
-    end
-      
-    % rescale (since bartels formulates the energy slightly differently)
-    img = img*parAlpha;
-
-    params.f = @(x) rhsImg(x, img, imgSize); 
-    %TODO unnecessary, either do more in
-    % rhsImg and return a function handle OR do everything here
-    % (maybe seperate file for easier access and configurations
-    % and comments)
+    params.f = rhsImg(imageName, parAlpha); %TODO rewrite and change name
   else
     params.f = @(x) rightHandSide(x);
     if useExactEnergy %TODO this is also possible without exact energy
