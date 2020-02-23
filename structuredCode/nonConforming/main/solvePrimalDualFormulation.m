@@ -28,7 +28,7 @@ function  [u,corrVec,energyVec] = ...
   exactEnergy = params.exactEnergy;
   saveScreenshots = params.saveScreenshots;
   showPlots = params.showPlots;
-  imageGiven = params.imageGiven;
+  plotModeGrayscale = params.plotModeGrayscale;
 
   % extract necessary data from currData
   stiMaCR = currData.stiMaCR;
@@ -120,8 +120,14 @@ function  [u,corrVec,energyVec] = ...
 
     if showPlots
       clf('reset');
-      if imageGiven, plotGrayscale(c4n, n4e, mean(u(s4e), 2));
+      if plotModeGrayscale, plotGrayscale(c4n, n4e, mean(u(s4e), 2));
       else, plotCR(c4n,n4e,uNew); end
+      % subplot(1, 2, 1)
+      % cla('reset');
+      % plotCR(c4n, n4e, uNew);
+      % subplot(1, 2, 2)
+      % cla('reset');
+      % plotGrayscale(c4n, n4e, mean(u(s4e), 2));
     end
   end
 end

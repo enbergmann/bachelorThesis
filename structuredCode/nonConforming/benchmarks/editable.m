@@ -5,20 +5,32 @@ function params = editable
 
 % TODO after this works create denoise exampe, see if the algorithm denoises
 % TODO benchmark needs modes like (function, image, denoise)
+% TODO document (or make clear) dependencies, i.e. which flags are
+%      automatically set by which other flags
+% TODO computeGleb flag, not effective for image probably due to missing 
+%      gradients. For H^1_0 examples there always will be gradients probably
+%      on the other hand.
 
 %% PARAMETERS
 
   % misc. parameters (will affect performance)
-  showPlots              = true; % Show plots during computation?
-  showProgress           = true; % Print output during computation?
-  degree4Integrate       = 20; % algebraic degree of exactness for integrate
-                               % from the AFEM package
+  showPlots              = true; 
+    % Show plots during iteration?
+  showProgress           = true; 
+    % Print output during iteration?
+  plotModeGrayscale      = true; 
+    % Use plotGrayscale instead of plotCR during iteration? Only effective if
+    % showProgress.
+  degree4Integrate       = 20; 
+    % algebraic degree of exactness for integrate from the AFEM package
 
   % AFEM parameters
-  geometry               = 'BigSquare'; % not necessary if imageGiven (for now)
-  parTheta               = 0.5;  % bulk param. (1 for uniform)
+  geometry               = 'BigSquare'; 
+    % not necessary if imageGiven (for now)
+  parTheta               = 0.5;  
+    % bulk param. (1 for uniform)
   initialRefinementLevel = 0;
-  minNrDof               = 6e3;
+  minNrDof               = 2e3;
   useProlongation        = true; 
   beta4Estimate          = 1;   
 
@@ -30,6 +42,11 @@ function params = editable
   parTau                 = 1/2;
 
   % experiment parameters
+  useImage               = true;
+  imageName              = '../utils/functions/images/cameraman.tif'; 
+  parAlpha               = 1e4; %1e4 for image example 
+   % TODO why does the analytic example is broken for 1e4
+  parBeta                = 1;
   exactSolutionKnown     = true;
   useExactEnergy         = true; % only effective if exactSolutionKnown == true
 		% just write it in from the file per hand, with like 10 digits or 
@@ -38,11 +55,6 @@ function params = editable
     % guaranteed lower energy bound
   % TODO how should the exactEnergy be written into here
   exactEnergy            = -2.05805109; % four significant digits
-  imageGiven             = true;
-  imageName              = '../utils/functions/images/cameraman.tif'; 
-  parAlpha               = 1e0; %1e4 for image example 
-   % TODO why does the analytic example is broken for 1e4
-  parBeta                = 1;
   errorNorm              = ["L2", "energy"]; % TODO list options (likewise for
                                              % some other params (think))
                                               %strArr
@@ -60,7 +72,7 @@ function params = editable
                               % 0 means no screenshots will be saved
 
   % Information about experiment for saving and documentation.
-  expName                = 'testForGleb';
+  expName                = 'testForBetterPlots';
   dirInfoName            = datestr(now, 'yy_mm_dd_HH_MM_SS');
   miscMsg                = sprintf(['this\nis\nan\nexample', ...
                                     '\non\nhow\nthis\ncould\nlook']);
@@ -87,19 +99,14 @@ function params = editable
 
 %% BUILD STRUCT
 % should not be of interest for mere usage of the program
-  params = struct;
+  if useImage
+    geometry = 'Square'; % TODO for now only on square possible, but 
+                         % might be possible on rectangles in general (useful 
+                         % though?)
+    exactSolutionKnown = false; % NOTE there won't be exact solutions for
+                                % real images
+  end
 
-  %if imageGiven
-  %  geometry = 'Square'; % TODO for now only on square possible, but 
-  %                       % might be possible on rectangles in general (useful 
-  %                       % though?)
-  %  % exactSolutionKnown = false; % NOTE there won't be 
-  %  % TODO think about it, one might interpret a function as image, but for 
-  %  % real images there won't be exact solutions
-  %end
-  %TODO prob all not possible if one want to see normal functions as images
-
-  params.imageGiven = imageGiven;
   params.geometry = geometry;
 
   if strcmp(geometry, 'Polygon')
@@ -122,13 +129,8 @@ function params = editable
   params.useProlongation = useProlongation;      
   params.exactSolutionKnown = exactSolutionKnown; 
 
-  if exactSolutionKnown
-    params.uExact = @(x) exactSolution(x);
-  else
-    params.uExact = @(x) NaN;
-  end
-
   if exactSolutionKnown 
+    params.uExact = @(x) exactSolution(x);
     params.useExactEnergy = useExactEnergy;
     params.exactEnergy = exactEnergy;
     % just compute it extrenalyy and only set the flag to true, if the energy is
@@ -168,6 +170,7 @@ function params = editable
     %
     %use significant decimals at termination criterion
   else
+    params.uExact = @(x) NaN;
     params.useExactEnergy = false;
     params.exactEnergy = NaN;
   end
@@ -183,13 +186,15 @@ function params = editable
   params.showPlots = showPlots;              
   if showPlots, params.figVisible = 'on';
   else, params.figVisible = 'off'; end
+  params.plotModeGrayscale = plotModeGrayscale;
   params.showProgress = showProgress;          
 
   params.expName = expName;
   params.dirInfoName = dirInfoName;
   params.miscMsg = miscMsg;
 
-  if false%imageGiven
+  params.u0 = @(x) initalValue(x);
+  if useImage
     % TODO see below, probably leave everything in rhsImg
     % TODO call function image2function or sth
 
@@ -226,9 +231,9 @@ function params = editable
     % and comments)
   else
     params.f = @(x) rightHandSide(x);
-    if useExactEnergy
+    if useExactEnergy %TODO this is also possible without exact energy
+                      % just needs to rewrite some stuff in saveResults etc.
       params.gradF = @(x) gradientRightHandSide(x);
     end
   end
-  params.u0 = @(x) initalValue(x);
 end
