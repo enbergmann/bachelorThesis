@@ -26,6 +26,7 @@ function  [u,corrVec,energyVec] = ...
   parAlpha = params.parAlpha;
   showProgress = params.showProgress;
   exactEnergy = params.exactEnergy;
+  useExactEnergy = params.useExactEnergy;
   saveScreenshots = params.saveScreenshots;
   showPlots = params.showPlots;
   plotModeGrayscale = params.plotModeGrayscale;
@@ -63,6 +64,19 @@ function  [u,corrVec,energyVec] = ...
   energyVec = [];
   E = 1;
 
+  if showProgress
+    % TODO bennchmark this, might even be super unprblematic without showPlots
+    %  (concerning time)
+    fprintf('\n========================================\n\n');
+    fprintf('Current iteration on a mesh with \n\n');
+    fprintf('nrDof: %d\n', length(dof));
+    fprintf('epsStop: %e\n', epsStop);
+    if useExactEnergy, fprintf('Exact energy: %f\n', exactEnergy); end
+    fprintf('\n========================================\n\n');
+    fprintf('    corr           energy         step\n');
+    fprintf('   ------         --------       ------ \n');
+    lineLength = 0;
+  end
   if showPlots, figure; end
 
   while corr > epsStop
@@ -98,20 +112,19 @@ function  [u,corrVec,energyVec] = ...
     %corr = sqrt(dtU'*C*dtU); % Bartels termination criterion
     corr = sqrt(dtU'*stiMaCR*dtU); % Only gradients
 
-    if showProgress
-      % TODO make this prettier (also number of iteration)
-      % use structs and disp table maybe
-      fprintf('corr/epsStop: %e / %e\n', corr, epsStop);
-      format long; % TODO change that in the fprintf %.8g or something
-      fprintf('E = %f, E_exact = %f\n', E, exactEnergy);
-      format short;
-      fprintf('============================== \n');
-    end
-
     u = uNew;
     E = ENew;
     energyVec(end+1) = E;
     corrVec(end+1) = corr;
+
+    if showProgress
+      % TODO use structs and disp table maybe or just table (there must be
+      % a getTable and replace feature)
+
+      fprintf(repmat('\b', 1, lineLength));
+      lineLength = fprintf('%e      %f        %d', ...
+        corr, E, length(corrVec));
+    end
 
     if saveScreenshots > 0 & mod(length(energyVec), saveScreenshots) == 0
       % TODO this function is not written yet, do it next time it's needed

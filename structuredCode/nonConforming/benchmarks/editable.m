@@ -29,7 +29,7 @@ function params = editable
     % not necessary if useImage (for now)
   parTheta               = 0.5;  
     % bulk param. (1 for uniform)
-  initialRefinementLevel = 0;
+  initialRefinementLevel = 3;
   minNrDof               = 2e3;
   useProlongation        = true; 
   beta4Estimate          = 1;   
