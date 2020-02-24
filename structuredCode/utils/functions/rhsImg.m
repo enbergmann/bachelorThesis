@@ -1,4 +1,4 @@
-function f = image2rhs(imageName, parAlpha)
+function f = image2rhs(imageName, parAlpha, addNoise)
   %TODO make this prettier at some point, but it works just fine for now
   % even though only on square
     %TODO  JUST COPIED MAYBE SOLVED ALREADY unnecessary, either do more in
@@ -16,6 +16,7 @@ function f = image2rhs(imageName, parAlpha)
 
   % read image and convert utf8 to double
   img = im2double(imread(imageName));
+  if addNoise, img = imnoise(img, 'gaussian'); end
   imgSize = size(img);
 
   %   % add 10 pixel frame of zeros

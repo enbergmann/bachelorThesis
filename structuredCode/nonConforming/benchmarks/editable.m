@@ -3,8 +3,6 @@ function params = editable
 % Execute program/startAlgorithmNC.m to run algorithm.
 % Execute program/computeExactEnergyBV(...) to approximate the exact energy.
 
-% TODO after this works create denoise exampe, see if the algorithm denoises
-% TODO benchmark needs modes like (function, image, denoise)
 % TODO document (or make clear) dependencies, i.e. which flags are
 %      automatically set by which other flags
 % TODO computeGleb flag, not effective for image probably due to missing 
@@ -14,7 +12,7 @@ function params = editable
 %% PARAMETERS
 
   % misc. parameters (will affect performance)
-  showPlots              = true; 
+  showPlots              = false; 
     % Show plots during iteration?
   showProgress           = true; 
     % Print output during iteration?
@@ -29,8 +27,8 @@ function params = editable
     % not necessary if useImage (for now)
   parTheta               = 0.5;  
     % bulk param. (1 for uniform)
-  initialRefinementLevel = 3;
-  minNrDof               = 2e3;
+  initialRefinementLevel = 0;
+  minNrDof               = 1e4;
   useProlongation        = true; 
   beta4Estimate          = 1;   
 
@@ -44,6 +42,10 @@ function params = editable
   % experiment parameters
   useImage               = false;
   imageName              = '../utils/functions/images/cameraman.tif'; 
+  addNoise               = false;
+    % TODO probably add ability to denoise rhs and images (might need case
+    % distinction by considering useImage flag)
+    % TODO noise type (see MATLAB imnoise)
   parAlpha               = 1e0; %1e4 for image example 
    % TODO why does the analytic example is broken for 1e4
   parBeta                = 1;
@@ -72,7 +74,7 @@ function params = editable
                               % 0 means no screenshots will be saved
 
   % Information about experiment for saving and documentation.
-  expName                = 'testForBetterPlots';
+  expName                = 'testDenoising';
   dirInfoName            = datestr(now, 'yy_mm_dd_HH_MM_SS');
   miscMsg                = sprintf(['this\nis\nan\nexample', ...
                                     '\non\nhow\nthis\ncould\nlook']);
@@ -198,9 +200,16 @@ function params = editable
 
   params.u0 = @(x) initalValue(x);
   if useImage
-    params.f = rhsImg(imageName, parAlpha); %TODO rewrite and change name
+    params.f = rhsImg(imageName, parAlpha, addNoise); 
+    %TODO rewrite and change name
   else
-    params.f = @(x) rightHandSide(x);
+    noise = 0;
+    %if addNoise, noise = .4; end;
+    params.f = @(x) rightHandSide(x); %+ noise*(rand-.5);
+    %params.f = @(x) rightHandSide(x) + noise*(rand(size(x,1))-.5);
+    %   but this is a different noise on every level
+    %  TODO what if add noise, this obv doesnt work since it only adds one 
+    %  random number
     if useExactEnergy %TODO this is also possible without exact energy
                       % just needs to rewrite some stuff in saveResults etc.
       params.gradF = @(x) gradientRightHandSide(x);
