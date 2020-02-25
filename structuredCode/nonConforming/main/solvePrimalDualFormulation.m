@@ -65,8 +65,6 @@ function  [u,corrVec,energyVec] = ...
   E = 1;
 
   if showProgress
-    % TODO bennchmark this, might even be super unprblematic without showPlots
-    %  (concerning time)
     fprintf('\n========================================\n\n');
     fprintf('Current iteration on a mesh with \n\n');
     fprintf('nrDof: %d\n', length(dof));
@@ -88,14 +86,19 @@ function  [u,corrVec,energyVec] = ...
     
     % compute RHS
     
-    % TODO recalculate this at some point, Tiens looks different (smarter prob.)
-    % TODO kill the loop maybe, we know how inefficent this stuff is
+    % TODO kill the loop
     b = zeros(nrSides, 1);
+    %for elem = 1 : nrElems
+    %  bLocal = (gradCRu(elem, :)/parTau - varLambda(elem, :))...
+    %    *gradsCR4e(:, :, elem)';  
+    %  b(s4e(elem, :)) = b(s4e(elem, :)) + area4e(elem)*bLocal'; % right-hand side
+    %end
+    bTemp = (gradCRu/parTau - varLambda);
     for elem = 1 : nrElems
-      bLocal = (gradCRu(elem, :)/parTau - ...
-        varLambda(elem, :))*gradsCR4e(:, :, elem)';  
+      bLocal = bTemp(elem, :)*gradsCR4e(:, :, elem)';  
       b(s4e(elem, :)) = b(s4e(elem, :)) + area4e(elem)*bLocal'; % right-hand side
     end
+    keyboard
     b = b + intRHS4s;
 
     %% Solve System
