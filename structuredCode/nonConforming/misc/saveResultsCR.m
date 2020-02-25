@@ -55,6 +55,14 @@ function saveResults(params, currData, outputLvlInfo, outputLvl, output)
   warning('on', 'MATLAB:MKDIR:DirectoryExists');
     
 %% SAVE INFORMATION ABOUT EXPERIMENT
+  tableStruct = outputLvlInfo;
+  fields = fieldnames(outputLvl);
+  for ind = 2:length(fields) 
+    tableStruct.(fields{ind}) = outputLvl.(fields{ind});
+  end
+  writetable(struct2table(tableStruct), ...
+    sprintf('%s/lvlOutput.txt', dirName), 'Delimiter', ' ');
+
   if currLvl == 0
     % this means the benchmark-file should not be changed until level 0 is
     % saved
