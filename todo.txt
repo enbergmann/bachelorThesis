@@ -4,9 +4,6 @@ kill loop in solvePrimalDual... to save another 20% runtime
 
 denoising example mode plus plots(ask tien what is useful and what isn't)
 
-save triangulation relevant data (compare to Tiens latex example on what 
-information is needed)
-
 
 GENERAL PROGRAM STUFF
 

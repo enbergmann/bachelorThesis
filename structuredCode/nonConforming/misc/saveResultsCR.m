@@ -247,6 +247,10 @@ function saveResults(params, currData, outputLvlInfo, outputLvl, output)
   fName = sprintf('%s/triangulation.png', dirName);
   saveas(triangFig, fName);
 
+  dlmwrite(sprintf('%s/c4n.txt', dirName), c4n, 'Delimiter', '\t');
+  dlmwrite(sprintf('%s/n4e.txt', dirName), n4e, 'Delimiter', '\t');
+
+
   % % TODO careful, what error is the estimator for (this error should always
   % % be computed then (if possible), make error4lvl a alternative then)
 
