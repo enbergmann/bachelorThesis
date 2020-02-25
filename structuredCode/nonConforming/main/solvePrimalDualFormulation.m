@@ -88,15 +88,28 @@ function  [u,corrVec,energyVec] = ...
     
     % TODO kill the loop
     b = zeros(nrSides, 1);
+
     %for elem = 1 : nrElems
     %  bLocal = (gradCRu(elem, :)/parTau - varLambda(elem, :))...
     %    *gradsCR4e(:, :, elem)';  
     %  b(s4e(elem, :)) = b(s4e(elem, :)) + area4e(elem)*bLocal'; % right-hand side
     %end
-    bTemp = (gradCRu/parTau - varLambda);
+
+    %bLocal = zeros(nrElems, 3);
+    % for elem = 1 : nrElems
+    %   % TODO this can be compared to gradientCR, then half is done
+    %   bLocal(elem, :) = bTemp(elem, :)*gradsCR4e(:, :, elem)';  
+    % end
+    
+    bTemp = (gradCRu/parTau - varLambda); % bTemp4e
+    bRe = reshape(bTemp', 2*nrElems, 1);
+    gRe = reshape(permute(gradsCR4e, [2 3 1]), 2*nrElems, 3);
+    bLocal = reshape(sum(reshape(bRe.*gRe, 2, nrElems*3)), nrElems, 3);
+
     for elem = 1 : nrElems
-      bLocal = bTemp(elem, :)*gradsCR4e(:, :, elem)';  
-      b(s4e(elem, :)) = b(s4e(elem, :)) + area4e(elem)*bLocal'; % right-hand side
+      %TODO this is new, but should be possible
+      b(s4e(elem, :)) = b(s4e(elem, :)) + area4e(elem)*bLocal(elem, :)'; 
+        % right-hand side
     end
     keyboard
     b = b + intRHS4s;
