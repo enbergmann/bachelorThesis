@@ -1,6 +1,9 @@
 CURRENT TODOS
 
-kill loop in solvePrimalDual... to save another 20% runtime
+save outputLvlInfo, outputLvlError, outputLvlEnergy separately and plot
+them seperately
+
+rewrite the killed loops to be more readable and maybe easier to understand
 
 denoising example mode plus plots(ask tien what is useful and what isn't)
 
