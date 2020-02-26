@@ -86,33 +86,51 @@ function  [u,corrVec,energyVec] = ...
     
     % compute RHS
     
-    % TODO kill the loop
-    b = zeros(nrSides, 1);
+    % b = zeros(nrSides, 1);
 
-    %for elem = 1 : nrElems
-    %  bLocal = (gradCRu(elem, :)/parTau - varLambda(elem, :))...
-    %    *gradsCR4e(:, :, elem)';  
-    %  b(s4e(elem, :)) = b(s4e(elem, :)) + area4e(elem)*bLocal'; % right-hand side
-    %end
+    % % NOTE 1st iteration of the code
+    % for elem = 1 : nrElems
+    %   bLocal = (gradCRu(elem, :)/parTau - varLambda(elem, :))...
+    %     *gradsCR4e(:, :, elem)';  
+    %   b(s4e(elem, :)) = b(s4e(elem, :)) + area4e(elem)*bLocal'; % right-hand side
+    % end
 
+    % NOTE 2nd iteration of the code
     %bLocal = zeros(nrElems, 3);
     % for elem = 1 : nrElems
-    %   % TODO this can be compared to gradientCR, then half is done
     %   bLocal(elem, :) = bTemp(elem, :)*gradsCR4e(:, :, elem)';  
     % end
-    
+
+    % TODO rewrite it better, 
+    % thought: sum works for depth dimension af array, so one could add first
+    % and then multiply (or not, dunno)
     bTemp = (gradCRu/parTau - varLambda); % bTemp4e
     bRe = reshape(bTemp', 2*nrElems, 1);
     gRe = reshape(permute(gradsCR4e, [2 3 1]), 2*nrElems, 3);
-    bLocal = reshape(sum(reshape(bRe.*gRe, 2, nrElems*3)), nrElems, 3);
+    bLocal = area4e.*reshape(sum(reshape(bRe.*gRe, 2, nrElems*3)), nrElems, 3);
 
-    for elem = 1 : nrElems
-      %TODO this is new, but should be possible
-      b(s4e(elem, :)) = b(s4e(elem, :)) + area4e(elem)*bLocal(elem, :)'; 
-        % right-hand side
-    end
-    keyboard
-    b = b + intRHS4s;
+    % % NOTE 2nd iteration stuff
+    % for elem = 1 : nrElems
+    %   b(s4e(elem, :)) = b(s4e(elem, :)) + bLocal(elem, :)'; 
+    %     % right-hand side
+    % end
+    % b = b + intRHS4s;
+
+    % one side can only exist 1 or 2 times, not more (use unique fist and last)
+    % this solution is highly CR0 dependend, because it needs dof and inner
+    % edges to be the exact same (more general one would need to compute the
+    % inner edges and use them instead of dof)
+
+    [s4eSorted, s4eSortedInd] = sort(s4e(:));
+    [~, s4eSortedUniqueIndFirst] = unique(s4eSorted);
+    [~, s4eSortedUniqueIndLast] = unique(s4eSorted, 'last');
+    s4eSortedUniqueFirst = s4eSortedInd(s4eSortedUniqueIndFirst);
+    s4eSortedUniqueLast = s4eSortedInd(s4eSortedUniqueIndLast);
+    bLocalFirst = bLocal(s4eSortedUniqueFirst);
+    bLocalLast = bLocal(s4eSortedUniqueLast);
+    b = intRHS4s + bLocalFirst;
+    b(dof) = b(dof) + bLocalLast(dof);
+      % without dof outer edges (non-dof for CR0) would be counted two times
 
     %% Solve System
     uNew = zeros(nrSides, 1);
