@@ -21,6 +21,7 @@ function params = editable
     % showProgress.
   degree4Integrate       = 20; 
     % algebraic degree of exactness for integrate from the AFEM package
+  plotRhs                = false;
 
   % AFEM parameters
   geometry               = 'BigSquare'; 
@@ -28,7 +29,7 @@ function params = editable
   parTheta               = 0.5;  
     % bulk param. (1 for uniform)
   initialRefinementLevel = 0;
-  minNrDof               = 1e3;
+  minNrDof               = 1e4;
   useProlongation        = true; 
   beta4Estimate          = 1;   
 
@@ -193,6 +194,7 @@ function params = editable
   else, params.figVisible = 'off'; end
   params.plotModeGrayscale = plotModeGrayscale;
   params.showProgress = showProgress;          
+  params.plotRhs = plotRhs;
 
   params.expName = expName;
   params.dirInfoName = dirInfoName;

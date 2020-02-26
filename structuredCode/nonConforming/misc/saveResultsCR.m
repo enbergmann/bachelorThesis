@@ -18,6 +18,7 @@ function saveResults(params, currData, outputLvlInfo, outputLvl, output)
   parBeta = params.parBeta;
   useExactEnergy = params.useExactEnergy;
   exactEnergy = params.exactEnergy;
+  plotRhs = params.plotRhs;
 
   % extract necessary information from currData
   nrDof = currData.nrDof; 
@@ -72,34 +73,39 @@ function saveResults(params, currData, outputLvlInfo, outputLvl, output)
       expName, dirInfoName, benchmark);
     copyfile(source, destination);
 
-    % % plot rhs and grayscale image of rhs
-    if strcmp(geometry, 'Polygon'), geometry = 'BigSquare'; end
-    [c4nRhs, n4eRhs] = loadGeometry(geometry, 9);
+    if plotRhs
+      % plot rhs and grayscale image of rhs
 
-    rhsFig = figure('visible', figVisible); 
-    trisurf(n4eRhs, c4nRhs(:, 1), c4nRhs(:, 2), f(c4nRhs), ...
-      'EdgeColor', 'None');
-    ftitle = sprintf(...
-      'right-hand side for \\alpha =%d, \\beta =%d', parAlpha, parBeta);
-    title(ftitle);
-    fName = sprintf('../../results/nonconforming/%s/%s/rhs.png', ...
-      expName, dirInfoName);
-    saveas(rhsFig, fName);
+      % TODO make polygon mode right (there is a function for this, i.e.
+      % don't use load geometry)
+      if strcmp(geometry, 'Polygon'), geometry = 'BigSquare'; end
+      [c4nRhs, n4eRhs] = loadGeometry(geometry, 9);
 
-    grayscaleFig = figure('visible', figVisible); 
-    trisurf(n4eRhs, c4nRhs(:, 1), c4nRhs(:, 2), f(c4nRhs), ...
-      'EdgeColor', 'None');
-    view(0, 90);
-    axis off;
-    axis equal;
-    colormap gray;
-    ftitle = sprintf(...
-      'right-hand side grayscale for \\alpha =%d, \\beta =%d', ...
-      parAlpha, parBeta);
-    title(ftitle);
-    fName = sprintf('../../results/nonconforming/%s/%s/rhsGrayscale.png', ...
-      expName, dirInfoName);
-    saveas(grayscaleFig, fName);
+      rhsFig = figure('visible', figVisible); 
+      trisurf(n4eRhs, c4nRhs(:, 1), c4nRhs(:, 2), f(c4nRhs), ...
+        'EdgeColor', 'None');
+      ftitle = sprintf(...
+        'right-hand side for \\alpha =%d, \\beta =%d', parAlpha, parBeta);
+      title(ftitle);
+      fName = sprintf('../../results/nonconforming/%s/%s/rhs.png', ...
+        expName, dirInfoName);
+      saveas(rhsFig, fName);
+
+      grayscaleFig = figure('visible', figVisible); 
+      trisurf(n4eRhs, c4nRhs(:, 1), c4nRhs(:, 2), f(c4nRhs), ...
+        'EdgeColor', 'None');
+      view(0, 90);
+      axis off;
+      axis equal;
+      colormap gray;
+      ftitle = sprintf(...
+        'right-hand side grayscale for \\alpha =%d, \\beta =%d', ...
+        parAlpha, parBeta);
+      title(ftitle);
+      fName = sprintf('../../results/nonconforming/%s/%s/rhsGrayscale.png', ...
+        expName, dirInfoName);
+      saveas(grayscaleFig, fName);
+    end
   end
   % TODO think about what stuff might be relevant from the given structs and
   %      save them if there is anything useful
