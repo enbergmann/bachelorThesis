@@ -29,12 +29,12 @@ function params = editable
   parTheta               = 0.5;  
     % bulk param. (1 for uniform)
   initialRefinementLevel = 0;
-  minNrDof               = 1e4;
+  minNrDof               = 1e3;
   useProlongation        = true; 
   beta4Estimate          = 1;   
 
   % algorithm parameters
-  epsStop                = 1e-2; % TODO sth about updating it depending on
+  epsStop                = 1e-6; % TODO sth about updating it depending on
                                  %      mesh size
   stopCrit               = ["Exact Error Difference", ...
                             "weighted energy difference"];

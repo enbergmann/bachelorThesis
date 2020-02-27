@@ -76,15 +76,17 @@ function startAlgorithmCR(benchmark)
   time = [];
   outputLvlInfo.time = time;
 
-  outputLvl.lvl = lvl;
-  outputLvl.energy = [];
-  if useExactEnergy, outputLvl.gleb = []; end
-  if exactSolutionKnown, outputLvl.error4lvl = []; end 
+  outputLvlError.lvl = lvl;
+  if exactSolutionKnown, outputLvlError.error4lvl = []; end 
     % TODO might call this errorL2 and sth else errorAlt if there is 
     % alternative errors at some point
-  outputLvl.eta = [];
-  outputLvl.etaVol = [];
-  outputLvl.etaJumps = [];
+  outputLvlError.eta = [];
+  outputLvlError.etaVol = [];
+  outputLvlError.etaJumps = [];
+
+  outputLvlEnergy.lvl = lvl;
+  outputLvlEnergy.energy = [];
+  if useExactEnergy, outputLvlEnergy.gleb = []; end
 
   currData.c4n = c4n;
   currData.n4e = n4e;
@@ -158,7 +160,7 @@ function startAlgorithmCR(benchmark)
     [u, output.corrVec, energyVec] = ...
       solvePrimalDualFormulation(params, currData, u0, varLambda);
     outputLvlInfo.time(end+1, 1) = toc;
-    outputLvl.energy(end+1, 1) = energyVec(end);
+    outputLvlEnergy.energy(end+1, 1) = energyVec(end);
     output.energyVec = energyVec;
     output.u = u;
     outputLvlInfo.nrIterations(end+1, 1) = length(energyVec);
@@ -169,7 +171,7 @@ function startAlgorithmCR(benchmark)
 
     % compute guaranteed lower energy bound
     if useExactEnergy
-      outputLvl.gleb(end+1, 1) = ...
+      outputLvlEnergy.gleb(end+1, 1) = ...
         computeGleb(params, currData, output);
     end
 
@@ -180,31 +182,34 @@ function startAlgorithmCR(benchmark)
 
     % TODO implement flag for different errors
     if exactSolutionKnown
-      outputLvl.error4lvl(end+1, 1) = ...
+      outputLvlError.error4lvl(end+1, 1) = ...
         sqrt(sum(error4eCRL2(c4n, n4e, uExact, u)));
     end
 
-    outputLvl.eta(end+1, 1) = sqrt(sum(eta4e));
-    outputLvl.etaVol(end+1, 1) = sqrt(sum(etaVol4e));
-    outputLvl.etaJumps(end+1, 1) = sqrt(sum(etaJumps4e));
+    outputLvlError.eta(end+1, 1) = sqrt(sum(eta4e));
+    outputLvlError.etaVol(end+1, 1) = sqrt(sum(etaVol4e));
+    outputLvlError.etaJumps(end+1, 1) = sqrt(sum(etaJumps4e));
 
     clc;
     disp(struct2table(outputLvlInfo));
-    disp(struct2table(outputLvl));
+    disp(struct2table(outputLvlError));
+    disp(struct2table(outputLvlEnergy));
 
     % TODO maybe allow only a fixed amounts of different errors, like only two,
     %      so one can choose L2 and H1 for example
     %      so sth like error4lvl, errorAlt4lvl
     % TODO probably always have the error for which the estimator is an 
     %      upper bound
-    saveResultsCR(params, currData, outputLvlInfo, outputLvl, output);
+    saveResultsCR(params, currData, ...
+      outputLvlInfo, outputLvlError, outputLvlEnergy, output);
 
     % check termination
     if nrDof(end) >= minNrDof, break; end
 
     lvl(end+1, 1) = lvl(end) + 1; %#ok<AGROW>
     outputLvlInfo.lvl = lvl;
-    outputLvl.lvl = lvl;
+    outputLvlError.lvl = lvl;
+    outputLvlEnergy.lvl = lvl;
 
     % MARK
     n4sMarked = markBulk(n4e, eta4e, parTheta);

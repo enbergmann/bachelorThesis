@@ -3,7 +3,8 @@
 % TODO similar to struct 2 table write those information in a file so
 % one can see everything in one go, also elapsed time of program and so on
 
-function saveResults(params, currData, outputLvlInfo, outputLvl, output)
+function saveResults(params, currData, ...
+    outputLvlInfo, outputLvlError, outputLvlEnergy, output)
 
 %% INITIALIZATION
   % extract necessary parameters from params
@@ -31,15 +32,17 @@ function saveResults(params, currData, outputLvlInfo, outputLvl, output)
   nrDof4lvl = outputLvlInfo.nrDof;
   time = outputLvlInfo.time(end);
 
-  % extract necessary information from outputLvlInfo
-  eta4lvl = outputLvl.eta;
-  etaVol4lvl = outputLvl.etaVol;
-  etaJumps4lvl = outputLvl.etaJumps;
+  % extract necessary information from outputLvlError
+  eta4lvl = outputLvlError.eta;
+  etaVol4lvl = outputLvlError.etaVol;
+  etaJumps4lvl = outputLvlError.etaJumps;
   if exactSolutionKnown
-    error4lvl = outputLvl.error4lvl;
+    error4lvl = outputLvlError.error4lvl;
   end
+
+  % extract necessary information from outputLvlInfoEnergy
   if useExactEnergy
-    gleb4lvl = outputLvl.gleb;
+    gleb4lvl = outputLvlEnergy.gleb;
   end
   
   % extract necessary information from output
@@ -56,13 +59,23 @@ function saveResults(params, currData, outputLvlInfo, outputLvl, output)
   warning('on', 'MATLAB:MKDIR:DirectoryExists');
     
 %% SAVE INFORMATION ABOUT EXPERIMENT
-  tableStruct = outputLvlInfo;
-  fields = fieldnames(outputLvl);
-  for ind = 2:length(fields) 
-    tableStruct.(fields{ind}) = outputLvl.(fields{ind});
-  end
-  writetable(struct2table(tableStruct), ...
-    sprintf('%s/lvlOutput.txt', dirName), 'Delimiter', ' ');
+  % TODO could be rewritten t some point but for three structs now
+  % tableStruct = outputLvlInfo;
+  % fields = fieldnames(outputLvl);
+  % for ind = 2:length(fields) 
+  %   tableStruct.(fields{ind}) = outputLvl.(fields{ind});
+  % end
+  % writetable(struct2table(tableStruct), ...
+  %   sprintf('%s/lvlOutput.txt', dirName), 'Delimiter', ' ');
+
+  writetable(struct2table(outputLvlInfo), ...
+    sprintf('%s/lvlOutputInfo.txt', dirName), 'Delimiter', ' ');
+
+  writetable(struct2table(outputLvlError), ...
+    sprintf('%s/lvlOutputError.txt', dirName), 'Delimiter', ' ');
+
+  writetable(struct2table(outputLvlEnergy), ...
+    sprintf('%s/lvlOutputEnergy.txt', dirName), 'Delimiter', ' ');
 
   if currLvl == 0
     % this means the benchmark-file should not be changed until level 0 is
