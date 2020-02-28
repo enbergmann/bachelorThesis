@@ -42,14 +42,14 @@ function params = editable %#ok<*MSNU>
   parTau                 = 1/2;
 
   % experiment parameters
-  useImage               = false;
+  useImage               = true;
   imageName              = ...
     '../utils/functions/images/cameraman.tif'; %#ok<NASGU> 
   addNoise               = false; %#ok<NASGU>
     % TODO probably add ability to denoise rhs and images (might need case
     % distinction by considering useImage flag)
     % TODO noise type (see MATLAB imnoise)
-  parAlpha               = 1e0; %1e4 for image example 
+  parAlpha               = 1e4; %1e4 for image example 
    % TODO why does the analytic example is broken for 1e4
   parBeta                = 1;
   exactSolutionKnown     = true; %#ok<NASGU>
@@ -80,7 +80,7 @@ function params = editable %#ok<*MSNU>
                               % 0 means no screenshots will be saved
 
   % Information about experiment for saving and documentation.
-  expName                = '10e-6_epsStop';
+  expName                = '10e-6_epsStopImage';
   dirInfoName            = datestr(now, 'yy_mm_dd_HH_MM_SS');
   miscMsg                = sprintf(['this\nis\nan\nexample', ...
                                     '\non\nhow\nthis\ncould\nlook']);
