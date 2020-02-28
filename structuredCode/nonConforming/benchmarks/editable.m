@@ -29,25 +29,25 @@ function params = editable
   parTheta               = 0.5;  
     % bulk param. (1 for uniform)
   initialRefinementLevel = 0;
-  minNrDof               = 1e3;
+  minNrDof               = 1e4;
   useProlongation        = true; 
   beta4Estimate          = 1;   
 
   % algorithm parameters
-  epsStop                = 1e-6; % TODO sth about updating it depending on
+  epsStop                = 1e-2; % TODO sth about updating it depending on
                                  %      mesh size
   stopCrit               = ["Exact Error Difference", ...
                             "weighted energy difference"];
   parTau                 = 1/2;
 
   % experiment parameters
-  useImage               = false;
+  useImage               = true;
   imageName              = '../utils/functions/images/cameraman.tif'; 
   addNoise               = false;
     % TODO probably add ability to denoise rhs and images (might need case
     % distinction by considering useImage flag)
     % TODO noise type (see MATLAB imnoise)
-  parAlpha               = 1e0; %1e4 for image example 
+  parAlpha               = 1e4; %1e4 for image example 
    % TODO why does the analytic example is broken for 1e4
   parBeta                = 1;
   exactSolutionKnown     = true;
@@ -75,7 +75,7 @@ function params = editable
                               % 0 means no screenshots will be saved
 
   % Information about experiment for saving and documentation.
-  expName                = 'testDenoising';
+  expName                = 'benchmarkImage';
   dirInfoName            = datestr(now, 'yy_mm_dd_HH_MM_SS');
   miscMsg                = sprintf(['this\nis\nan\nexample', ...
                                     '\non\nhow\nthis\ncould\nlook']);
