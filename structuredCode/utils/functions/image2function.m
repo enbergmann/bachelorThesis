@@ -1,17 +1,11 @@
-function f = image2rhs(imageName, parAlpha, addNoise)
+function f = image2function(imageName, parAlpha, addNoise)
   %TODO make this prettier at some point, but it works just fine for now
   % even though only on square
-    %TODO  JUST COPIED MAYBE SOLVED ALREADY unnecessary, either do more in
-    % rhsImg and return a function handle OR do everything here
-    % (maybe seperate file for easier access and configurations
-    % and comments)
-  % TODO return function handle for maximum speed
 % TODO comment this when it's beautiful
 % TODO name is prob more sth like 'projectImageToSquare'
 
   % prob only works on Square domain right now
 
-  % TODO see below, probably leave everything in rhsImg
   % TODO call function image2function or sth
 
   % read image and convert utf8 to double
@@ -30,10 +24,10 @@ function f = image2rhs(imageName, parAlpha, addNoise)
       % first 25 rows
     img(imgSize(1)-(j-1), :) = (j-1)*img(imgSize(1)-(j-1), :)/25;
       % last 25 rows
-    img([j:imgSize(1)-(j-1)], j) = (j-1)*img([j:imgSize(1)-(j-1)], j)/25;
+    img(j:imgSize(1)-(j-1), j) = (j-1)*img(j:imgSize(1)-(j-1), j)/25;
       % first 25 columns except already done first and last j rows
-    img([j:imgSize(1)-(j-1)], imgSize(2)-(j-1)) ...
-        = (j-1)*img([j:imgSize(1)-(j-1)], imgSize(2)-(j-1))/25;
+    img(j:imgSize(1)-(j-1), imgSize(2)-(j-1)) ...
+        = (j-1)*img(j:imgSize(1)-(j-1), imgSize(2)-(j-1))/25;
       % last 25 columns except already done first and lastj rows
     % always divide by 25 since j is 25 at most
   end
