@@ -59,14 +59,17 @@ function saveResults(params, currData, ...
   warning('on', 'MATLAB:MKDIR:DirectoryExists');
     
 %% SAVE INFORMATION ABOUT EXPERIMENT
-  % TODO could be rewritten t some point but for three structs now
-  % tableStruct = outputLvlInfo;
-  % fields = fieldnames(outputLvl);
-  % for ind = 2:length(fields) 
-  %   tableStruct.(fields{ind}) = outputLvl.(fields{ind});
-  % end
-  % writetable(struct2table(tableStruct), ...
-  %   sprintf('%s/lvlOutput.txt', dirName), 'Delimiter', ' ');
+  tableStruct = outputLvlInfo;
+  fieldsError = fieldnames(outputLvlError);
+  fieldsEnergy = fieldnames(outputLvlEnergy);
+  for ind = 2:length(fieldsError) 
+    tableStruct.(fieldsError{ind}) = outputLvlError.(fieldsError{ind});
+  end
+  for ind = 2:length(fieldsEnergy) 
+    tableStruct.(fieldsEnergy{ind}) = outputLvlEnergy.(fieldsEnergy{ind});
+  end
+  writetable(struct2table(tableStruct), ...
+    sprintf('%s/lvlOutput.txt', dirName), 'Delimiter', ' ');
 
   writetable(struct2table(outputLvlInfo), ...
     sprintf('%s/lvlOutputInfo.txt', dirName), 'Delimiter', ' ');
