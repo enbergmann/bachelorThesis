@@ -50,7 +50,8 @@ function  [u,corrVec,energyVec] = ...
   % extract necessary data
 
   % initialize remaing parameters
-  firstScreenshot = datestr(now, 'yy_mm_dd_HH_MM_SS');
+
+  % firstScreenshot = datestr(now, 'yy_mm_dd_HH_MM_SS');
 
   A = stiMaCR/parTau+parAlpha*maMaCR; %TODO here could be an h in front of stiMaCR
   %C = maMaCR + h*stiMaCR;
@@ -62,7 +63,6 @@ function  [u,corrVec,energyVec] = ...
   corr = epsStop+1; 
   corrVec = [];
   energyVec = [];
-  E = 1;
 
   if showProgress
     fprintf('\n========================================\n\n');
@@ -148,8 +148,8 @@ function  [u,corrVec,energyVec] = ...
 
     u = uNew;
     E = ENew;
-    energyVec(end+1) = E;
-    corrVec(end+1) = corr;
+    energyVec(end+1) = E; %#ok<AGROW>
+    corrVec(end+1) = corr; %#ok<AGROW>
 
     if showProgress
       % TODO use structs and disp table maybe or just table (there must be
@@ -160,7 +160,7 @@ function  [u,corrVec,energyVec] = ...
         corr, E, length(corrVec));
     end
 
-    if saveScreenshots > 0 & mod(length(energyVec), saveScreenshots) == 0
+    if saveScreenshots > 0 && mod(length(energyVec), saveScreenshots) == 0
       % TODO this function is not written yet, do it next time it's needed
       saveScreenshot();
     end

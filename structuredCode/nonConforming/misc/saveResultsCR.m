@@ -3,7 +3,7 @@
 % TODO similar to struct 2 table write those information in a file so
 % one can see everything in one go, also elapsed time of program and so on
 
-function saveResults(params, currData, ...
+function saveResultsCR(params, currData, ...
     outputLvlInfo, outputLvlError, outputLvlEnergy, output)
 
 %% INITIALIZATION

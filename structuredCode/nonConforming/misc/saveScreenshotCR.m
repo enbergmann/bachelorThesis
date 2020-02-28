@@ -1,7 +1,7 @@
 %TODO this folder is for functions that don't need to be documented
 %TODO very old version, needs to be rewritten if needed again
 % WON'T function for now
-function saveScreenshot(firstScreenshot)
+function saveScreenshotCR(firstScreenshot)
   dirName = sprintf(...
     '../../../../results/tvRegPrimalDualScreenshots/%s/%s',...
     firstScreenshot,datestr(now,'yy_mm_dd_HH_MM_SS'));

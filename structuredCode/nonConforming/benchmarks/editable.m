@@ -1,4 +1,4 @@
-function params = editable
+function params = editable %#ok<*MSNU>
 % Editable prototype for benchmark files.
 % Execute program/startAlgorithmNC.m to run algorithm.
 % Execute program/computeExactEnergyBV(...) to approximate the exact energy.
@@ -24,8 +24,8 @@ function params = editable
   plotRhs                = false;
 
   % AFEM parameters
-  geometry               = 'BigSquare'; 
-    % not necessary if useImage (for now)
+  geometry               = 'BigSquare'; %#ok<NASGU>                     
+    % not necessary if useImage (for now                     )
   parTheta               = 0.5;  
     % bulk param. (1 for uniform)
   initialRefinementLevel = 0;
@@ -41,23 +41,27 @@ function params = editable
   parTau                 = 1/2;
 
   % experiment parameters
-  useImage               = true;
-  imageName              = '../utils/functions/images/cameraman.tif'; 
-  addNoise               = false;
+  useImage               = false;
+  imageName              = ...
+    '../utils/functions/images/cameraman.tif'; %#ok<NASGU> 
+  addNoise               = false; %#ok<NASGU>
     % TODO probably add ability to denoise rhs and images (might need case
     % distinction by considering useImage flag)
     % TODO noise type (see MATLAB imnoise)
-  parAlpha               = 1e4; %1e4 for image example 
+  parAlpha               = 1e0; %1e4 for image example 
    % TODO why does the analytic example is broken for 1e4
   parBeta                = 1;
-  exactSolutionKnown     = true;
-  useExactEnergy         = true; % only effective if exactSolutionKnown == true
+  exactSolutionKnown     = true; %#ok<NASGU>
+  useExactEnergy         = true; %#ok<NASGU>
+    % only effective if exactSolutionKnown == true
+
 		% just write it in from the file per hand, with like 10 digits or 
 		% sth.. Think about it.
     % TODO for now this is also the flag to use gradient of f to compute a
     % guaranteed lower energy bound
   % TODO how should the exactEnergy be written into here
-  exactEnergy            = -2.05805109; % four significant digits
+  exactEnergy            = -2.05805109; %#ok<NASGU>
+    % four significant digits
   errorNorm              = ["L2", "energy"]; % TODO list options (likewise for
                                              % some other params (think))
                                               %strArr
@@ -82,7 +86,7 @@ function params = editable
 
 
   % function handles 
-  function y = initalValue(x)
+  function y = initalValue(x) %#ok<INUSD>
     y = 0;
   end
 
@@ -99,16 +103,17 @@ function params = editable
 
   function y = exactSolution(x)
     % can be ignored if exactSolutionKnown == false
-    y = f01ExactSolution(x, [parAlpha]);
+    y = f01ExactSolution(x, parAlpha);
   end
 
 
 %% BUILD STRUCT
 % should not be of interest for mere usage of the program
   if useImage
-    geometry = 'Square'; % TODO for now only on square possible, but 
-                         % might be possible on rectangles in general (useful 
-                         % though?)
+    geometry = 'Square'; %#ok<UNRCH>
+      % TODO for now only on square possible, but 
+      % might be possible on rectangles in general (useful 
+      % though?)
     exactSolutionKnown = false; % NOTE there won't be exact solutions for
                                 % real images
   end
@@ -136,7 +141,7 @@ function params = editable
   params.exactSolutionKnown = exactSolutionKnown; 
 
   if exactSolutionKnown 
-    params.uExact = @(x) exactSolution(x);
+    params.uExact = @(x) exactSolution(x); %#ok<UNRCH>
     params.useExactEnergy = useExactEnergy;
     params.exactEnergy = exactEnergy;
     % just compute it extrenalyy and only set the flag to true, if the energy is
@@ -176,7 +181,7 @@ function params = editable
     %
     %use significant decimals at termination criterion
   else
-    params.uExact = @(x) NaN;
+    params.uExact = @(x) NaN; %#ok<UNRCH>
     params.useExactEnergy = false;
     params.exactEnergy = NaN;
   end
@@ -190,7 +195,7 @@ function params = editable
 
   params.degree4Integrate = degree4Integrate;
   params.showPlots = showPlots;              
-  if showPlots, params.figVisible = 'on';
+  if showPlots, params.figVisible = 'on'; %#ok<UNRCH>
   else, params.figVisible = 'off'; end
   params.plotModeGrayscale = plotModeGrayscale;
   params.showProgress = showProgress;          
@@ -202,10 +207,10 @@ function params = editable
 
   params.u0 = @(x) initalValue(x);
   if useImage
-    params.f = rhsImg(imageName, parAlpha, addNoise); 
+    params.f = rhsImg(imageName, parAlpha, addNoise); %#ok<UNRCH>
     %TODO rewrite and change name
   else
-    noise = 0;
+    noise = 0; %#ok<NASGU,UNRCH> 
     %if addNoise, noise = .4; end;
     params.f = @(x) rightHandSide(x); %+ noise*(rand-.5);
     %params.f = @(x) rightHandSide(x) + noise*(rand(size(x,1))-.5);
