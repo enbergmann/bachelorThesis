@@ -30,7 +30,7 @@ function params = editable %#ok<*MSNU>
   parTheta               = 0.5;  
     % bulk param. (1 for uniform)
   initialRefinementLevel = 0;
-  minNrDof               = 1e4;
+  minNrDof               = 1e9;
   useProlongation        = true; 
   beta4Estimate          = 1;   
 
