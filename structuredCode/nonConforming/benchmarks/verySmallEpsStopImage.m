@@ -208,7 +208,7 @@ function params = editable %#ok<*MSNU>
 
   params.u0 = @(x) initalValue(x);
   if useImage
-    params.f = rhsImg(imageName, parAlpha, addNoise); %#ok<UNRCH>
+    params.f = image2function(imageName, parAlpha, addNoise); %#ok<UNRCH>
     %TODO rewrite and change name
   else
     noise = 0; %#ok<NASGU,UNRCH> 
