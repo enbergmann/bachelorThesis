@@ -12,6 +12,7 @@ function saveResultsCR(params, currData, ...
   f = params.f;
   benchmark = params.benchmark;
   exactSolutionKnown = params.exactSolutionKnown;
+  uExact = params.uExact;
   expName = params.expName;
   dirInfoName = params.dirInfoName;
   figVisible = params.figVisible;
@@ -121,6 +122,35 @@ function saveResultsCR(params, currData, ...
       fName = sprintf('../../results/nonconforming/%s/%s/rhsGrayscale.png', ...
         expName, dirInfoName);
       saveas(grayscaleFig, fName);
+
+      if exactSolutionKnown
+        uExactFig = figure('visible', figVisible); 
+        trisurf(n4eRhs, c4nRhs(:, 1), c4nRhs(:, 2), uExact(c4nRhs), ...
+          'EdgeColor', 'None');
+        ftitle = sprintf(...
+          'exact solution for \\alpha =%d, \\beta =%d', parAlpha, parBeta);
+        title(ftitle);
+        fName = ...
+          sprintf('../../results/nonconforming/%s/%s/exactSolution.png', ...
+          expName, dirInfoName);
+        saveas(uExactFig, fName);
+
+        uExactGrayscaleFig = figure('visible', figVisible); 
+        trisurf(n4eRhs, c4nRhs(:, 1), c4nRhs(:, 2), uExact(c4nRhs), ...
+          'EdgeColor', 'None');
+        view(0, 90);
+        axis off;
+        axis equal;
+        colormap gray;
+        ftitle = sprintf(...
+          'exact solution grayscale for \\alpha =%d, \\beta =%d', ...
+          parAlpha, parBeta);
+        title(ftitle);
+        fName = ...
+          sprintf('../../results/nonconforming/%s/%s/uExactGrayscale.png', ...
+          expName, dirInfoName);
+        saveas(uExactGrayscaleFig, fName);
+      end
     end
   end
   % TODO think about what stuff might be relevant from the given structs and

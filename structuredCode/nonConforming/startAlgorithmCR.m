@@ -1,30 +1,11 @@
-% NOTE REMEMBER MATLAB ist copyOnWrite, so try not to change structs in
+% NOTE remember MATLAB ist copyOnWrite, so try not to change structs in
 % functions to avoid the struct being copied 
 % might be necessary to use 'clear' to delete data later (e.g. after saving c4n
 % in current)
 
-% TODO for all my functions (dont want to touch afem stuff) compute all
-% necessary stuff (in particular that is dependend on geometry) before and pass
-% it to the functions i.e. my mentality will be efficiency >> memory usage
-
-%TODO save all current geometry stuff in a 'current' struct
-%comments then should read sth like
-%current: struct, must contain the following fields
-%            c4n - [copy allready existing comments]
-%            n4e -
-%            ... -
-% TODO might want a 'never quit modus' to termination (just do the algorithm until
-% manual termination by the user)
-
-% TODO think about when do I want to write functions for stuff
-%  - multiple use
-%  - e.g. saveScreenshot stuff (to shorten code and not comment it since it's
-%    not necesary at all for the code, so just put it somewhere where nobody
-%    needs to see it)
-
-% TODO look into how one can set the HOME directory for the current execution
-%      so all the paths are correct (like cd to the directory where 
-%      startAlgorithmNC is before anything else)
+% NOTE for all non-AFEM functions compute all necessary stuff (in particular
+% that is dependend on geometry) before and pass it to the functions i.e.
+% mentality is efficiency >> memory usage
 
 function startAlgorithmCR(benchmark)
 % Loads a benchmark and starts the corresponding experiment with the
@@ -34,13 +15,9 @@ function startAlgorithmCR(benchmark)
 % input:  benchmark - 'string'/'char array with exactly one row' containing the 
 %                     name of the benchmark the user wants to use (optional
 %                     parameter, default value is 'editable').
-%
-% TODO do we even need output here, prob don't since results will be saved
-% output: params    - 'struct' containing the parameters obtained from the
-%                     benchmark.
-%         output    - 'struct' containing the results of the experiment.
 
 %% INITIALIZATION
+  cd(fileparts(which('startAlgorithmCR')));
   addpath(genpath(pwd), genpath('../utils/'));
 
   if nargin < 1
@@ -64,9 +41,8 @@ function startAlgorithmCR(benchmark)
   useProlongation = params.useProlongation;
   useExactEnergy = params.useExactEnergy;
   
-  % initialize remaining parameters and struct with information dependend solely
-  % on the current geometry
-
+  % initialize remaining parameters and struct with information dependend
+  % solely on the current geometry
   lvl = 0;
 
   outputLvlInfo.lvl = lvl;
