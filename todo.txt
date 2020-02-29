@@ -1,5 +1,9 @@
 CURRENT TODOS
 
+tikz important stuff, prepare current results report
+
+plot exact solution along axis for comparison to discrete solution
+
 rewrite the killed loops to be more readable and maybe easier to understand
 
 denoising example mode plus plots(ask tien what is useful and what isn't)
