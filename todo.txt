@@ -1,5 +1,8 @@
 CURRENT TODOS
 
+prepare file with all important energies, estimators, functions and so on,
+where the results can be added in the end
+
 tikz important stuff, prepare current results report
 
 plot exact solution along axis for comparison to discrete solution
