@@ -20,7 +20,7 @@ function saveResultsCR(params, currData, ...
   parBeta = params.parBeta;
   useExactEnergy = params.useExactEnergy;
   exactEnergy = params.exactEnergy;
-  plotRhs = params.plotRhs;
+  plotGivenFunctions = params.plotGivenFunctions;
 
   % extract necessary information from currData
   nrDof = currData.nrDof; 
@@ -90,7 +90,7 @@ function saveResultsCR(params, currData, ...
       expName, dirInfoName, benchmark);
     copyfile(source, destination);
 
-    if plotRhs
+    if plotGivenFunctions
       % plot rhs and grayscale image of rhs
 
       % TODO make polygon mode right (there is a function for this, i.e.

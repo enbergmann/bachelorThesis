@@ -19,9 +19,7 @@ function vCR = interpolationCR(currData, v)
   n4s = currData.n4s;
   length4s = currData.length4s;
 
-  % compute uCR
-  integrand = @(n4p,Gpts4p,Gpts4ref) ...
-      v(Gpts4p);
-  
-  vCR = integrate(integrand, c4n, n4s, 20, length4s)./length4s;
+  % compute vCR
+  vCR = integrate(@(n4p,Gpts4p,Gpts4ref) v(Gpts4p), ...
+    c4n, n4s, 20, length4s)./length4s;
 end

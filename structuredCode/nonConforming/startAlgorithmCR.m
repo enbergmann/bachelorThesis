@@ -1,10 +1,11 @@
-% NOTE remember MATLAB ist copyOnWrite, so try not to change structs in
+% NOTE remember MATLAB is copyOnWrite, so try not to change structs in
 % functions to avoid the struct being copied 
-% might be necessary to use 'clear' to delete data later (e.g. after saving c4n
-% in current)
 
-% NOTE for all non-AFEM functions compute all necessary stuff (in particular
-% that is dependend on geometry) before and pass it to the functions i.e.
+% TODO might be necessary to use 'clear'
+% to delete data later (e.g. after saving c4n in current)
+
+% NOTE for all non-AFEM functions compute all necessary data (in particular
+% that is dependent on geometry) before and pass it to the functions i.e.
 % mentality is efficiency >> memory usage
 
 function startAlgorithmCR(benchmark)
@@ -17,17 +18,20 @@ function startAlgorithmCR(benchmark)
 %                     parameter, default value is 'editable').
 
 %% INITIALIZATION
+  % change to the directory nonConforming where startAlgorithmCR.m should have
+  % been called from such that all relative filepaths used during runtime are
+  % correct
   cd(fileparts(which('startAlgorithmCR')));
   addpath(genpath(pwd), genpath('../utils/'));
 
-  if nargin < 1
-    benchmark = 'editable';
-  end
+  if nargin<1, benchmark = 'editable'; end
 
+  % get parameters from the given benchmark file
   params = feval(benchmark);
   params.benchmark = benchmark;
 
   % extract necessary parameters from params
+  if params.debugIfError; dbstop if error, end;
   c4n = params.c4n;
   n4e = params.n4e;
   n4sDb = params.n4sDb;
@@ -40,6 +44,7 @@ function startAlgorithmCR(benchmark)
   parTheta = params.parTheta;
   useProlongation = params.useProlongation;
   useExactEnergy = params.useExactEnergy;
+  u0Mode = params.u0Mode;
   
   % initialize remaining parameters and struct with information dependend
   % solely on the current geometry
@@ -72,32 +77,34 @@ function startAlgorithmCR(benchmark)
   n4s = computeN4s(n4e);
   currData.n4s = n4s;
 
+  nrSides = size(n4s, 1);
+  currData.nrSides = nrSides;
+
   length4s = computeLength4s(c4n, n4s);
   currData.length4s = length4s;
 
-  % TODO this could have a flag for different options for initial u0
-  % which would also have to be in benchmark (initialU0)
-  u0 = interpolationCR(currData, f);
+  switch u0Mode
+    case 'zeros', u0 = zeros(nrSides, 1);
+    case 'interpolationRhs', u0 = interpolationCR(currData, f); 
+  end
 
+  % TODO here sth must be done when there are different possibilities for
+  % epsStop
   currData.epsStop = params.epsStop;
 
 %% MAIN AFEM LOOP
   while(true)
-    
     currData.hMax = max(length4s);
     currData.area4e = computeArea4e(c4n, n4e);
 
     currData.s4n = computeS4n(n4e);
-
-    s4e = computeS4e(n4e);
-    currData.s4e = s4e;
-
-    currData.nrElems = size(n4e, 1);
-    currData.nrSides = max(max(s4e));
+    currData.s4e = computeS4e(n4e);
 
     currData.mid4e = computeMid4e(c4n, n4e);
-    currData.s4n = computeS4n(n4e,n4s);
+    currData.s4n = computeS4n(n4e, n4s);
     currData.e4s = computeE4s(n4e);
+
+    currData.nrElems = size(n4e, 1);
 
     currData.gradsCR4e = computeGradsCR4e(currData);
     gradCRu0 = gradientCR(currData, u0);
@@ -217,13 +224,21 @@ function startAlgorithmCR(benchmark)
     % update some geometry dependent data in currData
     n4s = computeN4s(n4e);
     currData.n4s = n4s;
+
+    nrSides = size(n4s, 1);
+    currData.nrSides = nrSides;
   
     length4s = computeLength4s(c4n, n4s);
     currData.length4s = length4s;
 
-    % compute inital value for the iteration on the next level if not 
+    % compute inital value for the iteration on the next level if not
     % useProlongation
-    if ~useProlongation, u0 = interpolationCR(currData, f); end
+    if ~useProlongation 
+      switch u0Mode
+        case 'zeros', u0 = zeros(nrSides, 1);
+        case 'interpolationRhs', u0 = interpolationCR(currData, f); 
+      end
+    end
 
     %TODO epsStop should probably be updated right here and now
   end

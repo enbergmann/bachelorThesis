@@ -22,11 +22,14 @@ function params = editable %#ok<*MSNU>
     % showProgress.
   degree4Integrate       = 20; 
     % algebraic degree of exactness for integrate from the AFEM package
-  plotRhs                = true;
+  plotGivenFunctions     = false;
+    % Plot given right-hand side and, if given, exact solution?
+  debugIfError           = true;
+    % Enter debug mode if an error occurs?
 
   % AFEM parameters
   geometry               = 'BigSquare'; %#ok<NASGU>                     
-    % not necessary if useImage (for now                     )
+    % not necessary if useImage (for now)                     )
   parTheta               = 0.5;  
     % bulk param. (1 for uniform)
   initialRefinementLevel = 0;
@@ -35,6 +38,14 @@ function params = editable %#ok<*MSNU>
   beta4Estimate          = 1;   
 
   % algorithm parameters
+  u0Mode                 = 'zeros'; 
+    % initial iterate for the iteration on level 0 and, if not useProlongation,
+    % for the iterations on all levels
+    % Options:
+    %   'zeros': CR function with all coefficients equal to 0
+    %   'interpolationRhs': CR interpolation of given rhs to the mesh on the
+    %     level
+                                                  
   epsStop                = 1e-2; % TODO sth about updating it depending on
                                  %      mesh size
   stopCrit               = ["Exact Error Difference", ...
@@ -80,21 +91,15 @@ function params = editable %#ok<*MSNU>
                               % 0 means no screenshots will be saved
 
   % Information about experiment for saving and documentation.
-  expName                = 'benchmarkImage';
+  expName                = 'uninteristingStuffJustTesting';
   dirInfoName            = datestr(now, 'yy_mm_dd_HH_MM_SS');
   miscMsg                = sprintf(['this\nis\nan\nexample', ...
                                     '\non\nhow\nthis\ncould\nlook']);
 
-
-  % function handles 
-  function y = initalValue(x) %#ok<INUSD>
-    y = 0;
-  end
-
-  % function handles that can be ignored if useImage
-  % TODO pasted-graphic-2.tiff does have a calculation formula to calculate
-  % f from some given function u(r) --> other examples possible (easier even?)
+  % function handles (can be ignored if useImage)
   function y = rightHandSide(x)
+    % TODO pasted-graphic-2.tiff does have a calculation formula to calculate f
+    % from some given function u(r) --> other examples possible (easier even?)
     y =  f01(x, [parAlpha, parBeta]);
   end
 
@@ -106,7 +111,6 @@ function params = editable %#ok<*MSNU>
     % can be ignored if exactSolutionKnown == false
     y = f01ExactSolution(x, parAlpha);
   end
-
 
 %% BUILD STRUCT
 % should not be of interest for mere usage of the program
@@ -200,13 +204,14 @@ function params = editable %#ok<*MSNU>
   else, params.figVisible = 'off'; end
   params.plotModeGrayscale = plotModeGrayscale;
   params.showProgress = showProgress;          
-  params.plotRhs = plotRhs;
+  params.plotGivenFunctions = plotGivenFunctions;
+  params.debugIfError = debugIfError;
 
   params.expName = expName;
   params.dirInfoName = dirInfoName;
   params.miscMsg = miscMsg;
 
-  params.u0 = @(x) initalValue(x);
+  params.u0Mode = u0Mode;
   if useImage
     params.f = image2function(imageName, parAlpha, addNoise); %#ok<UNRCH>
     %TODO rewrite and change name
