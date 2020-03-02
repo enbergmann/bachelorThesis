@@ -7,6 +7,9 @@ function gleb = computeGleb(params, currData, ...
 % \sqrt{1/48+1/j_{1,1}^2}\leq 0.298217419)
 % TODO use gradient for f only when exact energy is known, hence make it 
 % dependent on this to and then gradF is in params
+% TODO calculare termGradFSquared for an easy example and compare it with 
+% the result of integrate (does this even make sense what the integrate
+% produces)
 
   gradF = params.gradF;
   parAlpha = params.parAlpha;
