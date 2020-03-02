@@ -18,7 +18,7 @@ function startAlgorithmCR(benchmark)
 %                     parameter, default value is 'editable').
 
 %% INITIALIZATION
-  % change to the directory nonConforming where startAlgorithmCR.m should have
+  % change to the directory nonconforming where startAlgorithmCR.m should have
   % been called from such that all relative filepaths used during runtime are
   % correct
   cd(fileparts(which('startAlgorithmCR')));
