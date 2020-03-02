@@ -16,11 +16,45 @@
 \input{../thesisTex/header/commands} 
 
 \begin{document}
-The energy to be minimized is
+\chapter{The continuous and discrete problem}
+Let $\alpha>0$, $\Omega\subset\Rbb^n$ bounded polyhedral Lipschitz domain, and
+$f\in L^2(\Omega)$.
 
-and the discrete energy is.
+The continuous problem minimizes 
+\begin{align}
+  \label{equ:contProb}
+  E(v)\coloneqq \frac{\alpha}{2}\Vert v\Vert^2_{L^2(\Omega)}
+  +|v|_{\BV(\Omega)}+ \Vert v\Vert_{L^1(\Omega)}
+  -\int_\Omega f\,v\dx
+\end{align}
+amongst all $v\in V\coloneqq \BV(\Omega)\cap L^2(\Omega)$ where the \BV 
+seminorm $|v|_{\BV(\Omega)}$ is equals to the $W^{1,1}$ seminorm for any 
+$v\in W^{1,1}(\Omega)$.
 
+The nonconforming problem minimizes 
+\begin{align}
+  \label{equ:discProb}
+  \Enc(\vcr)\coloneqq \frac{\alpha}{2}\Vert \vcr\Vert^2_{L^2(\Omega)}
+  +|\vcr |_{1,1,\NC}-\int_\Omega f\, \vcr\dx
+\end{align}
+amongst all $\vcr\in\CR^1_0(\Tcal)$ where $|\bullet|_{1,1,\NC}\coloneqq
+\Vert\gradnc\Vert_{L^1(\Omega)}$.
+
+\chapter{Estimator and guaranteed lower energy bound}
+
+For $f\in H^1_0(\Omega)$ and $u\in H^1_0(\Omega)$ ($\ucr\in
+\CR^1_0(\Omega)$) continuous (discrete) minimzer with minimal energy
+$E(u)$ ($\Enc(\ucr)$) it holds
+\begin{align}
+  \label{equ:gleb}
+  \Enc(\ucr)+\frac{\alpha}{2}\Vert u-\ucr\Vert_{L^2(\Omega)}^2
+  -\
+\end{align}<++>
+
+
+\chapter{Example with exact solution}
 Funcions considered are 
 
 the esimator
+\chapter{Application to an image}
 \end{document}
