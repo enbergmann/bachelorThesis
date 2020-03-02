@@ -29,9 +29,9 @@ function startAlgorithmCR(benchmark)
   % get parameters from the given benchmark file
   params = feval(benchmark);
   params.benchmark = benchmark;
+  if params.debugIfError; dbstop if error, end;
 
   % extract necessary parameters from params
-  if params.debugIfError; dbstop if error, end;
   c4n = params.c4n;
   n4e = params.n4e;
   n4sDb = params.n4sDb;

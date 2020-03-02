@@ -1,4 +1,4 @@
-function f = image2function(imageName, parAlpha, addNoise)
+function f = image2function(imageName, parAlpha, addNoise, blurWidth)
   %TODO make this prettier at some point, but it works just fine for now
   % even though only on square
 % TODO comment this when it's beautiful
@@ -11,6 +11,7 @@ function f = image2function(imageName, parAlpha, addNoise)
   % read image and convert utf8 to double
   img = im2double(imread(imageName));
   if addNoise, img = imnoise(img, 'gaussian'); end
+  img = imfilter(img, ones(blurWidth)/blurWidth^2);
   imgSize = size(img);
 
   %   % add 10 pixel frame of zeros

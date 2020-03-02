@@ -17,7 +17,7 @@ function params = editable %#ok<*MSNU>
     % Show plots during iteration?
   showProgress           = true; 
     % Print output during iteration?
-  plotModeGrayscale      = false; 
+  plotModeGrayscale      = true; 
     % Use plotGrayscale instead of plotCR during iteration? Only effective if
     % showProgress.
   degree4Integrate       = 20; 
@@ -55,11 +55,16 @@ function params = editable %#ok<*MSNU>
   % experiment parameters
   useImage               = false;
   imageName              = ...
-    '../utils/functions/images/cameraman.tif'; %#ok<NASGU> 
+    '../utils/functions/images/whiteSquare.tif'; %#ok<NASGU> 
+    % whiteSquare, cameraman
+    % TODO append path automatically
   addNoise               = false; %#ok<NASGU>
     % TODO probably add ability to denoise rhs and images (might need case
     % distinction by considering useImage flag)
     % TODO noise type (see MATLAB imnoise)
+  blurWidth              = 1; %#ok<NASGU>
+    % TODO comment
+    % 1 for nothing  TODO think about it, it might change stuff
   parAlpha               = 1e0; %1e4 for image example 
    % TODO why does the analytic example is broken for 1e4
   parBeta                = 1;
@@ -213,7 +218,8 @@ function params = editable %#ok<*MSNU>
 
   params.u0Mode = u0Mode;
   if useImage
-    params.f = image2function(imageName, parAlpha, addNoise); %#ok<UNRCH>
+    params.f = image2function(imageName, parAlpha, ...
+      addNoise, blurWidth); %#ok<UNRCH>
     %TODO rewrite and change name
   else
     noise = 0; %#ok<NASGU,UNRCH> 
