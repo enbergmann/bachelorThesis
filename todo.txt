@@ -1,5 +1,7 @@
 CURRENT TODOS
 
+redo all of Tiens document.pdf experiments and compare results
+
 prepare file with all important energies, estimators, functions and so on,
 where the results can be added in the end
 
