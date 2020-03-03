@@ -1,5 +1,8 @@
 CURRENT TODOS
 
+understand PastedGraphic-2.tiff, i.e. how to compute f from u and what
+sgn\partial_r u is supposed to mean
+
 redo all of Tiens document.pdf experiments and compare results
 
 prepare file with all important energies, estimators, functions and so on,
