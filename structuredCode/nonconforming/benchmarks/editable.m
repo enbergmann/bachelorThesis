@@ -35,6 +35,7 @@ function params = editable %#ok<*MSNU>
   initialRefinementLevel = 0;
   minNrDof               = 1e3;
   useProlongation        = true; 
+  n4Estimate             = 2;
   beta4Estimate          = 1;   
 
   % algorithm parameters
@@ -144,6 +145,7 @@ function params = editable %#ok<*MSNU>
   params.initialRefinementLevel = initialRefinementLevel;
 
   params.minNrDof = minNrDof;
+  params.n4Estimate = n4Estimate;
   params.beta4Estimate = beta4Estimate;
   params.epsStop = epsStop;
   params.stopCrit = stopCrit;              

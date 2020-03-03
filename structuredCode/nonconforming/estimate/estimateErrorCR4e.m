@@ -3,6 +3,7 @@ function [eta4e, etaVol4e, etaJumps4e] = ...
   %TODO interface documentation
 
   beta4Estimate = params.beta4Estimate;
+  n4Estimate = params.n4Estimate;
 
   n4e = currData.n4e;
   area4e = currData.area4e;
@@ -12,9 +13,6 @@ function [eta4e, etaVol4e, etaJumps4e] = ...
 
   u = output.u;
   normOfDifference4e = output.normOfDifference4e;
-
-  n=2; % TODO should probably in params, think about a suiting name and do it
-        % it's a param for the estimator, hence its destined place is in params
 
   % TODO prob rewrite some of this stuff, at least documentation, not 
   % necessarily use currData, let them be like AFEM functions1
@@ -39,8 +37,8 @@ function [eta4e, etaVol4e, etaJumps4e] = ...
 
         %TODO Tien has a little error, he also has n = 2, alpha = beta = 1
         %(in documentaion of his)
-  etaVol4e = area4e.^(2/n).*normOfDifference4e;
+  etaVol4e = area4e.^(2/n4Estimate).*normOfDifference4e;
   % TODO sth with the volume term is pretty wrong
-  etaJumps4e = area4e.^(beta4Estimate/n).*termJumps;
+  etaJumps4e = area4e.^(beta4Estimate/n4Estimate).*termJumps;
   eta4e = etaVol4e + etaJumps4e;
 end
