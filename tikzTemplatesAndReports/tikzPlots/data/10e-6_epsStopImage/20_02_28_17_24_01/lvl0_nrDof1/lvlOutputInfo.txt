@@ -1,0 +1,2 @@
+lvl nrDof nrIterations time
+0 1 9 0.098204

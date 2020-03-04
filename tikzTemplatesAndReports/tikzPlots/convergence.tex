@@ -1,0 +1,73 @@
+\documentclass[tikz]{standalone}
+\usepackage{amsmath,amsfonts,amssymb,amsthm,mathtools}
+\usepackage{tikz}
+\usepackage{pgfplots}
+
+\begin{document}
+
+% TODO see tiens dottet without specific plot (i.e. dottet in general is
+% eps-6 and the other the other eps
+
+\begin{tikzpicture}
+    \begin{loglogaxis}[legend pos = north east, 
+      scale = 2, xlabel = {nrDof}]      
+
+      \addplot [solid, cyan, mark = diamond] 
+      table[x = {nrDof}, y = {error4lvl}] 
+      {f01/epsModerate/lvl15_nrDof1209309/lvlOutput.txt}; 
+      \addlegendentry{$\Vert u - u_h\Vert_{L^2(\Omega)}$}
+
+      \addplot [solid, green, mark = diamond] 
+      table[x = {nrDof}, y = {eta}] 
+      {f01/epsModerate/lvl15_nrDof1209309/lvlOutput.txt}; 
+      \addlegendentry{$\eta$}
+
+      \addplot [solid, red, mark = diamond] 
+      table[x = {nrDof}, y = {etaVol}] 
+      {f01/epsModerate/lvl15_nrDof1209309/lvlOutput.txt}; 
+      \addlegendentry{$\eta_\text{Vol}$}
+
+      \addplot [solid, orange, mark = diamond] 
+      table[x = {nrDof}, y = {etaJumps}] 
+      {f01/epsModerate/lvl15_nrDof1209309/lvlOutput.txt}; 
+      \addlegendentry{$\eta_\text{Jumps}$}
+
+      add slope triangle
+      \draw (axis cs:1e4,1e0)--(axis cs:1e6,1e-1)   	%links unten, rechts unten
+                   -- (axis cs:1e6,1e0)								   	%oben
+                   -- cycle;
+        \node at (axis cs: 1e6, 3e-1) [right] {$1$};
+        \node at (axis cs: 1e5, 1e0) [above] { $2$};
+
+      \addplot [dashed, cyan, mark = square] 
+      table[x = {nrDof}, y = {error4lvl}] 
+      {f01/epsSmall/lvl10_nrDof49355/lvlOutput.txt}; 
+      \addlegendentry{$\Vert u - u_h\Vert_{L^2(\Omega)}$}
+
+      \addplot [dashed, green, mark = square] 
+      table[x = {nrDof}, y = {eta}] 
+      {f01/epsSmall/lvl10_nrDof49355/lvlOutput.txt}; 
+      \addlegendentry{$\eta$}
+
+      \addplot [dashed, red, mark = square] 
+      table[x = {nrDof}, y = {etaVol}] 
+      {f01/epsSmall/lvl10_nrDof49355/lvlOutput.txt}; 
+      \addlegendentry{$\eta_\text{Vol}$}
+
+      \addplot [dashed, orange, mark = square] 
+      table[x = {nrDof}, y = {etaJumps}] 
+      {f01/epsSmall/lvl10_nrDof49355/lvlOutput.txt}; 
+      \addlegendentry{$\eta_\text{Jumps}$}
+    \end{loglogaxis}
+\end{tikzpicture}
+
+%\begin{tikzpicture}
+%  \begin{loglogaxis}
+%    \addplot
+%    table[x={nrDof}, y={error4lvl}]  
+%    {f01/epsModerate/lvl15_nrDof1209309/lvlOutput.txt}
+%  \end{loglogaxis}
+%\end{tikzpicture}
+
+\end{document}
+
