@@ -26,7 +26,8 @@
 
 \begin{tikzpicture}
   \begin{loglogaxis}[legend pos = outer north east, 
-    scale = 2, xlabel = {nrDof},      
+    scale = 2, xlabel = {nrDof},
+    ymin = 2e-2, ymax = 2e4,
     legend entries = {$\varepsilon = 1e-2$,
                      $\varepsilon = 1e-6$,
                      $\Vert u - u_h\Vert_{L^2(\Omega)}$,
@@ -62,14 +63,19 @@
     table[x = nrDof1e-2, y index=0 ] 
     {glebExactEnergyDifference1e-2.txt}; 
 
+    % eta
     add slope triangle
-    \draw (axis cs:1e4,1e0)--(axis cs:1e6,1e-1) 
-                 -- (axis cs:1e6,1e0) node [midway, right] {$1$}
-                 -- cycle node [midway, above] {$2$}; 	
-                 %links unten, rechts unten
-                 %oben
-    %  \node at (axis cs: 1e6, 3e-1) [midway, right] {$1$};
-    %  \node at (axis cs: 1e5, 1e0) [above] { $2$};
+    \draw (axis cs:1e5,2.5e-1)  
+                 --(axis cs:1e6,1e-1) 
+                 -- (axis cs:1e6,2.5e-1) node [midway, right] {\scriptsize$2$}
+                 -- cycle node [midway, above] {\scriptsize$5$}; 	
+
+    % gleb
+    add slope triangle
+    \draw (axis cs:1e1,5e2)
+                 --(axis cs:1e6,5e2) node [midway, below] {\scriptsize$5$} 	
+                 -- (axis cs:1e1,5e3) 
+                 -- cycle node [midway, left] {\scriptsize$1$};
 
     \addplot [solid, cyan, mark = square] 
     table[x = {nrDof}, y = {error4lvl}] 
@@ -90,6 +96,19 @@
     \addplot [dashed, gray, mark = diamond] 
     table[x = nrDof1e-6, y index=0 ] 
     {glebExactEnergyDifference1e-6.txt}; 
+
+    % eta
+    add slope triangle
+    \draw (axis cs:1e3,1.86) 
+                 --(axis cs:1e5,5e-1) 
+                 -- (axis cs:1e5,1.86) node [midway, right] {\scriptsize$2$}
+                 -- cycle node [midway, above] {\scriptsize$7$};
+    % error
+    add slope triangle
+    \draw (axis cs:1e4,3e-2) 
+                 --(axis cs:1e5,3e-2) node [midway, below] {\scriptsize$5$}
+                 -- (axis cs:1e4,7.5e-2)
+                 -- cycle node [midway, left] {\scriptsize$2$};
   \end{loglogaxis}
 \end{tikzpicture}
 
