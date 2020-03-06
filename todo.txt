@@ -43,7 +43,10 @@ CSU, Young etc einmal aufschreiben --> Appendix?
 
  SUBDIFFERENTIAL ALS DUALRAUMTEILMENGE AUFFASSEN
 
-
+HOW TO COMPUTE SLOPE TRIANGLE
+1. get slope n/m with natural numbers, i.e. 
+  n/m = (lg(y_2)-lg(y_1))/(lg(x_2)-lg(x_1))
+2. choose 3 out of 4 coordinates and compute the last one
 
 
 readd general part of experiments section into documentation
