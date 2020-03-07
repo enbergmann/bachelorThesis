@@ -1,7 +1,18 @@
-% TODO this is all not done yet, just changed so it functions again
-%
+% NOTE figures that might be included in latex later without title and caption
+% but everything else should have this for faster overview
+
 % TODO similar to struct 2 table write those information in a file so
 % one can see everything in one go, also elapsed time of program and so on
+% TODO general file with most intersting infos about the level
+% one file for AFEM output for all levels (outputLvl) (add GLEB difference)
+% one file for all iteration outputs (maybe, compare to old plots)
+% 
+% I.E. pretty much anything can be seen in benchmark.m but make a file with 
+% just the relevant information with one look, like
+% alpha = ...
+% beta = ...
+% n = ...
+% ...
 
 function saveResultsCR(params, currData, ...
     outputLvlInfo, outputLvlError, outputLvlEnergy, output)
@@ -21,6 +32,7 @@ function saveResultsCR(params, currData, ...
   useExactEnergy = params.useExactEnergy;
   exactEnergy = params.exactEnergy;
   plotGivenFunctions = params.plotGivenFunctions;
+  refinementLevel4Plots = params.refinementLevel4Plots;
 
   % extract necessary information from currData
   nrDof = currData.nrDof; 
@@ -69,90 +81,88 @@ function saveResultsCR(params, currData, ...
   for ind = 2:length(fieldsEnergy) 
     tableStruct.(fieldsEnergy{ind}) = outputLvlEnergy.(fieldsEnergy{ind});
   end
-  writetable(struct2table(tableStruct), ...
-    sprintf('%s/lvlOutput.txt', dirName), 'Delimiter', ' ');
-
-  writetable(struct2table(outputLvlInfo), ...
-    sprintf('%s/lvlOutputInfo.txt', dirName), 'Delimiter', ' ');
-
-  writetable(struct2table(outputLvlError), ...
-    sprintf('%s/lvlOutputError.txt', dirName), 'Delimiter', ' ');
-
-  writetable(struct2table(outputLvlEnergy), ...
-    sprintf('%s/lvlOutputEnergy.txt', dirName), 'Delimiter', ' ');
+  writetable(struct2table(tableStruct), sprintf('%s/lvlOutput.csv', dirName));
 
   if currLvl == 0
     % this means the benchmark-file should not be changed until level 0 is
     % saved
     source = sprintf('benchmarks/%s.m', benchmark);
     destination = ...
-      sprintf('../../results/nonconforming/%s/%s/benchmark_%s.txt', ...
+      sprintf('../../results/nonconforming/%s/%s/benchmark_%s.m', ...
       expName, dirInfoName, benchmark);
     copyfile(source, destination);
 
     if plotGivenFunctions
       % plot rhs and grayscale image of rhs
-
       % TODO make polygon mode right (there is a function for this, i.e.
       % don't use load geometry)
       if strcmp(geometry, 'Polygon'), geometry = 'BigSquare'; end
-      [c4nRhs, n4eRhs] = loadGeometry(geometry, 9);
+      [c4nRhs, n4eRhs] = loadGeometry(geometry, refinementLevel4Plots);
+
+      fVal = f(c4nRhs);
 
       rhsFig = figure('visible', figVisible); 
-      trisurf(n4eRhs, c4nRhs(:, 1), c4nRhs(:, 2), f(c4nRhs), ...
+      trisurf(n4eRhs, c4nRhs(:, 1), c4nRhs(:, 2), fVal, ...
         'EdgeColor', 'None');
-      ftitle = sprintf(...
-        'right-hand side for \\alpha =%d, \\beta =%d', parAlpha, parBeta);
-      title(ftitle);
       fName = sprintf('../../results/nonconforming/%s/%s/rhs.png', ...
         expName, dirInfoName);
       saveas(rhsFig, fName);
 
-      grayscaleFig = figure('visible', figVisible); 
-      trisurf(n4eRhs, c4nRhs(:, 1), c4nRhs(:, 2), f(c4nRhs), ...
-        'EdgeColor', 'None');
+      rhsAxisFig = figure('visible', figVisible); 
+      plotAxis(c4nRhs, fVal);
+      fName = sprintf('../../results/nonconforming/%s/%s/rhsAxis.png', ...
+        expName, dirInfoName);
+      saveas(rhsAxisFig, fName);
+
+      rhsGrayscaleFig = figure('visible', figVisible); 
+      trisurf(n4eRhs, c4nRhs(:, 1), c4nRhs(:, 2),  fVal, 'EdgeColor', 'None');
       view(0, 90);
       axis off;
       axis equal;
       colormap gray;
-      ftitle = sprintf(...
-        'right-hand side grayscale for \\alpha =%d, \\beta =%d', ...
-        parAlpha, parBeta);
-      title(ftitle);
       fName = sprintf('../../results/nonconforming/%s/%s/rhsGrayscale.png', ...
         expName, dirInfoName);
-      saveas(grayscaleFig, fName);
+      saveas(rhsGrayscaleFig, fName);
 
       if exactSolutionKnown
+        uExactVal = uExact(c4nRhs);
+
+% TODO here rhsGrayscaleFig gets overwritten by uExactFig. WHY
+% this following figure eats the previous one
+
         uExactFig = figure('visible', figVisible); 
-        trisurf(n4eRhs, c4nRhs(:, 1), c4nRhs(:, 2), uExact(c4nRhs), ...
+        trisurf(n4eRhs, c4nRhs(:, 1), c4nRhs(:, 2), uExactVal, ...
           'EdgeColor', 'None');
-        ftitle = sprintf(...
-          'exact solution for \\alpha =%d, \\beta =%d', parAlpha, parBeta);
-        title(ftitle);
-        fName = ...
           sprintf('../../results/nonconforming/%s/%s/exactSolution.png', ...
+          expName, dirInfoName);
+        fName = sprintf(...
+          '../../results/nonconforming/%s/%s/exactSolution.png', ...
           expName, dirInfoName);
         saveas(uExactFig, fName);
 
+
+        uExactAxisFig = figure('visible', figVisible); 
+        plotAxis(c4nRhs, uExactVal);
+        fName = sprintf(...
+          '../../results/nonconforming/%s/%s/exactSolutionAxis.png', ...
+          expName, dirInfoName);
+        saveas(uExactAxisFig, fName);
+
         uExactGrayscaleFig = figure('visible', figVisible); 
-        trisurf(n4eRhs, c4nRhs(:, 1), c4nRhs(:, 2), uExact(c4nRhs), ...
+        trisurf(n4eRhs, c4nRhs(:, 1), c4nRhs(:, 2), uExactVal, ...
           'EdgeColor', 'None');
         view(0, 90);
         axis off;
         axis equal;
         colormap gray;
-        ftitle = sprintf(...
-          'exact solution grayscale for \\alpha =%d, \\beta =%d', ...
-          parAlpha, parBeta);
-        title(ftitle);
-        fName = ...
-          sprintf('../../results/nonconforming/%s/%s/uExactGrayscale.png', ...
+        fName = sprintf(...
+          '../../results/nonconforming/%s/%s/exactSolutionGrayscale.png', ...
           expName, dirInfoName);
         saveas(uExactGrayscaleFig, fName);
       end
     end
   end
+
   % TODO think about what stuff might be relevant from the given structs and
   %      save them if there is anything useful
   %
@@ -177,34 +187,23 @@ function saveResultsCR(params, currData, ...
 
 %% SAVE PLOTS OF SOLUTION
   approxFig = figure('visible', figVisible); 
-  plotCR(c4n, n4e, u, {'CR Solution'; [num2str(nrDof) ' degrees of freedom']});
-  ftitle = sprintf(...
-    'approximation for nrDof = %d, \\alpha =%d, \\beta =%d', ...
-    nrDof, parAlpha, parBeta);
-  title(ftitle);
+  plotCR(c4n, n4e, u);
   fName = sprintf('%s/solution_nrDof_%d.png', dirName, nrDof);
   saveas(approxFig, fName);
   
   approxFigAxis = figure('visible', figVisible); 
   plotAxisNC(c4n,n4e,u);
-  ftitle = sprintf(...
-    'approximation along axis for nrDof = %d, \\alpha =%d, \\beta =%d', ...
-    nrDof, parAlpha, parBeta);
-  title(ftitle);
   fName = sprintf('%s/solution_nrDof_%d_axis.png', dirName, nrDof);
   saveas(approxFigAxis, fName);
 
   grayscaleFig = figure('visible', figVisible); 
-  plotGrayscale(c4n, n4e, mean(u(s4e), 2), ...
-    {'CR Solution'; [num2str(nrDof) ' degrees of freedom']});
-  ftitle = sprintf(...
-    'grayscale of approximation for nrDof = %d, \\alpha =%d, \\beta =%d', ...
-    nrDof, parAlpha, parBeta);
-  title(ftitle);
+  plotGrayscale(c4n, n4e, mean(u(s4e), 2));
   fName = sprintf('%s/grayscale_nrDof_%d.png', dirName, nrDof);
   saveas(grayscaleFig, fName);
 
 %% SAVE PLOTS AND RESULTS OF THE ITERATION FOR THE LEVEL
+  % TODO this just all in one file, maybe with iterationNumber as first row?
+  % --> see latex tikz first and decide after
   name = sprintf('%s/corrVec.txt', dirName);
   file = fopen(name, 'w');
   fprintf(file, '%.8e\n', corrVec);
@@ -215,7 +214,6 @@ function saveResultsCR(params, currData, ...
   fprintf(file, '%.8g\n', energyVec);
   fclose(file);
   
-  % TODO THIS IS ALL JUST A TEST, REWRITE AND CHANGE DETAILS AND INFOS
   if useExactEnergy
     name = sprintf('%s/exactAbsoluteEnergyDifference.txt', dirName);
     file = fopen(name, 'w');
@@ -233,11 +231,6 @@ function saveResultsCR(params, currData, ...
     fName = sprintf('%s/enDiffExact_nrDof_%d.png', dirName, nrDof);
     saveas(enDiffExactFig, fName);
 
-    name = sprintf('%s/gleb.txt', dirName);
-    file = fopen(name, 'w');
-    fprintf(file, '%.8g\n', gleb4lvl);
-    fclose(file);
-
     glebFig = figure('visible', figVisible);
     loglog(nrDof4lvl, gleb4lvl, '-o');
     legend(sprintf('GLEB'));
@@ -248,11 +241,6 @@ function saveResultsCR(params, currData, ...
     fName = sprintf('%s/gleb.png', dirName);
     title(ftitle);
     saveas(glebFig, fName);
-
-    name = sprintf('%s/glebExactEnergyDifference.txt', dirName);
-    file = fopen(name, 'w');
-    fprintf(file, '%.8g\n', exactEnergy-gleb4lvl);
-    fclose(file);
 
     glebExactEnergyDiffereneFig = figure('visible',figVisible);
     loglog(nrDof4lvl, exactEnergy-gleb4lvl, '-o');
@@ -298,24 +286,21 @@ function saveResultsCR(params, currData, ...
   saveas(corrFig, fName);
 
 %% SAVE AFEM RESULTS AND TRIANGULATION
-  % TODO save c4n and n4e to tikz triangulation (see tiens example)
   triangFig = figure('visible',figVisible);
   plotTriangulation(c4n,n4e);
-  ftitle = sprintf('Triangulation for nrDof = %d, \\alpha = %d, \\beta = %d', ...
-    nrDof, parAlpha, parBeta);
-  title(ftitle);
   fName = sprintf('%s/triangulation.png', dirName);
   saveas(triangFig, fName);
 
   dlmwrite(sprintf('%s/c4n.txt', dirName), c4n, 'Delimiter', '\t');
   dlmwrite(sprintf('%s/n4e.txt', dirName), n4e, 'Delimiter', '\t');
 
-
   % % TODO careful, what error is the estimator for (this error should always
   % % be computed then (if possible), make error4lvl a alternative then)
 
-  % convergence plots
-  % TODO mu and xi
+  % TODO there should be a plot where exactE-GLEB is plotted as well,
+  % one convergence plot with everything
+
+  % convergence plots 
   estimatorAndErrorFig = figure('visible', figVisible);
   % plotConvergence(nrDof4lvl,eta4lvl,'\eta_l');
   loglog(nrDof4lvl, eta4lvl, '-bo');
@@ -345,31 +330,4 @@ function saveResultsCR(params, currData, ...
   title(ftitle);
   xlabel('nrDof');
   saveas(estimatorAndErrorFig, fName);
-
-  name = sprintf('%s/nrDof4lvl.txt', dirName);
-  file = fopen(name, 'w');
-  fprintf(file, '%.8g\n', nrDof4lvl);
-  fclose(file);
-
-  name = sprintf('%s/eta4lvl.txt', dirName);
-  file = fopen(name, 'w');
-  fprintf(file, '%.8g\n', eta4lvl);
-  fclose(file);
-
-  name = sprintf('%s/etaVol4lvl.txt', dirName);
-  file = fopen(name, 'w');
-  fprintf(file, '%.8g\n', etaVol4lvl);
-  fclose(file);
-
-  name = sprintf('%s/etaJumps4lvl.txt', dirName);
-  file = fopen(name, 'w');
-  fprintf(file, '%.8g\n', etaJumps4lvl);
-  fclose(file);
-
-  if exactSolutionKnown
-    name = sprintf('%s/error4lvl.txt', dirName);
-    file = fopen(name, 'w');
-    fprintf(file, '%.8g\n', error4lvl);
-    fclose(file);
-  end
 end

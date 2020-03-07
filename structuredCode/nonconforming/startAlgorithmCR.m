@@ -22,7 +22,8 @@ function startAlgorithmCR(benchmark)
   % been called from such that all relative filepaths used during runtime are
   % correct
   cd(fileparts(which('startAlgorithmCR')));
-  addpath(genpath(pwd), genpath('../utils/'));
+  addpath(genpath(pwd), genpath('../utils/'), ...
+    genpath('../conforming/plot/'));
 
   if nargin<1, benchmark = 'editable'; end
 
@@ -44,6 +45,7 @@ function startAlgorithmCR(benchmark)
   parTheta = params.parTheta;
   useProlongation = params.useProlongation;
   useExactEnergy = params.useExactEnergy;
+  exactEnergy = params.exactEnergy;
   u0Mode = params.u0Mode;
   
   % initialize remaining parameters and struct with information dependend
@@ -67,7 +69,10 @@ function startAlgorithmCR(benchmark)
 
   outputLvlEnergy.lvl = lvl;
   outputLvlEnergy.energy = [];
-  if useExactEnergy, outputLvlEnergy.gleb = []; end
+  if useExactEnergy 
+    outputLvlEnergy.gleb = []; 
+    outputLvlEnergy.diffGlebExactE = [];
+  end
 
   currData.c4n = c4n;
   currData.n4e = n4e;
@@ -154,8 +159,9 @@ function startAlgorithmCR(benchmark)
 
     % compute guaranteed lower energy bound
     if useExactEnergy
-      outputLvlEnergy.gleb(end+1, 1) = ...
-        computeGleb(params, currData, output);
+      glebCurr = computeGleb(params, currData, output);
+      outputLvlEnergy.gleb(end+1, 1) = glebCurr;
+      outputLvlEnergy.diffGlebExactE(end+1, 1) = exactEnergy - glebCurr;
     end
 
     % ESTIMATE
