@@ -1,5 +1,5 @@
 \documentclass[draft=false,twoside,12pt]{scrreprt}
-\newcommand{\lang}{ngerman}
+\newcommand{\lang}{english}
 \usepackage[\lang]{babel}
 \usepackage{graphicx}
 \usepackage{float} %TODO what does this do
@@ -84,7 +84,7 @@ For $\alpha = \beta = 1$ define $f$ as a function of the radius as
     2\alpha(\frac{5}{2}-3r)^\beta+\frac{1}{r}&
     \text{if } \frac{1}{2}\leq r\leq\frac{5}{6},\\
     -3\pi\sin(\pi(6r-5))+\frac{1+\cos(\pi(6r-5))}{2r} &
-    \text{if } \frac{5}{6}\leq r\leq 1.
+    \text{if } \frac{5}{6}\leq r\leq 1,
   \end{cases}
 \end{align}
 with exact solution
@@ -104,13 +104,43 @@ with exact solution
   \end{cases}
 \end{align}
 
+\begin{minipage}[t]{0.45\textwidth}
+  \begin{figure}[H]
+	  \centering
+		\includegraphics[width=\textwidth]{tikzPlots/f01/rhs.png} 
+		\caption{right-hand side $f$}
+  \end{figure}
+\end{minipage}
+\begin{minipage}[t]{0.45\textwidth}
+  \begin{figure}[H]
+	  \centering
+		\includegraphics[width=\textwidth]{tikzPlots/f01/exactSolution.png} 
+		\caption{exact solution $u$}
+  \end{figure}
+\end{minipage}
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=14cm]{tikzPlots/f01/convergence/bothEps/fig.pdf}
-  \caption{Convergence history plot for the $L^2$ error, $\eta$,
+  \caption{convergence history plot for the $L^2$ error, $\eta$,
   $\eta_\text{Vol}$, $\eta_\text{Jumps}$, and the guaranteed lower energy
   bound}
 \end{figure}
+
+\begin{minipage}[t]{0.45\textwidth}
+  \begin{figure}[H]
+	  \centering
+		\includegraphics[width=\textwidth]{tikzPlots/f01/approx/solution1e-2.png} 
+    \caption{last iterate for $\varepsilon = 10^{-2}$}
+  \end{figure}
+\end{minipage}
+\begin{minipage}[t]{0.45\textwidth}
+  \begin{figure}[H]
+	  \centering
+		\includegraphics[width=\textwidth]{tikzPlots/f01/approx/solution1e-6.png} 
+    \caption{last iterate for $\varepsilon = 10^{-6}$}
+  \end{figure}
+\end{minipage}
 \section{Application to an image}
+
 \end{document}
