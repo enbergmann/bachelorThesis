@@ -11,15 +11,14 @@
 
 \begin{document}
 
-% TODO see tiens dottet without specific plot (i.e. dottet in general is
-% eps-6 and the other the other eps
+% TODO find here how csv files work
+    % \addplot [dashed, black, thick, mark = diamond] 
+    % table[col sep = comma, x = {nrDof}, y = {error4lvl}] 
+    % {lvlOutput.csv}; 
 
-\pgfplotstableset{
+\pgfplotstableset{col sep = space, %comma, (for csv files, than it works great)
   create on use/nrDof1e-2/.style={create col/copy column from 
-  table={lvlOutputEps1e-2.txt}{nrDof}}
-}
-
-\pgfplotstableset{
+  table={lvlOutputEps1e-2.txt}{nrDof}},
   create on use/nrDof1e-6/.style={create col/copy column from 
   table={lvlOutputEps1e-6.txt}{nrDof}}
 }
@@ -27,7 +26,7 @@
 \begin{tikzpicture}
   \begin{loglogaxis}[legend pos = outer north east, 
     scale = 2, xlabel = {nrDof},
-    ymin = 2e-2, ymax = 2e4,
+    ymin = 1.5e-2, ymax = 2e4,
     legend entries = {$\varepsilon = 10^{-2}$,
                      $\varepsilon = 10^{-6}$,
                      $\Vert u - u_h\Vert_{L^2(\Omega)}$,
@@ -46,6 +45,7 @@
     \addplot [solid, cyan, mark = o] 
     table[x = {nrDof}, y = {error4lvl}] 
     {lvlOutputEps1e-2.txt}; 
+
 
     \addplot [solid, green, mark = o] 
     table[x = {nrDof}, y = {eta}] 
