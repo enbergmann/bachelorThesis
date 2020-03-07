@@ -127,9 +127,6 @@ function saveResultsCR(params, currData, ...
       if exactSolutionKnown
         uExactVal = uExact(c4nRhs);
 
-% TODO here rhsGrayscaleFig gets overwritten by uExactFig. WHY
-% this following figure eats the previous one
-
         uExactFig = figure('visible', figVisible); 
         trisurf(n4eRhs, c4nRhs(:, 1), c4nRhs(:, 2), uExactVal, ...
           'EdgeColor', 'None');
@@ -233,7 +230,6 @@ function saveResultsCR(params, currData, ...
 
     glebFig = figure('visible', figVisible);
     loglog(nrDof4lvl, gleb4lvl, '-o');
-    legend(sprintf('GLEB'));
     ftitle = sprintf('GLEB for nrDof = %d, \\alpha = %d, \\beta = %d', ...
       nrDof, parAlpha, parBeta);
     xlabel('nrDof');
@@ -241,31 +237,17 @@ function saveResultsCR(params, currData, ...
     fName = sprintf('%s/gleb.png', dirName);
     title(ftitle);
     saveas(glebFig, fName);
-
-    glebExactEnergyDiffereneFig = figure('visible',figVisible);
-    loglog(nrDof4lvl, exactEnergy-gleb4lvl, '-o');
-    ftitle = sprintf(...
-      'E_u-GLEB for nrDof = %d, \\alpha = %d, \\beta = %d', ...
-      nrDof, parAlpha, parBeta);
-    title(ftitle);
-    xlabel('nrDof');
-    ylabel('E_u-GLEB');
-    fName = sprintf('%s/gleb_nrDof_%d.png', dirName, nrDof);
-    saveas(glebExactEnergyDiffereneFig, fName);
   end
     
   enFig = figure('visible', figVisible); 
+  enFigLegend = sprintf("nrDof = %d (%0.2fs)", nrDof, time);
   plot(energyVec);
   if useExactEnergy
     hold on;
     plot(exactEnergy*ones(1, length(energyVec)));
-    legend(sprintf('nrDof = %d (%0.2fs)', nrDof, time), ...
-      sprintf('E_u = %.8g', exactEnergy));
-    hold off;
-  else
-    legend(sprintf('nrDof = %d (%0.2fs)', nrDof, time));
-    % TODO else unnecessary, isnt there some legend Add entry
+    enFigLegend(end+1) = sprintf("E_u = %.8g", exactEnergy);
   end
+  legend(enFigLegend);
   ftitle=sprintf('Energy for inital nrDof=%d, \\alpha =%d, \\beta =%d',...
   nrDof, parAlpha, parBeta);
   title(ftitle);
@@ -294,40 +276,30 @@ function saveResultsCR(params, currData, ...
   dlmwrite(sprintf('%s/c4n.txt', dirName), c4n, 'Delimiter', '\t');
   dlmwrite(sprintf('%s/n4e.txt', dirName), n4e, 'Delimiter', '\t');
 
+  % convergence plots 
+
   % % TODO careful, what error is the estimator for (this error should always
   % % be computed then (if possible), make error4lvl a alternative then)
-
-  % TODO there should be a plot where exactE-GLEB is plotted as well,
-  % one convergence plot with everything
-
-  % convergence plots 
-  estimatorAndErrorFig = figure('visible', figVisible);
-  % plotConvergence(nrDof4lvl,eta4lvl,'\eta_l');
-  loglog(nrDof4lvl, eta4lvl, '-bo');
+  convergenceFig = figure('visible', figVisible);
+  loglog(nrDof4lvl, eta4lvl, '-o');
   hold on
-  loglog(nrDof4lvl, etaVol4lvl, '-ms');
+  loglog(nrDof4lvl, etaVol4lvl, '-o');
   hold on
-  loglog(nrDof4lvl, etaJumps4lvl, '-rd');
+  loglog(nrDof4lvl, etaJumps4lvl, '-o');
+  convergenceFigLegend = ...
+    [sprintf("\\eta"), sprintf("\\eta_{Vol}"), sprintf("\\eta_{Jumps}")];
   if exactSolutionKnown
     hold on
-    loglog(nrDof4lvl, error4lvl, '-g*');
-    legend(sprintf('\\eta'), ...
-      sprintf('\\eta_{Vol}'), sprintf('\\eta_{Jumps}'), ...
-      sprintf('||u-u_{CR}||_{L^2}'));
-    ftitle = sprintf('Error and Estimator for nrDof = %d, \\alpha = %d, \\beta = %d', ...
-      nrDof, parAlpha, parBeta);
-    ylabel('estimator and error');
-    fName = sprintf('%s/errorAndEstimator.png', dirName);
-    hold off;
-  else
-    legend(sprintf('\\eta'), ...
-      sprintf('\\eta_{Vol}'), sprintf('\\eta_{Jumps}'))
-    ftitle = sprintf('Estimator for nrDof = %d, \\alpha = %d, \\beta = %d', ...
-      nrDof, parAlpha, parBeta);
-    ylabel('estimator');
-    fName = sprintf('%s/estimator.png', dirName);
+    loglog(nrDof4lvl, error4lvl, '-o');
+    convergenceFigLegend(end+1) = sprintf("||u-u_{CR}||_{L^2}");
+    if useExactEnergy
+      hold on
+      loglog(nrDof4lvl, exactEnergy-gleb4lvl, '-o');
+      convergenceFigLegend(end+1) = "GLEB";
+    end
   end
-  title(ftitle);
+  legend(convergenceFigLegend, 'Location', 'SW');
   xlabel('nrDof');
-  saveas(estimatorAndErrorFig, fName);
+  fName = sprintf('%s/convergence.png', dirName);
+  saveas(convergenceFig, fName);
 end

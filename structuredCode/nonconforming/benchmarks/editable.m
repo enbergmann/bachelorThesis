@@ -24,7 +24,7 @@ function params = editable %#ok<*MSNU>
     % algebraic degree of exactness for integrate from the AFEM package
   plotGivenFunctions     = true;
     % Plot given right-hand side and, if given, exact solution?
-  refinementLevel4Plots  = 7; % 11 is very close to the limit
+  refinementLevel4Plots  = 9; % 11 is very close to the limit
   debugIfError           = true;
     % Enter debug mode if an error occurs?
 
@@ -34,7 +34,7 @@ function params = editable %#ok<*MSNU>
   parTheta               = 0.5;  
     % bulk param. (1 for uniform)
   initialRefinementLevel = 0;
-  minNrDof               = 1e3;
+  minNrDof               = 1e4;
   useProlongation        = true; 
   n4Estimate             = 2;
   beta4Estimate          = 1;   
