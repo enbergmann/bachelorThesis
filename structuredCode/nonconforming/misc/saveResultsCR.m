@@ -34,12 +34,22 @@ function saveResultsCR(params, currData, ...
   plotGivenFunctions = params.plotGivenFunctions;
   refinementLevel4Plots = params.refinementLevel4Plots;
   polygonMesh = params.polygonMesh;
+  parTheta = params.parTheta;
+  minNrDof = params.minNrDof;
+  n4Estimate = params.n4Estimate;
+  beta4Estimate = params.beta4Estimate;
 
   % extract necessary information from currData
+  nrElems = currData.nrElems; 
+  nrSides = currData.nrSides; 
   nrDof = currData.nrDof; 
+  hMax = currData.hMax;
+  epsStop = currData.epsStop;
   c4n = currData.c4n;
   n4e = currData.n4e;
   s4e = currData.s4e;
+  n4sDb = currData.n4sDb;
+  n4sNb = currData.n4sNb;
 
   % extract necessary information from outputLvlInfo
   currLvl = outputLvlInfo.lvl(end);
@@ -69,21 +79,10 @@ function saveResultsCR(params, currData, ...
   dirName = sprintf('../../results/nonconforming/%s/%s/lvl%d_nrDof%d', ...
     expName, dirInfoName, currLvl, nrDof);
     % startAlgorithmNC run from .../structuredcode/nonconforming
-  mkdir(dirName);
+  mkdir(sprintf('%s/mesh', dirName));
   warning('on', 'MATLAB:MKDIR:DirectoryExists');
     
 %% SAVE INFORMATION ABOUT EXPERIMENT
-  tableStruct = outputLvlInfo;
-  fieldsError = fieldnames(outputLvlError);
-  fieldsEnergy = fieldnames(outputLvlEnergy);
-  for ind = 2:length(fieldsError) 
-    tableStruct.(fieldsError{ind}) = outputLvlError.(fieldsError{ind});
-  end
-  for ind = 2:length(fieldsEnergy) 
-    tableStruct.(fieldsEnergy{ind}) = outputLvlEnergy.(fieldsEnergy{ind});
-  end
-  writetable(struct2table(tableStruct), sprintf('%s/lvlOutput.csv', dirName));
-
   if currLvl == 0
     % this means the benchmark-file should not be changed until level 0 is
     % saved
@@ -93,8 +92,26 @@ function saveResultsCR(params, currData, ...
       expName, dirInfoName, benchmark);
     copyfile(source, destination);
 
+    % save experiment parameters
+    expParams = struct(...
+      'parAlpha', parAlpha, 'parBeta', parBeta, ...
+      'minNrDof', minNrDof, 'parTheta', parTheta, ...
+      'n4Estimate', n4Estimate, 'beta4Estimate', beta4Estimate);
+    name = sprintf('../../results/nonconforming/%s/%s/expParams.csv', ...
+      expName, dirInfoName);
+    writetable(struct2table(expParams, 'AsArray', true), name);
+
+    % save remaining parameters
+    paramsReduced = rmfield(params, ...
+      {'c4n', 'n4e', 'n4sDb', 'n4sNb', 'stopCrit', 'errorNorm', ...
+      'parTheta', 'minNrDof', 'n4Estimate', 'beta4Estimate', ...
+      'parAlpha', 'parBeta'});
+    name = sprintf('../../results/nonconforming/%s/%s/paramsReduced.csv', ...
+      expName, dirInfoName);
+    writetable(struct2table(paramsReduced, 'AsArray', true), name);
+
+    % plot rhs and grayscale image of rhs
     if plotGivenFunctions
-      % plot rhs and grayscale image of rhs
       if polygonMesh
         [c4nRhs, n4eRhs] = computeGeometryPolygon(refinementLevel4Plots);
       else
@@ -162,27 +179,12 @@ function saveResultsCR(params, currData, ...
     end
   end
 
-  % TODO think about what stuff might be relevant from the given structs and
-  %      save them if there is anything useful
-  %
-  % % save workspace
-  % name = sprintf('%s/workspace.mat', dirName);
-  % save(name,'-regexp','^(?!(c4n|n4e|approxFig|approxFigAxis)$).');
-  % % save all except for the listed in the end
-  %
-  % TODO fix it maybe, what does one need here
-  % name = sprintf('%s/setting.txt', dirName);
-  % file = fopen(name, 'w');
-  % fprintf(file, ...
-  %   ['%s\nalpha = %.8g \nbeta = %.8g \nnrDof = %d ', 
-  %   '\nepsStop = %.2e\ntime = %0.2fs\ntau = %.8g\n\nmisc: %s\n'], ...
-  %   message, parAlpha, parBeta, nrDof, terminate, time, tau, miscMsg);
-  % fclose(file);
-  %
-  % TODO doesn't work, can it even?
-  % name = sprintf('%s/parameters.txt', dirName);
-  % writetable(struct2table(params, 'AsArray', true), name);
-
+  % save parameters for current level
+  currDataReduced = struct(...
+    'nrElems', nrElems, 'nrSides', nrSides, 'nrDof', nrDof, ...
+    'hMax', hMax, 'epsStop', epsStop);
+  name = sprintf('%s/currentData.csv', dirName);
+  writetable(struct2table(currDataReduced, 'AsArray', true), name);
 
 %% SAVE PLOTS OF SOLUTION
   approxFig = figure('visible', figVisible); 
@@ -261,19 +263,34 @@ function saveResultsCR(params, currData, ...
   end
 
 %% SAVE AFEM RESULTS AND TRIANGULATION
+  % plot triangulation
   triangFig = figure('visible',figVisible);
   plotTriangulation(c4n,n4e);
   fName = sprintf('%s/triangulation.png', dirName);
   saveas(triangFig, fName);
 
-  dlmwrite(sprintf('%s/c4n.txt', dirName), c4n, 'Delimiter', '\t');
-  dlmwrite(sprintf('%s/n4e.txt', dirName), n4e, 'Delimiter', '\t');
+  dlmwrite(sprintf('%s/mesh/c4n.txt', dirName), c4n, 'Delimiter', '\t');
+  dlmwrite(sprintf('%s/mesh/n4e.txt', dirName), n4e, 'Delimiter', '\t');
+  dlmwrite(sprintf('%s/mesh/n4sDb.txt', dirName), n4sDb, 'Delimiter', '\t');
+  dlmwrite(sprintf('%s/mesh/n4sNb.txt', dirName), n4sNb, 'Delimiter', '\t');
+  dlmwrite(sprintf('%s/mesh/s4e.txt', dirName), s4e, 'Delimiter', '\t');
 
-  % convergence plots 
+  % save AFEM results
+  tableStruct = outputLvlInfo;
+  fieldsError = fieldnames(outputLvlError);
+  fieldsEnergy = fieldnames(outputLvlEnergy);
+  for ind = 2:length(fieldsError) 
+    tableStruct.(fieldsError{ind}) = outputLvlError.(fieldsError{ind});
+  end
+  for ind = 2:length(fieldsEnergy) 
+    tableStruct.(fieldsEnergy{ind}) = outputLvlEnergy.(fieldsEnergy{ind});
+  end
+  writetable(struct2table(tableStruct), sprintf('%s/lvlOutput.csv', dirName));
 
+  % convergence plots
+  convergenceFig = figure('visible', figVisible);
   % % TODO careful, what error is the estimator for (this error should always
   % % be computed then (if possible), make error4lvl a alternative then)
-  convergenceFig = figure('visible', figVisible);
   loglog(nrDof4lvl, eta4lvl, '-o');
   hold on
   loglog(nrDof4lvl, etaVol4lvl, '-o');

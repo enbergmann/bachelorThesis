@@ -24,7 +24,7 @@ function params = editable %#ok<*MSNU>
     % algebraic degree of exactness for integrate from the AFEM package
   plotGivenFunctions     = true;
     % Plot given right-hand side and, if given, exact solution?
-  refinementLevel4Plots  = 9; % 11 is very close to the limit
+  refinementLevel4Plots  = 7; % 11 is very close to the limit
   debugIfError           = true;
     % Enter debug mode if an error occurs?
 
@@ -34,7 +34,7 @@ function params = editable %#ok<*MSNU>
   parTheta               = 0.5;  
     % bulk param. (1 for uniform)
   initialRefinementLevel = 0;
-  minNrDof               = 1e4;
+  minNrDof               = 1e3;
   useProlongation        = true; 
   n4Estimate             = 2;
   beta4Estimate          = 1;   
@@ -100,8 +100,6 @@ function params = editable %#ok<*MSNU>
   % Information about experiment for saving and documentation.
   expName                = 'reworkSaveResults';
   dirInfoName            = datestr(now, 'yy_mm_dd_HH_MM_SS');
-  miscMsg                = sprintf(['this\nis\nan\nexample', ...
-                                    '\non\nhow\nthis\ncould\nlook']);
 
   % function handles (can be ignored if useImage)
   function y = rightHandSide(x)
@@ -218,7 +216,6 @@ function params = editable %#ok<*MSNU>
 
   params.expName = expName;
   params.dirInfoName = dirInfoName;
-  params.miscMsg = miscMsg;
 
   params.u0Mode = u0Mode;
   if useImage
