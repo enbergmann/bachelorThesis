@@ -1,17 +1,8 @@
 CURRENT TODOS
 
-in save results guarantee that all information can be found somewhere (nrDof,
-nrNodes, nrSides, ... maybe one file with all)
+saveResults still needs nrNodes (size(c4n, 1))
 
-saveResults more info in txt files with column names (it's so much easier
-to handle in tikz than using different files)
-e.g. glebEnergyDifference in lvlOutput.txt
-advantage: produce much less files
-i.e. have everything that's supposed to be plotted against nrDof in ONE file
-and maybe everything that's plotted against iterations in one file
-
-  !! less files from save results, more functiobality (in particular since 
-  saveas takes lots of time)
+saveResults maybe everything that's plotted against iterations in one file
 
 understand PastedGraphic-2.tiff, i.e. how to compute f from u and what
 sgn\partial_r u is supposed to mean
