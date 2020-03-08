@@ -33,6 +33,7 @@ function saveResultsCR(params, currData, ...
   exactEnergy = params.exactEnergy;
   plotGivenFunctions = params.plotGivenFunctions;
   refinementLevel4Plots = params.refinementLevel4Plots;
+  polygonMesh = params.polygonMesh;
 
   % extract necessary information from currData
   nrDof = currData.nrDof; 
@@ -94,10 +95,11 @@ function saveResultsCR(params, currData, ...
 
     if plotGivenFunctions
       % plot rhs and grayscale image of rhs
-      % TODO make polygon mode right (there is a function for this, i.e.
-      % don't use load geometry)
-      if strcmp(geometry, 'Polygon'), geometry = 'BigSquare'; end
-      [c4nRhs, n4eRhs] = loadGeometry(geometry, refinementLevel4Plots);
+      if polygonMesh
+        [c4nRhs, n4eRhs] = computeGeometryPolygon(refinementLevel4Plots);
+      else
+        [c4nRhs, n4eRhs] = loadGeometry(geometry, refinementLevel4Plots);
+      end
 
       fVal = f(c4nRhs);
 
@@ -199,46 +201,29 @@ function saveResultsCR(params, currData, ...
   saveas(grayscaleFig, fName);
 
 %% SAVE PLOTS AND RESULTS OF THE ITERATION FOR THE LEVEL
-  % TODO this just all in one file, maybe with iterationNumber as first row?
-  % --> see latex tikz first and decide after
+  % save corrections (? TODO)
   name = sprintf('%s/corrVec.txt', dirName);
   file = fopen(name, 'w');
   fprintf(file, '%.8e\n', corrVec);
   fclose(file);
   
+  corrFig = figure('visible', figVisible);
+  loglog(corrVec);
+  ftitle = sprintf(...
+    'loglog plot - corr for nrDof = %d, \\alpha = %d, \\beta = %d', ...
+    nrDof, parAlpha, parBeta);
+  title(ftitle);
+  xlabel('number of iterations');
+  ylabel('corr');
+  fName = sprintf('%s/corr_nrDof_%d_loglog.png', dirName, nrDof);
+  saveas(corrFig, fName);
+  
+  % save discrete energies
   name = sprintf('%s/energyVec.txt', dirName);
   file = fopen(name, 'w');
   fprintf(file, '%.8g\n', energyVec);
   fclose(file);
   
-  if useExactEnergy
-    name = sprintf('%s/exactAbsoluteEnergyDifference.txt', dirName);
-    file = fopen(name, 'w');
-    fprintf(file, '%.8g\n', abs(energyVec-exactEnergy));
-    fclose(file);
-
-    enDiffExactFig = figure('visible',figVisible);
-    loglog(abs(energyVec-exactEnergy));
-    ftitle = sprintf(...
-      '|E_{NC}(u_{NC})-E_u| for nrDof = %d, \\alpha = %d, \\beta = %d', ...
-      nrDof, parAlpha, parBeta);
-    title(ftitle);
-    xlabel('number of iterations');
-    ylabel('|E_{NC}(u_{NC})-E_u|');
-    fName = sprintf('%s/enDiffExact_nrDof_%d.png', dirName, nrDof);
-    saveas(enDiffExactFig, fName);
-
-    glebFig = figure('visible', figVisible);
-    loglog(nrDof4lvl, gleb4lvl, '-o');
-    ftitle = sprintf('GLEB for nrDof = %d, \\alpha = %d, \\beta = %d', ...
-      nrDof, parAlpha, parBeta);
-    xlabel('nrDof');
-    ylabel('GLEB');
-    fName = sprintf('%s/gleb.png', dirName);
-    title(ftitle);
-    saveas(glebFig, fName);
-  end
-    
   enFig = figure('visible', figVisible); 
   enFigLegend = sprintf("nrDof = %d (%0.2fs)", nrDof, time);
   plot(energyVec);
@@ -255,17 +240,25 @@ function saveResultsCR(params, currData, ...
   xlabel('number of iterations');
   ylabel('energy');
   saveas(enFig, fName);
-  
-  
-  corrFig = figure('visible', figVisible);
-  loglog(corrVec);
-  ftitle=sprintf('loglog plot - corr for nrDof = %d, \\alpha = %d, \\beta = %d', ...
-    nrDof, parAlpha, parBeta);
-  title(ftitle);
-  xlabel('number of iterations');
-  ylabel('corr');
-  fName = sprintf('%s/corr_nrDof_%d_loglog.png', dirName, nrDof);
-  saveas(corrFig, fName);
+
+  if useExactEnergy
+    % save differences between discrete energies and exact energy
+    name = sprintf('%s/exactAbsoluteEnergyDifference.txt', dirName);
+    file = fopen(name, 'w');
+    fprintf(file, '%.8g\n', abs(energyVec-exactEnergy));
+    fclose(file);
+
+    enDiffExactFig = figure('visible',figVisible);
+    loglog(abs(energyVec-exactEnergy));
+    ftitle = sprintf(...
+      '|E_{NC}(u_{NC})-E_u| for nrDof = %d, \\alpha = %d, \\beta = %d', ...
+      nrDof, parAlpha, parBeta);
+    title(ftitle);
+    xlabel('number of iterations');
+    ylabel('|E_{NC}(u_{NC})-E_u|');
+    fName = sprintf('%s/enDiffExact_nrDof_%d.png', dirName, nrDof);
+    saveas(enDiffExactFig, fName);
+  end
 
 %% SAVE AFEM RESULTS AND TRIANGULATION
   triangFig = figure('visible',figVisible);
