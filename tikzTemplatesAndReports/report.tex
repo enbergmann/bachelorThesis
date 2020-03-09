@@ -141,6 +141,16 @@ with exact solution
     \caption{last iterate for $\varepsilon = 10^{-6}$}
   \end{figure}
 \end{minipage}
-\section{Application to an image}
 
+\section{Application to an image}
+For $\alpha = 10000$ and $\beta = 1$ let $f$ represent the grayscale of an 
+image in $[0,1]^{256\times 256}$ scaled to the domain $\Omega\in(0,1)^2$ as
+seen in \cref{fig:rhsCameraman}.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=14cm]{tikzPlots/imageCameraman/rhsGrayscale.png}
+  \caption{grayscale plot of the right-hand side $f$}
+  \label{fig:rhsCameraman}
+\end{figure}
 \end{document}
