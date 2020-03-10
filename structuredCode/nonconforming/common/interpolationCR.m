@@ -18,8 +18,9 @@ function vCR = interpolationCR(currData, v)
   c4n = currData.c4n;
   n4s = currData.n4s;
   length4s = currData.length4s;
+  degree4Integrate = currData.degree4Integrate;
 
   % compute vCR
   vCR = integrate(@(n4p,Gpts4p,Gpts4ref) v(Gpts4p), ...
-    c4n, n4s, 20, length4s)./length4s;
+    c4n, n4s, degree4Integrate, length4s)./length4s;
 end

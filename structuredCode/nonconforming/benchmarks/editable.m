@@ -20,7 +20,7 @@ function params = editable %#ok<*MSNU>
   plotModeGrayscale      = false; 
     % Use plotGrayscale instead of plotCR during iteration? Only effective if
     % showProgress.
-  degree4Integrate       = 100; 
+  degree4Integrate       = 10; 
     % algebraic degree of exactness for integrate from the AFEM package
   plotGivenFunctions     = false;
     % Plot given right-hand side and, if given, exact solution?

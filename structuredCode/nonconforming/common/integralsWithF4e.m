@@ -1,5 +1,6 @@
 function [int1RHS4e, int2RHS4e, int3RHS4e, intRHS4s] = ...
-    integralsWithF4e(currData, f, degree)
+    integralsWithF4e(params, currData)
+  %TODO update interface documentation
 % Computes the integrals of a function f times a Crouzeix-Raviart-basis
 % function, both global and local, with respect to the triangulation given by
 % [c4n, n4e].
@@ -25,6 +26,9 @@ function [int1RHS4e, int2RHS4e, int3RHS4e, intRHS4s] = ...
 %                      function wrt. j-th edge
 
   % extract necessary dCR-basis function wrt. the first local edge of the j-thata
+  f = params.f;
+  degree4Integrate = params.degree4Integrate;
+  
   c4n = currData.c4n;
   n4e = currData.n4e;
   area4e = currData.area4e;
@@ -58,11 +62,14 @@ function [int1RHS4e, int2RHS4e, int3RHS4e, intRHS4s] = ...
 
   % compute integrals \int_\Omega f*\psi_j dx
   int1RHS4e = integrate(@(n4p, Gpts4p, Gpts4ref)(...
-    f(Gpts4p).*(1 - 2*varLambda3(Gpts4p))), c4n, n4e, degree+1, area4e);
+    f(Gpts4p).*(1 - 2*varLambda3(Gpts4p))), ...
+    c4n, n4e, degree4Integrate, area4e);
   int2RHS4e = integrate(@(n4p, Gpts4p, Gpts4ref)(...
-    f(Gpts4p).*(1 - 2*varLambda1(Gpts4p))), c4n, n4e, degree+1, area4e);
+    f(Gpts4p).*(1 - 2*varLambda1(Gpts4p))), ...
+    c4n, n4e, degree4Integrate, area4e);
   int3RHS4e = integrate(@(n4p, Gpts4p, Gpts4ref)(...
-    f(Gpts4p).*(1 - 2*varLambda2(Gpts4p))), c4n, n4e, degree+1, area4e);
+    f(Gpts4p).*(1 - 2*varLambda2(Gpts4p))), ...
+    c4n, n4e, degree4Integrate, area4e);
   
   % compute integrals
   intRHS4s = zeros(nrSides, 1); % int_\Omega f*u dx

@@ -133,7 +133,7 @@ function startAlgorithmCR(benchmark)
 
     [currData.int1RHS4e, currData.int2RHS4e, currData.int3RHS4e, ...
       currData.intRHS4s] = ...
-      integralsWithF4e(currData, f, 200);
+      integralsWithF4e(params, currData);
       % needed here and in error estimate function
 
     % TODO
