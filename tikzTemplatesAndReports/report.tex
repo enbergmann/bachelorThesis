@@ -150,7 +150,52 @@ seen in \cref{fig:rhsCameraman}.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=14cm]{tikzPlots/imageCameraman/rhsGrayscale.png}
-  \caption{grayscale plot of the right-hand side $f$}
+  \caption{grayscale plot of the right-hand side $f$ (view from above onto the
+  $x$-$y$ plane)}
   \label{fig:rhsCameraman}
 \end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=14cm]
+  {tikzPlots/imageCameraman/convergence/eps1e-2And1e-6/fig.pdf}
+  \caption{convergence history plot for $\eta$,
+  $\eta_\text{Vol}$, and $\eta_\text{Jumps}$}
+\end{figure}
+
+\begin{minipage}[t]{0.5\textwidth}
+  \begin{figure}[H]
+	  \centering
+		\includegraphics[width=\textwidth]
+      {tikzPlots/imageCameraman/approx/1e-2/grayscale.png}
+    \caption{grayscale plot of last iterate for $\varepsilon = 10^{-2}$}
+  \end{figure}
+\end{minipage}
+\begin{minipage}[t]{0.5\textwidth}
+  \begin{figure}[H]
+	  \centering
+		\includegraphics[width=\linewidth]
+      {tikzPlots/imageCameraman/approx/1e-6/grayscale.png}
+    \caption{grayscale plot of last iterate for $\varepsilon = 10^{-6}$}
+  \end{figure}
+\end{minipage}
+
+\begin{minipage}[t]{0.5\textwidth}
+  \begin{figure}[H]
+	  \centering
+		\includegraphics[width=\textwidth]
+      {tikzPlots/imageCameraman/mesh/1e-2/triangulation.png}
+    \caption{adaptive triangulation for $59996$ degrees of freedom for
+      $\varepsilon = 10^{-2}$}
+  \end{figure}
+\end{minipage}
+\begin{minipage}[t]{0.5\textwidth}
+  \begin{figure}[H]
+	  \centering
+		\includegraphics[width=\linewidth]
+      {tikzPlots/imageCameraman/mesh/1e-6/triangulation.png}
+    \caption{adaptive triangulation for $59999$ degrees of freedom for
+      $\varepsilon = 10^{-6}$}
+  \end{figure}
+\end{minipage}
 \end{document}
