@@ -181,8 +181,8 @@ function saveResultsCR(params, currData, ...
 
   % save parameters for current level
   currDataReduced = struct(...
-    'nrElems', nrElems, 'nrSides', nrSides, 'nrDof', nrDof, ...
-    'hMax', hMax, 'epsStop', epsStop);
+    'nrElems', nrElems, 'nrNodes', size(c4n, 1), 'nrSides', nrSides, ...
+    'nrDof', nrDof, 'hMax', hMax, 'epsStop', epsStop);
   name = sprintf('%s/currentData.csv', dirName);
   writetable(struct2table(currDataReduced, 'AsArray', true), name);
 
@@ -271,6 +271,7 @@ function saveResultsCR(params, currData, ...
 
   dlmwrite(sprintf('%s/mesh/c4n.txt', dirName), c4n, 'Delimiter', '\t');
   dlmwrite(sprintf('%s/mesh/n4e.txt', dirName), n4e, 'Delimiter', '\t');
+  dlmwrite(sprintf('%s/mesh/n4eM.txt', dirName), n4e-1, 'Delimiter', '\t');
   dlmwrite(sprintf('%s/mesh/n4sDb.txt', dirName), n4sDb, 'Delimiter', '\t');
   dlmwrite(sprintf('%s/mesh/n4sNb.txt', dirName), n4sNb, 'Delimiter', '\t');
   dlmwrite(sprintf('%s/mesh/s4e.txt', dirName), s4e, 'Delimiter', '\t');

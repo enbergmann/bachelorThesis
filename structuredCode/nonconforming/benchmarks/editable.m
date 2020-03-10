@@ -17,27 +17,27 @@ function params = editable %#ok<*MSNU>
     % Show plots during iteration?
   showProgress           = true; 
     % Print output during iteration?
-  plotModeGrayscale      = true; 
+  plotModeGrayscale      = false; 
     % Use plotGrayscale instead of plotCR during iteration? Only effective if
     % showProgress.
-  degree4Integrate       = 20; 
+  degree4Integrate       = 100; 
     % algebraic degree of exactness for integrate from the AFEM package
-  plotGivenFunctions     = true;
+  plotGivenFunctions     = false;
     % Plot given right-hand side and, if given, exact solution?
-  refinementLevel4Plots  = 7; % 11 is very close to the limit
+  refinementLevel4Plots  = 9; % 11 is very close to the limit
   debugIfError           = true;
     % Enter debug mode if an error occurs?
 
   % AFEM parameters
   geometry               = 'BigSquare'; %#ok<NASGU>                     
     % not necessary if useImage (for now)                     )
-  parTheta               = 0.5;  
+  parTheta               = 0.5;
     % bulk param. (1 for uniform)
   initialRefinementLevel = 0;
   minNrDof               = 1e3;
-  useProlongation        = true; 
+  useProlongation        = true;
   n4Estimate             = 2;
-  beta4Estimate          = 1;   
+  beta4Estimate          = 1;
 
   % algorithm parameters
   u0Mode                 = 'zeros'; 
@@ -48,7 +48,7 @@ function params = editable %#ok<*MSNU>
     %   'interpolationRhs': CR interpolation of given rhs to the mesh on the
     %     level
                                                   
-  epsStop                = 1e-4; % TODO sth about updating it depending on
+  epsStop                = 1e-5; % TODO sth about updating it depending on
                                  %      mesh size
   stopCrit               = ["Exact Error Difference", ...
                             "weighted energy difference"];
@@ -94,17 +94,20 @@ function params = editable %#ok<*MSNU>
                                             %this))
                               % TODO 
   saveScreenshots        = 0; % save screenshots every saveScreenshots
-                              % iterations during algorithm, e.g. for the case it doesn't finish
+                              % iterations during algorithm, e.g. for the case
+                              % it doesn't finish
                               % 0 means no screenshots will be saved
 
   % Information about experiment for saving and documentation.
-  expName                = 'reworkSaveResults';
-  dirInfoName            = datestr(now, 'yy_mm_dd_HH_MM_SS');
+  expName                = 'd4iTest';
+  dirInfoName            = sprintf('%s_adaptive', ...
+    datestr(now, 'yy_mm_dd_HH_MM_SS'));
 
   % function handles (can be ignored if useImage)
   function y = rightHandSide(x)
     % TODO pasted-graphic-2.tiff does have a calculation formula to calculate f
     % from some given function u(r) --> other examples possible (easier even?)
+    % y =  middleSquare(x);
     y =  f01(x, [parAlpha, parBeta]);
   end
 

@@ -1,0 +1,28 @@
+\documentclass[tikz]{standalone}
+\usepackage{amsmath,amsfonts,amssymb,amsthm,mathtools}
+\usepackage{tikz}
+\usepackage{pgfplots}
+
+\begin{document}
+	\begin{tikzpicture}
+	%% SETTINGS
+	% style for plot of triangulations
+	\pgfplotsset{triangulationplot/.style={
+			axis equal
+	}}
+	% style for each patch
+	\pgfplotsset{patchstyle/.style={
+			patch,
+			white,
+			faceted color=blue,
+			line width=.5pt
+	}}
+
+	%% PLOT
+	\begin{axis}[axis equal, hide axis]
+	  \addplot[patchstyle,
+	    patch table={n4eM.txt}]
+	    table{c4n.txt};
+	  \end{axis}
+	\end{tikzpicture}
+\end{document}
