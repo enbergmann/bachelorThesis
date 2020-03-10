@@ -22,7 +22,7 @@ function params = editable %#ok<*MSNU>
     % showProgress.
   degree4Integrate       = 10; 
     % algebraic degree of exactness for integrate from the AFEM package
-  plotGivenFunctions     = false;
+  plotGivenFunctions     = true;
     % Plot given right-hand side and, if given, exact solution?
   refinementLevel4Plots  = 9; % 11 is very close to the limit
   debugIfError           = true;
@@ -34,7 +34,7 @@ function params = editable %#ok<*MSNU>
   parTheta               = 0.5;
     % bulk param. (1 for uniform)
   initialRefinementLevel = 0;
-  minNrDof               = 1e3;
+  minNrDof               = 1e6;
   useProlongation        = true;
   n4Estimate             = 2;
   beta4Estimate          = 1;
@@ -67,10 +67,10 @@ function params = editable %#ok<*MSNU>
   blurWidth              = 1; %#ok<NASGU>
     % TODO comment
     % 1 for nothing  TODO think about it, it might change stuff
-  parAlpha               = 1e0; %1e4 for image example 
+  parAlpha               = 1e2; %1e4 for image example 
    % TODO why does the analytic example is broken for 1e4
   parBeta                = 1;
-  exactSolutionKnown     = true; %#ok<NASGU>
+  exactSolutionKnown     = false; %#ok<NASGU>
   useExactEnergy         = true; %#ok<NASGU>
     % only effective if exactSolutionKnown == true
 
@@ -107,8 +107,8 @@ function params = editable %#ok<*MSNU>
   function y = rightHandSide(x)
     % TODO pasted-graphic-2.tiff does have a calculation formula to calculate f
     % from some given function u(r) --> other examples possible (easier even?)
-    % y =  middleSquare(x);
-    y =  f01(x, [parAlpha, parBeta]);
+    y =  middleSquare(x);
+    % y =  f01(x, [parAlpha, parBeta]);
   end
 
   function y = gradientRightHandSide(x)

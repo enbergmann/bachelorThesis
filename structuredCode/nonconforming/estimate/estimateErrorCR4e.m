@@ -35,10 +35,7 @@ function [eta4e, etaVol4e, etaJumps4e] = ...
   %  +length4s(s4e(:,3))'*sum(absNodeJumps4s(s4e(:,3)),2)); %Sprunganteil
 
 
-        %TODO Tien has a little error, he also has n = 2, alpha = beta = 1
-        %(in documentaion of his)
   etaVol4e = area4e.^(2/n4Estimate).*normOfDifference4e;
-  % TODO sth with the volume term is pretty wrong
   etaJumps4e = area4e.^(beta4Estimate/n4Estimate).*termJumps;
   eta4e = etaVol4e + etaJumps4e;
 end

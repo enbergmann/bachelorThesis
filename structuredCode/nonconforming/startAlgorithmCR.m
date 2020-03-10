@@ -167,7 +167,8 @@ function startAlgorithmCR(benchmark)
     % ESTIMATE
 
     %TODO still need to comment and some other stuff
-    [eta4e, etaVol4e, etaJumps4e] = estimateErrorCR4e(params, currData, output);
+    [eta4e, etaVol4e, etaJumps4e] = ...
+      estimateErrorCR4e(params, currData, output);
 
     % TODO implement flag for different errors
     if exactSolutionKnown
@@ -175,9 +176,9 @@ function startAlgorithmCR(benchmark)
         sqrt(sum(error4eCRL2(c4n, n4e, uExact, u)));
     end
 
-    outputLvlError.eta(end+1, 1) = sqrt(sum(eta4e));
-    outputLvlError.etaVol(end+1, 1) = sqrt(sum(etaVol4e));
-    outputLvlError.etaJumps(end+1, 1) = sqrt(sum(etaJumps4e));
+    outputLvlError.eta(end+1, 1) = sum(eta4e);
+    outputLvlError.etaVol(end+1, 1) = sum(etaVol4e);
+    outputLvlError.etaJumps(end+1, 1) = sum(etaJumps4e);
 
     clc;
     disp(struct2table(outputLvlInfo));
