@@ -34,7 +34,7 @@ function params = editable %#ok<*MSNU>
   parTheta               = 0.5;
     % bulk param. (1 for uniform)
   initialRefinementLevel = 0;
-  minNrDof               = 1e3;
+  minNrDof               = 1e9;
   useProlongation        = true;
   beta4Estimate          = 1;
   n4Estimate             = 2;
@@ -100,9 +100,8 @@ function params = editable %#ok<*MSNU>
                               % 0 means no screenshots will be saved
 
   % Information about experiment for saving and documentation.
-  expName                = 'd4iTest';
-  dirInfoName            = sprintf('%s_adaptive', ...
-    datestr(now, 'yy_mm_dd_HH_MM_SS'));
+  expName                = 'f01Benchmark';
+  dirInfoName            = 'adaptive';
 
   % function handles (can be ignored if useImage)
   function y = rightHandSide(x)

@@ -31,10 +31,10 @@ function params = editable %#ok<*MSNU>
   % AFEM parameters
   geometry               = 'BigSquare'; %#ok<NASGU>                     
     % not necessary if useImage (for now)                     )
-  parTheta               = 0.5;
+  parTheta               = 1;
     % bulk param. (1 for uniform)
   initialRefinementLevel = 0;
-  minNrDof               = 1e3;
+  minNrDof               = 1e9;
   useProlongation        = true;
   beta4Estimate          = 1;
   n4Estimate             = 2;
@@ -68,10 +68,10 @@ function params = editable %#ok<*MSNU>
   blurWidth              = 1; %#ok<NASGU>
     % TODO comment
     % 1 for nothing  TODO think about it, it might change stuff
-  parAlpha               = 1e0; %1e4 for image example 
+  parAlpha               = 1e2; %1e4 for image example 
    % TODO why does the analytic example is broken for 1e4
   parBeta                = 1;
-  exactSolutionKnown     = true; %#ok<NASGU>
+  exactSolutionKnown     = false; %#ok<NASGU>
   useExactEnergy         = true; %#ok<NASGU>
     % only effective if exactSolutionKnown == true
 
@@ -100,16 +100,15 @@ function params = editable %#ok<*MSNU>
                               % 0 means no screenshots will be saved
 
   % Information about experiment for saving and documentation.
-  expName                = 'd4iTest';
-  dirInfoName            = sprintf('%s_adaptive', ...
-    datestr(now, 'yy_mm_dd_HH_MM_SS'));
+  expName                = 'middleSquareBenchmark';
+  dirInfoName            = 'uniform';
 
   % function handles (can be ignored if useImage)
   function y = rightHandSide(x)
     % TODO pasted-graphic-2.tiff does have a calculation formula to calculate f
     % from some given function u(r) --> other examples possible (easier even?)
-    % y =  middleSquare(x);
-    y =  f01(x, [parAlpha, parBeta]);
+    y =  middleSquare(x);
+    % y =  f01(x, [parAlpha, parBeta]);
   end
 
   function y = gradientRightHandSide(x)

@@ -20,36 +20,55 @@ function params = editable %#ok<*MSNU>
   plotModeGrayscale      = false; 
     % Use plotGrayscale instead of plotCR during iteration? Only effective if
     % showProgress.
-  degree4Integrate       = 20; 
+  degree4Integrate       = 10; 
     % algebraic degree of exactness for integrate from the AFEM package
-  plotRhs                = true;
+  plotGivenFunctions     = true;
+    % Plot given right-hand side and, if given, exact solution?
+  refinementLevel4Plots  = 9; % 11 is very close to the limit
+  debugIfError           = true;
+    % Enter debug mode if an error occurs?
 
   % AFEM parameters
   geometry               = 'BigSquare'; %#ok<NASGU>                     
-    % not necessary if useImage (for now                     )
-  parTheta               = 0.5;  
+    % not necessary if useImage (for now)                     )
+  parTheta               = 0.5;
     % bulk param. (1 for uniform)
   initialRefinementLevel = 0;
   minNrDof               = 1e9;
-  useProlongation        = true; 
-  beta4Estimate          = 1;   
+  useProlongation        = true;
+  beta4Estimate          = 1;
+  n4Estimate             = 2;
+    % dimension, i.e. this should remain 2
 
   % algorithm parameters
-  epsStop                = 1e-2; % TODO sth about updating it depending on
+  u0Mode                 = 'zeros'; 
+    % initial iterate for the iteration on level 0 and, if not useProlongation,
+    % for the iterations on all levels
+    % Options:
+    %   'zeros': CR function with all coefficients equal to 0
+    %   'interpolationRhs': CR interpolation of given rhs to the mesh on the
+    %     level
+                                                  
+  epsStop                = 1e-5; % TODO sth about updating it depending on
                                  %      mesh size
   stopCrit               = ["Exact Error Difference", ...
                             "weighted energy difference"];
   parTau                 = 1/2;
 
   % experiment parameters
-  useImage               = false;
+  useImage               = true;
   imageName              = ...
     '../utils/functions/images/cameraman.tif'; %#ok<NASGU> 
+    % whiteSquare, cameraman
+    % TODO append path automatically
   addNoise               = false; %#ok<NASGU>
     % TODO probably add ability to denoise rhs and images (might need case
     % distinction by considering useImage flag)
     % TODO noise type (see MATLAB imnoise)
-  parAlpha               = 1e0; %1e4 for image example 
+  blurWidth              = 1; %#ok<NASGU>
+    % TODO comment
+    % 1 for nothing  TODO think about it, it might change stuff
+  parAlpha               = 1e4; %1e4 for image example 
    % TODO why does the analytic example is broken for 1e4
   parBeta                = 1;
   exactSolutionKnown     = true; %#ok<NASGU>
@@ -76,25 +95,19 @@ function params = editable %#ok<*MSNU>
                                             %this))
                               % TODO 
   saveScreenshots        = 0; % save screenshots every saveScreenshots
-                              % iterations during algorithm, e.g. for the case it doesn't finish
+                              % iterations during algorithm, e.g. for the case
+                              % it doesn't finish
                               % 0 means no screenshots will be saved
 
   % Information about experiment for saving and documentation.
-  expName                = '10e-2_epsStop';
-  dirInfoName            = datestr(now, 'yy_mm_dd_HH_MM_SS');
-  miscMsg                = sprintf(['this\nis\nan\nexample', ...
-                                    '\non\nhow\nthis\ncould\nlook']);
+  expName                = 'camermanBenchmark';
+  dirInfoName            = 'adaptive';
 
-
-  % function handles 
-  function y = initalValue(x) %#ok<INUSD>
-    y = 0;
-  end
-
-  % function handles that can be ignored if useImage
-  % TODO pasted-graphic-2.tiff does have a calculation formula to calculate
-  % f from some given function u(r) --> other examples possible (easier even?)
+  % function handles (can be ignored if useImage)
   function y = rightHandSide(x)
+    % TODO pasted-graphic-2.tiff does have a calculation formula to calculate f
+    % from some given function u(r) --> other examples possible (easier even?)
+    % y =  middleSquare(x);
     y =  f01(x, [parAlpha, parBeta]);
   end
 
@@ -106,7 +119,6 @@ function params = editable %#ok<*MSNU>
     % can be ignored if exactSolutionKnown == false
     y = f01ExactSolution(x, parAlpha);
   end
-
 
 %% BUILD STRUCT
 % should not be of interest for mere usage of the program
@@ -135,6 +147,7 @@ function params = editable %#ok<*MSNU>
   params.initialRefinementLevel = initialRefinementLevel;
 
   params.minNrDof = minNrDof;
+  params.n4Estimate = n4Estimate;
   params.beta4Estimate = beta4Estimate;
   params.epsStop = epsStop;
   params.stopCrit = stopCrit;              
@@ -200,15 +213,17 @@ function params = editable %#ok<*MSNU>
   else, params.figVisible = 'off'; end
   params.plotModeGrayscale = plotModeGrayscale;
   params.showProgress = showProgress;          
-  params.plotRhs = plotRhs;
+  params.plotGivenFunctions = plotGivenFunctions;
+  params.refinementLevel4Plots = refinementLevel4Plots;
+  params.debugIfError = debugIfError;
 
   params.expName = expName;
   params.dirInfoName = dirInfoName;
-  params.miscMsg = miscMsg;
 
-  params.u0 = @(x) initalValue(x);
+  params.u0Mode = u0Mode;
   if useImage
-    params.f = rhsImg(imageName, parAlpha, addNoise); %#ok<UNRCH>
+    params.f = image2function(imageName, parAlpha, ...
+      addNoise, blurWidth); %#ok<UNRCH>
     %TODO rewrite and change name
   else
     noise = 0; %#ok<NASGU,UNRCH> 
