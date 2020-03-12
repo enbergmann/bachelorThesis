@@ -8,9 +8,6 @@ if parTheta==1, refineUniformRed(...); end
 WHOA this is even worse for camerman, it still looks really really adaptive,
 is this constant black that crazy?
 
-remove forced title from plotTriangulation (make it optional like plotCR)
-
-maybe move iteration results in saveData to iteration folder (like mesh stuff)
 
 understand PastedGraphic-2.tiff, i.e. how to compute f from u and what
 sgn\partial_r u is supposed to mean
