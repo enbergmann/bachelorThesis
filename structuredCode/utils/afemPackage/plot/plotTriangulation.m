@@ -3,8 +3,9 @@ function triang = plotTriangulation ( c4n, n4e )
 %   plotTriangulation(c4n, n4e) draws the grid defined by c4n and n4e into
 %                               a figure.
 
-    % Set titles of plot and window.
-    title({'Mesh plot'; [num2str(size(c4n,1)), ' nodes']});
+    % % Set titles of plot and window.
+    % title({'Mesh plot'; [num2str(size(c4n,1)), ' nodes']});
+
     % This can be done with triplot but patch is _much_ faster.
     % Get the coordinates for each node of each triangle.
     X1 = c4n(n4e(:,1),1);
