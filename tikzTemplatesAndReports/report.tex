@@ -69,9 +69,10 @@ $E(u)$ $\left(\Enc(\ucr)\right)$ it holds
 \end{align}
 where $|\bullet|_{1,2}=\Vert\nabla \bullet\Vert_{L^2(\Omega)}$.
 
-
+\section{Experiments}
+In the following sections it holds $\beta = 1$ and $\varepsilon=10^{-5}$.
 \section{Example with exact solution}
-For $\alpha = \beta = 1$ define $f$ as a function of the radius as
+For $\alpha = 1$ define $f$ as a function of the radius as
 \begin{align}
   \label{equ:f01}
   f(r)\coloneqq 
@@ -119,29 +120,69 @@ with exact solution
   \end{figure}
 \end{minipage}
 
+\begin{minipage}[t]{0.45\textwidth}
+  \begin{figure}[H]
+	  \centering
+		\includegraphics[width=\textwidth]{tikzPlots/f01/rhsAxis.png} 
+		\caption{right-hand side $f$ along the axes}
+  \end{figure}
+\end{minipage}
+\begin{minipage}[t]{0.45\textwidth}
+  \begin{figure}[H]
+	  \centering
+		\includegraphics[width=\textwidth]{tikzPlots/f01/exactSolutionAxis.png} 
+		\caption{exact solution $u$ along the axes}
+  \end{figure}
+\end{minipage}
+
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=14cm]{tikzPlots/f01/convergence/bothEps/fig.pdf}
+	\includegraphics[width=14cm]{tikzPlots/f01/convergence.pdf}
   \caption{convergence history plot for the $L^2$ error, $\eta$,
   $\eta_\text{Vol}$, $\eta_\text{Jumps}$, and the guaranteed lower energy
   bound}
 \end{figure}
 
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=14cm]{tikzPlots/f01/misc.pdf}
+  \caption{development of the number of iterations and the elapsed time for 
+  each iteration}
+\end{figure}
+
 \begin{minipage}[t]{0.45\textwidth}
   \begin{figure}[H]
 	  \centering
-		\includegraphics[width=\textwidth]{tikzPlots/f01/approx/solution1e-2.png} 
-    \caption{last iterate for $\varepsilon = 10^{-2}$}
+		\includegraphics[width=\textwidth]
+      {tikzPlots/f01/1e-5/adaptive/lvl10/solution.png} 
+    \caption{last iterate for $\theta = 1$}
   \end{figure}
 \end{minipage}
 \begin{minipage}[t]{0.45\textwidth}
   \begin{figure}[H]
 	  \centering
-		\includegraphics[width=\textwidth]{tikzPlots/f01/approx/solution1e-6.png} 
-    \caption{last iterate for $\varepsilon = 10^{-6}$}
+		\includegraphics[width=\textwidth]
+      {tikzPlots/f01/1e-5/uniform/lvl6/solution.png} 
+    \caption{last iterate for $\theta = 0.5$}
   \end{figure}
 \end{minipage}
 
+\begin{minipage}[t]{0.45\textwidth}
+  \begin{figure}[H]
+	  \centering
+		\includegraphics[width=\textwidth]
+      {tikzPlots/f01/1e-5/adaptive/lvl10/solutionAxis.png} 
+    \caption{last iterate along the axes for $\theta = 1$}
+  \end{figure}
+\end{minipage}
+\begin{minipage}[t]{0.45\textwidth}
+  \begin{figure}[H]
+	  \centering
+		\includegraphics[width=\textwidth]
+      {tikzPlots/f01/1e-5/uniform/lvl6/solutionAxis.png} 
+    \caption{last iterate along the axes for $\theta = 0.5$}
+  \end{figure}
+\end{minipage}
 \section{Application to an image}
 For $\alpha = 10000$ and $\beta = 1$ let $f$ represent the grayscale of an 
 image in $[0,1]^{256\times 256}$ scaled to the domain $\Omega\in(0,1)^2$ as
