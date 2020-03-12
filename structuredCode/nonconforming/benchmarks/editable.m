@@ -24,8 +24,8 @@ function params = editable %#ok<*MSNU>
     % algebraic degree of exactness for integrate from the AFEM package
   plotGivenFunctions     = true;
     % Plot given right-hand side and, if given, exact solution?
-  refinementLevel4Plots  = 9; % 11 is very close to the limit
-  debugIfError           = true;
+  refinementLevel4Plots  = 4; % 11 is very close to the limit
+  debugIfError           = false;
     % Enter debug mode if an error occurs?
 
   % AFEM parameters
@@ -34,7 +34,7 @@ function params = editable %#ok<*MSNU>
   parTheta               = 0.5;
     % bulk param. (1 for uniform)
   initialRefinementLevel = 0;
-  minNrDof               = 1e3;
+  minNrDof               = 1e4;
   useProlongation        = true;
   beta4Estimate          = 1;
   n4Estimate             = 2;
@@ -49,7 +49,7 @@ function params = editable %#ok<*MSNU>
     %   'interpolationRhs': CR interpolation of given rhs to the mesh on the
     %     level
                                                   
-  epsStop                = 1e-5; % TODO sth about updating it depending on
+  epsStop                = 1e-2; % TODO sth about updating it depending on
                                  %      mesh size
   stopCrit               = ["Exact Error Difference", ...
                             "weighted energy difference"];
@@ -100,7 +100,7 @@ function params = editable %#ok<*MSNU>
                               % 0 means no screenshots will be saved
 
   % Information about experiment for saving and documentation.
-  expName                = 'd4iTest';
+  expName                = 'srTest';
   dirInfoName            = sprintf('%s_adaptive', ...
     datestr(now, 'yy_mm_dd_HH_MM_SS'));
 

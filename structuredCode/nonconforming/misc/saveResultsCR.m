@@ -54,7 +54,9 @@ function saveResultsCR(params, currData, ...
   % extract necessary information from outputLvlInfo
   currLvl = outputLvlInfo.lvl(end);
   nrDof4lvl = outputLvlInfo.nrDof;
-  time = outputLvlInfo.time(end);
+  time4lvl = outputLvlInfo.time;
+  time = time4lvl(end);
+  nrIterations4lvl = outputLvlInfo.nrIterations;
 
   % extract necessary information from outputLvlError
   eta4lvl = outputLvlError.eta;
@@ -76,10 +78,11 @@ function saveResultsCR(params, currData, ...
 
 %% CREATE DIRECTORY
   warning('off', 'MATLAB:MKDIR:DirectoryExists');
-  dirName = sprintf('../../results/nonconforming/%s/%s/lvl%d_nrDof%d', ...
-    expName, dirInfoName, currLvl, nrDof);
+  dirName = sprintf('../../results/nonconforming/%s/%s/lvl%d', ...
+    expName, dirInfoName, currLvl);
     % startAlgorithmNC run from .../structuredcode/nonconforming
   mkdir(sprintf('%s/mesh', dirName));
+  mkdir(sprintf('%s/iteration', dirName));
   warning('on', 'MATLAB:MKDIR:DirectoryExists');
     
 %% SAVE INFORMATION ABOUT EXPERIMENT
@@ -183,28 +186,28 @@ function saveResultsCR(params, currData, ...
   currDataReduced = struct(...
     'nrElems', nrElems, 'nrNodes', size(c4n, 1), 'nrSides', nrSides, ...
     'nrDof', nrDof, 'hMax', hMax, 'epsStop', epsStop);
-  name = sprintf('%s/currentData.csv', dirName);
+  name = sprintf('%s/currentDataReduced.csv', dirName);
   writetable(struct2table(currDataReduced, 'AsArray', true), name);
 
 %% SAVE PLOTS OF SOLUTION
   approxFig = figure('visible', figVisible); 
   plotCR(c4n, n4e, u);
-  fName = sprintf('%s/solution_nrDof_%d.png', dirName, nrDof);
+  fName = sprintf('%s/solution.png', dirName);
   saveas(approxFig, fName);
   
   approxFigAxis = figure('visible', figVisible); 
   plotAxisNC(c4n,n4e,u);
-  fName = sprintf('%s/solution_nrDof_%d_axis.png', dirName, nrDof);
+  fName = sprintf('%s/solutionAxis.png', dirName);
   saveas(approxFigAxis, fName);
 
   grayscaleFig = figure('visible', figVisible); 
   plotGrayscale(c4n, n4e, mean(u(s4e), 2));
-  fName = sprintf('%s/grayscale_nrDof_%d.png', dirName, nrDof);
+  fName = sprintf('%s/solutionGrayscale.png', dirName);
   saveas(grayscaleFig, fName);
 
 %% SAVE PLOTS AND RESULTS OF THE ITERATION FOR THE LEVEL
-  % save corrections (? TODO)
-  name = sprintf('%s/corrVec.txt', dirName);
+  % save corrections (is that the name? TODO)
+  name = sprintf('%s/iteration/corrVec.txt', dirName);
   file = fopen(name, 'w');
   fprintf(file, '%.8e\n', corrVec);
   fclose(file);
@@ -217,11 +220,11 @@ function saveResultsCR(params, currData, ...
   title(ftitle);
   xlabel('number of iterations');
   ylabel('corr');
-  fName = sprintf('%s/corr_nrDof_%d_loglog.png', dirName, nrDof);
+  fName = sprintf('%s/iteration/corr.png', dirName);
   saveas(corrFig, fName);
   
   % save discrete energies
-  name = sprintf('%s/energyVec.txt', dirName);
+  name = sprintf('%s/iteration/energyVec.txt', dirName);
   file = fopen(name, 'w');
   fprintf(file, '%.8g\n', energyVec);
   fclose(file);
@@ -235,17 +238,17 @@ function saveResultsCR(params, currData, ...
     enFigLegend(end+1) = sprintf("E_u = %.8g", exactEnergy);
   end
   legend(enFigLegend);
-  ftitle=sprintf('Energy for inital nrDof=%d, \\alpha =%d, \\beta =%d',...
+  ftitle=sprintf('Energy for nrDof=%d, \\alpha =%d, \\beta =%d',...
   nrDof, parAlpha, parBeta);
   title(ftitle);
-  fName = sprintf('%s/energy.png', dirName);
+  fName = sprintf('%s/iteration/energy.png', dirName);
   xlabel('number of iterations');
   ylabel('energy');
   saveas(enFig, fName);
 
   if useExactEnergy
     % save differences between discrete energies and exact energy
-    name = sprintf('%s/exactAbsoluteEnergyDifference.txt', dirName);
+    name = sprintf('%s/iteration/exactAbsoluteEnergyDifference.txt', dirName);
     file = fopen(name, 'w');
     fprintf(file, '%.8g\n', abs(energyVec-exactEnergy));
     fclose(file);
@@ -258,7 +261,7 @@ function saveResultsCR(params, currData, ...
     title(ftitle);
     xlabel('number of iterations');
     ylabel('|E_{NC}(u_{NC})-E_u|');
-    fName = sprintf('%s/enDiffExact_nrDof_%d.png', dirName, nrDof);
+    fName = sprintf('%s/iteration/enDiffExact.png', dirName);
     saveas(enDiffExactFig, fName);
   end
 
@@ -313,4 +316,14 @@ function saveResultsCR(params, currData, ...
   xlabel('nrDof');
   fName = sprintf('%s/convergence.png', dirName);
   saveas(convergenceFig, fName);
+
+  % time and nrIteration development
+  miscFig = figure('visible', figVisible);
+  loglog(nrDof4lvl, time4lvl, '-o');
+  hold on
+  loglog(nrDof4lvl, nrIterations4lvl, '-o');
+  legend([sprintf("time"), sprintf("number of iterations")], 'Location', 'SE');
+  xlabel('nrDof');
+  fName = sprintf('%s/miscInfo.png', dirName);
+  saveas(miscFig, fName);
 end
