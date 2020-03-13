@@ -31,7 +31,7 @@ function params = editable %#ok<*MSNU>
   % AFEM parameters
   geometry               = 'BigSquare'; %#ok<NASGU>                     
     % not necessary if useImage (for now)                     )
-  parTheta               = 0.5;
+  parTheta               = 0.5
     % bulk param. (1 for uniform)
   initialRefinementLevel = 0;
   minNrDof               = 1e4;
@@ -100,8 +100,8 @@ function params = editable %#ok<*MSNU>
                               % 0 means no screenshots will be saved
 
   % Information about experiment for saving and documentation.
-  expName                = 'srTest';
-  dirInfoName            = sprintf('%s_adaptive', ...
+  expName                = 'refineTest';
+  dirInfoName            = sprintf('%s_uniform', ...
     datestr(now, 'yy_mm_dd_HH_MM_SS'));
 
   % function handles (can be ignored if useImage)

@@ -202,7 +202,9 @@ function startAlgorithmCR(benchmark)
     outputLvlEnergy.lvl = lvl;
 
     % MARK
-    n4sMarked = markBulk(n4e, eta4e, parTheta);
+    
+    if parTheta==1, n4sMarked = markUniform(n4e); 
+    else, n4sMarked = markBulk(n4e, eta4e, parTheta); end
 
     % REFINE
     c4nOld = c4n;
