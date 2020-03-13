@@ -1,0 +1,2 @@
+nrElems,nrNodes,nrSides,nrDof,hMax,epsStop
+59574,29832,89405,89317,0.25,1e-05

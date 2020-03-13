@@ -8,6 +8,10 @@
             bindingoffset = 6mm]
             {geometry}
 % \usepackage{fancyhdr}
+\usepackage{datatool}
+
+\DTLloaddb{f01Adaptive}{tikzPlots/f01/1e-5/adaptive/lvl11/currentData.csv}
+
 \pagestyle{headings}
 
 % \setlength{\parindent}{0pt}
@@ -183,6 +187,15 @@ with exact solution
     \caption{last iterate along the axes for $\theta = 0.5$}
   \end{figure}
 \end{minipage}
+
+%TODO
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=14cm]{tikzPlots/f01/1e-5/adaptive/lvl11/triangulation.png}
+  \caption{adaptive mesh for $\theta = 0.5$ and nodes}
+  \DTLforeach{f01Adaptive}{\nrNodes=nrNodes}{\nrNodes} nodes
+\end{figure}
+
 \section{Application to an image}
 For $\alpha = 10000$ and $\beta = 1$ let $f$ represent the grayscale of an 
 image in $[0,1]^{256\times 256}$ scaled to the domain $\Omega\in(0,1)^2$ as

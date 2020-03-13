@@ -9,6 +9,11 @@
 %    }
 %  }
 
+\pgfplotsset{compat=newest,
+	axis background/.style={fill=black!5!white},
+	grid style={densely dotted,semithick}
+  }
+
 \begin{document}
 
 % TODO find here how csv files work
@@ -26,6 +31,7 @@
 \begin{tikzpicture}
   \begin{loglogaxis}[legend pos = outer north east, 
     scale = 2, xlabel = {nrDof},
+    ymajorgrids=true,
     legend entries = {$\theta = 0.5$,
                      $\theta = 1$,
                      time,
@@ -37,19 +43,19 @@
 
     \addplot [solid, cyan, mark = *] 
     table[x = {nrDof}, y = {time}] 
-    {1e-5/adaptive/lvl10/lvlOutput.csv}; 
+    {1e-5/adaptive/lvl11/lvlOutput.csv}; 
 
     \addplot [solid, green, mark = *] 
     table[x = {nrDof}, y = {nrIterations}] 
-    {1e-5/adaptive/lvl10/lvlOutput.csv}; 
+    {1e-5/adaptive/lvl11/lvlOutput.csv}; 
 
     \addplot [densely dashed, cyan, mark = square*] 
     table[x = {nrDof}, y = {time}] 
-    {1e-5/uniform/lvl6/lvlOutput.csv}; 
+    {1e-5/uniform/lvl7/lvlOutput.csv}; 
 
     \addplot [densely dashed, green, mark = square*] 
     table[x = {nrDof}, y = {nrIterations}] 
-    {1e-5/uniform/lvl6/lvlOutput.csv}; 
+    {1e-5/uniform/lvl7/lvlOutput.csv}; 
   \end{loglogaxis}
 \end{tikzpicture}
 \end{document}
