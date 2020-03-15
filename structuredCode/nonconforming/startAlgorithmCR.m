@@ -152,7 +152,6 @@ function startAlgorithmCR(benchmark)
     output.energyVec = energyVec;
     output.u = u;
     outputLvlInfo.nrIterations(end+1, 1) = length(energyVec);
-      % TODO maybe length minus 1, think about it
 
     output.normOfDifference4e = ...
       computeNormOfDifference4e(params, currData, output);
@@ -216,7 +215,7 @@ function startAlgorithmCR(benchmark)
     % edges if polygonMesh, else getParentSide will not work)
     if useProlongation
       % TODO comment and interface documentation
-      u0 = computeRefinementExtension(c4nOld, n4eOld, c4n, n4e, u);
+      u0 = computeRefinementExtensionCR(c4nOld, n4eOld, c4n, n4e, u);
     end
 
     if polygonMesh

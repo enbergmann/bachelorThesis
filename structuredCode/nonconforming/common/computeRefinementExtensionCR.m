@@ -1,20 +1,24 @@
-function uNew = computeRefinementExtension(c4n, n4e, c4nNew, n4eNew, u)
-% TODO comment and structure and write the interface documentation
-% function computeRefinementExtension
+function uNew = computeRefinementExtensionCR(c4n, n4e, c4nNew, n4eNew, u)
+% Computes the prolongation of a CR solution u with respect to a mesh defined
+% by [c4n, n4e] to a one-level refinement of this mesh defined by [c4nNew,
+% n4eNew].
 %
-% Compute the prolongation of a solution of the CRFEM to a
-% one-level refinement of the mesh.
+% computeRefinementExtensionCR.m
+% input:  c4n    - coordinates for nodes
+%         n4e    - nodes for elements
+%         c4nNew - coordinates for nodes for the one-level refinement
+%         n4eNew - nodes for elements for the one-level refinement
+%         u      - '(number of sides of the coarse mesh x 1)-dimensional 
+%                   double array' where the j-th row contains the coefficient 
+%                   of the CR solution wrt. the j-th side of the coarse
+%                   triangulation
 %
-% INPUT         c4n          Coordinates of the coarse mesh
-%               n4e          nodes for elements of the coarse mesh
-%               c4nNew          Coordinates of the fine mesh
-%               n4eNew          nodes for elements of the fine mesh
-%               u          solution on the coarse mesh
-%
-% OUTPUT        uNew          prolongation of the old solution to the new
-%                               mesh
+% output: uNew   - '(number of sides of the refined mesh x 1)-dimensional 
+%                   double array' where the j-th row contains the coefficient 
+%                   of the CR prolongation of u wrt. the j-th side of the new
+%                   triangulation
 
-  %% initialization
+%% INITIALIZATION
   n4sNew = computeN4s(n4eNew);
   s4n = computeS4n(n4e);
   s4e = computeS4e(n4e); 
@@ -29,6 +33,7 @@ function uNew = computeRefinementExtension(c4n, n4e, c4nNew, n4eNew, u)
     nrNodes, nrNodesNew); 
   e4n = getElements4Nodes(n4e);
 
+%% COMPUTE REFINEMENT EXTENSION
   uNew = zeros(nrSidesNew, 1);
   val = [u(s4e(:, 1)) - u(s4e(:, 2)) + u(s4e(:, 3)), ... % 1st local nodes
             u(s4e(:, 1)) + u(s4e(:, 2)) - u(s4e(:, 3)), ... % 2nd local nodes
@@ -52,6 +57,7 @@ function uNew = computeRefinementExtension(c4n, n4e, c4nNew, n4eNew, u)
   end
 end
 
+%% FURTHER FUNCTIONS
 function n4parentSides4n = getParentSide(c4n, c4nNew, s4n, n4sNew, ...
     nrNodes, nrNodesNew)
 % return the two nodes of bisected side for new node and twice the input
