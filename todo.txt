@@ -1,26 +1,13 @@
 CURRENT TODOS
 
-talk to franz/tien about parTheta = 1 and how it isn't unform for middleSquare
-(since eta is 0 on the outer ring at some point and hence the mark estiamate
-is still satisfied)
-is this a problem or is it ok? if not, then should i just write 
-if parTheta==1, refineUniformRed(...); end
-WHOA this is even worse for camerman, it still looks really really adaptive,
-is this constant black that crazy?
-
+add coordinates to grayscale plot (since this is a function and for example
+middle square is on a different geometry)
 
 understand PastedGraphic-2.tiff, i.e. how to compute f from u and what
 sgn\partial_r u is supposed to mean
 
 
 redo all of Tiens document.pdf experiments and compare results
-
-write also stuff in tikz like adding all times from lvlOutput for
-all time needed and so on
-
-tikz important stuff, prepare current results report
-
-plot time and nrIteration agains nrDof
 
 also say what's the inital value for any level (zeros level 1, prolongation
 else)
