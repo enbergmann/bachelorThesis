@@ -10,15 +10,15 @@ coord =\
 coordFlag = True
 
 if coord == "yn":
-  x2 = float(input("\nx2 = "))
-  y2 = float(input("y2 = "))
+  x = float(input("\nx = "))
+  y = float(input("y = "))
   xn = float(input("xn = "))
-  resLg = -m*log10(x2/xn) + log10(y2)
+  resLg = -m*log10(x/xn) + log10(y)
 elif coord == "xn":
-  x2 = float(input("\nx2 = "))
-  y2 = float(input("y2 = "))
+  x = float(input("\nx = "))
+  y = float(input("y = "))
   yn = float(input("yn = "))
-  resLg = -log10(y2/yn)/m + log10(x2)
+  resLg = -log10(y/yn)/m + log10(x)
 else:
   coordFlag = False  
   print("\nFlawed input: ", coord, "\n")
