@@ -10,7 +10,6 @@
 % \usepackage{fancyhdr}
 \usepackage{datatool}
 
-\DTLloaddb{f01Adaptive}{tikzPlots/f01/1e-5/adaptive/lvl11/currentData.csv}
 
 \pagestyle{headings}
 
@@ -34,7 +33,7 @@ The continuous problem minimizes
   -\int_\Omega f\,v\dx
 \end{align}
 amongst all $v\in V\coloneqq \BV(\Omega)\cap L^2(\Omega)$ where the \BV 
-seminorm $|v|_{\BV(\Omega)}$ is equals to the $W^{1,1}$ seminorm for any 
+seminorm $|v|_{\BV(\Omega)}$ is equal to the $W^{1,1}$ seminorm for any 
 $v\in W^{1,1}(\Omega)$.
 
 The nonconforming problem minimizes 
@@ -158,46 +157,51 @@ with exact solution
   \begin{figure}[H]
 	  \centering
 		\includegraphics[width=\textwidth]
-      {tikzPlots/f01/1e-5/adaptive/lvl10/solution.png} 
-    \caption{last iterate for $\theta = 1$}
-  \end{figure}
-\end{minipage}
-\begin{minipage}[t]{0.45\textwidth}
-  \begin{figure}[H]
-	  \centering
-		\includegraphics[width=\textwidth]
-      {tikzPlots/f01/1e-5/uniform/lvl6/solution.png} 
+      {tikzPlots/f01/1e-5/adaptive/lvl12/solution.png} 
     \caption{last iterate for $\theta = 0.5$}
   \end{figure}
 \end{minipage}
+\begin{minipage}[t]{0.45\textwidth}
+  \begin{figure}[H]
+	  \centering
+		\includegraphics[width=\textwidth]
+      {tikzPlots/f01/1e-5/trueUniform/lvl7/solution.png} 
+    \caption{last iterate for $\theta = 1$}
+  \end{figure}
+\end{minipage}
 
 \begin{minipage}[t]{0.45\textwidth}
   \begin{figure}[H]
 	  \centering
 		\includegraphics[width=\textwidth]
-      {tikzPlots/f01/1e-5/adaptive/lvl10/solutionAxis.png} 
-    \caption{last iterate along the axes for $\theta = 1$}
-  \end{figure}
-\end{minipage}
-\begin{minipage}[t]{0.45\textwidth}
-  \begin{figure}[H]
-	  \centering
-		\includegraphics[width=\textwidth]
-      {tikzPlots/f01/1e-5/uniform/lvl6/solutionAxis.png} 
+      {tikzPlots/f01/1e-5/adaptive/lvl12/solutionAxis.png} 
     \caption{last iterate along the axes for $\theta = 0.5$}
   \end{figure}
 \end{minipage}
+\begin{minipage}[t]{0.45\textwidth}
+  \begin{figure}[H]
+	  \centering
+		\includegraphics[width=\textwidth]
+      {tikzPlots/f01/1e-5/trueUniform/lvl7/solutionAxis.png} 
+    \caption{last iterate along the axes for $\theta = 1$}
+  \end{figure}
+\end{minipage}
 
-%TODO
+\DTLloaddb{db}{tikzPlots/f01/1e-5/adaptive/lvl11/currentData.csv}
+\DTLassign{db}{1}{\nrNodes=nrNodes, \nrDof=nrDof}
+
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=14cm]{tikzPlots/f01/1e-5/adaptive/lvl11/triangulation.png}
-  \caption{adaptive mesh for $\theta = 0.5$ and nodes}
-  \DTLforeach{f01Adaptive}{\nrNodes=nrNodes}{\nrNodes} nodes
+  \includegraphics[width=14cm]
+  {tikzPlots/f01/1e-5/adaptive/lvl11/triangulation.png}
+  \caption{adaptive mesh for $\theta = 0.5$ with \nrNodes\ nodes and 
+  \nrDof\ degrees of freedom}
 \end{figure}
 
+\DTLgdeletedb{db}
+
 \section{Application to an image}
-For $\alpha = 10000$ and $\beta = 1$ let $f$ represent the grayscale of an 
+For $\alpha = 10000$ let $f$ represent the grayscale of an 
 image in $[0,1]^{256\times 256}$ scaled to the domain $\Omega\in(0,1)^2$ as
 seen in \cref{fig:rhsCameraman}.
 
@@ -212,44 +216,114 @@ seen in \cref{fig:rhsCameraman}.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=14cm]
-  {tikzPlots/imageCameraman/convergence/eps1e-2And1e-6/fig.pdf}
+  {tikzPlots/imageCameraman/convergence.pdf}
   \caption{convergence history plot for $\eta$,
   $\eta_\text{Vol}$, and $\eta_\text{Jumps}$}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=14cm]{tikzPlots/imageCameraman/misc.pdf}
+  \caption{development of the number of iterations and the elapsed time for 
+  each iteration}
 \end{figure}
 
 \begin{minipage}[t]{0.5\textwidth}
   \begin{figure}[H]
 	  \centering
 		\includegraphics[width=\textwidth]
-      {tikzPlots/imageCameraman/approx/1e-2/grayscale.png}
-    \caption{grayscale plot of last iterate for $\varepsilon = 10^{-2}$}
+      {tikzPlots/imageCameraman/1e-5/adaptive/lvl40/solutionGrayscale.png}
+    \caption{grayscale plot of last iterate for $\theta = 0.5$}
   \end{figure}
 \end{minipage}
 \begin{minipage}[t]{0.5\textwidth}
   \begin{figure}[H]
 	  \centering
 		\includegraphics[width=\linewidth]
-      {tikzPlots/imageCameraman/approx/1e-6/grayscale.png}
-    \caption{grayscale plot of last iterate for $\varepsilon = 10^{-6}$}
+      {tikzPlots/imageCameraman/1e-5/uniform/lvl9/solutionGrayscale.png}
+    \caption{grayscale plot of last iterate for $\theta = 1$}
   \end{figure}
 \end{minipage}
+
+\DTLloaddb{db}{tikzPlots/imageCameraman/1e-5/adaptive/lvl26/currentData.csv}
+\DTLassign{db}{1}{\nrNodes=nrNodes, \nrDof=nrDof}
+
+\begin{figure}[H]
+	\centering
+  \includegraphics[width=14cm]
+  {tikzPlots/imageCameraman/1e-5/adaptive/lvl26/triangulation.png}
+  \caption{adaptive mesh for $\theta = 0.5$ with \nrNodes\ nodes and 
+  \nrDof\ degrees of freedom}
+\end{figure}
+
+\DTLgdeletedb{db}
+
+%TODO here and above not only plot the mesh but also the solution on this mesh
+%(maybe with subfigure or maybe with minipages)
+
+\section{Application to a function with discontinuity set}
+For $\alpha = 100$ define 
+\begin{align}
+  \label{equ:defMidSqu}
+  f(x)\coloneqq 
+  \begin{cases}
+    100 &\text{if } \Vert x\Vert_\infty\leq \frac{1}{2},\\
+    0 &\text{else}
+  \end{cases}
+\end{align}
+on $\Omega = (-1,1)^2$.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=14cm]{tikzPlots/middleSquare/rhsGrayscale.png}
+  \caption{grayscale plot of the right-hand side $f$ (view from above onto the
+  $x$-$y$ plane)}
+  \label{fig:rhsMiddleSquare}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=14cm]
+  {tikzPlots/middleSquare/convergence.pdf}
+  \caption{convergence history plot for $\eta$,
+  $\eta_\text{Vol}$, and $\eta_\text{Jumps}$}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=14cm]{tikzPlots/middleSquare/misc.pdf}
+  \caption{development of the number of iterations and the elapsed time for 
+  each iteration}
+\end{figure}
 
 \begin{minipage}[t]{0.5\textwidth}
   \begin{figure}[H]
 	  \centering
 		\includegraphics[width=\textwidth]
-      {tikzPlots/imageCameraman/mesh/1e-2/triangulation.png}
-    \caption{adaptive triangulation for $59996$ degrees of freedom for
-      $\varepsilon = 10^{-2}$}
+      {tikzPlots/middleSquare/1e-5/adaptive/lvl11/solutionGrayscale.png}
+    \caption{grayscale plot of last iterate for $\theta = 0.5$}
   \end{figure}
 \end{minipage}
 \begin{minipage}[t]{0.5\textwidth}
   \begin{figure}[H]
 	  \centering
 		\includegraphics[width=\linewidth]
-      {tikzPlots/imageCameraman/mesh/1e-6/triangulation.png}
-    \caption{adaptive triangulation for $59999$ degrees of freedom for
-      $\varepsilon = 10^{-6}$}
+      {tikzPlots/middleSquare/1e-5/uniform/lvl7/solutionGrayscale.png}
+    \caption{grayscale plot of last iterate for $\theta = 1$}
   \end{figure}
 \end{minipage}
+
+\DTLloaddb{db}{tikzPlots/middleSquare/1e-5/adaptive/lvl11/currentData.csv}
+\DTLassign{db}{1}{\nrNodes=nrNodes, \nrDof=nrDof}
+
+\begin{figure}[H]
+	\centering
+  \includegraphics[width=14cm]
+  {tikzPlots/middleSquare/1e-5/adaptive/lvl11/triangulation.png}
+  \caption{adaptive mesh for $\theta = 0.5$ with \nrNodes\ nodes and 
+  \nrDof\ degrees of freedom}
+\end{figure}
+
+\DTLgdeletedb{db}
+
 \end{document}

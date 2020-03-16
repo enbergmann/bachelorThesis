@@ -34,7 +34,7 @@
     ymajorgrids=true,
     legend entries = {$\theta = 0.5$,
                      $\theta = 1$,
-                     time,
+                     time in seconds,
                      number of iterations}]
     \addlegendimage{solid, mark=*}
     \addlegendimage{densely dashed, mark=square*}
@@ -43,19 +43,19 @@
 
     \addplot [solid, cyan, mark = *] 
     table[x = {nrDof}, y = {time}] 
-    {1e-5/adaptive/lvl11/lvlOutput.csv}; 
+    {1e-5/adaptive/lvl12/lvlOutput.csv}; 
 
     \addplot [solid, green, mark = *] 
     table[x = {nrDof}, y = {nrIterations}] 
-    {1e-5/adaptive/lvl11/lvlOutput.csv}; 
+    {1e-5/adaptive/lvl12/lvlOutput.csv}; 
 
     \addplot [densely dashed, cyan, mark = square*] 
     table[x = {nrDof}, y = {time}] 
-    {1e-5/uniform/lvl7/lvlOutput.csv}; 
+    {1e-5/trueUniform/lvl7/lvlOutput.csv}; 
 
     \addplot [densely dashed, green, mark = square*] 
     table[x = {nrDof}, y = {nrIterations}] 
-    {1e-5/uniform/lvl7/lvlOutput.csv}; 
+    {1e-5/trueUniform/lvl7/lvlOutput.csv}; 
   \end{loglogaxis}
 \end{tikzpicture}
 \end{document}

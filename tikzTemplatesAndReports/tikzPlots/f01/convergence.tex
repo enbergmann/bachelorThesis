@@ -49,53 +49,74 @@
     \addlegendimage{no markers, orange}
     \addlegendimage{no markers, gray}
 
-    % adaptive
+    % adaptive 0.5
     \addplot [solid, cyan, mark = *] 
     table[x = {nrDof}, y = {error4lvl}] 
-    {1e-5/adaptive/lvl11/lvlOutput.csv}; 
+    {1e-5/adaptive/lvl12/lvlOutput.csv}; 
 
     \addplot [solid, green, mark = *] 
     table[x = {nrDof}, y = {eta}] 
-    {1e-5/adaptive/lvl11/lvlOutput.csv}; 
+    {1e-5/adaptive/lvl12/lvlOutput.csv}; 
 
     \addplot [solid, red, mark = *] 
     table[x = {nrDof}, y = {etaVol}] 
-    {1e-5/adaptive/lvl11/lvlOutput.csv}; 
+    {1e-5/adaptive/lvl12/lvlOutput.csv}; 
 
     \addplot [solid, orange, mark = *] 
     table[x = {nrDof}, y = {etaJumps}] 
-    {1e-5/adaptive/lvl11/lvlOutput.csv}; 
+    {1e-5/adaptive/lvl12/lvlOutput.csv}; 
 
     \addplot [solid, gray, mark = *] 
     table[x = {nrDof}, y = {diffGlebExactE}] 
-    {1e-5/adaptive/lvl11/lvlOutput.csv}; 
+    {1e-5/adaptive/lvl12/lvlOutput.csv}; 
 
     % uniform
     \addplot [densely dashed, cyan, mark = square*] 
     table[x = {nrDof}, y = {error4lvl}] 
-    {1e-5/uniform/lvl7/lvlOutput.csv}; 
+    {1e-5/trueUniform/lvl7/lvlOutput.csv}; 
 
     \addplot [densely dashed, green, mark = square*] 
     table[x = {nrDof}, y = {eta}] 
-    {1e-5/uniform/lvl7/lvlOutput.csv}; 
+    {1e-5/trueUniform/lvl7/lvlOutput.csv}; 
 
     \addplot [densely dashed, red, mark = square*] 
     table[x = {nrDof}, y = {etaVol}] 
-    {1e-5/uniform/lvl7/lvlOutput.csv}; 
+    {1e-5/trueUniform/lvl7/lvlOutput.csv}; 
 
     \addplot [densely dashed, orange, mark = square*] 
     table[x = {nrDof}, y = {etaJumps}] 
-    {1e-5/uniform/lvl7/lvlOutput.csv}; 
+    {1e-5/trueUniform/lvl7/lvlOutput.csv}; 
 
     \addplot [densely dashed, gray, mark = square*] 
     table[x = {nrDof}, y = {diffGlebExactE}] 
-    {1e-5/uniform/lvl7/lvlOutput.csv}; 
+    {1e-5/trueUniform/lvl7/lvlOutput.csv}; 
+    
+    % % adaptive 0.999
+    % \addplot [densely dotted, cyan, mark = square*] 
+    % table[x = {nrDof}, y = {error4lvl}] 
+    % {1e-5/uniform/lvl7/lvlOutput.csv}; 
+
+    % \addplot [densely dotted, green, mark = square*] 
+    % table[x = {nrDof}, y = {eta}] 
+    % {1e-5/uniform/lvl7/lvlOutput.csv}; 
+
+    % \addplot [densely dotted, red, mark = square*] 
+    % table[x = {nrDof}, y = {etaVol}] 
+    % {1e-5/uniform/lvl7/lvlOutput.csv}; 
+
+    % \addplot [densely dotted, orange, mark = square*] 
+    % table[x = {nrDof}, y = {etaJumps}] 
+    % {1e-5/uniform/lvl7/lvlOutput.csv}; 
+
+    % \addplot [densely dotted, gray, mark = square*] 
+    % table[x = {nrDof}, y = {diffGlebExactE}] 
+    % {1e-5/uniform/lvl7/lvlOutput.csv}; 
 
     % gleb
     add slope triangle
-    \draw (axis cs:1e1,5e2)
-                 --(axis cs:1e6,5e2) node [midway, below] {\scriptsize$5$} 	
-                 -- (axis cs:1e1,5e3) 
+    \draw (axis cs:2e3,6e2)
+                 --(axis cs:2e5,6e2) node [midway, below] {\scriptsize$5$} 	
+                 -- (axis cs:2e3,1.51e3) 
                  -- cycle node [midway, left] {\scriptsize$1$}
                  ;
     % eta
