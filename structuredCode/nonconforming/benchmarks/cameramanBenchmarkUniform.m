@@ -22,7 +22,7 @@ function params = editable %#ok<*MSNU>
     % showProgress.
   degree4Integrate       = 10; 
     % algebraic degree of exactness for integrate from the AFEM package
-  plotGivenFunctions     = true;
+  plotGivenFunctions     = false;
     % Plot given right-hand side and, if given, exact solution?
   refinementLevel4Plots  = 9; % 11 is very close to the limit
   debugIfError           = true;
@@ -49,7 +49,7 @@ function params = editable %#ok<*MSNU>
     %   'interpolationRhs': CR interpolation of given rhs to the mesh on the
     %     level
                                                   
-  epsStop                = 1e-5; % TODO sth about updating it depending on
+  epsStop                = 1e-4; % TODO sth about updating it depending on
                                  %      mesh size
   stopCrit               = ["Exact Error Difference", ...
                             "weighted energy difference"];
@@ -100,7 +100,7 @@ function params = editable %#ok<*MSNU>
                               % 0 means no screenshots will be saved
 
   % Information about experiment for saving and documentation.
-  expName                = 'camermanBenchmark';
+  expName                = '1e-4camermanBenchmark';
   dirInfoName            = 'uniform';
 
   % function handles (can be ignored if useImage)

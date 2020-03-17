@@ -34,7 +34,7 @@ function params = editable %#ok<*MSNU>
   parTheta               = 0.5
     % bulk param. (1 for uniform)
   initialRefinementLevel = 0;
-  minNrDof               = 1e4;
+  minNrDof               = 1e3;
   useProlongation        = true;
   beta4Estimate          = 1;
   n4Estimate             = 2;
@@ -49,7 +49,7 @@ function params = editable %#ok<*MSNU>
     %   'interpolationRhs': CR interpolation of given rhs to the mesh on the
     %     level
                                                   
-  epsStop                = 1e-2; % TODO sth about updating it depending on
+  epsStop                = 1e-4; % TODO sth about updating it depending on
                                  %      mesh size
   stopCrit               = ["Exact Error Difference", ...
                             "weighted energy difference"];
