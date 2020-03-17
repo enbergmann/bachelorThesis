@@ -16,8 +16,7 @@ function plotGrayscale(c4n, n4e, x, OPTtitle)
   X = [X1'; X2'; X3'];
   Y = [Y1'; Y2'; Y3'];
   
-  axis off;
-  axis equal;
+  axis image;
   colormap gray;
   patch(X, Y, x', 'EdgeColor', 'none');
   drawnow;

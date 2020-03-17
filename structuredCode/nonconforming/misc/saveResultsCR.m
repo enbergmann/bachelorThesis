@@ -139,8 +139,7 @@ function saveResultsCR(params, currData, ...
       rhsGrayscaleFig = figure('visible', figVisible); 
       trisurf(n4eRhs, c4nRhs(:, 1), c4nRhs(:, 2),  fVal, 'EdgeColor', 'None');
       view(0, 90);
-      axis off;
-      axis equal;
+      axis image;
       colormap gray;
       fName = sprintf('../../results/nonconforming/%s/%s/rhsGrayscale.png', ...
         expName, dirInfoName);
@@ -171,8 +170,7 @@ function saveResultsCR(params, currData, ...
         trisurf(n4eRhs, c4nRhs(:, 1), c4nRhs(:, 2), uExactVal, ...
           'EdgeColor', 'None');
         view(0, 90);
-        axis off;
-        axis equal;
+        axis image;
         colormap gray;
         fName = sprintf(...
           '../../results/nonconforming/%s/%s/exactSolutionGrayscale.png', ...
