@@ -1,17 +1,7 @@
 CURRENT TODOS
 
-add coordinates to grayscale plot (since this is a function and for example
-middle square is on a different geometry)
-
 understand PastedGraphic-2.tiff, i.e. how to compute f from u and what
 sgn\partial_r u is supposed to mean
-
-
-redo all of Tiens document.pdf experiments and compare results
-
-also say what's the inital value for any level (zeros level 1, prolongation
-else)
-
 
 rewrite the killed loops to be more readable and maybe easier to understand
 
