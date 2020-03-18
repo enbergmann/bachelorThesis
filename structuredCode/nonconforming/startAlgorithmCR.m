@@ -1,9 +1,6 @@
 % NOTE remember MATLAB is copyOnWrite, so try not to change structs in
 % functions to avoid the struct being copied 
 
-% TODO might be necessary to use 'clear'
-% to delete data later (e.g. after saving c4n in current)
-
 % NOTE for all non-AFEM functions compute all necessary data (in particular
 % that is dependent on geometry) before and pass it to the functions i.e.
 % mentality is efficiency >> memory usage
