@@ -6,18 +6,22 @@ function [stiMaCR, maMaCR] = computeFeMatricesCR(currData)
 % input:  currData - 'struct' with fields:
 %                        nrElems: number of elements
 %                         area4e: areas for elements
-%                      gradsCR4e: gradients of CR basis functions of elements
+%                      gradsCR4e: '(3 x 2 x nrElems)-dimensional double
+%                                 array' where the j-th row of the k-th matrix
+%                                 contains the gradient of the CR-basis
+%                                 function w.r.t. to j-th edge of the k-th
+%                                 element
 %                            s4e: sides for elements
 %
-% output: stiMaCR  - '(nrSides x nrSides)-dimensional sparse double array' where 
-%                    the k-th entry in the j-th row is the L2-scalar product of
-%                    the piecewise gradient of the CR-basis function wrt.  k-th
-%                    edge with the piecewise gradient of the CR-basis function
-%                    wrt. j-th edge
-%         maMaCR   - '(nrSides x nrSides)-dimensional sparse double array' where 
-%                    the k-th entry in the j-th row is the L2-scalar product
-%                    of the CR-basis function wrt. k-th edge with the CR-basis
-%                    function wrt. j-th edge
+% output: stiMaCR  - '(nrSides x nrSides)-dimensional sparse double array'
+%                    where the k-th entry in the j-th row is the L2-scalar
+%                    product of the piecewise gradient of the CR-basis function
+%                    w.r.t. k-th edge with the piecewise gradient of the
+%                    CR-basis function w.r.t. j-th edge
+%         maMaCR   - '(nrSides x nrSides)-dimensional sparse double array'
+%                    where the k-th entry in the j-th row is the L2-scalar
+%                    product of the CR-basis function w.r.t. k-th edge with the
+%                    CR-basis function w.r.t. j-th edge
   
   % extract necessary data
   nrElems = currData.nrElems;
@@ -32,7 +36,8 @@ function [stiMaCR, maMaCR] = computeFeMatricesCR(currData)
     stiMaCRlocal(:, :, elem) = ...
       area4e(elem)*(gradsCR4e(:, :, elem)*gradsCR4e(:, :, elem)'); 
       % local stiffness matrix
-    maMaCRlocal(:, :, elem) = area4e(elem)*eye(3)/3; % local mass matrix
+    maMaCRlocal(:, :, elem) = area4e(elem)*eye(3)/3; 
+      % local mass matrix
   end
   
   % assembly of the global stiffness matrix and global mass matrix

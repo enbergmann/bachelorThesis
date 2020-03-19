@@ -3,7 +3,7 @@ function dof = computeDofCR(currData)
 % by [n4e, n4sDb, n4sNb].
 %
 % computeDofCR.m
-% input:  currData - struct with fields:
+% input:  currData - 'struct' with fields:
 %                        n4sDb: nodes for Dirichlet boundary sides
 %                          s4n: sides for nodes
 %                      nrSides: number of sides

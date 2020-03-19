@@ -1,6 +1,0 @@
-function nodeValues4e = computeNodeValues4e(s4e,u)
-  u = reshape(u,[length(u),1]);
-  nodeValues4e = [u(s4e(:,3))+u(s4e(:,1))-u(s4e(:,2)),...
-                  u(s4e(:,1))+u(s4e(:,2))-u(s4e(:,3)),...
-                  u(s4e(:,2))+u(s4e(:,3))-u(s4e(:,1))]; 
-end

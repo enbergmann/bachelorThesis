@@ -6,26 +6,31 @@ function [int1RHS4e, int2RHS4e, int3RHS4e, intRHS4s] = ...
 % [c4n, n4e].
 % 
 % integralsWithF4e.m
+% input:  params     - 'struct' with fields:
+%                                       f: 'function_handle' of the function f
+%                                          in the integrals
+%                        degree4Integrate: 'uint64' up to which the integration
+%                                          in integrate must be exact
 % input:  currData   - 'struct' with fields:
-%                           c4n: coordinates for nodes
-%                           n4e: nodes for elements
-%                        area4e: area for elements
-%         degree     - 'uint64' up to which the integration in integrate must 
-%                      be exact
-%         f          - 'function_handle' of the function f in the integral
+%                            c4n: coordinates for nodes
+%                            n4e: nodes for elements
+%                            s4e: sides for elements
+%                         area4e: areas for elements
+%                        nrSides: number of sides
+%                        nrElems: number of elements
 %
 % output: int1RHS4e  - '(nrElems x 1)-dimensional double array' where 
 %                      the j-th entry is the integral over the j-th element of
 %                      f times the first local CR-basis function, i.e. the
-%                      CR-basis function wrt. the first local edge of the j-th
+%                      CR-basis function w.r.t. the first local edge of the j-th
 %                      triangle
 %         int2RHS4e  - as int1RHS4e for the second local CR-basis function
 %         int3RHS4e  - as int1RHS4e for the third local CR-basis function
 %         intRHS4s   - '(nrSides x 1)-dimensional double array' where 
 %                      the j-th entry is the integral of f times the CR-basis
-%                      function wrt. j-th edge
+%                      function w.r.t. j-th edge
 
-  % extract necessary dCR-basis function wrt. the first local edge of the j-thata
+  % extract necessary data
   f = params.f;
   degree4Integrate = params.degree4Integrate;
   

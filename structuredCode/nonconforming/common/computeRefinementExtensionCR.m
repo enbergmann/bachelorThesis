@@ -8,15 +8,14 @@ function uNew = computeRefinementExtensionCR(c4n, n4e, c4nNew, n4eNew, u)
 %         n4e    - nodes for elements
 %         c4nNew - coordinates for nodes for the one-level refinement
 %         n4eNew - nodes for elements for the one-level refinement
-%         u      - '(number of sides of the coarse mesh x 1)-dimensional 
-%                   double array' where the j-th row contains the coefficient 
-%                   of the CR solution wrt. the j-th side of the coarse
-%                   triangulation
+%         u      - '(nrSides of the coarse mesh x 1)-dimensional double array'
+%                  where the j-th row contains the coefficient of the CR
+%                  solution w.r.t. the j-th side of the coarse triangulation
 %
-% output: uNew   - '(number of sides of the refined mesh x 1)-dimensional 
-%                   double array' where the j-th row contains the coefficient 
-%                   of the CR prolongation of u wrt. the j-th side of the new
-%                   triangulation
+% output: uNew   - '(nrSides of the refined mesh x 1)-dimensional double array'
+%                  where the j-th row contains the coefficient of the CR
+%                  prolongation of u wrt. the j-th side of the new
+%                  triangulation
 
 %% INITIALIZATION
   n4sNew = computeN4s(n4eNew);
@@ -35,6 +34,7 @@ function uNew = computeRefinementExtensionCR(c4n, n4e, c4nNew, n4eNew, u)
 
 %% COMPUTE REFINEMENT EXTENSION
   uNew = zeros(nrSidesNew, 1);
+  %TODO this following line is already the output of computeNodeValuesCR4e
   val = [u(s4e(:, 1)) - u(s4e(:, 2)) + u(s4e(:, 3)), ... % 1st local nodes
             u(s4e(:, 1)) + u(s4e(:, 2)) - u(s4e(:, 3)), ... % 2nd local nodes
             - u(s4e(:, 1)) + u(s4e(:, 2)) + u(s4e(:, 3))]'; % 3rd local nodes

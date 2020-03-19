@@ -27,7 +27,7 @@ function startAlgorithmCR(benchmark)
   % get parameters from the given benchmark file
   params = feval(benchmark);
   params.benchmark = benchmark;
-  if params.debugIfError; dbstop if error, end;
+  if params.debugIfError, dbstop if error; end
 
   % extract necessary parameters from params
   c4n = params.c4n;
@@ -87,7 +87,7 @@ function startAlgorithmCR(benchmark)
 
   switch u0Mode
     case 'zeros', u0 = zeros(nrSides, 1);
-    case 'interpolationRhs', u0 = interpolationCR(currData, f); 
+    case 'interpolationRhs', u0 = interpolationCR(params, currData, f); 
   end
 
   % TODO here sth must be done when there are different possibilities for
@@ -241,7 +241,7 @@ function startAlgorithmCR(benchmark)
     if ~useProlongation 
       switch u0Mode
         case 'zeros', u0 = zeros(nrSides, 1);
-        case 'interpolationRhs', u0 = interpolationCR(currData, f); 
+        case 'interpolationRhs', u0 = interpolationCR(params, currData, f); 
       end
     end
 

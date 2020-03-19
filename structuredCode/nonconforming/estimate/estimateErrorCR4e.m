@@ -17,7 +17,7 @@ function [eta4e, etaVol4e, etaJumps4e] = ...
   % TODO prob rewrite some of this stuff, at least documentation, not 
   % necessarily use currData, let them be like AFEM functions1
   
-  nodeValues4e = computeNodeValues4e(s4e, u); % nodeValues4e(j) = (u(P1),u(P2),u(P3)) 
+  nodeValues4e = computeNodeValuesCR4e(s4e, u); % nodeValues4e(j) = (u(P1),u(P2),u(P3)) 
                                               %  wrt. T_j
   absNodeJumps4s = computeAbsNodeJumps4s(n4e, e4s, nodeValues4e);
 

@@ -5,16 +5,18 @@ function gradCRv = gradientCR(currData, v)
 %
 % gradientCR.m
 % input:  currData - 'struct' with fields:
-%                         nrElems: number of elements
-%                             s4e: sides for elements
-%                       gradsCR4e: gradients of side based Crouzeix-Raviart
-%                                  basis functions for all elements
+%                        nrElems: number of elements
+%                            s4e: sides for elements
+%                      gradsCR4e: '(3 x 2 x nrElems)-dimensional double array'
+%                                 where the j-th row of the k-th matrix
+%                                 contains the gradient of the CR-basis
+%                                 function w.r.t. to j-th edge of the k-th
+%                                 element
 %         v        - 'function_handle' of the function whose piecewise gradient
 %                    is to be computed
 %
-% output: gradCRv  - '(number of elements x 2)-dimensional double array' where 
-%                     the j-th row contains the gradient of v on the j-th
-%                     triangle 
+% output: gradCRv  - '(nrElems x 2)-dimensional double array' where the j-th
+%                    row contains the gradient of v on the j-th triangle 
 
   % extract necessary data
   nrElems = currData.nrElems;

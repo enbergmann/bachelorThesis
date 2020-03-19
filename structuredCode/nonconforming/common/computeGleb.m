@@ -1,18 +1,16 @@
-function gleb = computeGleb(params, currData, ...
-  output)
+function gleb = computeGleb(params, currData, output)
 % TODO PastedGraphic-1.tiff 
 % implement
 % E_{NC}(u_{CR}) - \kappa_{CR}/\alpha ||h_\mathcal{T}(f-\alpha u_{CR})|| |f|_{1,2}
 % where \kappa_{CR} is the constant from I_{NC} operator (GNUMO S 102, 
 % \sqrt{1/48+1/j_{1,1}^2}\leq 0.298217419)
-% TODO use gradient for f only when exact energy is known, hence make it 
-% dependent on this to and then gradF is in params
 % TODO calculare termGradFSquared for an easy example and compare it with 
 % the result of integrate (does this even make sense what the integrate
 % produces)
 
   gradF = params.gradF;
   parAlpha = params.parAlpha;
+  degree4Integrate = params.degree4Integrate;
   
   c4n = currData.c4n;
   n4e = currData.n4e;
@@ -27,7 +25,7 @@ function gleb = computeGleb(params, currData, ...
   
   termGradFSquared = sum(sum(...
     integrate(@(n4p, Gpts4p, Gpts4ref)(gradF(Gpts4p).^2), ...
-    c4n, n4e, 20, area4e)));
+    c4n, n4e, degree4Integrate, area4e)));
     % termGradFSquared = ||\nabla f||^2_{L^2(\Omega)}
 
   integrals4e = max(...
