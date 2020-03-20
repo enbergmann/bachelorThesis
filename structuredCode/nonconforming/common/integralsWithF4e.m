@@ -1,6 +1,5 @@
 function [int1RHS4e, int2RHS4e, int3RHS4e, intRHS4s] = ...
     integralsWithF4e(params, currData)
-  %TODO update interface documentation
 % Computes the integrals of a function f times a Crouzeix-Raviart-basis
 % function, both global and local, with respect to the triangulation given by
 % [c4n, n4e].
