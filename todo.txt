@@ -1,9 +1,12 @@
 CURRENT TODOS
 
+for now only gleb changed so only experiments with f01 would need to be redone
+  (everything else is usable)
+
 profile a long run to find weak code
 
-computeGleb (check if integrate produces useful results for 2D funcitons)
 computeNormOfDifference4e
+  computeGleb after normOfDifference4e is documented  
 computeRefinementExtensino (see TODO in file)
 computeDiscreteEnergyCR (compare to Tien)
 computeP1prolongation ever used?
