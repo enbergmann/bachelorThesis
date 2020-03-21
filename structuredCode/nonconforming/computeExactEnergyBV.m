@@ -1,46 +1,46 @@
 function computeExactEnergyBV(geometry, fStr, fStrParams, uStr, uStrParams, ...
     gradUStr, gradUStrParams, parAlpha, ...,
     minNrDof, minPrecision, degree4Integrate)
+%% DOC
 % Computes and saves an approximation (at least up to precision minPrecision
 % and minNrDof dofs) of the exact BV energy of a function u, whose pointwise
 % gradient is known, for a right-hand side f on a mesh given by geometry.
 %
 % computeExactEnergyBV.m
-% input:  geometry         - 'char array with exactly one row' containing the 
-%                            name of the geometry the user wants to approximate
-%                            the exact energy on
-%         fStr             - 'string'/'char array with exactly one row' 
-%                            containing the name of the right-hand side f
-%         fStrParams       - 'double array with exactly one row' containing the 
-%                            necessary parameters to produce a function handle
-%                            of f (0x0 is possible if f needs no further
-%                            parameters)
-%         uStr             - 'string'/'char array with exactly one row' 
-%                            containing the name of the function u whose exact
-%                            BV energy is to be approximated 
-%         uStrParams       - 'double array with exactly one row' containing the 
-%                            necessary parameters to produce a function handle
-%                            of u (0x0 is possible if u needs no further
-%                            parameters)
-%         gradUStr         - 'string'/'char array with exactly one row' 
-%                            containing the name of the gradient of the
-%                            function u whose exact BV energy is to be
-%                            approximated
-%         gradUStrParams   - 'double array with exactly one row' containing the 
-%                            necessary parameters to produce a function handle 
-%                            of the gradient of u (0x0 is possible if the 
-%                            gradient of u needs no further parameters)
-%         parAlpha         - 'double' parameter alpha necessary for the 
-%                            computation of the energy
-%         minNrDof         - 'uint64' minimal number of dofs of the finest, red 
-%                            refined, mesh on which the energy is approximated
-%         minPrecision     - 'uint64' minimal number of significant digits the 
-%                            approximation of the energy should possess
-%         degree4Integrate - 'uint64' up to which the integration in integrate
-%                            must be exact
-%
-% output: -
+% input: geometry         - 'char array with exactly one row' containing the 
+%                           name of the geometry the user wants to approximate
+%                           the exact energy on
+%        fStr             - 'string'/'char array with exactly one row' 
+%                           containing the name of the right-hand side f
+%        fStrParams       - 'double array with exactly one row' containing the 
+%                           necessary parameters to produce a function handle
+%                           of f (0x0 is possible if f needs no further
+%                           parameters)
+%        uStr             - 'string'/'char array with exactly one row' 
+%                           containing the name of the function u whose exact
+%                           BV energy is to be approximated 
+%        uStrParams       - 'double array with exactly one row' containing the 
+%                           necessary parameters to produce a function handle
+%                           of u (0x0 is possible if u needs no further
+%                           parameters)
+%        gradUStr         - 'string'/'char array with exactly one row' 
+%                           containing the name of the gradient of the
+%                           function u whose exact BV energy is to be
+%                           approximated
+%        gradUStrParams   - 'double array with exactly one row' containing the 
+%                           necessary parameters to produce a function handle 
+%                           of the gradient of u (0x0 is possible if the 
+%                           gradient of u needs no further parameters)
+%        parAlpha         - 'double' parameter alpha necessary for the 
+%                           computation of the energy
+%        minNrDof         - 'uint64' minimal number of dofs of the finest, red 
+%                           refined, mesh on which the energy is approximated
+%        minPrecision     - 'uint64' minimal number of significant digits the 
+%                           approximation of the energy should possess
+%        degree4Integrate - 'uint64' up to which the integration in integrate
+%                           must be exact
 
+%% INIT
   addpath(genpath(pwd), genpath('../utils/'));
 
   if nargin < 11
@@ -82,6 +82,7 @@ function computeExactEnergyBV(geometry, fStr, fStrParams, uStr, uStrParams, ...
   energy = [];
   significantDigits = 0;
   
+%% MAIN
   while true
     % compute geometry
     [c4n, n4e, n4sDb, n4sNb] = refineUniformRed(c4n, n4e, n4sDb, n4sNb);
@@ -94,6 +95,7 @@ function computeExactEnergyBV(geometry, fStr, fStrParams, uStr, uStrParams, ...
     area4e  = computeArea4e(c4n, n4e);
     
     % compute nrDof
+    % TODO dof is pretty useless, right? nrNodes might be sufficient
     s4e = computeS4e(n4e);
     n4s = computeN4s(n4e);
     tempStruct.n4sDb = n4sDb;
@@ -121,8 +123,8 @@ function computeExactEnergyBV(geometry, fStr, fStrParams, uStr, uStrParams, ...
           break
         end
       end
-      % in MATLAB j is known even after the loop ends
       significantDigits(end+1,1) = j-1;%#ok<AGROW>
+        % in MATLAB j is known even after the loop ends
     end
     output.significantDigits = significantDigits;
 
@@ -145,7 +147,9 @@ function computeExactEnergyBV(geometry, fStr, fStrParams, uStr, uStrParams, ...
       break
     end
   end
+end
 
+%% POSTPONED
   % TODO maybe delete all but the best file with the name
   %  sprintf('%s/minPrecision_%d_nrDof_%d.txt', ...
   %    dirName, significantDigits(end), nrDof(end));
