@@ -1,30 +1,25 @@
-% NOTE remember MATLAB is copyOnWrite, so try not to change structs in
-% functions to avoid the struct being copied 
-
-% NOTE for all non-AFEM functions compute all necessary data (in particular
-% that is dependent on geometry) before and pass it to the functions i.e.
-% mentality is efficiency >> memory usage
-
 function startAlgorithmCR(benchmark)
+%% DOC
 % Loads a benchmark and starts the corresponding experiment with the
 % nonconforming algorithm.
 %
 % startAlgorithmCR.m
-% input:  benchmark - 'string'/'char array with exactly one row' containing the 
-%                     name of the benchmark the user wants to use (optional
-%                     parameter, default value is 'editable').
+% input: benchmark - 'string'/'char array with exactly one row' containing the 
+%                    name of the benchmark the user wants to use (optional
+%                    parameter, default value is 'editable').
 
-%% INITIALIZATION
-  % change to the directory nonconforming where startAlgorithmCR.m should have
-  % been called from such that all relative filepaths used during runtime are
-  % correct
+%% INIT
+  % initialize paths and load benchmark
   cd(fileparts(which('startAlgorithmCR')));
-  addpath(genpath(pwd), genpath('../utils/'), ...
+    % change to the directory 'nonconforming' where startAlgorithmCR.m should
+    % have been called from for correctness of relative filepaths during
+    % runtime
+  addpath(genpath(pwd), ...
+    genpath('../utils/'), ...
     genpath('../conforming/plot/'));
 
   if nargin<1, benchmark = 'editable'; end
 
-  % get parameters from the given benchmark file
   params = feval(benchmark);
   params.benchmark = benchmark;
   if params.debugIfError, dbstop if error; end
@@ -45,8 +40,7 @@ function startAlgorithmCR(benchmark)
   exactEnergy = params.exactEnergy;
   u0Mode = params.u0Mode;
   
-  % initialize remaining parameters and struct with information dependend
-  % solely on the current geometry
+  % initialize outputLvl structs (structs for AFEM output)
   lvl = 0;
 
   outputLvlInfo.lvl = lvl;
@@ -58,8 +52,6 @@ function startAlgorithmCR(benchmark)
 
   outputLvlError.lvl = lvl;
   if exactSolutionKnown, outputLvlError.error4lvl = []; end 
-    % TODO might call this errorL2 and sth else errorAlt if there is 
-    % alternative errors at some point
   outputLvlError.eta = [];
   outputLvlError.etaVol = [];
   outputLvlError.etaJumps = [];
@@ -70,7 +62,8 @@ function startAlgorithmCR(benchmark)
     outputLvlEnergy.gleb = []; 
     outputLvlEnergy.diffGlebExactE = [];
   end
-
+  
+  % initialize currData (struct with parameters and data for the level)
   currData.c4n = c4n;
   currData.n4e = n4e;
   currData.n4sDb = n4sDb;
@@ -94,8 +87,9 @@ function startAlgorithmCR(benchmark)
   % epsStop
   currData.epsStop = params.epsStop;
 
-%% MAIN AFEM LOOP
+%% MAIN
   while(true)
+    % initialize remaining current data
     currData.hMax = max(length4s);
     currData.area4e = computeArea4e(c4n, n4e);
 
@@ -139,7 +133,7 @@ function startAlgorithmCR(benchmark)
     %
     % RIGHT NOW its just the initial epsStop as termination crit.!!!!
 
-    % SOLVE
+    % SOLVE (and save output information about the iteration)
     tic;
     % TODO not done yet (subfunctions, documentation)
     [u, output.corrVec, energyVec] = ...
@@ -161,11 +155,11 @@ function startAlgorithmCR(benchmark)
     end
 
     % ESTIMATE
-
     %TODO still need to comment and some other stuff
     [eta4e, etaVol4e, etaJumps4e] = ...
       estimateErrorCR4e(params, currData, output);
-
+    
+    % compute error
     % TODO implement flag for different errors
     if exactSolutionKnown
       outputLvlError.error4lvl(end+1, 1) = ...
@@ -176,20 +170,17 @@ function startAlgorithmCR(benchmark)
     outputLvlError.etaVol(end+1, 1) = sum(etaVol4e);
     outputLvlError.etaJumps(end+1, 1) = sum(etaJumps4e);
 
+    % display information about the level
     clc;
     disp(struct2table(outputLvlInfo));
     disp(struct2table(outputLvlError));
     disp(struct2table(outputLvlEnergy));
 
-    % TODO maybe allow only a fixed amounts of different errors, like only two,
-    %      so one can choose L2 and H1 for example
-    %      so sth like error4lvl, errorAlt4lvl
-    % TODO probably always have the error for which the estimator is an 
-    %      upper bound
+    % save results
     saveResultsCR(params, currData, ...
       outputLvlInfo, outputLvlError, outputLvlEnergy, output);
 
-    % check termination
+    % check termination and update level
     if nrDof(end) >= minNrDof, break; end
 
     lvl(end+1, 1) = lvl(end) + 1; %#ok<AGROW>
@@ -198,35 +189,36 @@ function startAlgorithmCR(benchmark)
     outputLvlEnergy.lvl = lvl;
 
     % MARK
-    
     if parTheta==1, n4sMarked = markUniform(n4e); 
     else, n4sMarked = markBulk(n4e, eta4e, parTheta); end
 
-    % REFINE
+    % REFINE (and prolongate solution to new mesh if needed)
     c4nOld = c4n;
     n4eOld = n4e;
 
     [c4n, n4e, n4sDb, n4sNb] = refineRGB(c4n, n4e, n4sDb, n4sNb, n4sMarked);
-    % compute inital value for the iteration on the next level if
-    % useProlongation (needs to be done before projection of the nodes on the
-    % edges if polygonMesh, else getParentSide will not work)
+
     if useProlongation
-      % TODO comment and interface documentation
+      % compute inital value for the iteration on the next level if
+      % useProlongation (needs to be done before projection of the nodes on the
+      % edges if polygonMesh, else getParentSide will not work)
       u0 = computeRefinementExtensionCR(c4nOld, n4eOld, c4n, n4e, u);
     end
 
     if polygonMesh
+      % project boundary nodes of the refined mesh outward onto the unit circle
+      % if polygonMesh
       temp = unique(n4sDb);
       c4n(temp, :) = ...
         c4n(temp, :)./repmat(sqrt(c4n(temp, 1).^2 + c4n(temp, 2).^2), 1, 2);
     end
     
+    % update first information in currData
     currData.c4n = c4n;
     currData.n4e = n4e;
     currData.n4sDb = n4sDb;
     currData.n4sNb = n4sNb;
 
-    % update some geometry dependent data in currData
     n4s = computeN4s(n4e);
     currData.n4s = n4s;
 
@@ -236,9 +228,9 @@ function startAlgorithmCR(benchmark)
     length4s = computeLength4s(c4n, n4s);
     currData.length4s = length4s;
 
-    % compute inital value for the iteration on the next level if not
-    % useProlongation
     if ~useProlongation 
+      % compute inital value for the iteration on the next level if not
+      % useProlongation
       switch u0Mode
         case 'zeros', u0 = zeros(nrSides, 1);
         case 'interpolationRhs', u0 = interpolationCR(params, currData, f); 
