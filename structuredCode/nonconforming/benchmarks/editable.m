@@ -82,17 +82,6 @@ function params = editable %#ok<*MSNU>
   % TODO how should the exactEnergy be written into here
   exactEnergy            = -2.05805109; %#ok<NASGU>
     % four significant digits
-  errorNorm              = ["L2", "energy"]; % TODO list options (likewise for
-                                             % some other params (think))
-                                              %strArr
-                                            %maybe altErrorNorm and always
-                                            %compute L2 error because it's 
-                                            %useful for the estimator (or
-                                            %always L2 and H1 error, if 
-                                            %useful, but they probably only 
-                                            %differ bei some constant hence
-                                            %one of those is sufficient (check
-                                            %this))
                               % TODO 
   saveScreenshots        = 0; % save screenshots every saveScreenshots
                               % iterations during algorithm, e.g. for the case
@@ -103,6 +92,19 @@ function params = editable %#ok<*MSNU>
   expName                = 'commentCommon';
   dirInfoName            = sprintf('%s', ...
     datestr(now, 'yy_mm_dd_HH_MM_SS'));
+  errorNorm              = ["L2", "energy"]; 
+    %TODO list options (likewise for some other params (think)) strArr maybe
+    %altErrorNorm and always compute L2 error because it's useful for the
+    %estimator (or always L2 and H1 error, if useful, but they probably only
+    %differ bei some constant hence one of those is sufficient (check this))
+    %TODO might call this altError and give only ine option (i.e. there's
+    %always L2 error and maybe altError) UNTIL THEN error4lvl is a fine name
+    %and is always L2 
+    %TODO maybe allow only a fixed amounts of different errors, like only two,
+    %so one can choose L2 and H1 for example so sth like error4lvl,
+    %errorAlt4lvl
+    %TODO probably always have the error for which the estimator is an upper
+    %bound
 
   % function handles (can be ignored if useImage)
   function y = rightHandSide(x)
