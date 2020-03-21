@@ -1,8 +1,5 @@
 CURRENT TODOS
 
-for now only gleb changed so only experiments with f01 would need to be redone
-  (everything else is usable)
-
 profile a long run to find weak code
 
 computeNormOfDifference4e
