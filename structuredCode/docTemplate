@@ -1,6 +1,6 @@
 function [out1, out2, ...] = fun(in1, in2, ...)
-%% DOC (for fold)
-% Does x and computes y. (fold)
+%% DOC (always fold)
+% Does x and computes y. 
 %
 % fun.m
 % input:  in1  - 'class' containing...
@@ -15,8 +15,8 @@ function [out1, out2, ...] = fun(in1, in2, ...)
 %         .
 %         .
 
-%% INIT (fold)
-  % headline (for fold)
+%% INIT (always fold)
+  % headline (for fold if section is big enough)
   code
     % description of code
 
@@ -24,8 +24,8 @@ function [out1, out2, ...] = fun(in1, in2, ...)
   .
   .
 
-%% MAIN (for fold)
-  % headline (for fold)
+%% MAIN (always fold)
+  % headline (fold if section is big enough)
   code
     % description of code
 
