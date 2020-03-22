@@ -64,7 +64,7 @@ function [int1RHS4e, int2RHS4e, int3RHS4e, intRHS4s] = ...
                                            (z(:, 2)-a3(:, 2)));
   varLambda3 = @(z)(1 - varLambda1(z) - varLambda2(z));
 
-  % compute integrals \int_\Omega f*\psi_j dx
+  % compute integrals \int_T f*\psi_j dx
   int1RHS4e = integrate(@(n4p, Gpts4p, Gpts4ref)(...
     f(Gpts4p).*(1 - 2*varLambda3(Gpts4p))), ...
     c4n, n4e, degree4Integrate, area4e);
@@ -76,7 +76,7 @@ function [int1RHS4e, int2RHS4e, int3RHS4e, intRHS4s] = ...
     c4n, n4e, degree4Integrate, area4e);
   
   % compute integrals
-  intRHS4s = zeros(nrSides, 1); % int_\Omega f*u dx
+  intRHS4s = zeros(nrSides, 1); % int_T f*(\psi_1 + \psi_2 + \psi_3) dx
   for elem = 1 : nrElems
     intRHS4s(s4e(elem, :)) = intRHS4s(s4e(elem,:)) + ...
       [int1RHS4e(elem), int2RHS4e(elem), int3RHS4e(elem)]';

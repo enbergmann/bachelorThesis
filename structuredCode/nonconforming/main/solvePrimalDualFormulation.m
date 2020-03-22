@@ -145,6 +145,8 @@ function  [u,corrVec,energyVec] = ...
     dtU = (u - uNew)/parTau; 
     %corr = sqrt(dtU'*C*dtU); % Bartels termination criterion
     corr = sqrt(dtU'*stiMaCR*dtU); % Only gradients
+      % TODO gradCRu already computed, so using the stiMa might be unnecessary
+      % (cf. Tiens code)
 
     u = uNew;
     E = ENew;

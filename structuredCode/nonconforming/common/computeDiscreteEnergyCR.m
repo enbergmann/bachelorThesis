@@ -1,32 +1,41 @@
-% TODO recalculate this stuff (TIens looks different somehow)
-%
-function E = computeDiscreteEnergyCR(params, currData, u, gradCRu)
-% Compute the discrete energy for the nonconforming problem of the
-% Crouzeix-Raviart function u. 
+function energy = computeDiscreteEnergyCR(params, currData, v, vGradCR)
+%% DOC
+% Computes the discrete energy of the Crouzeix-Raviart function v
+%   \alpha/2 ||v||^2_{L^2(Omega)} + ||\nabla_{CR} v||_{L^1(\Omega)}
+%     - \int_\Omega fv dx
+% for the nonconforming problem.
 % 
-% TODO
 % computeDiscreteEnergyCR.m
 % input:  params   - 'struct' with fields:
-%                       parAlpha: parameter alpha from the problem
+%                      parAlpha: 'double' containing the parameter alpha from
+%                                the problem
 %         currData - 'struct' with fields:
-%                         area4e: areas for elements
-%                       intRHS4s: integral of f times the CR-basis function
-%                                 wrt. j-th side in the j-th component
-%                         maMaCR: global CR mass matrix
-%         u        -
-%         gradCRu  -
+%                        area4e: areas for elements
+%                      intRHS4s: '(nrSides x 1)-dimensional double array' where
+%                                the j-th entry is the integral of f times the
+%                                CR-basis function w.r.t. j-th edge of the
+%                                triangulation
+%                        maMaCR: global CR mass matrix
+%         v        - '(nrSides x 1)-dimensional double array' where the j-th
+%                    row contains the coefficient of v w.r.t. the j-th edge of
+%                    the triangulation 
+%         vGradCR  - '(nrElems x 2)-dimensional double array' where the j-th
+%                    row contains the gradient of v on the j-th triangle 
 %
-% output: E        - 'double' containing the discrete energy of u
+% output: energy   - 'double' containing the discrete energy of u
   
-  % extract necessary data
+%% INIT
+  % extract necessary parameters from params
   parAlpha = params.parAlpha;
 
+  % extract necessary information from currData
   area4e = currData.area4e;
   intRHS4s = currData.intRHS4s;
   maMaCR = currData.maMaCR;
 
-  % compute energy
-  E = area4e'*sqrt(sum(gradCRu.^2, 2)) ... % L^1 norm uf gradCR u
-               - u'*intRHS4s ... % integral f u
-               + parAlpha/2*u'*maMaCR*u;    % L^2 norm uf u
+%% MAIN
+  energy = parAlpha/2*v'*maMaCR*v ...  % \alpha/2 ||v||^2_{L^2(Omega)}
+    + area4e'*sqrt(sum(vGradCR.^2, 2)) ... % ||\nabla_{CR} v||_{L^1(\Omega)}
+    - v'*intRHS4s; % \int_\Omega fv dx
+             
 end

@@ -1,5 +1,6 @@
 function [stiMaCR, maMaCR] = computeFeMatricesCR(currData)
-% Assemble the Crouzeix-Raviart stiffness and mass matrix with respect to the
+%% DOC
+% Assembles the Crouzeix-Raviart stiffness and mass matrix with respect to the
 % triangulation given by [c4n, n4e].
 % 
 % computeFeMatricesCR.m
@@ -23,15 +24,19 @@ function [stiMaCR, maMaCR] = computeFeMatricesCR(currData)
 %                    product of the CR-basis function w.r.t. k-th edge with the
 %                    CR-basis function w.r.t. j-th edge
   
-  % extract necessary data
+%% INIT
+  % extract necessary information from currData
   nrElems = currData.nrElems;
   area4e = currData.area4e;
   gradsCR4e = currData.gradsCR4e;
   s4e = currData.s4e;
 
-  % compute local stiffness and mass matrices
+  % initialize local stiffness and mass matrices
   stiMaCRlocal = zeros(3, 3, nrElems);
   maMaCRlocal = zeros(3, 3, nrElems);
+
+%% MAIN
+  % compute local stiffness and mass matrices
   for elem = 1:nrElems
     stiMaCRlocal(:, :, elem) = ...
       area4e(elem)*(gradsCR4e(:, :, elem)*gradsCR4e(:, :, elem)'); 

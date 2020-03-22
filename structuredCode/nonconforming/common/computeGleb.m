@@ -1,4 +1,5 @@
 function gleb = computeGleb(params, currData, output)
+%% DOC
 % Computes the guaranteed lower energy bound 
 %   gleb = E_{NC}(u_{CR}) - 
 %            \kappa_{CR}/\alpha ||h_\mathcal{T}(f-\alpha u_{CR})|| |f|_{1,2}
@@ -13,8 +14,8 @@ function gleb = computeGleb(params, currData, output)
 % input:  params   - 'struct' with fields:
 %                                 gradF: 'function_handle' of the gradient of
 %                                        the right-hand side f
-%                              parAlpha: %'double' TODO
-%                                        regularization parameter
+%                              parAlpha: 'double' containing the parameter 
+%                                        alpha from the problem
 %                      degree4Integrate: 'uint64' up to which the integration
 %                                        in integrate must be exact
 %
@@ -35,7 +36,7 @@ function gleb = computeGleb(params, currData, output)
 %
 % output: gleb     - 'double' containing the guaranteed lower energy bound
 
-%% INITIALIZATION
+%% INIT
   % extract necessary parameters from params
   gradF = params.gradF;
   parAlpha = params.parAlpha;
@@ -55,7 +56,7 @@ function gleb = computeGleb(params, currData, output)
   % define remaining parameters
   kappaCR = 0.298217419;
   
-%% COMPUTATIONS
+%% MAIN
   termGradFSquared = sum(...
     integrate(@(n4p, Gpts4p, Gpts4ref)(sum(gradF(Gpts4p).^2, 2)), ...
     c4n, n4e, degree4Integrate, area4e));
