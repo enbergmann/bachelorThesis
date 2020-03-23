@@ -6,23 +6,23 @@ function energy = computeDiscreteEnergyCR(params, currData, v, vGradCR)
 % for the nonconforming problem.
 % 
 % computeDiscreteEnergyCR.m
-% input:  params   - 'struct' with fields:
-%                      parAlpha: 'double' containing the parameter alpha from
-%                                the problem
-%         currData - 'struct' with fields:
-%                        area4e: areas for elements
-%                      intRHS4s: '(nrSides x 1)-dimensional double array' where
-%                                the j-th entry is the integral of f times the
-%                                CR-basis function w.r.t. j-th edge of the
-%                                triangulation
-%                        maMaCR: global CR mass matrix
-%         v        - '(nrSides x 1)-dimensional double array' where the j-th
-%                    row contains the coefficient of v w.r.t. the j-th edge of
-%                    the triangulation 
-%         vGradCR  - '(nrElems x 2)-dimensional double array' where the j-th
-%                    row contains the gradient of v on the j-th triangle 
+% input: params   - 'struct' with fields:
+%                     parAlpha: 'double' containing the parameter alpha from
+%                               the problem
+%        currData - 'struct' with fields:
+%                       area4e: areas for elements
+%                     intRHS4s: '(nrSides x 1)-dimensional double array' where
+%                               the j-th entry is the integral of f times the
+%                               CR-basis function w.r.t. j-th edge of the
+%                               triangulation
+%                       maMaCR: global CR mass matrix
+%        v        - '(nrSides x 1)-dimensional double array' where the j-th row
+%                   contains the coefficient of v w.r.t. the j-th edge of the
+%                   triangulation 
+%        vGradCR  - '(nrElems x 2)-dimensional double array' where the j-th row
+%                   contains the gradient of v on the j-th triangle 
 %
-% output: energy   - 'double' containing the discrete energy of u
+% output: energy - 'double' containing the discrete energy of u
   
 %% INIT
   % extract necessary parameters from params

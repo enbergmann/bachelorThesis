@@ -5,12 +5,11 @@ function absNodeJumps4s = computeAbsNodeJumps4s(n4e, e4s, nodeValues4e)
 % triangulation.
 %
 % computeAbsNodeJumps4s.m
-% input:  n4e            - nodes for elements
-%         e4s            - elements for sides 
-%         nodeValues4e   - '(nrElems x 3)-dimensional double array' where the
-%                          k-th entry of the j-th row contains the value of u
-%                          in the k-th local node of the j-th triangle of the
-%                          mesh
+% input: n4e          - nodes for elements
+%        e4s          - elements for sides 
+%        nodeValues4e - '(nrElems x 3)-dimensional double array' where the k-th
+%                       entry of the j-th row contains the value of u in the
+%                       k-th local node of the j-th triangle of the mesh
 %
 % output: absNodeJumps4s - '(nrElems x 2)-dimensional double array' where the
 %                          j-th row contains the two jumps in the two nodes of

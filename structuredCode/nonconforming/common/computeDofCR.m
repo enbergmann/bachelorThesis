@@ -4,13 +4,13 @@ function dof = computeDofCR(currData)
 % by [n4e, n4sDb, n4sNb].
 %
 % computeDofCR.m
-% input:  currData - 'struct' with fields:
-%                        n4sDb: nodes for Dirichlet boundary sides
-%                          s4n: sides for nodes
-%                      nrSides: number of sides
+% input: currData - 'struct' with fields:
+%                       n4sDb: nodes for Dirichlet boundary sides
+%                         s4n: sides for nodes
+%                     nrSides: number of sides
 %
-% output: dof      - '(1 x nrDof)-dimensional double array' where the j-th row 
-%                    contains the number of the j-th degree of freedom
+% output: dof - '(1 x nrDof)-dimensional double array' where the j-th row
+%               contains the number of the j-th degree of freedom
   
 %% INIT
   % extract necessary information from currData

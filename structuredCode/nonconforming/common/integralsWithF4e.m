@@ -6,8 +6,8 @@ function [int1RHS4e, int2RHS4e, int3RHS4e, intRHS4s] = ...
 % 
 % integralsWithF4e.m
 % input:  params     - 'struct' with fields:
-%                                       f: 'function_handle' of the function f
-%                                          in the integrals
+%                                       f: 'function_handle' of the right-hand
+%                                          side f
 %                        degree4Integrate: 'uint64' up to which the integration
 %                                          in integrate must be exact
 % input:  currData   - 'struct' with fields:
