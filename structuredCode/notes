@@ -4,3 +4,6 @@ struct being copied
 for all non-AFEM functions compute all necessary data (in particular
 that is dependent on geometry) before and pass it to the functions i.e.
 mentality is efficiency >> memory usage
+
+.' is the same as transpose while 
+' is the same as ctranspose, i.e transpose and complex conjugate
