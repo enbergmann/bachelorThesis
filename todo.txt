@@ -2,11 +2,10 @@ CURRENT TODOS
 
 profile a long run to find weak code
 
-computeNormOfDifference4e
-  computeGleb after normOfDifference4e is documented  
-computeRefinementExtensino (see TODO in file)
-computeP1prolongation ever used?
+MISSING IN CURRENT EFFORT (commmon)
+gradientCR (rewrite loop)
 integralsWithf4e think about it
+interpolationCR
 
 understand PastedGraphic-2.tiff, i.e. how to compute f from u and what
 sgn\partial_r u is supposed to mean
@@ -20,6 +19,9 @@ denoising example mode plus plots(ask tien what is useful and what isn't)
 maybe find out what alpha is and better document it
 
 VARIABLES TO BE RENAMEND
+(start in editable one parameter at a time and go from big files to subfiles
+one variable at a time and consistent)
+
 don't use E like that, this is against any convention
 things like RHS and DOF are names here, hence in camel case they are used as
   xyzRhs and xyzDof
