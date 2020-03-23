@@ -3,7 +3,7 @@ function gleb = computeGleb(params, currData, output)
 % Computes the guaranteed lower energy bound 
 %   gleb = E_{NC}(u_{CR}) - 
 %            \kappa_{CR}/\alpha ||h_\mathcal{T}(f-\alpha u_{CR})|| |f|_{1,2}
-% w.r.t. the result of solvePrimalDualFormulation.m  on the triangulation given 
+% w.r.t. the result of solvePrimalDualFormulation.m on the triangulation given 
 % by [c4n, n4e] where
 %   \kappa_{CR} = \sqrt{1/48 + 1/j_{1, 1}^2}\leq 0.298217419 
 % (j_{1, 1} smallest positive root of the Bessel function of the first kind) is
@@ -11,30 +11,38 @@ function gleb = computeGleb(params, currData, output)
 % p 102). 
 %
 % computeGleb.m
-% input:  params   - 'struct' with fields:
-%                                 gradF: 'function_handle' of the gradient of
-%                                        the right-hand side f
-%                              parAlpha: 'double' containing the parameter 
-%                                        alpha from the problem
-%                      degree4Integrate: 'uint64' up to which the integration
-%                                        in integrate must be exact
+% input: params   - 'struct' with fields:
+%                                gradF: 'function_handle' of the gradient of
+%                                       the right-hand side f
+%                             parAlpha: 'double' containing the parameter alpha
+%                                       from the problem
+%                     degree4Integrate: 'uint64' up to which the integration in
+%                                       integrate must be exact
 %
-%         currData - 'struct' with fields:
-%                           c4n: coordinates for nodes
-%                           n4e: nodes for elements 
-%                           s4e: sides for elements
-%                        area4e: areas for elements
-%                      length4s: lengths for sides
+%        currData - 'struct' with fields:
+%                          c4n: coordinates for nodes
+%                          n4e: nodes for elements 
+%                          s4e: sides for elements
+%                       area4e: areas for elements
+%                     length4s: lengths for sides
 %
-%         output   - 'struct' with fields: 
-%                               energyVec: '(nrIterations of current level 
-%                                          x 1)-dimensional double array' where
-%                                          the j-th row contains the discrete 
-%                                          energy of the j-th iterate of the 
-%                                          iteration on the current level
-%                      normOfDifference4e: TODO
+%        output   - 'struct' with fields: 
+%                                     energyVec: '(nrIterations of current
+%                                                level x 1)-dimensional double
+%                                                array' where the j-th row
+%                                                contains the discrete energy
+%                                                of the j-th iterate of the
+%                                                iteration on the current level
+%                     normDiffRhsSolCrSquared4e: '(nrElems x 1)-dimensional
+%                                                double array' where the j-th
+%                                                row contains the integral over
+%                                                the j-th triangle of the
+%                                                triangulation of the
+%                                                right-hand side f minus
+%                                                parAlpha times the CR solution
+%                                                u of the iteration
 %
-% output: gleb     - 'double' containing the guaranteed lower energy bound
+% output: gleb - 'double' containing the guaranteed lower energy bound
 
 %% INIT
   % extract necessary parameters from params
@@ -51,7 +59,7 @@ function gleb = computeGleb(params, currData, output)
   
   % extract necessary information from output
   discreteEnergy = output.energyVec(end);
-  normOfDifference4e = output.normOfDifference4e;
+  normDiffRhsSolCrSquared4e = output.normDiffRhsSolCrSquared4e;
   
   % define remaining parameters
   kappaCR = 0.298217419;
@@ -64,7 +72,7 @@ function gleb = computeGleb(params, currData, output)
 
   termScaledDifference = sum(...
     max([length4s(s4e(:, 1)), length4s(s4e(:, 2)), length4s(s4e(:, 3))], ...
-    [], 2).*normOfDifference4e);
+    [], 2).*normDiffRhsSolCrSquared4e);
     % ||h_\\mathcal{T}(f - \alpha u_{CR})||^2_{L^2(\Omega)}
 
   % compute gleb

@@ -12,7 +12,7 @@ function [eta4e, etaVol4e, etaJumps4e] = ...
   e4s = currData.e4s;
 
   u = output.u;
-  normOfDifference4e = output.normOfDifference4e;
+  normDiffRhsSolCrSquared4e = output.normDiffRhsSolCrSquared4e;
 
   % TODO prob rewrite some of this stuff, at least documentation, not 
   % necessarily use currData, let them be like AFEM functions1
@@ -35,7 +35,7 @@ function [eta4e, etaVol4e, etaJumps4e] = ...
   %  +length4s(s4e(:,3))'*sum(absNodeJumps4s(s4e(:,3)),2)); %Sprunganteil
 
 
-  etaVol4e = area4e.^(2/n4Estimate).*normOfDifference4e;
+  etaVol4e = area4e.^(2/n4Estimate).*normDiffRhsSolCrSquared4e;
   etaJumps4e = area4e.^(beta4Estimate/n4Estimate).*termJumps;
   eta4e = etaVol4e + etaJumps4e;
 end

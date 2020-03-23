@@ -1,23 +1,24 @@
-function uNew = computeRefinementExtensionCR(c4n, n4e, c4nNew, n4eNew, u)
-% Computes the prolongation of a CR solution u with respect to a mesh defined
+function vNew = computeRefinementExtensionCR(c4n, n4e, c4nNew, n4eNew, v)
+%% DOC
+% Computes the prolongation of a CR function v with respect to a mesh defined
 % by [c4n, n4e] to a one-level refinement of this mesh defined by [c4nNew,
 % n4eNew].
 %
 % computeRefinementExtensionCR.m
-% input:  c4n    - coordinates for nodes
-%         n4e    - nodes for elements
-%         c4nNew - coordinates for nodes for the one-level refinement
-%         n4eNew - nodes for elements for the one-level refinement
-%         u      - '(nrSides of the coarse mesh x 1)-dimensional double array'
-%                  where the j-th row contains the coefficient of the CR
-%                  solution w.r.t. the j-th side of the coarse triangulation
+% input: c4n    - coordinates for nodes for the coarse mesh
+%        n4e    - nodes for elements for the coarse mesh
+%        c4nNew - coordinates for nodes for the refined mesh
+%        n4eNew - nodes for elements for the refined mesh
+%        v      - '(nrSides of the coarse mesh x 1)-dimensional double array'
+%                 where the j-th row contains the coefficient of the CR
+%                 function w.r.t. the j-th side of the coarse triangulation
 %
-% output: uNew   - '(nrSides of the refined mesh x 1)-dimensional double array'
+% output: vNew   - '(nrSides of the refined mesh x 1)-dimensional double array'
 %                  where the j-th row contains the coefficient of the CR
-%                  prolongation of u wrt. the j-th side of the new
+%                  prolongation of v w.r.t. the j-th side of the new
 %                  triangulation
 
-%% INITIALIZATION
+%% INIT
   n4sNew = computeN4s(n4eNew);
   s4n = computeS4n(n4e);
   s4e = computeS4e(n4e); 
@@ -32,24 +33,23 @@ function uNew = computeRefinementExtensionCR(c4n, n4e, c4nNew, n4eNew, u)
     nrNodes, nrNodesNew); 
   e4n = getElements4Nodes(n4e);
 
-%% COMPUTE REFINEMENT EXTENSION
-  uNew = zeros(nrSidesNew, 1);
-  %TODO this following line is already the output of computeNodeValuesCR4e
-  val = [u(s4e(:, 1)) - u(s4e(:, 2)) + u(s4e(:, 3)), ... % 1st local nodes
-            u(s4e(:, 1)) + u(s4e(:, 2)) - u(s4e(:, 3)), ... % 2nd local nodes
-            - u(s4e(:, 1)) + u(s4e(:, 2)) + u(s4e(:, 3))]'; % 3rd local nodes
+  vNew = zeros(nrSidesNew, 1);
+  val = transpose(computeNodeValuesCR4e(s4e, v));
+    % NOTE nodeValues4e could already be known in startAlgorithmCR but for this
+    % computeRefinementExtension to be more intuitive with v as input and vNew
+    % as output it's computed again here
+
+%% MAIN
   val = val(:); 
-    % values in the nodes computed by formula above, every three entries are
-    % wrt. to one triangle (value in midpoint is (node1-node2)/2, hence 3
-    % equations, solve for node1, node 2, and node 3 to obtain above formula)
+    % every three entries are w.r.t. to one triangle   
   valNew = computeP1Extension(n4e, n4eNew, nrElemsNew, val, ...
-    n4parentSides4n, e4n); 
+  n4parentSides4n, e4n); 
     % now possible since values in nodes are knwon
     
   for elem = 1:nrElemsNew
     sides = s4eNew(elem, :);
     temp = valNew(3*elem - [2 1 0]); % values in nodes of current element
-    uNew(sides) = (temp + temp([2 3 1]))/2; 
+    vNew(sides) = (temp + temp([2 3 1]))/2; 
      % average the values in nodes of the current edge for the value in
      % midpoint 
      % no addition needed since CR continuous in the midpoints BUT this
@@ -117,8 +117,8 @@ function e4n = getElements4Nodes(n4e)
   end
 end
 
-function valNew = computeP1Extension(n4e,n4eNew,nrElemsNew,vOld,...
-                                   n4parentSides4n,e4n)
+function valNew = computeP1Extension(n4e, n4eNew, nrElemsNew, vOld, ...
+                                   n4parentSides4n, e4n)
 % set the local values in the new nodes as linear interpolation of the values
 % of the vertices of the new nodes parent edge on each triangle (standard nodal
 % interpolation of the discrete solution of the old mesh to the new mesh of
@@ -146,4 +146,3 @@ function valNew = computeP1Extension(n4e,n4eNew,nrElemsNew,vOld,...
       % in the current Parent element in the right entry of valNew
   end
 end
-

@@ -144,8 +144,8 @@ function startAlgorithmCR(benchmark)
     output.u = u;
     outputLvlInfo.nrIterations(end+1, 1) = length(energyVec);
 
-    output.normOfDifference4e = ...
-      computeNormOfDifference4e(params, currData, output);
+    output.normDiffRhsSolCrSquared4e = ...
+      computeNormDiffRhsSolCrSquared4e(params, currData, output);
 
     % compute guaranteed lower energy bound
     if useExactEnergy
