@@ -16,9 +16,12 @@ denoising example mode plus plots(ask tien what is useful and what isn't)
 
 maybe find out what alpha is and better document it
 
-VARIABLES TO BE RENAMEND
+VARIABLES/FILES TO BE RENAMEND
 (start in editable one parameter at a time and go from big files to subfiles
 one variable at a time and consistent)
+
+integralsWithF4e is also a nogo
+(i.e. never F or U because of Camel Case Sheniegans)
 
 don't use E like that, this is against any convention
 things like RHS and DOF are names here, hence in camel case they are used as
