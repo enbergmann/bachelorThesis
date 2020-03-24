@@ -1,6 +1,6 @@
 function absNodeJumps4s = computeAbsNodeJumps4s(n4e, e4s, nodeValues4e)
 %% DOC
-% Computes the jumps of a elementwise defined function u with local nodal
+% Computes the jumps of a element-wise defined function u with local nodal
 % values given by nodeValues4e in the two nodes of each side of the
 % triangulation.
 %

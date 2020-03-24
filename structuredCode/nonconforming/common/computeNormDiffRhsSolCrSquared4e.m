@@ -70,7 +70,7 @@ function normDiffRhsSolCrSquared4e = ...
   termSolCrSquared4e = 1/3*area4e.*sum(u(s4e).^2, 2);
     % termSolCrSquared4e(elem) = ||u||^2_{L^2(T)}
     % NOTE u'*maMaCR*u would be faster to compute ||u|^2_{L^2(\Omega)} but 
-    % the elementwise norm is necessary for computeGleb.m
+    % the element-wise norm is necessary for computeGleb.m
 
   normDiffRhsSolCrSquared4e = termRhsSquared4e - 2*parAlpha*termMixed4e + ...
     parAlpha^2*termSolCrSquared4e;
