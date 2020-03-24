@@ -4,8 +4,6 @@ profile a long run to find weak code
 
 MISSING IN CURRENT EFFORT (commmon)
 gradientCR (rewrite loop)
-integralsWithf4e think about it
-interpolationCR
 
 understand PastedGraphic-2.tiff, i.e. how to compute f from u and what
 sgn\partial_r u is supposed to mean
