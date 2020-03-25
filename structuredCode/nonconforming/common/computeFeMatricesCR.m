@@ -9,19 +9,19 @@ function [stiMaCR, maMaCR] = computeFeMatricesCR(currData)
 %                        area4e: areas for elements
 %                     gradsCR4e: '(3 x 2 x nrElems)-dimensional double array'
 %                                where the j-th row of the k-th matrix contains
-%                                the gradient of the CR-basis function w.r.t.
-%                                to j-th edge of the k-th element
+%                                the gradient of the local CR-basis function
+%                                w.r.t. the j-th edge of the k-th element
 %                           s4e: sides for elements
 %
 % output: stiMaCR - '(nrSides x nrSides)-dimensional sparse double array' where
 %                   the k-th entry in the j-th row is the L2-scalar product of
-%                   the piecewise gradient of the CR-basis function w.r.t. k-th
-%                   edge with the piecewise gradient of the CR-basis function
-%                   w.r.t. j-th edge
+%                   the piecewise gradient of the CR-basis function w.r.t. the
+%                   k-th edge with the piecewise gradient of the CR-basis
+%                   function w.r.t. the j-th edge
 %         maMaCR  - '(nrSides x nrSides)-dimensional sparse double array' where
 %                   the k-th entry in the j-th row is the L2-scalar product of
-%                   the CR-basis function w.r.t. k-th edge with the CR-basis
-%                   function w.r.t. j-th edge
+%                   the CR-basis function w.r.t. the k-th edge with the
+%                   CR-basis function w.r.t. the j-th edge
   
 %% INIT
   % extract necessary information from currData
