@@ -31,7 +31,7 @@ function params = editable %#ok<*MSNU>
   % AFEM parameters
   geometry               = 'BigSquare'; %#ok<NASGU>                     
     % not necessary if useImage (for now)                     )
-  parTheta               = 0.5
+  parTheta               = 0.5;
     % bulk param. (1 for uniform)
   initialRefinementLevel = 0;
   minNrDof               = 5e3;

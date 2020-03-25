@@ -1,23 +1,9 @@
-% NOTE figures that might be included in latex later without title and caption
-% but everything else should have this for faster overview
-
 % TODO similar to struct 2 table write those information in a file so
 % one can see everything in one go, also elapsed time of program and so on
-% TODO general file with most intersting infos about the level
-% one file for AFEM output for all levels (outputLvl) (add GLEB difference)
-% one file for all iteration outputs (maybe, compare to old plots)
-% 
-% I.E. pretty much anything can be seen in benchmark.m but make a file with 
-% just the relevant information with one look, like
-% alpha = ...
-% beta = ...
-% n = ...
-% ...
-
+% elapsed time in hours and days depending on scale
 function saveResultsCR(params, currData, ...
     outputLvlInfo, outputLvlError, outputLvlEnergy, output)
-
-%% INITIALIZATION
+%% INIT
   % extract necessary parameters from params
   geometry = params.geometry;
   f = params.f;
@@ -76,7 +62,8 @@ function saveResultsCR(params, currData, ...
   corrVec = output.corrVec;
   energyVec = output.energyVec;
 
-%% CREATE DIRECTORY
+%% MAIN
+  % create directory
   warning('off', 'MATLAB:MKDIR:DirectoryExists');
   dirName = sprintf('../../results/nonconforming/%s/%s/lvl%d', ...
     expName, dirInfoName, currLvl);
@@ -85,7 +72,7 @@ function saveResultsCR(params, currData, ...
   mkdir(sprintf('%s/iteration', dirName));
   warning('on', 'MATLAB:MKDIR:DirectoryExists');
     
-%% SAVE INFORMATION ABOUT EXPERIMENT
+  % save information about the experiment
   if currLvl == 0
     % this means the benchmark-file should not be changed until level 0 is
     % saved
@@ -187,7 +174,7 @@ function saveResultsCR(params, currData, ...
   name = sprintf('%s/currentDataReduced.csv', dirName);
   writetable(struct2table(currDataReduced, 'AsArray', true), name);
 
-%% SAVE PLOTS OF SOLUTION
+  % save plots of solution
   approxFig = figure('visible', figVisible); 
   plotCR(c4n, n4e, u);
   fName = sprintf('%s/solution.png', dirName);
@@ -203,7 +190,7 @@ function saveResultsCR(params, currData, ...
   fName = sprintf('%s/solutionGrayscale.png', dirName);
   saveas(grayscaleFig, fName);
 
-%% SAVE PLOTS AND RESULTS OF THE ITERATION FOR THE LEVEL
+  % save plots and results of the iteration for the level
   % save corrections (is that the name? TODO)
   name = sprintf('%s/iteration/corrVec.txt', dirName);
   file = fopen(name, 'w');
@@ -263,7 +250,7 @@ function saveResultsCR(params, currData, ...
     saveas(enDiffExactFig, fName);
   end
 
-%% SAVE AFEM RESULTS AND TRIANGULATION
+  % save AFEM results and triangulation
   % plot triangulation
   triangFig = figure('visible',figVisible);
   plotTriangulation(c4n,n4e);

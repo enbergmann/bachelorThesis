@@ -37,10 +37,11 @@ function gleb = computeGleb(params, currData, output)
 %                                                double array' where the j-th
 %                                                row contains the integral over
 %                                                the j-th triangle of the
-%                                                triangulation of the
-%                                                right-hand side f minus
-%                                                parAlpha times the CR solution
-%                                                u of the iteration
+%                                                triangulation of the square of
+%                                                the difference of the
+%                                                right-hand side f and the
+%                                                product of parAlpha and the CR
+%                                                solution u of the iteration
 %
 % output: gleb - 'double' containing the guaranteed lower energy bound
 

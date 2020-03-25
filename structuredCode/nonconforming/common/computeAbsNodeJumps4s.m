@@ -23,7 +23,7 @@ function absNodeJumps4s = computeAbsNodeJumps4s(n4e, e4s, nodeValues4e)
     tPlus = e4s(side, 1);
     tMinus = e4s(side, 2);
       % the two neighbouring triangles of side (tMinus = 0 if side is an outer
-      % edge)
+      % edge, i.e. the jumps in outer nodes remain zero)
     if tMinus ~= 0 
       pos = 1;
       for indPlus = 1:3
