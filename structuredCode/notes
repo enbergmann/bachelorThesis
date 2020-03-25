@@ -7,3 +7,8 @@ mentality is efficiency >> memory usage
 
 .' is the same as transpose while 
 ' is the same as ctranspose, i.e transpose and complex conjugate
+
+reshape uses columns first, than rows, and lastly dimensions
+
+figures that might be included in LaTeX shouldn't have titles or more 
+information than, e.g., plot and axis
