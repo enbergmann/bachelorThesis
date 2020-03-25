@@ -1,16 +1,18 @@
 CURRENT TODOS
 
-profile a long run to find weak code
+estimate compare to Tiens estimator (compare his files (also those
+that compute FSquared)) and also call his eta and see if the same results
+are there (try to use all his functions and only change on line in the code
+if possible)
+  if this works, my eta is prob pretty good, but there might be a difference
+    (apart from different integrate degree)
 
-MISSING IN CURRENT EFFORT (commmon)
-gradientCR (rewrite loop)
+rewrite the killed loops to be more readable and maybe easier to understand
+  solvePrimalDualFormulation (also comment and stuff (and finally kill lots of
+  TODOs))
 
 understand PastedGraphic-2.tiff, i.e. how to compute f from u and what
 sgn\partial_r u is supposed to mean
-
-rewrite the killed loops to be more readable and maybe easier to understand
-  gradientCR
-  solvePrimalDualFormulation
 
 denoising example mode plus plots(ask tien what is useful and what isn't)
 
