@@ -28,7 +28,7 @@ function [int1RHS4e, int2RHS4e, int3RHS4e, intRHS4s] = ...
 %         int3RHS4e - as int1RHS4e for the third local CR-basis function
 %         intRHS4s  - '(nrSides x 1)-dimensional double array' where 
 %                     the j-th entry is the integral of f times the CR-basis
-%                     function w.r.t. j-th edge
+%                     function w.r.t. the j-th edge
 
 %% INIT
   % extract necessary parameters from params

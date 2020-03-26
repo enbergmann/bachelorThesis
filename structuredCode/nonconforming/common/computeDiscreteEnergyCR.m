@@ -13,7 +13,7 @@ function energy = computeDiscreteEnergyCR(params, currData, v, vGradCR)
 %                       area4e: areas for elements
 %                     intRHS4s: '(nrSides x 1)-dimensional double array' where
 %                               the j-th entry is the integral of f times the
-%                               CR-basis function w.r.t. j-th edge of the
+%                               CR-basis function w.r.t. the j-th edge of the
 %                               triangulation
 %                       maMaCR: global CR mass matrix
 %        v        - '(nrSides x 1)-dimensional double array' where the j-th row
