@@ -21,6 +21,8 @@ maybe find out what alpha is and better document it
    are and change them whereever they are documented)
    (tau, epsStop, alpha, beta, Lambda...)
 
+finally rework editable with comments and so on
+
 VARIABLES/FILES TO BE RENAMEND
 (start in editable one parameter at a time and go from big files to subfiles
 one variable at a time and consistent)
