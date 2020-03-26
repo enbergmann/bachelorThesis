@@ -1,26 +1,85 @@
-function  [u,corrVec,energyVec] = ...
+function  [u, corrVec, energyVec] = ...
     solvePrimalDualFormulation(params, currData, u, varLambda) 
-  % TODO think about how the output should be handled, then think about 
-  % documentation
-
-% Computes the piecewise gradient of the Crouzeix-Raviart function v (vanishing
-% in the midpoints of boundary edges) with respect to the triangulation given
-% by [c4n, n4e].
+%% DOC
+% Executes the nonconfomring iteration on the triangulation given
+% by [c4n, n4e] with initial values u and varLambda.
 %
-% gradientCR.m
-% input:  params   - 'struct' with fields:
-%         currData - 'struct' with fields:
-%                         nrElems: number of elements
-%                             s4e: sides for elements
-%                       gradsCR4e: gradients of side based Crouzeix-Raviart
-%                                  basis functions for all elements
-%         v        - 'function_handle' of the function whose piecewise gradient 
-%                     is to be computed
+% solvePrimalDualFormulation.m
+% input: params    - 'struct' with fields:
+%                                 parTau: 'double' containing the parameter 
+%                                         \tau from the problem
+%                               parAlpha: 'double' containing the parameter 
+%                                         \alpha from the problem
+%                           showProgress: 'logical' with value 1 if progress
+%                                         must be printed during the iteration
+%                                         and 0 else
+%                            exactEnergy: 'double' containing the exact energy
+%                                         of the minimizer of the continuous
+%                                         problem
+%                         useExactEnergy: 'logical' with value 0 if exactEnergy
+%                                         must be ignored and 1 else
+%                        saveScreenshots: 'uint64' containing the information
+%                                         that every saveScreenshots-th
+%                                         iteration a screenshot of the results
+%                                         of the iteration must be saved and 0
+%                                         if no screenshots must be saved
+%                              showPlots: 'logical' with value 1 if plots
+%                                         must be shown during the iteration
+%                                         and 0 else
+%                      plotModeGrayscale: 'logical' with value 1 if shown plots
+%                                         must be plotted as grayscale plots
+%                                         with view from above onto the x-y
+%                                         plane
+%        currData  - 'struct' with fields:
+%                        stiMaCR: '(nrSides x nrSides)-dimensional sparse
+%                                 double array' where the k-th entry in the
+%                                 j-th row is the L2-scalar product of the
+%                                 piecewise gradient of the CR-basis function
+%                                 w.r.t. the k-th edge with the piecewise
+%                                 gradient of the CR-basis function w.r.t. the
+%                                 j-th edge
+%                         maMaCR: '(nrSides x nrSides)-dimensional sparse
+%                                 double array' where the k-th entry in the
+%                                 j-th row is the L2-scalar product of the
+%                                 CR-basis function w.r.t. the k-th edge with
+%                                 the CR-basis function w.r.t. the j-th edge
+%                            c4n: coordinates for nodes
+%                            n4e: nodes for elements  
+%                        nrSides: number of sides
+%                        epsStop: 'double' containing the minimal value corr
+%                                 must reach for the iteration to terminate
+%                      gradsCR4e: '(3 x 2 x nrElems)-dimensional double array'
+%                                 where the j-th row of the k-th matrix
+%                                 contains the gradient of the local CR-basis
+%                                 function w.r.t. the j-th edge of the k-th
+%                                 element
+%                        nrElems: number of elements
+%                            s4e: sides for elements
+%                         area4e: areas for elements
+%                       intRHS4s: '(nrSides x 1)-dimensional double array'
+%                                 where the j-th entry is the integral of f
+%                                 times the CR-basis function w.r.t. the j-th
+%                                 edge
+%                            dof: '(1 x nrDof)-dimensional double array' where
+%                                 the j-th column contains the number of the
+%                                 j-th degree of freedom
+%        u         - '(nrSides x 1)-dimensional double array' where the j-th
+%                    row contains the CR coefficient of the initial value u for
+%                    the iteration
+%        varLambda - '(nrELems x 2)-dimensional double array' where the j-th
+%                    row contains the initial value for Lambda for the
+%                    iteration on the j-th element of the triangulation
 %
-% output: u  - '(number of sides x 2)-dimensional double array' where 
-%                     the j-th row contains the gradient of v on the j-th
-%                     triangle 
+% output: u         - '(nrSides x 1)-dimensional double array' where the j-th
+%                     row contains the CR coefficient of the final iterate of
+%                     the iteration, i.e. the approximated solution
+%         corrVec   - '(1 x nrIterations) - dimensional double array' where the
+%                     j-th column contains the corr for the j-th iteration step
+%         energyVec - '(1 x nrIterations) - dimensional double array' where the
+%                     j-th column contains the discrete energy of the j-th
+%                     iterate 
 
+%% INIT
   % extract necessary parameters from params
   parTau = params.parTau;
   parAlpha = params.parAlpha;
@@ -31,7 +90,7 @@ function  [u,corrVec,energyVec] = ...
   showPlots = params.showPlots;
   plotModeGrayscale = params.plotModeGrayscale;
 
-  % extract necessary data from currData
+  % extract necessary information from currData
   stiMaCR = currData.stiMaCR;
   maMaCR = currData.maMaCR;
   c4n = currData.c4n;
@@ -45,25 +104,21 @@ function  [u,corrVec,energyVec] = ...
   intRHS4s = currData.intRHS4s;
   dof = currData.dof;
 
-  % INITIALIZATION 
-  
-  % extract necessary data
-
-  % initialize remaing parameters
-
+  % initialize further variables
   % firstScreenshot = datestr(now, 'yy_mm_dd_HH_MM_SS');
 
-  A = stiMaCR/parTau+parAlpha*maMaCR; %TODO here could be an h in front of stiMaCR
+  A = stiMaCR/parTau+parAlpha*maMaCR; 
+    %TODO here could be an h in front of stiMaCR
   %C = maMaCR + h*stiMaCR;
 
   gradCRu = gradientCR(currData, u);
 
   v = zeros(nrSides, 1);    
 
-  corr = epsStop+1; 
   corrVec = [];
   energyVec = [];
 
+  % start printing progress and initialize figure if showPlots
   if showProgress
     fprintf('\n========================================\n\n');
     fprintf('Current iteration on a mesh with \n\n');
@@ -77,15 +132,19 @@ function  [u,corrVec,energyVec] = ...
   end
   if showPlots, figure; end
 
-  while corr > epsStop
+%% MAIN
+  while true
+    % compute basic information for the next itertion step
     gradCRv = gradientCR(currData, v);
     M = varLambda + parTau*(gradCRu + parTau*gradCRv);
 
     varLambda = M./repmat(max(1, sqrt(sum(M.^2, 2))), 1, 2);
-    varLambda(isinf(varLambda)) = 0;
+    varLambda(isinf(varLambda)) = 0; % this is prob. unnecessary, since only
+                                     %0/0=NaN happens by definition
+                                     %leave it just to be save? doesn't hurt
+    varLambda(isnan(varLambda)) = 0;
     
-    % compute RHS
-    
+    % compute right-hand side
     % b = zeros(nrSides, 1);
 
     % % NOTE 1st iteration of the code
@@ -132,17 +191,17 @@ function  [u,corrVec,energyVec] = ...
     b(dof) = b(dof) + bLocalLast(dof);
       % without dof outer edges (non-dof for CR0) would be counted two times
 
-    %% Solve System
+    % solve system
     uNew = zeros(nrSides, 1);
     uNew(dof) = A(dof, dof)\b(dof);
     v = (uNew - u)/parTau;        
 
-    %% Check Termination
+    % compute information dependent on the new iterate uNew
     gradCRu = gradientCR(currData, uNew);
     ENew = computeDiscreteEnergyCR(params, currData, uNew, gradCRu);
 
-    % TODO here case distinction for termination criteria needs to be done
     dtU = (u - uNew)/parTau; 
+      % TODO here case distinction for termination criteria needs to be done
     %corr = sqrt(dtU'*C*dtU); % Bartels termination criterion
     corr = sqrt(dtU'*stiMaCR*dtU); % Only gradients
       % TODO gradCRu already computed, so using the stiMa might be unnecessary
@@ -153,10 +212,8 @@ function  [u,corrVec,energyVec] = ...
     energyVec(end+1) = E; %#ok<AGROW>
     corrVec(end+1) = corr; %#ok<AGROW>
 
+    % show miscellaneous information
     if showProgress
-      % TODO use structs and disp table maybe or just table (there must be
-      % a getTable and replace feature)
-
       fprintf(repmat('\b', 1, lineLength));
       lineLength = fprintf('%e      %f        %d', ...
         corr, E, length(corrVec));
@@ -171,12 +228,9 @@ function  [u,corrVec,energyVec] = ...
       clf('reset');
       if plotModeGrayscale, plotGrayscale(c4n, n4e, mean(u(s4e), 2));
       else, plotCR(c4n,n4e,uNew); end
-      % subplot(1, 2, 1)
-      % cla('reset');
-      % plotCR(c4n, n4e, uNew);
-      % subplot(1, 2, 2)
-      % cla('reset');
-      % plotGrayscale(c4n, n4e, mean(u(s4e), 2));
     end
+
+    % check termination
+    if corr<epsStop, break; end
   end
 end

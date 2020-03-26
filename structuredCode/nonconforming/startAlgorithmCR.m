@@ -135,7 +135,6 @@ function startAlgorithmCR(benchmark)
 
     % SOLVE (and save output information about the iteration)
     tic;
-    % TODO not done yet (subfunctions, documentation)
     [u, output.corrVec, energyVec] = ...
       solvePrimalDualFormulation(params, currData, u0, varLambda);
     outputLvlInfo.time(end+1, 1) = toc;
@@ -155,7 +154,6 @@ function startAlgorithmCR(benchmark)
     end
 
     % ESTIMATE
-    %TODO still need to comment and some other stuff
     [eta4e, etaVol4e, etaJumps4e] = ...
       estimateErrorCR4e(params, currData, output);
     

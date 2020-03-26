@@ -9,7 +9,7 @@ function dof = computeDofCR(currData)
 %                         s4n: sides for nodes
 %                     nrSides: number of sides
 %
-% output: dof - '(1 x nrDof)-dimensional double array' where the j-th row
+% output: dof - '(1 x nrDof)-dimensional double array' where the j-th column
 %               contains the number of the j-th degree of freedom
   
 %% INIT
