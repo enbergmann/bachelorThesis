@@ -53,7 +53,6 @@ function  [u, corrVec, energyVec] = ...
 %                                 contains the gradient of the local CR-basis
 %                                 function w.r.t. the j-th edge of the k-th
 %                                 element
-%                        nrElems: number of elements
 %                            s4e: sides for elements
 %                         area4e: areas for elements
 %                       intRHS4s: '(nrSides x 1)-dimensional double array'
@@ -63,6 +62,7 @@ function  [u, corrVec, energyVec] = ...
 %                            dof: '(1 x nrDof)-dimensional double array' where
 %                                 the j-th column contains the number of the
 %                                 j-th degree of freedom
+%                          nrDof: number of degrees of freedom
 %                            e4s: elements for sides
 %        u         - '(nrSides x 1)-dimensional double array' where the j-th
 %                    row contains the CR coefficient of the initial value u for
@@ -99,11 +99,11 @@ function  [u, corrVec, energyVec] = ...
   nrSides = currData.nrSides;
   epsStop = currData.epsStop;
   gradsCR4e = currData.gradsCR4e;  
-  nrElems = currData.nrElems;
   s4e = currData.s4e;
   area4e = currData.area4e;
   intRHS4s = currData.intRHS4s;
   dof = currData.dof;
+  nrDof = currData.nrDof;
   e4s = currData.e4s;
 
   % initialize further variables
@@ -121,38 +121,45 @@ function  [u, corrVec, energyVec] = ...
   energyVec = [];
 
   % prepare computation of b
-  indPlus = e4s(:, 1);
-  indMinus = e4s(dof, 2); % indMinus = e4s(dof, 2);
+  elemPlusForSides = e4s(:, 1);
+    % the j-th component contains the number of T_{+} for the j-th edge of the
+    % mesh
+  elemMinusForInnerSides = e4s(dof, 2);
+    % the j-th component contains the number of T_{-} for the j-th inner edge
+    % of the mesh
   
-  s4ePlus = s4e(indPlus, :);
-  s4eMinus = s4e(indMinus, :);
+  sidesPlus = s4e(elemPlusForSides, :);
+    % the k-th entry of the j-th row contains the global number of the k-th
+    % local side of T_{+} for the j-th edge of the mesh
+  sidesMinus = s4e(elemMinusForInnerSides, :);
+    % the k-th entry of the j-th row contains the global number of the k-th
+    % local side of T_{-} for the j-th inner edge of the mesh
 
-  gradCrPlus4s = zeros(nrSides, 2);
-    % j-th row is the gradient of the j-th CR basis function on the 
-    % T+ triangle of the j-th edge
-  gradCrMinus4dof = zeros(length(dof), 2); % TODO export nrDof (else lenght(dof)
-                                         % is used two times)
-    % j-th row is the gradient of the j-th dof CR basis function on the 
-    % T+ triangle of the j-th dof
+  gradCrOnElemPlusForSides = zeros(nrSides, 2);
   for side = 1:nrSides
-    localNrOfSide = find(s4ePlus(side, :) == side);
-    gradCrPlus4s(side, :) = gradsCR4e(localNrOfSide, :, indPlus(side));
+    localNr = sidesPlus(side, :) == side;
+      % local number of side on T_{+}
+    gradCrOnElemPlusForSides(side, :) = ...
+      gradsCR4e(localNr, :, elemPlusForSides(side));
+      % the j-th row contains the gradient of the j-th CR basis function w.r.t.
+      % the j-th edge of the mesh on T_{+}
   end
 
-  for nrCurrDof = 1:length(dof) 
-    % side-th dof NOTE actually should be over inner edges, if dof and inner
-    % edges not the same, than computeDof as of now can be called
-    % computeInnerEdges and then just replace dof here with innerSide or sth
-    localNrOfDof = find(s4eMinus(nrCurrDof, :) == dof(nrCurrDof));
-    gradCrMinus4dof(nrCurrDof, :) = ...
-      gradsCR4e(localNrOfDof, :, indMinus(nrCurrDof));
+  gradCrOnElemMinusForInnerSides = zeros(nrDof, 2); 
+  for nrInnerSide = 1:nrDof 
+    localNr = sidesMinus(nrInnerSide, :) == dof(nrInnerSide);
+      % local number of the nrInnerSide-th side on T_{-}
+    gradCrOnElemMinusForInnerSides(nrInnerSide, :) = ...
+      gradsCR4e(localNr, :, elemMinusForInnerSides(nrInnerSide));
+      % the j-th row contains the gradient of the CR basis function w.r.t. the
+      % j-th inner edge of the mesh on T_{-}
   end
 
   % start printing progress and initialize figure if showPlots
   if showProgress
     fprintf('\n========================================\n\n');
     fprintf('Current iteration on a mesh with \n\n');
-    fprintf('nrDof: %d\n', length(dof));
+    fprintf('nrDof: %d\n', nrDof);
     fprintf('epsStop: %e\n', epsStop);
     if useExactEnergy, fprintf('Exact energy: %f\n', exactEnergy); end
     fprintf('\n========================================\n\n');
@@ -177,18 +184,34 @@ function  [u, corrVec, energyVec] = ...
     % compute right-hand side
 
     % for k = 1, ..., nrSides
-    %   b(k) = sp4s(k) + intRHS4s(k)
+    %   b(k) = ...
+    %     (temp, \nabla_{NC}\psi_k)_{L^2(\Omega)} ...
+    %     + intRHS4s(k, :)
     % with
-    %   sp4s(k) = (term1, term24s(k))_{L^2(\Omega)},
-    %   term1 = 1/\tau \gradNC u_{j-1} -\Lambda_j,
-    %   term2 = \gradNC \psi_k, and
-    %   intRHS4s_k = (f, \psi_k)_L^2(\Omega)
+    %   temp = \nabla_{NC}u_{j-1} - \Lambda_j    and
+    %   intRHS4s(k, :) = (f, \psi_k)_L^2(\Omega)
+    % furthermore, utilizing that temp and \nabla\psi_k are constant on any
+    % triangle and therefore also temp\cdot \nabla\psi_k,
+    %   (temp, \nabla_{NC}\psi_k)_{L^2(\Omega)} ...
+    %     = \int_\Omega temp\cdot\nabla_{NC}\psi_k dx 
+    %     = \sum{T\in\mathcal{T}} \int_T temp\cdot\nabla\psi_k dx
+    %     = \sum{T\in\mathcal{T}} temp\cdot\nabla\psi_k \int_T 1 dx
+    %     = \sum{T\in\mathcal{T}} temp\cdot\nabla\psi_k |T|
+    % and since psi_k = 0 on \mathcal{T}\setminus{T_{+}, T_{-}}
+    %   (temp, \nabla_{NC}\psi_k)_{L^2(\Omega)} ...
+    %     = temp\cdot\nabla\psi_k|_{T_{+}} |T_{+}| ...
+    %       + temp\cdot\nabla\psi_k|_{T_{-}} |T_{-}|
+    % for an inner edge E_k = T_{+}\cap T_{-} and
+    %   (temp, \nabla_{NC}\psi_k)_{L^2(\Omega)} ...
+    %     = temp\cdot\nabla\psi_k|_{T_{+}} |T_{+}|
     
     temp4e = (gradCRu/parTau - varLambda);
     b = intRHS4s + ...
-      area4e(indPlus).*sum(temp4e(indPlus, :).*gradCrPlus4s, 2);
+      area4e(elemPlusForSides).*sum(...
+      temp4e(elemPlusForSides, :).*gradCrOnElemPlusForSides, 2);
     b(dof) = b(dof) + ...
-      area4e(indMinus).*sum(temp4e(indMinus, :).*gradCrMinus4dof, 2);
+      area4e(elemMinusForInnerSides).*sum(...
+      temp4e(elemMinusForInnerSides, :).*gradCrOnElemMinusForInnerSides, 2);
 
     % solve system
     uNew = zeros(nrSides, 1);
