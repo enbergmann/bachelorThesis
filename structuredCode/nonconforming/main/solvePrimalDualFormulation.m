@@ -63,6 +63,7 @@ function  [u, corrVec, energyVec] = ...
 %                            dof: '(1 x nrDof)-dimensional double array' where
 %                                 the j-th column contains the number of the
 %                                 j-th degree of freedom
+%                            e4s: elements for sides
 %        u         - '(nrSides x 1)-dimensional double array' where the j-th
 %                    row contains the CR coefficient of the initial value u for
 %                    the iteration
@@ -103,6 +104,7 @@ function  [u, corrVec, energyVec] = ...
   area4e = currData.area4e;
   intRHS4s = currData.intRHS4s;
   dof = currData.dof;
+  e4s = currData.e4s;
 
   % initialize further variables
   % firstScreenshot = datestr(now, 'yy_mm_dd_HH_MM_SS');
@@ -117,6 +119,34 @@ function  [u, corrVec, energyVec] = ...
 
   corrVec = [];
   energyVec = [];
+
+  % prepare computation of b
+  indPlus = e4s(:, 1);
+  indMinus = e4s(dof, 2); % indMinus = e4s(dof, 2);
+  
+  s4ePlus = s4e(indPlus, :);
+  s4eMinus = s4e(indMinus, :);
+
+  gradCrPlus4s = zeros(nrSides, 2);
+    % j-th row is the gradient of the j-th CR basis function on the 
+    % T+ triangle of the j-th edge
+  gradCrMinus4dof = zeros(length(dof), 2); % TODO export nrDof (else lenght(dof)
+                                         % is used two times)
+    % j-th row is the gradient of the j-th dof CR basis function on the 
+    % T+ triangle of the j-th dof
+  for side = 1:nrSides
+    localNrOfSide = find(s4ePlus(side, :) == side);
+    gradCrPlus4s(side, :) = gradsCR4e(localNrOfSide, :, indPlus(side));
+  end
+
+  for nrCurrDof = 1:length(dof) 
+    % side-th dof NOTE actually should be over inner edges, if dof and inner
+    % edges not the same, than computeDof as of now can be called
+    % computeInnerEdges and then just replace dof here with innerSide or sth
+    localNrOfDof = find(s4eMinus(nrCurrDof, :) == dof(nrCurrDof));
+    gradCrMinus4dof(nrCurrDof, :) = ...
+      gradsCR4e(localNrOfDof, :, indMinus(nrCurrDof));
+  end
 
   % start printing progress and initialize figure if showPlots
   if showProgress
@@ -145,51 +175,20 @@ function  [u, corrVec, energyVec] = ...
     varLambda(isnan(varLambda)) = 0;
     
     % compute right-hand side
-    % b = zeros(nrSides, 1);
 
-    % % NOTE 1st iteration of the code
-    % for elem = 1 : nrElems
-    %   bLocal = (gradCRu(elem, :)/parTau - varLambda(elem, :))...
-    %     *gradsCR4e(:, :, elem)';  
-    %   b(s4e(elem, :)) = b(s4e(elem, :)) + area4e(elem)*bLocal'; % right-hand side
-    % end
-
-    % NOTE 2nd iteration of the code
-    %bLocal = zeros(nrElems, 3);
-    % for elem = 1 : nrElems
-    %   bLocal(elem, :) = bTemp(elem, :)*gradsCR4e(:, :, elem)';  
-    % end
-
-    % TODO rewrite it better, 
-    % thought: sum works for depth dimension af array, so one could add first
-    % and then multiply (or not, dunno)
-    bTemp = (gradCRu/parTau - varLambda); % bTemp4e
-    bRe = reshape(bTemp', 2*nrElems, 1);
-    gRe = reshape(permute(gradsCR4e, [2 3 1]), 2*nrElems, 3);
-    bLocal = area4e.*reshape(sum(reshape(bRe.*gRe, 2, nrElems*3)), nrElems, 3);
-
-    % % NOTE 2nd iteration stuff
-    % for elem = 1 : nrElems
-    %   b(s4e(elem, :)) = b(s4e(elem, :)) + bLocal(elem, :)'; 
-    %     % right-hand side
-    % end
-    % b = b + intRHS4s;
-
-    % one side can only exist 1 or 2 times, not more (use unique fist and last)
-    % this solution is highly CR0 dependend, because it needs dof and inner
-    % edges to be the exact same (more general one would need to compute the
-    % inner edges and use them instead of dof)
-
-    [s4eSorted, s4eSortedInd] = sort(s4e(:));
-    [~, s4eSortedUniqueIndFirst] = unique(s4eSorted);
-    [~, s4eSortedUniqueIndLast] = unique(s4eSorted, 'last');
-    s4eSortedUniqueFirst = s4eSortedInd(s4eSortedUniqueIndFirst);
-    s4eSortedUniqueLast = s4eSortedInd(s4eSortedUniqueIndLast);
-    bLocalFirst = bLocal(s4eSortedUniqueFirst);
-    bLocalLast = bLocal(s4eSortedUniqueLast);
-    b = intRHS4s + bLocalFirst;
-    b(dof) = b(dof) + bLocalLast(dof);
-      % without dof outer edges (non-dof for CR0) would be counted two times
+    % for k = 1, ..., nrSides
+    %   b(k) = sp4s(k) + intRHS4s(k)
+    % with
+    %   sp4s(k) = (term1, term24s(k))_{L^2(\Omega)},
+    %   term1 = 1/\tau \gradNC u_{j-1} -\Lambda_j,
+    %   term2 = \gradNC \psi_k, and
+    %   intRHS4s_k = (f, \psi_k)_L^2(\Omega)
+    
+    temp4e = (gradCRu/parTau - varLambda);
+    b = intRHS4s + ...
+      area4e(indPlus).*sum(temp4e(indPlus, :).*gradCrPlus4s, 2);
+    b(dof) = b(dof) + ...
+      area4e(indMinus).*sum(temp4e(indMinus, :).*gradCrMinus4dof, 2);
 
     % solve system
     uNew = zeros(nrSides, 1);
