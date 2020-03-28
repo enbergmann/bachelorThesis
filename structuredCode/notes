@@ -18,3 +18,8 @@ checkcode to optimize code (new name for mlint) and also mlintrpt
 >edit functionname< can be used to read functions (even MATLAB functions)
 
 profiling for performance optimization, this also uses checkcode
+
+computation of right-hand side for linear system in
+solvePrimalDualFormulation.m should be done with respect to inner edges but is
+done with respect to dof until there is a computation needed where dof and
+inner edges are not the same
