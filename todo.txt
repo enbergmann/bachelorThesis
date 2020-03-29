@@ -1,15 +1,11 @@
 CURRENT TODOS
 
-estimate compare to Tiens estimator (compare his files (also those
-that compute FSquared)) and also call his eta and see if the same results
-are there (try to use all his functions and only change on line in the code
-if possible)
-  if this works, my eta is prob pretty good, but there might be a difference
-    (apart from different integrate degree)
+finally rework editable with comments and so on
 
-rewrite the killed loops to be more readable and maybe easier to understand
-  solvePrimalDualFormulation (also comment and stuff (and finally kill lots of
-  TODOs))
+tiens initPrimalDual has degrees degreeF+1 and for intFSq4e it has degreeF*2
+which leads to a pretty different eta from me (around 2 difference on small
+levels) is this choice for degree significant and really important for correct
+results or is that not the case
 
 understand PastedGraphic-2.tiff, i.e. how to compute f from u and what
 sgn\partial_r u is supposed to mean
@@ -20,8 +16,6 @@ maybe find out what alpha is and better document it
  do this for all variables from the experiment (at some point think what they 
    are and change them whereever they are documented)
    (tau, epsStop, alpha, beta, Lambda...)
-
-finally rework editable with comments and so on
 
 VARIABLES/FILES TO BE RENAMEND
 (start in editable one parameter at a time and go from big files to subfiles
@@ -36,6 +30,7 @@ things like RHS and DOF are names here, hence in camel case they are used as
 Cr, Bv, Nc, ... also as above (decide sth)
 intRHS4s to sth that has f times psi_j in it or sth like that 
 eg gradF, gradCRu and so on
+
 
 GENERAL THESIS TEX STUFF
 
