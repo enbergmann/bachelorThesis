@@ -15,6 +15,8 @@ function [eta4e, etaVol4e, etaJumps4e] = ...
 %                                   
 %        currData - 'struct' with fields:
 %                          n4e: nodes for elements 
+%                          n4s: nodes for sides
+%                      nrSides: number of sides
 %                       area4e: areas for elements
 %                          s4e: sides for elements
 %                     length4s: lengths for sides
@@ -56,6 +58,8 @@ function [eta4e, etaVol4e, etaJumps4e] = ...
 
   % extract necessary information from currData
   n4e = currData.n4e;
+  n4s = currData.n4s;
+  nrSides = currData.nrSides;
   area4e = currData.area4e;
   s4e = currData.s4e;
   length4s = currData.length4s;
@@ -71,7 +75,7 @@ function [eta4e, etaVol4e, etaJumps4e] = ...
 
   % compute \eta_{Jumps}
   nodeValues4e = computeNodeValuesCR4e(s4e, u); 
-  absNodeJumps4s = computeAbsNodeJumps4s(n4e, e4s, nodeValues4e);
+  absNodeJumps4s = computeAbsNodeJumps4s(n4e, n4s, e4s, nrSides, nodeValues4e);
 
   termJumps4e = 1/4*(...
                 length4s(s4e(:, 1)).*sum(absNodeJumps4s(s4e(:, 1), :), 2)...

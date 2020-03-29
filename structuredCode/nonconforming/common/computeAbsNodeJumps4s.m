@@ -1,44 +1,53 @@
-function absNodeJumps4s = computeAbsNodeJumps4s(n4e, e4s, nodeValues4e)
+function absNodeJumps4s = ...
+    computeAbsNodeJumps4s(n4e, n4s, e4s, nrSides, nodeValues4e)
 %% DOC
-% Computes the jumps of a element-wise defined function u with local nodal
-% values given by nodeValues4e in the two nodes of each side of the
+% Computes the absolute jumps of a element-wise defined function v with local
+% nodal values given by nodeValues4e in the two nodes of each side of the
 % triangulation.
 %
 % computeAbsNodeJumps4s.m
 % input: n4e          - nodes for elements
+%        n4s          - nodes for sides
 %        e4s          - elements for sides 
+%        nrSides      - number of sides
 %        nodeValues4e - '(nrElems x 3)-dimensional double array' where the k-th
-%                       entry of the j-th row contains the value of u in the
+%                       entry of the j-th row contains the value of v in the
 %                       k-th local node of the j-th triangle of the mesh
 %
 % output: absNodeJumps4s - '(nrElems x 2)-dimensional double array' where the
-%                          j-th row contains the two jumps in the two nodes of
-%                          the j-th side of the triangulation
+%                          j-th row contains the two absolute jumps in the two
+%                          nodes of the j-th side of the triangulation
 
 %% INIT
   absNodeJumps4s = zeros(size(e4s));
 
 %% MAIN
-  for side = 1:size(e4s, 1)
+  for side = 1:nrSides
     tPlus = e4s(side, 1);
     tMinus = e4s(side, 2);
       % the two neighbouring triangles of side (tMinus = 0 if side is an outer
-      % edge, i.e. the jumps in outer nodes remain zero)
-    if tMinus ~= 0 
-      pos = 1;
-      for indPlus = 1:3
-        indMinus = find(n4e(tMinus, :) == n4e(tPlus, indPlus));
-          % find node of tMinus that is the indPlus-th node of tPlus (if it is
-          % one at all)
-        if not(isempty(indMinus))
-          % if the indPlus-th node of tPlus is the indMinus-th node of
-          % tMinus...
-          absNodeJumps4s(side, pos) = abs(nodeValues4e(tPlus, indPlus) - ...
-                                         nodeValues4e(tMinus, indMinus));
-            % ... compute the jump in the pos-th node of side
-          pos = pos + 1;
-        end
-      end
+      % edge)
+    node1 = n4s(side, 1);
+    node2 = n4s(side, 2);
+      % the two nodes of side = conv({node1, node2})
+    indPlus1 = n4e(tPlus, :) == node1;
+    indPlus2 = n4e(tPlus, :) == node2;
+      % find the local node numbers of node1 and node2 on tPlus
+    valPlus1 = nodeValues4e(tPlus, indPlus1);
+    valPlus2 = nodeValues4e(tPlus, indPlus2);
+      % the values of v in node1 and node2 on tPlus
+    if tMinus == 0
+      valMinus1 = 0;
+      valMinus2 = 0;
+        % the values of v in node1 and node2 on tMinus if side is an outer edge
+    else
+      indMinus1 = n4e(tMinus, :) == node1;
+      indMinus2 = n4e(tMinus, :) == node2;
+        % find the local node numbers of node1 and node2 on tPlus
+      valMinus1 = nodeValues4e(tMinus, indMinus1);
+      valMinus2 = nodeValues4e(tMinus, indMinus2);
+        % the values of v in node1 and node2 on tMinus if side is an inner edge
     end
+    absNodeJumps4s(side, :) = abs([valPlus1-valMinus1, valPlus2 - valMinus2]);
   end
 end
