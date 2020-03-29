@@ -22,7 +22,7 @@ function params = editable %#ok<*MSNU>
     % showProgress.
   degree4Integrate       = 10; 
     % algebraic degree of exactness for integrate from the AFEM package
-  plotGivenFunctions     = true;
+  plotGivenFunctions     = false;
     % Plot given right-hand side and, if given, exact solution?
   refinementLevel4Plots  = 11; % 11 is very close to the limit
   debugIfError           = true;
