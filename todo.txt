@@ -17,6 +17,30 @@ maybe find out what alpha is and better document it
    are and change them whereever they are documented)
    (tau, epsStop, alpha, beta, Lambda...)
 
+computeExactEnergyBV
+  - don't use dof but nrNodes insteas since dof is probably pretty useless for
+    this (right? think about it)
+   -%% POSTPONED
+    % TODO maybe delete all but the best file with the name
+    %  sprintf('%s/minPrecision_%d_nrDof_%d.txt', ...
+    %    dirName, significantDigits(end), nrDof(end));
+    %
+    %    but this is really unimportant and probably not worth the effort
+
+
+    % nrElems = size(n4e,1);
+    % nrSides = max(max(s4e));
+    % [temp1,temp2,temp3] = computeIntegrals(f,c4n,n4e,200,area4e);
+    % temp = zeros(nrSides,1);
+    % for elem = 1 : nrElems
+    %   temp(s4e(elem,:)) = ...
+    %     temp(s4e(elem,:)) + [temp1(elem),temp2(elem),temp3(elem)]';
+    % end
+    % [~,MAMANC] = computeFeMatrices(c4n,n4e,s4e,area4e,nrElems);
+
+    % du = computeGradientNC(c4n,n4e,u);
+    % E = computeEnergy(area4e,u,du,alpha,temp,MAMANC); end
+
 VARIABLES/FILES TO BE RENAMEND
 (start in editable one parameter at a time and go from big files to subfiles
 one variable at a time and consistent)
@@ -31,6 +55,13 @@ Cr, Bv, Nc, ... also as above (decide sth)
 intRHS4s to sth that has f times psi_j in it or sth like that 
 eg gradF, gradCRu and so on
 
+%% BENCHMARK TODOS JUST COPIED
+% TODO computeGleb flag, not effective for image probably due to missing 
+%      gradients. For H^1_0 examples there always will be gradients probably
+%      on the other hand.
+
+eps stop% TODO sth about updating it depending on mesh size
+stopCrit
 
 GENERAL THESIS TEX STUFF
 
