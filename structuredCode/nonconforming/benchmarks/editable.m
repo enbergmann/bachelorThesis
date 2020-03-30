@@ -1,59 +1,90 @@
-function params = editable %#ok<*MSNU>
+function params = editable %#ok<*MSNU,FNDEF>
+%% DOC
 % Editable prototype for benchmark files.
 % Execute program/startAlgorithmNC(benchmark).m (benchmark name of 
 % benchmark file) to run algorithm.
 % Execute program/computeExactEnergyBV(...) to approximate the exact energy.
 
-% TODO document (or make clear) dependencies, i.e. which flags are
-%      automatically set by which other flags
-% TODO computeGleb flag, not effective for image probably due to missing 
-%      gradients. For H^1_0 examples there always will be gradients probably
-%      on the other hand.
-
 %% PARAMETERS
-
   % misc. parameters (will affect performance)
   showPlots              = false; 
-    % Show plots during iteration?
-  showProgress           = true; 
-    % Print output during iteration?
   plotModeGrayscale      = false; 
-    % Use plotGrayscale instead of plotCR during iteration? Only effective if
-    % showProgress.
+    % not effective if showPlots == false
+  showProgress           = true; 
   degree4Integrate       = 10; 
-    % algebraic degree of exactness for integrate from the AFEM package
   plotGivenFunctions     = true;
-    % Plot given right-hand side and, if given, exact solution?
   refinementLevel4Plots  = 4; % 11 is very close to the limit
+    % not effective if plotGivenFunctions == false
   debugIfError           = false;
-    % Enter debug mode if an error occurs?
+
+  % showPlots             - 'logical' with value 1 if plots must be shown
+  %                         during the iteration and 0 else
+  % plotModeGrayscale     - 'logical' with value 1 if plots during the
+  %                          iteration must be grayscale plots with view from
+  %                          above onto the x-y plane and 0 else 
+  % showProgress          - 'logical' with value 1 if information about the
+  %                         iteration must be printed during the iteration and
+  %                         0 else
+  % degree4Integrate      - 'uint64' containing the algebraic degree of
+  %                          exactness for integrate from the AFEM package that
+  %                          must be used for calculations
+  % plotGivenFunctions    - 'logical' with value 1 if a plot of the right-hand
+  %                         side f and, if given, of the exact solution must
+  %                         be saved and, if showPlots == true, shown
+  % refinementLevel4Plots - 'uint64' containing the refinement level of the 
+  %                         mesh the right-hand side f and, if given, exact
+  %                         solution must be drawn on
+  % debugIfError          - 'logical' with value 1 if MATLAB must enter debug
+  %                         mode if an error occurs during runtime and 0 else
 
   % AFEM parameters
   geometry               = 'BigSquare'; %#ok<NASGU>                     
-    % not necessary if useImage (for now)                     )
-  parTheta               = 0.5;
-    % bulk param. (1 for uniform)
+    % set automatically to 'Square' if useImage == true
   initialRefinementLevel = 0;
+  parTheta               = 0.5;
   minNrDof               = 5e3;
   useProlongation        = true;
   beta4Estimate          = 1;
   n4Estimate             = 2;
-    % dimension, i.e. this should remain 2
+    % this should remain 2
+
+  % geometry               - 'string'/'char array with exactly one row' 
+  %                          containing the name of the geometry the
+  %                          computation must be one
+  % initialRefinementLevel - 'uint64' containing the initial refinement level
+  %                          the geometry must be loaded with by loadGeometry
+  %                          for level 0 of AFEM
+  % parTheta               - 'double' containing the bulk parameter for marking
+  %                          (1 for uniform)
+  % minNrDof               - 'uint64' containing the minimal number of degrees
+  %                          of freedom the last level of AFEM must have before
+  %                          terminating
+  % useProlongation        - 'logical' with value 1 if the prolongation of the
+  %                           solution of a level of AFEM to the refined mesh 
+  %                           for the next level must be used as initial value
+  %                           for the iteration on the next level
+  % beta4Estimate          - 'double' containing the parameter \beta from the
+  %                          problem
+  % n4Estimate             - 'uint64' containing the dimension
 
   % algorithm parameters
-  u0Mode                 = 'zeros'; 
-    % initial iterate for the iteration on level 0 and, if not useProlongation,
-    % for the iterations on all levels
-    % Options:
-    %   'zeros': CR function with all coefficients equal to 0
-    %   'interpolationRhs': CR interpolation of given rhs to the mesh on the
-    %     level
-                                                  
-  epsStop                = 1e-2; % TODO sth about updating it depending on
-                                 %      mesh size
-  stopCrit               = ["Exact Error Difference", ...
-                            "weighted energy difference"];
-  parTau                 = 1/2;
+  u0Mode         = 'zeros'; 
+  initialEpsStop = 1e-2; 
+  stopCrit       = ["Exact Error Difference", ...
+                    "weighted energy difference"]; 
+  parTau         = 1/2;
+
+  % u0Mode         - 'char array with exactly one row' containing the choice
+  %                  for the inital iterate for iteration on level 0 and, if
+  %                  useProlongation == false, for the iterations on all levels
+  %   Options:
+  %                'zeros': CR function with all coefficients equal to 0
+  %     'interpolationRhs': CR interpolation of the right-hand side f to the
+  %                         mesh on the level
+  % initialEpsStop - 'double' containing the initial epsStop for relevant for 
+  %                  the iteration on the first level of AFEM
+  % stopCrit       - TODO
+  % parTau         - 'double' containing the parameter \tau from the algorithm
 
   % experiment parameters
   useImage               = false;
@@ -152,7 +183,7 @@ function params = editable %#ok<*MSNU>
   params.minNrDof = minNrDof;
   params.n4Estimate = n4Estimate;
   params.beta4Estimate = beta4Estimate;
-  params.epsStop = epsStop;
+  params.initialEpsStop = initialEpsStop;
   params.stopCrit = stopCrit;              
   params.useProlongation = useProlongation;      
   params.exactSolutionKnown = exactSolutionKnown; 

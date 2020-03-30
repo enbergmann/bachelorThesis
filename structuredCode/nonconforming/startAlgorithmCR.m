@@ -85,7 +85,7 @@ function startAlgorithmCR(benchmark)
 
   % TODO here sth must be done when there are different possibilities for
   % epsStop
-  currData.epsStop = params.epsStop;
+  currData.epsStop = params.initialEpsStop;
 
 %% MAIN
   while(true)
