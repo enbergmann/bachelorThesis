@@ -1,4 +1,4 @@
-function params = editable %#ok<*MSNU>
+function params = editable %#ok<*MSNU,FNDEF>
 % Editable prototype for benchmark files.
 % Execute program/startAlgorithmNC(benchmark).m (benchmark name of 
 % benchmark file) to run algorithm.

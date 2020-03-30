@@ -95,7 +95,6 @@ function computeExactEnergyBV(geometry, fStr, fStrParams, uStr, uStrParams, ...
     area4e  = computeArea4e(c4n, n4e);
     
     % compute nrDof
-    % TODO dof is pretty useless, right? nrNodes might be sufficient
     s4e = computeS4e(n4e);
     n4s = computeN4s(n4e);
     tempStruct.n4sDb = n4sDb;
@@ -148,24 +147,3 @@ function computeExactEnergyBV(geometry, fStr, fStrParams, uStr, uStrParams, ...
     end
   end
 end
-
-%% POSTPONED
-  % TODO maybe delete all but the best file with the name
-  %  sprintf('%s/minPrecision_%d_nrDof_%d.txt', ...
-  %    dirName, significantDigits(end), nrDof(end));
-  %
-  %    but this is really unimportant and probably not worth the effort
-
-
-  % nrElems = size(n4e,1);
-  % nrSides = max(max(s4e));
-  % [temp1,temp2,temp3] = computeIntegrals(f,c4n,n4e,200,area4e);
-  % temp = zeros(nrSides,1);
-  % for elem = 1 : nrElems
-  %   temp(s4e(elem,:)) = ...
-  %     temp(s4e(elem,:)) + [temp1(elem),temp2(elem),temp3(elem)]';
-  % end
-  % [~,MAMANC] = computeFeMatrices(c4n,n4e,s4e,area4e,nrElems);
-
-  % du = computeGradientNC(c4n,n4e,u);
-  % E = computeEnergy(area4e,u,du,alpha,temp,MAMANC); end
