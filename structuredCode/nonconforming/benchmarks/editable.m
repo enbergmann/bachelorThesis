@@ -88,81 +88,79 @@ function params = editable %#ok<*MSNU,FNDEF>
 
   % experiment parameters
   useImage               = false;
-  imageName              = ...
-    '../utils/functions/images/whiteSquare.tif'; %#ok<NASGU> 
-    % whiteSquare, cameraman
-    % TODO append path automatically
+  imageName              = 'whiteSquare.tif'; %#ok<NASGU> 
+    % not effective if useImage == false
+    % whiteSquare.tif, cameraman.tif
   addNoise               = false; %#ok<NASGU>
-    % TODO probably add ability to denoise rhs and images (might need case
-    % distinction by considering useImage flag)
-    % TODO noise type (see MATLAB imnoise)
+    % not effective if useImage == false
   blurWidth              = 1; %#ok<NASGU>
-    % TODO comment
-    % 1 for nothing  TODO think about it, it might change stuff
-  parAlpha               = 1e0; %1e4 for image example 
-   % TODO why does the analytic example is broken for 1e4
+    % not effective if useImage == false
+  parAlpha               = 1e0; 
   parBeta                = 1;
   exactSolutionKnown     = true; %#ok<NASGU>
+    % set automatically to false if useImage == true
   useExactEnergy         = true; %#ok<NASGU>
-    % only effective if exactSolutionKnown == true
+    % set automatically to false if exactSolutionKnown == false
+  exactEnergy            = -2.05805109; %#ok<NASGU> % 4 significant digits
+    % set automatically to NaN if exactSolutionKnown == false
+    % not effective if useExactEnergy == false
+  saveScreenshots        = 0; 
+                              
+  % useImage           - 'logical' with value 1 if an image given by imageName
+  %                      in the folder '../utils/functions/images/' must be
+  %                      used as right-hand side f for the experiment
+  % imageName          - 'char array with exactly one row' containing the name
+  %                      of the 
+  % addNoise           - TODO   
+  % blurWidth          - TODO    
+  % parAlpha           - 'double' containing the parameter \alpha from the
+  %                      problem
+  % parbeta            - 'double' containing the parameter \beta from the
+  %                      problem
+  % exactSolutionKnown - 'logical' with value 1 if the exact solution to the
+  %                      continuous problem for the given right-hand side is
+  %                      given and 0 else
+  % useExactEnergy     - 'logical' with value 1 if the exact energy given by
+  %                      exactEnergy must be used during runtime
+  % exactEnergy        - 'double' containing the exact energy of the continuous
+  %                      problem for exact solution in H^1_0
+  % saveScreenshots    - %TODO
 
-		% just write it in from the file per hand, with like 10 digits or 
-		% sth.. Think about it.
-    % TODO for now this is also the flag to use gradient of f to compute a
-    % guaranteed lower energy bound
-  % TODO how should the exactEnergy be written into here
-  exactEnergy            = -2.05805109; %#ok<NASGU>
-    % four significant digits
-                              % TODO 
-  saveScreenshots        = 0; % save screenshots every saveScreenshots
-                              % iterations during algorithm, e.g. for the case
-                              % it doesn't finish
-                              % 0 means no screenshots will be saved
-
-  % Information about experiment for saving and documentation.
+  % information about experiment for saving and documentation.
   expName                = 'commentCommon';
   dirInfoName            = sprintf('%s', ...
     datestr(now, 'yy_mm_dd_HH_MM_SS'));
   errorNorm              = ["L2", "energy"]; 
-    %TODO list options (likewise for some other params (think)) strArr maybe
-    %altErrorNorm and always compute L2 error because it's useful for the
-    %estimator (or always L2 and H1 error, if useful, but they probably only
-    %differ bei some constant hence one of those is sufficient (check this))
-    %TODO might call this altError and give only ine option (i.e. there's
-    %always L2 error and maybe altError) UNTIL THEN error4lvl is a fine name
-    %and is always L2 
-    %TODO maybe allow only a fixed amounts of different errors, like only two,
-    %so one can choose L2 and H1 for example so sth like error4lvl,
-    %errorAlt4lvl
-    %TODO probably always have the error for which the estimator is an upper
-    %bound
 
-  % function handles (can be ignored if useImage)
+  % expName     - 'char array with exactly one row' containing the name for the
+  %               folder in '../../results/nonconforming/' where the results of
+  %               the experiment must be saved in
+  % dirInfoName - 'char array with exactly one row' containing the name for the 
+  %               folder in '../../results/nonconforming/expName/' where the 
+  %               results of the experiment must be saved in
+  % errorNorm   - TODO
+
+  % function handles (not effective if useImage == true)
   function y = rightHandSide(x)
-    % TODO pasted-graphic-2.tiff does have a calculation formula to calculate f
-    % from some given function u(r) --> other examples possible (easier even?)
-    % y =  middleSquare(x);
     y =  f01(x, [parAlpha, parBeta]);
   end
 
   function y = gradientRightHandSide(x)
+    % not effective if useExactEnergy == false
     y =  f01Gradient(x, [parAlpha, parBeta]);
   end
 
   function y = exactSolution(x)
-    % can be ignored if exactSolutionKnown == false
+    % not effective if exactSolutionKnown == false
     y = f01ExactSolution(x, parAlpha);
   end
 
 %% BUILD STRUCT
-% should not be of interest for mere usage of the program
+% advanced, not of interest for mere usage of the program
   if useImage
     geometry = 'Square'; %#ok<UNRCH>
-      % TODO for now only on square possible, but 
-      % might be possible on rectangles in general (useful 
-      % though?)
-    exactSolutionKnown = false; % NOTE there won't be exact solutions for
-                                % real images
+    exactSolutionKnown = false; 
+    imageName =  sprintf('../utils/functions/images/%s', imageName);
   end
 
   params.geometry = geometry;
@@ -192,42 +190,6 @@ function params = editable %#ok<*MSNU,FNDEF>
     params.uExact = @(x) exactSolution(x); %#ok<UNRCH>
     params.useExactEnergy = useExactEnergy;
     params.exactEnergy = exactEnergy;
-    % just compute it extrenalyy and only set the flag to true, if the energy is
-    % given (read really exact valye from file)
-    % TODO continue here, when the function is great
-
-
-    %TODO probably compute it here
-    %TODO compute exact energy here and use it e.g. in showProgress instead of
-    % drop useExactEnergy and just use exactEnergy = 3 type params
-    % use insan(exactEnergy) to find out whether exact energy is know or not, 
-    % i.e. exactEnergy = NaN, if it is not known
-    %
-    % function that coputes exact energy should simply refine the mesh mesh
-    % uniformly until it has a million dofs or something and then compute the 
-    % energy and use it for here (might take some time, but only once, hence 
-    % who cares)
-    % this functions must prob. be written without struct s.t. it can be called
-    % from here
-    %
-    % OR
-    % compute exact energy in results where it is needed, but where
-    % meshes are already computed to a certain degree (con: might still need
-    % exact energy during programm (maybe in a termination criterion, even
-    % though this might be stupid since there likely won't be results guaranteen 
-    % sth))
-    %-2.0580.....
-    %
-    %TODO
-    %best solution: first time on mesh and given solution compute it very well
-    %and save it (compute until some timer runs out, with message, saying that
-    %it's computed at the moment)
-    %
-    %use struct [field = geometry, structInner] with structInner [field
-    % = exactSolutionName,
-    %intArray] with 1x2 intArray [nrDof, Error]
-    %
-    %use significant decimals at termination criterion
   else
     params.uExact = @(x) NaN; %#ok<UNRCH>
     params.useExactEnergy = false;
@@ -258,17 +220,10 @@ function params = editable %#ok<*MSNU,FNDEF>
   if useImage
     params.f = image2function(imageName, parAlpha, ...
       addNoise, blurWidth); %#ok<UNRCH>
-    %TODO rewrite and change name
   else
     noise = 0; %#ok<NASGU,UNRCH> 
-    %if addNoise, noise = .4; end;
-    params.f = @(x) rightHandSide(x); %+ noise*(rand-.5);
-    %params.f = @(x) rightHandSide(x) + noise*(rand(size(x,1))-.5);
-    %   but this is a different noise on every level
-    %  TODO what if add noise, this obv doesnt work since it only adds one 
-    %  random number
-    if useExactEnergy %TODO this is also possible without exact energy
-                      % just needs to rewrite some stuff in saveResults etc.
+    params.f = @(x) rightHandSide(x); 
+    if useExactEnergy 
       params.gradF = @(x) gradientRightHandSide(x);
     end
   end

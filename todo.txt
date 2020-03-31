@@ -63,6 +63,90 @@ eg gradF, gradCRu and so on
 eps stop% TODO sth about updating it depending on mesh size
 stopCrit
 
+geometry
+% TODO for now only on square possible, but 
+% might be possible on rectangles in general (useful 
+% though?)
+
+exactEnergy variant of loading exact energy, maybe?
+ % just compute it extrenalyy and only set the flag to true, if the energy is
+ % given (read really exact valye from file)
+ % TODO continue here, when the function is great
+ %TODO probably compute it here
+ %TODO compute exact energy here and use it e.g. in showProgress instead of
+ % drop useExactEnergy and just use exactEnergy = 3 type params
+ % use insan(exactEnergy) to find out whether exact energy is know or not, 
+ % i.e. exactEnergy = NaN, if it is not known
+ %
+ % function that coputes exact energy should simply refine the mesh mesh
+ % uniformly until it has a million dofs or something and then compute the 
+ % energy and use it for here (might take some time, but only once, hence 
+ % who cares)
+ % this functions must prob. be written without struct s.t. it can be called
+ % from here
+ %
+ % OR
+ % compute exact energy in results where it is needed, but where
+ % meshes are already computed to a certain degree (con: might still need
+ % exact energy during programm (maybe in a termination criterion, even
+ % though this might be stupid since there likely won't be results guaranteen 
+ % sth))
+ %-2.0580.....
+ %
+ %TODO
+ %best solution: first time on mesh and given solution compute it very well
+ %and save it (compute until some timer runs out, with message, saying that
+ %it's computed at the moment)
+ %
+ %use struct [field = geometry, structInner] with structInner [field
+ % = exactSolutionName,
+ %intArray] with 1x2 intArray [nrDof, Error]
+ %
+ %use significant decimals at termination criterion
+
+% TODO probably add ability to denoise rhs and images (might need case
+% distinction by considering useImage flag)
+% TODO noise type (see MATLAB imnoise)
+
+blurWidth % 1 for nothing  TODO think about it, it might change stuff
+
+parAlpha % TODO why does the analytic example is broken for 1e4
+
+errorNorm
+%TODO list options (likewise for some other params (think)) strArr maybe
+%altErrorNorm and always compute L2 error because it's useful for the
+%estimator (or always L2 and H1 error, if useful, but they probably only
+%differ bei some constant hence one of those is sufficient (check this))
+%TODO might call this altError and give only ine option (i.e. there's
+%always L2 error and maybe altError) UNTIL THEN error4lvl is a fine name
+%and is always L2 
+%TODO maybe allow only a fixed amounts of different errors, like only two,
+%so one can choose L2 and H1 for example so sth like error4lvl,
+%errorAlt4lvl
+%TODO probably always have the error for which the estimator is an upper
+%bound
+
+function rightHandSide
+ % TODO pasted-graphic-2.tiff does have a calculation formula to calculate f
+ % from some given function u(r) --> other examples possible (easier even?)
+ % y =  middleSquare(x);
+
+image2function
+ %TODO rewrite and change name
+ 
+gradientRHS and therefore gleb can also be used if useExactEnergy == false
+ if useExactEnergy %TODO this is also possible without exact energy
+                   % just needs to rewrite some stuff in saveResults etc.
+
+some noise stuff
+    noise = 0; %#ok<NASGU,UNRCH> 
+    % if addNoise, noise = .4; end;
+    params.f = @(x) rightHandSide(x); %+ noise*(rand-.5);
+    %params.f = @(x) rightHandSide(x) + noise*(rand(size(x,1))-.5);
+    %   but this is a different noise on every level
+    %  TODO what if add noise, this obv doesnt work since it only adds one 
+    %  random number
+
 GENERAL THESIS TEX STUFF
 
 CSU, Young etc einmal aufschreiben --> Appendix?
