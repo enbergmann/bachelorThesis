@@ -1,11 +1,11 @@
 function computeExactEnergyBV(geometry, fStr, fStrParams, uStr, uStrParams, ...
     gradUStr, gradUStrParams, parAlpha, ...,
-    minNrDof, minPrecision, degree4Integrate)
+    minNrInnerEdges, minPrecision, degree4Integrate)
 %% DOC
 % Computes and saves an approximation (at least up to precision minPrecision
-% and minNrDof dofs) of the exact BV energy of a H^1_0 function u, whose
-% pointwise gradient is known, for a right-hand side f on a mesh given by
-% geometry.
+% and minNrInnerEdges inner edges) of the exact BV energy of a H^1_0 function
+% u, whose pointwise gradient is known, for a right-hand side f on a mesh given
+% by geometry.
 %
 % computeExactEnergyBV.m
 % input: geometry         - 'char array with exactly one row' containing the 
@@ -34,8 +34,9 @@ function computeExactEnergyBV(geometry, fStr, fStrParams, uStr, uStrParams, ...
 %                           gradient of u needs no further parameters)
 %        parAlpha         - 'double' parameter alpha necessary for the 
 %                           computation of the energy
-%        minNrDof         - 'uint64' minimal number of dofs of the finest, red 
-%                           refined, mesh on which the energy is approximated
+%        minNrInnerEdges  - 'uint64' minimal number of inner edges of the
+%                           finest, red refined, mesh on which the energy is
+%                           approximated
 %        minPrecision     - 'uint64' minimal number of significant digits the 
 %                           approximation of the energy should possess
 %        degree4Integrate - 'uint64' up to which the integration in integrate
@@ -49,7 +50,7 @@ function computeExactEnergyBV(geometry, fStr, fStrParams, uStr, uStrParams, ...
     if nargin < 10
       minPrecision = 2;
       if nargin < 9
-        minNrDof = 1e4;
+        minNrInnerEdges = 1e4;
       end
     end
   end
@@ -79,7 +80,7 @@ function computeExactEnergyBV(geometry, fStr, fStrParams, uStr, uStrParams, ...
 
   output = struct;
 
-  nrDof = [];
+  nrInnerEdges = [];
   energy = [];
   significantDigits = 0;
   
@@ -95,15 +96,15 @@ function computeExactEnergyBV(geometry, fStr, fStrParams, uStr, uStrParams, ...
 
     area4e  = computeArea4e(c4n, n4e);
     
-    % compute nrDof
+    % compute nrInnerEdges
     s4e = computeS4e(n4e);
     n4s = computeN4s(n4e);
     tempStruct.n4sDb = n4sDb;
     tempStruct.s4n = computeS4n(n4e, n4s);
     tempStruct.nrSides = max(max(s4e));
     dof = computeDofCR(tempStruct);
-    nrDof(end+1,1) = length(dof);%#ok<AGROW>
-    output.nrDof = nrDof;
+    nrInnerEdges(end+1,1) = length(dof);%#ok<AGROW>
+    output.nrInnerEdges = nrInnerEdges;
 
     % compute energy
     energy(end+1,1) = sum(...
@@ -130,21 +131,22 @@ function computeExactEnergyBV(geometry, fStr, fStrParams, uStr, uStrParams, ...
 
     % display status of computation
     fprintf([repmat('\n',1,50), ...
-      '    minNrDof = %e\n    minPrecision = %d\n\n'], minNrDof, minPrecision);
+      '    minNrInnerEdges = %e\n    minPrecision = %d\n\n'], ...
+      minNrInnerEdges, minPrecision);
     disp(struct2table(output));
 
     % save results
-    name = sprintf('%s/nrDof_%d_significantDigits_%d.txt', ...
-      dirName, nrDof(end), significantDigits(end));
+    name = sprintf('%s/nrInnerEdges%d_significantDigits_%d.txt', ...
+      dirName, nrInnerEdges(end), significantDigits(end));
 
     file = fopen(name, 'w');
-    fprintf(file, 'nrDof   energy   significantDigits\n');
-    fprintf(file, '%d   %.30g   %d\n', [nrDof, energy, significantDigits]');
+    fprintf(file, 'nrInnerEdges   energy   significantDigits\n');
+    fprintf(file, '%d   %.30g   %d\n', ...
+      [nrInnerEdges, energy, significantDigits]');
     fclose(file);
 
     % check termination
-    if nrDof(end) > minNrDof && significantDigits(end)>=minPrecision
-      break
-    end
+    if nrInnerEdges(end)>minNrInnerEdges && ...
+        significantDigits(end)>=minPrecision, break; end
   end
 end

@@ -1,7 +1,5 @@
 CURRENT TODOS
 
-finally rework editable with comments and so on
-
 tiens initPrimalDual has degrees degreeF+1 and for intFSq4e it has degreeF*2
 which leads to a pretty different eta from me (around 2 difference on small
 levels) is this choice for degree significant and really important for correct
@@ -12,34 +10,22 @@ sgn\partial_r u is supposed to mean
 
 denoising example mode plus plots(ask tien what is useful and what isn't)
 
+if polygon mesh should ever be used again it should be created by using 
+  markUniform und refine up to inital level such that the refinement is always
+  the same and not red-refinement for this one case
+
 maybe find out what alpha is and better document it
  do this for all variables from the experiment (at some point think what they 
    are and change them whereever they are documented)
    (tau, epsStop, alpha, beta, Lambda...)
 
 computeExactEnergyBV
-  - don't use dof but nrNodes insteas since dof is probably pretty useless for
-    this (right? think about it)
    -%% POSTPONED
     % TODO maybe delete all but the best file with the name
     %  sprintf('%s/minPrecision_%d_nrDof_%d.txt', ...
     %    dirName, significantDigits(end), nrDof(end));
     %
     %    but this is really unimportant and probably not worth the effort
-
-
-    % nrElems = size(n4e,1);
-    % nrSides = max(max(s4e));
-    % [temp1,temp2,temp3] = computeIntegrals(f,c4n,n4e,200,area4e);
-    % temp = zeros(nrSides,1);
-    % for elem = 1 : nrElems
-    %   temp(s4e(elem,:)) = ...
-    %     temp(s4e(elem,:)) + [temp1(elem),temp2(elem),temp3(elem)]';
-    % end
-    % [~,MAMANC] = computeFeMatrices(c4n,n4e,s4e,area4e,nrElems);
-
-    % du = computeGradientNC(c4n,n4e,u);
-    % E = computeEnergy(area4e,u,du,alpha,temp,MAMANC); end
 
 VARIABLES/FILES TO BE RENAMEND
 (start in editable one parameter at a time and go from big files to subfiles
@@ -146,6 +132,10 @@ some noise stuff
     %   but this is a different noise on every level
     %  TODO what if add noise, this obv doesnt work since it only adds one 
     %  random number
+
+
+
+
 
 GENERAL THESIS TEX STUFF
 
