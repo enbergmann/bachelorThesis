@@ -87,7 +87,7 @@ function params = editable %#ok<*MSNU,FNDEF>
   % parTau         - 'double' containing the parameter \tau from the algorithm
 
   % experiment parameters
-  useImage               = false;
+  useImage               = true;
   imageName              = 'whiteSquare.tif'; %#ok<NASGU> 
     % not effective if useImage == false
     % whiteSquare.tif, cameraman.tif
@@ -95,7 +95,7 @@ function params = editable %#ok<*MSNU,FNDEF>
     % not effective if useImage == false
   blurWidth              = 1; %#ok<NASGU>
     % not effective if useImage == false
-  parAlpha               = 1e0; 
+  parAlpha               = 1e2; 
   parBeta                = 1;
   exactSolutionKnown     = true; %#ok<NASGU>
     % set automatically to false if useImage == true
@@ -127,7 +127,7 @@ function params = editable %#ok<*MSNU,FNDEF>
   % saveScreenshots    - %TODO
 
   % information about experiment for saving and documentation.
-  expName                = 'commentCommon';
+  expName                = 'noiseAgain';
   dirInfoName            = sprintf('%s', ...
     datestr(now, 'yy_mm_dd_HH_MM_SS'));
   errorNorm              = ["L2", "energy"]; 
