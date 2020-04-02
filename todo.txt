@@ -5,9 +5,6 @@ which leads to a pretty different eta from me (around 2 difference on small
 levels) is this choice for degree significant and really important for correct
 results or is that not the case
 
-understand PastedGraphic-2.tiff, i.e. how to compute f from u and what
-sgn\partial_r u is supposed to mean
-
 denoising example mode plus plots(ask tien what is useful and what isn't)
 
 if polygon mesh should ever be used again it should be created by using 
