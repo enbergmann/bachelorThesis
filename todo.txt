@@ -1,5 +1,10 @@
 CURRENT TODOS
 
+FOR REPORT
+  rename gleb to exactEnergy-GLEB
+  also plot |energy-exactEnergy|
+
+
 tiens initPrimalDual has degrees degreeF+1 and for intFSq4e it has degreeF*2
 which leads to a pretty different eta from me (around 2 difference on small
 levels) is this choice for degree significant and really important for correct
