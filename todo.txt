@@ -4,6 +4,11 @@ FOR REPORT
   rename gleb to exactEnergy-GLEB
   also plot |energy-exactEnergy|
 
+further examples: sgn discont is totally broken, only f01 discont seems to work 
+                  kinda (but are the rates (in particular) GLEB worse?)
+  for f02 compute gradient and exact energy
+
+probably actually think about reading exact energy from known energies
 
 tiens initPrimalDual has degrees degreeF+1 and for intFSq4e it has degreeF*2
 which leads to a pretty different eta from me (around 2 difference on small
