@@ -13,7 +13,7 @@ function params = editable %#ok<*MSNU,FNDEF>
   showProgress           = true; 
   degree4Integrate       = 10; 
   plotGivenFunctions     = true;
-  refinementLevel4Plots  = 4; % 11 is very close to the limit
+  refinementLevel4Plots  = 6; % 11 is very close to the limit
     % not effective if plotGivenFunctions == false
   debugIfError           = false;
 
@@ -87,7 +87,7 @@ function params = editable %#ok<*MSNU,FNDEF>
   % parTau         - 'double' containing the parameter \tau from the algorithm
 
   % experiment parameters
-  useImage               = true;
+  useImage               = false;
   imageName              = 'whiteSquare.tif'; %#ok<NASGU> 
     % not effective if useImage == false
     % whiteSquare.tif, cameraman.tif
@@ -95,7 +95,7 @@ function params = editable %#ok<*MSNU,FNDEF>
     % not effective if useImage == false
   blurWidth              = 1; %#ok<NASGU>
     % not effective if useImage == false
-  parAlpha               = 1e2; 
+  parAlpha               = 1e0; 
   parBeta                = 1;
   exactSolutionKnown     = true; %#ok<NASGU>
     % set automatically to false if useImage == true
@@ -127,7 +127,7 @@ function params = editable %#ok<*MSNU,FNDEF>
   % saveScreenshots    - %TODO
 
   % information about experiment for saving and documentation.
-  expName                = 'noiseAgain';
+  expName                = 'f01DiscontTest';
   dirInfoName            = sprintf('%s', ...
     datestr(now, 'yy_mm_dd_HH_MM_SS'));
   errorNorm              = ["L2", "energy"]; 
@@ -142,7 +142,7 @@ function params = editable %#ok<*MSNU,FNDEF>
 
   % function handles (not effective if useImage == true)
   function y = rightHandSide(x)
-    y =  f01(x, [parAlpha, parBeta]);
+    y =  f01Discontinuous(x, [parAlpha, parBeta]);
   end
 
   function y = gradientRightHandSide(x)
