@@ -1,0 +1,25 @@
+\section{Konstruktion eines Experiments mit exakter Lösung}
+Um eine rechte Seite zu finden, zu der die exakte Lösung bekannt
+ist, wähle eine Funktion des Radius $u\in H^1_0([0,1])$ mit Träger im 
+zweidimensionalen Einheitskreis. Insbesondere muss damit gelten $u(1)=0$ und
+$u$ stetig.
+Die rechte Seite als Funktion des Radius $f\in L^2([0,1])$ ist dann gegeben
+durch 
+\begin{align*}
+  f \coloneqq 
+  \alpha u - \partial_r(\sign(\partial_r u)) - \frac{\sign(\partial_r u)}{r},
+\end{align*}
+wobei für $F\in\Rbb^2\setminus\{0\}$ gilt 
+$\sign(F)\coloneqq \left\{\frac{F}{|F|}\right\}$ 
+und $\sign(0)\in B_1(0)$.
+Damit außerdem gilt $f\in H^1_0([0,1])$, was z.B.\ für GLEB relevant ist, 
+muss also noch Stetigkeit von $\sign(\partial_r u)$ und 
+$\partial_r(\sign(\partial_r u))$ verlangt werden und 
+$\partial_r(\sign(\partial_r u(1))=\sign(\partial_r u(1))=0$.
+
+Auf diese Weise erhält man die Experiment TODO
+
+Dann berechnet man Gradienten von u und f indem TODO
+Und dann berechnet man exakte Energie mit Funktion TODO indem TODO
+
+Dann kann man das Programm nutzen.
