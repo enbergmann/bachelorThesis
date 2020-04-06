@@ -6,7 +6,11 @@ FOR REPORT
 
 further examples: sgn discont is totally broken, only f01 discont seems to work 
                   kinda (but are the rates (in particular) GLEB worse?)
-  for f02 compute gradient and exact energy
+  for f02 experiment with alpha, since u is totally independent of that 
+  parameter. What happens?
+  f02 doesn't work, zero is to broken, maybe f03 will do?
+  
+  Same idea, why does f01 brake for high alpha?
 
 probably actually think about reading exact energy from known energies
 
