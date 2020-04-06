@@ -69,7 +69,7 @@ function params = editable %#ok<*MSNU,FNDEF>
 
   % algorithm parameters
   u0Mode         = 'zeros'; 
-  initialEpsStop = 1e-2; 
+  initialEpsStop = 1e-4; 
   stopCrit       = ["Exact Error Difference", ...
                     "weighted energy difference"]; 
   parTau         = 1/2;
@@ -99,7 +99,7 @@ function params = editable %#ok<*MSNU,FNDEF>
   parBeta                = 1;
   exactSolutionKnown     = true; %#ok<NASGU>
     % set automatically to false if useImage == true
-  useExactEnergy         = true; %#ok<NASGU>
+  useExactEnergy         = false; %#ok<NASGU>
     % set automatically to false if exactSolutionKnown == false
   exactEnergy            = -2.05805109; %#ok<NASGU> % 4 significant digits
     % set automatically to NaN if exactSolutionKnown == false
@@ -127,7 +127,7 @@ function params = editable %#ok<*MSNU,FNDEF>
   % saveScreenshots    - %TODO
 
   % information about experiment for saving and documentation.
-  expName                = 'f01DiscontTest';
+  expName                = 'f02Test';
   dirInfoName            = sprintf('%s', ...
     datestr(now, 'yy_mm_dd_HH_MM_SS'));
   errorNorm              = ["L2", "energy"]; 
@@ -142,17 +142,17 @@ function params = editable %#ok<*MSNU,FNDEF>
 
   % function handles (not effective if useImage == true)
   function y = rightHandSide(x)
-    y =  f01Discontinuous(x, [parAlpha, parBeta]);
+    y =  f02(x, parAlpha);
   end
 
   function y = gradientRightHandSide(x)
     % not effective if useExactEnergy == false
-    y =  f01Gradient(x, [parAlpha, parBeta]);
+    y =  f02Gradient(x, parAlpha);
   end
 
   function y = exactSolution(x)
     % not effective if exactSolutionKnown == false
-    y = f01ExactSolution(x, parAlpha);
+    y = f02ExactSolution(x);
   end
 
 %% BUILD STRUCT
