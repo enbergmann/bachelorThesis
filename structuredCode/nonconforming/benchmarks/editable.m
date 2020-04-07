@@ -69,7 +69,7 @@ function params = editable %#ok<*MSNU,FNDEF>
 
   % algorithm parameters
   u0Mode         = 'zeros'; 
-  initialEpsStop = 1e-4; 
+  initialEpsStop = 1e-3; 
   stopCrit       = ["Exact Error Difference", ...
                     "weighted energy difference"]; 
   parTau         = 1/2;
@@ -96,7 +96,7 @@ function params = editable %#ok<*MSNU,FNDEF>
   blurWidth              = 1; %#ok<NASGU>
     % not effective if useImage == false
   parAlpha               = 1e0; 
-  parBeta                = 1;
+  parBeta                = 1/2;
   exactSolutionKnown     = true; %#ok<NASGU>
     % set automatically to false if useImage == true
   useExactEnergy         = false; %#ok<NASGU>
@@ -127,7 +127,7 @@ function params = editable %#ok<*MSNU,FNDEF>
   % saveScreenshots    - %TODO
 
   % information about experiment for saving and documentation.
-  expName                = 'f02Test';
+  expName                = 'f02GoodTest';
   dirInfoName            = sprintf('%s', ...
     datestr(now, 'yy_mm_dd_HH_MM_SS'));
   errorNorm              = ["L2", "energy"]; 
@@ -142,7 +142,7 @@ function params = editable %#ok<*MSNU,FNDEF>
 
   % function handles (not effective if useImage == true)
   function y = rightHandSide(x)
-    y =  f02(x, parAlpha);
+    y =  f02(x, [parAlpha, parBeta]);
   end
 
   function y = gradientRightHandSide(x)
@@ -152,7 +152,7 @@ function params = editable %#ok<*MSNU,FNDEF>
 
   function y = exactSolution(x)
     % not effective if exactSolutionKnown == false
-    y = f02ExactSolution(x);
+    y = f02ExactSolution(x, parBeta);
   end
 
 %% BUILD STRUCT
