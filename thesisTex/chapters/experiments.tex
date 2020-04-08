@@ -16,8 +16,32 @@ Damit außerdem gilt $f\in H^1_0([0,1])$, was z.B.\ für GLEB relevant ist,
 muss also noch Stetigkeit von $\sign(\partial_r u)$ und 
 $\partial_r(\sign(\partial_r u))$ verlangt werden und 
 $\partial_r(\sign(\partial_r u(1))=\sign(\partial_r u(1))=0$.
+Damit $f$ in $0$ definierbar ist, muss auch gelten 
+$\sign(\partial_r u) \in o(r)$ für $r\to 0$.
 
-Auf diese Weise erhält man die rechten Seiten
+Damit erhält man für die Funktion
+\begin{align*}
+  u_1(r)\coloneqq
+  \begin{cases}
+    1, & \text{wenn } 0\leq r\leq\frac{1}{6},\\
+    1+(6r-1)^\beta, & \text{wenn } \frac{1}{6}\leq r\leq\frac{1}{3},\\
+    2, &\text{wenn } \frac{1}{3}\leq r\leq\frac{1}{2},\\
+    2(\frac{5}{2}-3r)^\beta, &\text{wenn } \frac{1}{2}\leq r\leq\frac{5}{6},\\
+    0, &\text{wenn } \frac{5}{6}\leq r\leq 1,
+  \end{cases}
+\end{align*}
+wobei $\beta\geq 1/2$, mit der Wahl
+\begin{align*}
+  \sign(\partial_r u_1(r)) =
+  \begin{cases}
+    12r-36r^2, & \text{wenn } 0\leq r\leq\frac{1}{6},\\
+    1, & \text{wenn } \frac{1}{6}\leq r\leq\frac{1}{3},\\
+    \cos(\pi(6r-2)), &\text{wenn } \frac{1}{3}\leq r\leq\frac{1}{2},\\
+    -1, &\text{wenn } \frac{1}{2}\leq r\leq\frac{5}{6},\\
+    -\frac{1+\cos(\pi(6r-5))}{2}, &\text{wenn } \frac{5}{6}\leq r\leq 1,
+  \end{cases}
+\end{align*}
+die rechte Seite
 \begin{align*}
   f_1(r)\coloneqq 
   \begin{cases}
@@ -29,38 +53,43 @@ Auf diese Weise erhält man die rechten Seiten
     2\alpha(\frac{5}{2}-3r)^\beta+\frac{1}{r},&
     \text{wenn } \frac{1}{2}\leq r\leq\frac{5}{6},\\
     -3\pi\sin(\pi(6r-5))+\frac{1+\cos(\pi(6r-5))}{2r}, &
-    \text{wenn } \frac{5}{6}\leq r\leq 1,
+    \text{wenn } \frac{5}{6}\leq r\leq 1.
   \end{cases}
 \end{align*}
-mit exakter Lösung
-\begin{align*}
-  u_1(r)\coloneqq
-  \begin{cases}
-    1, & \text{wenn } 0\leq r\leq\frac{1}{6},\\
-    1+(6r-1)^\beta, & \text{wenn } \frac{1}{6}\leq r\leq
-    \frac{1}{3},\\
-    2, &
-    \text{wenn } \frac{1}{3}\leq r\leq\frac{1}{2},\\
-    2(\frac{5}{2}-3r)^\beta, &
-    \text{wenn } \frac{1}{2}\leq r\leq\frac{5}{6},\\
-    0, &
-    \text{wenn } \frac{5}{6}\leq r\leq 1
-  \end{cases}
-\end{align*}
-und
-\begin{align*}
-  f_2(r)\coloneqq 
-  \begin{cases}
-    \alpha(-2r+1), & \text{wenn } 0\leq r\leq\frac{1}{2},\\
-    64r^2-108r+48-\frac{4}{r}, & \text{wenn } \frac{1}{2}\leq r\leq 1,
-  \end{cases}
-\end{align*}
-mit exakter Lösung
+
+Für die Funktion
 \begin{align*}
   u_2(r)\coloneqq 
   \begin{cases}
-    -2r+1, & \text{wenn } 0\leq r\leq\frac{1}{2},\\
-    0, & \text{wenn } \frac{1}{2}\leq r\leq 1.
+    1, & \text{wenn } 0\leq r\leq\frac{1-\beta}{2},\\
+    -\frac{1}{\beta}r + \frac{1+\beta}{2\beta}, & 
+    \text{wenn } \frac{1-\beta}{2}\leq r\leq \frac{1+\beta}{2},\\
+    0, & \text{wenn } \frac{1+\beta}{2}\leq r\leq 1,
+  \end{cases}
+\end{align*}
+mit der Wahl
+\begin{align*}
+  \sign(\partial_r u_2(r))\coloneqq 
+  \begin{cases}
+    \frac{4}{1-\beta}r\left(\frac{1}{1-\beta}r -1\right), &
+    \text{wenn } 0\leq r\leq\frac{1-\beta}{2},\\
+    -1, & \text{wenn } \frac{1-\beta}{2}\leq r\leq \frac{1+\beta}{2},\\
+    \frac{4}{(\beta-1)^3}
+    \left( 4r^3-3(\beta+3)r^2 +6(\beta+1)r-3\beta-1\right), & 
+    \text{wenn } \frac{1+\beta}{2}\leq r\leq 1,
+  \end{cases}
+\end{align*}
+die rechte Seite
+\begin{align*}
+  f_2(r)\coloneqq 
+  \begin{cases}
+    \alpha - \frac{4}{1-\beta}\left(\frac{3}{1-\beta}r - 2\right), &
+    \text{wenn } 0\leq r\leq\frac{1-\beta}{2},\\
+    -\frac{\alpha}{\beta}\left( r-\frac{1+\beta}{2} \right) +\frac{1}{r}, & 
+    \text{wenn } \frac{1-\beta}{2}\leq r\leq \frac{1+\beta}{2},\\
+    \frac{-4}{(\beta-1)^3}
+    \left( 16r^2 -9(\beta+3)r + 12(\beta+1) - \frac{3\beta+1}{r}\right), & 
+    \text{wenn } \frac{1+\beta}{2}\leq r\leq 1.
   \end{cases}
 \end{align*}
 
