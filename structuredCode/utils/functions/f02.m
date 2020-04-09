@@ -5,10 +5,10 @@ function y = f02(x, args)
   r = sqrt(sum(x.^2, 2));
   y = zeros(length(r), 1);
  
-  ind = 0<=r & r<=(1 - parBeta)/2;
-  y(ind) = parAlpha - 12/(1 - parBeta)^2*r(ind) + 8/(1 - parBeta);
+  ind = r<=(1 - parBeta)/2;
+  y(ind) = parAlpha - 4/(1 - parBeta)*(3/(1 - parBeta)*r(ind) - 2);
 
-  ind = (1 - parBeta)/2<=r & r<=(1 + parBeta)/2;
+  ind = (1 - parBeta)/2<r & r<=(1 + parBeta)/2;
   rTemp = r(ind);
   y(ind) = -parAlpha/parBeta*(rTemp - (1 + parBeta)/2) + 1./rTemp;
 
