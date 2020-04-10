@@ -133,7 +133,7 @@ function params = editable %#ok<*MSNU,FNDEF>
   blurWidth              = 1; %#ok<NASGU>
     % not effective if useImage == false
   parAlpha               = 1e0; 
-  parBeta                = 1/2;
+  parBeta                = 9/10;
   exactSolutionKnown     = true; %#ok<NASGU>
     % set automatically to false if useImage == true
   useExactEnergy         = true; %#ok<NASGU>
@@ -144,7 +144,7 @@ function params = editable %#ok<*MSNU,FNDEF>
   saveScreenshots        = 0; 
                               
   % information about experiment for saving and documentation.
-  expName                = 'f02_1_2a1e-4';
+  expName                = 'f02_9_10a1e-4';
   dirInfoName            = sprintf('%s', ...
     datestr(now, 'yy_mm_dd_HH_MM_SS'));
   errorNorm              = ["L2", "energy"]; 

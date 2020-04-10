@@ -101,7 +101,7 @@ function params = editable %#ok<*MSNU,FNDEF>
   showProgress           = true; 
   degree4Integrate       = 10; 
   plotGivenFunctions     = true;
-  refinementLevel4Plots  = 6; % 11 is very close to the limit
+  refinementLevel4Plots  = 9; % 11 is very close to the limit
     % not effective if plotGivenFunctions == false
   debugIfError           = false;
 
@@ -110,7 +110,7 @@ function params = editable %#ok<*MSNU,FNDEF>
     % set automatically to 'Square' if useImage == true
   initialRefinementLevel = 0;
   parTheta               = 0.5;
-  minNrDof               = 1e4;
+  minNrDof               = 1e9;
   useProlongation        = true;
   beta4Estimate          = 1;
   n4Estimate             = 2;
@@ -118,7 +118,7 @@ function params = editable %#ok<*MSNU,FNDEF>
 
   % algorithm parameters
   u0Mode         = 'zeros'; 
-  initialEpsStop = 1e-3; 
+  initialEpsStop = 1e-4; 
   stopCrit       = ["Exact Error Difference", ...
                     "weighted energy difference"]; 
   parTau         = 1/2;
@@ -144,7 +144,7 @@ function params = editable %#ok<*MSNU,FNDEF>
   saveScreenshots        = 0; 
                               
   % information about experiment for saving and documentation.
-  expName                = 'f01Results';
+  expName                = 'f01a1e-4';
   dirInfoName            = sprintf('%s', ...
     datestr(now, 'yy_mm_dd_HH_MM_SS'));
   errorNorm              = ["L2", "energy"]; 
