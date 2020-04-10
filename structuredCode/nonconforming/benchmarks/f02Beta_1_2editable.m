@@ -136,15 +136,15 @@ function params = editable %#ok<*MSNU,FNDEF>
   parBeta                = 1/2;
   exactSolutionKnown     = true; %#ok<NASGU>
     % set automatically to false if useImage == true
-  useExactEnergy         = false; %#ok<NASGU>
+  useExactEnergy         = true; %#ok<NASGU>
     % set automatically to false if exactSolutionKnown == false
-  exactEnergy            = -2.05805109; %#ok<NASGU> % 4 significant digits
+  exactEnergy            = -0.29452909; %#ok<NASGU> % 4 significant digits
     % set automatically to NaN if exactSolutionKnown == false
     % not effective if useExactEnergy == false
   saveScreenshots        = 0; 
                               
   % information about experiment for saving and documentation.
-  expName                = 'f02GoodTest';
+  expName                = 'f02Beta_1_2Results';
   dirInfoName            = sprintf('%s', ...
     datestr(now, 'yy_mm_dd_HH_MM_SS'));
   errorNorm              = ["L2", "energy"]; 
@@ -156,7 +156,7 @@ function params = editable %#ok<*MSNU,FNDEF>
 
   function y = gradientRightHandSide(x)
     % not effective if useExactEnergy == false
-    y =  f02Gradient(x, parAlpha);
+    y =  f02Gradient(x, [parAlpha, parBeta]);
   end
 
   function y = exactSolution(x)
