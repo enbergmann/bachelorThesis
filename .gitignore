@@ -1,5 +1,5 @@
 proGit.pdf
-sources/additionalSources
+sources/additionalSources/
 code/version1/program/evaluation/*.txt
 code/s1Version/program/evaluation/*.txt
 *.out
@@ -18,3 +18,4 @@ l2Error_1e-*
 code/version1/program/t.mat
 code/version1/program/test.mat
 importantProfiles/
+structuredCode/nonconforming/knownExactEnergies/
