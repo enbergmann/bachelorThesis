@@ -95,7 +95,7 @@ function params = editable %#ok<*MSNU,FNDEF>
 
 %% PARAMETERS
   % misc. parameters (will affect performance)
-  showPlots              = false; 
+  showPlots              = true; 
   plotModeGrayscale      = false; 
     % not effective if showPlots == false
   showProgress           = true; 
@@ -132,9 +132,9 @@ function params = editable %#ok<*MSNU,FNDEF>
     % not effective if useImage == false
   blurWidth              = 1; %#ok<NASGU>
     % not effective if useImage == false
-  parAlpha               = 1e0; 
+  parAlpha               = 1e4; 
   parBeta                = 1/2;
-  exactSolutionKnown     = true; %#ok<NASGU>
+  exactSolutionKnown     = false; %#ok<NASGU>
     % set automatically to false if useImage == true
   useExactEnergy         = false; %#ok<NASGU>
     % set automatically to false if exactSolutionKnown == false
@@ -144,19 +144,19 @@ function params = editable %#ok<*MSNU,FNDEF>
   saveScreenshots        = 0; 
                               
   % information about experiment for saving and documentation.
-  expName                = 'f02GoodTest';
+  expName                = 'bubbleBigSquare';
   dirInfoName            = sprintf('%s', ...
     datestr(now, 'yy_mm_dd_HH_MM_SS'));
   errorNorm              = ["L2", "energy"]; 
 
   % function handles (not effective if useImage == true)
   function y = rightHandSide(x)
-    y =  f02(x, [parAlpha, parBeta]);
+    y =  bubble(x);
   end
 
   function y = gradientRightHandSide(x)
     % not effective if useExactEnergy == false
-    y =  f02Gradient(x, parAlpha);
+    y =  bubbleGradient(x);
   end
 
   function y = exactSolution(x)
