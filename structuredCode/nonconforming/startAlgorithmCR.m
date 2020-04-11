@@ -36,6 +36,7 @@ function startAlgorithmCR(benchmark)
   minNrDof = params.minNrDof;
   parTheta = params.parTheta;
   useProlongation = params.useProlongation;
+  rhsGradientKnown = params.rhsGradientKnown;
   useExactEnergy = params.useExactEnergy;
   exactEnergy = params.exactEnergy;
   u0Mode = params.u0Mode;
@@ -58,9 +59,11 @@ function startAlgorithmCR(benchmark)
 
   outputLvlEnergy.lvl = lvl;
   outputLvlEnergy.energy = [];
-  if useExactEnergy 
+  if useExactEnergy, outputLvlEnergy.diffDiscExactE = []; end
+  if rhsGradientKnown 
     outputLvlEnergy.gleb = []; 
-    outputLvlEnergy.diffGlebExactE = [];
+    if useExactEnergy, outputLvlEnergy.diffGlebExactE = []; end
+    outputLvlEnergy.diffGlebDiscreteE = [];
   end
   
   % initialize currData (struct with parameters and data for the level)
@@ -142,15 +145,22 @@ function startAlgorithmCR(benchmark)
     output.energyVec = energyVec;
     output.u = u;
     outputLvlInfo.nrIterations(end+1, 1) = length(energyVec);
+    if useExactEnergy 
+      outputLvlEnergy.diffDiscExactE(end+1, 1) = ...
+        abs(exactEnergy - energyVec(end)); 
+    end
 
     output.normDiffRhsSolCrSquared4e = ...
       computeNormDiffRhsSolCrSquared4e(params, currData, output);
 
     % compute guaranteed lower energy bound
-    if useExactEnergy
+    if rhsGradientKnown
       glebCurr = computeGleb(params, currData, output);
       outputLvlEnergy.gleb(end+1, 1) = glebCurr;
-      outputLvlEnergy.diffGlebExactE(end+1, 1) = exactEnergy - glebCurr;
+      outputLvlEnergy.diffGlebDiscreteE(end+1, 1) = energyVec(end) - glebCurr;
+      if useExactEnergy
+        outputLvlEnergy.diffGlebExactE(end+1, 1) = exactEnergy - glebCurr;
+      end
     end
 
     % ESTIMATE

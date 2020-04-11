@@ -15,6 +15,7 @@ function saveResultsCR(params, currData, ...
   figVisible = params.figVisible;
   parAlpha = params.parAlpha;
   parBeta = params.parBeta;
+  rhsGradientKnown = params.rhsGradientKnown;
   useExactEnergy = params.useExactEnergy;
   exactEnergy = params.exactEnergy;
   plotGivenFunctions = params.plotGivenFunctions;
@@ -48,13 +49,14 @@ function saveResultsCR(params, currData, ...
   eta4lvl = outputLvlError.eta;
   etaVol4lvl = outputLvlError.etaVol;
   etaJumps4lvl = outputLvlError.etaJumps;
-  if exactSolutionKnown
-    error4lvl = outputLvlError.error4lvl;
-  end
+  if exactSolutionKnown, error4lvl = outputLvlError.error4lvl; end
 
   % extract necessary information from outputLvlInfoEnergy
-  if useExactEnergy
+  if useExactEnergy, diffDiscExactE4lvl = outputLvlEnergy.diffDiscExactE; end
+  if rhsGradientKnown 
     gleb4lvl = outputLvlEnergy.gleb;
+    diffGlebDiscreteE4lvl = outputLvlEnergy.diffGlebDiscreteE;
+    if useExactEnergy, diffGlebExactE4lvl = outputLvlEnergy.diffGlebExactE; end
   end
   
   % extract necessary information from output
@@ -293,8 +295,18 @@ function saveResultsCR(params, currData, ...
     convergenceFigLegend(end+1) = sprintf("||u-u_{CR}||_{L^2}");
     if useExactEnergy
       hold on
-      loglog(nrDof4lvl, exactEnergy-gleb4lvl, '-o');
-      convergenceFigLegend(end+1) = "GLEB";
+      loglog(nrDof4lvl, diffDiscExactE4lvl, '-o');
+      convergenceFigLegend(end+1) = sprintf("|E(u)-E_{NC}(u_{CR})|");
+    end
+  end
+  if rhsGradientKnown
+    hold on
+    loglog(nrDof4lvl, diffGlebDiscreteE4lvl, '-o');
+    convergenceFigLegend(end+1) = "E_{NC}(u_{CR}) - GLEB";
+    if useExactEnergy
+      hold on
+      loglog(nrDof4lvl, diffGlebExactE4lvl, '-o');
+      convergenceFigLegend(end+1) = "E(u) - GLEB";
     end
   end
   legend(convergenceFigLegend, 'Location', 'SW');

@@ -75,6 +75,8 @@ function params = editable %#ok<*MSNU,FNDEF>
 %                        problem
 %   parbeta            - 'double' containing the parameter \beta from the
 %                        problem
+%   rhsGradientKnown   - 'logical' with value 1 if the gradient of the 
+%                        given right-hand side is given and 0 else
 %   exactSolutionKnown - 'logical' with value 1 if the exact solution to the
 %                        continuous problem for the given right-hand side is
 %                        given and 0 else
@@ -95,7 +97,7 @@ function params = editable %#ok<*MSNU,FNDEF>
 
 %% PARAMETERS
   % misc. parameters (will affect performance)
-  showPlots              = true; 
+  showPlots              = false; 
   plotModeGrayscale      = false; 
     % not effective if showPlots == false
   showProgress           = true; 
@@ -132,11 +134,13 @@ function params = editable %#ok<*MSNU,FNDEF>
     % not effective if useImage == false
   blurWidth              = 1; %#ok<NASGU>
     % not effective if useImage == false
-  parAlpha               = 1e4; 
-  parBeta                = 1/2;
-  exactSolutionKnown     = false; %#ok<NASGU>
+  parAlpha               = 1e0; 
+  parBeta                = 1;
+  rhsGradientKnown       = true;
     % set automatically to false if useImage == true
-  useExactEnergy         = false; %#ok<NASGU>
+  exactSolutionKnown     = true; %#ok<NASGU>
+    % set automatically to false if useImage == true
+  useExactEnergy         = true; %#ok<NASGU>
     % set automatically to false if exactSolutionKnown == false
   exactEnergy            = -2.05805109; %#ok<NASGU> % 4 significant digits
     % set automatically to NaN if exactSolutionKnown == false
@@ -144,30 +148,31 @@ function params = editable %#ok<*MSNU,FNDEF>
   saveScreenshots        = 0; 
                               
   % information about experiment for saving and documentation.
-  expName                = 'bubbleBigSquare';
+  expName                = 'f01MoreConvergence';
   dirInfoName            = sprintf('%s', ...
     datestr(now, 'yy_mm_dd_HH_MM_SS'));
   errorNorm              = ["L2", "energy"]; 
 
   % function handles (not effective if useImage == true)
   function y = rightHandSide(x)
-    y =  bubble(x);
+    y =  f01(x, [parAlpha, parBeta]);
   end
 
   function y = gradientRightHandSide(x)
     % not effective if useExactEnergy == false
-    y =  bubbleGradient(x);
+    y =  f01Gradient(x, [parAlpha, parBeta]);
   end
 
   function y = exactSolution(x)
     % not effective if exactSolutionKnown == false
-    y = f02ExactSolution(x, parBeta);
+    y = f01ExactSolution(x, parBeta);
   end
 
 %% BUILD STRUCT
 % advanced, not of interest for mere usage of the program
   if useImage
     geometry = 'Square'; %#ok<UNRCH>
+    rhsGradientKnown = false; 
     exactSolutionKnown = false; 
     imageName =  sprintf('../utils/functions/images/%s', imageName);
   end
@@ -193,6 +198,7 @@ function params = editable %#ok<*MSNU,FNDEF>
   params.initialEpsStop = initialEpsStop;
   params.stopCrit = stopCrit;              
   params.useProlongation = useProlongation;      
+  params.rhsGradientKnown = rhsGradientKnown; 
   params.exactSolutionKnown = exactSolutionKnown; 
 
   if exactSolutionKnown 
@@ -232,7 +238,7 @@ function params = editable %#ok<*MSNU,FNDEF>
   else
     noise = 0; %#ok<NASGU,UNRCH> 
     params.f = @(x) rightHandSide(x); 
-    if useExactEnergy 
+    if rhsGradientKnown 
       params.gradF = @(x) gradientRightHandSide(x);
     end
   end
