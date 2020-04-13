@@ -5,7 +5,7 @@ folgende Minimierungsproblem.
   Finde $u\in \BV(\Omega)\cap L^2(\Omega)$, sodass
   $u$ das Funktional
   \begin{align}\label{eq:continuousProblem}
-    E(v)\coloneqq \frac{\alpha}{2}\Vert v\Vert_{L^2(\Omega)} + |v|_{\BV(\Omega)}
+    E(v)\coloneqq \frac{\alpha}{2}\Vert v\Vert_{L^2(\Omega)}^2 + |v|_{\BV(\Omega)}
     +\Vert v\Vert_{L^1(\partial\Omega)}-\int_\Omega fv\dx
   \end{align}
   unter allen $v\in V\coloneqq\BV(\Omega)\cap L^2(\Omega)$ minimiert.
@@ -24,13 +24,22 @@ folgende Minimierungsproblem.
   \begin{equation}
     \label{eq:contProbBddFromBelow}
     \begin{aligned}
-      E(v)&=\frac{\alpha}{2}\Vert v\Vert_{L^2(\Omega)} + |v|_{\BV(\Omega)}
+      E(v)&=\frac{\alpha}{2}\Vert v\Vert_{L^2(\Omega)}^2 + |v|_{\BV(\Omega)}
       +\Vert v\Vert_{L^1(\partial\Omega)}-\int_\Omega fv\dx\\
       &\geq 
-      \frac{\alpha}{4}\Vert v\Vert_{L^2(\Omega)} + |v|_{\BV(\Omega)}
+      \frac{\alpha}{2}\Vert v\Vert_{L^2(\Omega)}^2 + |v|_{\BV(\Omega)}
+      +\Vert v\Vert_{L^1(\partial\Omega)}
+      -\Vert f\Vert_{L^2(\Omega)}\Vert v\Vert_{L^2(\Omega)}\\
+      &\geq 
+      \frac{\alpha}{2}\Vert v\Vert_{L^2(\Omega)}^2 + |v|_{\BV(\Omega)}
+      +\Vert v\Vert_{L^1(\partial\Omega)}
+      -\frac{1}{\alpha}\Vert f\Vert_{L^2(\Omega)}^2
+      -\frac{\alpha}{4}\Vert v\Vert_{L^2(\Omega)}^2\\
+      &\geq 
+      \frac{\alpha}{4}\Vert v\Vert_{L^2(\Omega)}^2 + |v|_{\BV(\Omega)}
       +\Vert v\Vert_{L^1(\partial\Omega)}-\frac{1}{\alpha}\Vert
       f\Vert_{L^2(\Omega)}^2\\
-      &\geq -\Vert f\Vert_{L^2(\Omega)}^2.
+      &\geq -\frac{1}{\alpha}\Vert f\Vert_{L^2(\Omega)}^2.
     \end{aligned}
   \end{equation}
   Somit existiert eine infimierende Folge
@@ -74,6 +83,7 @@ folgende Minimierungsproblem.
   %und $\Vert\bullet\Vert_{L^2(\Omega)}$ und $-\int_\Omega f\bullet\dx$ sind 
   %stetig (d.h.\ insbesondere 
   \bigbreak
+  %TODO
   todo: Randterm sufs? Die beiden verbleibenden Terme sind ufs, aber auch sufs?
   \bigbreak
   Damit gilt insgesamt
@@ -103,15 +113,16 @@ folgende Minimierungsproblem.
   \begin{align*}
     F(u) &\coloneqq |u|_{\BV(\Omega)} + \Vert u \Vert_{L^1(\partial\Omega)},&
     G_\ell(u)\coloneqq \frac{\alpha}{2}\Vert u\Vert_{L^2(\Omega)}^2 -
-    \int_\Omega fu\dx.
+    \int_\Omega f_\ell u\dx.
   \end{align*}
-  Bezeichne $E_\ell\coloneqq F+E_\ell$ und setze $F$ auf $L^2(\Omega)$
+  Bezeichne $E_\ell\coloneqq F+G_\ell$ und setze $F$ auf $L^2(\Omega)$
   durch $\infty$ fort.
 
   $G_\ell$ ist Fr\'echet-differenzierbar mit Fr\'echet-Ableitung
   \begin{align*}
-    \delta G_\ell(u)[v] = \alpha (u,v)_{L^2(\Omega)} - \int_\Omega fv\dx 
-    = (\alpha u-f,v)_{L^2(\Omega)} \quad \text{ für alle } v\in L^2(\Omega).
+    \delta G_\ell(u)[v] = \alpha (u,v)_{L^2(\Omega)} - \int_\Omega f_\ell v\dx 
+    = (\alpha u-f_\ell ,v)_{L^2(\Omega)} \quad 
+    \text{ für alle } v\in L^2(\Omega).
   \end{align*}
 
   Das Funktional $F$ ist konvex, deshalb (TODO quote Rf) ist das Subdifferential
@@ -141,6 +152,10 @@ folgende Minimierungsproblem.
     &\leq
     \Vert f_1-f_2\Vert_{L^2(\Omega)}\Vert u_1 - u_2\Vert_{L^2(\Omega)}.
   \end{align*}
+
+  %TODO
+  TODO wie verschwindet das $\alpha$ hier? Oder verpasst man der Abschätzung 
+  im Satz noch eine Konstante $1/\alpha$ vor der oberen Schranke?
 
   Falls $\Vert u_1 - u_2 \Vert_{L^2(\Omega)} = 0$, gilt der Satz.
   Ansonsten führt Division durch \\
