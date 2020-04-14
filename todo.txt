@@ -1,18 +1,11 @@
 CURRENT TODOS
 
+use newest exact energy for all
+f01 with alpha 1 and 10000 adaptive and uniform
+f02 with alpha 1 for beta 1/10, 1/2, 9/10, only adaptive
+
 FOR REPORT
   rename gleb to exactEnergy-GLEB
-  also plot |energy-exactEnergy|
-
-further examples: sgn discont is totally broken, only f01 discont seems to work 
-                  kinda (but are the rates (in particular) GLEB worse?)
-  for f02 experiment with alpha, since u is totally independent of that 
-  parameter. What happens?
-  f02 doesn't work, zero is to broken, maybe f03 will do?
-  
-  Same idea, why does f01 brake for high alpha?
-
-probably actually think about reading exact energy from known energies
 
 tiens initPrimalDual has degrees degreeF+1 and for intFSq4e it has degreeF*2
 which leads to a pretty different eta from me (around 2 difference on small
