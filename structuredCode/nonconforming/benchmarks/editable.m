@@ -7,8 +7,83 @@ function params = editable %#ok<*MSNU,FNDEF>
 %
 % editable.m
 % output: params - 'struct' with fields created dependent on the choice of the
-%                  following parameters
-%   
+%                  following parameters (documentation of parameters in the
+%                  DOCUMENTATION OF PARAMETERS section below)
+
+%% PARAMETERS
+  % misc. parameters (will affect performance)
+  showPlots              = false; 
+  plotModeGrayscale      = false; 
+    % not effective if showPlots == false
+  showProgress           = true; 
+  degree4Integrate       = 10; 
+  plotGivenFunctions     = true;
+  refinementLevel4Plots  = 9; % 11 is very close to the limit
+    % not effective if plotGivenFunctions == false
+  debugIfError           = false;
+
+  % AFEM parameters
+  geometry               = 'BigSquare'; %#ok<NASGU>                     
+    % set automatically to 'Square' if useImage == true
+  initialRefinementLevel = 0;
+  parTheta               = 0.5;
+  minNrDof               = 1e4;
+  useProlongation        = true;
+  beta4Estimate          = 1;
+  n4Estimate             = 2;
+    % this should remain 2
+
+  % algorithm parameters
+  u0Mode         = 'zeros'; 
+  initialEpsStop = 1e-4; 
+  stopCrit       = ["Exact Error Difference", ...
+                    "weighted energy difference"]; 
+  parTau         = 1/2;
+
+  % experiment parameters
+  useImage               = false;
+  imageName              = 'whiteSquare.tif'; %#ok<NASGU> 
+    % not effective if useImage == false
+    % whiteSquare.tif, cameraman.tif
+  addNoise               = false; %#ok<NASGU>
+    % not effective if useImage == false
+  blurWidth              = 1; %#ok<NASGU>
+    % not effective if useImage == false
+  parAlpha               = 1e4; 
+  parBeta                = 1;
+  rhsGradientKnown       = true;
+    % set automatically to false if useImage == true
+  exactSolutionKnown     = false; %#ok<NASGU>
+    % set automatically to false if useImage == true
+  useExactEnergy         = false; %#ok<NASGU>
+    % set automatically to false if exactSolutionKnown == false
+  exactEnergy            = -0.2945243096; %#ok<NASGU> % 7 significant digits
+    % set automatically to NaN if exactSolutionKnown == false
+    % not effective if useExactEnergy == false
+  saveScreenshots        = 0; 
+                              
+  % information about experiment for saving and documentation.
+  expName                = 'bubbleTest';
+  dirInfoName            = sprintf('%s', ...
+    datestr(now, 'yy_mm_dd_HH_MM_SS'));
+  errorNorm              = ["L2", "energy"]; 
+
+  % function handles (not effective if useImage == true)
+  function y = rightHandSide(x)
+    y =  bubble(x);
+  end
+
+  function y = gradientRightHandSide(x)
+    % not effective if useExactEnergy == false
+    y =  bubbleGradient(x);
+  end
+
+  function y = exactSolution(x)
+    % not effective if exactSolutionKnown == false
+    y = f02ExactSolution(x, parBeta);
+  end
+   
+%% DOCUMENTATION OF PARAMETERS
 % misc. parameters (will affect performance)
 %   showPlots             - 'logical' with value 1 if plots must be shown
 %                           during the iteration and 0 else
@@ -94,79 +169,6 @@ function params = editable %#ok<*MSNU,FNDEF>
 %                 folder in '../../results/nonconforming/expName/' where the 
 %                 results of the experiment must be saved in
 %   errorNorm   - TODO
-
-%% PARAMETERS
-  % misc. parameters (will affect performance)
-  showPlots              = false; 
-  plotModeGrayscale      = false; 
-    % not effective if showPlots == false
-  showProgress           = true; 
-  degree4Integrate       = 10; 
-  plotGivenFunctions     = true;
-  refinementLevel4Plots  = 6; % 11 is very close to the limit
-    % not effective if plotGivenFunctions == false
-  debugIfError           = false;
-
-  % AFEM parameters
-  geometry               = 'BigSquare'; %#ok<NASGU>                     
-    % set automatically to 'Square' if useImage == true
-  initialRefinementLevel = 0;
-  parTheta               = 0.5;
-  minNrDof               = 1e4;
-  useProlongation        = true;
-  beta4Estimate          = 1;
-  n4Estimate             = 2;
-    % this should remain 2
-
-  % algorithm parameters
-  u0Mode         = 'zeros'; 
-  initialEpsStop = 1e-3; 
-  stopCrit       = ["Exact Error Difference", ...
-                    "weighted energy difference"]; 
-  parTau         = 1/2;
-
-  % experiment parameters
-  useImage               = false;
-  imageName              = 'whiteSquare.tif'; %#ok<NASGU> 
-    % not effective if useImage == false
-    % whiteSquare.tif, cameraman.tif
-  addNoise               = false; %#ok<NASGU>
-    % not effective if useImage == false
-  blurWidth              = 1; %#ok<NASGU>
-    % not effective if useImage == false
-  parAlpha               = 1e4; 
-  parBeta                = 1/2;
-  rhsGradientKnown       = true;
-    % set automatically to false if useImage == true
-  exactSolutionKnown     = true; %#ok<NASGU>
-    % set automatically to false if useImage == true
-  useExactEnergy         = false; %#ok<NASGU>
-    % set automatically to false if exactSolutionKnown == false
-  exactEnergy            = -0.2945243096; %#ok<NASGU> % 7 significant digits
-    % set automatically to NaN if exactSolutionKnown == false
-    % not effective if useExactEnergy == false
-  saveScreenshots        = 0; 
-                              
-  % information about experiment for saving and documentation.
-  expName                = 'f02AlphaTest';
-  dirInfoName            = sprintf('%s', ...
-    datestr(now, 'yy_mm_dd_HH_MM_SS'));
-  errorNorm              = ["L2", "energy"]; 
-
-  % function handles (not effective if useImage == true)
-  function y = rightHandSide(x)
-    y =  f02(x, [parAlpha, parBeta]);
-  end
-
-  function y = gradientRightHandSide(x)
-    % not effective if useExactEnergy == false
-    y =  f02Gradient(x, [parAlpha, parBeta]);
-  end
-
-  function y = exactSolution(x)
-    % not effective if exactSolutionKnown == false
-    y = f02ExactSolution(x, parBeta);
-  end
 
 %% BUILD STRUCT
 % advanced, not of interest for mere usage of the program
