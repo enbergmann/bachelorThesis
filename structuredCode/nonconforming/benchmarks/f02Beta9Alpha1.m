@@ -102,7 +102,7 @@ function params = editable %#ok<*MSNU,FNDEF>
     % not effective if showPlots == false
   showProgress           = true; 
   degree4Integrate       = 10; 
-  plotGivenFunctions     = false;
+  plotGivenFunctions     = true;
   refinementLevel4Plots  = 9; % 11 is very close to the limit
     % not effective if plotGivenFunctions == false
   debugIfError           = false;
@@ -111,7 +111,7 @@ function params = editable %#ok<*MSNU,FNDEF>
   geometry               = 'BigSquare'; %#ok<NASGU>                     
     % set automatically to 'Square' if useImage == true
   initialRefinementLevel = 0;
-  parTheta               = 1;
+  parTheta               = 0.5;
   minNrDof               = 1e9;
   useProlongation        = true;
   beta4Estimate          = 1;
@@ -134,37 +134,37 @@ function params = editable %#ok<*MSNU,FNDEF>
     % not effective if useImage == false
   blurWidth              = 1; %#ok<NASGU>
     % not effective if useImage == false
-  parAlpha               = 1e4; 
-  parBeta                = 1;
+  parAlpha               = 1e0; 
+  parBeta                = 9/10;
   rhsGradientKnown       = true;
     % set automatically to false if useImage == true
   exactSolutionKnown     = true; %#ok<NASGU>
     % set automatically to false if useImage == true
-  useExactEnergy         = false; %#ok<NASGU>
+  useExactEnergy         = true; %#ok<NASGU>
     % set automatically to false if exactSolutionKnown == false
-  exactEnergy            = -2.05803406239; %#ok<NASGU> % 6 significant digits
+  exactEnergy            = -0.263108387254; %#ok<NASGU> % 7 significant digits
     % set automatically to NaN if exactSolutionKnown == false
     % not effective if useExactEnergy == false
   saveScreenshots        = 0; 
                               
   % information about experiment for saving and documentation.
-  expName                = 'f01Alpha10000';
-  dirInfoName            = sprintf('uniform');
+  expName                = 'f02Alpha1';
+  dirInfoName            = sprintf('beta9Adaptive');
   errorNorm              = ["L2", "energy"]; 
 
   % function handles (not effective if useImage == true)
   function y = rightHandSide(x)
-    y =  f01(x, [parAlpha, parBeta]);
+    y =  f02(x, [parAlpha, parBeta]);
   end
 
   function y = gradientRightHandSide(x)
     % not effective if useExactEnergy == false
-    y =  f01Gradient(x, [parAlpha, parBeta]);
+    y =  f02Gradient(x, [parAlpha, parBeta]);
   end
 
   function y = exactSolution(x)
     % not effective if exactSolutionKnown == false
-    y = f01ExactSolution(x, parBeta);
+    y = f02ExactSolution(x, parBeta);
   end
 
 %% BUILD STRUCT
