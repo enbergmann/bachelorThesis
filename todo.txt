@@ -1,8 +1,5 @@
 CURRENT TODOS
 
-use newest exact energy for all
-f01 with alpha 1 and 10000 adaptive and uniform
-f02 with alpha 1 for beta 1/10, 1/2, 9/10, only adaptive
 
 FOR REPORT
   rename gleb to exactEnergy-GLEB
