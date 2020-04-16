@@ -142,7 +142,7 @@ function params = editable %#ok<*MSNU,FNDEF>
     % set automatically to false if useImage == true
   useExactEnergy         = true; %#ok<NASGU>
     % set automatically to false if exactSolutionKnown == false
-  exactEnergy            = -2.05803406239; %#ok<NASGU> % 6 significant digits
+  exactEnergy            = -2.058034062391; %#ok<NASGU> % 6 significant digits
     % set automatically to NaN if exactSolutionKnown == false
     % not effective if useExactEnergy == false
   saveScreenshots        = 0; 
