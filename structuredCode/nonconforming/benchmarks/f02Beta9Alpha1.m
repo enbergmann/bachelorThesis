@@ -102,7 +102,7 @@ function params = editable %#ok<*MSNU,FNDEF>
     % not effective if showPlots == false
   showProgress           = true; 
   degree4Integrate       = 10; 
-  plotGivenFunctions     = true;
+  plotGivenFunctions     = false;
   refinementLevel4Plots  = 9; % 11 is very close to the limit
     % not effective if plotGivenFunctions == false
   debugIfError           = false;
