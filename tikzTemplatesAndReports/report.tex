@@ -236,7 +236,7 @@ seen in \cref{fig:rhsCameraman}.
   \begin{figure}[H]
 	  \centering
 		\includegraphics[width=\textwidth]
-      {tikzPlots/imageCameraman/1e-5/adaptive/lvl40/solutionGrayscale.png}
+      {tikzPlots/imageCameraman/1e-4/adaptive/lvl21/solutionGrayscale.png}
     \caption{grayscale plot of last iterate for $\theta = 0.5$}
   \end{figure}
 \end{minipage}
@@ -244,18 +244,19 @@ seen in \cref{fig:rhsCameraman}.
   \begin{figure}[H]
 	  \centering
 		\includegraphics[width=\linewidth]
-      {tikzPlots/imageCameraman/1e-5/uniform/lvl9/solutionGrayscale.png}
+      {tikzPlots/imageCameraman/1e-4/uniform/lvl9/solutionGrayscale.png}
     \caption{grayscale plot of last iterate for $\theta = 1$}
   \end{figure}
 \end{minipage}
 
-\DTLloaddb{db}{tikzPlots/imageCameraman/1e-5/adaptive/lvl26/currentData.csv}
+\DTLloaddb{db}{
+tikzPlots/imageCameraman/1e-4/adaptive/lvl16/currentDataReduced.csv}
 \DTLassign{db}{1}{\nrNodes=nrNodes, \nrDof=nrDof}
 
 \begin{figure}[H]
 	\centering
   \includegraphics[width=14cm]
-  {tikzPlots/imageCameraman/1e-5/adaptive/lvl26/triangulation.png}
+  {tikzPlots/imageCameraman/1e-4/adaptive/lvl16/triangulation.png}
   \caption{adaptive mesh for $\theta = 0.5$ with \nrNodes\ nodes and 
   \nrDof\ degrees of freedom}
 \end{figure}
@@ -304,7 +305,7 @@ on $\Omega = (-1,1)^2$.
   \begin{figure}[H]
 	  \centering
 		\includegraphics[width=\textwidth]
-      {tikzPlots/middleSquare/1e-5/adaptive/lvl11/solutionGrayscale.png}
+      {tikzPlots/middleSquare/1e-4/adaptive/lvl16/solutionGrayscale.png}
     \caption{grayscale plot of last iterate for $\theta = 0.5$}
   \end{figure}
 \end{minipage}
@@ -312,18 +313,19 @@ on $\Omega = (-1,1)^2$.
   \begin{figure}[H]
 	  \centering
 		\includegraphics[width=\linewidth]
-      {tikzPlots/middleSquare/1e-5/uniform/lvl7/solutionGrayscale.png}
+      {tikzPlots/middleSquare/1e-4/uniform/lvl8/solutionGrayscale.png}
     \caption{grayscale plot of last iterate for $\theta = 1$}
   \end{figure}
 \end{minipage}
 
-\DTLloaddb{db}{tikzPlots/middleSquare/1e-5/adaptive/lvl11/currentData.csv}
+\DTLloaddb{db}{
+tikzPlots/middleSquare/1e-4/adaptive/lvl8/currentDataReduced.csv}
 \DTLassign{db}{1}{\nrNodes=nrNodes, \nrDof=nrDof}
 
 \begin{figure}[H]
 	\centering
   \includegraphics[width=14cm]
-  {tikzPlots/middleSquare/1e-5/adaptive/lvl11/triangulation.png}
+  {tikzPlots/middleSquare/1e-4/adaptive/lvl8/triangulation.png}
   \caption{adaptive mesh for $\theta = 0.5$ with \nrNodes\ nodes and 
   \nrDof\ degrees of freedom}
 \end{figure}

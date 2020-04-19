@@ -47,28 +47,28 @@
     % adaptive 0.5
     \addplot [solid, green, mark = *] 
     table[x = {nrDof}, y = {eta}] 
-    {1e-5/adaptive/lvl11/lvlOutput.csv}; 
+    {1e-4/adaptive/lvl16/lvlOutput.csv}; 
 
     \addplot [solid, red, mark = *] 
     table[x = {nrDof}, y = {etaVol}] 
-    {1e-5/adaptive/lvl11/lvlOutput.csv}; 
+    {1e-4/adaptive/lvl16/lvlOutput.csv}; 
 
     \addplot [solid, orange, mark = *] 
     table[x = {nrDof}, y = {etaJumps}] 
-    {1e-5/adaptive/lvl11/lvlOutput.csv}; 
+    {1e-4/adaptive/lvl16/lvlOutput.csv}; 
 
     % uniform
     \addplot [densely dashed, green, mark = square*] 
     table[x = {nrDof}, y = {eta}] 
-    {1e-5/uniform/lvl7/lvlOutput.csv}; 
+    {1e-4/uniform/lvl8/lvlOutput.csv}; 
 
     \addplot [densely dashed, red, mark = square*] 
     table[x = {nrDof}, y = {etaVol}] 
-    {1e-5/uniform/lvl7/lvlOutput.csv}; 
+    {1e-4/uniform/lvl8/lvlOutput.csv}; 
 
     \addplot [densely dashed, orange, mark = square*] 
     table[x = {nrDof}, y = {etaJumps}] 
-    {1e-5/uniform/lvl7/lvlOutput.csv}; 
+    {1e-4/uniform/lvl8/lvlOutput.csv}; 
     
     % % adaptive 0.999
     % \addplot [densely dotted, cyan, mark = square*] 
@@ -93,17 +93,17 @@
 
     % eta uniform
     add slope triangle
-    \draw (axis cs:2e5,7e-2) 
-                 --(axis cs:2e5,2.21e-1) node [midway, right] {\scriptsize$1$}
-                 -- (axis cs:2e4,2.21e-1) node [midway, above] {\scriptsize$2$}
+    \draw (axis cs:8e5,4e-2) 
+                 --(axis cs:8e5,1.26e-1) node [midway, right] {\scriptsize$1$}
+                 -- (axis cs:8e4,1.26e-1) node [midway, above] {\scriptsize$2$}
                  -- cycle
                  ;
 
     % eta adaptive
     add slope triangle
-    \draw (axis cs:1e5,1e-2) 
-                 --(axis cs:1e5,5e-2) node [midway, right] {\scriptsize$1$}
-                 -- (axis cs:2e4,5e-2) node [midway, above] {\scriptsize$1$}
+    \draw (axis cs:8e5,1.5e-3) 
+                 --(axis cs:8e5,1.5e-2) node [midway, right] {\scriptsize$1$}
+                 -- (axis cs:8e4,1.5e-2) node [midway, above] {\scriptsize$1$}
                  -- cycle
                  ;
   \end{loglogaxis}

@@ -43,19 +43,19 @@
 
     \addplot [solid, cyan, mark = *] 
     table[x = {nrDof}, y = {time}] 
-    {1e-5/adaptive/lvl40/lvlOutput.csv}; 
+    {1e-4/adaptive/lvl21/lvlOutput.csv}; 
 
     \addplot [solid, green, mark = *] 
     table[x = {nrDof}, y = {nrIterations}] 
-    {1e-5/adaptive/lvl40/lvlOutput.csv}; 
+    {1e-4/adaptive/lvl21/lvlOutput.csv}; 
 
     \addplot [densely dashed, cyan, mark = square*] 
     table[x = {nrDof}, y = {time}] 
-    {1e-5/uniform/lvl9/lvlOutput.csv}; 
+    {1e-4/uniform/lvl9/lvlOutput.csv}; 
 
     \addplot [densely dashed, green, mark = square*] 
     table[x = {nrDof}, y = {nrIterations}] 
-    {1e-5/uniform/lvl9/lvlOutput.csv}; 
+    {1e-4/uniform/lvl9/lvlOutput.csv}; 
   \end{loglogaxis}
 \end{tikzpicture}
 \end{document}

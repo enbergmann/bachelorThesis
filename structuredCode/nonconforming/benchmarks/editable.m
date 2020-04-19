@@ -17,7 +17,7 @@ function params = editable %#ok<*MSNU,FNDEF>
     % not effective if showPlots == false
   showProgress           = true; 
   degree4Integrate       = 10; 
-  plotGivenFunctions     = true;
+  plotGivenFunctions     = false;
   refinementLevel4Plots  = 9; % 11 is very close to the limit
     % not effective if plotGivenFunctions == false
   debugIfError           = false;
@@ -27,7 +27,7 @@ function params = editable %#ok<*MSNU,FNDEF>
     % set automatically to 'Square' if useImage == true
   initialRefinementLevel = 0;
   parTheta               = 0.5;
-  minNrDof               = 1e4;
+  minNrDof               = 5e4;
   useProlongation        = true;
   beta4Estimate          = 1;
   n4Estimate             = 2;
@@ -35,14 +35,14 @@ function params = editable %#ok<*MSNU,FNDEF>
 
   % algorithm parameters
   u0Mode         = 'zeros'; 
-  initialEpsStop = 1e-4; 
+  initialEpsStop = 1e-5; 
   stopCrit       = ["Exact Error Difference", ...
                     "weighted energy difference"]; 
   parTau         = 1/2;
 
   % experiment parameters
-  useImage               = false;
-  imageName              = 'whiteSquare.tif'; %#ok<NASGU> 
+  useImage               = true;
+  imageName              = 'cameraman.tif'; %#ok<NASGU> 
     % not effective if useImage == false
     % whiteSquare.tif, cameraman.tif
   addNoise               = false; %#ok<NASGU>
@@ -51,7 +51,7 @@ function params = editable %#ok<*MSNU,FNDEF>
     % not effective if useImage == false
   parAlpha               = 1e4; 
   parBeta                = 1;
-  rhsGradientKnown       = true;
+  rhsGradientKnown       = false;
     % set automatically to false if useImage == true
   exactSolutionKnown     = false; %#ok<NASGU>
     % set automatically to false if useImage == true
@@ -63,7 +63,7 @@ function params = editable %#ok<*MSNU,FNDEF>
   saveScreenshots        = 0; 
                               
   % information about experiment for saving and documentation.
-  expName                = 'bubbleTest';
+  expName                = 'camTestNrLevels';
   dirInfoName            = sprintf('%s', ...
     datestr(now, 'yy_mm_dd_HH_MM_SS'));
   errorNorm              = ["L2", "energy"]; 

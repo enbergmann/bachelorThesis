@@ -1,0 +1,2 @@
+geometry,polygonMesh,initialRefinementLevel,initialEpsStop,useProlongation,exactSolutionKnown,uExact,useExactEnergy,exactEnergy,parTau,saveScreenshots,degree4Integrate,showPlots,figVisible,plotModeGrayscale,showProgress,plotGivenFunctions,refinementLevel4Plots,debugIfError,expName,dirInfoName,u0Mode,f,benchmark
+Square,0,0,0.0001,1,0,,0,NaN,0.5,0,10,0,off,0,1,0,4,0,1e-4cam,adaptive,zeros,,cama4

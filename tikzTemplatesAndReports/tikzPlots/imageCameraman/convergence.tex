@@ -47,28 +47,28 @@
     % adaptive 0.5
     \addplot [solid, green, mark = *] 
     table[x = {nrDof}, y = {eta}] 
-    {1e-5/adaptive/lvl40/lvlOutput.csv}; 
+    {1e-4/adaptive/lvl21/lvlOutput.csv}; 
 
     \addplot [solid, red, mark = *] 
     table[x = {nrDof}, y = {etaVol}] 
-    {1e-5/adaptive/lvl40/lvlOutput.csv}; 
+    {1e-4/adaptive/lvl21/lvlOutput.csv}; 
 
     \addplot [solid, orange, mark = *] 
     table[x = {nrDof}, y = {etaJumps}] 
-    {1e-5/adaptive/lvl40/lvlOutput.csv}; 
+    {1e-4/adaptive/lvl21/lvlOutput.csv}; 
 
     % uniform
     \addplot [densely dashed, green, mark = square*] 
     table[x = {nrDof}, y = {eta}] 
-    {1e-5/uniform/lvl9/lvlOutput.csv}; 
+    {1e-4/uniform/lvl9/lvlOutput.csv}; 
 
     \addplot [densely dashed, red, mark = square*] 
     table[x = {nrDof}, y = {etaVol}] 
-    {1e-5/uniform/lvl9/lvlOutput.csv}; 
+    {1e-4/uniform/lvl9/lvlOutput.csv}; 
 
     \addplot [densely dashed, orange, mark = square*] 
     table[x = {nrDof}, y = {etaJumps}] 
-    {1e-5/uniform/lvl9/lvlOutput.csv}; 
+    {1e-4/uniform/lvl9/lvlOutput.csv}; 
     
     % % adaptive 0.999
     % \addplot [densely dotted, cyan, mark = square*] 
