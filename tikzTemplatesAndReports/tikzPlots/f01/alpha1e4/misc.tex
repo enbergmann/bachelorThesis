@@ -1,0 +1,62 @@
+\documentclass[tikz]{standalone}
+\usepackage{amsmath,amsfonts,amssymb,amsthm,mathtools}
+\usepackage{tikz}
+\usepackage{pgfplots, pgfplotstable}
+
+%\pgfplotstableset{
+%  create on use/test/.style={
+%    create col/copy column from table={glebExactEnergyDifference1e-2.txt}{0}
+%    }
+%  }
+
+\pgfplotsset{compat=newest,
+	axis background/.style={fill=black!5!white},
+	grid style={densely dotted,semithick}
+  }
+
+\begin{document}
+
+% TODO find here how csv files work
+    % \addplot [dashed, black, thick, mark = diamond] 
+    % table[col sep = comma, x = {nrDof}, y = {error4lvl}] 
+    % {lvlOutput.csv}; 
+
+\pgfplotstableset{col sep = comma, %space, (for txt files, than it works great)
+  % create on use/nrDof1e-2/.style={create col/copy column from 
+  % table={lvlOutputEps1e-2.txt}{nrDof}},
+  % create on use/nrDof1e-6/.style={create col/copy column from 
+  % table={lvlOutputEps1e-6.txt}{nrDof}}
+}
+
+\begin{tikzpicture}
+  \begin{loglogaxis}[legend pos = outer north east, 
+    scale = 2, xlabel = {nrDof},
+    ymajorgrids=true,
+    legend entries = {$\theta = 0.5$,
+                     $\theta = 1$,
+                     time in seconds,
+                     number of iterations}]
+    \addlegendimage{solid, mark=*}
+    \addlegendimage{densely dashed, mark=square*}
+    \addlegendimage{no markers, cyan}
+    \addlegendimage{no markers, green}
+
+    \addplot [solid, cyan, mark = *] 
+    table[x = {nrDof}, y = {time}] 
+    {1e-4/adaptive/lvl25/lvlOutput.csv}; 
+
+    \addplot [solid, green, mark = *] 
+    table[x = {nrDof}, y = {nrIterations}] 
+    {1e-4/adaptive/lvl25/lvlOutput.csv}; 
+
+    \addplot [densely dashed, cyan, mark = square*] 
+    table[x = {nrDof}, y = {time}] 
+    {1e-4/uniform/lvl8/lvlOutput.csv}; 
+
+    \addplot [densely dashed, green, mark = square*] 
+    table[x = {nrDof}, y = {nrIterations}] 
+    {1e-4/uniform/lvl8/lvlOutput.csv}; 
+  \end{loglogaxis}
+\end{tikzpicture}
+\end{document}
+

@@ -47,7 +47,7 @@ amongst all $\vcr\in\CR^1_0(\Tcal)$ where $|\bullet|_{1,1,\NC}\coloneqq
 
 \section{Refinement indicator and guaranteed lower energy bound}
 
-For some $n\in\mathbb{N}$ (here $n=2$) and $0<\beta\leq 1$ define a refinement
+For some $n\in\mathbb{N}$ (here $n=2$) and $0<\gamma\leq 1$ define a refinement
 indicator 
 $\eta\coloneqq\sum_{T\in\mathcal{T}}\eta(T)$
 with
@@ -56,13 +56,13 @@ with
   \eta (T)\coloneqq 
   \underbrace{|T|^{2/n}\Vert f-\alpha \ucr\Vert^2_{L^2(T)}}_{\eqqcolon 
   \eta_\text{Vol}(T)}
-  +\underbrace{|T|^{\beta/n}\sum_{F\in\Fcal(T)}\Vert [\ucr]_F\Vert_{L^1(F)}}_{
+  +\underbrace{|T|^{\gamma/n}\sum_{F\in\Fcal(T)}\Vert [\ucr]_F\Vert_{L^1(F)}}_{
   \eqqcolon \eta_\text{Jumps}(T)}
 \end{align}
 for any $T\in\mathcal{T}$.
 
 For $f\in H^1_0(\Omega)$ and $u\in H^1_0(\Omega)$ $\left(\ucr\in
-\CR^1_0(\Omega)\right)$ continuous (discrete) minimzer with minimal energy
+\CR^1_0(\Omega)\right)$ continuous (discrete) minimizer with minimal energy
 $E(u)$ $\left(\Enc(\ucr)\right)$ it holds
 \begin{align}
   \label{equ:gleb}
@@ -76,10 +76,14 @@ Hence, for $\textup{GLEB} \coloneqq
   \Enc(\ucr) - \frac{\kappa_\CR}{\alpha}\Vert
   h_\mathcal{T}(f-\alpha\ucr)\Vert_{L^2(\Omega)} |f|_{1,2}$, it holds
   $\Enc(\ucr)\geq \textup{GLEB}$ and $E(u)\geq \textup{GLEB}$.
+
 \section{Experiments}
-In the following sections it holds $\beta = 1$ and $\varepsilon=10^{-5}$.
-\section{Example with exact solution}
-For $\alpha = 1$ define $f$ as a function of the radius as
+In the following sections the termination criterion for the algorithm
+was TODO $<\varepsilon=10^{-4}$. %TODO
+
+\section{Examples with exact solution}
+\subsection{Example 1}
+For $\beta=1$ define $f$ as a function of the radius as
 \begin{align}
   \label{equ:f01}
   f(r)\coloneqq 
@@ -112,99 +116,211 @@ with exact solution
   \end{cases}
 \end{align}
 
-\begin{minipage}[t]{0.45\textwidth}
+For $\alpha=1$ the exact energy $E(u)$ was computed before the experiment.
+
+\begin{minipage}[t]{0.3\textwidth}
   \begin{figure}[H]
 	  \centering
-		\includegraphics[width=\textwidth]{tikzPlots/f01/rhs.png} 
-		\caption{right-hand side $f$}
+		\includegraphics[width=1.1\textwidth]{tikzPlots/f01/alpha1/rhs.png} 
+		\caption{$f$ for $\alpha=1$}
   \end{figure}
 \end{minipage}
-\begin{minipage}[t]{0.45\textwidth}
+\hfill
+\vline
+\hfill
+\begin{minipage}[t]{0.3\textwidth}
   \begin{figure}[H]
 	  \centering
-		\includegraphics[width=\textwidth]{tikzPlots/f01/exactSolution.png} 
-		\caption{exact solution $u$}
+		\includegraphics[width=1.1\textwidth]{tikzPlots/f01/alpha1e4/rhs.png} 
+		\caption{$f$ for $\alpha=10^4$}
+  \end{figure}
+\end{minipage}
+\hfill
+\vline
+\hfill
+\begin{minipage}[t]{0.3\textwidth}
+  \begin{figure}[H]
+	  \centering
+		\includegraphics[width=1.1\textwidth]
+    {tikzPlots/f01/alpha1/exactSolution.png} 
+		\caption{$u$}
   \end{figure}
 \end{minipage}
 
-\begin{minipage}[t]{0.45\textwidth}
+\begin{minipage}[t]{0.3\textwidth}
   \begin{figure}[H]
 	  \centering
-		\includegraphics[width=\textwidth]{tikzPlots/f01/rhsAxis.png} 
-		\caption{right-hand side $f$ along the axes}
+		\includegraphics[width=1.1\textwidth]{tikzPlots/f01/alpha1/rhsAxis.png} 
+		\caption{$f$ along the axes for $\alpha=1$}
   \end{figure}
 \end{minipage}
-\begin{minipage}[t]{0.45\textwidth}
+\hfill
+\vline
+\hfill
+\begin{minipage}[t]{0.3\textwidth}
   \begin{figure}[H]
 	  \centering
-		\includegraphics[width=\textwidth]{tikzPlots/f01/exactSolutionAxis.png} 
-		\caption{exact solution $u$ along the axes}
+		\includegraphics[width=1.1\textwidth]{tikzPlots/f01/alpha1e4/rhsAxis.png} 
+		\caption{$f$ along the axes for $\alpha=10^4$}
+  \end{figure}
+\end{minipage}
+\hfill
+\vline
+\hfill
+\begin{minipage}[t]{0.3\textwidth}
+  \begin{figure}[H]
+	  \centering
+		\includegraphics[width=1.1\textwidth]
+    {tikzPlots/f01/alpha1/exactSolutionAxis.png} 
+		\caption{$u$ along the axes}
   \end{figure}
 \end{minipage}
 
+\vspace{-\parskip}
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=14cm]{tikzPlots/f01/convergence.pdf}
-  \caption{convergence history plot for the $L^2$ error, $\eta$,
-  $\eta_\text{Vol}$, $\eta_\text{Jumps}$, and the guaranteed lower energy
-  bound}
+	\includegraphics[width=14cm]{tikzPlots/f01/alpha1/convergence.pdf}
+  \caption{convergence history plot for $\alpha=1$}
 \end{figure}
 
+\vspace{-\parskip}
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=14cm]{tikzPlots/f01/misc.pdf}
+	\includegraphics[width=14cm]{tikzPlots/f01/alpha1e4/convergence.pdf}
+  \caption{convergence history plot for $\alpha=10^4$}
+\end{figure}
+
+\vspace{-\parskip}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=14cm]{tikzPlots/f01/alpha1/misc.pdf}
   \caption{development of the number of iterations and the elapsed time for 
-  each iteration}
+  each iteration for $\alpha=1$}
 \end{figure}
 
-\begin{minipage}[t]{0.45\textwidth}
-  \begin{figure}[H]
-	  \centering
-		\includegraphics[width=\textwidth]
-      {tikzPlots/f01/1e-5/adaptive/lvl12/solution.png} 
-    \caption{last iterate for $\theta = 0.5$}
-  \end{figure}
-\end{minipage}
-\begin{minipage}[t]{0.45\textwidth}
-  \begin{figure}[H]
-	  \centering
-		\includegraphics[width=\textwidth]
-      {tikzPlots/f01/1e-5/trueUniform/lvl7/solution.png} 
-    \caption{last iterate for $\theta = 1$}
-  \end{figure}
-\end{minipage}
+\vspace{-\parskip}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=14cm]{tikzPlots/f01/alpha1e4/misc.pdf}
+  \caption{development of the number of iterations and the elapsed time for 
+  each iteration for $\alpha=10^4$}
+\end{figure}
 
-\begin{minipage}[t]{0.45\textwidth}
-  \begin{figure}[H]
-	  \centering
-		\includegraphics[width=\textwidth]
-      {tikzPlots/f01/1e-5/adaptive/lvl12/solutionAxis.png} 
-    \caption{last iterate along the axes for $\theta = 0.5$}
-  \end{figure}
-\end{minipage}
-\begin{minipage}[t]{0.45\textwidth}
-  \begin{figure}[H]
-	  \centering
-		\includegraphics[width=\textwidth]
-      {tikzPlots/f01/1e-5/trueUniform/lvl7/solutionAxis.png} 
-    \caption{last iterate along the axes for $\theta = 1$}
-  \end{figure}
-\end{minipage}
-
-\DTLloaddb{db}{tikzPlots/f01/1e-5/adaptive/lvl11/currentData.csv}
+\DTLloaddb{db}{tikzPlots/f01/alpha1/1e-4/adaptive/lvl10/currentDataReduced.csv}
 \DTLassign{db}{1}{\nrNodes=nrNodes, \nrDof=nrDof}
 
-\begin{figure}[H]
-	\centering
-  \includegraphics[width=14cm]
-  {tikzPlots/f01/1e-5/adaptive/lvl11/triangulation.png}
-  \caption{adaptive mesh for $\theta = 0.5$ with \nrNodes\ nodes and 
-  \nrDof\ degrees of freedom}
-\end{figure}
+\DTLloaddb{dbAlt}{tikzPlots/f01/alpha1e4/1e-4/adaptive/lvl19/currentDataReduced.csv}
+\DTLassign{dbAlt}{1}{\nrNodesAlt=nrNodes, \nrDofAlt=nrDof}
+
+\vspace{-\parskip}
+\begin{minipage}[t]{0.45\textwidth}
+  \begin{figure}[H]
+    \includegraphics[width=1.3\textwidth]
+    {tikzPlots/f01/alpha1/1e-4/adaptive/lvl10/triangulation.png}
+    \caption{adaptive mesh for $\alpha=1$ and $\theta = 0.5$ with \nrNodes\
+    nodes and \nrDof\ degrees of freedom}
+  \end{figure}
+\end{minipage}
+\hfill
+\vline
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+  \begin{figure}[H]
+  	\centering
+    \includegraphics[width=1.3\textwidth]
+    {tikzPlots/f01/alpha1e4/1e-4/adaptive/lvl19/triangulation.png}
+    \caption{adaptive mesh for $\alpha=10^4$ and $\theta = 0.5$ with
+    \nrNodesAlt\ nodes and \nrDofAlt\ degrees of freedom}
+  \end{figure}
+\end{minipage}
 
 \DTLgdeletedb{db}
+\DTLgdeletedb{dbAlt}
 
-\section{Application to an image}
+\begin{minipage}[t]{0.45\textwidth}
+  \begin{figure}[H]
+	  \centering
+		\includegraphics[width=1.1\textwidth]
+      {tikzPlots/f01/alpha1/1e-4/adaptive/lvl15/solution.png} 
+    \caption{last iterate for $\alpha=1$ and $\theta = 0.5$}
+  \end{figure}
+\end{minipage}
+\hfill
+\vline
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+  \begin{figure}[H]
+	  \centering
+		\includegraphics[width=1.1\textwidth]
+      {tikzPlots/f01/alpha1/1e-4/uniform/lvl8/solution.png} 
+    \caption{last iterate for $\alpha=1$ and $\theta = 1$}
+  \end{figure}
+\end{minipage}
+
+\vspace{-\parskip}
+\begin{minipage}[t]{0.45\textwidth}
+  \begin{figure}[H]
+	  \centering
+		\includegraphics[width=1.1\textwidth]
+      {tikzPlots/f01/alpha1/1e-4/adaptive/lvl15/solutionAxis.png} 
+    \caption{last iterate along the axes for $\alpha=1$ and $\theta = 0.5$}
+  \end{figure}
+\end{minipage}
+\hfill
+\vline
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+  \begin{figure}[H]
+	  \centering
+		\includegraphics[width=1.1\textwidth]
+      {tikzPlots/f01/alpha1/1e-4/uniform/lvl8/solutionAxis.png} 
+    \caption{last iterate along the axes for $\alpha=1$ and $\theta = 1$}
+  \end{figure}
+\end{minipage}
+
+\begin{minipage}[t]{0.45\textwidth}
+  \begin{figure}[H]
+	  \centering
+		\includegraphics[width=1.1\textwidth]
+      {tikzPlots/f01/alpha1e4/1e-4/adaptive/lvl25/solution.png} 
+    \caption{last iterate for $\alpha=10^4$ and $\theta = 0.5$}
+  \end{figure}
+\end{minipage}
+\hfill
+\vline
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+  \begin{figure}[H]
+	  \centering
+		\includegraphics[width=1.1\textwidth]
+      {tikzPlots/f01/alpha1e4/1e-4/uniform/lvl8/solution.png} 
+    \caption{last iterate for $\alpha=10^4$ and $\theta = 1$}
+  \end{figure}
+\end{minipage}
+
+\vspace{-\parskip}
+\begin{minipage}[t]{0.45\textwidth}
+  \begin{figure}[H]
+	  \centering
+		\includegraphics[width=1.1\textwidth]
+      {tikzPlots/f01/alpha1e4/1e-4/adaptive/lvl25/solutionAxis.png} 
+    \caption{last iterate along the axes for $\alpha=10^4$ and $\theta = 0.5$}
+  \end{figure}
+\end{minipage}
+\hfill
+\vline
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+  \begin{figure}[H]
+	  \centering
+		\includegraphics[width=1.1\textwidth]
+      {tikzPlots/f01/alpha1e4/1e-4/uniform/lvl8/solutionAxis.png} 
+    \caption{last iterate along the axes for $\alpha=10^4$ and $\theta = 1$}
+  \end{figure}
+\end{minipage}
+\subsection{Example 2}
+
+\section{Application to image}
 For $\alpha = 10000$ let $f$ represent the grayscale of an 
 image in $[0,1]^{256\times 256}$ scaled to the domain $\Omega\in(0,1)^2$ as
 seen in \cref{fig:rhsCameraman}.

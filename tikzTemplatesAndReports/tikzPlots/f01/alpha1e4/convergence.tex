@@ -1,0 +1,157 @@
+\documentclass[tikz]{standalone}
+\usepackage{amsmath,amsfonts,amssymb,amsthm,mathtools}
+\usepackage{tikz}
+\usepackage{pgfplots, pgfplotstable}
+
+\pgfplotsset{compat=newest,
+	axis background/.style={fill=black!5!white},
+	grid style={densely dotted,semithick}
+  }
+
+%\pgfplotstableset{
+%  create on use/test/.style={
+%    create col/copy column from table={glebExactEnergyDifference1e-2.txt}{0}
+%    }
+%  }
+
+\begin{document}
+
+% TODO find here how csv files work
+    % \addplot [dashed, black, thick, mark = diamond] 
+    % table[col sep = comma, x = {nrDof}, y = {error4lvl}] 
+    % {lvlOutput.csv}; 
+
+\pgfplotstableset{col sep = comma, %space, (for txt files, than it works great)
+  % create on use/nrDof1e-2/.style={create col/copy column from 
+  % table={lvlOutputEps1e-2.txt}{nrDof}},
+  % create on use/nrDof1e-6/.style={create col/copy column from 
+  % table={lvlOutputEps1e-6.txt}{nrDof}}
+}
+
+
+\begin{tikzpicture}
+  \begin{loglogaxis}[legend pos = outer north east, 
+    scale = 2, xlabel = {nrDof},
+    ymax = 1e4,
+    ymajorgrids=true]
+
+    \addlegendentry{$\theta = 0.5$}
+    \addlegendimage{solid, mark=*}
+
+    \addlegendentry{$\theta = 1$}
+    \addlegendimage{densely dashed, mark=square*}
+
+    \addlegendentry{$\Vert u - u_h\Vert_{L^2(\Omega)}$}
+    \addlegendimage{no markers, ultra thick, cyan}
+
+    \addlegendentry{$\eta$}
+    \addlegendimage{no markers, ultra thick, green}
+
+    \addlegendentry{$\eta_\text{Vol}$}
+    \addlegendimage{no markers, ultra thick, red}
+
+    \addlegendentry{$\eta_\text{Jumps}$}
+    \addlegendimage{no markers, ultra thick, orange}
+
+    \addlegendentry{$E_\textup{NC}(u_{CR})-\textup{GLEB}$}
+    \addlegendimage{no markers, ultra thick, lightgray}
+
+    % adaptive 0.5
+    \addplot [solid, cyan, mark = *] 
+    table[x = {nrDof}, y = {error4lvl}] 
+    {1e-4/adaptive/lvl25/lvlOutput.csv}; 
+
+    \addplot [solid, green, mark = *] 
+    table[x = {nrDof}, y = {eta}] 
+    {1e-4/adaptive/lvl25/lvlOutput.csv}; 
+
+    \addplot [solid, red, mark = *] 
+    table[x = {nrDof}, y = {etaVol}] 
+    {1e-4/adaptive/lvl25/lvlOutput.csv}; 
+
+    \addplot [solid, orange, mark = *] 
+    table[x = {nrDof}, y = {etaJumps}] 
+    {1e-4/adaptive/lvl25/lvlOutput.csv}; 
+
+    \addplot [solid, lightgray, mark = *] 
+    table[x = {nrDof}, y = {diffGlebDiscreteE}] 
+    {1e-4/adaptive/lvl25/lvlOutput.csv}; 
+
+    % uniform
+    \addplot [densely dashed, cyan, mark = square*] 
+    table[x = {nrDof}, y = {error4lvl}] 
+    {1e-4/uniform/lvl8/lvlOutput.csv}; 
+
+    \addplot [densely dashed, green, mark = square*] 
+    table[x = {nrDof}, y = {eta}] 
+    {1e-4/uniform/lvl8/lvlOutput.csv}; 
+
+    \addplot [densely dashed, red, mark = square*] 
+    table[x = {nrDof}, y = {etaVol}] 
+    {1e-4/uniform/lvl8/lvlOutput.csv}; 
+
+    \addplot [densely dashed, orange, mark = square*] 
+    table[x = {nrDof}, y = {etaJumps}] 
+    {1e-4/uniform/lvl8/lvlOutput.csv}; 
+
+    \addplot [densely dashed, lightgray, mark = square*] 
+    table[x = {nrDof}, y = {diffGlebDiscreteE}] 
+    {1e-4/uniform/lvl8/lvlOutput.csv}; 
+
+    % % adaptive 0.999
+    % \addplot [densely dotted, cyan, mark = square*] 
+    % table[x = {nrDof}, y = {error4lvl}] 
+    % {1e-5/uniform/lvl7/lvlOutput.csv}; 
+
+    % \addplot [densely dotted, green, mark = square*] 
+    % table[x = {nrDof}, y = {eta}] 
+    % {1e-5/uniform/lvl7/lvlOutput.csv}; 
+
+    % \addplot [densely dotted, red, mark = square*] 
+    % table[x = {nrDof}, y = {etaVol}] 
+    % {1e-5/uniform/lvl7/lvlOutput.csv}; 
+
+    % \addplot [densely dotted, orange, mark = square*] 
+    % table[x = {nrDof}, y = {etaJumps}] 
+    % {1e-5/uniform/lvl7/lvlOutput.csv}; 
+
+    % \addplot [densely dotted, gray, mark = square*] 
+    % table[x = {nrDof}, y = {diffGlebExactE}] 
+    % {1e-5/uniform/lvl7/lvlOutput.csv}; 
+
+    % % gleb
+    % add slope triangle
+    % \draw (axis cs:1e4,7.54e1)
+    %              -- (axis cs:1e6,3e1) 
+    %              -- (axis cs:1e4,3e1) node [midway, below] {\scriptsize$5$} 	 
+    %              -- cycle node [midway, left] {\scriptsize$1$}
+    %              ;
+    
+    % % eta
+    % add slope triangle
+    % \draw (axis cs:1e6,1e0)
+    %              -- (axis cs:1e6,1e-1) node [midway, right] {\scriptsize$1$}
+    %              -- (axis cs:1e4,1e0)
+    %              -- cycle node [midway, above] {\scriptsize$2$}
+    %              ;
+
+    % % etaJumps
+    % add slope triangle
+    % \draw (axis cs:1e6,5e-4)
+    %              -- (axis cs:1e5,5e-4) node [midway, below] {\scriptsize$1$}
+    %              -- (axis cs:1e5,5e-3) node [midway, left] {\scriptsize$1$}
+    %              -- cycle 
+    %              ;
+  \end{loglogaxis}
+\end{tikzpicture}
+
+%\begin{tikzpicture}
+%  \begin{loglogaxis}
+%    \addplot
+%    table[x={nrDof}, y={error4lvl}]  
+%    {f01/epsModerate/lvl15_nrDof1209309/lvlOutput.txt}
+%  \end{loglogaxis}
+%\end{tikzpicture}
+
+\end{document}
+
