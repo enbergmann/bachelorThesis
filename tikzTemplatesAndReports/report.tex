@@ -78,8 +78,13 @@ Hence, for $\textup{GLEB} \coloneqq
   $\Enc(\ucr)\geq \textup{GLEB}$ and $E(u)\geq \textup{GLEB}$.
 
 \section{Experiments}
-In the following sections the termination criterion for the algorithm
-was TODO $<\varepsilon=10^{-4}$. %TODO
+In the following sections on each level the termination criterion for the
+iteration was
+\begin{align*}
+  \left\Vert \frac{\gradnc (u_{j}-u_{j-1})}{\tau}  \right\Vert_{L^2(\Omega)}
+  <\varepsilon\coloneqq 10^{-4}
+\end{align*}
+for $\tau=\frac{1}{2}$.
 
 \section{Examples with exact solution}
 \subsection{Example 1}
@@ -319,7 +324,29 @@ For $\alpha=1$ the exact energy $E(u)$ was computed before the experiment.
   \end{figure}
 \end{minipage}
 \subsection{Example 2}
-For $\alpha=1$ define $f$ as a function of the radius as
+For $\alpha=1$ and $\beta\in(0,1)$ define $f$ as a function of the radius as
+\begin{align*}
+  f(r)\coloneqq 
+  \begin{cases}
+    \alpha - \frac{4}{1-\beta}\left(\frac{3}{1-\beta}r - 2\right) &
+    \text{if } 0\leq r\leq\frac{1-\beta}{2},\\
+    -\frac{\alpha}{\beta}\left( r-\frac{1+\beta}{2} \right) +\frac{1}{r} & 
+    \text{if } \frac{1-\beta}{2}\leq r\leq \frac{1+\beta}{2},\\
+    \frac{-4}{(\beta-1)^3}
+    \left( 16r^2 -9(\beta+3)r + 12(\beta+1) - \frac{3\beta+1}{r}\right) & 
+    \text{if } \frac{1+\beta}{2}\leq r\leq 1,
+  \end{cases}
+\end{align*}
+with exact solution
+\begin{align*}
+  u_2(r)\coloneqq 
+  \begin{cases}
+    1 & \text{if } 0\leq r\leq\frac{1-\beta}{2},\\
+    -\frac{1}{\beta}r + \frac{1+\beta}{2\beta} & 
+    \text{if } \frac{1-\beta}{2}\leq r\leq \frac{1+\beta}{2},\\
+    0 & \text{if } \frac{1+\beta}{2}\leq r.
+  \end{cases}
+\end{align*}
 
 The experiments were conducted for $\beta = \frac{1}{10}, \frac{1}{2},
 \frac{9}{10}$ and the corresponding exact energies were computed beforehand.
