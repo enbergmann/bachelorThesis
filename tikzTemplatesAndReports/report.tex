@@ -184,21 +184,21 @@ For $\alpha=1$ the exact energy $E(u)$ was computed before the experiment.
 \vspace{-\parskip}
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=14cm]{tikzPlots/f01/alpha1/convergence.pdf}
+	\includegraphics[width=16.5cm]{tikzPlots/f01/alpha1/convergence.pdf}
   \caption{convergence history plot for $\alpha=1$}
 \end{figure}
 
 \vspace{-\parskip}
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=14cm]{tikzPlots/f01/alpha1e4/convergence.pdf}
+	\includegraphics[width=16.5cm]{tikzPlots/f01/alpha1e4/convergence.pdf}
   \caption{convergence history plot for $\alpha=10^4$}
 \end{figure}
 
 \vspace{-\parskip}
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=14cm]{tikzPlots/f01/alpha1/misc.pdf}
+	\includegraphics[width=16cm]{tikzPlots/f01/alpha1/misc.pdf}
   \caption{development of the number of iterations and the elapsed time for 
   each iteration for $\alpha=1$}
 \end{figure}
@@ -206,7 +206,7 @@ For $\alpha=1$ the exact energy $E(u)$ was computed before the experiment.
 \vspace{-\parskip}
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=14cm]{tikzPlots/f01/alpha1e4/misc.pdf}
+	\includegraphics[width=16cm]{tikzPlots/f01/alpha1e4/misc.pdf}
   \caption{development of the number of iterations and the elapsed time for 
   each iteration for $\alpha=10^4$}
 \end{figure}
@@ -477,150 +477,138 @@ The corresponding exact energies were computed beforehand.
   \end{figure}
 \end{minipage}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% TODO here 
 \vspace{-\parskip}
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=14cm]{tikzPlots/f01/alpha1/convergence.pdf}
-  \caption{convergence history plot for $\alpha=1$}
+	\includegraphics[width=16.5cm]{tikzPlots/f02/convergence.pdf}
+  \caption{convergence history plot}
 \end{figure}
 
 \vspace{-\parskip}
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=14cm]{tikzPlots/f01/alpha1e4/convergence.pdf}
-  \caption{convergence history plot for $\alpha=10^4$}
-\end{figure}
-
-\vspace{-\parskip}
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=14cm]{tikzPlots/f01/alpha1/misc.pdf}
+	\includegraphics[width=16cm]{tikzPlots/f02/misc.pdf}
   \caption{development of the number of iterations and the elapsed time for 
-  each iteration for $\alpha=1$}
+  each iteration}
 \end{figure}
 
-\vspace{-\parskip}
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=14cm]{tikzPlots/f01/alpha1e4/misc.pdf}
-  \caption{development of the number of iterations and the elapsed time for 
-  each iteration for $\alpha=10^4$}
-\end{figure}
-
-\DTLloaddb{db}{tikzPlots/f01/alpha1/1e-4/adaptive/lvl10/currentDataReduced.csv}
+\DTLloaddb{db}
+  {tikzPlots/f02/beta1Tenth/1e-4/adaptive/lvl10/currentDataReduced.csv}
 \DTLassign{db}{1}{\nrNodes=nrNodes, \nrDof=nrDof}
 
-\DTLloaddb{dbAlt}{tikzPlots/f01/alpha1e4/1e-4/adaptive/lvl19/currentDataReduced.csv}
+\DTLloaddb{dbAlt}
+  {tikzPlots/f02/beta5Tenth/1e-4/adaptive/lvl10/currentDataReduced.csv}
 \DTLassign{dbAlt}{1}{\nrNodesAlt=nrNodes, \nrDofAlt=nrDof}
 
+\DTLloaddb{dbAlt2}
+  {tikzPlots/f02/beta9Tenth/1e-4/adaptive/lvl12/currentDataReduced.csv}
+\DTLassign{dbAlt2}{1}{\nrNodesAlt2=nrNodes, \nrDofAlt2=nrDof}
+
 \vspace{-\parskip}
-\begin{minipage}[t]{0.45\textwidth}
+\begin{minipage}[t]{0.3\textwidth}
   \begin{figure}[H]
-    \includegraphics[width=1.3\textwidth]
-    {tikzPlots/f01/alpha1/1e-4/adaptive/lvl10/triangulation.png}
-    \caption{adaptive mesh for $\alpha=1$ and $\theta = 0.5$ with \nrNodes\
-    nodes and \nrDof\ degrees of freedom}
+	  \centering
+    \includegraphics[width=1.2\textwidth]
+    {tikzPlots/f02/beta1Tenth/1e-4/adaptive/lvl10/triangulation.png}
+    \caption{adaptive mesh for $\beta=\frac{1}{10}$ with
+    \nrNodes\ nodes and \nrDof\ degrees of freedom}
   \end{figure}
 \end{minipage}
 \hfill
 \vline
 \hfill
-\begin{minipage}[t]{0.45\textwidth}
+\begin{minipage}[t]{0.3\textwidth}
   \begin{figure}[H]
-  	\centering
-    \includegraphics[width=1.3\textwidth]
-    {tikzPlots/f01/alpha1e4/1e-4/adaptive/lvl19/triangulation.png}
-    \caption{adaptive mesh for $\alpha=10^4$ and $\theta = 0.5$ with
+	  \centering
+    \includegraphics[width=1.2\textwidth]
+    {tikzPlots/f02/beta5Tenth/1e-4/adaptive/lvl10/triangulation.png}
+    \caption{adaptive mesh for $\beta=\frac{1}{2}$ with
     \nrNodesAlt\ nodes and \nrDofAlt\ degrees of freedom}
+  \end{figure}
+\end{minipage}
+\hfill
+\vline
+\hfill
+\begin{minipage}[t]{0.3\textwidth}
+  \begin{figure}[H]
+	  \centering
+    \includegraphics[width=1.2\textwidth]
+    {tikzPlots/f02/beta9Tenth/1e-4/adaptive/lvl12/triangulation.png}
+    \caption{adaptive mesh for $\beta=\frac{9}{10}$ with
+    \nrNodesAlt2\ nodes and \nrDofAlt2\ degrees of freedom}
   \end{figure}
 \end{minipage}
 
 \DTLgdeletedb{db}
 \DTLgdeletedb{dbAlt}
+\DTLgdeletedb{dbAlt2}
 
-\begin{minipage}[t]{0.45\textwidth}
+\vspace{-\parskip}
+\begin{minipage}[t]{0.3\textwidth}
   \begin{figure}[H]
 	  \centering
 		\includegraphics[width=1.1\textwidth]
-      {tikzPlots/f01/alpha1/1e-4/adaptive/lvl15/solution.png} 
-    \caption{last iterate for $\alpha=1$ and $\theta = 0.5$}
+      {tikzPlots/f02/beta1Tenth/1e-4/adaptive/lvl16/solution.png} 
+      \caption{last iterate for $\beta=\frac{1}{10}$}
   \end{figure}
 \end{minipage}
 \hfill
 \vline
 \hfill
-\begin{minipage}[t]{0.45\textwidth}
+\begin{minipage}[t]{0.3\textwidth}
   \begin{figure}[H]
 	  \centering
 		\includegraphics[width=1.1\textwidth]
-      {tikzPlots/f01/alpha1/1e-4/uniform/lvl8/solution.png} 
-    \caption{last iterate for $\alpha=1$ and $\theta = 1$}
+      {tikzPlots/f02/beta5Tenth/1e-4/adaptive/lvl15/solution.png} 
+      \caption{last iterate for $\beta=\frac{1}{2}$}
+  \end{figure}
+\end{minipage}
+\hfill
+\vline
+\hfill
+\begin{minipage}[t]{0.3\textwidth}
+  \begin{figure}[H]
+	  \centering
+		\includegraphics[width=1.1\textwidth]
+      {tikzPlots/f02/beta9Tenth/1e-4/adaptive/lvl17/solution.png} 
+      \caption{last iterate for $\beta=\frac{9}{10}$}
   \end{figure}
 \end{minipage}
 
 \vspace{-\parskip}
-\begin{minipage}[t]{0.45\textwidth}
+\begin{minipage}[t]{0.3\textwidth}
   \begin{figure}[H]
 	  \centering
 		\includegraphics[width=1.1\textwidth]
-      {tikzPlots/f01/alpha1/1e-4/adaptive/lvl15/solutionAxis.png} 
-    \caption{last iterate along the axes for $\alpha=1$ and $\theta = 0.5$}
+      {tikzPlots/f02/beta1Tenth/1e-4/adaptive/lvl16/solutionAxis.png} 
+      \caption{last iterate along the axes for $\beta=\frac{1}{10}$}
   \end{figure}
 \end{minipage}
 \hfill
 \vline
 \hfill
-\begin{minipage}[t]{0.45\textwidth}
+\begin{minipage}[t]{0.3\textwidth}
   \begin{figure}[H]
 	  \centering
 		\includegraphics[width=1.1\textwidth]
-      {tikzPlots/f01/alpha1/1e-4/uniform/lvl8/solutionAxis.png} 
-    \caption{last iterate along the axes for $\alpha=1$ and $\theta = 1$}
+      {tikzPlots/f02/beta5Tenth/1e-4/adaptive/lvl15/solutionAxis.png} 
+      \caption{last iterate along the axes for $\beta=\frac{1}{2}$}
+  \end{figure}
+\end{minipage}
+\hfill
+\vline
+\hfill
+\begin{minipage}[t]{0.3\textwidth}
+  \begin{figure}[H]
+	  \centering
+		\includegraphics[width=1.1\textwidth]
+      {tikzPlots/f02/beta9Tenth/1e-4/adaptive/lvl17/solutionAxis.png} 
+      \caption{last iterate along the axes for $\beta=\frac{9}{10}$}
   \end{figure}
 \end{minipage}
 
-\begin{minipage}[t]{0.45\textwidth}
-  \begin{figure}[H]
-	  \centering
-		\includegraphics[width=1.1\textwidth]
-      {tikzPlots/f01/alpha1e4/1e-4/adaptive/lvl25/solution.png} 
-    \caption{last iterate for $\alpha=10^4$ and $\theta = 0.5$}
-  \end{figure}
-\end{minipage}
-\hfill
-\vline
-\hfill
-\begin{minipage}[t]{0.45\textwidth}
-  \begin{figure}[H]
-	  \centering
-		\includegraphics[width=1.1\textwidth]
-      {tikzPlots/f01/alpha1e4/1e-4/uniform/lvl8/solution.png} 
-    \caption{last iterate for $\alpha=10^4$ and $\theta = 1$}
-  \end{figure}
-\end{minipage}
-
-\vspace{-\parskip}
-\begin{minipage}[t]{0.45\textwidth}
-  \begin{figure}[H]
-	  \centering
-		\includegraphics[width=1.1\textwidth]
-      {tikzPlots/f01/alpha1e4/1e-4/adaptive/lvl25/solutionAxis.png} 
-    \caption{last iterate along the axes for $\alpha=10^4$ and $\theta = 0.5$}
-  \end{figure}
-\end{minipage}
-\hfill
-\vline
-\hfill
-\begin{minipage}[t]{0.45\textwidth}
-  \begin{figure}[H]
-	  \centering
-		\includegraphics[width=1.1\textwidth]
-      {tikzPlots/f01/alpha1e4/1e-4/uniform/lvl8/solutionAxis.png} 
-    \caption{last iterate along the axes for $\alpha=10^4$ and $\theta = 1$}
-  \end{figure}
-\end{minipage}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%% TODO here (check if data is current in tikz plots
 \section{Application to image}
 For $\alpha = 10000$ let $f$ represent the grayscale of an image in
 $[0,1]^{256\times 256}$ multiplied with $\alpha$ scaled to the domain
@@ -636,7 +624,7 @@ $\Omega\in(0,1)^2$ as seen in \cref{fig:rhsCameraman}.
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=14cm]
+	\includegraphics[width=16cm]
   {tikzPlots/imageCameraman/convergence.pdf}
   \caption{convergence history plot for $\eta$,
   $\eta_\text{Vol}$, and $\eta_\text{Jumps}$}
@@ -644,7 +632,7 @@ $\Omega\in(0,1)^2$ as seen in \cref{fig:rhsCameraman}.
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=14cm]{tikzPlots/imageCameraman/misc.pdf}
+	\includegraphics[width=16cm]{tikzPlots/imageCameraman/misc.pdf}
   \caption{development of the number of iterations and the elapsed time for 
   each iteration}
 \end{figure}
@@ -705,7 +693,7 @@ on $\Omega = (-1,1)^2$.
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=14cm]
+	\includegraphics[width=16cm]
   {tikzPlots/middleSquare/convergence.pdf}
   \caption{convergence history plot for $\eta$,
   $\eta_\text{Vol}$, and $\eta_\text{Jumps}$}
@@ -713,7 +701,7 @@ on $\Omega = (-1,1)^2$.
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=14cm]{tikzPlots/middleSquare/misc.pdf}
+	\includegraphics[width=16cm]{tikzPlots/middleSquare/misc.pdf}
   \caption{development of the number of iterations and the elapsed time for 
   each iteration}
 \end{figure}
