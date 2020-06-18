@@ -624,8 +624,7 @@ $\Omega\in(0,1)^2$ as seen in \cref{fig:rhsCameraman}.
 	\centering
 	\includegraphics[width=16cm]
   {tikzPlots/imageCameraman/convergence.pdf}
-  \caption{convergence history plot for $\eta$,
-  $\eta_\text{Vol}$, and $\eta_\text{Jumps}$}
+  \caption{convergence history plot}
 \end{figure}
 
 \begin{figure}[H]
@@ -690,8 +689,7 @@ on $\Omega = (-1,1)^2$.
 	\centering
 	\includegraphics[width=16cm]
   {tikzPlots/middleSquare/convergence.pdf}
-  \caption{convergence history plot for $\eta$,
-  $\eta_\text{Vol}$, and $\eta_\text{Jumps}$}
+  \caption{convergence history plot}
 \end{figure}
 
 \begin{figure}[H]
@@ -733,6 +731,54 @@ tikzPlots/middleSquare/1e-4/adaptive/lvl8/currentDataReduced.csv}
 \DTLgdeletedb{db}
 
 \section{Another example without known exact solution}
-%TODO bubble plots (only gleb triangle left) and report, than all is done
+Define
+\begin{align}
+  \label{equ:defBubble}
+  f(x, y)\coloneqq \sin(\pi x)\sin(\pi y)
+\end{align}
+on $\Omega = (-1,1)^2$.
+Let $\alpha = 10^4$ and $\theta = 0.5$.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=14cm]{tikzPlots/bubble/rhs.png}
+  \caption{plot of the right-hand side $f$}
+  \label{fig:rhsBubble}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=16cm]
+  {tikzPlots/bubble/convergence.pdf}
+  \caption{convergence history plot}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=16cm]{tikzPlots/bubble/misc.pdf}
+  \caption{development of the number of iterations and the elapsed time for 
+  each iteration}
+\end{figure}
+
+\begin{figure}[H]
+  \centering
+	\includegraphics[width=16cm]
+    {tikzPlots/bubble/1e-4/adaptive/lvl19/solution.png}
+  \caption{plot of last iterate}
+\end{figure}
+
+\DTLloaddb{db}{
+tikzPlots/bubble/1e-4/adaptive/lvl14/currentDataReduced.csv}
+\DTLassign{db}{1}{\nrNodes=nrNodes, \nrDof=nrDof}
+
+\begin{figure}[H]
+	\centering
+  \includegraphics[width=14cm]
+  {tikzPlots/bubble/1e-4/adaptive/lvl14/triangulation.png}
+  \caption{adaptive mesh with \nrNodes\ nodes and 
+  \nrDof\ degrees of freedom}
+\end{figure}
+
+\DTLgdeletedb{db}
 
 \end{document}
