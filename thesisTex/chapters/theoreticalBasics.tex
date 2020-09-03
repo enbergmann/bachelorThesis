@@ -11,51 +11,82 @@
 % Möglicherweise kann ich also doch eine durchgehende Geschichte erzählen und
 % insbesondere alles verstehen
 
-Dieser Abschnitt folgt Kapitel 10 von [bartels].
-Dabei sei $\Omega \subset \Rbb^n$ ein offenes, polygonal berandetes
-Lipschitz-Gebiet.
 
-\section{Vorbereitung}
 
-\begin{definition}[braides]\label{def:masz}
-  Eine Funktion $\mu:\Bcal(\Omega)\to\Rbb^N$ heißt (Vektor-) Maß auf $\Omega$,
-  wenn sie abzählbar additiv ist, d.h.\ für alle
-  $(B_j)_{j\in\Nbb}\subseteq\Bcal(\Omega)$ mit $B_j \cap B_k = \emptyset$ für
-  $j\neq k$ gilt
-  \begin{align*}
-    \mu\left( \dot{\bigcup_{j\in\Nbb}} B_j  \right) = \sum_{j\in\Nbb} \mu(B_j).
-  \end{align*}
-  Die Menge aller dieser Maße sei $\Mcal(\Omega;\Rbb^N)$.
+\section{Maßtheoretische Grundlagen}
+ 
+TODO doch noch wenigstens eine einfach Def für Radon Maße (vor allem mit Zitat 
+zu einer Quelle
 
-  Im Fall $N=1$ heißt $\mu$ skalares Maß. Falls $\mu$ zusätzlich nur Werte in 
-  $[0,\infty)$
-  annimmt, heißt es positives Maß. Die Menge aller skalaren Maße sei 
-  $\Mcal(\Omega)$ und die Menge aller positiven Maße sei 
-  $\Mcal_+(\Omega)$.
-\end{definition}
+% \begin{definition}[braides]\label{def:masz}
+%   Eine Funktion $\mu:\Bcal(\Omega)\to\Rbb^N$ heißt (Vektor-) Maß auf $\Omega$,
+%   wenn sie abzählbar additiv ist, d.h.\ für alle
+%   $(B_j)_{j\in\Nbb}\subseteq\Bcal(\Omega)$ mit $B_j \cap B_k = \emptyset$ für
+%   $j\neq k$ gilt
+%   \begin{align*}
+%     \mu\left( \dot{\bigcup_{j\in\Nbb}} B_j  \right) = \sum_{j\in\Nbb} \mu(B_j).
+%   \end{align*}
+%   Die Menge aller dieser Maße sei $\Mcal(\Omega;\Rbb^N)$.
+% 
+%   Im Fall $N=1$ heißt $\mu$ skalares Maß. Falls $\mu$ zusätzlich nur Werte in 
+%   $[0,\infty)$
+%   annimmt, heißt es positives Maß. Die Menge aller skalaren Maße sei 
+%   $\Mcal(\Omega)$ und die Menge aller positiven Maße sei 
+%   $\Mcal_+(\Omega)$.
+% \end{definition}
+% 
+% \begin{remark}
+%   Die übliche Anforderung $\mu(\emptyset) = 0$  an ein Maß ist äquivalent zur 
+%   Bedingung, dass $A\in \Bcal(\Omega)$ existiert, sodass $\mu(A)$ in jeder 
+%   Komponente endliche Werte annimmt. 
+% 
+%   Da in \Cref{def:masz} als Wertebereich $\Rbb^N$ gefordert wird, ist
+%   diese äquivalente Bedingung erfüllt.
+% \end{remark}
+% 
+% \begin{definition}\label{def:radonmasz}
+%   Eine Funktion $\mu:\Bcal(\Omega)\to\Rbb^N$ heißt Radonmaß auf 
+%   $\Omega$, wenn $\mu|_{\Bcal(\Omega')}$ ein Maß auf jeder Menge 
+%   $\Omega'\ssubset \Omega$ (d.h.\,$\closure({\Omega'})\subset \interior({\Omega})$) 
+%   ist.
+% \end{definition}
 
-\begin{remark}
-  Die übliche Anforderung $\mu(\emptyset) = 0$  an ein Maß ist äquivalent zur 
-  Bedingung, dass $A\in \Bcal(\Omega)$ existiert, sodass $\mu(A)$ in jeder 
-  Komponente endliche Werte annimmt. 
-
-  Da in \Cref{def:masz} als Wertebereich $\Rbb^N$ gefordert wird, ist
-  diese äquivalente Bedingung erfüllt.
-\end{remark}
-
-\begin{definition}\label{def:radonmasz}
-  Eine Funktion $\mu:\Bcal(\Omega)\to\Rbb^N$ heißt Radonmaß auf 
-  $\Omega$, wenn $\mu|_{\Bcal(\Omega')}$ ein Maß auf jeder Menge 
-  $\Omega'\ssubset \Omega$ (d.h.\,$\closure({\Omega'})\subset \interior({\Omega})$) 
-  ist.
-\end{definition}
+%TODO
+% nur die Sachen rausschreiben/zusammentragen/zitieren (um später Theoreme und
+% Gleichungen zitieren zu können statt Bücher) die auch wirklich gebraucht 
+% werden später in Beweisen
 
 \section{Direkte Methode der Variationsrechnung}
 \section{Subdifferential}
 \section{Karush-Kuhn-Tucker Bedingungen}
 
-
 \section{Funktionen Beschränkter Variation}
+
+Dieser Abschnitt folgt Kapitel 10 von \cite{Bar15}.
+Dabei sei $\Omega \subset \Rbb^n$ ein offenes, polygonal berandetes
+Lipschitz-Gebiet.
+
+% TODO jede übernommene Definition übernehmen trotz Disclaimer oben?
+% jede Notation erklären bzw. definieren? Falls ja; am Anfang oder Ende der
+% Arbeit?
+
+\begin{definition}
+  % TODO maybe move to Grundlagen über RAdon Maße
+  Die Vervollständigung des Raums $C^\infty_C(\Omega;\Rbb^m)$ bezüglich der 
+  Norm
+  $\Vert\bullet\Vert_{L^\infty(\Omega}$ ist ein separabler Banachraums und wird
+  bezeichnet mit 
+  $C_0(\Omega; \Rbb^m)$.
+  Der Dualraum $\Mcal(\Omega;\Rbb^m)$ von $C_0(\Omega; \Rbb^m)$ wird
+  durch den Riesz'schen Darstellungssatz (TODO quote) identifiziert mit
+  dem Raum aller (vektoriellen) Radon Maße. Dabei ist die Anwendung
+  von $\mu\in \Mcal(\Omega;\Rbb^m)$
+  auf $\phi\in C_0(\Omega;\Rbb^m)$ definiert durch
+  \begin{align*}
+    \langle \mu, \phi\rangle = \int_\Omega \phi \dmu =
+    \int_\Omega \phi(x) \dmu(x).
+  \end{align*}
+\end{definition}
 
 \begin{definition}[Funktionen beschränkter Variation]
   Eine Funktion $u\in L^1(\Omega)$ ist von beschränkter Variation, wenn ihre
@@ -79,9 +110,16 @@ Lipschitz-Gebiet.
   ist ausgestattet mit der Norm 
   \begin{align*}
     \Vert u \Vert_{\BV(\Omega)} \coloneqq \Vert u\Vert_{L^1(\Omega)} +
-    |u|_{\BV(\Omega)}.
+    |u|_{\BV(\Omega)}
   \end{align*}
+  für $u\in\BV(\Omega)$.
 \end{definition}
+
+\begin{remark}
+  Es gilt $W^{1,1}(\Omega)\subset\BV(\Omega)$ und 
+  $\Vert u \Vert_{\BV(\Omega)}=\Vert u \Vert_{W^{1,1}(\Omega)}$ für alle
+  $u\in W^{1,1}(\Omega)$.
+\end{remark}
 
 \begin{definition}
   Sei $(u_n)_{n\in\Nbb}\subset \BV(\Omega)$ und sei $u\in \BV(\Omega)$ mit
