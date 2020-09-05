@@ -12,13 +12,14 @@
 
 % \setlength{\parindent}{0pt}
 
-\overfullrule=2cm
-
 \input{header/main}
 %\input{header/tikz}
 \input{header/environments}
 \input{header/commands} 
 
+% --- DEBUG -------------------------------------------------------------------
+\overfullrule=2cm % marks overfull hboxes by black bar in document
+\usepackage{todonotes}
 
 % --- META INFORMATION --------------------------------------------------------
 
@@ -46,8 +47,14 @@ der Funktionen von beschränkter Variation}
 \maketitle
 \tableofcontents
 
+% TODO to toc
+\todototoc
+\listoftodos
+% TODO
+
 \chapter{Einleitung}
 \input{chapters/introduction.tex}
+\todo{TODO schreibe Einleitung, zitiere Quellen, die Anwendungen beschreiben}
 
 \chapter{Theoretische Grundlagen}
 \input{chapters/theoreticalBasics.tex}
@@ -75,6 +82,7 @@ Die erste Quelle (und wichtigste) ist \cite{Bar15} und dann gibt es bisher
 noch
 \cite[200]{Roc70}.
 Um zu testen zitiert man am besten \cite{TestProbe99}.
+\todo{NOTE Bsp wie zitieren funktioniert und um Bib zu testen}
 
 \printbibliography
 

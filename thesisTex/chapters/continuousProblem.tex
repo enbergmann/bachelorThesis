@@ -19,8 +19,9 @@ folgende Minimierungsproblem.
 
 \begin{proof}
   Das Funktional $E$ in \eqref{eq:continuousProblem} ist nach unten beschränkt,
-  denn für alle $v\in \BV(\Omega)\cap L^2(\Omega)$ gilt mit der Cauchy-Schwarzschen
-  Ungleichung und der Youngschen Ungleichung
+  denn für alle $v\in \BV(\Omega)\cap L^2(\Omega)$ gilt mit der
+  Cauchy-Schwarzschen Ungleichung und der Youngschen Ungleichung
+  \todo[inline]{TODO Ungleichungen erwähnen/zitieren in Kapitel 1}
   \begin{equation}
     \label{eq:contProbBddFromBelow}
     \begin{aligned}
@@ -59,14 +60,20 @@ folgende Minimierungsproblem.
   \medbreak
   Nun garantiert \cref{thm:compactness} die Existenz einer schwach konvergenten
   Teilfolge $(u_{n_k})_{k\in\Nbb}$ von $(u_n)_{n\in\Nbb}$ mit schwachem Grenzwert
-  $u\in\BV(\Omega)$. O.B.d.A.\ ist $(u_{n_k})_{k\in\Nbb}=(u_n)_{n\in\Nbb}$.
+  $u\in\BV(\Omega)$. Ohne Beschränkung der Allgemeinheit
+  ist $(u_{n_k})_{k\in\Nbb}=(u_n)_{n\in\Nbb}$.
 
-  Analog ist $(u_n)_{n\in\Nbb}$ nach \cref{eq:contProbBddFromBelow} ebenfalls
-  beschränkt bezüglich der Norm $\Vert\bullet\Vert_{L^2(\Omega)}$, besitzt also
-  eine Teilfolge (O.B.d.A.\ weiterhin bezeichnet mit $(u_n)_{n\in\Nbb}$), die
-  in $L^2(\Omega)$ schwach gegen ein $\tilde{u}\in L^2(\Omega)$ konvergiert.
+  Aus \cref{eq:contProbBddFromBelow} folgt 
+  $E(v)\rightarrow\infty$ für
+  $\Vert v\Vert_{L^2(\Omega)}\rightarrow\infty$. Somit muss $(u_n)_{n\in\Nbb}$ 
+  auch beschränkt sein bezüglich der Norm $\Vert\bullet\Vert_{L^2(\Omega)}$ und
+  besitzt deshalb 
+  eine Teilfolge (ohne Beschränkung der Allgemeinheit weiterhin bezeichnet mit
+  $(u_n)_{n\in\Nbb}$), die
+  in $L^2(\Omega)$ schwach gegen $\tilde{u}\in L^2(\Omega)$ konvergiert.
   Da die Einbettung $L^2(\Omega)\hookrightarrow L^1(\Omega)$ kompakt ist, 
-  %TODO besser zitieren, Rellich Kondrachov erwähnen oder sogar nachrechnen?
+  \todo[inline]{TODO besser zitieren, Rellich Kondrachov erwähnen oder sogar
+  nachrechnen?}
   existiert eine Teilfolge (O.B.d.A\ $(u_n)_{n\in\Nbb}$), die stark gegen
   $\tilde u$ konvergiert bezüglich der Norm $\Vert\bullet\Vert_{L^1(\Omega)}$.
 
