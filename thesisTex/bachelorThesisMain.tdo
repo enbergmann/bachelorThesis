@@ -13,10 +13,14 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {todo}{TODO zitiere?}{5}{section*.9}
 \defcounter {refsection}{0}\relax 
-\contentsline {todo}{TODO schreibe die \IeC {\"a}quivalenz und Bedingungen genauer, was soll hier wirklich gesagt werden? Vielleicht auch erst beim Diskreten Problem, da es dort Nullranddaten gibt? Beachte insbesondere, dass $g=\alpha f$ (oder sowas) in Bartels und behandel also das noch richtig hier}{7}{section*.10}
+\contentsline {todo}{TODO Vielleicht auch erst beim Diskreten Problem, da es dort Nullranddaten gibt? Beachte insbesondere, dass $f=\alpha g$ }{7}{section*.10}
 \defcounter {refsection}{0}\relax 
 \contentsline {todo}{TODO Ungleichungen erw\IeC {\"a}hnen/zitieren in Kapitel 1}{7}{section*.11}
 \defcounter {refsection}{0}\relax 
-\contentsline {todo}{TODO besser zitieren, Rellich Kondrachov erw\IeC {\"a}hnen oder sogar nachrechnen?}{8}{section*.12}
+\contentsline {todo}{warum beschr\IeC {\"a}nkt, warum folgt aus BV Norm gegen unenedlich auch das Normen, die in der der Absch\IeC {\"a}tzung sind, gegen unendlich}{7}{section*.12}
 \defcounter {refsection}{0}\relax 
-\contentsline {todo}{NOTE Bsp wie zitieren funktioniert und um Bib zu testen}{16}{section*.13}
+\contentsline {todo}{eigentlich nur die Seminorm nach Absch. oben}{7}{section*.13}
+\defcounter {refsection}{0}\relax 
+\contentsline {todo}{TODO besser zitieren, Rellich Kondrachov erw\IeC {\"a}hnen oder sogar nachrechnen?}{8}{section*.14}
+\defcounter {refsection}{0}\relax 
+\contentsline {todo}{NOTE Bsp wie zitieren funktioniert und um Bib zu testen}{16}{section*.15}
