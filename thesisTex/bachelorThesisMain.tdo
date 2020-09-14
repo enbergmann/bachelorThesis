@@ -7,20 +7,22 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {todo}{TODO Ma\IeC {\ss }theorie f\IeC {\"u}r Vektorma\IeC {\ss }e ist absolut nicht notwenig, da meine Anwendung ausschlie\IeC {\ss }lich von R2 nach R geht M\IeC {\"o}glicherweise kann ich also doch eine durchgehende Geschichte erz\IeC {\"a}hlen und insbesondere alles verstehen, im Quelltext sind noch auskommentierte Theorem zur Ma\IeC {\ss }theorie}{5}{section*.6}
 \defcounter {refsection}{0}\relax 
-\contentsline {todo}{TODO jede \IeC {\"u}bernommene Definition/Theorem/etc. zitieren trotz Disclaimer oben? jede Notation erkl\IeC {\"a}ren bzw. definieren? Falls ja; am Anfang oder Ende der Arbeit?}{5}{section*.7}
+\contentsline {todo}{Direkt von R2 ausgehen, weil mehr im Programm nicht geht?}{5}{section*.7}
 \defcounter {refsection}{0}\relax 
-\contentsline {todo}{TODO vielleicht zu Grundlagen \IeC {\"u}ber Radonma\IeC {\ss }e verschieben}{5}{section*.8}
+\contentsline {todo}{TODO jede \IeC {\"u}bernommene Definition/Theorem/etc. zitieren trotz Disclaimer oben? jede Notation erkl\IeC {\"a}ren bzw. definieren? Falls ja; am Anfang oder Ende der Arbeit?}{5}{section*.8}
 \defcounter {refsection}{0}\relax 
-\contentsline {todo}{TODO zitiere?}{5}{section*.9}
+\contentsline {todo}{TODO vielleicht zu Grundlagen \IeC {\"u}ber Radonma\IeC {\ss }e verschieben}{5}{section*.9}
 \defcounter {refsection}{0}\relax 
-\contentsline {todo}{TODO Vielleicht auch erst beim Diskreten Problem, da es dort Nullranddaten gibt? Beachte insbesondere, dass $f=\alpha g$ }{7}{section*.10}
+\contentsline {todo}{TODO zitiere?}{5}{section*.10}
 \defcounter {refsection}{0}\relax 
-\contentsline {todo}{TODO Ungleichungen erw\IeC {\"a}hnen/zitieren in Kapitel 1}{7}{section*.11}
+\contentsline {todo}{TODO Vielleicht auch erst beim Diskreten Problem, da es dort Nullranddaten gibt? Beachte insbesondere, dass $f=\alpha g$ }{7}{section*.11}
 \defcounter {refsection}{0}\relax 
-\contentsline {todo}{warum beschr\IeC {\"a}nkt, warum folgt aus BV Norm gegen unenedlich auch das Normen, die in der der Absch\IeC {\"a}tzung sind, gegen unendlich}{7}{section*.12}
+\contentsline {todo}{TODO Ungleichungen erw\IeC {\"a}hnen/zitieren in Kapitel 1}{7}{section*.12}
 \defcounter {refsection}{0}\relax 
-\contentsline {todo}{eigentlich nur die Seminorm nach Absch. oben}{7}{section*.13}
+\contentsline {todo}{warum beschr\IeC {\"a}nkt, warum folgt aus BV Norm gegen unenedlich auch das Normen, die in der der Absch\IeC {\"a}tzung sind, gegen unendlich VIELLEICHT THEOREM 2.4 (lecture05 BV)}{7}{section*.13}
 \defcounter {refsection}{0}\relax 
-\contentsline {todo}{TODO besser zitieren, Rellich Kondrachov erw\IeC {\"a}hnen oder sogar nachrechnen?}{8}{section*.14}
+\contentsline {todo}{eigentlich nur die Seminorm nach Absch. oben}{7}{section*.14}
 \defcounter {refsection}{0}\relax 
-\contentsline {todo}{NOTE Bsp wie zitieren funktioniert und um Bib zu testen}{16}{section*.15}
+\contentsline {todo}{TODO besser zitieren, Rellich Kondrachov erw\IeC {\"a}hnen oder sogar nachrechnen?}{8}{section*.15}
+\defcounter {refsection}{0}\relax 
+\contentsline {todo}{NOTE Bsp wie zitieren funktioniert und um Bib zu testen}{16}{section*.16}

@@ -65,22 +65,23 @@ im Quelltext sind noch auskommentierte Theorem zur Maßtheorie}
 Dieser Abschnitt folgt Kapitel 10 von \cite{Bar15}.
 Dabei sei $\Omega \subset \Rbb^n$ ein offenes, polygonal berandetes
 Lipschitz-Gebiet.
+\todo{Direkt von R2 ausgehen, weil mehr im Programm nicht geht?}
 \todo[inline]{TODO jede übernommene Definition/Theorem/etc. zitieren trotz
 Disclaimer oben?  jede Notation erklären bzw. definieren? Falls ja; am Anfang
 oder Ende der Arbeit?}
 
 \begin{definition}
-  \todo[inline]{TODO vielleicht zu Grundlagen über Radonmaße verschieben}
+  \todo{TODO vielleicht zu Grundlagen über Radonmaße verschieben}
   Die Vervollständigung des Raums $C^\infty_C(\Omega;\Rbb^m)$ bezüglich der 
   Norm
-  $\Vert\bullet\Vert_{L^\infty(\Omega}$ ist ein separabler Banachraums und wird
+  $\Vert\bullet\Vert_{L^\infty(\Omega)}$ ist ein separabler Banachraums und wird
   bezeichnet mit 
   $C_0(\Omega; \Rbb^m)$.
   Der Dualraum $\Mcal(\Omega;\Rbb^m)$ von $C_0(\Omega; \Rbb^m)$ wird
   durch den Riesz'schen Darstellungssatz \todo{TODO zitiere?} identifiziert mit
-  dem Raum aller (vektoriellen) Radon Maße. Dabei ist die Anwendung
+  dem Raum aller (vektoriellen) Radon Maße. Dabei wird die Anwendung
   von $\mu\in \Mcal(\Omega;\Rbb^m)$
-  auf $\phi\in C_0(\Omega;\Rbb^m)$ definiert durch
+  auf $\phi\in C_0(\Omega;\Rbb^m)$ identifiziert mit
   \begin{align*}
     \langle \mu, \phi\rangle = \int_\Omega \phi \dmu =
     \int_\Omega \phi(x) \dmu(x).
@@ -118,6 +119,8 @@ oder Ende der Arbeit?}
   Es gilt $W^{1,1}(\Omega)\subset\BV(\Omega)$ und 
   $\Vert u \Vert_{\BV(\Omega)}=\Vert u \Vert_{W^{1,1}(\Omega)}$ für alle
   $u\in W^{1,1}(\Omega)$.
+  {\color{green}es gilt für diese u tatsächlich (nach BV lecture04) ca.
+  $|u|_{\BV(\Omega)=\Vert \nabla u \Vert_{L^1(\Omega)}}$}
 \end{remark}
 
 \begin{definition}
