@@ -119,7 +119,7 @@ oder Ende der Arbeit?}
   Es gilt $W^{1,1}(\Omega)\subset\BV(\Omega)$ und 
   $\Vert u \Vert_{\BV(\Omega)}=\Vert u \Vert_{W^{1,1}(\Omega)}$ für alle
   $u\in W^{1,1}(\Omega)$.
-  {\color{green}es gilt für diese u tatsächlich (nach BV lecture04) ca.
+  {\color{red}es gilt für diese u tatsächlich (nach BV lecture04) ca.
   $|u|_{\BV(\Omega)=\Vert \nabla u \Vert_{L^1(\Omega)}}$}
 \end{remark}
 
@@ -130,6 +130,24 @@ oder Ende der Arbeit?}
     \item[(i)]
       Die Folge $(u_n)_{n\in\Nbb}$ konvergiert strikt gegen $u$,
       wenn $|u_n|_{\BV(\Omega)}\rightarrow |u|_{\BV(\Omega)}$ für $n\rightarrow\infty$.
+      {\color{red} strikte Konvergenz gdw. ($\Vert u-u_n\Vert_{L^1(\Omega)}
+      \to 0$ und $|u_n|_{\BV(\Omega)}\rightarrow |u|_{\BV(\Omega)}$)
+      was impliziert $\Vert u_n\Vert_\BV\to \Vert u\Vert_{\BV}$ aber nicht
+      unbedingt $\Vert u_n - u \Vert_\BV\to 0$, da nicht folgt, dass 
+      $|u_n - u|_\BV\to 0$
+      
+      aus BV Konvergenz, also $\Vert u_n - u \Vert_\BV\to 0$, folgt hingegen 
+      aber ($\Vert u-u_n\Vert_{L^1(\Omega)}
+      \to 0$ und $|u_n - u|_{\BV(\Omega)}\rightarrow 0$), also insbesondere
+      ($\Vert u-u_n\Vert_{L^1(\Omega)}
+      \to 0$ und $|u_n|_{\BV(\Omega)}\rightarrow |u|_{\BV(\Omega)}$), d.h.
+      strikte Konvergenz
+      
+      jede BV konvergente Folge ist also strikt konvergent aber nicht umgekehrt,
+      es gibt also mehr strikt konvergente Folgen, deshalb klingt es sinnvoll,
+      dass wir BV Funktionen durch $C^\infty$ Funktionen (usw.) approximieren
+      können bzgl strikter Konvergenz aber nicht bzgl BV Konvergenz (strong 
+      topology, vgl.  Ende von BV lecture04}
     \item[(ii)] Die Folge $(u_n)_{n\in\Nbb}$ konvergiert
       schwach gegen $u$, wenn
       $Du_n\rightharpoonup^\ast Du$ in 
@@ -156,6 +174,28 @@ oder Ende der Arbeit?}
   \label{thm:approximationBySmoothFunctions}
   Die Räume $C^\infty(\overline\Omega)$ und $C^\infty(\Omega)\cap\BV(\Omega)$
   liegen dicht in $\BV(\Omega)$ bezüglich strikter Konvergenz.
+
+  {\color{red}BV lecture05 Thm 2.4 liefert sogar (Folge in
+  $C^\infty\cap W^{1,1}$) sowohl strikte als auch schwache Konvergenz gegen
+  gegebenes $u\in\BV$, also wir haben nach diesem Thm die Dichte von
+  $C^\infty\cap W^{1,1}$ bzgl. strikter und schwacher BV Konvergenz
+  
+  da für Folgen in $W^{1,1}$ BV und $W^{1,1}$ Norm übereinstimmen und da
+  $W^{1,1}$ der Abschluss von $C^\infty$ bzgl. der $W^{1,1}$ Norm ist (
+  $C^\infty$ dicht in $W^{ 1,1 }$ bzgl. W11 Norm), ist
+  für $W^{1,1}$ Funktionen W11 auch Abschluss von Cinfty bzgl
+  der BV Norm (Cinfty dicht in W11 bzhl BV Norm)
+  
+  JETZT DER KNACKPUNKT und wie aus Thmeorem 2.6 gefolgert werden kann was in BV lecture
+  steht: da BV Konvergenz strikte Konvergenz impliziert, ist 
+  also Cinfty auch dicht in W11 bzgl strikter Konvergenz und W11 ist Teilmenge
+  von BV. Da A dicht in B und B Teilmenge C impliziert das B dicht in C (wiki,
+  natürlich beides bzgl gleicher Metrik), folgt insgesamt W11 dicht in BV bzgl
+  strikter Konvergenz
+  
+  MORGEN CONTINUE IN WITH THIS IN EXISTENCE PROOF: NOW I might know WHY
+  infimizing sequence in BV can simply be choosen in W11 or something
+  (Think about it and what bartels did)}
 \end{theorem}
 
 \begin{theorem}
@@ -163,4 +203,5 @@ oder Ende der Arbeit?}
   Sei $(u_n)_{n\in\Nbb}\subset \BV(\Omega)$ eine beschränkte Folge. Dann 
   existiert eine Teilfolge $(u_{n_k})_{k\in\Nbb}$ und ein $u\in\BV(\Omega)$,
   sodass $u_{n_k}\rightharpoonup u$ in $\BV(\Omega)$ für $k\rightarrow\infty$.
+  {\color{red}augenscheinlich nicht in BV lecture}
 \end{theorem}
