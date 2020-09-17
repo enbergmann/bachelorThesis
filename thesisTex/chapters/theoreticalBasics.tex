@@ -205,3 +205,22 @@ oder Ende der Arbeit?}
   sodass $u_{n_k}\rightharpoonup u$ in $\BV(\Omega)$ für $k\rightarrow\infty$.
   {\color{red}augenscheinlich nicht in BV lecture}
 \end{theorem}
+
+\begin{theorem}
+  \label{thm:embeddingBVintoLp}
+  Die Einbettung $\BV(\Omega)\to L^p(\Omega)$ ist stetig für 
+  $1\leq p\leq n/(n-1)$ und kompakt für $1\leq p< n/(n-1)$
+\end{theorem}\todo[inline]{TODO vielleicht wichtig, Quelle braucht es noch}
+
+\begin{theorem}[Spuroperator]
+  \label{thm:traceOperator}
+  Es existiert ein linearer Operator $T:\BV(\Omega)\to L^1(\partial\Omega)$
+  mit $T(u) = u|_{\partial\Omega}$ für alle $u\in\BV(\Omega)\cap
+  C(\overline\Omega)$.
+
+  Der Operator $T$ ist stetig bezüglich strikter Konvergenz in $\BV(\Omega)$,
+  aber nicht stetig bezüglich schwacher Konvergenz in $\BV(\Omega)$. 
+\end{theorem}\todo[inline]{TODO finde Quelle, nur ein Remark in Bartels (wird 
+aber für CCs Funktional offensichtlich gebraucht, es gibt noch weitere Aussagen
+in Bartels (zB integration by parts aber erstmal nur Existens und Stetigkeit 
+hier (wie gesagt, nur was gebraucht wird zitieren, oder?)}

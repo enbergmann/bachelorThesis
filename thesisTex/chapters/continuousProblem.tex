@@ -12,7 +12,6 @@ folgende Minimierungsproblem.
 \end{problem}
 
 \begin{remark}
-  %TODO
   \todo[inline]{TODO Vielleicht auch erst beim Diskreten Problem,
   da es dort Nullranddaten gibt? Beachte insbesondere, dass $f=\alpha g$ }
   In \cite[Kapitel~10.1.3]{Bar15} wird \Cref{prob:continuousProblem} für ein
@@ -26,9 +25,9 @@ folgende Minimierungsproblem.
   $I(v) = E(v) - \Vert v\Vert_{L^1(\partial \Omega)}+ 
   \frac{\alpha}{2}\Vert g\Vert_{L^2(\Omega)}^2$ für alle 
   $v\in \BV(\Omega)\cap L^2(\Omega)$. Da der Term $\frac{\alpha}{2}\Vert
-  g\Vert_{L^2(\Omega)}^2$ konstant ist, haben dann, falls $\Vert
-  v\Vert_{L^1(\partial\Omega)} = 0$, beide Funktionale die
-  gleichen Minimierer in $\BV(\Omega)\cap L^2(\Omega)$.
+  g\Vert_{L^2(\Omega)}^2$ konstant ist, haben beide Funktionale die
+  gleichen Minimierer in $\left\{v\in\BV(\Omega)\cap L^2(\Omega)\mid 
+  \Vert v\Vert_{L^1(\partial\Omega)}=0\right\}$.
 \end{remark}
 
 \begin{theorem}[Existenz einer Lösung]
@@ -64,22 +63,32 @@ folgende Minimierungsproblem.
     \end{aligned}
   \end{equation}
   Somit existiert eine infimierende Folge
-  \todo[inline]{warum beschränkt, warum folgt aus BV Norm gegen unenedlich
-  auch das Normen, die in der der Abschätzung sind, gegen unendlich VIELLEICHT
-  THEOREM 2.4 (lecture05 BV)}
   $(u_n)_{n\in\Nbb}\subset\BV(\Omega)\cap
   L^2(\Omega)$ von $E$, d.h.\ $(u_n)_{n\in\Nbb}$ erfüllt
   $\lim_{n\rightarrow\infty}E(u_n) =
   \inf_{v\in\BV(\Omega)\cap
     L^2(\Omega)}E(v)$. 
-    % bezüglich der Normen $\Vert\bullet\Vert_{BV(\Omega)}$ 
-    % und $\Vert\bullet\Vert_{L^2(\Omega)}$.
 
   \Cref{eq:contProbBddFromBelow} impliziert außerdem, dass
-  $E(v)\rightarrow\infty$, falls
-  $\Vert v\Vert_{\BV(\Omega)}\rightarrow\infty$.
-  \todo{eigentlich nur die Seminorm nach Absch. oben}
-  Die Folge $(u_n)_{n\in\Nbb}$ muss also insbesondere beschränkt sein.
+  $E(u_n)\rightarrow\infty$ falls
+  $|u_n|_{\BV(\Omega)}\rightarrow\infty$ für $n\to\infty$.
+  Falls andererseits $|u_n|_{\BV(\Omega)}\leq c$ für alle $n\in\Nbb$ und ein
+  $c\in\Rbb_{+}$ aber $\Vert u_n\Vert_{\BV(\Omega)}\to\infty$ für $n\to\infty$,
+  folgt nach Definition von $\Vert\bullet\Vert_{\BV(\Omega)}$, dass
+  $\int_\Omega|u_n|\dx = \Vert u_n\Vert_{L^1(\Omega)}\to \infty$ für
+  $n\to\infty$. Dafür ist notwendig, dass $|u_n|\to\infty$ für $n\to\infty$, 
+  also insbesondere $|u_n|\geq 1$ für hinreichend große $n\in\Nbb$. Daraus 
+  folgt für solche hinreichend große $n\in\Nbb$, dass $\Vert
+  u_n\Vert_{L^1(\Omega)} = \int_\Omega|u_n|\dx \leq
+  \int_\Omega |u_n|^2\dx=\Vert u_n\Vert^2_{L^2(\Omega)}$ und somit ebenfalls
+  durch \Cref{eq:contProbBddFromBelow} $E(u_n)\to\infty$ für
+  $n\to\infty$.
+
+  Die Folge $(u_n)_{n\in\Nbb}$ muss also beschränkt in $\BV(\Omega)$ sein, da 
+  sonst $E(u_n)$ bestimmt divergiert, im Widerspruch dazu, dass
+  $(u_n)_{n\in\Nbb}$ infimierende Folge ist.
+
+  %TODO TODO
 
   \medbreak
   Nun garantiert \cref{thm:compactness} die Existenz einer schwach konvergenten
@@ -97,7 +106,9 @@ folgende Minimierungsproblem.
   in $L^2(\Omega)$ schwach gegen $\tilde{u}\in L^2(\Omega)$ konvergiert.
   Da die Einbettung $L^2(\Omega)\hookrightarrow L^1(\Omega)$ kompakt ist, 
   \todo[inline]{TODO besser zitieren, Rellich Kondrachov erwähnen oder sogar
-  nachrechnen?}
+  nachrechnen? DAS IST SOgAR FALsch, oder? Differenzierbarkeit muss doch 
+  verloren gehen. Das ist eher eine von den BV Einbettung siehe Remark 10.5
+  in Bartels oder so}
   existiert eine Teilfolge (O.B.d.A\ $(u_n)_{n\in\Nbb}$), die stark gegen
   $\tilde u$ konvergiert bezüglich der Norm $\Vert\bullet\Vert_{L^1(\Omega)}$.
 
