@@ -76,8 +76,9 @@ folgende Minimierungsproblem.
   $c\in\Rbb_{+}$ aber $\Vert u_n\Vert_{\BV(\Omega)}\to\infty$ für $n\to\infty$,
   folgt nach Definition von $\Vert\bullet\Vert_{\BV(\Omega)}$, dass
   $\int_\Omega|u_n|\dx = \Vert u_n\Vert_{L^1(\Omega)}\to \infty$ für
-  $n\to\infty$. Dafür ist notwendig, dass $|u_n|\to\infty$ für $n\to\infty$, 
-  also insbesondere $|u_n|\geq 1$ für hinreichend große $n\in\Nbb$. Daraus 
+  $n\to\infty$. Dafür ist für fast alle $x\in\Rbb$ notwendig, dass
+  $|u_n(x)|\to\infty$ für $n\to\infty$, 
+  also insbesondere $|u_n(x)|\geq 1$ für hinreichend große $n\in\Nbb$. Daraus 
   folgt für solche hinreichend große $n\in\Nbb$, dass $\Vert
   u_n\Vert_{L^1(\Omega)} = \int_\Omega|u_n|\dx \leq
   \int_\Omega |u_n|^2\dx=\Vert u_n\Vert^2_{L^2(\Omega)}$ und somit ebenfalls
@@ -85,7 +86,7 @@ folgende Minimierungsproblem.
   $n\to\infty$.
 
   Die Folge $(u_n)_{n\in\Nbb}$ muss also beschränkt in $\BV(\Omega)$ sein, da 
-  sonst $E(u_n)$ bestimmt divergiert, im Widerspruch dazu, dass
+  sonst $(E(u_n))_{n\in\Nbb}$ bestimmt divergiert, im Widerspruch dazu, dass
   $(u_n)_{n\in\Nbb}$ infimierende Folge ist.
 
   %TODO TODO
@@ -126,7 +127,8 @@ folgende Minimierungsproblem.
   %stetig (d.h.\ insbesondere 
   \bigbreak
   %TODO
-  todo: Randterm sufs? Die beiden verbleibenden Terme sind ufs, aber auch sufs?
+  \todo[inline]{Randterm sufs? Die beiden verbleibenden Terme sind ufs, aber
+  auch sufs?}
   \bigbreak
   Damit gilt insgesamt
   \begin{align*}
