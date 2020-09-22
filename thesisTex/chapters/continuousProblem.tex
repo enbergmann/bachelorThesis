@@ -89,8 +89,6 @@ folgende Minimierungsproblem.
   sonst $(E(u_n))_{n\in\Nbb}$ bestimmt divergiert, im Widerspruch dazu, dass
   $(u_n)_{n\in\Nbb}$ infimierende Folge ist.
 
-  %TODO TODO
-
   \medbreak
   Nun garantiert \cref{thm:compactness} die Existenz einer schwach konvergenten
   Teilfolge $(u_{n_k})_{k\in\Nbb}$ von $(u_n)_{n\in\Nbb}$ mit schwachem Grenzwert
@@ -101,22 +99,29 @@ folgende Minimierungsproblem.
   $E(v)\rightarrow\infty$ für
   $\Vert v\Vert_{L^2(\Omega)}\rightarrow\infty$. Somit muss $(u_n)_{n\in\Nbb}$ 
   auch beschränkt sein bezüglich der Norm $\Vert\bullet\Vert_{L^2(\Omega)}$ und
-  besitzt deshalb 
+  besitzt deshalb wegen der Reflexivität von $L^2(\Omega)$
   eine Teilfolge (ohne Beschränkung der Allgemeinheit weiterhin bezeichnet mit
   $(u_n)_{n\in\Nbb}$), die
   in $L^2(\Omega)$ schwach gegen $\tilde{u}\in L^2(\Omega)$ konvergiert.
-  Da die Einbettung $L^2(\Omega)\hookrightarrow L^1(\Omega)$ kompakt ist, 
-  \todo[inline]{TODO besser zitieren, Rellich Kondrachov erwähnen oder sogar
-  nachrechnen? DAS IST SOgAR FALsch, oder? Differenzierbarkeit muss doch 
-  verloren gehen. Das ist eher eine von den BV Einbettung siehe Remark 10.5
-  in Bartels oder so}
-  existiert eine Teilfolge (O.B.d.A\ $(u_n)_{n\in\Nbb}$), die stark gegen
-  $\tilde u$ konvergiert bezüglich der Norm $\Vert\bullet\Vert_{L^1(\Omega)}$.
 
   Allerdings bedeutet die schwache Konvergenz $u_n\rightharpoonup u$ in
   $\BV(\Omega)$  
   insbesondere, dass $u_n\rightarrow u$ in $L^1(\Omega)$.
-  Es gilt also $u=\tilde u \in L^2(\Omega)$, d.h.\ $u\in\BV(\Omega)\cap
+  Es gilt 
+  \begin{align*}
+    u_n \to u \text{ in } L^1(\Omega)&\Rightarrow
+    \Vert u_n-u\Vert_{L^1(\Omega)}=\int_\Omega |u_n - u|\dx \to 0\\
+    &\Rightarrow |u_n(x) - u(x)| \to 0 \text{ a.e. in } \Omega\\
+    &\Rightarrow |u_n(x) - u(x)|^2 \to 0 \text{ a.e. in } \Omega\\
+    &\Rightarrow \Vert u_n-u\Vert^2_{L^2(\Omega)}=
+    \int_\Omega |u_n - u|^2\dx \to 0\\
+    &\Rightarrow u_n \to u \text{ in } L^2(\Omega)\\
+    &\Rightarrow u_n \rightharpoonup u \text{ in } L^2(\Omega).
+  \end{align*}
+  \todo[inline]{TODO wahrscheinlich falsch, Konvergenz in Norm impliziert
+  i.A. nicht Konvergenz a.e. oder umgekehrt}
+  Da schwache Grenzwerte eindeutig bestimmt sind, gilt also $u=\tilde u
+  \in L^2(\Omega)$, d.h.\ $u\in\BV(\Omega)\cap
   L^2(\Omega)$.
 
   \medbreak
