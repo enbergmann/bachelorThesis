@@ -9,6 +9,9 @@ folgende Minimierungsproblem.
     +\Vert v\Vert_{L^1(\partial\Omega)}-\int_\Omega fv\dx
   \end{align}
   unter allen $v\in\BV(\Omega)\cap L^2(\Omega)$ minimiert.
+
+  Nach \cref{thm:traceOperator} ist der Term $\Vert
+  v\Vert_{L^1(\partial\Omega)}$ wohldefiniert.
 \end{problem}
 
 \begin{remark}
@@ -21,25 +24,50 @@ folgende Minimierungsproblem.
     I(v)\coloneqq |v|_{\BV(\Omega)} + \frac{\alpha}{2}\int_\Omega (v-g)^2\dx
   \end{align*}
   für $v\in \BV(\Omega)\cap L^2(\Omega)$.
-  Für $f = \alpha g$ gilt
+
+  Nun wählen wir $f = \alpha g$. Dann gilt
   $I(v) = E(v) - \Vert v\Vert_{L^1(\partial \Omega)}+ 
   \frac{\alpha}{2}\Vert g\Vert_{L^2(\Omega)}^2$ für alle 
   $v\in \BV(\Omega)\cap L^2(\Omega)$. Da der Term $\frac{\alpha}{2}\Vert
-  g\Vert_{L^2(\Omega)}^2$ konstant ist, haben beide Funktionale die
-  gleichen Minimierer in $\left\{v\in\BV(\Omega)\cap L^2(\Omega)\mid 
+  g\Vert_{L^2(\Omega)}^2$ konstant ist, haben die Funktionale $E$ und $I$ somit
+  die gleichen Minimierer in $\left\{v\in\BV(\Omega)\cap L^2(\Omega)\mid 
   \Vert v\Vert_{L^1(\partial\Omega)}=0\right\}$.
 \end{remark}
+
+Zunächst zeigen wir, dass \cref{prob:continuousProblem} eine Lösung besitzt.
+Dafür benötigen wir die folgenden Ungleichungen.
+
+\begin{lemma}[Cauchy-Schwarzsche Ungleichung]
+  \label{lem:csu}
+  Sei $V$ ein reeller oder komplexer Vektorraum mit Skalarprodukt
+  $(\cdot,\cdot)_V$. Dann gilt für alle $x,y\in V$
+  \begin{align*}
+    |(x,y)_V|^2\leq (x,x)_V (y,y)_V.
+  \end{align*}
+  Gleichheit gilt genau dann, wenn $x$ und $y$ linear unabhängig sind.
+\end{lemma}
+
+\begin{lemma}[Youngsche Ungleichung]
+  \label{lem:young}
+  Seien $a,b\in\Rbb$ und $\varepsilon>0$ beliebig. Dann gilt
+  \begin{align*}
+    ab\leq\frac{1}{\varepsilon}a^2+\frac{\varepsilon}{4}b^2. 
+  \end{align*}
+\end{lemma}
 
 \begin{theorem}[Existenz einer Lösung]
   \label{thm:contProblemExistence}
   \Cref{prob:continuousProblem} besitzt eine Lösung \\$u\in\BV(\Omega)\cap
   L^2(\Omega)$.
 \end{theorem}
+\todo[inline]{Q beide zitieren mit irgendeiner Quelle mit der passenden
+Formulierung oder ist das zu basic}
 
 \begin{proof}
   Das Funktional $E$ in \eqref{eq:continuousProblem} ist nach unten beschränkt,
   denn für alle $v\in \BV(\Omega)\cap L^2(\Omega)$ gilt mit der
-  Cauchy-Schwarzschen Ungleichung und der Youngschen Ungleichung
+  Cauchy-Schwarzschen Ungleichung (\cref{lem:csu}) und der Youngschen
+  Ungleichung (\cref{lem:young})
   \todo[inline]{TODO Ungleichungen erwähnen/zitieren in Kapitel 1}
   \begin{equation}
     \label{eq:contProbBddFromBelow}
