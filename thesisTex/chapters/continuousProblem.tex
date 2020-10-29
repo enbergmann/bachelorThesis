@@ -34,7 +34,7 @@ folgende Minimierungsproblem.
   \Vert v\Vert_{L^1(\partial\Omega)}=0\right\}$.
 \end{remark}
 
-Zunächst zeigen wir, dass \cref{prob:continuousProblem} eine Lösung besitzt.
+Zunächst zeigen wir, dass \Cref{prob:continuousProblem} eine Lösung besitzt.
 Dafür benötigen wir die folgenden Ungleichungen.
 
 \begin{lemma}[Cauchy-Schwarzsche Ungleichung]
@@ -54,14 +54,14 @@ Dafür benötigen wir die folgenden Ungleichungen.
     ab\leq\frac{1}{\varepsilon}a^2+\frac{\varepsilon}{4}b^2. 
   \end{align*}
 \end{lemma}
+\todo[inline]{Q beide zitieren mit irgendeiner Quelle mit der passenden
+Formulierung oder ist das zu basic}
 
 \begin{theorem}[Existenz einer Lösung]
   \label{thm:contProblemExistence}
   \Cref{prob:continuousProblem} besitzt eine Lösung \\$u\in\BV(\Omega)\cap
   L^2(\Omega)$.
 \end{theorem}
-\todo[inline]{Q beide zitieren mit irgendeiner Quelle mit der passenden
-Formulierung oder ist das zu basic}
 
 \begin{proof}
   Das Funktional $E$ in \eqref{eq:continuousProblem} ist nach unten beschränkt,
@@ -105,6 +105,7 @@ Formulierung oder ist das zu basic}
   folgt nach Definition von $\Vert\bullet\Vert_{\BV(\Omega)}$, dass
   $\int_\Omega|u_n|\dx = \Vert u_n\Vert_{L^1(\Omega)}\to \infty$ für
   $n\to\infty$. Dafür ist für fast alle $x\in\Rbb$ notwendig, dass
+  \todo{Q stimmt das wirklich, kann man wirklich eine f.f.a. Aussage treffen?}
   $|u_n(x)|\to\infty$ für $n\to\infty$, 
   also insbesondere $|u_n(x)|\geq 1$ für hinreichend große $n\in\Nbb$. Daraus 
   folgt für solche hinreichend große $n\in\Nbb$, dass $\Vert
@@ -189,6 +190,7 @@ Formulierung oder ist das zu basic}
     \Vert u_1 - u_2\Vert_{L^2(\Omega)} \leq \Vert f_1-f_2\Vert_{L^2(\Omega)}.
   \end{align*}
 \end{theorem}
+\todo{hier noch alpha entsprechend ergänzen?}
 
 \begin{proof}
   Definiere die konvexen Funktionale $F:\BV(\Omega)\to \Rbb$ und 
@@ -201,9 +203,19 @@ Formulierung oder ist das zu basic}
   Bezeichne $E_\ell\coloneqq F+G_\ell$ und setze $F$ auf $L^2(\Omega)$
   durch $\infty$ fort.
 
-  $G_\ell$ ist Fr\'echet-differenzierbar \todo[inline]{TODO nachrechnen,
-  Gateaux ist klar, aber auch Frechet?} mit
-  Fr\'echet-Ableitung
+  $G_\ell$ ist Fr\'echet-differenzierbar 
+
+  \todo[inline]{TODO nachrechnen,
+  Gateaux ist klar, aber auch Frechet? EDIT: nachgerechnet, es funktioniert
+  nach WIKI Def.
+  
+  Außerdem: Im Grundlagen Kapitel noch einführen, was hier in dieser Arbeit
+  mit Gateaux, Frechet etc gemeint ist? (ist ja von Autor zu Autor anders (cf
+  Wiki))} 
+
+  und die Fr\'echet-Ableitung $\delta G_\ell(u):L^2(\Omega)\to\Rbb^2 $ an der
+  Stelle
+  $u\in L^2(\Omega)$ ist gegeben durch
   \begin{align*}
     \delta G_\ell(u)[v] = \alpha (u,v)_{L^2(\Omega)} - \int_\Omega f_\ell v\dx 
     = (\alpha u-f_\ell ,v)_{L^2(\Omega)} \quad 
@@ -212,7 +224,8 @@ Formulierung oder ist das zu basic}
 
   Das Funktional $F$ ist konvex {\color{red} wegen Dreiecksungleichung und 
   homogenität ($\lambda$ und $1-\lambda$ sind größer gleich 0)}, deshalb 
-  \todo[inline]{TODO quote Rockafella} ist das Subdifferential
+  \todo[inline]{TODO quote Rockafella (pp. 213/Section 23)} ist das
+  Subdifferential
   $\partial F$ von $F$ monoton, d.h.\ für alle $\mu_\ell\in \partial F(u_\ell)$,
   $\ell=1,2$, gilt
   \begin{align}\label{eq:stabilityAndUniqueness:monotonicityOfSubdifferential}
@@ -246,7 +259,10 @@ Formulierung oder ist das zu basic}
 
   Zumindest Eindeutigkeit bekommt man auch hier immernoch (man
   setzt f1 und f2 im Satz gleich f), was gut ist.
-  Reicht das also sogar?}
+  Reicht das also sogar?
+  
+  Das entspricht auch der Abschätzung aus Bartels, da f=alpha g. Wenn man das
+  ganze mit g schreibt, steht exakt das aus Bartels da}
 
   Falls $\Vert u_1 - u_2 \Vert_{L^2(\Omega)} = 0$, gilt der Satz.
   Ansonsten führt Division durch \\

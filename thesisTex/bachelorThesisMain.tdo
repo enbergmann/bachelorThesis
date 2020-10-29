@@ -11,34 +11,40 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {todo}{TODO Ma\IeC {\ss }theorie f\IeC {\"u}r Vektorma\IeC {\ss }e ist absolut nicht notwenig, da meine Anwendung ausschlie\IeC {\ss }lich von R2 nach R geht M\IeC {\"o}glicherweise kann ich also doch eine durchgehende Geschichte erz\IeC {\"a}hlen und insbesondere alles verstehen, im Quelltext sind noch auskommentierte Theorem zur Ma\IeC {\ss }theorie}{6}{section*.8}
 \defcounter {refsection}{0}\relax 
-\contentsline {todo}{Direkt von R2 ausgehen, weil mehr im Programm nicht geht?}{6}{section*.9}
+\contentsline {todo}{braucht es eigentlich nicht, im Beweis selbst werden ja alle Argumente gebracht, also diese section ist \IeC {\"u}berfl\IeC {\"u}ssig}{6}{section*.9}
 \defcounter {refsection}{0}\relax 
-\contentsline {todo}{TODO jede \IeC {\"u}bernommene Definition/Theorem/etc. zitieren trotz Disclaimer oben? jede Notation erkl\IeC {\"a}ren bzw. definieren? Falls ja; am Anfang oder Ende der Arbeit?}{6}{section*.10}
+\contentsline {todo}{Direkt von R2 ausgehen, weil mehr im Programm nicht geht?}{7}{section*.10}
 \defcounter {refsection}{0}\relax 
-\contentsline {todo}{TODO vielleicht zu Grundlagen \IeC {\"u}ber Radonma\IeC {\ss }e verschieben}{7}{section*.11}
+\contentsline {todo}{TODO jede \IeC {\"u}bernommene Definition/Theorem/etc. zitieren trotz Disclaimer oben? jede Notation erkl\IeC {\"a}ren bzw. definieren? Falls ja; am Anfang oder Ende der Arbeit?}{7}{section*.11}
 \defcounter {refsection}{0}\relax 
-\contentsline {todo}{TODO zitiere?}{7}{section*.12}
+\contentsline {todo}{TODO vielleicht zu Grundlagen \IeC {\"u}ber Radonma\IeC {\ss }e verschieben}{7}{section*.12}
 \defcounter {refsection}{0}\relax 
-\contentsline {todo}{TODO vielleicht wichtig, Quelle braucht es noch}{8}{section*.13}
+\contentsline {todo}{TODO zitiere?}{7}{section*.13}
 \defcounter {refsection}{0}\relax 
-\contentsline {todo}{TODO finde Quelle, nur ein Remark in Bartels (wird aber f\IeC {\"u}r CCs Funktional offensichtlich gebraucht, es gibt noch weitere Aussagen in Bartels (zB integration by parts aber erstmal nur Existens und Stetigkeit hier (wie gesagt, nur was gebraucht wird zitieren, oder?)}{8}{section*.14}
+\contentsline {todo}{TODO vielleicht wichtig, Quelle braucht es noch}{8}{section*.14}
 \defcounter {refsection}{0}\relax 
-\contentsline {todo}{TODO Vielleicht auch erst beim Diskreten Problem, da es dort Nullranddaten gibt? Beachte insbesondere, dass $f=\alpha g$ }{9}{section*.15}
+\contentsline {todo}{TODO finde Quelle, nur ein Remark in Bartels (wird aber f\IeC {\"u}r CCs Funktional offensichtlich gebraucht, es gibt noch weitere Aussagen in Bartels (zB integration by parts aber erstmal nur Existens und Stetigkeit hier (wie gesagt, nur was gebraucht wird zitieren, oder?)}{9}{section*.15}
 \defcounter {refsection}{0}\relax 
-\contentsline {todo}{Q beide zitieren mit irgendeiner Quelle mit der passenden Formulierung oder ist das zu basic}{9}{section*.16}
+\contentsline {todo}{TODO Vielleicht auch erst beim Diskreten Problem, da es dort Nullranddaten gibt? Beachte insbesondere, dass $f=\alpha g$ }{10}{section*.16}
 \defcounter {refsection}{0}\relax 
-\contentsline {todo}{TODO Ungleichungen erw\IeC {\"a}hnen/zitieren in Kapitel 1}{10}{section*.17}
+\contentsline {todo}{Q beide zitieren mit irgendeiner Quelle mit der passenden Formulierung oder ist das zu basic}{10}{section*.17}
 \defcounter {refsection}{0}\relax 
-\contentsline {todo}{TODO wahrscheinlich falsch, Konvergenz in Norm impliziert i.A. nicht Konvergenz f.\IeC {\"u}. in Omega oder umgekehrt. Das andere Argument war, dass L2 nach L1 kompakt sei, also die schwache Konvergenz in L2 w\IeC {\"a}re stark in L1, aber das liefert zumindest Sobolev nicht. Stimmt das jemals, also hier?}{10}{section*.18}
+\contentsline {todo}{TODO Ungleichungen erw\IeC {\"a}hnen/zitieren in Kapitel 1}{11}{section*.18}
 \defcounter {refsection}{0}\relax 
-\contentsline {todo}{Randterm sufs? Die beiden verbleibenden Terme sind ufs, aber auch sufs? Die Norm ist schwach unterhalbstetig. Es muss aber vorher gekl\IeC {\"a}rt sein, welche Konvergenzen jetzt zutreffen um das untersuchen zu k\IeC {\"o}nnen, also es muss gekl\IeC {\"a}rt werden, wie richtig bewiesen wird, dass der Grenzwert auch in L2 liegt eben}{11}{section*.19}
+\contentsline {todo}{Q stimmt das wirklich, kann man wirklich eine f.f.a. Aussage treffen?}{11}{section*.19}
 \defcounter {refsection}{0}\relax 
-\contentsline {todo}{TODO nachrechnen, Gateaux ist klar, aber auch Frechet?}{11}{section*.20}
+\contentsline {todo}{TODO wahrscheinlich falsch, Konvergenz in Norm impliziert i.A. nicht Konvergenz f.\IeC {\"u}. in Omega oder umgekehrt. Das andere Argument war, dass L2 nach L1 kompakt sei, also die schwache Konvergenz in L2 w\IeC {\"a}re stark in L1, aber das liefert zumindest Sobolev nicht. Stimmt das jemals, also hier?}{11}{section*.20}
 \defcounter {refsection}{0}\relax 
-\contentsline {todo}{TODO quote Rockafella}{11}{section*.21}
+\contentsline {todo}{Randterm sufs? Die beiden verbleibenden Terme sind ufs, aber auch sufs? Die Norm ist schwach unterhalbstetig. Es muss aber vorher gekl\IeC {\"a}rt sein, welche Konvergenzen jetzt zutreffen um das untersuchen zu k\IeC {\"o}nnen, also es muss gekl\IeC {\"a}rt werden, wie richtig bewiesen wird, dass der Grenzwert auch in L2 liegt eben}{12}{section*.21}
 \defcounter {refsection}{0}\relax 
-\contentsline {todo}{TODO quote as well}{11}{section*.22}
+\contentsline {todo}{hier noch alpha entsprechend erg\IeC {\"a}nzen?}{12}{section*.22}
 \defcounter {refsection}{0}\relax 
-\contentsline {todo}{TODO wie verschwindet das $\alpha $ hier um dann die Absch\IeC {\"a}tzung aus dem Satz zu bekommen (f\IeC {\"u}r $alpha\geq 1$ haben wir sie ja auch, aber $\alpha >0$ ist nur gefordert? Oder verpasst man der Absch\IeC {\"a}tzung im Satz noch eine Konstante $1/\alpha $ vor der oberen Schranke? {\@@par }Zumindest Eindeutigkeit bekommt man auch hier immernoch (man setzt f1 und f2 im Satz gleich f), was gut ist. Reicht das also sogar?}{12}{section*.23}
+\contentsline {todo}{TODO nachrechnen, Gateaux ist klar, aber auch Frechet? EDIT: nachgerechnet, es funktioniert nach WIKI Def. {\@@par }Au\IeC {\ss }erdem: Im Grundlagen Kapitel noch einf\IeC {\"u}hren, was hier in dieser Arbeit mit Gateaux, Frechet etc gemeint ist? (ist ja von Autor zu Autor anders (cf Wiki))}{12}{section*.23}
 \defcounter {refsection}{0}\relax 
-\contentsline {todo}{NOTE Bsp wie zitieren funktioniert und um Bib zu testen}{19}{section*.24}
+\contentsline {todo}{TODO quote Rockafella (pp. 213/Section 23)}{12}{section*.24}
+\defcounter {refsection}{0}\relax 
+\contentsline {todo}{TODO quote as well}{13}{section*.25}
+\defcounter {refsection}{0}\relax 
+\contentsline {todo}{TODO wie verschwindet das $\alpha $ hier um dann die Absch\IeC {\"a}tzung aus dem Satz zu bekommen (f\IeC {\"u}r $alpha\geq 1$ haben wir sie ja auch, aber $\alpha >0$ ist nur gefordert? Oder verpasst man der Absch\IeC {\"a}tzung im Satz noch eine Konstante $1/\alpha $ vor der oberen Schranke? {\@@par }Zumindest Eindeutigkeit bekommt man auch hier immernoch (man setzt f1 und f2 im Satz gleich f), was gut ist. Reicht das also sogar? {\@@par }Das entspricht auch der Absch\IeC {\"a}tzung aus Bartels, da f=alpha g. Wenn man das ganze mit g schreibt, steht exakt das aus Bartels da}{13}{section*.26}
+\defcounter {refsection}{0}\relax 
+\contentsline {todo}{NOTE Bsp wie zitieren funktioniert und um Bib zu testen}{20}{section*.27}
