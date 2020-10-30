@@ -54,7 +54,18 @@ Dafür benötigen wir die folgenden Ungleichungen.
     ab\leq\frac{1}{\varepsilon}a^2+\frac{\varepsilon}{4}b^2. 
   \end{align*}
 \end{lemma}
-\todo[inline]{Q beide zitieren mit irgendeiner Quelle mit der passenden
+
+\begin{lemma}[Höldersche Ungleichung]
+  \label{lem:hoelder}
+  Seien $p,q\in [1,\infty]$ mit $1/p+1/q=1$, $f\in L^p(\Omega)$ und 
+  $g\in L^q(\Omega)$. Dann gilt $fg\in L^1(\Omega)$ mit 
+  \begin{align*}
+    \Vert fg\Vert_{L^1(\Omega)}\leq 
+    \Vert f\Vert_{L^p(\Omega)}\Vert g\Vert_{L^q(\Omega)}.
+  \end{align*}
+\end{lemma}
+
+\todo[inline]{Q alle drei zitieren mit irgendeiner Quelle mit der passenden
 Formulierung oder ist das zu basic}
 
 \begin{theorem}[Existenz einer Lösung]
@@ -64,11 +75,22 @@ Formulierung oder ist das zu basic}
 \end{theorem}
 
 \begin{proof}
-  Das Funktional $E$ in \eqref{eq:continuousProblem} ist nach unten beschränkt,
-  denn für alle $v\in \BV(\Omega)\cap L^2(\Omega)$ gilt mit der
-  Cauchy-Schwarzschen Ungleichung (\cref{lem:csu}) und der Youngschen
-  Ungleichung (\cref{lem:young})
-  \todo[inline]{TODO Ungleichungen erwähnen/zitieren in Kapitel 1}
+  Für alle $v\in L^2(\Omega)\subset L^1(\Omega)$ gilt mit der Hölderschen
+  Ungleichung
+  \todo[inline]{Q wo und wie einmal erwähnen, dass die Lp Räume geschachtelt 
+  sind da Omega bdd ist?}
+  (\cref{lem:hoelder}) für $p=q=2$, dass
+  \begin{equation}\label{equ:hoelderL2BiggerL1}
+    \Vert v\Vert_{L^1} 
+    = \Vert 1\cdot v\Vert_{L^1(\Omega)}
+    \leq \Vert 1\Vert_{L^2(\Omega)}\Vert v\Vert_{L^2(\Omega)}
+    =|\Omega|^2 \Vert v\Vert_{L^1(\Omega)}.
+  \end{equation}
+
+  Dann folgt für das Funktional $E$ in \eqref{eq:continuousProblem}
+  für alle $v\in \BV(\Omega)\cap L^2(\Omega)$ durch die
+  Cauchy-Schwarzschen Ungleichung (\cref{lem:csu}), die Youngschen
+  Ungleichung (\cref{lem:young}) und \cref{equ:hoelderL2BiggerL1}, dass
   \begin{equation}
     \label{eq:contProbBddFromBelow}
     \begin{aligned}
@@ -87,89 +109,71 @@ Formulierung oder ist das zu basic}
       \frac{\alpha}{4}\Vert v\Vert_{L^2(\Omega)}^2 + |v|_{\BV(\Omega)}
       +\Vert v\Vert_{L^1(\partial\Omega)}-\frac{1}{\alpha}\Vert
       f\Vert_{L^2(\Omega)}^2\\
+      &\geq 
+      \frac{\alpha}{4|\Omega|}\Vert v\Vert_{L^1(\Omega)}^2 + |v|_{\BV(\Omega)}
+      +\Vert v\Vert_{L^1(\partial\Omega)}-\frac{1}{\alpha}\Vert
+      f\Vert_{L^2(\Omega)}^2\\
       &\geq -\frac{1}{\alpha}\Vert f\Vert_{L^2(\Omega)}^2.
     \end{aligned}
   \end{equation}
-  Somit existiert eine infimierende Folge
-  $(u_n)_{n\in\Nbb}\subset\BV(\Omega)\cap
-  L^2(\Omega)$ von $E$, d.h.\ $(u_n)_{n\in\Nbb}$ erfüllt
-  $\lim_{n\rightarrow\infty}E(u_n) =
-  \inf_{v\in\BV(\Omega)\cap
-    L^2(\Omega)}E(v)$. 
+
+  Somit ist $E$ nach unten beschränkt, was die Existenz einer infimierenden
+  Folge $(u_n)_{n\in\Nbb}\subset\BV(\Omega)\cap L^2(\Omega)$ von $E$ 
+  impliziert, d.h.\
+  $(u_n)_{n\in\Nbb}$ erfüllt $\lim_{n\rightarrow\infty}E(u_n) =
+  \inf_{v\in\BV(\Omega)\cap L^2(\Omega)}E(v)$. 
 
   \Cref{eq:contProbBddFromBelow} impliziert außerdem, dass
-  $E(u_n)\rightarrow\infty$ falls
-  $|u_n|_{\BV(\Omega)}\rightarrow\infty$ für $n\to\infty$.
-  Falls andererseits $|u_n|_{\BV(\Omega)}\leq c$ für alle $n\in\Nbb$ und ein
-  $c\in\Rbb_{+}$ aber $\Vert u_n\Vert_{\BV(\Omega)}\to\infty$ für $n\to\infty$,
-  folgt nach Definition von $\Vert\bullet\Vert_{\BV(\Omega)}$, dass
-  $\int_\Omega|u_n|\dx = \Vert u_n\Vert_{L^1(\Omega)}\to \infty$ für
-  $n\to\infty$. Dafür ist für fast alle $x\in\Rbb$ notwendig, dass
-  \todo{Q stimmt das wirklich, kann man wirklich eine f.f.a. Aussage treffen?}
-  $|u_n(x)|\to\infty$ für $n\to\infty$, 
-  also insbesondere $|u_n(x)|\geq 1$ für hinreichend große $n\in\Nbb$. Daraus 
-  folgt für solche hinreichend große $n\in\Nbb$, dass $\Vert
-  u_n\Vert_{L^1(\Omega)} = \int_\Omega|u_n|\dx \leq
-  \int_\Omega |u_n|^2\dx=\Vert u_n\Vert^2_{L^2(\Omega)}$ und somit ebenfalls
-  durch \Cref{eq:contProbBddFromBelow} $E(u_n)\to\infty$ für
-  $n\to\infty$.
+  $E(u_n)\overset{n\to\infty}{\to}\infty$, falls
+  $|u_n|_{\BV(\Omega)}\overset{n\to\infty}{\to}\infty$ oder 
+  $\Vert u_n\Vert_{L^1(\Omega)}\overset{n\to\infty}{\to}\infty$, also 
+  insgesamt, falls
+  $\Vert u_n\Vert_{\BV(\Omega)}\overset{n\to\infty}{\to}\infty$.
 
-  Die Folge $(u_n)_{n\in\Nbb}$ muss also beschränkt in $\BV(\Omega)$ sein, da 
-  sonst $(E(u_n))_{n\in\Nbb}$ bestimmt divergiert, im Widerspruch dazu, dass
-  $(u_n)_{n\in\Nbb}$ infimierende Folge ist.
+  Deshalb muss die Folge $(u_n)_{n\in\Nbb}$ beschränkt in $\BV(\Omega)$ sein.
 
   \medbreak
   Nun garantiert \cref{thm:compactness} die Existenz einer schwach konvergenten
   Teilfolge $(u_{n_k})_{k\in\Nbb}$ von $(u_n)_{n\in\Nbb}$ mit schwachem Grenzwert
   $u\in\BV(\Omega)$. Ohne Beschränkung der Allgemeinheit
   ist $(u_{n_k})_{k\in\Nbb}=(u_n)_{n\in\Nbb}$.
+  Schwache Konvergenz von $(u_n)_{n\in\Nbb}$ in $\BV(\Omega)$ gegen
+  $u$ bedeutet insbesondere, dass $(u_n)_{n\in\Nbb}$ auch stark, und damit
+  auch schwach, in $L^1(\Omega)$ gegen $u$ konvergiert.
 
-  Aus \cref{eq:contProbBddFromBelow} folgt 
+  \medbreak
+  Weiterhin folgt aus \cref{eq:contProbBddFromBelow}, dass
   $E(v)\rightarrow\infty$ für
   $\Vert v\Vert_{L^2(\Omega)}\rightarrow\infty$. Somit muss $(u_n)_{n\in\Nbb}$ 
   auch beschränkt sein bezüglich der Norm $\Vert\bullet\Vert_{L^2(\Omega)}$ und
-  besitzt deshalb wegen der Reflexivität von $L^2(\Omega)$
+  besitzt deshalb, wegen der Reflexivität von $L^2(\Omega)$,
   eine Teilfolge (ohne Beschränkung der Allgemeinheit weiterhin bezeichnet mit
   $(u_n)_{n\in\Nbb}$), die
-  in $L^2(\Omega)$ schwach gegen $\tilde{u}\in L^2(\Omega)$ konvergiert.
+  in $L^2(\Omega)$ schwach gegen einen Grenzwert 
+  $\tilde{u}\in L^2(\Omega)$ konvergiert. Somit gilt für alle $w\in
+  L^2(\Omega)$ und, da $L^\infty(\Omega)\subset L^2(\Omega)$, insbesondere 
+  auch für alle $w\in
+  L^\infty(\Omega)$, dass 
+  $\int_\Omega u_n w\dx \overset{n\to\infty}{\to}\int_\Omega \tilde{u} w\dx$. 
+  Damit konvergiert $(u_n)_{n\in\Nbb}$ also auch schwach in $L^1(\Omega)$ gegen
+  $\tilde{u}\in L^2(\Omega)\subset L^1(\Omega)$. 
 
-  Allerdings bedeutet die schwache Konvergenz $u_n\rightharpoonup u$ in
-  $\BV(\Omega)$  
-  insbesondere, dass $u_n\rightarrow u$ in $L^1(\Omega)$.
-  Es gilt 
-  \begin{align*}
-    u_n \to u \text{ in } L^1(\Omega)&\Rightarrow
-    \Vert u_n-u\Vert_{L^1(\Omega)}=\int_\Omega |u_n - u|\dx \to 0\\
-    &\Rightarrow |u_n(x) - u(x)| \to 0 \text{ a.e. in } \Omega\\
-    &\Rightarrow |u_n(x) - u(x)|^2 \to 0 \text{ a.e. in } \Omega\\
-    &\Rightarrow \Vert u_n-u\Vert^2_{L^2(\Omega)}=
-    \int_\Omega |u_n - u|^2\dx \to 0\\
-    &\Rightarrow u_n \to u \text{ in } L^2(\Omega)\\
-    &\Rightarrow u_n \rightharpoonup u \text{ in } L^2(\Omega).
-  \end{align*}
-  \todo[inline]{TODO wahrscheinlich falsch, Konvergenz in Norm impliziert
-  i.A. nicht Konvergenz f.ü. in Omega oder umgekehrt.
-  Das andere Argument war, dass L2 nach L1 kompakt sei, also die schwache
-  Konvergenz in L2 wäre stark in L1, aber das liefert zumindest Sobolev nicht.
-  Stimmt das jemals, also hier?}
-  Da schwache Grenzwerte eindeutig bestimmt sind, gilt also $u=\tilde u
-  \in L^2(\Omega)$, d.h.\ $u\in\BV(\Omega)\cap
+  \medbreak
+  Da schwache Grenzwerte eindeutig bestimmt sind, gilt insgesamt $u=\tilde u
+  \in L^2(\Omega)$, das heißt $u\in\BV(\Omega)\cap
   L^2(\Omega)$.
 
   \medbreak
-  \cref{thm:wlsc} liefert die schwache Unterhalbstetigkeit der Seminorm
-  $|\bullet|_{\BV(\Omega)}$ \\
-  bezüglich schwacher Konvergenz in $\BV(\Omega)$.
+  Wir wissen, dass $(u_n)_{n\in\Nbb}$ beschränkt in $\BV(\Omega)$
+  ist und in $L^1(\Omega)$ gegen $u\in \BV(\Omega)\cap L^2(\Omega)\subset
+  L^1(\Omega)$ konvergiert. \cref{thm:wlsc} impliziert unter diesen 
+  Voraussetzungen, dass $|u|_{\BV(\Omega)}\leq \liminf_{n\to\infty} 
+  |u_n|_{\BV(\Omega)}$.
   %und $\Vert\bullet\Vert_{L^2(\Omega)}$ und $-\int_\Omega f\bullet\dx$ sind 
   %stetig (d.h.\ insbesondere 
   \bigbreak
   %TODO
-  \todo[inline]{Randterm sufs? Die beiden verbleibenden Terme sind ufs, aber
-  auch sufs? Die Norm ist schwach unterhalbstetig. Es muss aber vorher 
-  geklärt sein, welche Konvergenzen jetzt zutreffen um das untersuchen zu 
-  können, also es muss geklärt werden, wie richtig bewiesen wird, dass der 
-  Grenzwert auch in L2 liegt eben}
-  \bigbreak
+
   Damit gilt insgesamt
   \begin{align*}
     \inf_{v\in\BV(\Omega)\cap L^2(\Omega)}E(v)\leq
