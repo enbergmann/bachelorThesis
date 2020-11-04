@@ -68,6 +68,53 @@ Dafür benötigen wir die folgenden Ungleichungen.
 \todo[inline]{Q alle drei zitieren mit irgendeiner Quelle mit der passenden
 Formulierung oder ist das zu basic}
 
+Außerdem wird im Beweis folgende Aussage benötigt.
+
+\begin{lemma}
+  \label{lem:bvExtension}
+  Sei $v\in\BV(\Omega)$. Für eine beliebige Menge
+  $\Omega_0\subset\Rbb^2$ mit
+  $\Omega\subset\interior{\left(\Omega_0\right)}$ definiere, für fast
+  alle
+  $x\in\Omega_0$,
+  \begin{align*}
+    \tilde{v}(x)\coloneqq
+    \begin{cases}
+      v(x),  &\text{ falls } x\in\Omega,\\
+      0,     &\text{ falls } x\in\Omega_0\setminus\Omega.
+    \end{cases} 
+  \end{align*}
+  Dann gilt $\tilde{v}\in\BV\left(\Omega_0\right)$ und
+  $|\tilde{v}|_{\BV\left(\Omega_0\right)}
+  = |v|_{\BV(\Omega)}+\Vert v\Vert_{L^1(\Omega)}$.
+\end{lemma}
+
+\begin{proof}
+  Mit der Definition von $\tilde{v}$ gilt 
+  \begin{align*}
+    \Vert \tilde{v}\Vert_{L^1(\Omega_0)} 
+    = \int_{\Omega_0} |\tilde{v}|\dx 
+    = \int_\Omega |v|\dx 
+    = \Vert v\Vert_{L^1(\Omega)} 
+    <\infty
+  \end{align*}
+  und somit $\tilde{v}\in L^1(\Omega)$.
+  Außerdem gilt für alle $\tilde{\Phi}\in C^1_C(\Omega_0)(\Omega;\Rbb^2)$
+  \begin{align*}
+    -\int_{\Omega_0} \tilde{v}\Div\left(\tilde{\Phi}\right)\dx
+    = -\int_\Omega v\Div\left(\tilde{\Phi}\right)\dx 
+    \leq\ldots
+    \leq c \left\Vert\tilde{\Phi}\right\Vert_{L^\infty(\Omega_0)}
+  \end{align*}
+  \todo[inline]{Wie geht diese Abschätzung? Wie nutzt man, dass v bereits in
+  BV ist und so eine Abschätzung für alle C1c Funktionen auf Omega erfüllt?
+  (Nun haben wir aber leider nur C1c auf der Erweiterung Omega0, die somit
+  nicht zwangsläufig C1c auf Omega ist, nur C1)}
+  mit einer Konstante $c>0$.
+  Insgesamt ist damit gezeigt, dass $\tilde{v}\in\BV(\Omega_0).$
+  \todo[inline]{Wie zeigt man die noch zu beweisende Gleichheit?}
+\end{proof}
+
 \begin{theorem}[Existenz einer Lösung]
   \label{thm:contProblemExistence}
   \Cref{prob:continuousProblem} besitzt eine Lösung \\$u\in\BV(\Omega)\cap
@@ -169,11 +216,38 @@ Formulierung oder ist das zu basic}
   L^1(\Omega)$ konvergiert. \cref{thm:wlsc} impliziert unter diesen 
   Voraussetzungen, dass $|u|_{\BV(\Omega)}\leq \liminf_{n\to\infty} 
   |u_n|_{\BV(\Omega)}$.
-  %und $\Vert\bullet\Vert_{L^2(\Omega)}$ und $-\int_\Omega f\bullet\dx$ sind 
-  %stetig (d.h.\ insbesondere 
-  \bigbreak
-  %TODO
 
+  \medbreak
+  Wir betrachten nun eine Menge $\Omega_0\subset\Rbb^2$ mit 
+  $\Omega\subset\interior(\Omega_0)$ und definieren, für alle
+  $k\in\Nbb$ und für fast alle 
+  $x\in\Omega_0$,
+  \begin{align*}
+    \tilde{u}_k(x)\coloneqq
+    \begin{cases}
+      u_k(x),  &\text{ falls } x\in\Omega,\\
+      0,     &\text{ falls } x\in\Omega_0\setminus\Omega
+    \end{cases} 
+  \end{align*}
+  und
+  \begin{align*}
+    \tilde{u}(x)\coloneqq
+    \begin{cases}
+      u(x),  &\text{ falls } x\in\Omega,\\
+      0,     &\text{ falls } x\in\Omega_0\setminus\Omega.
+    \end{cases} 
+  \end{align*}
+  \todo[inline]{Argumentiere, warum diese Funktionen E auch minimieren (unter
+  allen v in L2 cap BV auf Omega0 erweitert mit 0) und folge dann dem 
+  Aufschrieb auf dem Blatt} 
+
+
+  \medbreak
+  Die Funktionen $\Vert\bullet\Vert_{L^2(\Omega)}^2$ und $-\int_\Omega
+  f\bullet\dx$ sind auf $L^2(\Omega)$ stetig und konvex, somit also schwach
+  unterhalbstetig.
+  
+  \medbreak
   Damit gilt insgesamt
   \begin{align*}
     \inf_{v\in\BV(\Omega)\cap L^2(\Omega)}E(v)\leq
