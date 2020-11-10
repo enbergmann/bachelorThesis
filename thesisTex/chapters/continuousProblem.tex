@@ -72,9 +72,10 @@ Außerdem wird im Beweis folgende Aussage benötigt.
 
 \begin{lemma}
   \label{lem:bvExtension}
-  Sei $v\in\BV(\Omega)$. Für eine beliebige Menge
-  $\Omega_0\subset\Rbb^2$ mit
-  $\Omega\subset\interior{\left(\Omega_0\right)}$ definiere, für fast
+  Sei $v\in\BV(\Omega)$ und $\Omega_0\subset\Rbb^2$ ein beliebiges offenes,
+  polygonal berandetes 
+  Lipschitz-Gebiet mit $\Omega\subset\interior{\left(\Omega_0\right)}$.
+  Definiere, für fast
   alle
   $x\in\Omega_0$,
   \begin{align*}
@@ -86,7 +87,7 @@ Außerdem wird im Beweis folgende Aussage benötigt.
   \end{align*}
   Dann gilt $\tilde{v}\in\BV\left(\Omega_0\right)$ und
   $|\tilde{v}|_{\BV\left(\Omega_0\right)}
-  = |v|_{\BV(\Omega)}+\Vert v\Vert_{L^1(\Omega)}$.
+  = |v|_{\BV(\Omega)}+\Vert v\Vert_{L^1(\partial\Omega)}$.
 \end{lemma}
 
 \begin{proof}
@@ -98,8 +99,8 @@ Außerdem wird im Beweis folgende Aussage benötigt.
     = \Vert v\Vert_{L^1(\Omega)} 
     <\infty
   \end{align*}
-  und somit $\tilde{v}\in L^1(\Omega)$.
-  Außerdem gilt für alle $\tilde{\Phi}\in C^1_C(\Omega_0)(\Omega;\Rbb^2)$
+  und somit $\tilde{v}\in L^1(\Omega_0)$.
+  Außerdem gilt für alle $\tilde{\Phi}\in C^1_C(\Omega_0;\Rbb^2)$
   \begin{align*}
     -\int_{\Omega_0} \tilde{v}\Div\left(\tilde{\Phi}\right)\dx
     = -\int_\Omega v\Div\left(\tilde{\Phi}\right)\dx 
@@ -112,7 +113,9 @@ Außerdem wird im Beweis folgende Aussage benötigt.
   nicht zwangsläufig C1c auf Omega ist, nur C1)}
   mit einer Konstante $c>0$.
   Insgesamt ist damit gezeigt, dass $\tilde{v}\in\BV(\Omega_0).$
-  \todo[inline]{Wie zeigt man die noch zu beweisende Gleichheit?}
+  \todo[inline]{Wie zeigt man die noch zu beweisende Gleichheit? int by parts 
+  Bartels Rem 10.5 (iii). C unendlich geschnitten BV ist dicht in BV bzgl.
+  stikter Konvergenz UND der Spuroperator ist stetig bzgl strikter Konvergenz.}
 \end{proof}
 
 \begin{theorem}[Existenz einer Lösung]
@@ -131,7 +134,7 @@ Außerdem wird im Beweis folgende Aussage benötigt.
     \Vert v\Vert_{L^1} 
     = \Vert 1\cdot v\Vert_{L^1(\Omega)}
     \leq \Vert 1\Vert_{L^2(\Omega)}\Vert v\Vert_{L^2(\Omega)}
-    =|\Omega|^2 \Vert v\Vert_{L^1(\Omega)}.
+    =\sqrt{|\Omega|} \Vert v\Vert_{L^2(\Omega)}.
   \end{equation}
 
   Dann folgt für das Funktional $E$ in \eqref{eq:continuousProblem}
@@ -185,8 +188,8 @@ Außerdem wird im Beweis folgende Aussage benötigt.
   $u\in\BV(\Omega)$. Ohne Beschränkung der Allgemeinheit
   ist $(u_{n_k})_{k\in\Nbb}=(u_n)_{n\in\Nbb}$.
   Schwache Konvergenz von $(u_n)_{n\in\Nbb}$ in $\BV(\Omega)$ gegen
-  $u$ bedeutet insbesondere, dass $(u_n)_{n\in\Nbb}$ auch stark, und damit
-  auch schwach, in $L^1(\Omega)$ gegen $u$ konvergiert.
+  $u$ bedeutet insbesondere, dass $(u_n)_{n\in\Nbb}$ stark und damit
+  auch schwach in $L^1(\Omega)$ gegen $u$ konvergiert.
 
   \medbreak
   Weiterhin folgt aus \cref{eq:contProbBddFromBelow}, dass
@@ -198,9 +201,10 @@ Außerdem wird im Beweis folgende Aussage benötigt.
   $(u_n)_{n\in\Nbb}$), die
   in $L^2(\Omega)$ schwach gegen einen Grenzwert 
   $\tilde{u}\in L^2(\Omega)$ konvergiert. Somit gilt für alle $w\in
-  L^2(\Omega)$ und, da $L^\infty(\Omega)\subset L^2(\Omega)$, insbesondere 
+  L^2(\Omega)\cong L^2(\Omega)^\ast$ und, da $L^\infty(\Omega)\subset
+  L^2(\Omega)$, insbesondere 
   auch für alle $w\in
-  L^\infty(\Omega)$, dass 
+  L^\infty(\Omega)\cong L^1(\Omega)^\ast$, dass 
   $\int_\Omega u_n w\dx \overset{n\to\infty}{\to}\int_\Omega \tilde{u} w\dx$. 
   Damit konvergiert $(u_n)_{n\in\Nbb}$ also auch schwach in $L^1(\Omega)$ gegen
   $\tilde{u}\in L^2(\Omega)\subset L^1(\Omega)$. 
@@ -218,7 +222,8 @@ Außerdem wird im Beweis folgende Aussage benötigt.
   |u_n|_{\BV(\Omega)}$.
 
   \medbreak
-  Wir betrachten nun eine Menge $\Omega_0\subset\Rbb^2$ mit 
+  Wir betrachten nun ein offenes, polygonal berandetes Lipschitz-Gebiet
+  $\Omega_0\subset\Rbb^2$ mit 
   $\Omega\subset\interior(\Omega_0)$ und definieren, für alle
   $k\in\Nbb$ und für fast alle 
   $x\in\Omega_0$,
@@ -237,6 +242,7 @@ Außerdem wird im Beweis folgende Aussage benötigt.
       0,     &\text{ falls } x\in\Omega_0\setminus\Omega.
     \end{cases} 
   \end{align*}
+  %TODO continue here
   \todo[inline]{Argumentiere, warum diese Funktionen E auch minimieren (unter
   allen v in L2 cap BV auf Omega0 erweitert mit 0) und folge dann dem 
   Aufschrieb auf dem Blatt} 
