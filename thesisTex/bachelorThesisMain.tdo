@@ -29,22 +29,18 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {todo}{Q alle drei zitieren mit irgendeiner Quelle mit der passenden Formulierung oder ist das zu basic}{10}{section*.17}
 \defcounter {refsection}{0}\relax 
-\contentsline {todo}{Wie geht diese Absch\IeC {\"a}tzung? Wie nutzt man, dass v bereits in BV ist und so eine Absch\IeC {\"a}tzung f\IeC {\"u}r alle C1c Funktionen auf Omega erf\IeC {\"u}llt? (Nun haben wir aber leider nur C1c auf der Erweiterung Omega0, die somit nicht zwangsl\IeC {\"a}ufig C1c auf Omega ist, nur C1)}{11}{section*.18}
+\contentsline {todo}{In Grundlagen einmal dar\IeC {\"u}ber reden, wie f\IeC {\"u}r fast alle hier zu verstehen ist? Es gibt verschiedene Konventionen und hier ist nat\IeC {\"u}rlich gemeint f\IeC {\"u}r alle x bis auf die aus Nullmengen}{11}{section*.18}
 \defcounter {refsection}{0}\relax 
-\contentsline {todo}{Wie zeigt man die noch zu beweisende Gleichheit? int by parts Bartels Rem 10.5 (iii). C unendlich geschnitten BV ist dicht in BV bzgl. stikter Konvergenz UND der Spuroperator ist stetig bzgl strikter Konvergenz.}{11}{section*.19}
+\contentsline {todo}{Wie geht diese Absch\IeC {\"a}tzung? Wie nutzt man, dass v bereits in BV ist und so eine Absch\IeC {\"a}tzung f\IeC {\"u}r alle Testfunktionen aus $C^1_C(\Omega )$ erf\IeC {\"u}llt? (Nun haben wir aber leider nur eine Testfunktion in $C^1_C(\Omega _0)$ auf der Erweiterung, die somit nat\IeC {\"u}rlich nicht zwangsl\IeC {\"a}ufig $C^1_C(\Omega ;\mathbb {R}^2)$, sondern nur $C^1(\Omega ;\mathbb {R}^2)$)}{11}{section*.19}
 \defcounter {refsection}{0}\relax 
-\contentsline {todo}{Q wo und wie einmal erw\IeC {\"a}hnen, dass die Lp R\IeC {\"a}ume geschachtelt sind da Omega bdd ist?}{11}{section*.20}
+\contentsline {todo}{Wie zeigt man die noch zu beweisende Gleichheit? Es gibt int. by parts (Bartels Rem 10.5 (iii)). Au\IeC {\ss }erdem gilt $C^\infty (\Omega )\cap \textup {BV}(\Omega )$ ist dicht in BV bzgl. stikter Konvergenz (Bartels Thm 10.2) UND der Spuroperator ist stetig bzgl strikter Konvergenz (Bartels Remark 10.5 (iii)).}{11}{section*.20}
 \defcounter {refsection}{0}\relax 
-\contentsline {todo}{Argumentiere, warum diese Funktionen E auch minimieren (unter allen v in L2 cap BV auf Omega0 erweitert mit 0) und folge dann dem Aufschrieb auf dem Blatt}{12}{section*.21}
+\contentsline {todo}{Q wo und wie einmal erw\IeC {\"a}hnen, dass die Lp R\IeC {\"a}ume geschachtelt sind da Omega bdd ist? In Grundlagenkapitel 'Da bdd gilt hier immer die Inklusion ..' vielleicht einmal allgemein, dann noch mit Zitierung.}{11}{section*.21}
 \defcounter {refsection}{0}\relax 
-\contentsline {todo}{hier noch alpha entsprechend erg\IeC {\"a}nzen?}{13}{section*.22}
+\contentsline {todo}{TODO nachrechnen, Gateaux ist klar, aber auch Frechet? EDIT: nachgerechnet, es funktioniert nach WIKI Def. {\@@par }Au\IeC {\ss }erdem: Im Grundlagen Kapitel noch einf\IeC {\"u}hren, was hier in dieser Arbeit mit Gateaux, Frechet etc gemeint ist? (ist ja von Autor zu Autor anders (cf Wiki))}{13}{section*.22}
 \defcounter {refsection}{0}\relax 
-\contentsline {todo}{TODO nachrechnen, Gateaux ist klar, aber auch Frechet? EDIT: nachgerechnet, es funktioniert nach WIKI Def. {\@@par }Au\IeC {\ss }erdem: Im Grundlagen Kapitel noch einf\IeC {\"u}hren, was hier in dieser Arbeit mit Gateaux, Frechet etc gemeint ist? (ist ja von Autor zu Autor anders (cf Wiki))}{13}{section*.23}
+\contentsline {todo}{TODO quote Rockafella (pp. 213/Section 23)}{14}{section*.23}
 \defcounter {refsection}{0}\relax 
-\contentsline {todo}{TODO quote Rockafella (pp. 213/Section 23)}{13}{section*.24}
+\contentsline {todo}{TODO quote as well}{14}{section*.24}
 \defcounter {refsection}{0}\relax 
-\contentsline {todo}{TODO quote as well}{13}{section*.25}
-\defcounter {refsection}{0}\relax 
-\contentsline {todo}{TODO wie verschwindet das $\alpha $ hier um dann die Absch\IeC {\"a}tzung aus dem Satz zu bekommen (f\IeC {\"u}r $alpha\geq 1$ haben wir sie ja auch, aber $\alpha >0$ ist nur gefordert? Oder verpasst man der Absch\IeC {\"a}tzung im Satz noch eine Konstante $1/\alpha $ vor der oberen Schranke? {\@@par }Zumindest Eindeutigkeit bekommt man auch hier immernoch (man setzt f1 und f2 im Satz gleich f), was gut ist. Reicht das also sogar? {\@@par }Das entspricht auch der Absch\IeC {\"a}tzung aus Bartels, da f=alpha g. Wenn man das ganze mit g schreibt, steht exakt das aus Bartels da}{13}{section*.26}
-\defcounter {refsection}{0}\relax 
-\contentsline {todo}{NOTE Bsp wie zitieren funktioniert und um Bib zu testen}{21}{section*.27}
+\contentsline {todo}{NOTE Bsp wie zitieren funktioniert und um Bib zu testen}{21}{section*.25}

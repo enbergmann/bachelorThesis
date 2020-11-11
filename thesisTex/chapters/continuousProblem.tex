@@ -1,4 +1,5 @@
-Betrachte für gegebene $\alpha>0$ und $f\in L^2(\Omega)$ das 
+Wir betrachten für ein gegebenes $\alpha\in\Rbb^+$ und eine Funktion
+$f\in L^2(\Omega)$ das 
 folgende Minimierungsproblem. 
 
 \begin{problem}\label{prob:continuousProblem}
@@ -78,6 +79,9 @@ Außerdem wird im Beweis folgende Aussage benötigt.
   Definiere, für fast
   alle
   $x\in\Omega_0$,
+  \todo[inline]{In Grundlagen einmal darüber reden, wie für fast alle hier zu 
+  verstehen ist? Es gibt verschiedene Konventionen und hier ist natürlich 
+  gemeint für alle x bis auf die aus Nullmengen}
   \begin{align*}
     \tilde{v}(x)\coloneqq
     \begin{cases}
@@ -108,14 +112,20 @@ Außerdem wird im Beweis folgende Aussage benötigt.
     \leq c \left\Vert\tilde{\Phi}\right\Vert_{L^\infty(\Omega_0)}
   \end{align*}
   \todo[inline]{Wie geht diese Abschätzung? Wie nutzt man, dass v bereits in
-  BV ist und so eine Abschätzung für alle C1c Funktionen auf Omega erfüllt?
-  (Nun haben wir aber leider nur C1c auf der Erweiterung Omega0, die somit
-  nicht zwangsläufig C1c auf Omega ist, nur C1)}
+  BV ist und so eine Abschätzung für alle Testfunktionen aus $C^1_C(\Omega)$
+  erfüllt?  (Nun haben wir aber leider nur eine Testfunktion 
+  in  $C^1_C(\Omega_0)$ auf der
+  Erweiterung, die
+  somit natürlich nicht zwangsläufig $C^1_C(\Omega;\Rbb^2)$, sondern nur
+  $C^1(\Omega;\Rbb^2)$)}
   mit einer Konstante $c>0$.
-  Insgesamt ist damit gezeigt, dass $\tilde{v}\in\BV(\Omega_0).$
-  \todo[inline]{Wie zeigt man die noch zu beweisende Gleichheit? int by parts 
-  Bartels Rem 10.5 (iii). C unendlich geschnitten BV ist dicht in BV bzgl.
-  stikter Konvergenz UND der Spuroperator ist stetig bzgl strikter Konvergenz.}
+  Insgesamt ist damit gezeigt, dass $\tilde{v}\in\BV(\Omega_0;\Rbb^2).$
+  \todo[inline]{Wie zeigt man die noch zu beweisende Gleichheit? Es gibt int.
+  by parts (Bartels Rem 10.5 (iii)). Außerdem gilt
+  $C^\infty(\Omega)\cap \BV(\Omega)$ ist dicht in BV
+  bzgl.  stikter Konvergenz (Bartels Thm 10.2) UND der Spuroperator ist stetig
+  bzgl strikter
+  Konvergenz (Bartels Remark 10.5 (iii)).}
 \end{proof}
 
 \begin{theorem}[Existenz einer Lösung]
@@ -128,7 +138,8 @@ Außerdem wird im Beweis folgende Aussage benötigt.
   Für alle $v\in L^2(\Omega)\subset L^1(\Omega)$ gilt mit der Hölderschen
   Ungleichung
   \todo[inline]{Q wo und wie einmal erwähnen, dass die Lp Räume geschachtelt 
-  sind da Omega bdd ist?}
+  sind da Omega bdd ist? In Grundlagenkapitel 'Da bdd gilt hier immer die
+  Inklusion ..' vielleicht einmal allgemein, dann noch mit Zitierung.}
   (\cref{lem:hoelder}) für $p=q=2$, dass
   \begin{equation}\label{equ:hoelderL2BiggerL1}
     \Vert v\Vert_{L^1} 
@@ -139,7 +150,7 @@ Außerdem wird im Beweis folgende Aussage benötigt.
 
   Dann folgt für das Funktional $E$ in \eqref{eq:continuousProblem}
   für alle $v\in \BV(\Omega)\cap L^2(\Omega)$ durch die
-  Cauchy-Schwarzschen Ungleichung (\cref{lem:csu}), die Youngschen
+  Cauchy-Schwarzsche Ungleichung (\cref{lem:csu}), die Youngsche
   Ungleichung (\cref{lem:young}) und \cref{equ:hoelderL2BiggerL1}, dass
   \begin{equation}
     \label{eq:contProbBddFromBelow}
@@ -214,23 +225,23 @@ Außerdem wird im Beweis folgende Aussage benötigt.
   \in L^2(\Omega)$, das heißt $u\in\BV(\Omega)\cap
   L^2(\Omega)$.
 
-  \medbreak
-  Wir wissen, dass $(u_n)_{n\in\Nbb}$ beschränkt in $\BV(\Omega)$
-  ist und in $L^1(\Omega)$ gegen $u\in \BV(\Omega)\cap L^2(\Omega)\subset
-  L^1(\Omega)$ konvergiert. \cref{thm:wlsc} impliziert unter diesen 
-  Voraussetzungen, dass $|u|_{\BV(\Omega)}\leq \liminf_{n\to\infty} 
-  |u_n|_{\BV(\Omega)}$.
+  %\medbreak
+  %Wir wissen, dass $(u_n)_{n\in\Nbb}$ beschränkt in $\BV(\Omega)$
+  %ist und in $L^1(\Omega)$ gegen $u\in \BV(\Omega)\cap L^2(\Omega)\subset
+  %L^1(\Omega)$ konvergiert. \cref{thm:wlsc} impliziert unter diesen 
+  %Voraussetzungen, dass $|u|_{\BV(\Omega)}\leq \liminf_{n\to\infty} 
+  %|u_n|_{\BV(\Omega)}$.
 
   \medbreak
   Wir betrachten nun ein offenes, polygonal berandetes Lipschitz-Gebiet
   $\Omega_0\subset\Rbb^2$ mit 
   $\Omega\subset\interior(\Omega_0)$ und definieren, für alle
-  $k\in\Nbb$ und für fast alle 
+  $n\in\Nbb$ und für fast alle 
   $x\in\Omega_0$,
   \begin{align*}
-    \tilde{u}_k(x)\coloneqq
+    \tilde{u}_n(x)\coloneqq
     \begin{cases}
-      u_k(x),  &\text{ falls } x\in\Omega,\\
+      u_n(x),  &\text{ falls } x\in\Omega,\\
       0,     &\text{ falls } x\in\Omega_0\setminus\Omega
     \end{cases} 
   \end{align*}
@@ -242,19 +253,62 @@ Außerdem wird im Beweis folgende Aussage benötigt.
       0,     &\text{ falls } x\in\Omega_0\setminus\Omega.
     \end{cases} 
   \end{align*}
-  %TODO continue here
-  \todo[inline]{Argumentiere, warum diese Funktionen E auch minimieren (unter
-  allen v in L2 cap BV auf Omega0 erweitert mit 0) und folge dann dem 
-  Aufschrieb auf dem Blatt} 
 
+  Dann gilt nach \cref{lem:bvExtension} sowohl $\tilde{u}\in\BV(\Omega_0)$ und
+  $|\tilde{u}|_{\BV\left(\Omega_0\right)} = |u|_{\BV(\Omega)}+\Vert
+  u\Vert_{L^1(\partial\Omega)}$ als auch $\tilde{u}_n\in\BV(\Omega_0)$
+   und
+   $|\tilde{u}_n|_{\BV\left(\Omega_0\right)}
+  = |u_n|_{\BV(\Omega)}+\Vert u_n\Vert_{L^1(\partial\Omega)}$ für alle
+  $n\in\Nbb$.
+  Da $(u_n)_{n\in \Nbb}$ infimierende Folge von $E$ ist, muss aufgrund der
+  Form von $E$ die Folge
+  $(|\tilde{u}_n|_{\BV(\Omega_0)})_{n\in\Nbb} = (|u_n|_{\BV(\Omega)}+\Vert
+  u_n\Vert_{L^1(\partial\Omega)})_{n\in\Nbb}$
+  beschränkt sein.
+  Außerdem gilt $\tilde{u}_n \overset{n\to\infty}{\to} \tilde{u}$ in
+  $L^1(\Omega_0)$, da aus der Definition von $\tilde{u}$ und 
+  $\tilde{u}_n$ für alle $n\in\Nbb$ und der bereits bekannten Eigenschaft 
+  $u_n\overset{n\to\infty}{\to} u$ folgt
+  \begin{align*}
+    \Vert \tilde{u}_n - \tilde{u}\Vert_{L^1(\Omega_0)} 
+    &= \int_{\Omega_0} |\tilde{u}_n - \tilde{u}|\dx\\
+    &= \int_\Omega |u_n - u|\dx\\
+    &= \Vert u_n - u\Vert_{L^1(\Omega)} \overset{n\to\infty}{\to} 0.
+  \end{align*}
+
+  Insgesamt ist also $(\tilde{u}_n)_{n\in\Nbb}$ eine Folge in $\BV(\Omega_0)$,
+  die in $L^1(\Omega_0)$ gegen $\tilde{u}\in\BV(\Omega_0)\subset
+  L^1(\Omega_0)$ konvergiert und 
+  erfüllt, dass $(|\tilde{u}_n|_{\BV(\Omega_0)})_{n\in\Nbb}$ beschränkt
+  ist. Somit folgt mit
+  \cref{thm:wlsc}  
+  \begin{equation}
+    \label{eq:wlscOfExtension}
+    \begin{aligned}
+      |u|_{\BV(\Omega)} +\Vert u\Vert_{L^1(\partial\Omega)}
+      = |\tilde{u}|_{\BV(\Omega_0)}
+      &\leq\liminf_{n\to\infty} |\tilde{u}_n|_{\BV(\Omega_0)}\\
+      &= \liminf_{n\to\infty} (|u_n|_{\BV(\Omega)} +
+      \Vert u_n\Vert_{L^1(\partial\Omega)}).
+    \end{aligned}
+  \end{equation}
 
   \medbreak
   Die Funktionen $\Vert\bullet\Vert_{L^2(\Omega)}^2$ und $-\int_\Omega
-  f\bullet\dx$ sind auf $L^2(\Omega)$ stetig und konvex, somit also schwach
-  unterhalbstetig.
+  f\bullet\dx$ sind auf $L^2(\Omega)$ stetig und konvex, was impliziert,
+  dass sie schwach unterhalbstetig auf $L^2(\Omega)$ sind. Da wir bereits
+  wissen, dass $u_n \overset{n\to\infty}{\rightharpoonup} u$ in $L^2(\Omega)$, 
+  folgt daraus 
+  \begin{align*}
+    \frac{\alpha}{2}\Vert u\Vert_{L^2(\Omega)}-\int_\Omega fu\dx
+    \leq \liminf_{n\to\infty}
+    \left(\frac{\alpha}{2}\Vert u_n\Vert_{L^2(\Omega)}
+    -\int_\Omega fu_n\dx\right).
+  \end{align*}
   
   \medbreak
-  Damit gilt insgesamt
+  Damit und mit \cref{eq:wlscOfExtension} gilt insgesamt
   \begin{align*}
     \inf_{v\in\BV(\Omega)\cap L^2(\Omega)}E(v)\leq
     E(u)\leq\liminf_{n\rightarrow\infty} E(u_n) =
@@ -271,10 +325,10 @@ Außerdem wird im Beweis folgende Aussage benötigt.
 
   Dann gilt 
   \begin{align*}
-    \Vert u_1 - u_2\Vert_{L^2(\Omega)} \leq \Vert f_1-f_2\Vert_{L^2(\Omega)}.
+    \Vert u_1 - u_2\Vert_{L^2(\Omega)} 
+    \leq\frac{1}{\alpha}\Vert f_1-f_2\Vert_{L^2(\Omega)}.
   \end{align*}
 \end{theorem}
-\todo{hier noch alpha entsprechend ergänzen?}
 
 \begin{proof}
   Definiere die konvexen Funktionale $F:\BV(\Omega)\to \Rbb$ und 
@@ -336,20 +390,8 @@ Außerdem wird im Beweis folgende Aussage benötigt.
     \Vert f_1-f_2\Vert_{L^2(\Omega)}\Vert u_1 - u_2\Vert_{L^2(\Omega)}.
   \end{align*}
 
-  \todo[inline]{TODO wie verschwindet das $\alpha$ hier um dann die
-  Abschätzung aus dem Satz zu bekommen (für $alpha\geq 1$ haben wir sie ja
-  auch, aber $\alpha>0$ ist nur gefordert? Oder verpasst man der
-  Abschätzung im Satz noch eine Konstante $1/\alpha$ vor der oberen Schranke?
-
-  Zumindest Eindeutigkeit bekommt man auch hier immernoch (man
-  setzt f1 und f2 im Satz gleich f), was gut ist.
-  Reicht das also sogar?
-  
-  Das entspricht auch der Abschätzung aus Bartels, da f=alpha g. Wenn man das
-  ganze mit g schreibt, steht exakt das aus Bartels da}
-
   Falls $\Vert u_1 - u_2 \Vert_{L^2(\Omega)} = 0$, gilt der Satz.
-  Ansonsten führt Division durch \\
-  $\Vert u_1 - u_2 \Vert_{L^2(\Omega)}\neq 0$ den 
+  Ansonsten führt Division durch\\
+  $\alpha\Vert u_1 - u_2 \Vert_{L^2(\Omega)}\neq 0$ den 
   Beweis zum Abschluss.
 \end{proof}
