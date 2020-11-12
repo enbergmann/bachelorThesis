@@ -2051,13 +2051,17 @@
     <bcf:datasource type="file" datatype="bibtex">sourcesBergmannBT.bib</bcf:datasource>
   </bcf:bibdata>
   <bcf:section number="0">
-    <bcf:citekey order="1">Roc70</bcf:citekey>
-    <bcf:citekey order="2">Sch13</bcf:citekey>
-    <bcf:citekey order="3">Bar15</bcf:citekey>
-    <bcf:citekey order="4">Bar15</bcf:citekey>
-    <bcf:citekey order="5">Bar15</bcf:citekey>
-    <bcf:citekey order="6">Roc70</bcf:citekey>
-    <bcf:citekey order="7">TestProbe99</bcf:citekey>
+    <bcf:citekey order="1">Zei86</bcf:citekey>
+    <bcf:citekey order="2">Zei85</bcf:citekey>
+    <bcf:citekey order="3">Zei86</bcf:citekey>
+    <bcf:citekey order="4">Zei86</bcf:citekey>
+    <bcf:citekey order="5">Zei86</bcf:citekey>
+    <bcf:citekey order="6">Zei90</bcf:citekey>
+    <bcf:citekey order="7">Bar15</bcf:citekey>
+    <bcf:citekey order="8">Bar15</bcf:citekey>
+    <bcf:citekey order="9">Bar15</bcf:citekey>
+    <bcf:citekey order="10">Roc70</bcf:citekey>
+    <bcf:citekey order="11">TestProbe99</bcf:citekey>
   </bcf:section>
   <bcf:sortlist section="0" name="anyt/global" type="entry" sortscheme="anyt" sortnamekeyscheme="global">
   <bcf:sorting>

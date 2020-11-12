@@ -362,18 +362,30 @@ Außerdem wird im Beweis folgende Aussage benötigt.
 
   Das Funktional $F$ ist konvex {\color{red} wegen Dreiecksungleichung und 
   homogenität ($\lambda$ und $1-\lambda$ sind größer gleich 0)}, deshalb 
-  \todo[inline]{TODO quote Rockafella (pp. 213/Section 23)} ist das
+  ist das
   Subdifferential
   $\partial F$ von $F$ monoton, d.h.\ für alle $\mu_\ell\in \partial F(u_\ell)$,
   $\ell=1,2$, gilt
   \begin{align}\label{eq:stabilityAndUniqueness:monotonicityOfSubdifferential}
     (\mu_1-\mu_2,u_1-u_2)_{L^2(\Omega)}\geq 0.
   \end{align}
+  \todo[inline]{SOURCE def for Subdifferential on banach spaces AND 
+  monotonicity of Subdifferential} 
 
   Für $\ell=1,2$ wird $E_\ell$ von $u_\ell$ minimiert, 
   deshalb gilt $0\in\partial E_\ell(u_\ell)
   = \partial F(u_\ell)+\partial G_\ell(u_\ell)=\partial F(u_\ell)+
-  \{\delta G_\ell(u_\ell)\}$ \todo[inline]{TODO quote as well} und es folgt
+  \{\delta G_\ell(u_\ell)\}$ 
+  \todo[inline]{SOURCE optimality condition for subdifferential on Banach 
+  spaces AND condition that in a differntiability point the subdifferential 
+  only contains the Frechet derivative 
+  AND property $\partial(A+B)(u)\subseteq \partial(A)(u) +
+  \partial(B)(u)$
+  
+  furthemore, check if equality holds in this particular case
+  or just $\subseteq$ (which would be enough for the proof) and make it clearer
+  that subdifferential properties are used here} 
+  und es folgt
   $-\delta G_\ell(u_\ell)\in\partial F(u_\ell)$.
   Daraus folgt zusammen mit
   \eqref{eq:stabilityAndUniqueness:monotonicityOfSubdifferential}

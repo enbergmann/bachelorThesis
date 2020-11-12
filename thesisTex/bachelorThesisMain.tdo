@@ -21,7 +21,7 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {todo}{TODO zitiere?}{7}{section*.13}
 \defcounter {refsection}{0}\relax 
-\contentsline {todo}{TODO vielleicht wichtig, Quelle braucht es noch}{8}{section*.14}
+\contentsline {todo}{TODO vielleicht wichtig, Quelle braucht es noch}{9}{section*.14}
 \defcounter {refsection}{0}\relax 
 \contentsline {todo}{TODO finde Quelle, nur ein Remark in Bartels (wird aber f\IeC {\"u}r CCs Funktional offensichtlich gebraucht, es gibt noch weitere Aussagen in Bartels (zB integration by parts aber erstmal nur Existens und Stetigkeit hier (wie gesagt, nur was gebraucht wird zitieren, oder?)}{9}{section*.15}
 \defcounter {refsection}{0}\relax 
@@ -39,8 +39,8 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {todo}{TODO nachrechnen, Gateaux ist klar, aber auch Frechet? EDIT: nachgerechnet, es funktioniert nach WIKI Def. {\@@par }Au\IeC {\ss }erdem: Im Grundlagen Kapitel noch einf\IeC {\"u}hren, was hier in dieser Arbeit mit Gateaux, Frechet etc gemeint ist? (ist ja von Autor zu Autor anders (cf Wiki))}{13}{section*.22}
 \defcounter {refsection}{0}\relax 
-\contentsline {todo}{TODO quote Rockafella (pp. 213/Section 23)}{14}{section*.23}
+\contentsline {todo}{SOURCE def for Subdifferential on banach spaces AND monotonicity of Subdifferential}{14}{section*.23}
 \defcounter {refsection}{0}\relax 
-\contentsline {todo}{TODO quote as well}{14}{section*.24}
+\contentsline {todo}{SOURCE optimality condition for subdifferential on Banach spaces AND condition that in a differntiability point the subdifferential only contains the Frechet derivative AND property $\partial (A+B)(u)\subseteq \partial (A)(u) + \partial (B)(u)$ {\@@par }furthemore, check if equality holds in this particular case or just $\subseteq $ (which would be enough for the proof) and make it clearer that subdifferential properties are used here}{14}{section*.24}
 \defcounter {refsection}{0}\relax 
 \contentsline {todo}{NOTE Bsp wie zitieren funktioniert und um Bib zu testen}{21}{section*.25}
