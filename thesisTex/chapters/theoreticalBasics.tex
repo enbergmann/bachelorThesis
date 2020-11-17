@@ -72,30 +72,93 @@ Argumente gebracht, also diese section ist überflüssig}
 
 \section{Subdifferential}
 In diesem Abschnitt trage ich die in dieser Arbeit benötigten Eigenschaften 
-des Subdifferentials einer konvexen Funktion auf einem Banachraum 
+des Subdifferentials eines Funktionals $F:X\to [-\infty,\infty]$ 
+auf einem Banachraum 
 $(X,\Vert\bullet\Vert_X)$ und die dafür benötigten Begriffe zusammen.
 
-\begin{definition}[\protect{\cite[S. 765]{Zei86}}]
-  Eine Funktion $f:X\to\Rbb$ heißt konvex, wenn für alle $x,y\in X$ und alle
-  $t\in[0,1]$ 
+\begin{definition}[\protect{\cite[S. 245, Definition 42.1]{Zei85}}]
+  Sei $X$ ein Vektorraum, $M\subseteq X$ und $F:M\to\Rbb$. 
+  
+  Dann heißt die Menge $M$ konvex, wenn für alle $u,v\in M$ und alle $t\in
+  [0,1]$ gilt $(1-t)u+tv\in M$.
+
+  Ist $M$ konvex, so heißt $F$ konvex, falls für alle $u,v\in M$ und alle
+  $t\in[0,1]$ gilt $F\big( (1-t)u+tv\big)\leq (1-t)F(u)+t F(v).$
+\end{definition}
+
+In \cite{Zei85} werden die folgenden Aussagen auf reellen lokal konvexen
+Räumen $X$ formuliert.
+Da nach \cite[S. 781, (43)]{Zei86} alle Banachräume 
+(\glqq B-spaces\grqq \cite[S.  786]{Zei86}) lokal konvex sind und in dieser
+Arbeit die Aussagen nur auf Banachräumen benötigt werden, beschränke ich
+die folgenden Aussagen auf reelle Banachräume.
+Im folgenden sei $(X,\Vert\bullet\Vert_X)$ stets ein reeller Banachraum und
+$F:X\to [-\infty,\infty]$ ein Funktional auf $X$.
+
+\begin{definition}[Subdifferential, \protect{\cite[S. 385,
+  Definition 47.8]{Zei85}}]
+  Für $u\in X$ mit $F(u)\neq\pm\infty$ heißt
+  \begin{equation}
+    \label{equ:subdifferential}
+    \partial F(u)\coloneq 
+    \{u^\ast\in X^\ast\ |\ 
+    \forall v\in X\quad F(v)\geq F(u)+\langle u^\ast,v-u\rangle\}  
+  \end{equation}
+  Subdifferential von $F$ an der Stelle $u$. Für $F(u)=\pm\infty$ definiere
+  $\partial F(u)\coloneq\emptyset$.
+
+  Ein Element $u^\ast\in\partial F(u)$ heißt Subgradient von $F$ an der Stelle
+  $u$.
+\end{definition}
+
+\begin{theorem}[\protect{\cite[S. 387, Proposition 47.12]{Zei85}}]
+  \label{thm:extremalprinzip}
+  Falls $F: X\to (-\infty,\infty]$ mit $F\nequiv\infty$, gilt
+  $F(u)=\inf_{v\in X}F(v)$ genau dann, wenn $0\in\partial F(u)$.
+\end{theorem}
+
+\begin{theorem}[\protect{\cite[S. 387, Proposition 47.13]{Zei85}}]
+  \label{thm:subdiffGateaux}
+  Sei $F: X\to [-\infty,\infty]$ konvex und G\^{a}teaux-differenzierbar an der 
+  Stelle $u\in X$ mit G\^{a}teaux-Differential $F'(u)$.
+
+  Dann gilt $\partial F(u)=\{F'(u)\}$.
+  \todo[inline]{TODO wie bei B-space suche G-derivative in den Zeidlers
+  und checke Notation und Definition mit der
+  Gateaux/Frechet-differenzierbarkeit, für die ich mich entschieden haben
+  werde, zitiere insbesondere wieder, wo G-derivate klar als Gateaux 
+  Ableitung definiert wird
+  
+  Bemerke, die Prop liefert noch wann das umgekehrte gilt, aber nur
+  aufschreiben, wenn das mal benötigt wird in dieser Arbeit}
+\end{theorem}
+
+\begin{theorem}[\protect{\cite[S. 389, Theorem 47.B]{Zei85}}]
+  \label{thm:subdifferentialSumRule}
+  Seien für $n\geq 2$ die Funktionale $F_1,F_2,\ldots,F_n: X\to
+  (-\infty,\infty]$ konvex und es existiere
+  ein $u_0\in X$ mit $F_k(u_0)<\infty$ für alle $k\in\{1,2\ldots,n\}$, sodass
+  $F_1,F_2,\ldots,F_{n-1}$ stetig an der Stelle $u_0$ sind.
+
+  Dann gilt 
   \begin{align*}
-    f(tx+(1-t)y)\leq tf(x)+(1-t)f(y).
+    \partial (F_1+F_2+\ldots+ F_n)(u) 
+    = \partial F_1(u)+\partial F_2(u)+ \ldots + \partial F_n(u) \quad\text{für
+    alle}\quad u\in X.
   \end{align*}
-\end{definition}
+\end{theorem}
 
-\begin{remark}
-  In \cite{Zei85} werden die Aussagen auf lokal konvexen Räumen 
-  $X$ formuliert.
-  Nach \cite[S. 781, (43)]{Zei86} sind aber alle Banachräume (B-spaces \cite[S.
-  786]{Zei86}) lokal konvex. Deshalb formuliere ich hier alle Aussagen für
-  Banachräume.
-\end{remark}
+\begin{theorem}[\protect{\cite[S. 396f., Definition 47.15, Theorem
+  47.F]{Zei85}}]
+  \label{thm:subdifferentialMonotonicity}
+  Sei $F:X\to (\infty,\infty]$ konvex und unterhalbstetig mit $F\nequiv\infty$.
 
-Zunächst seien einige grundlegende Eigenschaften eingeführt  \cite{Zei86},
-\cite{Zei90}
-\begin{definition}
-  Eine Funktion
-\end{definition}
+  Dann ist $\partial F(\bullet)$ monoton, das heißt 
+  \begin{align*}
+    \langle u^\ast-v^\ast,u-v\rangle\geq 0\quad \text{für alle}\quad u,v\in X, 
+    u^\ast \in \partial F(u), v^\ast \in \partial F(v).
+  \end{align*}
+\end{theorem}
 
 \section{Karush-Kuhn-Tucker Bedingungen}
 
