@@ -331,15 +331,15 @@ Außerdem wird im Beweis folgende Aussage benötigt.
 \end{theorem}
 
 \begin{proof}
-  Definiere die konvexen Funktionale $F:\BV(\Omega)\to \Rbb$ und 
-  $G_\ell:L^2(\Omega)\to \Rbb$, $\ell=1,2$, durch
+  Definiere die konvexen Funktionale $F:\BV(\Omega)\cap L^2(\Omega)\to \Rbb$
+  und 
+  $G_\ell:\BV(\Omega)\cap L^2(\Omega)\to \Rbb$, $\ell=1,2$, durch
   \begin{align*}
     F(u) &\coloneqq |u|_{\BV(\Omega)} + \Vert u \Vert_{L^1(\partial\Omega)},&
     G_\ell(u)\coloneqq \frac{\alpha}{2}\Vert u\Vert_{L^2(\Omega)}^2 -
     \int_\Omega f_\ell u\dx.
   \end{align*}
-  Bezeichne $E_\ell\coloneqq F+G_\ell$ und setze $F$ auf $L^2(\Omega)$
-  durch $\infty$ fort.
+  Bezeichne $E_\ell\coloneqq F+G_\ell$.
 
   $G_\ell$ ist Fr\'echet-differenzierbar 
 
@@ -352,18 +352,18 @@ Außerdem wird im Beweis folgende Aussage benötigt.
   Wiki)) und insbesondere irgendwo einmal alle Notationen einführen, was ist 
   welche Ableitung} 
 
-  und die Fr\'echet-Ableitung $\delta G_\ell(u):L^2(\Omega)\to\Rbb^2 $ an der
+  und die Fr\'echet-Ableitung $\delta G_\ell(u):
+  L^2(\Omega)\to\Rbb$ an der
   Stelle
-  $u\in L^2(\Omega)$ ist gegeben durch
+  $u\in \BV(\Omega)\cap L^2(\Omega)$ ist 
+  für alle $v\in L^2(\Omega)$ gegeben durch
   \begin{align*}
     \delta G_\ell(u)[v] = \alpha (u,v)_{L^2(\Omega)} - \int_\Omega f_\ell v\dx 
-    = (\alpha u-f_\ell ,v)_{L^2(\Omega)} \quad 
-    \text{ für alle } v\in L^2(\Omega).
+    = (\alpha u-f_\ell ,v)_{L^2(\Omega)}.
   \end{align*}
 
-  Das Funktional $F$ ist konvex {\color{red} wegen Dreiecksungleichung und 
-  homogenität ($\lambda$ und $1-\lambda$ sind größer gleich 0)}
-  und unterhalbstetig \todo[inline]{TODO check this}, deshalb 
+  Das Funktional $F$ ist konvex 
+  und stetig, also insbesondere unterhalbstetig, deshalb 
   ist nach \cref{thm:subdifferentialMonotonicity} das
   Subdifferential
   $\partial F$ von $F$ monoton, das heißt für alle $\mu_\ell\in \partial
