@@ -76,6 +76,8 @@ des Subdifferentials eines Funktionals $F:X\to [-\infty,\infty]$
 auf einem Banachraum 
 $(X,\Vert\bullet\Vert_X)$ und die dafür benötigten Begriffe zusammen.
 
+Zunächst eine grundlegende Definition.
+
 \begin{definition}[\protect{\cite[S. 245, Definition 42.1]{Zei85}}]
   Sei $X$ ein Vektorraum, $M\subseteq X$ und $F:M\to\Rbb$. 
   
@@ -86,13 +88,15 @@ $(X,\Vert\bullet\Vert_X)$ und die dafür benötigten Begriffe zusammen.
   $t\in[0,1]$ gilt $F\big( (1-t)u+tv\big)\leq (1-t)F(u)+t F(v).$
 \end{definition}
 
-In \cite{Zei85} werden die folgenden Aussagen auf reellen lokal konvexen
+In \cite{Zei85} werden einige der folgenden Aussagen auf reellen lokal konvexen
 Räumen $X$ formuliert.
 Da nach \cite[S. 781, (43)]{Zei86} alle Banachräume 
-(\glqq B-spaces\grqq \cite[S.  786]{Zei86}) lokal konvex sind und in dieser
-Arbeit die Aussagen nur auf Banachräumen benötigt werden, beschränke ich
-die folgenden Aussagen auf reelle Banachräume.
-Im folgenden sei $(X,\Vert\bullet\Vert_X)$ stets ein reeller Banachraum und
+(in \cite{Zei86} und \cite{Zei85} genannt \glqq B-spaces\grqq, \cite[S.
+786]{Zei86}) lokal
+konvex sind und in dieser Arbeit die Aussagen nur auf Banachräumen benötigt
+werden, beschränke ich
+die folgenden Aussagen, falls nicht anders spezifiziert, wie folgt.
+Sei $(X,\Vert\bullet\Vert_X)$ ein reeller Banachraum und
 $F:X\to [-\infty,\infty]$ ein Funktional auf $X$.
 
 \begin{definition}[Subdifferential, \protect{\cite[S. 385,
@@ -119,26 +123,35 @@ $F:X\to [-\infty,\infty]$ ein Funktional auf $X$.
 
 \begin{theorem}[\protect{\cite[S. 387, Proposition 47.13]{Zei85}}]
   \label{thm:subdiffGateaux}
-  Sei $F: X\to [-\infty,\infty]$ konvex und G\^{a}teaux-differenzierbar an der 
-  Stelle $u\in X$ mit G\^{a}teaux-Differential $F'(u)$.
-
-  Dann gilt $\partial F(u)=\{F'(u)\}$.
-  \todo[inline]{TODO wie bei B-space suche G-derivative in den Zeidlers
-  und checke Notation und Definition mit der
-  Gateaux/Frechet-differenzierbarkeit, für die ich mich entschieden haben
-  werde, zitiere insbesondere wieder, wo G-derivate klar als Gateaux 
-  Ableitung definiert wird
+  Falls $F$ konvex ist und G\^{a}teaux-differenzierbar
+  (in \cite{Zei86} und \cite{Zei85} genannt \glqq G-differentiable\grqq, \cite[S.
+  135f.]{Zei86})
+  an der Stelle $u\in X$ mit G\^{a}teaux-Differential $F'(u)$,
+  gilt $\partial F(u)=\{F'(u)\}$.
+  \todo[inline]{TODO checke Notation und Definition mit der
+  Gateaux/Frechet-differenzierbarkeit, für die ich mich entschieden habe (d.h.
+  meint Zeidler das gleiche  
   
   Bemerke, die Prop liefert noch wann das umgekehrte gilt, aber nur
-  aufschreiben, wenn das mal benötigt wird in dieser Arbeit}
+  aufschreiben, wenn das mal benötigt wird in dieser Arbeit
+
+  nutze vielleicht Zeidler I als Quelle für die Differentiale und vielleicht
+  auch Notation?}
 \end{theorem}
 
-\begin{theorem}[\protect{\cite[S. 389, Theorem 47.B]{Zei85}}]
+Das folgende Theorem folgt aus \cite[S. 389, Theorem 47.B]{Zei85} unter 
+Beachtung der Tatsache, dass die Addition von Funktionalen 
+$F_1,F_2,\ldots,F_n:X\to (-\infty,\infty]$ und die Addition von
+Menge in $X^\ast$ kommutieren.
+
+\begin{theorem}
   \label{thm:subdifferentialSumRule}
   Seien für $n\geq 2$ die Funktionale $F_1,F_2,\ldots,F_n: X\to
   (-\infty,\infty]$ konvex und es existiere
-  ein $u_0\in X$ mit $F_k(u_0)<\infty$ für alle $k\in\{1,2\ldots,n\}$, sodass
-  $F_1,F_2,\ldots,F_{n-1}$ stetig an der Stelle $u_0$ sind.
+  ein $u_0\in X$ und ein $j\in\{1,2,\ldots,n\}$ mit $F_k(u_0)<\infty$
+  für alle $k\in\{1,2\ldots,n\}$, 
+  sodass für alle $k\in\{1,2,\ldots,n\}\setminus\{j\}$ das Funktional
+  $F_k$ stetig an der Stelle $u_0$ ist.
 
   Dann gilt 
   \begin{align*}
@@ -151,7 +164,7 @@ $F:X\to [-\infty,\infty]$ ein Funktional auf $X$.
 \begin{theorem}[\protect{\cite[S. 396f., Definition 47.15, Theorem
   47.F]{Zei85}}]
   \label{thm:subdifferentialMonotonicity}
-  Sei $F:X\to (\infty,\infty]$ konvex und unterhalbstetig mit $F\nequiv\infty$.
+  Sei $F:X\to (-\infty,\infty]$ konvex und unterhalbstetig mit $F\nequiv\infty$.
 
   Dann ist $\partial F(\bullet)$ monoton, das heißt 
   \begin{align*}

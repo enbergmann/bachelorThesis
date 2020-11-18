@@ -13,9 +13,9 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {todo}{braucht es eigentlich nicht, im Beweis selbst werden ja alle Argumente gebracht, also diese section ist \IeC {\"u}berfl\IeC {\"u}ssig}{6}{section*.9}
 \defcounter {refsection}{0}\relax 
-\contentsline {todo}{TODO wie bei B-space suche G-derivative in den Zeidlers und checke Notation und Definition mit der Gateaux/Frechet-differenzierbarkeit, f\IeC {\"u}r die ich mich entschieden haben werde, zitiere insbesondere wieder, wo G-derivate klar als Gateaux Ableitung definiert wird {\@@par }Bemerke, die Prop liefert noch wann das umgekehrte gilt, aber nur aufschreiben, wenn das mal ben\IeC {\"o}tigt wird in dieser Arbeit}{7}{section*.10}
+\contentsline {todo}{TODO checke Notation und Definition mit der Gateaux/Frechet-differenzierbarkeit, f\IeC {\"u}r die ich mich entschieden habe (d.h. meint Zeidler das gleiche {\@@par }Bemerke, die Prop liefert noch wann das umgekehrte gilt, aber nur aufschreiben, wenn das mal ben\IeC {\"o}tigt wird in dieser Arbeit {\@@par }nutze vielleicht Zeidler I als Quelle f\IeC {\"u}r die Differentiale und vielleicht auch Notation?}{7}{section*.10}
 \defcounter {refsection}{0}\relax 
-\contentsline {todo}{Direkt von R2 ausgehen, weil mehr im Programm nicht geht?}{7}{section*.11}
+\contentsline {todo}{Direkt von R2 ausgehen, weil mehr im Programm nicht geht?}{8}{section*.11}
 \defcounter {refsection}{0}\relax 
 \contentsline {todo}{TODO jede \IeC {\"u}bernommene Definition/Theorem/etc. zitieren trotz Disclaimer oben? jede Notation erkl\IeC {\"a}ren bzw. definieren? Falls ja; am Anfang oder Ende der Arbeit?}{8}{section*.12}
 \defcounter {refsection}{0}\relax 
@@ -25,24 +25,24 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {todo}{TODO vielleicht wichtig, Quelle braucht es noch}{9}{section*.15}
 \defcounter {refsection}{0}\relax 
-\contentsline {todo}{TODO finde Quelle, nur ein Remark in Bartels (wird aber f\IeC {\"u}r CCs Funktional offensichtlich gebraucht, es gibt noch weitere Aussagen in Bartels (zB integration by parts aber erstmal nur Existens und Stetigkeit hier (wie gesagt, nur was gebraucht wird zitieren, oder?)}{9}{section*.16}
+\contentsline {todo}{TODO finde Quelle, nur ein Remark in Bartels (wird aber f\IeC {\"u}r CCs Funktional offensichtlich gebraucht, es gibt noch weitere Aussagen in Bartels (zB integration by parts aber erstmal nur Existens und Stetigkeit hier (wie gesagt, nur was gebraucht wird zitieren, oder?)}{10}{section*.16}
 \defcounter {refsection}{0}\relax 
-\contentsline {todo}{TODO Vielleicht auch erst beim Diskreten Problem, da es dort Nullranddaten gibt? Beachte insbesondere, dass $f=\alpha g$ }{10}{section*.17}
+\contentsline {todo}{TODO Vielleicht auch erst beim Diskreten Problem, da es dort Nullranddaten gibt? Beachte insbesondere, dass $f=\alpha g$ }{11}{section*.17}
 \defcounter {refsection}{0}\relax 
-\contentsline {todo}{Q alle drei zitieren mit irgendeiner Quelle mit der passenden Formulierung oder ist das zu basic}{10}{section*.18}
+\contentsline {todo}{Q alle drei zitieren mit irgendeiner Quelle mit der passenden Formulierung oder ist das zu basic}{11}{section*.18}
 \defcounter {refsection}{0}\relax 
-\contentsline {todo}{In Grundlagen einmal dar\IeC {\"u}ber reden, wie f\IeC {\"u}r fast alle hier zu verstehen ist? Es gibt verschiedene Konventionen und hier ist nat\IeC {\"u}rlich gemeint f\IeC {\"u}r alle x bis auf die aus Nullmengen}{11}{section*.19}
+\contentsline {todo}{In Grundlagen einmal dar\IeC {\"u}ber reden, wie f\IeC {\"u}r fast alle hier zu verstehen ist? Es gibt verschiedene Konventionen und hier ist nat\IeC {\"u}rlich gemeint f\IeC {\"u}r alle x bis auf die aus Nullmengen}{12}{section*.19}
 \defcounter {refsection}{0}\relax 
-\contentsline {todo}{Wie geht diese Absch\IeC {\"a}tzung? Wie nutzt man, dass v bereits in BV ist und so eine Absch\IeC {\"a}tzung f\IeC {\"u}r alle Testfunktionen aus $C^1_C(\Omega )$ erf\IeC {\"u}llt? (Nun haben wir aber leider nur eine Testfunktion in $C^1_C(\Omega _0)$ auf der Erweiterung, die somit nat\IeC {\"u}rlich nicht zwangsl\IeC {\"a}ufig $C^1_C(\Omega ;\mathbb {R}^2)$, sondern nur $C^1(\Omega ;\mathbb {R}^2)$)}{11}{section*.20}
+\contentsline {todo}{Wie geht diese Absch\IeC {\"a}tzung? Wie nutzt man, dass v bereits in BV ist und so eine Absch\IeC {\"a}tzung f\IeC {\"u}r alle Testfunktionen aus $C^1_C(\Omega )$ erf\IeC {\"u}llt? (Nun haben wir aber leider nur eine Testfunktion in $C^1_C(\Omega _0)$ auf der Erweiterung, die somit nat\IeC {\"u}rlich nicht zwangsl\IeC {\"a}ufig $C^1_C(\Omega ;\mathbb {R}^2)$, sondern nur $C^1(\Omega ;\mathbb {R}^2)$)}{12}{section*.20}
 \defcounter {refsection}{0}\relax 
-\contentsline {todo}{Wie zeigt man die noch zu beweisende Gleichheit? Es gibt int. by parts (Bartels Rem 10.5 (iii)). Au\IeC {\ss }erdem gilt $C^\infty (\Omega )\cap \textup {BV}(\Omega )$ ist dicht in BV bzgl. stikter Konvergenz (Bartels Thm 10.2) UND der Spuroperator ist stetig bzgl strikter Konvergenz (Bartels Remark 10.5 (iii)).}{11}{section*.21}
+\contentsline {todo}{Wie zeigt man die noch zu beweisende Gleichheit? Es gibt int. by parts (Bartels Rem 10.5 (iii)). Au\IeC {\ss }erdem gilt $C^\infty (\Omega )\cap \textup {BV}(\Omega )$ ist dicht in BV bzgl. stikter Konvergenz (Bartels Thm 10.2) UND der Spuroperator ist stetig bzgl strikter Konvergenz (Bartels Remark 10.5 (iii)).}{12}{section*.21}
 \defcounter {refsection}{0}\relax 
-\contentsline {todo}{Q wo und wie einmal erw\IeC {\"a}hnen, dass die Lp R\IeC {\"a}ume geschachtelt sind da Omega bdd ist? In Grundlagenkapitel 'Da bdd gilt hier immer die Inklusion ..' vielleicht einmal allgemein, dann noch mit Zitierung.}{11}{section*.22}
+\contentsline {todo}{Q wo und wie einmal erw\IeC {\"a}hnen, dass die Lp R\IeC {\"a}ume geschachtelt sind da Omega bdd ist? In Grundlagenkapitel 'Da bdd gilt hier immer die Inklusion ..' vielleicht einmal allgemein, dann noch mit Zitierung.}{12}{section*.22}
 \defcounter {refsection}{0}\relax 
-\contentsline {todo}{TODO nachrechnen, Gateaux ist klar, aber auch Frechet? EDIT: nachgerechnet, es funktioniert nach WIKI Def. {\@@par }Au\IeC {\ss }erdem: Im Grundlagen Kapitel noch einf\IeC {\"u}hren, was hier in dieser Arbeit mit Gateaux, Frechet etc gemeint ist? (ist ja von Autor zu Autor anders (cf Wiki)) und insbesondere irgendwo einmal alle Notationen einf\IeC {\"u}hren, was ist welche Ableitung}{13}{section*.23}
+\contentsline {todo}{TODO nachrechnen, Gateaux ist klar, aber auch Frechet? EDIT: nachgerechnet, es funktioniert nach WIKI Def. {\@@par }Au\IeC {\ss }erdem: Im Grundlagen Kapitel noch einf\IeC {\"u}hren, was hier in dieser Arbeit mit Gateaux, Frechet etc gemeint ist? (ist ja von Autor zu Autor anders (cf Wiki)) und insbesondere irgendwo einmal alle Notationen einf\IeC {\"u}hren, was ist welche Ableitung}{14}{section*.23}
 \defcounter {refsection}{0}\relax 
-\contentsline {todo}{TODO check this}{14}{section*.24}
+\contentsline {todo}{TODO check this}{15}{section*.24}
 \defcounter {refsection}{0}\relax 
-\contentsline {todo}{TODO eigentlich auch mal \IeC {\"u}ber Dualraumtheorie reden, insbesondere f\IeC {\"u}r Lp R\IeC {\"a}ume und wie die Sachen identifiziert werden k\IeC {\"o}nnen nach Riesz?}{14}{section*.25}
+\contentsline {todo}{TODO eigentlich auch mal \IeC {\"u}ber Dualraumtheorie reden, insbesondere f\IeC {\"u}r Lp R\IeC {\"a}ume und wie die Sachen identifiziert werden k\IeC {\"o}nnen nach Riesz?}{15}{section*.25}
 \defcounter {refsection}{0}\relax 
-\contentsline {todo}{NOTE Bsp wie zitieren funktioniert und um Bib zu testen}{21}{section*.26}
+\contentsline {todo}{NOTE Bsp wie zitieren funktioniert und um Bib zu testen}{22}{section*.26}
