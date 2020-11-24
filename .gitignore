@@ -12,6 +12,8 @@ code/s1Version/program/evaluation/*.txt
 *.blg
 *.fdb_latexmk
 *.swp
+*.bcf
+*.tdo
 results/*
 ccTo/*
 l2Error_1e-*
