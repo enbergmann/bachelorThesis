@@ -2,6 +2,9 @@ Wir betrachten für ein gegebenes $\alpha\in\Rbb^+$ und eine Funktion
 $f\in L^2(\Omega)$ das 
 folgende Minimierungsproblem. 
 
+\todo[inline]{TODO/Q nach \cite[Thm. 10.1.4 (first sentence in proof)]{ABM14}
+ist in 2D BV enthalten in $L^2$, d.h. $u\in \BV(\Omega)\cap L^2(\Omega)$ muss
+nur als $u\in \BV(\Omega)$ formuliert werden}
 \begin{problem}\label{prob:continuousProblem}
   Finde $u\in \BV(\Omega)\cap L^2(\Omega)$, sodass
   $u$ das Funktional
@@ -17,7 +20,12 @@ folgende Minimierungsproblem.
 
 \begin{remark}
   \todo[inline]{TODO Vielleicht auch erst beim Diskreten Problem,
-  da es dort Nullranddaten gibt? Beachte insbesondere, dass $f=\alpha g$ }
+  da es dort Nullranddaten gibt? Beachte insbesondere, dass $f=\alpha g$ 
+
+  falls tatsächlich das Problem nur in BV formuliert werden muss, da BV in 2D
+  in L2 enthalten ist, dann sollte das hier auch erwähnt werden: 'Bartels
+  formuliert das so und so in BV cap L2, aber da wir uns auf 2D beschränken,
+  gilt \ldots'}
   In \cite[Kapitel~10.1.3]{Bar15} wird \Cref{prob:continuousProblem} für ein
   gegebenes $g\in L^2(\Omega)$ formuliert
   mit dem Funktional 
