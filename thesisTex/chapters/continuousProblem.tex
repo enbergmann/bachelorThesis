@@ -2,9 +2,19 @@ Wir betrachten für ein gegebenes $\alpha\in\Rbb^+$ und eine Funktion
 $f\in L^2(\Omega)$ das 
 folgende Minimierungsproblem. 
 
-\todo[inline]{TODO/Q nach \cite[Thm. 10.1.4 (first sentence in proof)]{ABM14}
+\todo[inline]{TODO/Q nach \protect{\cite[Thm. 10.1.4 (first sentence in
+proof)]{ABM14}}
 ist in 2D BV enthalten in $L^2$, d.h. $u\in \BV(\Omega)\cap L^2(\Omega)$ muss
 nur als $u\in \BV(\Omega)$ formuliert werden}
+
+\todo[inline]{der eine Beweis der für 2D leichter wäre damit steht aber schon
+und alles 
+andere sollte auch in nD gelten, also vielleciht für dieses Kapitel in nD 
+bleiben (kommt auch drauf an, wie das vorherige Kapitel aussieht, ob es
+BV in nD formuliert oder ob ich zur Vereinfachung direkt 2D mache)
+Momentan ist das hier gemischt zwischen 2 und n: Überarbeiten!!}
+
+
 \begin{problem}\label{prob:continuousProblem}
   Finde $u\in \BV(\Omega)\cap L^2(\Omega)$, sodass
   $u$ das Funktional
@@ -77,64 +87,30 @@ Dafür benötigen wir die folgenden Ungleichungen.
 \todo[inline]{Q alle drei zitieren mit irgendeiner Quelle mit der passenden
 Formulierung oder ist das zu basic}
 
-Außerdem wird im Beweis folgende Aussage benötigt.
+\todo[inline]{In Grundlagen einmal darüber reden, wie für fast alle hier zu 
+verstehen ist? Es gibt verschiedene Konventionen und hier ist natürlich 
+gemeint für alle x bis auf die aus Nullmengen}
+
+Außerdem wird im Beweis folgende Aussage benötigt, die direkt aus \cite[S. 183,
+Theorem 1]{EG92} folgt, da $0\in\BV(\Rbb^n\setminus\Omega)$,
+$|0|_{\BV(\Rbb^n\setminus\Omega)}=0$ und $0|_{\partial\Omega}=0$.
+\todo[inline]{Q vielleicht den Trace Operator T immer mitnehmen?}
 
 \begin{lemma}
   \label{lem:bvExtension}
-  Sei $v\in\BV(\Omega)$ und $\Omega_0\subset\Rbb^2$ ein beliebiges offenes,
-  polygonal berandetes 
-  Lipschitz-Gebiet mit $\Omega\subset\interior{\left(\Omega_0\right)}$.
-  Definiere, für fast
-  alle
-  $x\in\Omega_0$,
-  \todo[inline]{In Grundlagen einmal darüber reden, wie für fast alle hier zu 
-  verstehen ist? Es gibt verschiedene Konventionen und hier ist natürlich 
-  gemeint für alle x bis auf die aus Nullmengen}
+  Sei $v\in\BV(\Omega)$.
+  Definiere, für alle $x\in\Rbb^n$,
   \begin{align*}
     \tilde{v}(x)\coloneqq
     \begin{cases}
       v(x),  &\text{ falls } x\in\Omega,\\
-      0,     &\text{ falls } x\in\Omega_0\setminus\Omega.
+      0,     &\text{ falls } x\in\Rbb^n\setminus\Omega.
     \end{cases} 
   \end{align*}
-  Dann gilt $\tilde{v}\in\BV\left(\Omega_0\right)$ und
-  $|\tilde{v}|_{\BV\left(\Omega_0\right)}
+  Dann gilt $\tilde{v}\in\BV\left(\Rbb^n\right)$ und
+  $|\tilde{v}|_{\BV\left(\Rbb^n\right)}
   = |v|_{\BV(\Omega)}+\Vert v\Vert_{L^1(\partial\Omega)}$.
 \end{lemma}
-
-\begin{proof}
-  Mit der Definition von $\tilde{v}$ gilt 
-  \begin{align*}
-    \Vert \tilde{v}\Vert_{L^1(\Omega_0)} 
-    = \int_{\Omega_0} |\tilde{v}|\dx 
-    = \int_\Omega |v|\dx 
-    = \Vert v\Vert_{L^1(\Omega)} 
-    <\infty
-  \end{align*}
-  und somit $\tilde{v}\in L^1(\Omega_0)$.
-  Außerdem gilt für alle $\tilde{\Phi}\in C^1_C(\Omega_0;\Rbb^2)$
-  \begin{align*}
-    -\int_{\Omega_0} \tilde{v}\Div\left(\tilde{\Phi}\right)\dx
-    = -\int_\Omega v\Div\left(\tilde{\Phi}\right)\dx 
-    \leq\ldots
-    \leq c \left\Vert\tilde{\Phi}\right\Vert_{L^\infty(\Omega_0)}
-  \end{align*}
-  \todo[inline]{Wie geht diese Abschätzung? Wie nutzt man, dass v bereits in
-  BV ist und so eine Abschätzung für alle Testfunktionen aus $C^1_C(\Omega)$
-  erfüllt?  (Nun haben wir aber leider nur eine Testfunktion 
-  in  $C^1_C(\Omega_0)$ auf der
-  Erweiterung, die
-  somit natürlich nicht zwangsläufig $C^1_C(\Omega;\Rbb^2)$, sondern nur
-  $C^1(\Omega;\Rbb^2)$)}
-  mit einer Konstante $c>0$.
-  Insgesamt ist damit gezeigt, dass $\tilde{v}\in\BV(\Omega_0;\Rbb^2).$
-  \todo[inline]{Wie zeigt man die noch zu beweisende Gleichheit? Es gibt int.
-  by parts (Bartels Rem 10.5 (iii)). Außerdem gilt
-  $C^\infty(\Omega)\cap \BV(\Omega)$ ist dicht in BV
-  bzgl.  stikter Konvergenz (Bartels Thm 10.2) UND der Spuroperator ist stetig
-  bzgl strikter
-  Konvergenz (Bartels Remark 10.5 (iii)).}
-\end{proof}
 
 \begin{theorem}[Existenz einer Lösung]
   \label{thm:contProblemExistence}
@@ -241,16 +217,14 @@ Außerdem wird im Beweis folgende Aussage benötigt.
   %|u_n|_{\BV(\Omega)}$.
 
   \medbreak
-  Wir betrachten nun ein offenes, polygonal berandetes Lipschitz-Gebiet
-  $\Omega_0\subset\Rbb^2$ mit 
-  $\Omega\subset\interior(\Omega_0)$ und definieren, für alle
-  $n\in\Nbb$ und für fast alle 
-  $x\in\Omega_0$,
+  Nun definieren wir, für alle
+  $n\in\Nbb$ und für alle 
+  $x\in\Rbb^n$,
   \begin{align*}
     \tilde{u}_n(x)\coloneqq
     \begin{cases}
       u_n(x),  &\text{ falls } x\in\Omega,\\
-      0,     &\text{ falls } x\in\Omega_0\setminus\Omega
+      0,     &\text{ falls } x\in\Rbb^n\setminus\Omega
     \end{cases} 
   \end{align*}
   und
@@ -258,45 +232,45 @@ Außerdem wird im Beweis folgende Aussage benötigt.
     \tilde{u}(x)\coloneqq
     \begin{cases}
       u(x),  &\text{ falls } x\in\Omega,\\
-      0,     &\text{ falls } x\in\Omega_0\setminus\Omega.
+      0,     &\text{ falls } x\in\Rbb^n\setminus\Omega.
     \end{cases} 
   \end{align*}
 
-  Dann gilt nach \cref{lem:bvExtension} sowohl $\tilde{u}\in\BV(\Omega_0)$ und
-  $|\tilde{u}|_{\BV\left(\Omega_0\right)} = |u|_{\BV(\Omega)}+\Vert
-  u\Vert_{L^1(\partial\Omega)}$ als auch $\tilde{u}_n\in\BV(\Omega_0)$
+  Dann gilt nach \cref{lem:bvExtension} sowohl $\tilde{u}\in\BV(\Rbb^n)$ und
+  $|\tilde{u}|_{\BV\left(\Rbb^n\right)} = |u|_{\BV(\Omega)}+\Vert
+  u\Vert_{L^1(\partial\Omega)}$ als auch $\tilde{u}_n\in\BV(\Rbb^n)$
    und
-   $|\tilde{u}_n|_{\BV\left(\Omega_0\right)}
+   $|\tilde{u}_n|_{\BV\left(\Rbb^n\right)}
   = |u_n|_{\BV(\Omega)}+\Vert u_n\Vert_{L^1(\partial\Omega)}$ für alle
   $n\in\Nbb$.
   Da $(u_n)_{n\in \Nbb}$ infimierende Folge von $E$ ist, muss aufgrund der
   Form von $E$ die Folge
-  $(|\tilde{u}_n|_{\BV(\Omega_0)})_{n\in\Nbb} = (|u_n|_{\BV(\Omega)}+\Vert
+  $(|\tilde{u}_n|_{\BV(\Rbb^n)})_{n\in\Nbb} = (|u_n|_{\BV(\Omega)}+\Vert
   u_n\Vert_{L^1(\partial\Omega)})_{n\in\Nbb}$
   beschränkt sein.
   Außerdem gilt $\tilde{u}_n \overset{n\to\infty}{\to} \tilde{u}$ in
-  $L^1(\Omega_0)$, da aus der Definition von $\tilde{u}$ und 
+  $L^1(\Rbb^n)$, da aus der Definition von $\tilde{u}$ und 
   $\tilde{u}_n$ für alle $n\in\Nbb$ und der bereits bekannten Eigenschaft 
   $u_n\overset{n\to\infty}{\to} u$ folgt
   \begin{align*}
-    \Vert \tilde{u}_n - \tilde{u}\Vert_{L^1(\Omega_0)} 
-    &= \int_{\Omega_0} |\tilde{u}_n - \tilde{u}|\dx\\
+    \Vert \tilde{u}_n - \tilde{u}\Vert_{L^1(\Rbb^n)} 
+    &= \int_{\Rbb^n} |\tilde{u}_n - \tilde{u}|\dx\\
     &= \int_\Omega |u_n - u|\dx\\
     &= \Vert u_n - u\Vert_{L^1(\Omega)} \overset{n\to\infty}{\to} 0.
   \end{align*}
 
-  Insgesamt ist also $(\tilde{u}_n)_{n\in\Nbb}$ eine Folge in $\BV(\Omega_0)$,
-  die in $L^1(\Omega_0)$ gegen $\tilde{u}\in\BV(\Omega_0)\subset
-  L^1(\Omega_0)$ konvergiert und 
-  erfüllt, dass $(|\tilde{u}_n|_{\BV(\Omega_0)})_{n\in\Nbb}$ beschränkt
+  Insgesamt ist also $(\tilde{u}_n)_{n\in\Nbb}$ eine Folge in $\BV(\Rbb^n)$,
+  die in $L^1(\Rbb^n)$ gegen $\tilde{u}\in\BV(\Rbb^n)\subset
+  L^1(\Rbb^n)$ konvergiert und 
+  erfüllt, dass $(|\tilde{u}_n|_{\BV(\Rbb^n)})_{n\in\Nbb}$ beschränkt
   ist. Somit folgt mit
   \cref{thm:wlsc}  
   \begin{equation}
     \label{eq:wlscOfExtension}
     \begin{aligned}
       |u|_{\BV(\Omega)} +\Vert u\Vert_{L^1(\partial\Omega)}
-      = |\tilde{u}|_{\BV(\Omega_0)}
-      &\leq\liminf_{n\to\infty} |\tilde{u}_n|_{\BV(\Omega_0)}\\
+      = |\tilde{u}|_{\BV(\Rbb^n)}
+      &\leq\liminf_{n\to\infty} |\tilde{u}_n|_{\BV(\Rbb^n)}\\
       &= \liminf_{n\to\infty} (|u_n|_{\BV(\Omega)} +
       \Vert u_n\Vert_{L^1(\partial\Omega)}).
     \end{aligned}
