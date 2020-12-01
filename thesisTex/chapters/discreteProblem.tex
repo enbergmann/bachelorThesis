@@ -1,7 +1,13 @@
 Betrachte für gegebenes $\alpha>0$ und rechte Seite $f\in L^2(\Omega)$ 
 folgende Diskretisierung von \Cref{prob:continuousProblem}. 
 
+\todo[inline]{Quote all CR and discretisation stuff right here somewhere (mglw
+in einer subsection)}
+
 \begin{problem}\label{prob:discreteProblem}
+  \todo[inline]{zitier BV stuff der relevant ist hierfür, überlege, wieso die
+  Diskretisierung genau so aussieht (Normen fallen zusammen, gewisse Terme
+  werden weggelassen, etc.)}
   Finde $\ucr\in \Vnc(\Tcal) \coloneqq \CR^1_0(\Tcal)$,
   sodass $\ucr$ das Funktional
   \begin{align}\label{eq:discreteProblem}
@@ -11,7 +17,8 @@ folgende Diskretisierung von \Cref{prob:continuousProblem}.
   unter allen $\vcr\in \Vnc(\Tcal)$ minimiert.
 \end{problem}
 
-\noindent Für $\vcr\in\Vnc(\Tcal)$, $\Lambda\in\Pbb_0(\Tcal;\Rbb^n)$,
+Definiere für $\vcr\in\Vnc(\Tcal)$, $\Lambda\in\Pbb_0(\Tcal;\Rbb^n)\subset
+L^\infty(\Omega;\Rbb^n)$ \todo{stimmt das?},
 \begin{align*}
   K_1(0)
   &\coloneqq 
@@ -20,18 +27,43 @@ folgende Diskretisierung von \Cref{prob:continuousProblem}.
   I_{K_1(0)}(\Lambda)
   &\coloneqq
   \begin{cases}
-    -\infty, & \text{falls } \Lambda\notin K_1(0) \text{ und}\\
+    \infty, & \text{falls } \Lambda\notin K_1(0),\\
     0,       & \text{falls } \Lambda\in K_1(0),
   \end{cases}
 \end{align*}
-ist das
-dazugehörige Lagrange-Funktional definert als
+das Funktional
 \begin{align}\label{eq:discreteProblemLagrangeFunctional}
   \Lcal_h(\vcr,\Lambda) \coloneqq \int_\Omega\Lambda\cdot\gradnc\vcr\dx +
   \frac{\alpha}{2}\Vert \vcr\Vert^2_{L^2(\Omega)} -\int_\Omega f\vcr\dx
-  - I_{K_1(0)}(\Lambda)
+  - I_{K_1(0)}(\Lambda).
 \end{align}
-und das Sattelpunktsproblem dem entsprechend wie folgt.
+
+Falls $\Lambda\notin K_1(0)$, gilt $\Lcal(\vcr,\Lambda)=-\infty$. Da
+außerdem für beliebige $\Lambda\in\Pbb_0(\Tcal;\Rbb^n)\cap K_1(0)$ (d.h.\
+$|\Lambda|\leq 1$ fast überall in $\Omega$ und
+außerdem $I_{K_1(0)}(\Lambda)=0$) mit
+der CSU \todo{stimmt das so} gilt, dass 
+\begin{align*}
+  \int_\Omega \Lambda\cdot\gradnc\vcr\dx
+  \leq \int_\Omega |\Lambda\cdot\gradnc\vcr|\dx
+  &\leq \int_\Omega |\Lambda||\gradnc\vcr|\dx\\
+  &\leq \int_\Omega 1|\gradnc\vcr|\dx\
+  = \Vert\gradnc\vcr\Vert_{L^1(\Omega)},
+\end{align*}
+folgt zunächst 
+\begin{align*}
+  \sup_{\Lambda\in\Pbb_0(\Tcal;\Rbb^n)}\Lcal(\vcr,\Lambda)=
+  \sup_{\Lambda\in\Pbb_0(\Tcal;\Rbb^n)\cap K_1(0)}\Lcal(\vcr,\Lambda)
+  \leq \Enc(\vcr).
+\end{align*}
+
+Weiterhin gilt für $\Lambda\in\sign(\gradnc\vcr)\subset \Pbb_0(\Tcal;\Rbb^n)\cap
+K_1(0)$, dass
+$\Enc(\vcr)=\Lcal(\vcr,\Lambda)$ und deshalb
+$\Enc(\vcr)\leq\sup_{\Lambda\in\Pbb_0(\Tcal;\Rbb^n)}\Lcal(\vcr,\Lambda)$
+
+Somit ist das folgende Sattelpunktsproblem äquivalent zu
+\Cref{prob:discreteProblem}.
 \begin{problem}\label{prob:discreteSaddlepointProblem}
   Löse
   \begin{align*}
