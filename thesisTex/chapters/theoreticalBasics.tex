@@ -192,16 +192,16 @@ oder Ende der Arbeit?}
   \todo{TODO vielleicht zu Grundlagen über Radonmaße verschieben}
   Die Vervollständigung des Raums $C^\infty_C(\Omega;\Rbb^m)$ bezüglich der 
   Norm
-  $\Vert\bullet\Vert_{L^\infty(\Omega)}$ ist ein separabler Banachraums und wird
+  $\Vert\bullet\Vert_{L^\infty(\Omega)}$ ist ein separabler Banachraum und wird
   bezeichnet mit 
   $C_0(\Omega; \Rbb^m)$.
   Der Dualraum $\Mcal(\Omega;\Rbb^m)$ von $C_0(\Omega; \Rbb^m)$ wird
   durch den Riesz'schen Darstellungssatz \todo{TODO zitiere?} identifiziert mit
-  dem Raum aller (vektoriellen) Radon Maße. Dabei wird die Anwendung
+  dem Raum aller (vektoriellen) Radonmaße. Dabei wird die Anwendung
   von $\mu\in \Mcal(\Omega;\Rbb^m)$
   auf $\phi\in C_0(\Omega;\Rbb^m)$ identifiziert mit
   \begin{align*}
-    \langle \mu, \phi\rangle = \int_\Omega \phi \dmu =
+    \langle \mu, \phi\rangle \coloneqq \int_\Omega \phi \dmu =
     \int_\Omega \phi(x) \dmu(x).
   \end{align*}
 \end{definition}
@@ -212,7 +212,7 @@ oder Ende der Arbeit?}
   $c\geq 0$ existiert, sodass 
   \begin{align}
     \label{eq:boundedVariation}
-    \langle Du,\Phi\rangle = - \int_\Omega u\Div (\phi) \dx 
+    \langle Du,\phi\rangle \coloneqq - \int_\Omega u\Div (\phi) \dx 
     \leq c\Vert\phi\Vert_{L^\infty(\Omega)}
   \end{align}
   für alle $\phi\in C^1_C(\Omega;\Rbb^n)$.
