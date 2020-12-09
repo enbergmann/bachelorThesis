@@ -15,6 +15,7 @@ code/s1Version/program/evaluation/*.txt
 *.bcf
 *.tdo
 *.run.xml
+*.synctex.gz
 results/*
 ccTo/*
 l2Error_1e-*
