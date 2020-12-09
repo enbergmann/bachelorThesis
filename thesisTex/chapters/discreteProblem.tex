@@ -7,7 +7,8 @@ in einer subsection)}
 \begin{problem}\label{prob:discreteProblem}
   \todo[inline]{zitier BV stuff der relevant ist hierfür, überlege, wieso die
   Diskretisierung genau so aussieht (Normen fallen zusammen, gewisse Terme
-  werden weggelassen, etc.)}
+  werden weggelassen, etc., siehe auch Draft on BV project für einige wichtige,
+  noch zu beweisende, Statements)}
   Finde $\ucr\in \Vnc(\Tcal) \coloneqq \CR^1_0(\Tcal)$,
   sodass $\ucr$ das Funktional
   \begin{align}\label{eq:discreteProblem}
@@ -28,10 +29,11 @@ L^\infty(\Omega;\Rbb^n)$ \todo{stimmt das?},
   &\coloneqq
   \begin{cases}
     \infty, & \text{falls } \Lambda\notin K_1(0),\\
-    0,       & \text{falls } \Lambda\in K_1(0),
+    0,       & \text{falls } \Lambda\in K_1(0)
   \end{cases}
 \end{align*}
-das Funktional
+und das Funktional $\Lcal_h:\CR^1_0(\Tcal)\times \Pbb_0(\Tcal;\Rbb^n)\to
+[-\infty,\infty)$ durch
 \begin{align}\label{eq:discreteProblemLagrangeFunctional}
   \Lcal_h(\vcr,\Lambda) \coloneqq \int_\Omega\Lambda\cdot\gradnc\vcr\dx +
   \frac{\alpha}{2}\Vert \vcr\Vert^2_{L^2(\Omega)} -\int_\Omega f\vcr\dx
