@@ -3,6 +3,8 @@ folgende Diskretisierung von \Cref{prob:continuousProblem}.
 
 \todo[inline]{Quote all CR and discretisation stuff right here somewhere (mglw
 in einer subsection)}
+\todo[inline]{Sowas wie $\Vnc$ nutzen als (geringfügige) Abkürzung oder einfach
+immer die Räume ausschreiben?}
 
 \begin{problem}\label{prob:discreteProblem}
   \todo[inline]{zitier BV stuff der relevant ist hierfür, überlege, wieso die
@@ -102,11 +104,17 @@ Somit ist das folgende Sattelpunktsproblem äquivalent zu
 
 \begin{proof}
   %TODO Existenzbeweis für eindeutige Lösbarkeit des diskreten Problems.
-  \textit{(i).} Es existiert eine eindeutige Lösung
-  $\ucr\in\Vnc(\Tcal)$ von \Cref{prob:discreteProblem}, deshalb besitzt
-  das Sattelpunktsproblem \ref{prob:discreteSaddlepointProblem} eine 
-  Lösung $(\ucr,\Lambda)\in \Vnc(\Tcal)\times(\Pbb_0(\Tcal;\Rbb^n)\cap
-  K_1(0)$. 
+  \textit{(i).} 
+  \todo[inline]{TODO Lösbarkeit (Existenz), vielleicht über Zeidler III, p.474,
+  49.15a}  
+
+  Die Lösung $\ucr\in \CR^1_0(\Tcal)$ ist eindeutig, da das Funktional $\Enc$
+  aus \Cref{prob:discreteProblem} strikt konvex ist {\color{red} der erste
+  Term ist quadratisch, also strikt konvex, der zweite ist konvex und der 
+  dritte linear, also ist deren Summe strikt konvex}.
+  \todo[inline]{grundlegende Aussagen der Optimierung wie diese noch zitieren?
+  Beweis ist einfach bei dieser, schneller Widerspruchsbeweis}
+
   In der ersten Komponente ist das Lagrange-Funktional
   Fr\'echet-\\
   differenzierbar mit 
