@@ -103,10 +103,27 @@ Somit ist das folgende Sattelpunktsproblem äquivalent zu
 \end{theorem}
 
 \begin{proof}
-  %TODO Existenzbeweis für eindeutige Lösbarkeit des diskreten Problems.
-  \textit{(i).} 
-  \todo[inline]{TODO Lösbarkeit (Existenz), vielleicht über Zeidler III, p.474,
-  49.15a}  
+  Mit analogen Abschätzungen wie in Ungleichung \eqref{eq:contProbBddFromBelow}
+  erhalten wir für das Funktional $\Enc$ aus \Cref{prob:discreteProblem} 
+  für alle $\vcr\in\CR^1_0(\Tcal)\subset L^2(\Omega)$ die Abschätzung 
+  \begin{equation*}
+    \Enc(\vcr) \geq -\frac{1}{\alpha}\Vert f\Vert_{L^2(\Omega)}^2.
+  \end{equation*}
+  Somit ist $\Enc$ nach unten beschränkt und es existiert eine infimierende
+  Folge $(v_k)_{k\in\Nbb} \subset \CR^1_0(\Tcal)$ von $\Enc$. Aufgrund der
+  Form von $\Enc$ ist diese Folge beschränkt bezüglich der Norm
+  $\Vert\bullet\Vert_{L^2(\Omega)}$ und wegen der  Reflexivität des
+  abgeschlossenen Unterraums $\CR^1_0(\Tcal)$ des reflexiven
+  Raums $L^2(\Omega)$ besitzt diese Folge eine schwach konvergente 
+  Teilfolge in $\CR^1_0(\Tcal)$
+  bezüglich der Norm $L^2(\Omega)$, welche auch stark konvergent ist, da 
+  $\CR^1_0(\Tcal)$ endlichdimensional ist. Der Grenzwert dieser Folge
+  liegt aufgrund der Abgeschlossenheit von $\CR^1_0(\Tcal)$ in
+  $\CR^1_0(\Tcal)$ und minimiert $\Enc$, da 
+  $\Enc$ stetig ist bezüglich der Konvergenz in $L^2(\Omega)$.
+
+  \todo[inline]{Absatz above: Sachen noch näher begründen? All die benutzten 
+  grundlegenden Aussagen noch zusammen suchen und zitieren irgendwo?}
 
   Die Lösung $\ucr\in \CR^1_0(\Tcal)$ ist eindeutig, da das Funktional $\Enc$
   aus \Cref{prob:discreteProblem} strikt konvex ist {\color{red} der erste
@@ -115,6 +132,8 @@ Somit ist das folgende Sattelpunktsproblem äquivalent zu
   \todo[inline]{grundlegende Aussagen der Optimierung wie diese noch zitieren?
   Beweis ist einfach bei dieser, schneller Widerspruchsbeweis}
 
+  %TODO hier weiter
+  \textit{(i).} 
   In der ersten Komponente ist das Lagrange-Funktional
   Fr\'echet-\\
   differenzierbar mit 
