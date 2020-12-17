@@ -132,7 +132,50 @@ Somit ist das folgende Sattelpunktsproblem äquivalent zu
   \todo[inline]{grundlegende Aussagen der Optimierung wie diese noch zitieren?
   Beweis ist einfach bei dieser, schneller Widerspruchsbeweis}
 
-  %TODO hier weiter
+  Nachdem wir die Existenz eines eindeutigen Minimierers
+  $\ucr\in\CR^1_0(\Tcal)$ von \Cref{prob:discreteProblem} bewiesen haben,
+  zeigen wir nun die äquivalenten Charakterisierung von $\ucr$.
+  Zunächst sei erwähnt, dass aus der Existenz des Minimierers von 
+  \Cref{prob:discreteProblem} und der Äquivalenz von
+  \Cref{prob:discreteProblem} und \Cref{prob:discreteSaddlepointProblem},
+  wobei wir insbesondere beretis gezeigt haben, dass 
+  $\Enc(\vcr)=\sup_{\Lambda\in\Pbb_0(\Tcal;\Rbb^n)}\Lcal_h(\vcr,\Lambda)$
+  für alle $\vcr\in\CR^1_0(\Tcal)$, folgt,
+  dass $\bar\Lambda\in\Pbb_0(\Tcal;\Rbb^n)$
+  existiert mit 
+  \begin{align*}
+    \Lcal_h\left(\ucr,\bar\Lambda\right)=
+    \inf_{\vcr\in\CR^1_0(\Tcal)}\sup_{\Lambda\in\Pbb_0(\Tcal;\Rbb^n)} 
+    \Lcal_h(\vcr,\Lambda).
+  \end{align*}
+  Da nach \cite[S. 379, Lemma 36.1]{Roc70} gilt, dass
+  \begin{align*}
+    \inf_{\vcr\in\CR^1_0(\Tcal)}\sup_{\Lambda\in\Pbb_0(\Tcal;\Rbb^n)} 
+    \Lcal_h(\vcr,\Lambda)
+    \geq 
+    \sup_{\Lambda\in\Pbb_0(\Tcal;\Rbb^n)} \inf_{\vcr\in\CR^1_0(\Tcal)} 
+    \Lcal_h(\vcr,\Lambda),
+  \end{align*}
+  folgt insgesamt
+  \begin{align*}
+    \inf_{\vcr\in\CR^1_0(\Tcal)}\sup_{\Lambda\in\Pbb_0(\Tcal;\Rbb^n)} 
+    \Lcal_h(\vcr,\Lambda)
+    =
+    \Lcal_h\left(\ucr,\bar\Lambda\right)
+    =
+    \sup_{\Lambda\in\Pbb_0(\Tcal;\Rbb^n)} \inf_{\vcr\in\CR^1_0(\Tcal)} 
+    \Lcal_h(\vcr,\Lambda).
+  \end{align*}
+  Somit ist $\left(\ucr,\bar\Lambda\right)\in 
+  \CR^1_0(\Tcal)\times \Pbb_0(\Tcal;\Rbb^n)$ nach \cite[S. 380, Lemma
+  36.2]{Roc70} Sattelpunkt 
+  von $\Lcal_h$ bezüglich der Maximierung über $\Pbb_0(\Tcal;\Rbb^n)$ und
+  der Minimierung über $\CR^1_0(\Tcal)$. 
+  Das bedeutet insbesondere, dass $\ucr$ Minimierer von 
+  $\Lcal_h(\bullet, \bar\Lambda)$ in $\CR^1_0(\Tcal)$ ist und $\bar\Lambda$
+  Maximierer von $\Lcal_h(\ucr,\bullet)$ über $\Pbb_0(\Tcal;\Rbb^n)$.
+
+  %TODO weiter hier
   \textit{(i).} 
   In der ersten Komponente ist das Lagrange-Funktional
   Fr\'echet-\\
