@@ -141,7 +141,9 @@ Somit ist das folgende Sattelpunktsproblem äquivalent zu
   wobei wir insbesondere beretis gezeigt haben, dass 
   $\Enc(\vcr)=\sup_{\Lambda\in\Pbb_0(\Tcal;\Rbb^n)}\Lcal_h(\vcr,\Lambda)$
   für alle $\vcr\in\CR^1_0(\Tcal)$, folgt,
-  dass $\bar\Lambda\in\Pbb_0(\Tcal;\Rbb^n)$
+  dass $\bar\Lambda\in\Pbb_0(\Tcal;\Rbb^n)\cap K_1(0)$ {\color{red} (denn
+  sonst ist das innere $\sup$ nicht erfüllt, da sonst
+  $-I_{K_1(0)}(\bar\Lambda)=-\infty$})
   existiert mit 
   \begin{align*}
     \Lcal_h\left(\ucr,\bar\Lambda\right)=
@@ -167,7 +169,8 @@ Somit ist das folgende Sattelpunktsproblem äquivalent zu
     \Lcal_h(\vcr,\Lambda).
   \end{align*}
   Somit ist $\left(\ucr,\bar\Lambda\right)\in 
-  \CR^1_0(\Tcal)\times \Pbb_0(\Tcal;\Rbb^n)$ nach \cite[S. 380, Lemma
+  \CR^1_0(\Tcal)\times (\Pbb_0(\Tcal;\Rbb^n)\cap K_1(0))$ nach \cite[S. 380,
+  Lemma
   36.2]{Roc70} Sattelpunkt 
   von $\Lcal_h$ bezüglich der Maximierung über $\Pbb_0(\Tcal;\Rbb^n)$ und
   der Minimierung über $\CR^1_0(\Tcal)$. 
@@ -175,16 +178,32 @@ Somit ist das folgende Sattelpunktsproblem äquivalent zu
   $\Lcal_h(\bullet, \bar\Lambda)$ in $\CR^1_0(\Tcal)$ ist und $\bar\Lambda$
   Maximierer von $\Lcal_h(\ucr,\bullet)$ über $\Pbb_0(\Tcal;\Rbb^n)$.
 
-  %TODO weiter hier
   \textit{(i).} 
-  In der ersten Komponente ist das Lagrange-Funktional
+  In der ersten Komponente ist das Lagrange-Funktional \todo{'Lagrange' 
+  weglassen, falls nicht doch noch benötigt? Keine Quelle nannte das bisher so}
   Fr\'echet-\\
-  differenzierbar mit 
+  differenzierbar {\color{red} (und für $\bar\Lambda$ ist das Funktional
+  reellwertig und nimmt nicht $-\infty$ an, also ist Zeidler anwendbar)} mit 
   \begin{align*}
-    \delta_{\ucr}\Lcal_h(\ucr,\Lambda)[\vcr]=
-    \int_\Omega\Lambda\cdot \gradnc\vcr\dx
-    +\alpha (\ucr,\vcr)_{L^2(\Omega)} - \int_\Omega f\vcr\dx.
+    \delta_{\ucr}\Lcal_h(\ucr,\bar\Lambda)[\vcr]=
+    \int_\Omega\bar\Lambda\cdot \gradnc\vcr\dx
+    +\alpha (\ucr,\vcr)_{L^2(\Omega)} - \int_\Omega f\vcr\dx
   \end{align*}
+  für alle $\vcr\in\CR^1_0(\Tcal)$.
+  Da $\ucr$ Minimierer von  $\Lcal_h(\bullet, \bar\Lambda)$ {\color{red}
+  (reellwertig!!!)} in $\CR^1_0(\Tcal)$
+  ist, gilt $0 = \delta_{\ucr}\Lcal_h(\ucr,\bar\Lambda)[\vcr]$ 
+  (\cite[S. 193, Theorem 40.A (oder vlt sogar 40.B nutzen)]{Zei85}).
+
+  
+  Diese Bedingung ist für alle $\vcr\in\Vnc(\Tcal)$ äquivalent zu
+  \begin{align*}
+    (\bar\Lambda,\gradnc\vcr)_{L^2(\Omega)}
+    =
+    (f-\alpha \ucr,\vcr)_{L^2(\Omega)}.
+  \end{align*}
+  Somit ist die zweite Aussage der (i) gezeigt.
+
   Die Karush-Kuhn-Tucker-Bedingungen für eine Lösung \\
   $(\ucr,\Lambda)\in\Vnc\times(\Pbb_0(\Tcal;\Rbb^n)\cap K_1(0))$
   des Sattelpunktsproblems \ref{prob:discreteSaddlepointProblem} lauten damit
@@ -199,13 +218,6 @@ Somit ist das folgende Sattelpunktsproblem äquivalent zu
     0&\in \partial_\Lambda \Lcal_h(\ucr,\Lambda) 
     =
     \{(\gradnc\ucr,\bullet)_{L^2(\Omega)}\}-\partial I_{K_1(0)}(\Lambda).
-  \end{align*}
-
-  Die erste Bedingung ist für alle $\vcr\in\Vnc(\Tcal)$ äquivalent zu
-  \begin{align*}
-    (\Lambda,\gradnc\vcr)_{L^2(\Omega)}
-    =
-    (f-\alpha \ucr,\vcr)_{L^2(\Omega)}.
   \end{align*}
 
   Die zweite Bedingung bedeutet, dass $(\gradnc\ucr,\bullet)_{L^2(\Omega)}\in -\partial
