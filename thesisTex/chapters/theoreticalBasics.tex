@@ -69,6 +69,36 @@ im Quelltext sind noch auskommentierte Theorem zur Maßtheorie}
 %   ist.
 % \end{definition}
 
+\section{Benötigte Begriffe der Variationsrechnung}
+\todo[inline]{im Zeidler lokal konvex Raum. Das irgendwie noch ausdrücken und
+die Aussage, dass B-spaces lokal konvex sind, einmal rechtzeitig erwähnen.}
+
+Die folgenden Aussagen basieren auf \cite[S. 189-192]{Zei85}.
+Wir betrachten einen Banachraum $X$, eine Teilmenge $V\subseteq X$ und ein
+Funktional $F:V\to\Rbb$. Sei $u$ ein innerer Punkt von $V$. Außerdem
+definieren wir für $h\in X$ die Funktion $\varphi_h:\Rbb\to\Rbb$ durch 
+$\varphi_h(t)\coloneqq F(u+th)$ für alle $t\in\Rbb$.
+
+\begin{definition}[$n$-te Variation]
+  Die $n$-te Variation von $F$ an der Stelle $u$ in Richtung $h\in X$ ist 
+  \begin{align*}
+    \delta^n F(u;h)\coloneqq \varphi_h^{(n)}(0)=
+    \left. \frac{d^n F(u+th)}{dt^n}\right|_{t=0},
+  \end{align*}
+  falls $\varphi_h^{(n)}(0)$ existiert. Wir schreiben $\delta$ für $\delta^1$.
+\end{definition}
+
+\begin{definition}[G\^ateaux- und Fr\'echet-Differential]
+  $F$ heißt G\^ateaux-differenzierbar an der Stelle $u$, falls ein 
+  Funktional $F'(u)\in X^\ast$ existiert mit 
+  \begin{align*}
+    \lim_{t\to 0}\frac{F(u+th)-F(u)}{h} = \langle F'(u), h\rangle\quad
+    \text{für alle } h\in X.
+  \end{align*}
+  $F'(u)$ heißt dann G\^ateaux-Differntial von $F$ an der Stelle $u$.
+
+\end{definition}<++>
+
 \section{Direkte Methode der Variationsrechnung}
 \todo[inline]{braucht es eigentlich nicht, im Beweis selbst werden ja alle 
 Argumente gebracht, also diese section ist überflüssig}
