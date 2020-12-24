@@ -69,7 +69,7 @@ im Quelltext sind noch auskommentierte Theorem zur Maßtheorie}
 %   ist.
 % \end{definition}
 
-\section{Benötigte Begriffe der Variationsrechnung}
+\section{Benötigte Begriffe der Variationsrechnung in Banachräumen}
 \todo[inline]{im Zeidler lokal konvex Raum. Das irgendwie noch ausdrücken und
 die Aussage, dass B-spaces lokal konvex sind, einmal rechtzeitig erwähnen.}
 
@@ -95,9 +95,50 @@ $\varphi_h(t)\coloneqq F(u+th)$ für alle $t\in\Rbb$.
     \lim_{t\to 0}\frac{F(u+th)-F(u)}{h} = \langle F'(u), h\rangle\quad
     \text{für alle } h\in X.
   \end{align*}
-  $F'(u)$ heißt dann G\^ateaux-Differntial von $F$ an der Stelle $u$.
+  $F'(u)$ heißt dann G\^ateaux-Differential von $F$ an der Stelle $u$.
 
-\end{definition}<++>
+  $F$ heißt Fr\'echet-differenzierbar an der Stelle $u$, falls ein Funktional
+  $F'(u)\in X^\ast$ existiert, sodass
+  \begin{align*}
+    \lim_{\Vert h\Vert_X\to 0}\frac{|F(u+th)-F(u)-
+    \langle F'(u),h\rangle|}{\Vert h\Vert_X} =0.
+  \end{align*}
+  $F'(u)$ heißt dann Fr\'echet-Differntial von $F$ an der Stelle $u$.
+  Das Fr\'echet-Differential von $F$ an der Stelle $u$ in Richtung $h\in X$
+  ist definiert durch $dF(u;h)\coloneq \langle F'(u),h\rangle.$
+\end{definition}
+
+Die wichtigsten Eigenschaften sind noch einmal in folgender Bemerkung 
+zusammengefasst.
+
+\begin{remark}
+  \begin{itemize}
+    \item Existiert das Fr\'echet-Differential $F'(u)$ von $F$ an der Stelle
+      $u$, so ist $F'(u)$ auch das G\^ateaux-Differential von $F$ an der Stelle
+      $u$ und es gilt 
+      \begin{align*}
+        \delta F(u;h)=dF(u;h)=\langle F'(u),h\rangle\quad\text{für alle } h\in
+        X.
+      \end{align*}
+%      Außerdem ist $F$ dann stetig an der Stelle $u$.
+  \end{itemize}
+\end{remark}
+
+Damit können wir eine wichtige Aussage der Variationsrechnung formulieren,
+basierend auf \cite[S. 193ff., Theorem 40.A, Theorem 40.B]{Zei85}.
+
+\begin{theorem}[Notwendige Optimalitätsbedingung erster Ordnung]
+  \label{thm:necessaryConditionFreeLocalExtrema}
+  Sei $u\in \interior(V)$ lokaler Minimierer von $F$, das heißt
+  es existiere eine Umgebung 
+  \todo[inline]{Definiere Umgebung so wie in Zeilder 'neigborhood', 
+  \cite[S. 751, (5)]{Zei86} (also es gibt eine offene Menge in der Umgebung,
+  die den Punkt enthällt} 
+  $U$ von $u$, so dass $F(v)\geq F(u)$ für alle $v\in U$. Dann gilt für alle
+  $h\in X$, dass $\delta F(u;h) = 0$, falls diese Variation für alle $h\in X$
+  existiert, beziehungsweise $F'(u) = 0$, falls $F'(u)$ als 
+  G\^ateaux- oder Fr\'echet-Differential existiert.
+\end{theorem}
 
 \section{Direkte Methode der Variationsrechnung}
 \todo[inline]{braucht es eigentlich nicht, im Beweis selbst werden ja alle 
