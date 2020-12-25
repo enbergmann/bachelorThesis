@@ -92,7 +92,7 @@ $\varphi_h(t)\coloneqq F(u+th)$ für alle $t\in\Rbb$.
   $F$ heißt G\^ateaux-differenzierbar an der Stelle $u$, falls ein 
   Funktional $F'(u)\in X^\ast$ existiert mit 
   \begin{align*}
-    \lim_{t\to 0}\frac{F(u+th)-F(u)}{h} = \langle F'(u), h\rangle\quad
+    \lim_{t\to 0}\frac{F(u+th)-F(u)}{t} = \langle F'(u), h\rangle\quad
     \text{für alle } h\in X.
   \end{align*}
   $F'(u)$ heißt dann G\^ateaux-Differential von $F$ an der Stelle $u$.
@@ -103,7 +103,7 @@ $\varphi_h(t)\coloneqq F(u+th)$ für alle $t\in\Rbb$.
     \lim_{\Vert h\Vert_X\to 0}\frac{|F(u+th)-F(u)-
     \langle F'(u),h\rangle|}{\Vert h\Vert_X} =0.
   \end{align*}
-  $F'(u)$ heißt dann Fr\'echet-Differntial von $F$ an der Stelle $u$.
+  $F'(u)$ heißt dann Fr\'echet-Differential von $F$ an der Stelle $u$.
   Das Fr\'echet-Differential von $F$ an der Stelle $u$ in Richtung $h\in X$
   ist definiert durch $dF(u;h)\coloneq \langle F'(u),h\rangle.$
 \end{definition}
@@ -175,6 +175,7 @@ $F:X\to [-\infty,\infty]$ ein Funktional auf $X$.
 
 \begin{definition}[Subdifferential, \protect{\cite[S. 385,
   Definition 47.8]{Zei85}}]
+  \label{def:subdifferential}
   Für $u\in X$ mit $F(u)\neq\pm\infty$ heißt
   \begin{equation}
     \label{equ:subdifferential}
@@ -190,7 +191,7 @@ $F:X\to [-\infty,\infty]$ ein Funktional auf $X$.
 \end{definition}
 
 \begin{theorem}[\protect{\cite[S. 387, Proposition 47.12]{Zei85}}]
-  \label{thm:extremalprinzip}
+  \label{thm:extremalprinciple}
   Falls $F: X\to (-\infty,\infty]$ mit $F\nequiv\infty$, gilt
   $F(u)=\inf_{v\in X}F(v)$ genau dann, wenn $0\in\partial F(u)$.
 \end{theorem}

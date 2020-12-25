@@ -82,13 +82,13 @@ Somit ist das folgende Sattelpunktsproblem äquivalent zu
   \Cref{prob:discreteProblem}. Außerdem gelten folgende äquivalente 
   Charakterisierungen von $\ucr$.
   \begin{itemize}
-    \item[(i)] Es existiert ein $\Lambda\in\Pbb_0(\Tcal;\Rbb^n)$ mit
-      $|\Lambda(\bullet)|\leq 1$ fast überall in $\Omega$, sodass
+    \item[(i)] Es existiert ein $\bar\Lambda\in\Pbb_0(\Tcal;\Rbb^n)$ mit
+      $|\bar\Lambda(\bullet)|\leq 1$ fast überall in $\Omega$, sodass
       \begin{align*}
-        \Lambda(\bullet)\cdot\gradnc\ucr(\bullet)
+        \bar\Lambda(\bullet)\cdot\gradnc\ucr(\bullet)
         &=
         |\gradnc\ucr(\bullet)| \quad\text{ fast überall in } \Omega \text{ und}\\
-        \left(\Lambda,\gradnc\vcr\right)_{L^2(\Omega)}
+        \left(\bar\Lambda,\gradnc\vcr\right)_{L^2(\Omega)}
         &= \left(f-\alpha\ucr,
         \vcr\right)_{L^2(\Omega)}
         \quad\text{ für alle } \vcr\in\Vnc(\Tcal).
@@ -136,10 +136,11 @@ Somit ist das folgende Sattelpunktsproblem äquivalent zu
   $\ucr\in\CR^1_0(\Tcal)$ von \Cref{prob:discreteProblem} bewiesen haben,
   zeigen wir nun die äquivalenten Charakterisierung von $\ucr$.
   Zunächst sei erwähnt, dass aus der Existenz des Minimierers von 
-  \Cref{prob:discreteProblem} und der Äquivalenz von
-  \Cref{prob:discreteProblem} und \Cref{prob:discreteSaddlepointProblem},
-  wobei wir insbesondere beretis gezeigt haben, dass 
-  $\Enc(\vcr)=\sup_{\Lambda\in\Pbb_0(\Tcal;\Rbb^n)}\Lcal_h(\vcr,\Lambda)$
+  \Cref{prob:discreteProblem} und der Äquivalenz des Minimierungsproblems
+  \ref{prob:discreteProblem} und des
+  Sattelpunktsproblems \ref{prob:discreteSaddlepointProblem},
+  wobei wir insbesondere bereits gezeigt haben, dass 
+  $\Enc(\vcr) = \sup_{\Lambda\in\Pbb_0(\Tcal;\Rbb^n)}\Lcal_h(\vcr,\Lambda)$
   für alle $\vcr\in\CR^1_0(\Tcal)$, folgt,
   dass $\bar\Lambda\in\Pbb_0(\Tcal;\Rbb^n)\cap K_1(0)$ {\color{red} (denn
   sonst ist das innere $\sup$ nicht erfüllt, da sonst
@@ -178,22 +179,22 @@ Somit ist das folgende Sattelpunktsproblem äquivalent zu
   $\Lcal_h(\bullet, \bar\Lambda)$ in $\CR^1_0(\Tcal)$ ist und $\bar\Lambda$
   Maximierer von $\Lcal_h(\ucr,\bullet)$ über $\Pbb_0(\Tcal;\Rbb^n)$.
 
-  \textit{(i).} 
+  \textit{ad (i).} 
   In der ersten Komponente ist das Lagrange-Funktional \todo{'Lagrange' 
   weglassen, falls nicht doch noch benötigt? Keine Quelle nannte das bisher so}
   Fr\'echet-\\
   differenzierbar {\color{red} (und für $\bar\Lambda$ ist das Funktional
   reellwertig und nimmt nicht $-\infty$ an, also ist Zeidler anwendbar)} mit 
   \begin{align*}
-    \delta_{\ucr}\Lcal_h(\ucr,\bar\Lambda)[\vcr]=
+    d\Lcal_h(\bullet,\bar\Lambda)(\ucr;\vcr)=
     \int_\Omega\bar\Lambda\cdot \gradnc\vcr\dx
     +\alpha (\ucr,\vcr)_{L^2(\Omega)} - \int_\Omega f\vcr\dx
   \end{align*}
   für alle $\vcr\in\CR^1_0(\Tcal)$.
   Da $\ucr$ Minimierer von  $\Lcal_h(\bullet, \bar\Lambda)$ {\color{red}
   (reellwertig!!!)} in $\CR^1_0(\Tcal)$
-  ist, gilt $0 = \delta_{\ucr}\Lcal_h(\ucr,\bar\Lambda)[\vcr]$ 
-  (\cite[S. 193, Theorem 40.A (oder vlt sogar 40.B nutzen)]{Zei85}).
+  ist, gilt nach \Cref{thm:necessaryConditionFreeLocalExtrema}, dass $0 =
+  d\Lcal_h(\bullet,\bar\Lambda)(\ucr;\vcr)$ .
 
   
   Diese Bedingung ist für alle $\vcr\in\Vnc(\Tcal)$ äquivalent zu
@@ -202,58 +203,81 @@ Somit ist das folgende Sattelpunktsproblem äquivalent zu
     =
     (f-\alpha \ucr,\vcr)_{L^2(\Omega)}.
   \end{align*}
-  Somit ist die zweite Aussage der (i) gezeigt.
+  Somit ist die zweite Gleichung von (i) gezeigt.
 
-  Die Karush-Kuhn-Tucker-Bedingungen für eine Lösung \\
-  $(\ucr,\Lambda)\in\Vnc\times(\Pbb_0(\Tcal;\Rbb^n)\cap K_1(0))$
-  des Sattelpunktsproblems \ref{prob:discreteSaddlepointProblem} lauten damit
+  In der zweiten Komponente ist $\Lcal_h$ konkav {(\color{red} $K_1(0)$ ist 
+  konvex, somit ist $I_{K_1(0)}$ konvex, also $-I_{K_1(0)}$ konkav. Die 
+  restlichen Terme sind konstant oder linear in $\Lambda$)}
+  \todo[inline]{diese grundlegende Aussage über Indikatorfunktionen irgendwo
+  (vielleicht sogar in Grundlagen) einmal zitieren}.
+  Da wir bereits wissen, dass $\Lcal_h(\ucr,\bullet)$ von $\bar\Lambda$ in
+  $\Pbb_0(\Tcal;\Rbb^n)$ maximiert wird, wird das konvexe Funktional 
+  $-\Lcal_h(\ucr,\bullet)$ 
+  \todo[inline]{zitieren, was konkav ist und das -konvex=konkav}
+  von $\bar\Lambda$ in $\Pbb_0(\Tcal;\Rbb^n)$ minimiert 
+  \todo[inline]{auch diese basic optimierungsaussage noch zitieren}.
+  Nach den Theoremen \ref{thm:extremalprinciple},
+  \ref{thm:subdifferentialSumRule} und \ref{thm:subdiffGateaux} gilt somit
   \begin{align*}
-    0 
-    &= 
-    \delta_{\ucr}\Lcal_h(\ucr,\Lambda)[\vcr]\\
-    &=
-    \int_\Omega\Lambda\cdot \gradnc\vcr\dx
-    +\alpha (\ucr,\vcr)_{L^2(\Omega)} - \int_\Omega f\vcr\dx \quad\text{ für 
-    alle } \vcr\in\Vnc\quad\text{ und}\\
-    0&\in \partial_\Lambda \Lcal_h(\ucr,\Lambda) 
+    0\in \partial \left(-\Lcal_h(\ucr,\bullet)\right)(\bar\Lambda) 
     =
-    \{(\gradnc\ucr,\bullet)_{L^2(\Omega)}\}-\partial I_{K_1(0)}(\Lambda).
+    \{-(\gradnc\ucr,\bullet)_{L^2(\Omega)}\}+\partial I_{K_1(0)}(\bar\Lambda).
   \end{align*}
-
-  Die zweite Bedingung bedeutet, dass $(\gradnc\ucr,\bullet)_{L^2(\Omega)}\in -\partial
-  I_{K_1(0)}(\Lambda)$, d.h.\ für
-  alle $q_0\in \Pbb_0(\Tcal;\Rbb^n)$ gilt
+  Äquivalent zu dieser Aussage ist , dass
+  $(\gradnc\ucr,\bullet)_{L^2(\Omega)}\in \partial
+  I_{K_1(0)}(\bar\Lambda)$, das heißt nach \Cref{def:subdifferential} gilt für
+  alle $\Lambda\in \Pbb_0(\Tcal;\Rbb^n)$ 
   \begin{align*}
-    (\gradnc\ucr,q_0-\Lambda)_{L^2(\Omega)} 
+    (\gradnc\ucr,\Lambda-\bar\Lambda)_{L^2(\Omega)} 
     \leq 
-    I_{K_1(0)}(q_0) - I_{K_1(0)}(\Lambda)
+    I_{K_1(0)}(\Lambda) - I_{K_1(0)}(\bar\Lambda)
     =
-    I_{K_1(0)}(q_0). 
+    I_{K_1(0)}(\Lambda),
   \end{align*}
-  Für $q_0\in \Pbb_0(\Tcal;\Rbb^n)\cap K_1(0)$ folgt insbesondere
+  da $\bar\Lambda\in K_1(0)$.
+  Für $\Lambda\in \Pbb_0(\Tcal;\Rbb^n)\cap K_1(0)$ folgt insbesondere
   \begin{align*}
-    (\gradnc\ucr,q_0-\Lambda)_{L^2(\Omega)}&\leq 0, \quad\text{ also}\\
-    (\gradnc\ucr,q_0)_{L^2(\Omega)}&\leq(\gradnc\ucr,\Lambda)_{L^2(\Omega)}.
+    (\gradnc\ucr,\Lambda-\bar\Lambda)_{L^2(\Omega)} 
+    &\leq 0,\quad\text{ also}\\ 
+    (\gradnc\ucr,\Lambda)_{L^2(\Omega)}
+    &\leq(\gradnc\ucr,\bar\Lambda)_{L^2(\Omega)}.
   \end{align*}
-  Mit der Wahl $q_0\coloneqq \sign\gradnc\ucr$, der Cauchy-Schwarzschen
-  Ungleichung und $\Lambda\in K_1(0)$ impliziert das
+  Damit und der Wahl $\Lambda\in \sign\left(\gradnc\ucr\right)\subset 
+  \Pbb_0(\Tcal;\Rbb^n)\cap K_1(0)$
+  impliziert die Cauchy-Schwarzsche Ungleichung, dass
   \begin{align*}
     \int_\Omega|\gradnc\ucr|\dx
-    &\leq
-    (\gradnc\ucr,\Lambda)_{L^2(\Omega)}\\
+    &=
+    (\gradnc\ucr,\Lambda)_{L^2(\Omega)}
+    \leq 
+    (\gradnc\ucr,\bar\Lambda)_{L^2(\Omega)}\\
     &\leq 
-    \int_\Omega|\gradnc\ucr|\,|\Lambda|\dx
+    \int_\Omega|\gradnc\ucr|\,|\bar\Lambda|\dx
     \leq
-    \int_\Omega|\gradnc\ucr|\dx\quad\text{ bzw. }\\
+    \int_\Omega|\gradnc\ucr|\dx,\quad\text{also }\\
+    \int_\Omega|\gradnc\ucr|\dx 
+    &= 
+    (\gradnc\ucr,\bar\Lambda)_{L^2(\Omega)}
+    \quad\text{beziehungsweise }\\
     \sum_{T\in\Tcal}|T|\,\left|(\gradnc\ucr)_{|_{T}}\right|
     &=
-    \sum_{T\in\Tcal}|T|\,(\gradnc\ucr\cdot \Lambda)_{|_T}
+    \sum_{T\in\Tcal}|T|\,(\gradnc\ucr\cdot \bar\Lambda)_{|_T}.
   \end{align*}
   Außerdem gilt mit der Cauchy-Schwarzschen Ungleichung auf allen $T\in\Tcal$,
-  dass $(\gradnc\ucr\cdot \Lambda)_{|_T}\leq(\gradnc\ucr)_{|_{T}}$.
-  Dementsprechend muss sogar für alle $T\in\Tcal$ gelten, dass
-  $(\gradnc\ucr\cdot \Lambda)_{|_T}=(\gradnc\ucr)_{|_{T}}$, d.h.\ fast überall
-  in $\Omega$ gilt $\Lambda(\bullet)\cdot\gradnc\ucr(\bullet)
-  =|\gradnc\ucr(\bullet)|$.
+  dass $(\gradnc\ucr\cdot
+  \bar\Lambda)_{|_T}\leq\left|(\gradnc\ucr)_{|_{T}}\right|$, da
+  $\bar\Lambda\in K_1(0)$.
+  Dementsprechend muss {\color{red} (da somit alle Summanden der rechten Summe
+  kleiner-gleich den entsprechenden Summanden (d.h. zum gleichen $T$) der
+  linken Summe sind und Gleichheit der Summen somit nur noch möglich ist, wenn
+  die entsprechenden Summanden tatsächlich gleich sind)} für alle
+  $T\in\Tcal$ gelten, dass
+  $(\gradnc\ucr\cdot \bar\Lambda)_{|_T}=\left|(\gradnc\ucr)_{|_{T}}\right|$,
+  das heißt fast überall
+  in $\Omega$ gilt $\bar\Lambda(\bullet)\cdot\gradnc\ucr(\bullet)
+  =|\gradnc\ucr(\bullet)|$. 
+  Damit ist die erste Gleichung von (i) gezeigt.
+
+  \textit{ad (ii).}
 \end{proof}
 
