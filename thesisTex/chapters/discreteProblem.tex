@@ -78,27 +78,43 @@ Somit ist das folgende Sattelpunktsproblem äquivalent zu
 
 \begin{theorem}[Charakterisierung diskreter Lösungen]
   \label{thm:discProbCharacterizationOfDiscreteSolutions}
-  Es existiert eine eindeutiges Lösung $\ucr\in\Vnc(\Tcal)$ von
-  \Cref{prob:discreteProblem}. Außerdem gelten folgende äquivalente 
-  Charakterisierungen von $\ucr$.
+  Es existiert eine eindeutige Lösung $\ucr\in\Vnc(\Tcal)$ von
+  \Cref{prob:discreteProblem}.
+
+  Außerdem sind die folgenden drei Aussagen
+  für eine Funktion $\ucr\in\CR^1_0(\Tcal)$ äquivalent.
   \begin{itemize}
-    \item[(i)] Es existiert ein $\bar\Lambda\in\Pbb_0(\Tcal;\Rbb^n)$ mit
-      $|\bar\Lambda(\bullet)|\leq 1$ fast überall in $\Omega$, sodass
-      \begin{align*}
+    \item[(i)] \Cref{prob:discreteProblem} wird von $\ucr$ gelöst.
+    \item[(ii)] Es existiert ein
+      $\bar\Lambda\in\Pbb_0(\Tcal;\Rbb^n)$ mit $|\bar\Lambda(\bullet)|\leq 1$
+      fast überall in $\Omega$, sodass
+      \begin{equation}
+        \label{eq:discreteMultiplierScalerProductEquality}
         \bar\Lambda(\bullet)\cdot\gradnc\ucr(\bullet)
-        &=
-        |\gradnc\ucr(\bullet)| \quad\text{ fast überall in } \Omega \text{ und}\\
+        =
+        |\gradnc\ucr(\bullet)| \quad\text{ fast überall in } \Omega 
+      \end{equation}
+      und
+      \begin{equation}
+        \label{eq:discreteMultiplierL2Equality}
         \left(\bar\Lambda,\gradnc\vcr\right)_{L^2(\Omega)}
-        &= \left(f-\alpha\ucr,
+        = \left(f-\alpha\ucr,
         \vcr\right)_{L^2(\Omega)}
         \quad\text{ für alle } \vcr\in\Vnc(\Tcal).
-      \end{align*}
-    \item[(ii)] Für alle $\vcr\in\Vnc(\Tcal)$ gilt die Variationsungleichung
-      \begin{align*}
+      \end{equation}
+    \item[(iii)] Für alle $\vcr\in\Vnc(\Tcal)$ löst
+      $\ucr$ die Variationsungleichung
+      \todo[inline]{'Variationsungleichung' habe ich einfach übernommen, will
+      ich das vielleicht einfach 'Ungleichung' nennen um nicht mit Worten 
+      um mich zu werfen, deren Herkunft (woher das zitiert werden kann) mir 
+      noch nicht klar ist?}
+      \begin{equation}
+        \label{eq:discreteVariationalInequality}
         (f-\alpha\ucr,\vcr-\ucr)_{L^2(\Omega)}\leq
         \Vert\gradnc\vcr\Vert_{L^1(\Omega)} -
-        \Vert\gradnc\ucr\Vert_{L^1(\Omega)}.
-      \end{align*}
+        \Vert\gradnc\ucr\Vert_{L^1(\Omega)}
+      \end{equation}
+      in $\CR^1_0(\Tcal)$.
   \end{itemize}
 \end{theorem}
 
@@ -135,7 +151,10 @@ Somit ist das folgende Sattelpunktsproblem äquivalent zu
   Nachdem wir die Existenz eines eindeutigen Minimierers
   $\ucr\in\CR^1_0(\Tcal)$ von \Cref{prob:discreteProblem} bewiesen haben,
   zeigen wir nun die äquivalenten Charakterisierung von $\ucr$.
-  Zunächst sei erwähnt, dass aus der Existenz des Minimierers von 
+
+  \bigskip
+  \textit{(i) $\Rightarrow$ (ii).}
+  Zunächst sei erwähnt, dass aus der Existenz des Minimierers $\ucr$ von 
   \Cref{prob:discreteProblem} und der Äquivalenz des Minimierungsproblems
   \ref{prob:discreteProblem} und des
   Sattelpunktsproblems \ref{prob:discreteSaddlepointProblem},
@@ -175,36 +194,11 @@ Somit ist das folgende Sattelpunktsproblem äquivalent zu
   36.2]{Roc70} Sattelpunkt 
   von $\Lcal_h$ bezüglich der Maximierung über $\Pbb_0(\Tcal;\Rbb^n)$ und
   der Minimierung über $\CR^1_0(\Tcal)$. 
-  Das bedeutet insbesondere, dass $\ucr$ Minimierer von 
+  Das bedeutet nach \cite[380]{Roc70} insbesondere, dass $\ucr$ Minimierer von 
   $\Lcal_h(\bullet, \bar\Lambda)$ in $\CR^1_0(\Tcal)$ ist und $\bar\Lambda$
   Maximierer von $\Lcal_h(\ucr,\bullet)$ über $\Pbb_0(\Tcal;\Rbb^n)$.
 
-  \textit{ad (i).} 
-  In der ersten Komponente ist das Lagrange-Funktional \todo{'Lagrange' 
-  weglassen, falls nicht doch noch benötigt? Keine Quelle nannte das bisher so}
-  Fr\'echet-\\
-  differenzierbar {\color{red} (und für $\bar\Lambda$ ist das Funktional
-  reellwertig und nimmt nicht $-\infty$ an, also ist Zeidler anwendbar)} mit 
-  \begin{align*}
-    d\Lcal_h(\bullet,\bar\Lambda)(\ucr;\vcr)=
-    \int_\Omega\bar\Lambda\cdot \gradnc\vcr\dx
-    +\alpha (\ucr,\vcr)_{L^2(\Omega)} - \int_\Omega f\vcr\dx
-  \end{align*}
-  für alle $\vcr\in\CR^1_0(\Tcal)$.
-  Da $\ucr$ Minimierer von  $\Lcal_h(\bullet, \bar\Lambda)$ {\color{red}
-  (reellwertig!!!)} in $\CR^1_0(\Tcal)$
-  ist, gilt nach \Cref{thm:necessaryConditionFreeLocalExtrema}, dass $0 =
-  d\Lcal_h(\bullet,\bar\Lambda)(\ucr;\vcr)$ .
-
-  
-  Diese Bedingung ist für alle $\vcr\in\Vnc(\Tcal)$ äquivalent zu
-  \begin{align*}
-    (\bar\Lambda,\gradnc\vcr)_{L^2(\Omega)}
-    =
-    (f-\alpha \ucr,\vcr)_{L^2(\Omega)}.
-  \end{align*}
-  Somit ist die zweite Gleichung von (i) gezeigt.
-
+  \medskip
   In der zweiten Komponente ist $\Lcal_h$ konkav {(\color{red} $K_1(0)$ ist 
   konvex, somit ist $I_{K_1(0)}$ konvex, also $-I_{K_1(0)}$ konkav. Die 
   restlichen Terme sind konstant oder linear in $\Lambda$)}
@@ -223,7 +217,7 @@ Somit ist das folgende Sattelpunktsproblem äquivalent zu
     =
     \{-(\gradnc\ucr,\bullet)_{L^2(\Omega)}\}+\partial I_{K_1(0)}(\bar\Lambda).
   \end{align*}
-  Äquivalent zu dieser Aussage ist , dass
+  Äquivalent zu dieser Aussage ist, dass
   $(\gradnc\ucr,\bullet)_{L^2(\Omega)}\in \partial
   I_{K_1(0)}(\bar\Lambda)$, das heißt nach \Cref{def:subdifferential} gilt für
   alle $\Lambda\in \Pbb_0(\Tcal;\Rbb^n)$ 
@@ -259,25 +253,127 @@ Somit ist das folgende Sattelpunktsproblem äquivalent zu
     &= 
     (\gradnc\ucr,\bar\Lambda)_{L^2(\Omega)}
     \quad\text{beziehungsweise }\\
-    \sum_{T\in\Tcal}|T|\,\left|(\gradnc\ucr)_{|_{T}}\right|
+    \sum_{T\in\Tcal}|T|\,\big|(\gradnc\ucr)|_T\big|
     &=
-    \sum_{T\in\Tcal}|T|\,(\gradnc\ucr\cdot \bar\Lambda)_{|_T}.
+    \sum_{T\in\Tcal}|T|\,(\gradnc\ucr\cdot \bar\Lambda)|_T.
   \end{align*}
   Außerdem gilt mit der Cauchy-Schwarzschen Ungleichung auf allen $T\in\Tcal$,
   dass $(\gradnc\ucr\cdot
-  \bar\Lambda)_{|_T}\leq\left|(\gradnc\ucr)_{|_{T}}\right|$, da
+  \bar\Lambda)|_T\leq\big|(\gradnc\ucr)|_{T}\big|$, da
   $\bar\Lambda\in K_1(0)$.
   Dementsprechend muss {\color{red} (da somit alle Summanden der rechten Summe
   kleiner-gleich den entsprechenden Summanden (d.h. zum gleichen $T$) der
   linken Summe sind und Gleichheit der Summen somit nur noch möglich ist, wenn
   die entsprechenden Summanden tatsächlich gleich sind)} für alle
   $T\in\Tcal$ gelten, dass
-  $(\gradnc\ucr\cdot \bar\Lambda)_{|_T}=\left|(\gradnc\ucr)_{|_{T}}\right|$,
+  $(\gradnc\ucr\cdot \bar\Lambda)|_T=\big|(\gradnc\ucr)|_T\big|$,
   das heißt fast überall
   in $\Omega$ gilt $\bar\Lambda(\bullet)\cdot\gradnc\ucr(\bullet)
   =|\gradnc\ucr(\bullet)|$. 
-  Damit ist die erste Gleichung von (i) gezeigt.
 
-  \textit{ad (ii).}
+  Damit ist \Cref{eq:discreteMultiplierScalerProductEquality} gezeigt.
+
+  \medskip
+  In der ersten Komponente ist das Lagrange-Funktional \todo{'Lagrange' 
+  weglassen, falls nicht doch noch benötigt? Keine Quelle nannte das bisher so}
+  Fr\'echet-\\
+  differenzierbar {\color{red} (und für $\bar\Lambda$ ist das Funktional
+  reellwertig und nimmt nicht $-\infty$ an, also ist Zeidler anwendbar)} mit 
+  \begin{align*}
+    d\Lcal_h(\bullet,\bar\Lambda)(\ucr;\vcr)=
+    \int_\Omega\bar\Lambda\cdot \gradnc\vcr\dx
+    +\alpha (\ucr,\vcr)_{L^2(\Omega)} - \int_\Omega f\vcr\dx
+  \end{align*}
+  für alle $\vcr\in\CR^1_0(\Tcal)$.
+  Da $\ucr$ Minimierer von  $\Lcal_h(\bullet, \bar\Lambda)$ {\color{red}
+  (reellwertig!!!)} in $\CR^1_0(\Tcal)$
+  ist, gilt nach \Cref{thm:necessaryConditionFreeLocalExtrema}, dass $0 =
+  d\Lcal_h(\bullet,\bar\Lambda)(\ucr;\vcr)$ .
+
+  
+  Diese Bedingung ist für alle $\vcr\in\Vnc(\Tcal)$ äquivalent zu
+  \begin{align*}
+    (\bar\Lambda,\gradnc\vcr)_{L^2(\Omega)}
+    =
+    (f-\alpha \ucr,\vcr)_{L^2(\Omega)}.
+  \end{align*}
+
+  Somit ist \Cref{eq:discreteMultiplierL2Equality} gezeigt.
+
+  \bigskip
+  \textit{(ii) $\Rightarrow$ (iii).}
+  Für alle $\vcr\in\CR^1_0(\Tcal)$ gilt mit
+  \Cref{eq:discreteMultiplierL2Equality}, der CSU,
+  \Cref{eq:discreteMultiplierScalerProductEquality} und
+  $\left|\bar\Lambda(\bullet)\right|\leq 1$ fast überall in $\Omega$ , dass
+  \begin{align*}
+    (f-\alpha\ucr,\vcr-\ucr)_{L^2(\Omega)} 
+    &= 
+    (f-\alpha\ucr,\vcr)_{L^2(\Omega)} 
+    - (f-\alpha\ucr,\ucr)_{L^2(\Omega)} \\
+    &=
+    \left(\bar\Lambda,\gradnc\vcr\right)_{L^2(\Omega)}
+    - \left(\bar\Lambda,\gradnc\ucr\right)_{L^2(\Omega)}\\
+    &=
+    \int_\Omega\bar\Lambda\cdot\gradnc\vcr\dx
+    - \int_\Omega\bar\Lambda\cdot\gradnc\ucr\dx\\
+    &\leq 
+    \int_\Omega\left|\bar\Lambda\right|\,|\gradnc\vcr|\dx
+    - \int_\Omega|\gradnc\ucr|\dx\\
+    &\leq 
+    \int_\Omega|\gradnc\vcr|\dx
+    - \int_\Omega|\gradnc\ucr|\dx\\
+    &=
+    \Vert\gradnc\vcr\Vert_{L^1(\Omega)}
+    -\Vert\gradnc\ucr\Vert_{L^1(\Omega)}.
+  \end{align*}
+
+  Damit löst $\ucr$ Ungleichung \eqref{eq:discreteVariationalInequality}
+  für alle $\vcr\in\CR^1_0(\Tcal)$ in $\CR^1_0(\Tcal)$.
+
+  \bigskip
+  \textit{(iii) $\Rightarrow$ (i)}.
+  Sei $\ucr\in\CR^1_0(\Tcal)$ Lösung von
+  \Cref{prob:discreteProblem}.
+  Wir haben bereits gezeigt, dass $\ucr$ stets existiert und außerdem, dass
+  $\ucr$ insbesondere für alle $\vcr\in\CR^1_0(\Tcal)$ eine Lösung von
+  Ungleichung \eqref{eq:discreteVariationalInequality} in $\CR^1_0(\Tcal)$ ist.
+
+  Zu zeigen ist somit nur noch, dass eine beliebige Funktion
+  $\tilde{u}_\CR\in\CR^1_0(\Tcal)$, die
+  Ungleichung \eqref{eq:discreteVariationalInequality} in $\CR^1_0(\Tcal)$ für
+  alle $\vcr\in\CR^1_0(\Tcal)$ löst, auch eine Lösung von
+  \Cref{prob:discreteProblem} ist, das heißt zu zeigen ist
+  $\tilde{u}_\CR=\ucr$.
+
+  \medskip
+  Für ein solches $\tilde{u}_\CR$ gilt
+  \begin{align*}
+    \left(f-\alpha\ucr,\tilde{u}_\CR-\ucr\right)_{L^2(\Omega)} 
+    &\leq
+    \left\Vert\gradnc\tilde{u}_\CR\right\Vert_{L^1(\Omega)}
+    -\Vert\gradnc\ucr\Vert_{L^1(\Omega)}\quad\text{und }\\
+    \left(f-\alpha\tilde{u}_\CR,\ucr-\tilde{u}_\CR\right)_{L^2(\Omega)} 
+    &\leq
+    \left\Vert\gradnc\ucr\right\Vert_{L^1(\Omega)}
+    -\Vert\gradnc\tilde{u}_\CR\Vert_{L^1(\Omega)}. 
+  \end{align*}
+  Addition dieser Ungleichungen
+  liefert die Ungleichung
+  \begin{align*}
+    \left(-\alpha\ucr,\tilde{u}_\CR-\ucr\right)_{L^2(\Omega)} 
+    + \left(-\alpha\tilde{u}_\CR,\ucr-\tilde{u}_\CR\right)_{L^2(\Omega)} 
+    \leq
+    0,
+  \end{align*}
+  welche äquivalent ist zu
+  \begin{align*}
+    \alpha\left\Vert\tilde{u}_\CR-\ucr\right\Vert_{L^2(\Omega)}^2
+    \leq
+    0.
+  \end{align*}
+  Da $\alpha>0$, impliziert das
+  $\left\Vert\tilde{u}_\CR-\ucr\right\Vert_{L^2(\Omega)}^2=0$, also
+  $\tilde{u}_\CR=\ucr$ in $\CR^1_0(\Tcal)$.
 \end{proof}
 
