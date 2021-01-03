@@ -1,0 +1,114 @@
+% --- OPERATORS ----------------------------------------------------------------
+
+\DeclareMathOperator{\interior}{int}
+\DeclareMathOperator{\closure}{cl}
+\DeclareMathOperator{\sign}{sign}
+\DeclareMathOperator{\Div}{div}
+\DeclareMathOperator{\atan}{atan2}
+%\DeclareMathOperator*{\liminf}{lim\,inf} % lim inf
+
+% --- SPACES -------------------------------------------------------------------
+
+\newcommand{\BV}{\textup{BV}}
+\newcommand{\CR}{\textup{CR}}
+\newcommand{\Vnc}{\ensuremath{V_\textup{NC}}}
+% already defined\newcommand{\P}{\textup{P}}
+
+% --- VARIABLES ----------------------------------------------------------------
+
+\newcommand{\ucr}{u_\textup{CR}}
+\newcommand{\vcr}{v_\textup{CR}}
+
+% --- FUNCTIONS ----------------------------------------------------------------
+
+\newcommand{\Enc}{E_\textup{NC}}
+
+% --- SYMBOLS/OPERATORS --------------------------------------------------------
+
+\newcommand{\nc}{\textup{NC}}
+\newcommand{\NC}{\textup{NC}}
+\newcommand{\dx}{\,\mathrm{d}x}
+\newcommand{\dmu}{\,\mathrm{d}\mu}
+\newcommand{\gradnc}{\nabla_\textup{NC}}
+
+% --- RELATIONS ----------------------------------------------------------------
+
+\newcommand{\ssubset}{\subset\joinrel\subset}
+
+% --- CALIGRAPHIC LETTERS ------------------------------------------------------
+
+\newcommand\Acal{\mathcal{A}}
+\newcommand\Bcal{\mathcal{B}}
+\newcommand\Ccal{\mathcal{C}}
+\newcommand\Dcal{\mathcal{D}}
+\newcommand\Ecal{\mathcal{E}}
+\newcommand\Fcal{\mathcal{F}}
+\newcommand\Gcal{\mathcal{G}}
+\newcommand\Hcal{\mathcal{H}}
+\newcommand\Ical{\mathcal{I}}
+\newcommand\Jcal{\mathcal{J}}
+\newcommand\Kcal{\mathcal{K}}
+\newcommand\Lcal{\mathcal{L}}
+\newcommand\Mcal{\mathcal{M}}
+\newcommand\Ncal{\mathcal{N}}
+\newcommand\Ocal{\mathcal{O}}
+\newcommand\Pcal{\mathcal{P}}
+\newcommand\Qcal{\mathcal{Q}}
+\newcommand\Rcal{\mathcal{R}}
+\newcommand\Scal{\mathcal{S}}
+\newcommand\Tcal{\mathcal{T}}
+\newcommand\Ucal{\mathcal{U}}
+\newcommand\Vcal{\mathcal{V}}
+\newcommand\Wcal{\mathcal{W}}
+\newcommand\Xcal{\mathcal{X}}
+\newcommand\Ycal{\mathcal{Y}}
+\newcommand\Zcal{\mathcal{Z}}
+
+% --- MATHBB LETTERS -----------------------------------------------------------
+
+\newcommand\Abb{\mathbb{A}}
+%\newcommand\Bbb{\mathbb{B}}
+\newcommand\Cbb{\mathbb{C}}
+\newcommand\Dbb{\mathbb{D}}
+\newcommand\Ebb{\mathbb{E}}
+\newcommand\Fbb{\mathbb{F}}
+\newcommand\Gbb{\mathbb{G}}
+\newcommand\Hbb{\mathbb{H}}
+\newcommand\Ibb{\mathbb{I}}
+\newcommand\Jbb{\mathbb{J}}
+\newcommand\Kbb{\mathbb{K}}
+\newcommand\Lbb{\mathbb{L}}
+\newcommand\Mbb{\mathbb{M}}
+\newcommand\Nbb{\mathbb{N}}
+\newcommand\Obb{\mathbb{O}}
+\newcommand\Pbb{\mathbb{P}}
+\newcommand\Qbb{\mathbb{Q}}
+\newcommand\Rbb{\mathbb{R}}
+\newcommand\Sbb{\mathbb{S}}
+\newcommand\Tbb{\mathbb{T}}
+\newcommand\Ubb{\mathbb{U}}
+\newcommand\Vbb{\mathbb{V}}
+\newcommand\Wbb{\mathbb{W}}
+\newcommand\Xbb{\mathbb{X}}
+\newcommand\Ybb{\mathbb{Y}}
+\newcommand\Zbb{\mathbb{Z}}
+
+% --- INTEGRAL MEAN ------------------------------------------------------------
+
+\def\Xint#1{\mathchoice
+{\XXint\displaystyle\textstyle{#1}}%
+{\XXint\textstyle\scriptstyle{#1}}%
+{\XXint\scriptstyle\scriptscriptstyle{#1}}%
+{\XXint\scriptscriptstyle\scriptscriptstyle{#1}}%
+\!\int}
+\def\XXint#1#2#3{{\setbox0=\hbox{$#1{#2#3}{\int}$}
+\vcenter{\hbox{$#2#3$}}\kern-.5\wd0}}
+\newcommand{\intmean}{\Xint-}
+
+% --- PERFECT BULLET -----------------------------------------------------------
+
+%\let\oldbullet\bullet
+%\newlength{\raisebulletlen}
+%\setbox1=\hbox{$\bullet$}\setbox2=\hbox{\tiny$\bullet$}
+%\setlength{\raisebulletlen}{\dimexpr0.5\ht1-0.5\ht2}
+%\renewcommand\bullet{\raisebox{\raisebulletlen}{\,\tiny$\oldbullet$}\,}

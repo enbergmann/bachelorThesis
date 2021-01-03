@@ -1,0 +1,171 @@
+\usepackage{ngerman}
+\usepackage{amsmath}
+\usepackage{amssymb,amstext}
+\usepackage{ntheorem}
+\usepackage{marvosym}
+\usepackage{mathrsfs}
+\usepackage{wasysym, ulem}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{verbatim}
+\usepackage{hyperref}
+\usepackage{relsize}
+
+
+%Die Zahlbereiche
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\K}{\mathbb{K}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Pol}{\mathbb{P}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Prim}{\mathrm{I \! P}}
+
+%um den \Rightarrow zu erhalten...
+\let\Rightarrow\undefined
+\DeclareMathSymbol{\Rightarrow}{\mathrel}{symbols}{"29} 
+
+%Die Pfeile
+\newcommand{\Lra}{\Leftrightarrow}
+\newcommand{\Ra}{\Rightarrow}
+
+\newcommand{\im}{\mathrm{im}}
+\newcommand{\tr}{\mathrm{tr}}
+\newcommand{\Span}{\mathrm{span}}
+\newcommand{\Kern}{\mathrm{Kern}}
+%Die Basis
+\newcommand{\B}{\mathcal{B}}
+\newcommand{\dist}{\mathrm{dist}}
+\newcommand{\id}{\mathrm{id}}
+%gequert
+\newcommand{\ol}{\overline}
+\newcommand{\ul}{\underline}
+%der Rang
+\newcommand{\ra}{\mathrm{Rang}}
+
+\newcommand{\fa}{\;\forall\;}
+\newcommand{\ex}{\;\exists\;}
+
+%Spectrum und Maximalspectrum
+\newcommand{\spec}{\mathrm{Spec}}
+\newcommand{\specm}{\mathrm{Specm}}
+\newcommand{\ord}{\mathrm{ord}}
+
+% Die kursiv geschriebenen theorem-Umgebungen
+\theoremseparator{.}
+\newtheorem{satz}{Satz}[chapter]
+\newtheorem{korollar}[satz]{Korollar}
+\newtheorem{lemma}[satz]{Lemma}
+\newtheorem{thm}[satz]{Theorem}
+\newtheorem{prop}[satz]{Proposition}
+
+% Die aufrecht geschriebenen theorem-Umgebungen
+\theoremseparator{.}
+\theorembodyfont{\upshape} 
+\newtheorem{bsp}[satz]{Beispiel}
+\newtheorem{defi}[satz]{Definition}
+\newtheorem{bem}[satz]{Bemerkung}
+\newtheorem{aufg}[satz]{Aufgabe}
+
+{\theoremstyle{break}
+\newtheorem*{bsps}{Beispiele}
+\newtheorem{bems}[satz]{Bemerkungen}
+\newtheorem*{algo}{Algorithmus}
+}
+
+
+\theoremsymbol{\ensuremath{ \hfill \Box }}
+\newtheorem*{bew}{Beweis}
+
+% Absatz Spezialdesign
+\parindent0mm    % Kein Einrücken
+\parskip3mm      % 3mm Platz
+
+% enumerate-Spezialdesign
+\usepackage{enumitem}
+
+\setlist{topsep=0pt, itemsep=0pt, parsep = 0pt, partopsep = 0pt, leftmargin=*, font=\bfseries}
+\newlist{biblio}{itemize}{1}
+\setlist[biblio]{listparindent=0pt,itemindent=0pt, label=, %\textbullet, 
+	itemsep=0.7ex, leftmargin=0pt, rightmargin = 0pt}
+
+	\newlist{romanenum}{enumerate}{1}
+\setlist[romanenum]{label=(\roman*)}
+\setenumerate[1]{label=(\alph*)}
+\setenumerate[2]{label=(\roman*)}
+\setdescription{leftmargin=0pt,  labelindent=\parindent, listparindent=\parindent, labelwidth=0.5em}
+
+\newcommand{\bbems}{\begin{bems}\begin{enumerate}}
+\newcommand{\ebems}{\end{enumerate}\end{bems}}
+\newcommand{\bbsps}{\begin{bsps}\begin{enumerate}}
+\newcommand{\ebsps}{\end{enumerate}\end{bsps}}
+
+
+%Paragraph mit Numerierung
+\setcounter{secnumdepth}{5}  % Paragraph bekommt einen counter
+\setcounter{tocdepth}{3}     % wird aber im Inhaltsverzeichnis nicht aufgelistet. 
+\def\theparagraph{\arabic{paragraph}}
+\def\labelparagraph{\arabic{paragraph}. }
+\def\thesubparagraph{\Alph{paragraph}(\roman{subparagraph})}
+
+
+\newcommand{\E}{\mathcal{E}}
+\newcommand{\D}{\mathcal{D}}
+\newcommand{\M}{\mathcal{M}}
+\newcommand{\NC}{\mathcal{N}}
+\newcommand{\T}{\mathcal{T}}
+\newcommand{\KC}{\mathcal{K}}
+\newcommand{\PC}{\mathcal{P}}
+\newcommand{\DC}{\mathcal{D}}
+\newcommand{\OT}{\mathcal{O}}
+\newcommand{\I}{\mathcal{I}}
+
+\newcommand{\circled}[1]{{\fontsize{14}{14}\selectfont
+\textcircled{{\small #1}}}}
+
+\newcommand{\hintf}{\int\hspace{-2.07ex}--}
+%\DeclareMathOperator{\hintt}{\int\hspace{-2.07ex}--}
+
+\newcommand{\ve}{\varepsilon}
+\newcommand{\contra}{\lightning}
+%\newcommand{\Div}{{\rm{div}}}
+%\newcommand{\en}{\| \vspace{-2pt} |}
+\newcommand{\en}{| \hspace{-1pt} | \hspace{-1pt} |}
+\newcommand{\biggg}{\vline{10pt}}
+
+
+%\newcommand{\3}{\ss }
+
+%%% PERFECT BULLET %%%
+\let\oldbullet\bullet
+\newlength{\raisebulletlen}
+\setbox1=\hbox{$\bullet$}\setbox2=\hbox{\tiny$\bullet$}
+\setlength{\raisebulletlen}{\dimexpr0.5\ht1-0.5\ht2}
+\renewcommand\bullet{\raisebox{\raisebulletlen}{\,\tiny$\oldbullet$}\,}
+
+
+\DeclareMathOperator*{\argmin}{argmin}
+\DeclareMathOperator{\conv}{conv}
+\DeclareMathOperator{\Cond}{cond}
+\DeclareMathOperator{\diam}{diam}
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator{\Dim}{dim}
+\DeclareMathOperator{\Div}{div}
+\DeclareMathOperator{\Lip}{Lip}
+\DeclareMathOperator{\Rang}{Rang}
+\DeclareMathOperator{\sing}{sing}
+\DeclareMathOperator{\STEMA}{STEMA}
+\DeclareMathOperator{\supp}{supp}
+\DeclareMathOperator{\width}{width}
+%\newcommand{\pg}{\selectlanguage{polutonikogreek}}
+%\newcommand{\sge}{\selectlanguage{german}}
+
+% For \operp
+% copied relevant lines from stix.sty
+%\DeclareFontEncoding{LS1}{}{}
+%\DeclareFontSubstitution{LS1}{stix}{m}{n}
+%\DeclareSymbolFont{symbols2}{LS1}{stixfrak} {m} {n}
+%\DeclareMathSymbol{\operp}{\mathbin}{symbols2}{"A8}
+\newcommand{\operp}{\mathsmaller {\bigcirc\hspace{-0.3cm}\perp}\;}

@@ -1,0 +1,122 @@
+%%% MY USER-DEFINED SETTINGS FOR TIKZ PACKAGE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{tikz}
+\usepackage{pgfplots}
+
+%%% LOAD LIBRARIES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usetikzlibrary{arrows,calc,shapes,external,positioning,patterns,snakes}
+  % arrows,backgrounds,fit,petri,shapes,positioning,calc,patterns,external
+
+%%% TIKZ EXTERNALIZATION %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\tikzset{external/optimize=false}
+\makeatletter
+\newcommand{\useexternalfile}[1]{%
+  \tikzsetnextfilename{#1_out}%
+  \input{\tikzexternal@filenameprefix#1.tex}}
+\makeatother
+
+%%% GENERAL PLOT SETTINGS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\pgfplotsset{
+  width=.65\linewidth,
+  grid style={densely dotted,semithick},
+  legend style={
+    legend columns=1,
+    legend pos=outer north east
+    % at={(.5,-.15)},
+    % anchor=north
+  },
+  compat=newest % compatibility for old pgfplots versions
+}
+
+%%% TIKZ PICTURE FORMATTING %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% style for finite element pictograms
+\tikzset{element/.style={
+  scale=3,
+  very thick,
+  line join=round,
+  line cap=round
+}}
+% style for slope triangles
+\tikzset{slopetriangle/.style={
+  bottom color=black!20,
+  middle color=black!5,
+  top color=white,
+  draw=black
+}}
+% style and macro for single triangles and refinement edges
+\tikzset{triangle/.style={
+  scale=4.5,very thick,fill=bgcolor,line join=round,line cap=round
+}}
+\newcommand\drawtriangle{
+  \path[draw,fill] (0,0) coordinate (A1) -- (1,0) coordinate (A2) -- (.5,.5)
+  coordinate (A3) --cycle;
+  \path[clip] (A1)--(A2) coordinate[midway] (A12) --(A3) coordinate[midway]
+  (A23) -- (A1) coordinate[midway] (A13) --cycle;
+}
+\tikzset{ref/.style={
+  decoration={border,amplitude=5pt,segment length=4pt},
+  preaction={decorate,draw,structure,semithick}
+}}
+% style for node/edge/triangle patches
+\tikzset{patch/.style={
+  scale=3,very thick,fill=bgcolor,line join=round,line cap=round
+}}
+
+
+%%% PLOT STYLES %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% general settings
+\pgfplotsset{
+  width=.65\linewidth,
+  axis background/.style={fill=bgcolor},
+  grid style={densely dotted,semithick},
+  legend style={
+    legend columns=1,
+    legend pos=outer north east
+    % at={(.5,-.15)},
+    % anchor=north
+  },
+  colormap/jet,
+  compat=newest % compatibility for old pgfplots versions
+}
+
+% style for plot of efficiency indices
+\pgfplotsset{efficiencyplot/.style={
+  ymin=1,
+  xlabel=ndof,
+  ylabel=efficiency indices,
+  ymajorgrids=true
+}}
+
+\pgfplotsset{efficiencyplot/.style={
+  xlabel=ndof,
+  ylabel=efficiency indices,
+  ymajorgrids=true
+}}
+\pgfplotsset{convergenceplot/.style={
+  xlabel=ndof,
+  ylabel=error,
+  ymajorgrids=true
+}}
+
+\pgfplotscreateplotcyclelist{convergence1}{%
+  {dashed,black,mark=*,        every mark/.append style={solid,scale=1.4,black,fill=gray!40!white}},
+  {dashed,black,mark=triangle*,every mark/.append style={solid,scale=1.4,black,fill=gray!40!white}},
+  {       black,mark=*,        every mark/.append style={scale=1.4,black,fill=gray}},
+  {       black,mark=triangle*,every mark/.append style={scale=1.4,black,fill=gray}},
+}
+\pgfplotscreateplotcyclelist{convergence2}{%
+  {dashed,black,mark=*,        every mark/.append style={solid,scale=1.4,black,fill=gray!40!white}},
+  {dashed,black,mark=triangle*,every mark/.append style={solid,scale=1.4,black,fill=gray!40!white}},
+  {dashed,black,mark=square*,every mark/.append style={solid,scale=1.4,black,fill=gray!40!white}},
+  {       black,mark=*,        every mark/.append style={scale=1.4,black,fill=gray}},
+  {       black,mark=triangle*,every mark/.append style={scale=1.4,black,fill=gray}},
+  {       black,mark=square*,every mark/.append style={scale=1.4,black,fill=gray}},
+}
+
+% Set style of tikz "points"
+\tikzstyle{point}=[
+inner sep=1.5pt,
+fill=white,
+draw,
+circle,
+very thick,
+]

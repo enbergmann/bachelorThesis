@@ -1,0 +1,397 @@
+\documentclass[xcolor=svgnames,english]{beamer}
+\usetheme{DarkHU}
+
+%\usepackage{pgfpages}
+%\pgfpagesuselayout{2 on 1}[a4paper,border shrink=5mm]
+
+\input{header/commands} 
+
+\usepackage[backend=biber, style = alphabetic]{biblatex}
+\usepackage{csquotes} % to fix biblatex warning expecting csquotes
+\addbibresource{sourcesBergmannBT.bib}
+
+
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+%\usepackage{eurosym}
+
+%\usepackage[backend=biber, style=authortitle-icomp]{biblatex}
+%\usepackage[babel,english=guillemets]{csquotes}
+%\addbibresource{bib.bib}
+
+%\usepackage{algorithm}
+%\usepackage{algpseudocode}
+
+\usepackage{tikz}
+%\usetikzlibrary{shapes, fit, positioning}
+%\usepackage{hyperref}
+
+%%%%%%%%%%%%%%%%%%%%%%%
+% UTF-8 input encoding
+\usepackage[utf8]{inputenc}
+\usepackage{microtype}\usepackage{blindtext}
+
+% Page layout formating of koma-script
+\usepackage[automark]{scrpage2}
+\usepackage{lmodern}
+
+% Language support
+\usepackage[english]{babel}
+
+% AMSMath package
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amstext}
+\usepackage{amsopn}
+\usepackage{amsthm}
+\usepackage{url}
+\usepackage{listings}
+\usepackage{xspace}
+\usepackage{mathabx}
+%\usepackage{mathptmx}
+\usepackage{esint}
+\usepackage{graphicx}
+\usepackage{mathtools}
+\usepackage{hyperref}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{enumitem,amssymb}
+\newlist{todolist}{itemize}{2}
+\setlist[todolist]{label=$\square$}
+\usepackage{pifont}
+\newcommand{\cmark}{\ding{51}}%
+\newcommand{\xmark}{\ding{55}}%
+\newcommand{\done}{\rlap{$\square$}{\raisebox{2pt}{\large\hspace{1pt}\cmark}}%
+\hspace{-2.5pt}}
+\newcommand{\wontfix}{\rlap{$\square$}{\large\hspace{1pt}\xmark}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\parindent 0ex
+
+
+\providecommand{\integral}[3]{\ensuremath{\int\limits_{#1} \! {#2} \, \mathrm{d}#3}}
+\providecommand{\T}{\ensuremath{\mathcal{T}}}
+\providecommand{\Hh}{\ensuremath{\mathrm{H}}}
+\providecommand{\Ll}{\ensuremath{\mathrm{L}}}
+ 
+%%%%%%%%%%
+\setbeamercolor{green box}{use=base, fg=base.fg, bg=green}
+\newenvironment{question}[1][center]{\begin{beamercolorbox}[#1, rounded=true,
+  sep=1pt]{green box}}{\end{beamercolorbox}}
+
+\setbeamercolor{yellow box}{use=base, fg=base.fg, bg=yellow}
+\newenvironment{emphbox}[1][center]{\begin{beamercolorbox}[#1, rounded=true,
+  sep=1pt]{yellow box}}{\end{beamercolorbox}}
+
+\renewcommand{\emph}[1]{\textcolor{magenta}{\bfseries #1}}
+\providecommand{\abs}[1]{\ensuremath{\left\lvert#1\right\rvert}}
+
+%\setbeamercovered{transparent}
+%\setbeamertemplate{navigation symbols}{}
+
+%\expandafter\def\expandafter\insertshorttitle\expandafter{%
+%  \insertshorttitle\hfill%
+%    \insertframenumber\,/\,\inserttotalframenumber}
+
+%\addtobeamertemplate{navigation symbols}{}{%
+%  \usebeamerfont{footline}%
+%  \usebeamercolor[fg]{footline}%
+%  \hspace{1em}%
+%  \insertframenumber/\inserttotalframenumber}
+
+%\expandafter\def\expandafter\insertshorttitle\expandafter{%
+%  \insertshorttitle\hfill%
+%    \insertframenumber\,/\,\inserttotalframenumber}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\author{Enrico Bergmann}
+\title{Minimization of a Functional on the Space of BV Functions and 
+Nonconforming Discretization of the Problem}
+\subtitle{I. Theoretical Basics and Characterization of Minimizers}
+\institute{Humboldt-Universität zu Berlin}
+\date{January 6, 2021}
+\titlegraphic{\includegraphics[height=1.6cm]{hukombi_bbw_rgb_op}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{microtype}
+
+\begin{document}
+
+\begin{frame}[plain, noframenumbering]
+	\maketitle
+\end{frame}
+  
+\begin{frame}{Table of Contents}
+  \tableofcontents
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Introduction}
+
+\begin{frame}[noframenumbering]{Table of Contents}
+  \tableofcontents[currentsection, currentsubsection]
+\end{frame}
+
+\begin{frame}
+  \fullcite[Chapter 10, p. 297-319]{Bar15}
+
+  \bigskip
+  \pause
+
+  Let $\Omega\subset\Rbb^n$ be a bounded polyhedral Lipschitz domain.
+
+  \medskip
+
+  For given $g\in L^2(\Omega)$ and $\alpha>0$ minimize the functional 
+  \begin{align*}
+    I(v)=|v|_{\BV(\Omega)}+\frac{\alpha}{2}\Vert v-g\Vert^2
+  \end{align*}
+  amongst all $v\in \BV(\Omega)\cap L^2(\Omega)$.
+\end{frame}
+
+\begin{frame}{Functions of Bounded Variation}
+  A function $v\in L^1(\Omega)$ with distributional derivative
+  $Dv:C^{\infty}_C(\Omega;\Rbb^n)\to\Rbb$ is said to be of bounded variation if 
+  there exists $c>0$ such that 
+  \begin{align*}
+    \langle Dv, \phi\rangle\coloneqq -\int_\Omega v\Div(\phi)\dx\leq
+    c\Vert\phi\Vert_{L^\infty(\Omega)}
+  \end{align*}
+  for all $\phi\in C^1_C(\Omega;\Rbb^n)$.
+
+  \pause  
+
+  The minimal constant $c\geq 0$ satisfying this property is called 
+  total variation of $Dv$ and is given by
+  \begin{align*}
+    |v|_{\BV(\Omega)} = \sup_{\substack{\phi\in C^1_C(\Omega;\Rbb^n)\\
+    \Vert\phi\Vert_{L^\infty(\Omega)}\leq 1}}-\int_\Omega v\Div (\phi)\dx.
+  \end{align*}
+
+  \pause
+
+  The space of all such functions is denoted by $\BV(\Omega)$.
+\end{frame}
+
+\begin{frame}{Properties of $\BV(\Omega)$}
+  $\BV(\Omega)$ is a nonseparable Banach space equipped with the norm
+  \begin{align*}
+    \Vert v \Vert_{\BV(\Omega)} \coloneqq \Vert v\Vert_{L^1(\Omega)} +
+    |v|_{\BV(\Omega)}\quad\text{for all } v\in\BV(\Omega).
+  \end{align*}
+  
+  \pause
+  \medskip
+  $W^{1,1}(\Omega)\subset\BV(\Omega)$ with $\Vert v\Vert_{\BV(\Omega)}=
+  \Vert v\Vert_{W^{1,1}(\Omega)}$ for all $v\in W^{1,1}(\Omega)$.
+\end{frame}
+
+\begin{frame}{Notions of convergence on $\BV(\Omega)$}
+  Let $(v_n)_{n\in\Nbb}\subset \BV(\Omega)$ and $v\in \BV(\Omega)$ such that
+  $v_n\rightarrow v$ in $L^1(\Omega)$ as $n\rightarrow\infty$.
+  \begin{itemize}
+    \item[(i)]
+      $(v_n)_{n\in\Nbb}$ converges intermediately or strictly to $v$
+      if $|v_n|_{\BV(\Omega)}\rightarrow |v|_{\BV(\Omega)}$ as
+      $n\rightarrow\infty$.
+      \pause
+    \item[(ii)] $(v_n)_{n\in\Nbb}$ converges weakly to
+      $v$ if
+      $\langle Dv_n,\phi\rangle\rightarrow \langle Dv,\phi\rangle$ 
+      for all $\phi\in C_0(\Omega;\Rbb^n)$ as 
+      $n\rightarrow\infty$.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Further Properties of $\BV(\Omega)$}
+  $C^\infty(\overline\Omega)$ and $C^\infty(\Omega)\cap\BV(\Omega)$ are dense
+  in $\BV(\Omega)$ with respect to intermediate convergence.
+  
+  \pause
+  \bigskip
+
+  The embedding $\BV(\Omega)\to L^p(\Omega)$ is continuous for
+  $1\leq p\leq n/(n-1)$ and compact for $1\leq p< n/(n-1)$
+  
+  \pause
+  \bigskip
+
+  There exists a linear operator $T:\BV(\Omega)\to L^1(\partial\Omega)$
+  such that $T(v) = v|_{\partial\Omega}$ for all $v\in\BV(\Omega)\cap
+  C(\overline\Omega)$.
+
+  $T$ is continuous with respect to intermediate convergence in $\BV(\Omega)$
+  but not with respect to weak convergence in $\BV(\Omega)$. 
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Continuous Problem}
+\begin{frame}{Table of Contents}
+  \tableofcontents[currentsection, currentsubsection]
+\end{frame}
+
+\begin{frame}
+  For given $f\in L^2(\Omega)$ and $\alpha>0$ minimize the functional 
+  \begin{align*}\label{eq:continuousProblem}
+    E(v)\coloneqq \frac{\alpha}{2}\Vert v\Vert_{L^2(\Omega)}^2 + |v|_{\BV(\Omega)}
+    +\Vert v\Vert_{L^1(\partial\Omega)}-\int_\Omega f\,v\dx
+  \end{align*}
+  amongst all $v\in \BV(\Omega)\cap L^2(\Omega)$.
+
+  \pause
+  \bigskip
+  
+
+  For $f = \alpha g$ we have
+  \begin{align*}
+    I(v) 
+    = |v|_{\BV(\Omega)}+\frac{\alpha}{2}\Vert v-g\Vert^2
+    = E(v) - \Vert v\Vert_{L^1(\partial \Omega)}+ \frac{\alpha}{2}\Vert
+    g\Vert_{L^2(\Omega)}^2
+  \end{align*}
+  for all $v\in \BV(\Omega)\cap L^2(\Omega)$.
+  
+  \pause
+  \medskip
+
+  $I$ and $E$ have the same minimizers in $\left\{v\in\BV(\Omega)\cap
+  L^2(\Omega)\mid \Vert v\Vert_{L^1(\partial\Omega)}=0\right\}$.
+\end{frame}
+
+\subsection{Existence of Minimizers}
+\begin{frame}{Table of Contents}
+  \tableofcontents[currentsection, currentsubsection]
+\end{frame}
+
+\begin{frame}
+  \begin{align*}
+    E(v)
+    \only<1->{&=
+    \frac{\alpha}{2}\Vert v\Vert_{L^2(\Omega)}^2 + |v|_{\BV(\Omega)}
+    +\Vert v\Vert_{L^1(\partial\Omega)}-\int_\Omega fv\dx}\\
+    \only<2->{&\geq 
+    \frac{\alpha}{2}\Vert v\Vert_{L^2(\Omega)}^2 + |v|_{\BV(\Omega)}
+    +\Vert v\Vert_{L^1(\partial\Omega)}
+    -\Vert f\Vert_{L^2(\Omega)}\Vert v\Vert_{L^2(\Omega)}}\\
+    \only<3->{&\geq 
+    \frac{\alpha}{2}\Vert v\Vert_{L^2(\Omega)}^2 + |v|_{\BV(\Omega)}
+    +\Vert v\Vert_{L^1(\partial\Omega)}
+    -\frac{1}{\alpha}\Vert f\Vert_{L^2(\Omega)}^2
+    -\frac{\alpha}{4}\Vert v\Vert_{L^2(\Omega)}^2}\\
+    \only<4->{&\geq 
+    \frac{\alpha}{4}\Vert v\Vert_{L^2(\Omega)}^2 + |v|_{\BV(\Omega)}
+    +\Vert v\Vert_{L^1(\partial\Omega)}-\frac{1}{\alpha}\Vert
+    f\Vert_{L^2(\Omega)}^2}\\
+    \only<5->{&\geq 
+    \frac{\alpha}{4|\Omega|}\Vert v\Vert_{L^1(\Omega)}^2 + |v|_{\BV(\Omega)}
+    +\Vert v\Vert_{L^1(\partial\Omega)}-\frac{1}{\alpha}\Vert
+    f\Vert_{L^2(\Omega)}^2}\\
+    \only<6->{&\geq 
+    -\frac{1}{\alpha}\Vert f\Vert_{L^2(\Omega)}^2.}
+  \end{align*}
+\end{frame}
+
+\begin{frame}
+  \begin{align*}
+    E(v)
+    &\geq 
+    \frac{\alpha}{4}\Vert v\Vert_{L^2(\Omega)}^2 + |v|_{\BV(\Omega)}
+    +\Vert v\Vert_{L^1(\partial\Omega)}-\frac{1}{\alpha}\Vert
+    f\Vert_{L^2(\Omega)}^2\\
+    &\geq 
+    \frac{\alpha}{4|\Omega|}\Vert v\Vert_{L^1(\Omega)}^2 + |v|_{\BV(\Omega)}
+    +\Vert v\Vert_{L^1(\partial\Omega)}-\frac{1}{\alpha}\Vert
+    f\Vert_{L^2(\Omega)}^2\\
+    &\geq -\frac{1}{\alpha}\Vert f\Vert_{L^2(\Omega)}^2.
+  \end{align*}
+
+  \pause
+
+  \begin{itemize}[label=$\bullet$]
+    \item\alt<1>{$E$ bounded from below}{$\exists
+      (u_n)_{n\in\Nbb}\subset\BV(\Omega)\cap L^2(\Omega)$ infimizing sequence
+      of $E$}
+    \item $\Vert u_n\Vert_{\BV(\Omega)}\to\infty$ as $n\to\infty$
+      $\Rightarrow$ $E(u_n)\to\infty$ as $n\to\infty$
+    \item $(u_n)_{n\in\Nbb}$ bounded
+  \end{itemize}
+
+\end{frame}
+
+\begin{frame}
+  
+\end{frame}
+
+\begin{frame}
+  \fullcite[p. 183, Theorem 1]{EG92}
+
+  \bigbreak
+
+  Let $v\in\BV(\Omega)$.
+  For all $x\in\Rbb^n$ define
+  \begin{align*}
+    \tilde{v}(x)\coloneqq
+    \begin{cases}
+      v(x)  &\text{ if } x\in\Omega,\\
+      0     &\text{ if } x\in\Rbb^n\setminus\Omega.
+    \end{cases} 
+  \end{align*}
+  Then $\tilde{v}\in\BV\left(\Rbb^n\right)$ and
+  $|\tilde{v}|_{\BV\left(\Rbb^n\right)}
+  = |v|_{\BV(\Omega)}+\Vert v\Vert_{L^1(\partial\Omega)}$.
+\end{frame}
+
+\subsection{Uniqueness and Stability}
+\begin{frame}{Table of Contents}
+  \tableofcontents[currentsection, currentsubsection]
+\end{frame}
+
+
+\section{Discrete Problem}
+\begin{frame}{Table of Contents}
+  \tableofcontents[currentsection, currentsubsection]
+\end{frame}
+%TODO maybe show refinement indicator to show that the we refine where the 
+% jumps are large
+
+% TODO include Prop 10.1 assumption
+\subsection{Equivalent Saddle Point Problem}
+\begin{frame}{Table of Contents}
+  \tableofcontents[currentsection, currentsubsection]
+\end{frame}
+\subsection{Characterization of Minimizers}
+\begin{frame}{Table of Contents}
+  \tableofcontents[currentsection, currentsubsection]
+\end{frame}
+
+\section{Outlook}
+\begin{frame}{Table of Contents}
+  \tableofcontents[currentsection, currentsubsection]
+\end{frame}
+
+%\begin{frame}{Checkliste}
+%\begin{itemize}
+%  \item
+%  \begin{todolist}
+%  \item[\done] $P_1$ implementieren.
+%  \item[\done] $P_2$ implementieren.
+%\pause  
+%  \item[\done] $P_3$ implementieren.
+%  \item[\done] Implementation des eingebauten Fehlerschätzers.
+%  \pause
+%  \item Nachstellen der Experimente aus dem Paper.
+%  \pause
+%  \item[\wontfix] Optimierung des Codes.
+%  \item[\wontfix] Durchführung weiterer Experimente.
+%  \item[\wontfix] Auswertung und Dokumentation.
+%  
+%  \end{todolist}
+%\end{itemize}
+%\end{frame}		
+
+\end{document}

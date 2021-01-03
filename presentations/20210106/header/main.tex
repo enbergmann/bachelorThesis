@@ -1,0 +1,29 @@
+% used packages
+
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+
+% --- REFERENCING I-------------------------------------------------------------
+
+\usepackage[hidelinks]{hyperref} % has to be loaded before ams to avoid warnings
+
+\usepackage[backend=biber, style = alphabetic]{biblatex}
+\usepackage{csquotes} % to fix biblatex warning expecting csquotes
+\addbibresource{sourcesBergmannBT.bib}
+
+% --- MATH ---------------------------------------------------------------------
+
+\usepackage{amsmath} % align
+\usepackage{amsthm} % proof
+\usepackage{amssymb}
+\usepackage{mathtools} %coloneqq
+\usepackage{mathabx} %vvvert
+
+
+% --- REFERENCING II -----------------------------------------------------------
+
+\usepackage[\lang]{cleveref} % has to be loaded after ams and hyperref
+
+% --- MISCELLANEOUS ------------------------------------------------------------
+
+\usepackage{ifthen}
