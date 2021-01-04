@@ -336,13 +336,13 @@ $|0|_{\BV(\Rbb^n\setminus\Omega)}=0$ und $0|_{\partial\Omega}=0$.
   Wiki)) und insbesondere irgendwo einmal alle Notationen einführen, was ist 
   welche Ableitung} 
 
-  und die Fr\'echet-Ableitung $\delta G_\ell(u):
+  und die Fr\'echet-Ableitung $G_\ell'(u):
   L^2(\Omega)\to\Rbb$ an der
   Stelle
   $u\in \BV(\Omega)\cap L^2(\Omega)$ ist 
   für alle $v\in L^2(\Omega)$ gegeben durch
   \begin{align*}
-    \delta G_\ell(u)[v] = \alpha (u,v)_{L^2(\Omega)} - \int_\Omega f_\ell v\dx 
+    dG_\ell(u;v) = \alpha (u,v)_{L^2(\Omega)} - \int_\Omega f_\ell v\dx 
     = (\alpha u-f_\ell ,v)_{L^2(\Omega)}.
   \end{align*}
 
@@ -363,9 +363,9 @@ $|0|_{\BV(\Rbb^n\setminus\Omega)}=0$ und $0|_{\partial\Omega}=0$.
   Nach \cref{thm:extremalprinciple} und
   \cref{thm:subdifferentialSumRule} gilt deshalb $0\in\partial E_\ell(u_\ell)
   = \partial F(u_\ell)+\partial G_\ell(u_\ell)=\partial F(u_\ell)+
-  \{\delta G_\ell(u_\ell)\}$ 
+  \{G_\ell'(u_\ell)\}$ 
   und es folgt
-  $-\delta G_\ell(u_\ell)\in\partial F(u_\ell)$.
+  $-G_\ell'(u_\ell)\in\partial F(u_\ell)$.
   Daraus folgt zusammen mit
   \eqref{eq:stabilityAndUniqueness:monotonicityOfSubdifferential}
   \begin{align*}
