@@ -1,0 +1,372 @@
+\begin{frame}{Table of Contents}
+  \tableofcontents[currentsection, currentsubsection]
+\end{frame}
+
+\begin{frame}
+  For given $f\in L^2(\Omega)$ and $\alpha>0$ minimize the functional 
+  \begin{align*}\label{eq:continuousProblem}
+    E(v)\coloneqq \frac{\alpha}{2}\Vert v\Vert_{L^2(\Omega)}^2 + |v|_{\BV(\Omega)}
+    +\Vert v\Vert_{L^1(\partial\Omega)}-\int_\Omega f\,v\dx
+  \end{align*}
+  amongst all $v\in \BV(\Omega)\cap L^2(\Omega)$.
+
+  \pause
+  \bigskip
+  
+
+  For $f = \alpha g$ we have
+  \begin{align*}
+    I(v) 
+    = |v|_{\BV(\Omega)}+\frac{\alpha}{2}\Vert v-g\Vert^2
+    = E(v) - \Vert v\Vert_{L^1(\partial \Omega)}+ \frac{\alpha}{2}\Vert
+    g\Vert_{L^2(\Omega)}^2
+  \end{align*}
+  for all $v\in \BV(\Omega)\cap L^2(\Omega)$.
+  
+  \pause
+  \medskip
+
+  $I$ and $E$ have the same minimizers in $\left\{v\in\BV(\Omega)\cap
+  L^2(\Omega)\mid \Vert v\Vert_{L^1(\partial\Omega)}=0\right\}$.
+\end{frame}
+
+\subsection{Existence of Minimizers}
+\begin{frame}{Table of Contents}
+  \tableofcontents[currentsection, currentsubsection]
+\end{frame}
+
+\begin{frame}
+  \begin{align*}
+    E(v)
+    \uncover<1->{&=
+    \frac{\alpha}{2}\Vert v\Vert_{L^2(\Omega)}^2 + |v|_{\BV(\Omega)}
+    +\Vert v\Vert_{L^1(\partial\Omega)}-\int_\Omega fv\dx}\\
+    \uncover<2->{&\geq 
+    \frac{\alpha}{2}\Vert v\Vert_{L^2(\Omega)}^2 + |v|_{\BV(\Omega)}
+    +\Vert v\Vert_{L^1(\partial\Omega)}
+    -\Vert f\Vert_{L^2(\Omega)}\Vert v\Vert_{L^2(\Omega)}}\\
+    \uncover<3->{&\geq 
+    \frac{\alpha}{2}\Vert v\Vert_{L^2(\Omega)}^2 + |v|_{\BV(\Omega)}
+    +\Vert v\Vert_{L^1(\partial\Omega)}
+    -\frac{1}{\alpha}\Vert f\Vert_{L^2(\Omega)}^2
+    -\frac{\alpha}{4}\Vert v\Vert_{L^2(\Omega)}^2}\\
+    \uncover<4->{&\geq 
+    \frac{\alpha}{4}\Vert v\Vert_{L^2(\Omega)}^2 + |v|_{\BV(\Omega)}
+    +\Vert v\Vert_{L^1(\partial\Omega)}-\frac{1}{\alpha}\Vert
+    f\Vert_{L^2(\Omega)}^2}\\
+    \uncover<5->{&\geq 
+    \frac{\alpha}{4|\Omega|}\Vert v\Vert_{L^1(\Omega)}^2 + |v|_{\BV(\Omega)}
+    +\Vert v\Vert_{L^1(\partial\Omega)}-\frac{1}{\alpha}\Vert
+    f\Vert_{L^2(\Omega)}^2}\\
+    \uncover<6->{&\geq 
+    -\frac{1}{\alpha}\Vert f\Vert_{L^2(\Omega)}^2}
+  \end{align*}
+\end{frame}
+
+\begin{frame}
+  \begin{align*}
+    E(v)
+    &=
+    \frac{\alpha}{2}\Vert v\Vert_{L^2(\Omega)}^2 + |v|_{\BV(\Omega)}
+    +\Vert v\Vert_{L^1(\partial\Omega)}-\int_\Omega fv\dx\\
+    &{\color<8->{red}{\geq 
+    \frac{\alpha}{4}\Vert v\Vert_{L^2(\Omega)}^2}} + |v|_{\BV(\Omega)}
+    +\Vert v\Vert_{L^1(\partial\Omega)}-\frac{1}{\alpha}\Vert
+    f\Vert_{L^2(\Omega)}^2\\
+    &{\color<5-7>{red}{\geq
+    \frac{\alpha}{4|\Omega|}\Vert v\Vert_{L^1(\Omega)}^2 + |v|_{\BV(\Omega)}}}
+    +\Vert v\Vert_{L^1(\partial\Omega)}-\frac{1}{\alpha}\Vert
+    f\Vert_{L^2(\Omega)}^2\\
+    &{\color<2-4>{red}{\geq -\frac{1}{\alpha}\Vert f\Vert_{L^2(\Omega)}^2}}
+  \end{align*}
+
+  \begin{itemize}[label=$\bullet$]
+    \uncover<3->{\item $E$ bounded from below}
+    \uncover<4->{\item $\exists (u_n)_{n\in\Nbb}\subset\BV(\Omega)\cap
+    L^2(\Omega)$ infimizing sequence of $E$}
+    \uncover<6->{\item $\Vert u_n\Vert_{\BV(\Omega)}\to\infty$
+    as $n\to\infty$ $\Rightarrow$ $E(u_n)\to\infty$ as $n\to\infty$}
+    \uncover<7->{\item $(u_n)_{n\in\Nbb}$ bounded in $\BV(\Omega)$}
+    \uncover<9->{\item $(u_n)_{n\in\Nbb}$ bounded in $L^2(\Omega)$}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  $(u_n)_{n\in\Nbb}\subset\BV(\Omega)\cap L^2(\Omega)$ is a bounded 
+  infimizing sequence of $E$.
+  \pause
+  \begin{block}{}
+    Let $(u_n)_{n\in\Nbb}\subset \BV(\Omega)$ be bounded. Then there
+    exists a subsequence $(u_{n_k})_{k\in\Nbb}$ of $(u_n)_{n\in\Nbb}$ and
+    $u\in\BV(\Omega)$
+    such that $u_{n_k}$ converges weakly to $u$ in $\BV(\Omega)$ as
+    $k\rightarrow\infty$.
+  \end{block}
+
+  \pause
+  \begin{itemize}
+    \item[$\bullet$] $(u_n)_{n\in\Nbb}$ (w.l.o.g.) converges weakly to
+      $u\in\BV(\Omega)$\pause in $L^1(\Omega)$.
+      \pause
+    \item[$\bullet$] $(u_n)_{n\in\Nbb}$ (w.l.o.g.) converges weakly to
+      $\bar{u}\in L^2(\Omega)$ in $L^2(\Omega)$.
+  \end{itemize}
+  \pause
+  \begin{align*}
+    \forall w\in (L^2(\Omega))^\ast\cong L^2(\Omega)
+    \supset L^\infty(\Omega)\cong (L^1(\Omega))^\ast:\\
+    \int_\Omega u_n w\dx\to \int_\Omega \bar{u} w\dx \text{ as } n\to\infty
+  \end{align*}
+  \pause
+  \begin{itemize}
+    \item[$\bullet$] $(u_n)_{n\in\Nbb}$ converges weakly to $\bar{u}$ in
+      $L^1(\Omega)$.
+      \pause
+    \item[$\bullet$] $u=\bar{u}\in \BV(\Omega)\cap L^2(\Omega)$.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \fullcite[p. 183, Theorem 1]{EG92}
+
+  \begin{block}{}
+    Let $v\in\BV(\Omega)$.
+    For all $x\in\Rbb^n$ define
+    \begin{align*}
+      \tilde{v}(x)\coloneqq
+      \begin{cases}
+        v(x)  &\text{ if } x\in\Omega,\\
+        0     &\text{ if } x\in\Rbb^n\setminus\Omega.
+      \end{cases} 
+    \end{align*}
+    Then $\tilde{v}\in\BV\left(\Rbb^n\right)$ and
+    $|\tilde{v}|_{\BV\left(\Rbb^n\right)}
+    = |v|_{\BV(\Omega)}+\Vert v\Vert_{L^1(\partial\Omega)}$.
+  \end{block}
+
+  \pause 
+  \begin{itemize}[label=$\bullet$]
+    \item 
+      $(|\tilde{u}_n|_{\BV(\Rbb^n)})_{n\in\Nbb} = (|u_n|_{\BV(\Omega)}+\Vert
+      u_n\Vert_{L^1(\partial\Omega)})_{n\in\Nbb}$ is bounded since 
+      $(u_n)_{n\in\Nbb}$ is infimizing sequence of $E$ and
+      $E(v)\geq 
+      \frac{\alpha}{4}\Vert v\Vert_{L^2(\Omega)}^2 + |v|_{\BV(\Omega)}
+      +\Vert v\Vert_{L^1(\partial\Omega)}-\frac{1}{\alpha}\Vert
+      f\Vert_{L^2(\Omega)}^2$.
+      \pause
+    \item $\tilde{u_n}\to\tilde{u}$ in $L^1(\Rbb^n)$ as $n\to\infty$ since
+      $u_n\to u$ in $L^1(\Omega)$.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \begin{itemize}[label=$\bullet$]
+    \item 
+      $(|\tilde{u}_n|_{\BV(\Rbb^n)})_{n\in\Nbb} = (|u_n|_{\BV(\Omega)}+\Vert
+      u_n\Vert_{L^1(\partial\Omega)})_{n\in\Nbb}$ is bounded.
+      \pause
+    \item $\tilde{u_n}\to\tilde{u}$ in $L^1(\Rbb^n)$ as $n\to\infty$.
+  \end{itemize}
+  \pause
+  \begin{block}{}
+    Let $(v_n)_{n\in\Nbb}\subset\BV(\Omega)$ and $v\in L^1(\Omega)$ such that
+    $|v_n|_{\BV(\Omega)}\leq c$ for some $c>0$ and all $n\in\Nbb$ and
+    $v_n\rightarrow v$ in $L^1(\Omega)$ as $n\rightarrow\infty$.
+
+    Then $v\in\BV(\Omega)$ and $|v|_{\BV(\Omega)}\leq
+    \liminf_{n\rightarrow\infty}|v_n|_{\BV(\Omega)}.$
+    Furthermore $v_n$ converges weakly to $v$ in $\BV(\Omega)$.
+  \end{block}
+  \pause
+  \begin{align*}
+    |u|_{\BV(\Omega)} +\Vert u\Vert_{L^1(\partial\Omega)}
+    = |\tilde{u}|_{\BV(\Rbb^n)}
+    &\leq\liminf_{n\to\infty} |\tilde{u}_n|_{\BV(\Rbb^n)}\\
+    &= \liminf_{n\to\infty} (|u_n|_{\BV(\Omega)} +
+    \Vert u_n\Vert_{L^1(\partial\Omega)}).
+  \end{align*}
+\end{frame}
+
+\begin{frame}
+
+  \begin{itemize}[label=$\bullet$]
+    \item 
+      $
+    |u|_{\BV(\Omega)} +\Vert u\Vert_{L^1(\partial\Omega)}
+    \leq \liminf_{n\to\infty} (|u_n|_{\BV(\Omega)} +
+    \Vert u_n\Vert_{L^1(\partial\Omega)}).
+    $
+  \pause
+  \item
+  $
+    \frac{\alpha}{2}\Vert u\Vert^2_{L^2(\Omega)}-\int_\Omega fu\dx
+    \leq \liminf_{n\to\infty}
+    \left(\frac{\alpha}{2}\Vert u_n\Vert_{L^2(\Omega)}^2
+    -\int_\Omega fu_n\dx\right)
+    $
+  since 
+  $\Vert\bullet\Vert_{L^2(\Omega)}^2$ and $-\int_\Omega
+  f\bullet\dx$ are continuous and convex (and hence w.l.s.c.) on $L^2(\Omega)$
+  and $u_n \rightharpoonup u$ in $L^2(\Omega)$ as $n\to\infty$.
+  \end{itemize}
+  \pause
+  
+  \begin{align*}
+    \inf_{v\in\BV(\Omega)\cap L^2(\Omega)}E(v)
+    &\leq
+    E(u)\\
+    &\leq\liminf_{n\rightarrow\infty} E(u_n) \\
+    &=
+    \lim_{n\rightarrow\infty}E(u_n) \\
+    &= \inf_{v\in\BV(\Omega)\cap
+    L^2(\Omega)}E(v),
+  \end{align*}
+  i.e.\ $\min_{v\in\BV(\Omega)\cap L^2(\Omega)} E(v) = E(u)$. \qed
+  
+\end{frame}
+
+\subsection{Uniqueness and Stability}
+\begin{frame}{Table of Contents}
+  \tableofcontents[currentsection, currentsubsection]
+\end{frame}
+
+\begin{frame}
+  \begin{block}{}
+  Let $u_1,u_2\in \BV(\Omega)\cap L^2(\Omega)$ be minimizers
+  of $E$ with $f_1,f_2\in L^2(\Omega)$ instead of $f$.
+
+  Then
+  \begin{align*}
+    \Vert u_1 - u_2\Vert_{L^2(\Omega)} 
+    \leq\frac{1}{\alpha}\Vert f_1-f_2\Vert_{L^2(\Omega)}.
+  \end{align*}
+  \end{block}
+  
+  \pause
+  Define convex functionals $F:\BV(\Omega)\cap L^2(\Omega)\to \Rbb$
+  and
+  $G_\ell:\BV(\Omega)\cap L^2(\Omega)\to \Rbb$, $\ell=1,2$, via
+  \begin{align*}
+    F(u) &\coloneqq |u|_{\BV(\Omega)} + \Vert u \Vert_{L^1(\partial\Omega)},&
+    G_\ell(u)\coloneqq \frac{\alpha}{2}\Vert u\Vert_{L^2(\Omega)}^2 -
+    \int_\Omega f_\ell u\dx.
+  \end{align*}
+  Let $E_\ell\coloneqq F+G_\ell$.
+\end{frame}
+
+\begin{frame}
+  \begin{itemize}
+    \item $E_\ell\coloneqq F+G_\ell$.
+    \item $F(u) \coloneqq |u|_{\BV(\Omega)} + \Vert u
+      \Vert_{L^1(\partial\Omega)}$.
+    \item $G_\ell(u)\coloneqq \frac{\alpha}{2}\Vert u\Vert_{L^2(\Omega)}^2 -
+    \int_\Omega f_\ell u\dx$.
+  \end{itemize}
+  \pause
+  The Fr\'echet derivative $G_\ell'(u):L^2(\Omega)\to\Rbb$ of $G_\ell$ at $u\in
+  \BV(\Omega)\cap L^2(\Omega)$ is
+  \begin{align*}
+    G_\ell'(u) = \alpha (u,\bullet)_{L^2(\Omega)} - \int_\Omega f_\ell
+    \bullet\dx = (\alpha u-f_\ell ,\bullet)_{L^2(\Omega)}.
+  \end{align*}
+\end{frame}
+
+\begin{frame}
+  \fullcite{Zei85}
+  
+  \pause
+  \bigskip
+
+  Let $(X,\Vert\bullet\Vert_X)$ be a real Banach space and 
+  $H:X\to [-\infty,\infty]$.
+  \medskip
+  \pause
+
+  The subdifferential of $H$ at some $u\in X$ with $H(u)\neq\pm\infty$ is
+  \begin{equation*}
+    \partial H(u)\coloneq 
+    \{u^\ast\in X^\ast\ |\ 
+    \forall v\in X\quad H(v)\geq H(u)+\langle u^\ast,v-u\rangle\}  
+  \end{equation*}
+  Define 
+  $\partial H(u)\coloneq\emptyset$
+  if $H(u)=\pm\infty$.
+
+  \pause
+  \medskip
+  $u^\ast\in\partial H(u)$ is called subgradient of $H$ at $u$.
+
+  \pause
+  \begin{block}{}
+    If $H: X\to (-\infty,\infty]$ such that $H\nequiv\infty$, then
+    $H(u)=\inf_{v\in X}H(v)$ if and only if $0\in\partial H(u)$.
+  \end{block}
+\end{frame}
+
+\begin{frame}
+  \begin{block}{}
+    If $H$ convex and G\^{a}teaux differentiable
+    at $u\in X$ with G\^{a}teaux derivative $H'(u)$, then
+    $\partial H(u)=\{H'(u)\}$.
+  \end{block}
+
+  \pause
+
+  $H_1,H_2,\ldots,H_n:X\to (-\infty,\infty]$ and the summation of sets in
+  $X^\ast$ commute,
+  \cite[S. 389, Theorem 47.B]{Zei85} implies the following statement.
+  \begin{block}{}
+    If the functionals $H_1,H_2,\ldots,H_n: X\to
+    (-\infty,\infty]$, $n\geq 2$, are convex and there exists 
+    $u_0\in X$ and $j\in\{1,2,\ldots,n\}$ such that $H_k(u_0)<\infty$
+    for all $k\in\{1,2\ldots,n\}$
+    and $H_k$ continuous at $u_0$ for all $k\in\{1,2,\ldots,n\}\setminus\{j\}$,
+    then
+    \begin{align*}
+      \partial (H_1+H_2+\ldots+ H_n)(u) 
+      = \partial H_1(u)+\partial H_2(u)+ \ldots + \partial H_n(u)
+    \end{align*}
+    for all $u\in X$.
+  \end{block}
+  \pause
+  \medskip
+  $0\in\partial E_\ell(u_\ell)
+  = \partial F(u_\ell)+\partial G_\ell(u_\ell)=\partial F(u_\ell)+
+  \{G_\ell'(u_\ell)\}$ for $\ell=1,2$.
+\end{frame}
+
+\begin{frame}
+  $-G_\ell'(u_\ell)=-(\alpha u-f_\ell ,\bullet)_{L^2(\Omega)}\in\partial
+  F(u_\ell)$.
+  
+  \pause
+  \begin{block}{}
+    Let $H:X\to (-\infty,\infty]$ convex and lower semi-continuous with
+    $H\nequiv\infty$.
+    
+    Then $\partial H(\bullet)$ is monoton, i.e.
+  \begin{align*}
+    \langle u^\ast-v^\ast,u-v\rangle\geq 0\quad \text{for all } u,v\in X, 
+    u^\ast \in \partial H(u), v^\ast \in \partial H(v).
+  \end{align*}
+  \end{block}
+
+  \pause
+  \medskip
+  Hence
+  $ \big( -(\alpha u_1 - f_1) + (\alpha u_2 - f_2), u_1 -
+  u_2\big)_{L^2(\Omega)} \geq 0.  $
+
+  \pause
+  \medskip
+  With the Cauchy-Schwarz inequality this implies
+  \begin{align*}
+    \alpha \Vert u_1 - u_2 \Vert_{L^2(\Omega)}^2
+    &\leq
+    \big(f_1 -f_2, u_1-u_2 \big)_{L^2(\Omega)}\\
+    &\leq
+    \Vert f_1-f_2\Vert_{L^2(\Omega)}\Vert u_1 - u_2\Vert_{L^2(\Omega)}.
+  \end{align*}
+  \qed
+\end{frame}

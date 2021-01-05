@@ -1,0 +1,97 @@
+\begin{frame}[noframenumbering]{Table of Contents}
+  \tableofcontents[currentsection, currentsubsection]
+\end{frame}
+
+\begin{frame}
+  \fullcite[Chapter 10, p. 297-319]{Bar15}
+
+  \bigskip
+  \pause
+
+  Let $\Omega\subset\Rbb^n$ be a bounded polyhedral Lipschitz domain.
+
+  \medskip
+
+  For given $g\in L^2(\Omega)$ and $\alpha>0$ minimize the functional 
+  \begin{align*}
+    I(v)=|v|_{\BV(\Omega)}+\frac{\alpha}{2}\Vert v-g\Vert^2
+  \end{align*}
+  amongst all $v\in \BV(\Omega)\cap L^2(\Omega)$.
+\end{frame}
+
+\begin{frame}{Functions of Bounded Variation}
+  A function $v\in L^1(\Omega)$ with distributional derivative
+  $Dv:C^{\infty}_C(\Omega;\Rbb^n)\to\Rbb$ is said to be of bounded variation if 
+  there exists $c>0$ such that 
+  \begin{align*}
+    \langle Dv, \phi\rangle\coloneqq -\int_\Omega v\Div(\phi)\dx\leq
+    c\Vert\phi\Vert_{L^\infty(\Omega)}
+  \end{align*}
+  for all $\phi\in C^1_C(\Omega;\Rbb^n)$.
+
+  \pause  
+
+  The minimal constant $c\geq 0$ satisfying this property is called 
+  total variation of $Dv$ and is given by
+  \begin{align*}
+    |v|_{\BV(\Omega)} = \sup_{\substack{\phi\in C^1_C(\Omega;\Rbb^n)\\
+    \Vert\phi\Vert_{L^\infty(\Omega)}\leq 1}}-\int_\Omega v\Div (\phi)\dx.
+  \end{align*}
+
+  \pause
+
+  The space of all such functions is denoted by $\BV(\Omega)$.
+\end{frame}
+
+\begin{frame}{Properties of $\BV(\Omega)$}
+  $\BV(\Omega)$ is a Banach space equipped with the norm
+  \begin{align*}
+    \Vert v \Vert_{\BV(\Omega)} \coloneqq \Vert v\Vert_{L^1(\Omega)} +
+    |v|_{\BV(\Omega)}\quad\text{for all } v\in\BV(\Omega).
+  \end{align*}
+  
+  \pause
+  \medskip
+  $W^{1,1}(\Omega)\subset\BV(\Omega)$ with $\Vert v\Vert_{\BV(\Omega)}=
+  \Vert v\Vert_{W^{1,1}(\Omega)}$ for all $v\in W^{1,1}(\Omega)$.
+\end{frame}
+
+\begin{frame}{Notions of convergence on $\BV(\Omega)$}
+  Let $(v_n)_{n\in\Nbb}\subset \BV(\Omega)$ and $v\in \BV(\Omega)$ such that
+  $v_n\rightarrow v$ in $L^1(\Omega)$ as $n\rightarrow\infty$.
+  \pause
+  \begin{itemize}
+    \item[(i)]
+      $(v_n)_{n\in\Nbb}$ converges intermediately or strictly to $v$
+      if $|v_n|_{\BV(\Omega)}\rightarrow |v|_{\BV(\Omega)}$ as
+      $n\rightarrow\infty$.
+      \pause
+    \item[(ii)] $(v_n)_{n\in\Nbb}$ converges weakly to
+      $v$ if
+      $\langle Dv_n,\phi\rangle\rightarrow \langle Dv,\phi\rangle$ 
+      for all $\phi\in C_0(\Omega;\Rbb^n)$ as 
+      $n\rightarrow\infty$.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Further Properties of $\BV(\Omega)$}
+  $C^\infty(\overline\Omega)$ and $C^\infty(\Omega)\cap\BV(\Omega)$ are dense
+  in $\BV(\Omega)$ with respect to intermediate convergence.
+  
+  \pause
+  \bigskip
+
+  The embedding $\BV(\Omega)\to L^p(\Omega)$ is continuous for
+  $1\leq p\leq n/(n-1)$ and compact for $1\leq p< n/(n-1)$.
+  
+  \pause
+  \bigskip
+
+  There exists a linear operator $T:\BV(\Omega)\to L^1(\partial\Omega)$
+  such that $T(v) = v|_{\partial\Omega}$ for all $v\in\BV(\Omega)\cap
+  C(\overline\Omega)$.
+
+  $T$ is continuous with respect to intermediate convergence in $\BV(\Omega)$
+  but not with respect to weak convergence in $\BV(\Omega)$. 
+\end{frame}
+
