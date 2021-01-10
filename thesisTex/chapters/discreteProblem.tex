@@ -1,10 +1,33 @@
-Betrachte für gegebenes $\alpha>0$ und rechte Seite $f\in L^2(\Omega)$ 
-folgende Diskretisierung von \Cref{prob:continuousProblem}. 
 
 \todo[inline]{Quote all CR and discretisation stuff right here somewhere (mglw
 in einer subsection)}
-\todo[inline]{Sowas wie $\Vnc$ nutzen als (geringfügige) Abkürzung oder einfach
-immer die Räume ausschreiben?}
+\todo[inline]{$\Vnc$ überall wegwerfen und einfach CR schreiben, da es CR kaum
+kürzer macht beim lesen}
+
+bevor wir das diskrete problem von (cref probcont) formulieren, bemerken wir,
+dass jede CR Funtkion in BV ist, was mittles Induktion aus
+(cite Theorem where omega is split, zb in Bartels) folgt und,
+dass  (cf Quelle)
+\begin{align*}
+  |\vcr|_{\BV(\Omega)} = \Vert \gradnc \vcr\Vert_{L^1(\Omega)} +
+  \sum_{F\in\Fcal(\Omega)}\int_F |[\vcr]_F|\ds,
+\end{align*}
+woraus folgt
+\begin{align*}
+  |\vcr|_{\BV(\Omega)} +\Vert\vcr\Vert_{L^1(\partial\Omega)} 
+  = \Vert \gradnc \vcr\Vert_{L^1(\Omega)} +
+  \sum_{F\in\Fcal}\int_F |[\vcr]_F|\ds,
+\end{align*}
+Wir betrachten eine nichtkonforme Diskretisierung, da wir die Sprungterme
+weglassen, wenn wir 
+  $|\vcr|_{\BV(\Omega)} +\Vert\vcr\Vert_{L^1(\partial\Omega)}$
+durch 
+  $\Vert \gradnc \vcr\Vert_{L^1(\Omega)}$ ersetzen.
+  Somit erhalten wir:
+  \todo[inline]{Above was just WIP, write that properly and cite stuff}
+
+Betrachte für gegebenes $\alpha>0$ und rechte Seite $f\in L^2(\Omega)$ 
+folgende Diskretisierung von \Cref{prob:continuousProblem}. 
 
 \begin{problem}\label{prob:discreteProblem}
   \todo[inline]{zitier BV stuff der relevant ist hierfür, überlege, wieso die
