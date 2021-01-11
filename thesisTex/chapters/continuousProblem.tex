@@ -337,7 +337,7 @@ $|0|_{\BV(\Rbb^n\setminus\Omega)}=0$ und $0|_{\partial\Omega}=0$.
   welche Ableitung} 
 
   und die Fr\'echet-Ableitung $G_\ell'(u):
-  L^2(\Omega)\to\Rbb$ an der
+  L^2(\Omega)\to\Rbb$ von $G_\ell$ an der
   Stelle
   $u\in \BV(\Omega)\cap L^2(\Omega)$ ist 
   für alle $v\in L^2(\Omega)$ gegeben durch
@@ -385,4 +385,70 @@ $|0|_{\BV(\Rbb^n\setminus\Omega)}=0$ und $0|_{\partial\Omega}=0$.
   Ansonsten führt Division durch\\
   $\alpha\Vert u_1 - u_2 \Vert_{L^2(\Omega)}\neq 0$ den 
   Beweis zum Abschluss.
+\end{proof}
+
+\begin{theorem}
+  \label{thm:convexity}
+  Sei $u\in\BV(\Omega)\cap L^2(\Omega)$ Lösung von 
+  \Cref{prob:continuousProblem}.
+
+  Dann gilt 
+  \begin{align*}
+    \frac{\alpha}{2}\Vert u-v\Vert_{L^2(\Omega)}^2 \leq E(v)-E(u)\quad
+    \text{für alle } v\in\BV(\Omega)\cap L^2(\Omega).
+  \end{align*}
+\end{theorem}
+
+\begin{proof}
+  Definiere die konvexen Funktionale $F:\BV(\Omega)\cap L^2(\Omega)\to \Rbb$
+  und 
+  $G:\BV(\Omega)\cap L^2(\Omega)\to \Rbb$ durch
+  \begin{align*}
+    F(u) &\coloneqq |u|_{\BV(\Omega)} + \Vert u \Vert_{L^1(\partial\Omega)},&
+    G(u)\coloneqq \frac{\alpha}{2}\Vert u\Vert_{L^2(\Omega)}^2 -
+    \int_\Omega f u\dx.
+  \end{align*}
+  Es gilt $E= F+G$.
+
+  $G$ ist Fr\'echet-differenzierbar und die Fr\'echet-Ableitung $G'(u):
+  L^2(\Omega)\to\Rbb$ von $G$ an der
+  Stelle
+  $u\in \BV(\Omega)\cap L^2(\Omega)$ ist 
+  für alle $v\in L^2(\Omega)$ gegeben durch
+  \begin{align*}
+    dG(u;v) = \alpha (u,v)_{L^2(\Omega)} - \int_\Omega f v\dx 
+    = (\alpha u-f ,v)_{L^2(\Omega)}.
+  \end{align*}
+
+  Das impliziert mit wenigen Rechenschritten
+  \begin{align}\label{eq:strongConvexityG}
+    dG(u;v-u) +\frac{\alpha}{2}\Vert u-v\Vert^2_{L^2(\Omega)}+G(u) 
+    =
+    G(v)
+  \end{align}
+  für alle $u,v\in \BV(\Omega)\cap L^2(\Omega)$.
+
+  Da $u$ Minimierer von $E$ ist, gilt mit \Cref{thm:extremalprinciple},
+  \Cref{thm:subdifferentialSumRule} und \Cref{thm:subdiffGateaux}, dass
+  \begin{align*}
+    0\in\partial E(u) = \partial F(u)+\{G'(u)\},
+  \end{align*}
+  woraus folgt 
+  \begin{align*}
+    -G'(u)\in\partial F(u),
+  \end{align*}
+  was nach \Cref{def:subdifferential} äquivalent ist zu
+  \begin{align*}
+    -dG(u;v-u)\leq F(v)-F(u)\quad\text{für alle }v\in\BV(\Omega)\cap
+    L^2(\Omega).
+  \end{align*}
+
+  Daraus folgt zusammen mit \Cref{eq:strongConvexityG}, dass
+  \begin{align*}
+    \frac{\alpha}{2}\Vert u-v\Vert_{L^2(\Omega)}^2+G(u)-G(v)+F(u)
+    = -dG(u;v-u)+F(u)\leq F(v)
+  \end{align*}
+  für alle $v\in \BV(\Omega)\cap L^2(\Omega)$.
+
+  Da $E=F+G$, folgt daraus die Aussage.
 \end{proof}
