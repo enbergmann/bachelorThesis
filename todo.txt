@@ -142,8 +142,6 @@ GENERAL THESIS TEX STUFF
 
 CSU, Young etc einmal aufschreiben --> Appendix?
 
- SUBDIFFERENTIAL ALS DUALRAUMTEILMENGE AUFFASSEN
-
 readd general part of experiments section into documentation
 
 compute gradient of exact solution, transform back from absolute value
