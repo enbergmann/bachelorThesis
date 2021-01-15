@@ -1,0 +1,258 @@
+From theoreticalBasics.tex
+
+%Dies(easymotion-prefix)er Abschnitt folgt dem einführenden Kapitel von [braidesApprox], 
+%mit der Einschränkung $\Omega \subset \Rbb^n$ offen und beschränkt, und für
+%genauere Informationen sei an dieser Stelle darauf verwiesen.
+%
+%Die Familie $\Bcal(\Omega)$ aller Borelmengen und die Familie
+%$\Bcal_C(\Omega)$ aller Borelmengen mit kompaktem Abschluss in
+%$\Omega$ stimmen in diesem Fall überein. 
+
+
+\section{Maßtheoretische Grundlagen}
+ 
+\todo[inline]{TODO doch noch wenigstens eine einfach Def für Radon Maße (vor
+allem mit Zitat zu einer Quelle.
+NACHTRAG: auf keinen Fall, BV einfach aus ABM, dieses Kapitel hier einstampfen}
+
+\todo[inline]{TODO Maßtheorie für Vektormaße ist absolut nicht notwenig, da
+meine Anwendung ausschließlich von R2 nach R geht Möglicherweise kann ich also
+doch eine durchgehende Geschichte erzählen und insbesondere alles verstehen,
+im Quelltext sind noch auskommentierte Theorem zur Maßtheorie}
+
+% \begin{definition}[braides]\label{def:masz}
+%   Eine Funktion $\mu:\Bcal(\Omega)\to\Rbb^N$ heißt (Vektor-) Maß auf $\Omega$,
+%   wenn sie abzählbar additiv ist, d.h.\ für alle
+%   $(B_j)_{j\in\Nbb}\subseteq\Bcal(\Omega)$ mit $B_j \cap B_k = \emptyset$ für
+%   $j\neq k$ gilt
+%   \begin{align*}
+%     \mu\left( \dot{\bigcup_{j\in\Nbb}} B_j  \right) = \sum_{j\in\Nbb} \mu(B_j).
+%   \end{align*}
+%   Die Menge aller dieser Maße sei $\Mcal(\Omega;\Rbb^N)$.
+% 
+%   Im Fall $N=1$ heißt $\mu$ skalares Maß. Falls $\mu$ zusätzlich nur Werte in 
+%   $[0,\infty)$
+%   annimmt, heißt es positives Maß. Die Menge aller skalaren Maße sei 
+%   $\Mcal(\Omega)$ und die Menge aller positiven Maße sei 
+%   $\Mcal_+(\Omega)$.
+% \end{definition}
+% 
+% \begin{remark}
+%   Die übliche Anforderung $\mu(\emptyset) = 0$  an ein Maß ist äquivalent zur 
+%   Bedingung, dass $A\in \Bcal(\Omega)$ existiert, sodass $\mu(A)$ in jeder 
+%   Komponente endliche Werte annimmt. 
+% 
+%   Da in \Cref{def:masz} als Wertebereich $\Rbb^N$ gefordert wird, ist
+%   diese äquivalente Bedingung erfüllt.
+% \end{remark}
+% 
+% \begin{definition}\label{def:radonmasz}
+%   Eine Funktion $\mu:\Bcal(\Omega)\to\Rbb^N$ heißt Radonmaß auf 
+%   $\Omega$, wenn $\mu|_{\Bcal(\Omega')}$ ein Maß auf jeder Menge 
+%   $\Omega'\ssubset \Omega$ (d.h.\,$\closure({\Omega'})\subset \interior({\Omega})$) 
+%   ist.
+% \end{definition}
+
+\section{Karush-Kuhn-Tucker Bedingungen}
+\todo[inline]{Wahrscheinlich einstampfen}
+
+\section{Sattelpunktsprobleme}
+In diesem Abschnitt können wir angelehnt an \cite[S. 4ff., S. 165ff.]{Aub79}
+eine propere Funktion $f:U\to (-\infty,\infty]$ betrachten, wobei $U$ ein
+Vektorraum ist.
+\todo[inline]{Wahrscheinlich einstampfen, das wurde an Ort und Stelle erledigt}
+
+\section{Funktionen Beschränkter Variation}
+
+Dieser Abschnitt folgt Kapitel 10 von \cite{ABM14}. Für Details siehe
+\cite{EG92}, \todo[inline]{Vielleicht noch weitere Quellen auflisten. ,,Für 
+Details siehe\ldots``}
+Dabei sei $\Omega$ eine offene Teilmenge des $\Rbb^n$.
+
+%\begin{definition}
+%  \todo{TODO vielleicht zu Grundlagen über Radonmaße verschieben, vielleicht
+%  auch einfach einstampfen. Fürs erste stehen gelassen. Vielleicht auch alles
+%  zu Maßen weglassen, weil es hier in der Arbeit nicht wirklich gebraucht wird
+%  und nur die notwendigen Dinge zitieren}
+%  Die Vervollständigung des Raums $C^\infty_C(\Omega;\Rbb^m)$ bezüglich der 
+%  Norm
+%  $\Vert\bullet\Vert_{L^\infty(\Omega)}$ ist ein separabler Banachraum und wird
+%  bezeichnet mit 
+%  $C_0(\Omega; \Rbb^m)$.
+%  Der Dualraum $\Mcal(\Omega;\Rbb^m)$ von $C_0(\Omega; \Rbb^m)$ wird
+%  durch den Riesz'schen Darstellungssatz \todo{TODO zitiere?} identifiziert mit
+%  dem Raum aller (vektoriellen) Radonmaße. Dabei wird die Anwendung
+%  von $\mu\in \Mcal(\Omega;\Rbb^m)$
+%  auf $\phi\in C_0(\Omega;\Rbb^m)$ identifiziert mit
+%  \begin{align*}
+%    \langle \mu, \phi\rangle \coloneqq \int_\Omega \phi \dmu =
+%    \int_\Omega \phi(x) \dmu(x).
+%  \end{align*}
+%\end{definition}
+
+Die folgende Definition basiert auf \cite[S. 393 f.]{ABM14}.
+
+\begin{definition}[Funktionen beschränkter Variation]
+  Eine Funktion $u\in L^1(\Omega)$ ist von beschränkter Variation, wenn   
+  \begin{align}
+    \label{eq:boundedVariation}
+    |u|_{\BV(\Omega)}
+    \coloneqq
+    \sup_{\substack{\phi\in C^1_C(\Omega;\Rbb^n)\\
+    \Vert\phi\Vert_{L^\infty(\Omega)}\leq 1}}\int_\Omega u\Div (\phi)\dx
+    <
+    \infty.
+  \end{align}
+
+  Durch $|\bullet|_{\BV(\Omega)}$ ist eine Seminorm auf $\BV(\Omega)$
+  gegeben.
+
+  Der Raum aller Funktionen beschränkter Variation $\BV(\Omega)$
+  ist ausgestattet mit der Norm 
+  \begin{align*}
+    \Vert u \Vert_{\BV(\Omega)} \coloneqq \Vert u\Vert_{L^1(\Omega)} +
+    |u|_{\BV(\Omega)}
+  \end{align*}
+  für $u\in\BV(\Omega)$.
+
+  Nach \cite[S. 395, Theorem 10.1.1.]{ABM14} ist $(\BV(\Omega),
+  \Vert\bullet\Vert_{\BV(\Omega)})$ ein Banachraum.
+\end{definition}
+
+%\begin{definition}[Funktionen beschränkter Variation]
+%  Eine Funktion $u\in L^1(\Omega)$ ist von beschränkter Variation, wenn ihre
+%  distributionelle Ableitung ein Radonmaß definiert, d.h.\ eine Konstante
+%  $c\geq 0$ existiert, sodass 
+%  \begin{align}
+%    \label{eq:boundedVariation}
+%    \langle Du,\phi\rangle \coloneqq - \int_\Omega u\Div (\phi) \dx 
+%    \leq c\Vert\phi\Vert_{L^\infty(\Omega)}
+%  \end{align}
+%  für alle $\phi\in C^1_C(\Omega;\Rbb^n)$.
+%
+%  Die minimale Konstante $c\geq 0$, die \eqref{eq:boundedVariation} erfüllt,
+%  heißt totale Variation von $Du$ und besitzt die Darstellung
+%  \begin{align*}
+%    |u|_{\BV(\Omega)} = \sup_{\substack{\phi\in C^1_C(\Omega;\Rbb^n)\\
+%    \Vert\phi\Vert_{L^\infty(\Omega)}\leq 1}}-\int_\Omega u\Div (\phi)\dx.
+%  \end{align*}
+%
+%  Durch $|\bullet|_{\BV(\Omega)}$ ist eine Seminorm auf $\BV(\Omega)$
+%  gegeben.
+%
+%  Der Raum aller Funktionen beschränkter Variation $\BV(\Omega)$
+%  ist ausgestattet mit der Norm 
+%  \begin{align*}
+%    \Vert u \Vert_{\BV(\Omega)} \coloneqq \Vert u\Vert_{L^1(\Omega)} +
+%    |u|_{\BV(\Omega)}
+%  \end{align*}
+%  für $u\in\BV(\Omega)$.
+%\end{definition}
+
+\begin{remark}
+  Es gilt $W^{1,1}(\Omega)\subset\BV(\Omega)$ und 
+  $\Vert u \Vert_{\BV(\Omega)}=\Vert u \Vert_{W^{1,1}(\Omega)}$ für alle
+  $u\in W^{1,1}(\Omega)$. (\cite[S. 394]{ABM14})
+\end{remark}
+
+\begin{definition}
+  Sei $(u_n)_{n\in\Nbb}\subset \BV(\Omega)$ und sei $u\in \BV(\Omega)$ mit
+  $u_n\rightarrow u$ in $L^1(\Omega)$ für $n\rightarrow\infty$.
+  \begin{itemize}
+    \item[(i)]
+      Die Folge $(u_n)_{n\in\Nbb}$ konvergiert strikt gegen $u$,
+      wenn $|u_n|_{\BV(\Omega)}\rightarrow |u|_{\BV(\Omega)}$ für $n\rightarrow\infty$.
+      {\color{red} strikte Konvergenz gdw. ($\Vert u-u_n\Vert_{L^1(\Omega)}
+      \to 0$ und $|u_n|_{\BV(\Omega)}\rightarrow |u|_{\BV(\Omega)}$)
+      was impliziert $\Vert u_n\Vert_\BV\to \Vert u\Vert_{\BV}$ aber nicht
+      unbedingt $\Vert u_n - u \Vert_\BV\to 0$, da nicht folgt, dass 
+      $|u_n - u|_\BV\to 0$
+      
+      aus BV Konvergenz, also $\Vert u_n - u \Vert_\BV\to 0$, folgt hingegen 
+      aber ($\Vert u-u_n\Vert_{L^1(\Omega)}
+      \to 0$ und $|u_n - u|_{\BV(\Omega)}\rightarrow 0$), also insbesondere
+      ($\Vert u-u_n\Vert_{L^1(\Omega)}
+      \to 0$ und $|u_n|_{\BV(\Omega)}\rightarrow |u|_{\BV(\Omega)}$), d.h.
+      strikte Konvergenz
+      
+      jede BV konvergente Folge ist also strikt konvergent aber nicht umgekehrt,
+      es gibt also mehr strikt konvergente Folgen, deshalb klingt es sinnvoll,
+      dass wir BV Funktionen durch $C^\infty$ Funktionen (usw.) approximieren
+      können bzgl strikter Konvergenz aber nicht bzgl BV Konvergenz (strong 
+      topology, vgl.  Ende von BV lecture04}
+    \item[(ii)] Die Folge $(u_n)_{n\in\Nbb}$ konvergiert
+      schwach gegen $u$, wenn
+      $Du_n\rightharpoonup^\ast Du$ in 
+      $\Mcal(\Omega;\Rbb^n)$ für $n\rightarrow\infty$, d.h.\ für alle
+      $\phi\in C_0(\Omega;\Rbb^n)$ gilt 
+      $\langle Du_n,\phi\rangle\rightarrow \langle Du,\phi\rangle$ für 
+      $n\rightarrow\infty$.
+  \end{itemize}
+\end{definition}
+
+\begin{theorem}[Schwache Unterhalbstetigkeit]
+  \label{thm:wlsc}
+  Seien $(u_n)_{n\in\Nbb}\subset\BV(\Omega)$ und $u\in L^1(\Omega)$ mit
+  $|u_n|_{\BV(\Omega)}\leq c$ für ein $c>0$ und alle $n\in\Nbb$ und
+  $u_n\rightarrow u$ in $L^1(\Omega)$ für $n\rightarrow\infty$.
+
+  Dann gilt $u\in\BV(\Omega)$ und $|u|_{\BV(\Omega)}\leq
+  \liminf_{n\rightarrow\infty}|u_n|_{\BV(\Omega)}.$
+  Außerdem gilt $u_n\rightharpoonup u$ in $\BV(\Omega)$ für $n\rightarrow
+  \infty$.
+\end{theorem}
+
+\begin{theorem}[Appoximation mit glatten Funktionen]
+  \label{thm:approximationBySmoothFunctions}
+  Die Räume $C^\infty(\overline\Omega)$ und $C^\infty(\Omega)\cap\BV(\Omega)$
+  liegen dicht in $\BV(\Omega)$ bezüglich strikter Konvergenz.
+
+  {\color{red}BV lecture05 Thm 2.4 liefert sogar (Folge in
+  $C^\infty\cap W^{1,1}$) sowohl strikte als auch schwache Konvergenz gegen
+  gegebenes $u\in\BV$, also wir haben nach diesem Thm die Dichte von
+  $C^\infty\cap W^{1,1}$ bzgl. strikter und schwacher BV Konvergenz
+  
+  da für Folgen in $W^{1,1}$ BV und $W^{1,1}$ Norm übereinstimmen und da
+  $W^{1,1}$ der Abschluss von $C^\infty$ bzgl. der $W^{1,1}$ Norm ist (
+  $C^\infty$ dicht in $W^{ 1,1 }$ bzgl. W11 Norm), ist
+  für $W^{1,1}$ Funktionen W11 auch Abschluss von Cinfty bzgl
+  der BV Norm (Cinfty dicht in W11 bzhl BV Norm)
+  
+  JETZT DER KNACKPUNKT und wie aus Thmeorem 2.6 gefolgert werden kann was in BV lecture
+  steht: da BV Konvergenz strikte Konvergenz impliziert, ist 
+  also Cinfty auch dicht in W11 bzgl strikter Konvergenz und W11 ist Teilmenge
+  von BV. Da A dicht in B und B Teilmenge C impliziert das B dicht in C (wiki,
+  natürlich beides bzgl gleicher Metrik), folgt insgesamt W11 dicht in BV bzgl
+  strikter Konvergenz
+  
+  MORGEN CONTINUE IN WITH THIS IN EXISTENCE PROOF: NOW I might know WHY
+  infimizing sequence in BV can simply be choosen in W11 or something
+  (Think about it and what bartels did)}
+\end{theorem}
+
+\begin{theorem}
+  \label{thm:compactness}
+  Sei $(u_n)_{n\in\Nbb}\subset \BV(\Omega)$ eine beschränkte Folge. Dann 
+  existiert eine Teilfolge $(u_{n_k})_{k\in\Nbb}$ und ein $u\in\BV(\Omega)$,
+  sodass $u_{n_k}\rightharpoonup u$ in $\BV(\Omega)$ für $k\rightarrow\infty$.
+  {\color{red}augenscheinlich nicht in BV lecture}
+\end{theorem}
+
+\begin{theorem}
+  \label{thm:embeddingBVintoLp}
+  Die Einbettung $\BV(\Omega)\to L^p(\Omega)$ ist stetig für 
+  $1\leq p\leq n/(n-1)$ und kompakt für $1\leq p< n/(n-1)$
+\end{theorem}\todo[inline]{TODO vielleicht wichtig, Quelle braucht es noch}
+
+\begin{theorem}[Spuroperator]
+  \label{thm:traceOperator}
+  Es existiert ein linearer Operator $T:\BV(\Omega)\to L^1(\partial\Omega)$
+  mit $T(u) = u|_{\partial\Omega}$ für alle $u\in\BV(\Omega)\cap
+  C(\overline\Omega)$.
+
+  Der Operator $T$ ist stetig bezüglich strikter Konvergenz in $\BV(\Omega)$,
+  aber nicht stetig bezüglich schwacher Konvergenz in $\BV(\Omega)$. 
+\end{theorem}\todo[inline]{TODO finde Quelle, nur ein Remark in Bartels (wird 
+aber für CCs Funktional offensichtlich gebraucht, es gibt noch weitere Aussagen
+in Bartels (zB integration by parts aber erstmal nur Existens und Stetigkeit 
+hier (wie gesagt, nur was gebraucht wird zitieren, oder?)}

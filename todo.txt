@@ -1,5 +1,10 @@
 CURRENT TODOS
 
+find alpha that denoises
+
+externalize fade to black on pictures so the original picture already has
+0 boundary
+
 
 FOR REPORT
   rename gleb to exactEnergy-GLEB
