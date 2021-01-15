@@ -1,13 +1,11 @@
 
 \todo[inline]{Quote all CR and discretisation stuff right here somewhere (mglw
 in einer subsection)}
-\todo[inline]{$\Vnc$ überall wegwerfen und einfach CR schreiben, da es CR kaum
-kürzer macht beim lesen}
 
 bevor wir das diskrete problem von (cref probcont) formulieren, bemerken wir,
-dass jede CR Funtkion in BV ist, was mittles Induktion aus
-(cite Theorem where omega is split, zb in Bartels) folgt und,
-dass  (cf Quelle)
+dass jede CR Funtkion in BV ist, was induktiv aus
+\cite[S. 404, Example 10.2.1]{ABM14} folgt unter Nutzung (noch irgendwas
+Dichte Argument mäßiges für die totale Variation)
 \begin{align*}
   |\vcr|_{\BV(\Omega)} = \Vert \gradnc \vcr\Vert_{L^1(\Omega)} +
   \sum_{F\in\Fcal(\Omega)}\int_F |[\vcr]_F|\ds,
@@ -30,20 +28,16 @@ Betrachte für gegebenes $\alpha>0$ und rechte Seite $f\in L^2(\Omega)$
 folgende Diskretisierung von \Cref{prob:continuousProblem}. 
 
 \begin{problem}\label{prob:discreteProblem}
-  \todo[inline]{zitier BV stuff der relevant ist hierfür, überlege, wieso die
-  Diskretisierung genau so aussieht (Normen fallen zusammen, gewisse Terme
-  werden weggelassen, etc., siehe auch Draft on BV project für einige wichtige,
-  noch zu beweisende, Statements)}
-  Finde $\ucr\in \Vnc(\Tcal) \coloneqq \CR^1_0(\Tcal)$,
+  Finde $\ucr\in \CR^1_0(\Tcal)$,
   sodass $\ucr$ das Funktional
   \begin{align}\label{eq:discreteProblem}
     \Enc(\vcr)\coloneqq \frac{\alpha}{2}\Vert \vcr\Vert_{L^2(\Omega)}^2
     +\Vert \gradnc\vcr\Vert_{L^1(\Omega)}-\int_\Omega f\vcr\dx
   \end{align}
-  unter allen $\vcr\in \Vnc(\Tcal)$ minimiert.
+  unter allen $\vcr\in \CR^1_0(\Tcal)$ minimiert.
 \end{problem}
 
-Definiere für $\vcr\in\Vnc(\Tcal)$, $\Lambda\in\Pbb_0(\Tcal;\Rbb^n)\subset
+Definiere für $\vcr\in\CR^1_0(\Tcal)$, $\Lambda\in\Pbb_0(\Tcal;\Rbb^n)\subset
 L^\infty(\Omega;\Rbb^n)$ \todo{stimmt das?},
 \begin{align*}
   K_1(0)
@@ -94,14 +88,14 @@ Somit ist das folgende Sattelpunktsproblem äquivalent zu
 \begin{problem}\label{prob:discreteSaddlepointProblem}
   Löse
   \begin{align*}
-    \inf_{\vcr\in\Vnc(\Tcal)}\sup_{\Lambda\in\Pbb_0(\Tcal;\Rbb^n)} 
+    \inf_{\vcr\in\CR^1_0(\Tcal)}\sup_{\Lambda\in\Pbb_0(\Tcal;\Rbb^n)} 
     \Lcal_h(\vcr,\Lambda).
   \end{align*}
 \end{problem}
 
 \begin{theorem}[Charakterisierung diskreter Lösungen]
   \label{thm:discProbCharacterizationOfDiscreteSolutions}
-  Es existiert eine eindeutige Lösung $\ucr\in\Vnc(\Tcal)$ von
+  Es existiert eine eindeutige Lösung $\ucr\in\CR^1_0(\Tcal)$ von
   \Cref{prob:discreteProblem}.
 
   Außerdem sind die folgenden drei Aussagen
@@ -123,21 +117,15 @@ Somit ist das folgende Sattelpunktsproblem äquivalent zu
         \left(\bar\Lambda,\gradnc\vcr\right)_{L^2(\Omega)}
         = \left(f-\alpha\ucr,
         \vcr\right)_{L^2(\Omega)}
-        \quad\text{für alle } \vcr\in\Vnc(\Tcal).
+        \quad\text{für alle } \vcr\in\CR^1_0(\Tcal).
       \end{equation}
-    \item[(iii)] Für alle $\vcr\in\Vnc(\Tcal)$ löst
-      $\ucr$ die Variationsungleichung
-      \todo[inline]{'Variationsungleichung' habe ich einfach übernommen, will
-      ich das vielleicht einfach 'Ungleichung' nennen um nicht mit Worten 
-      um mich zu werfen, deren Herkunft (woher das zitiert werden kann) mir 
-      noch nicht klar ist?}
+    \item[(iii)] Für alle $\vcr\in\CR^1_0(\Tcal)$ gilt
       \begin{equation}
         \label{eq:discreteVariationalInequality}
         (f-\alpha\ucr,\vcr-\ucr)_{L^2(\Omega)}\leq
         \Vert\gradnc\vcr\Vert_{L^1(\Omega)} -
-        \Vert\gradnc\ucr\Vert_{L^1(\Omega)}
+        \Vert\gradnc\ucr\Vert_{L^1(\Omega)}.
       \end{equation}
-      in $\CR^1_0(\Tcal)$.
   \end{itemize}
 \end{theorem}
 
@@ -314,7 +302,7 @@ Somit ist das folgende Sattelpunktsproblem äquivalent zu
   d\Lcal_h(\bullet,\bar\Lambda)(\ucr;\vcr)$ .
 
   
-  Diese Bedingung ist für alle $\vcr\in\Vnc(\Tcal)$ äquivalent zu
+  Diese Bedingung ist für alle $\vcr\in\CR^1_0(\Tcal)$ äquivalent zu
   \begin{align*}
     (\bar\Lambda,\gradnc\vcr)_{L^2(\Omega)}
     =
