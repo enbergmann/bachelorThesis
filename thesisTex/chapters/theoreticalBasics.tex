@@ -201,6 +201,9 @@ Dieser Abschnitt präsentiert die für diese Arbeite benötigten Aussagen
 über Funktionen beschrankter Variation und basiert auf
 Kapitel 10
 in \cite{ABM14}.
+\todo[inline]{Schreibe vlt noch sowas wie ,Für weitere Aussagen und Details
+zu BV Funktionen und den maßtheoretischen Grundlagen dafür siehe [EG92,
+Braides, ABM14]'}
 Dabei sei $\Omega$ eine offene Teilmenge des $\Rbb^n$.
 Der Raum aller $\Rbb^n$-wertigen Borelmaße wird bezeichnet mit
 $M(\Omega;\Rbb^n)$ und ist nach Riesz identifizierbar mit dem Dualraum von
@@ -278,19 +281,41 @@ wenn eine Aussage mal aus einer anderen Quelle kommt.}
 
 Mit Blick auf die folgenden Kapitel, sei $\Omega\subset\Rbb^n$ nun ein
 polygonal berandetes Lipschitz-Gebiet.
+\todo[inline]{Nochmal nachfragen: das heißt tatsächlich offen, beschränkt mit
+Lipschitz Rand, korrekt?}
+\todo[inline]{Nochmal nachfragen: $\sup u_k<\infty\Leftrightarrow u_k$ bounded,
+korrekt? Ich übersehe da nichts, oder? Falls doch, alle Theoreme nochmal 
+nachschlagen und sichergehen, dass sie richtig zitiert sind.}
 \todo[inline]{Die BV Aussagen aus den nächsten Kapitel wieder hierher holen, soweit 
 sinnvoll. Vielleicht auch nur die Spuroperator Aussage. Kann kopiert werden
 aus delTexts.tex.}
 
-Das folgende Theorem folgt aus Theorem 10.1.4 zusammen mit \Cref{thm:wlsc} 
-wie folgt (Beweis vielleicht wirklich führen).
-Nach 10.1.3 \ldots siehe Skizze auf Blatt.
-(10.1.4 liefert BV kompakt in L1 (immer), also schwache Konvergenz in BV
-impliziert immer starke Konvergenz in L1. Da die Folge im folgenden
-Thm beschränkt ist, impliziert
+\begin{theorem}[\protect{\cite[S. 176, Theorem 4]{EG92}}]
+  \label{thm:l1ConvergentSubsequence}
+  Sei $(u_n)_{n\in\Nbb}\subset \BV(\Omega)$ eine beschränkte Folge. Dann 
+  existiert eine Teilfolge $(u_{n_k})_{k\in\Nbb}$ von
+  $(u_n)_{n\in\Nbb}$ und ein $u\in\BV(\Omega)$, sodass
+  $u_{n_k}\to u$ in $L^1(\Omega)$ für $k\to \infty$.
+\end{theorem}
+\todo[inline]{Das kann vielleciht auch noch im kontinuierlichen Existenzbeweis 
+eingebracht werden und den etwas vereinfachen/verkürzen. Prüf das Zukunfts-Ich}
+
 \begin{theorem}
   \label{thm:compactness}
   Sei $(u_n)_{n\in\Nbb}\subset \BV(\Omega)$ eine beschränkte Folge. Dann 
   existiert eine Teilfolge $(u_{n_k})_{k\in\Nbb}$ und ein $u\in\BV(\Omega)$,
   sodass $u_{n_k}\rightharpoonup u$ in $\BV(\Omega)$ für $k\rightarrow\infty$.
 \end{theorem}
+
+\begin{proof}
+  Nach \Cref{thm:l1ConvergentSubsequence} besitzt $(u_n)_{n\in\Nbb}$ eine
+  Teilfolge $(u_{n_k})_{k\in\Nbb}$, die in $L^1(\Omega)$ gegen ein
+  $u\in\BV(\Omega)$ konvergiert.
+  Diese Folge ist nach Voraussetzung ebenfalls beschränkt in 
+  $\BV(\Omega)$, woraus nach Definition der Norm auf $\BV(\Omega)$ insbesondere
+  folgt, dass
+  $\sup_{k\in\Nbb}|u_{n_k}|_{\BV(\Omega)}< \infty$. 
+  
+  Insgesamt liefert \Cref{thm:wlsc} dann die schwache Konvergenz von
+  $(u_{n_k})_{k\in\Nbb}$ in $\BV(\Omega)$ gegen $u\in\BV(\Omega)$.
+\end{proof}
