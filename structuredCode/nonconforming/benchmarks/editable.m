@@ -13,21 +13,21 @@ function params = editable %#ok<*MSNU,FNDEF>
 %% PARAMETERS
   % misc. parameters (will affect performance)
   showPlots              = false; 
-  plotModeGrayscale      = false; 
+  plotModeGrayscale      = true; 
     % not effective if showPlots == false
   showProgress           = true; 
   degree4Integrate       = 10; 
   plotGivenFunctions     = false;
-  refinementLevel4Plots  = 9; % 11 is very close to the limit
+  refinementLevel4Plots  = 8; % 11 is very close to the limit
     % not effective if plotGivenFunctions == false
   debugIfError           = false;
 
   % AFEM parameters
   geometry               = 'BigSquare'; %#ok<NASGU>                     
     % set automatically to 'Square' if useImage == true
-  initialRefinementLevel = 0;
+  initialRefinementLevel = 1;
   parTheta               = 0.5;
-  minNrDof               = 5e4;
+  minNrDof               = 66000;
   useProlongation        = true;
   beta4Estimate          = 1;
   n4Estimate             = 2;
@@ -35,25 +35,21 @@ function params = editable %#ok<*MSNU,FNDEF>
 
   % algorithm parameters
   u0Mode         = 'zeros'; 
-  initialEpsStop = 1e-5; 
+  initialEpsStop = 1e-1; 
   stopCrit       = ["Exact Error Difference", ...
                     "weighted energy difference"]; 
   parTau         = 1/2;
 
   % experiment parameters
-  useImage               = true;
-  imageName              = 'cameraman.tif'; %#ok<NASGU> 
+  useImage               = false;
+  imageName              = 'f2bawgnSnr20cameraman.tif'; %#ok<NASGU> 
     % not effective if useImage == false
     % whiteSquare.tif, cameraman.tif
-  addNoise               = false; %#ok<NASGU>
-    % not effective if useImage == false
-  blurWidth              = 1; %#ok<NASGU>
-    % not effective if useImage == false
   parAlpha               = 1e4; 
   parBeta                = 1;
-  rhsGradientKnown       = false;
+  rhsGradientKnown       = true;
     % set automatically to false if useImage == true
-  exactSolutionKnown     = false; %#ok<NASGU>
+  exactSolutionKnown     = true; %#ok<NASGU>
     % set automatically to false if useImage == true
   useExactEnergy         = false; %#ok<NASGU>
     % set automatically to false if exactSolutionKnown == false
@@ -63,9 +59,10 @@ function params = editable %#ok<*MSNU,FNDEF>
   saveScreenshots        = 0; 
                               
   % information about experiment for saving and documentation.
-  expName                = 'camTestNrLevels';
-  dirInfoName            = sprintf('%s', ...
-    datestr(now, 'yy_mm_dd_HH_MM_SS'));
+  expName                = 'checkIfBroken';
+  dirInfoName            = sprintf('alpha=%d', parAlpha);
+  %dirInfoName            = sprintf('%s', ...
+  %  datestr(now, 'yy_mm_dd_HH_MM_SS'));
   errorNorm              = ["L2", "energy"]; 
 
   % function handles (not effective if useImage == true)
@@ -75,7 +72,7 @@ function params = editable %#ok<*MSNU,FNDEF>
 
   function y = gradientRightHandSide(x)
     % not effective if useExactEnergy == false
-    y =  bubbleGradient(x);
+    y =  f01(x);
   end
 
   function y = exactSolution(x)
@@ -144,8 +141,6 @@ function params = editable %#ok<*MSNU,FNDEF>
 %                        used as right-hand side f for the experiment
 %   imageName          - 'char array with exactly one row' containing the name
 %                        of the 
-%   addNoise           - TODO   
-%   blurWidth          - TODO    
 %   parAlpha           - 'double' containing the parameter \alpha from the
 %                        problem
 %   parbeta            - 'double' containing the parameter \beta from the
@@ -235,10 +230,8 @@ function params = editable %#ok<*MSNU,FNDEF>
 
   params.u0Mode = u0Mode;
   if useImage
-    params.f = image2function(imageName, parAlpha, ...
-      addNoise, blurWidth); %#ok<UNRCH>
+    params.f = image2function(imageName, parAlpha); %#ok<UNRCH>
   else
-    noise = 0; %#ok<NASGU,UNRCH> 
     params.f = @(x) rightHandSide(x); 
     if rhsGradientKnown 
       params.gradF = @(x) gradientRightHandSide(x);

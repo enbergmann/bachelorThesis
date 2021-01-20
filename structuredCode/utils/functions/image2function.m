@@ -1,4 +1,4 @@
-function f = image2function(imageName, parAlpha, addNoise, blurWidth)
+function f = image2function(imageName, parAlpha)
   %TODO make this prettier at some point, but it works just fine for now
   % even though only on square
 % TODO comment this when it's beautiful
