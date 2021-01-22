@@ -123,3 +123,52 @@ in Kapitel 2, dann das in Kapitel 3, \ldots``)
 links, verrauschtes Bild (Art des Rauschens nennen) mitte, entrauschtes Bild
 rechts). Falls ich die Experimente so eingestellt bekomme, dass sie entrauschen
  (todo)
+
+\begin{figure}
+  \centering
+  \begin{subfigure}[b]{.4\linewidth}
+    \caption{\url{https://homepages.cae.wisc.edu/~ece533/images/cameraman.tif}}
+    \includegraphics[width=\linewidth]{pictures/introBeta/cameraman.png}
+    \label{fig:camerman}
+  \end{subfigure}
+  \quad
+  \begin{subfigure}[b]{.4\linewidth}
+    \caption{$\snr=10$}
+    \includegraphics[width=\linewidth]{pictures/introBeta/snr10.png}
+    \label{fig:camermanSNR10}
+  \end{subfigure}
+
+  \begin{subfigure}{.3\linewidth}
+    \includegraphics[trim = 60 0 60 20, clip, width=\linewidth]
+      {pictures/introBeta/snr10/01000.png}
+    \caption{$\alpha=1000$}
+    \label{fig:snr10alpha1000}
+  \end{subfigure}
+  \begin{subfigure}{.3\linewidth}
+    \includegraphics[trim = 60 0 60 20, clip, width=\linewidth]
+      {pictures/introBeta/snr10/02500.png}
+    \caption{$\alpha=2500$}
+    \label{fig:snr10alpha2500}
+  \end{subfigure}
+  \begin{subfigure}{.3\linewidth}
+    \includegraphics[trim = 60 0 60 20, clip, width=\linewidth]
+      {pictures/introBeta/snr10/10000.png}
+    \caption{$\alpha=10000$}
+    \label{fig:snr10alpha10000}
+  \end{subfigure}
+  \caption{Originalbild (a) und Originalbild mit additiven weißen gaußschen
+  Rauschen (b) mit einem Signal-Rausch-Verhältnis (eng.\ signal-to-noise
+  ratio, SNR) von 10, jeweils mit nachträglich hinzugefügten graduellen
+  Übergang zu schwarzen Rand, was Nullranddaten entspricht und drei Ergebnisse
+  (c)-(d) des adaptiven Algorithmus mit verschiedenen Werten von $\alpha$}
+  \label{fig:exampleDenoising}
+\end{figure}
+
+\begin{figure}
+  \includegraphics[trim = 60 0 60 0, clip, width=\linewidth]
+    {pictures/introBeta/triangulation/triangulation.png}
+  \label{fig:exampleTriangulation}
+  \caption{Triangulierung mit 40300 Freiheitsgraden erzeugt vom adaptiven
+  Algorithmus für rauschfreien Input}
+\end{figure}
+
