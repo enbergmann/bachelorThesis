@@ -1,3 +1,44 @@
+In der Bildverarbeitung kann ein gegebenes Signal häufig nur durch eine
+unstetige Funktion dargestellt werden.
+Sobolev-Funktionen, obwohl im Allgemeinen nicht unbedingt stetig\todo{Quelle
+für Beispiel für unstetige Funktionen sind nicht immer
+Sobolev?},
+lassen die oftmals benötigten Sprünge über ein-kodimensionale Mengen nicht
+zu. Die Menge der Funktionen von beschränkter Variation ist 
+eine echte Obermenge des Sobolev-Raums der einmal schwach differenzierbaren 
+Funktionen und hat sich als geeignet für diese und weitere Anwendungen erwiesen 
+\cite{ABM14, AK06, Bar15} \todo{vielleicht noch Braides hier zitieren}.
+
+\todo[inline]{Genauer sein, also schon $\Omega$ und alles definieren? 
+soll man die Sachen zitieren, wenn die Formulierung davor von diesen 
+Werken inspiriert ist? Sollen noch Kapitel angegeben werden?}
+
+Eine mögliche Problemstellung in der Bildverarbeitung ist die 
+Rauschunterdrück\-ung, das heißt der Versuch unerwünschtes Rauschen in einem
+Signal zu verringern. Das ROF-Modell ist ein Modell-Problem dafür und sucht
+eine Funtion $u:\Omega\to\Rbb$ die das Funktional
+\begin{align*}
+  I(u)\coloneqq |u|_{\BV(\Omega)}+\frac{\alpha}{2}\Vert
+  u-g\Vert_{L^2(\Omega)}^2
+\end{align*}
+minimiert,
+wobei $g\in L^2(\Omega)$ das gegebene verrauschte Bild beschreibt und 
+$\alpha\in \Rbb_+$ ein Parameter ist, mit dem gewichtet werden kann, wie 
+stark Oszillationen minimiert werden sollen, beschrieben durch den Term
+$|u|_{\BV(\Omega)}$ und wie nahe die Lösung $u$ an der Eingabe $g$ liegen
+soll, beschrieben durch den Term $\Vert u-g\Vert_{L^2(\Omega)}$.
+Wie in \Cref{fig:exampleDenoising} zu sehen, führt die Wahl von einem zu
+kleinen $\alpha$ zu einer zu glatten, verwaschen aussehenden Lösung [ref Abb c
+später oder vlt noch was anderes, wenn mehr Bilder dazu kommen] während die 
+Wahl von einem zu großen $\alpha$ das Rauschen kaum verringert [ref
+das entsprechende Subbild].
+
+Benannt ist das ROF-Modell nach Rudin, Osher und Fatemi, die dieses 
+Problem 1972 in \cite{ROF92} vorschlugen
+[cite Getreuer, Chambolle-Pock 2011, bartelsErrorControlAndAdaptivityForBV].
+
+\bigskip
+------------------------
 write the introduction similar to
 [bartelsErrorControlAndAdaptivityForBV], just more details. See below.
 
@@ -82,7 +123,7 @@ große alpha wenig Entrauschen, kleine alpha blurry, oversmoothed u
 \cite{JZ13}
 
 \medskip
-TV Term verringert Osszilationen, lässt aber Unstetigkeiten der Lösung zu.
+TV Term verringert Oszillationen, lässt aber Unstetigkeiten der Lösung zu.
 Regularisierungs Term, der Rauschen und kleine Details entfernt.
 
 \medskip
