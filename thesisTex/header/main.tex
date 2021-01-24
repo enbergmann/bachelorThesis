@@ -12,6 +12,13 @@
 \usepackage{csquotes} % to fix biblatex warning expecting csquotes
 \addbibresource{sourcesBergmannBT.bib}
 
+%\emergencystretch=1em % allows for an additional line-breaking pass with the 
+                      % amount of tolerable white space per line increased
+                      % by 1em
+                      % fixes overfull hbox in bibliography
+                      %TODO check this and other options, maybe see if this 
+                      % can be done only local, check \sloppy and \fussy
+
 % --- MATH ---------------------------------------------------------------------
 
 \usepackage{amsmath} % align
