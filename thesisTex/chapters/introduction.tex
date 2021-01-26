@@ -25,118 +25,32 @@ minimiert,
 wobei $g\in L^2(\Omega)$ das gegebene verrauschte Bild beschreibt und 
 $\alpha\in \Rbb_+$ ein Parameter ist, mit dem gewichtet werden kann, wie 
 stark Oszillationen minimiert werden sollen, beschrieben durch den Term
-$|u|_{\BV(\Omega)}$ und wie nahe die Lösung $u$ an der Eingabe $g$ liegen
-soll, beschrieben durch den Term $\Vert u-g\Vert_{L^2(\Omega)}$.
-Wie in \Cref{fig:exampleDenoising} zu sehen, führt die Wahl von einem zu
-kleinen $\alpha$ zu einer zu glatten, verwaschen aussehenden Lösung [ref Abb c
-später oder vlt noch was anderes, wenn mehr Bilder dazu kommen] während die 
-Wahl von einem zu großen $\alpha$ das Rauschen kaum verringert [ref
-das entsprechende Subbild].
+$|u|_{\BV(\Omega)}$ (der aber Unstetigkeiten zulässt) und wie nahe die Lösung
+$u$ an der Eingabe $g$ liegen soll, beschrieben durch den Term $\Vert
+u-g\Vert_{L^2(\Omega)}^2$. (tradeoff between regularization and data fitting)
+
+Die Wahl von einem zu kleinen $\alpha$ führt zu einer zu glatten, verwaschen
+aussehenden Lösung, zu sehen zum Beispiel in den Abbildungen
+\ref{fig:snr10alpha100} und \ref{fig:snr10alpha1000}, während die Wahl von
+einem zu großen $\alpha$ das Rauschen kaum verringert, zu sehen zum Beispiel in
+den Abbildungen \ref{fig:snr10alpha5000} und \ref{fig:snr10alpha10000}.
+Für weitere Details und Referenzen zur Rauschunterdrückung und auch zu 
+Möglichkeiten $\alpha$ gegebenfalls zu bestimmen, siehe \cite{Get12}.
 
 Benannt ist das ROF-Modell nach Rudin, Osher und Fatemi, die dieses 
-Problem 1992 in \cite{ROF92} vorschlugen \cite{Bar15a, CP10, Get12}.
-
-\bigskip
-------------------------
-write the introduction similar to
-[bartelsErrorControlAndAdaptivityForBV], just more details. See below.
-
-In particular, drop infos needed about BV (wir werden sehen, dass BV Funktionen
-dies und das erfüllen und deshalb diese und jene Terme definiert sind)
-or (wir werden zuerst grundlagen einführen aus der Optimierung und über BV 
-Funktionen [dann verweis auf das entsprechende Kapitel], anschließend
-das konitnuierliche Problem betrachten [verweis auf kapitel] \ldots)
-\bigskip
-
-1. BV Funtionen allgemein: lassen unstetigkeiten zu, mehr als Sobolev 
-Funktionen,
-[hier nochmal überlegen, wie ich dieses über 'manifold' (one codimensional
-(ABM)) springen schreibe, ohne ins Detail gehen zu müssen]
-\medskip
-
-deshalb Anwendung zum Beispiel in
-\medskip
-
-[\cite{ABM14} modelization of a large number of problems in physics, mechanics,
-or image processing requires the introducion of new functionals spaces
-permitting discontinuities of the solution. In phase transitions, image
-segmentation, plasticity theory, the study of crasks and fissures, the study of
-the wake in fluid dynamics , and so forth, the solution of the problem presents
-discontinuities along one-odimensionalmanifolds.
--solution of these problems cannot be found in classical Sobolev spaces
-\medskip
-
-Viele physikalischen Anwendungen können mit kontinuierlichen Funktionen nicht
-beschrieben werden [Bartels, Error Control and Adaptivity for a variational
-model problem defined on functions of bounded variation, und darin zitierte
-Quellen].
-\medskip
-
-introduction aus [Braides] zitieren einfach mit Bemerkung, dass man dort
-Beispiele finden kann (vielleicht auch nicht, da sie direkt auf SBV
-eingeht und nicht auf BV)
-\medskip
-
-insbesondere in der 'Bildbearbeitung' (finde
-noch das richtige Wort, Computer Vision, computergestützte Analyse von Bildern
-oder so änhlich) wird das genutzt
-(Quellen: \cite{AK06}, \ldots)
-
-\cite{Get12} ist mglw ein guter Verweis für weitere Infos zum Denoisung und
-wahrscheinlich in Kapitel 6 auch zur Wahl von alpha, sagt
-aber auch viel über die Interpretation der Parameter
-Wahrscheinlich auch sowas schreiben wie ,Die Anwendung ist kein zentraler
-Punkt in dieser Arbeit, sonder \ldots, für weitere Details zum Denoising siehe
-\ldots.' Dann im Experimente Kapitel eine kleine Rand-Section, in der geguckt
-wird, wie verschiedene Alpha sich auf Denoising auswirken, rein optisch 'nur
-ein kleiner experementeller Exkurs zur Wahr des Tuning Parameters alpha'
-
-Vielleicht auch den Press Release zum Schwarzen Loch Bild erwähnen oder ist
-das zu random?
-
+Problem 1992 in \cite{ROF92} vorschlugen 
+(cf. \cites[1217]{Bar15a}[132]{CP10}[S. 74 f.]{Get12}).
+\todo[inline]{ Vielleicht auch den Press Release zum Schwarzen Loch Bild
+erwähnen oder ist das zu random?}
 
 \medskip
-
-2. als Modell Problem dient das ROF-Modell (\cite[sec 6.2.1]{CP10}, beschreibt
-auch,
-was die Parameter und Terme sollen, aber vielleicht auch noch andere Quellen 
-dazu (''siehe auch JZ13'')
-
-\medskip
-natürlich an dieser Stelle das Funktional einmal wie in Bartels hinschreiben
-
-an der stelle vielleicht auch kurz schreiben, was Bartels tut und dann was wir
-hier tun im Unterschied dazu
-
-\medskip
-
-benannt nach Rudin, Osher und Fatemi, die das Modell vorschlugen in
-\cite{ROF92} (das ist auch aus CP10, also mit in das Zitat von CP10 rein)
-
-\medskip
-u ist die exakte Lösung, g das gesehene verrauschte Bild und alpha Gewichtet 
-das Verhältniss zwischen Regularisierung und data fitting (tradeoff
-between regularization and data fitting, CP10)
-(zitiere eines der Paper/Bücher, CP10 above klärt das ganz gut)
-große alpha wenig Entrauschen, kleine alpha blurry, oversmoothed u
-\cite{JZ13}
-
-\medskip
-TV Term verringert Oszillationen, lässt aber Unstetigkeiten der Lösung zu.
-Regularisierungs Term, der Rauschen und kleine Details entfernt.
-
-\medskip
-der zweite Term versucht die Lösung nahe an g zu halten (Treue, fidelity) (cite
-getreuer und JZ13, hat aber keinen mathscinet entry), vielleicht auch nur
-für mich
-
-\medskip
-INSBESONDERE erst ROF beschreiben und Parameter erklären und dann CCs 
-Variante hinchreiben
-
-\medskip
-3. wir betrachten hier eine leicht abgewandlete Variante, die wie folgt
-zusammenhängt (dann dieses Remark (aber wohl nicht mehr als Remark)
+TODO (this is just a sketch)
+In (Quelle) macht Bartels, der das ROF MOdell mit Courant Elementen (Quelle) 
+approximiert und den Algorithmus basierend auf (Quelle) anwendet.
+Wir betrachten folgende leicht andere Formuliereung des ROF Modell 
+(Problem)
+und nutzen die CR FEM um die Lösung des nichtkonformen Problem
+(Problem) zu bestimmen.
 
 \begin{remark}
   In \cite[Kapitel~10.1.3]{Bar15} wird \Cref{prob:continuousProblem} für ein
@@ -156,15 +70,31 @@ zusammenhängt (dann dieses Remark (aber wohl nicht mehr als Remark)
   \Vert v\Vert_{L^1(\partial\Omega)}=0\right\}$.
 \end{remark}
 
-4. Kurzen Überblick über Aufbau der Arbeit (,,In Kap 1 machen wir das, dann das
-in Kapitel 2, dann das in Kapitel 3, \ldots``)
+In dieser Arbeit werden in Kapitel 2 (todo refs machen für Kapitel und nutzen)
+zunächst die benötigten theoretischen Grundlangen zur Variationsrechnung und
+Optimierung in Banachräumen als auch die relevanten Eigenschaften des
+Raumes der Funktionen von beschränkter Variation (ggf. ergänzen, falls noch
+mehr passiert irgendwann.
 
-5. auch ein hübsches Bild wie bei Philipp (siehe Paper, sowas wie: Originalbild 
-links, verrauschtes Bild (Art des Rauschens nennen) mitte, entrauschtes Bild
-rechts). Falls ich die Experimente so eingestellt bekomme, dass sie entrauschen
- (todo)
+In Kapitel 3 folgt die Formulierung des konitnuierlichen Problems und des
+Existenz- und Eindeutigkeitsbeweis für Minimiert des Problems. Außerdem 
+wird die starke Konverxität des Energiefunktinals gezeigt für die später
+numerische Auswerung.
 
-\begin{figure}
+Die Diskretisierung der nichtkonformen (sic?) Formulierung  des Problems 
+und der Beweis der Existenz und Eindeutigkeit von Minimierern des 
+diskreten Problems geschieht anschließend in Kapitel 4.
+
+Kapitel 5 beschreibt den Algorithmus und beweist Konvergenz der 
+Iterate. 
+
+Kapitel 6 Implementierung und erklärt, wie das Programm genutzt werden kann.
+Insbesondere wird auch erläutert, wie die Ergebnisse, die in 
+\Cref{fig:exampleDenoising} zu sehen sind, reproduziert werden können.
+
+Kapitel 7 nutzt das Programm für Experimente, die dort ausgewertet werden.
+
+\begin{figure}[h]
   \centering
   \begin{subfigure}[b]{.4\linewidth}
     \caption{\url{https://homepages.cae.wisc.edu/~ece533/images/cameraman.tif}}
@@ -179,16 +109,29 @@ rechts). Falls ich die Experimente so eingestellt bekomme, dass sie entrauschen
   \end{subfigure}
 
   \begin{subfigure}{.3\linewidth}
+    \caption{$\alpha=100$}
+    \includegraphics[trim = 60 0 60 20, clip, width=\linewidth]
+      {pictures/introBeta/snr10/00100.png}
+    \label{fig:snr10alpha100}
+  \end{subfigure}
+  \begin{subfigure}{.3\linewidth}
+    \caption{$\alpha=1000$}
     \includegraphics[trim = 60 0 60 20, clip, width=\linewidth]
       {pictures/introBeta/snr10/01000.png}
-    \caption{$\alpha=1000$}
     \label{fig:snr10alpha1000}
   \end{subfigure}
   \begin{subfigure}{.3\linewidth}
+    \caption{$\alpha=2500$}
     \includegraphics[trim = 60 0 60 20, clip, width=\linewidth]
       {pictures/introBeta/snr10/02500.png}
-    \caption{$\alpha=2500$}
     \label{fig:snr10alpha2500}
+  \end{subfigure}
+
+  \begin{subfigure}{.3\linewidth}
+    \includegraphics[trim = 60 0 60 20, clip, width=\linewidth]
+      {pictures/introBeta/snr10/05000.png}
+    \caption{$\alpha=05000$}
+    \label{fig:snr10alpha5000}
   \end{subfigure}
   \begin{subfigure}{.3\linewidth}
     \includegraphics[trim = 60 0 60 20, clip, width=\linewidth]
@@ -200,9 +143,12 @@ rechts). Falls ich die Experimente so eingestellt bekomme, dass sie entrauschen
   Rauschen (b) mit einem Signal-Rausch-Verhältnis (eng.\ signal-to-noise
   ratio, SNR) von 10, jeweils mit nachträglich hinzugefügten graduellen
   Übergang zu schwarzen Rand, was Nullranddaten entspricht und drei Ergebnisse
-  (c)-(d) des adaptiven Algorithmus mit verschiedenen Werten von $\alpha$}
+  (c)-(g) des adaptiven Algorithmus mit verschiedenen Werten von $\alpha$}
   \label{fig:exampleDenoising}
 \end{figure}
+
+\todo[inline]{Experimente länger rechnen und vielleicht 9 Wahlen für alpha mit
+einem ernsthaften Versuch, ein gut aussehendes entrauschtes Bild zu bekommen}
 
 \begin{figure}
   \includegraphics[trim = 60 0 60 0, clip, width=\linewidth]
@@ -212,3 +158,5 @@ rechts). Falls ich die Experimente so eingestellt bekomme, dass sie entrauschen
   Algorithmus für rauschfreien Input}
 \end{figure}
 
+\todo[inline]{diese Triangulierungs Figure lieber in den Experimente und hier
+(und zwar ausschließlich hier) die verrauschungsbeispiele bringen}
