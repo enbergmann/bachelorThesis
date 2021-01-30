@@ -402,7 +402,23 @@ Somit ist das folgende Sattelpunktsproblem äquivalent zu
   $\tilde{u}_\CR=\ucr$ in $\CR^1_0(\Tcal)$.
 \end{proof}
 
-\todo[inline]{Noch Remark 1.2 und Example 1 aus CC Draft übernehmen als Beispiel
-für die Uneindeutigkeit von $\Lambda$ im Allgemeinen? Falls ja, wie zitieren 
-,,Prof. Carstensen machte folgende Bemerkung''}
+Als letztes noch eine von Prof. Carstensen angemerkte äquivalente 
+Charakterisierung der dualen Variable $\bar\Lambda$ aus
+  \Cref{thm:discProbCharacterizationOfDiscreteSolutions} zur diskreten Lösung
+  $\ucr$.
+\begin{remark}
+  Das $\bar\Lambda$ fast überall in $\Omega$
+  \Cref{eq:discreteMultiplierScalerProductEquality} und
+  $|\bar\Lambda(\bullet)|\leq 1$ erfüllt, ist äquivalent zu 
+  $\bar\Lambda\in\sign(\gradnc \ucr)$. Falls $\gradnc\ucr\neq 0$ auf
+  $T\in\Tcal$, ist $\bar\Lambda=\gradnc\ucr/|\gradnc\ucr|$ eindeutig auf
+  $T$.
+
+  Im Allgemeinen ist $\bar\Lambda$ nicht eindeutig. So erfüllt zum Beispiel
+  für $f\equiv 0$ in \Cref{prob:discreteProblem} mit eindeutiger Lösung
+  $\ucr\equiv 0$ die Wahl $\bar\Lambda\coloneqq \Curl(v_\C)$ für ein beliebiges
+  $v_\C\in S^1(\Tcal)$ mit $|\Curl(v_\C)|\leq 1$ die Eigenschaft \textit{(ii)}
+  aus \Cref{thm:discProbCharacterizationOfDiscreteSolutions}.
+\end{remark}
+
 \section{Refinement Indicator und garantierte untere Energieschranke}
