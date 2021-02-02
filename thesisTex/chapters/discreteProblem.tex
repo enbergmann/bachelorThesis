@@ -410,8 +410,14 @@ Charakterisierung der dualen Variable $\bar\Lambda$ aus
   Das $\bar\Lambda$ fast überall in $\Omega$
   \Cref{eq:discreteMultiplierScalerProductEquality} und
   $|\bar\Lambda(\bullet)|\leq 1$ erfüllt, ist äquivalent zu 
-  $\bar\Lambda\in\sign(\gradnc \ucr)$. Falls $\gradnc\ucr\neq 0$ auf
-  $T\in\Tcal$, ist $\bar\Lambda=\gradnc\ucr/|\gradnc\ucr|$ eindeutig auf
+  $\bar\Lambda\in\sign(\gradnc \ucr)$.   
+
+  Die Notwendigkeit folgt hierbei unter anderem daraus, dass Gleichheit in der
+  CSU gilt genau dann, wenn die Vektoren linear abhänigig sind, da
+  $|\bar\Lambda|\leq 1$ gilt.
+
+  Falls $\gradnc\ucr\neq 0$ auf $T\in\Tcal$, gilt somit, nach Definition von
+  $\sign$, dass $\bar\Lambda=\gradnc\ucr/|\gradnc\ucr|$ eindeutig auf
   $T$.
 
   Im Allgemeinen ist $\bar\Lambda$ nicht eindeutig. So erfüllt zum Beispiel
@@ -421,4 +427,42 @@ Charakterisierung der dualen Variable $\bar\Lambda$ aus
   aus \Cref{thm:discProbCharacterizationOfDiscreteSolutions}.
 \end{remark}
 
-\section{Refinement Indicator und garantierte untere Energieschranke}
+\section{Verfeinerungsindikator und garantierte untere Energieschranke}
+Prof. Carstensen stellte zur numerischen Untersuchung den folgenden
+Verfeinerungsindikator zur adaptiven Netzverfeinerung  und eine 
+garantierte untere Energieschranke zur Verfügung.
+
+\begin{definition}[Verfeinerungsindikator]\label{def:refinementIndicator}
+  Für $n\in\mathbb{N}$ (hier $n=2$) und $0<\gamma\leq 1$ definieren wir den
+  Verfeinerungsindikator $\eta\coloneqq\sum_{T\in\Tcal}\eta(T)$, wobei
+  \begin{align} \label{eq:refinementIndicator} 
+    \eta (T)\coloneqq
+    \underbrace{|T|^{2/n}\Vert f-\alpha \ucr\Vert^2_{L^2(T)}}_{\eqqcolon
+    \eta_\text{V}(T)} +\underbrace{|T|^{\gamma/n}\sum_{F\in\Fcal(T)}\Vert
+    [\ucr]_F\Vert_{L^1(F)}}_{ \eqqcolon \eta_\text{J}(T)} 
+  \end{align} 
+  für alle $T\in\Tcal$.
+\end{definition}
+
+\begin{theorem}
+  \label{thm:gleb}
+  Ist $f\in H^1_0(\Omega)$, $u\in H^1_0(\Omega)$ Lösung von
+  \Cref{prob:continuousProblem} mit minimaler Energie $E(u)$ und $\ucr\in
+  \CR^1_0(\Omega)$ Lösung von \Cref{prob:discreteProblem} mit minimaler Energie
+  $\Enc(\ucr)$, dann gilt
+  \begin{align}
+    \label{eq:gleb}
+    \Enc(\ucr)+\frac{\alpha}{2}\Vert u-\ucr\Vert_{L^2(\Omega)}^2
+    -\frac{\kappa_\CR}{\alpha}\Vert
+    h_\Tcal(f-\alpha\ucr)\Vert_{L^2(\Omega)} |f|_{1,2}\leq E(u),
+  \end{align}
+  wobei $|\bullet|_{1,2}=\Vert\nabla \bullet\Vert_{L^2(\Omega)}$.
+  
+  Insbesondere gilt für 
+  $\Egleb \coloneqq 
+    \Enc(\ucr) - \frac{\kappa_\CR}{\alpha}\Vert
+    h_\Tcal(f-\alpha\ucr)\Vert_{L^2(\Omega)} |f|_{1,2}$, dass
+    $\Enc(\ucr)\geq \Egleb$ und $E(u)\geq \Egleb$.
+    \todo[inline]{$\kappa_\CR$ (Bessel Nullstelle) zitieren und wohl noch was
+    zur Regularität der Lösung bei dieser RHS sagen.}
+\end{theorem}
