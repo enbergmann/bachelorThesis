@@ -13,7 +13,7 @@ function params = editable %#ok<*MSNU,FNDEF>
 %% PARAMETERS
   % misc. parameters (will affect performance)
   showPlots              = false; 
-  plotModeGrayscale      = true; 
+  plotModeGrayscale      = false; 
     % not effective if showPlots == false
   showProgress           = true; 
   degree4Integrate       = 10; 
@@ -25,9 +25,9 @@ function params = editable %#ok<*MSNU,FNDEF>
   % AFEM parameters
   geometry               = 'BigSquare'; %#ok<NASGU>                     
     % set automatically to 'Square' if useImage == true
-  initialRefinementLevel = 1;
-  parTheta               = 0.5;
-  minNrDof               = 66000;
+  initialRefinementLevel = 0;
+  parTheta               = 1;
+  minNrDof               = 1e9;
   useProlongation        = true;
   beta4Estimate          = 1;
   n4Estimate             = 2;
@@ -35,7 +35,7 @@ function params = editable %#ok<*MSNU,FNDEF>
 
   % algorithm parameters
   u0Mode         = 'zeros'; 
-  initialEpsStop = 1e-1; 
+  initialEpsStop = 1e-4; 
   stopCrit       = ["Exact Error Difference", ...
                     "weighted energy difference"]; 
   parTau         = 1/2;
@@ -45,39 +45,39 @@ function params = editable %#ok<*MSNU,FNDEF>
   imageName              = 'f2bawgnSnr20cameraman.tif'; %#ok<NASGU> 
     % not effective if useImage == false
     % whiteSquare.tif, cameraman.tif
-  parAlpha               = 1e4; 
+  parAlpha               = 1e0; 
   parBeta                = 1;
   rhsGradientKnown       = true;
     % set automatically to false if useImage == true
   exactSolutionKnown     = true; %#ok<NASGU>
     % set automatically to false if useImage == true
-  useExactEnergy         = false; %#ok<NASGU>
+  useExactEnergy         = true; %#ok<NASGU>
     % set automatically to false if exactSolutionKnown == false
-  exactEnergy            = -0.2945243096; %#ok<NASGU> % 7 significant digits
+  exactEnergy            = -2.058034062391; %#ok<NASGU> % 7 significant digits
     % set automatically to NaN if exactSolutionKnown == false
     % not effective if useExactEnergy == false
   saveScreenshots        = 0; 
                               
   % information about experiment for saving and documentation.
-  expName                = 'checkIfBroken';
-  dirInfoName            = sprintf('alpha=%d', parAlpha);
-  %dirInfoName            = sprintf('%s', ...
-  %  datestr(now, 'yy_mm_dd_HH_MM_SS'));
+  expName                = 'moreOutputTest';
+  %dirInfoName            = sprintf('alpha=%d', parAlpha);
+  dirInfoName            = sprintf('%s', ...
+    datestr(now, 'yy_mm_dd_HH_MM_SS'));
   errorNorm              = ["L2", "energy"]; 
 
   % function handles (not effective if useImage == true)
   function y = rightHandSide(x)
-    y =  bubble(x);
+    y =  f01(x, [parAlpha, parBeta]);
   end
 
   function y = gradientRightHandSide(x)
     % not effective if useExactEnergy == false
-    y =  f01(x);
+    y =  f01Gradient(x, [parAlpha, parBeta]);
   end
 
   function y = exactSolution(x)
     % not effective if exactSolutionKnown == false
-    y = f02ExactSolution(x, parBeta);
+    y = f01ExactSolution(x, parBeta);
   end
    
 %% DOCUMENTATION OF PARAMETERS

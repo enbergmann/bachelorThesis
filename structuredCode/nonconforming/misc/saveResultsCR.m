@@ -2,7 +2,7 @@
 % one can see everything in one go, also elapsed time of program and so on
 % elapsed time in hours and days depending on scale
 function saveResultsCR(params, currData, ...
-    outputLvlInfo, outputLvlError, outputLvlEnergy, output)
+    outputLvlInfo, outputLvlError, outputLvlEnergy, outputLvlHidden, output)
 %% INIT
   % extract necessary parameters from params
   geometry = params.geometry;
@@ -270,6 +270,10 @@ function saveResultsCR(params, currData, ...
   tableStruct = outputLvlInfo;
   fieldsError = fieldnames(outputLvlError);
   fieldsEnergy = fieldnames(outputLvlEnergy);
+  fieldsHidden = fieldnames(outputLvlHidden);
+  for ind = 1:length(fieldsHidden) 
+    tableStruct.(fieldsHidden{ind}) = outputLvlHidden.(fieldsHidden{ind});
+  end
   for ind = 2:length(fieldsError) 
     tableStruct.(fieldsError{ind}) = outputLvlError.(fieldsError{ind});
   end

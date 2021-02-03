@@ -65,6 +65,9 @@ function startAlgorithmCR(benchmark)
     if useExactEnergy, outputLvlEnergy.diffGlebExactE = []; end
     outputLvlEnergy.diffGlebDiscreteE = [];
   end
+
+  outputLvlHidden.hMax = [];
+  %outputLvlHidden.jumps = [];
   
   % initialize currData (struct with parameters and data for the level)
   currData.c4n = c4n;
@@ -93,7 +96,10 @@ function startAlgorithmCR(benchmark)
 %% MAIN
   while(true)
     % initialize remaining current data
-    currData.hMax = max(length4s);
+    hMax = max(length4s);
+    currData.hMax = hMax;
+    outputLvlHidden.hMax(end+1, 1) = hMax;
+
     currData.area4e = computeArea4e(c4n, n4e);
 
     currData.s4n = computeS4n(n4e);
@@ -186,7 +192,7 @@ function startAlgorithmCR(benchmark)
 
     % save results
     saveResultsCR(params, currData, ...
-      outputLvlInfo, outputLvlError, outputLvlEnergy, output);
+      outputLvlInfo, outputLvlError, outputLvlEnergy, outputLvlHidden, output);
 
     % check termination and update level
     if nrDof(end) >= minNrDof, break; end
