@@ -42,6 +42,10 @@ function startAlgorithmCR(benchmark)
   u0Mode = params.u0Mode;
   
   % initialize outputLvl structs (structs for AFEM output)
+
+  outputLvlHidden.hMax = [];
+  outputLvlHidden.sumL1NormOfJumps = [];
+  
   lvl = 0;
 
   outputLvlInfo.lvl = lvl;
@@ -65,9 +69,6 @@ function startAlgorithmCR(benchmark)
     if useExactEnergy, outputLvlEnergy.diffGlebExactE = []; end
     outputLvlEnergy.diffGlebDiscreteE = [];
   end
-
-  outputLvlHidden.hMax = [];
-  %outputLvlHidden.jumps = [];
   
   % initialize currData (struct with parameters and data for the level)
   currData.c4n = c4n;
@@ -170,6 +171,11 @@ function startAlgorithmCR(benchmark)
     end
 
     % ESTIMATE
+    
+    %TODO compute jumps only once and give them to estimate
+    outputLvlHidden.sumL1NormOfJumps(end+1, 1) = ...
+      sum(computeL1NormOfJump4s(currData, output));
+
     [eta4e, etaVol4e, etaJumps4e] = ...
       estimateErrorCR4e(params, currData, output);
     
