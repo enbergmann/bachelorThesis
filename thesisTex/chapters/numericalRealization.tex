@@ -310,6 +310,92 @@ welche Stellen wird also umnummeriert
 \section{Aufstellung des zu lösenden LGS}
 Aufstellung der Gradienten etc.
  
+\section{Berechnung der L1 Norm der Sprünge}
+Für die Berechnung des Verfeinerungsindikators [verweis auf entsprechende
+section] und zur Auswertung der kontinuierlichen Energie $E(\vcr)$ einer 
+Crouzeix-Raviart Funktion $\vcr$, deren diskrete Energie $\Enc(\vcr)$
+bereits bekannt ist, werden die $L^1$ Normen der Kantensprünge 
+$[\vcr]_F$ für alle Kanten $F\in\Fcal$ der Triangulierung benötigt,
+wobei für eine Innenkante $F\in\Fcal(\Omega)$, die gemeinsame Kante der
+Dreiecke $T_+$ und $T_-$ ist, gilt
+$[\vcr]_F\coloneqq (\vcr|_{T_+})|_F-(\vcr|_{T_-})|_F$
+und $[\vcr]_F \coloneqq \vcr|_F$ für eine Randkante
+$F\in\Fcal(\partial\Omega)$. Die Konvention der Wahl von
+$T_+$ und $T_-$ ist hier irrelevant, da wir
+zur Berechung von $\Vert [\vcr]_F\Vert_{L^1(\Omega)}$
+ausschließlich den Betrag $|[\vcr]_F|$ benötigen.
+
+Da $\vcr\in\CR^1(\Tcal)$,
+ist $[\vcr]_F$ affin linear und es gilt $[\vcr]_F(\Mid(F))=0$ für 
+alle Innenkanten $F\in\Fcal(\Omega)$ und, falls 
+$\vcr\in\CR^1_0(\Tcal)$, auch für alle Randkanten $F\in\Fcal(\partial\Omega)$.
+
+Die folgenden Aussagen gelten also für Innenkanten beliebiger
+Crouzeix-Raviart Funktionen, wir beschränken uns aber von nun
+an auf Funktionen $\vcr\in\CR^1_0(\Tcal)$.
+
+Betrachten wir also eine beliebige Kante $F\in\Fcal$
+mit $F=\conv\{P_1,P_2\}$. 
+Wir definieren eine Parametrisierung $\gamma:[0,2]\to\Rbb^2$ von $F$ durch
+$\gamma(t)\coloneqq \frac{t}{2}(P_2-P_1)+P_1$. 
+Es gilt $|\gamma'|\equiv \frac{1}{2}|P_2-P_1|=\frac{1}{2}|F|$.
+
+Sei außerdem
+$p(t)\coloneqq [\vcr]_F(\gamma(t))$. Dann gilt nach
+ [cite Wegintegrale] 
+\begin{align*}
+  \Vert [\vcr]_F\Vert_{L^1(F)} 
+  &=
+  \int_F |[\vcr]_F|\ds 
+  = \int_0^2 |p(t)|\,|\gamma'(t)|\dt
+  = \frac{|F|}{2}\int_0^2 |p(t)|\dt\\
+  &= \frac{|F|}{2}\left(\int_0^1 |p(t)|\dt + \int_1^2 |p(t)|\dt\right).
+\end{align*}
+
+Da $\vcr\in\CR^1_0(\Tcal)$, ist $|p|$ auf $[0,1]$ und $[1,2]$ jeweils
+ein Polynom
+vom Grad $1$ mit $p(1)=[\vcr]_F(\Mid(F))=0$, womit sich $|p|$ jeweils
+explizit ausdrücken lässt durch
+$|p|(t)=(1-t)|p|(0)$ für alle $t\in[0,1]$ und 
+$|p|(t)=(t-1)|p|(2)$ für alle $t\in[1,2]$.
+Die Mittelpunktsregel $\int_a^b f(x)\dx\approx (b-a)f( (a+b)/2)$ [cite] ist
+exakt für Polynome vom Grad $1$ und somit gilt
+\begin{align*}
+  \int_0^1 |p(t)|\dt 
+  &= 
+  (1-0)|p|\left( \frac{1}{2} \right)
+  =
+  \frac{|p|(0)}{2}\quad\text{und }\\
+  \int_1^2 |p(t)|\dt 
+  &= 
+  (2-1)|p|\left( \frac{3}{2} \right)
+  =
+  \frac{|p|(2)}{2}.
+\end{align*}
+
+Somit erhalten wir insgesamt 
+\begin{align*}
+  \Vert [\vcr]_F\Vert_{L^1(F)} 
+  &=
+  \frac{|F|}{2}\left(\frac{|p|(0)}{2} + \frac{|p|(2)}{2}\right)
+  =
+  \frac{|F|}{4}(|p|(0)+|p|(2))\\
+  &= 
+  \frac{|F|}{4}\big(|[\vcr]_F|(P_1)+|[\vcr]_F|(P_2)\big),
+\end{align*}
+beziehungsweise 
+  $\Vert [\vcr]_F\Vert_{L^1(F)} =
+  \frac{|F|}{4}\big(|\vcr|(P_1)+|\vcr|(P_2)\big)$ für eine Randkanten
+  $F\in\Fcal(\partial\Omega)$.
+
+Diese Berechnung ist realisiert durch die 
+Funktionen \texttt{computeBlaJumps}, die die absoluten Sprünge
+in den Endpunkte einer Kante berchnet, \texttt{computeAbsJumps}, die \ldots,
+und \texttt{computeL1NormOfJumps}, die schließlich die $L^1$ Norm aller
+Kantensprünge berechnet\ldots.
+
+
+
 \section{Implementation der GLEB}
 
 \section{Implementation des Refinement Indicators}
