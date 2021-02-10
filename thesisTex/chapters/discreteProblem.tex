@@ -427,6 +427,53 @@ Charakterisierung der dualen Variable $\bar\Lambda$ aus
   aus \Cref{thm:discProbCharacterizationOfDiscreteSolutions}.
 \end{remark}
 
+\section{Zu untersuchende Raten (WIP Titel)}
+Wir zeigen in dieser Arbeit keine Fehlerabschätzung, können aber in den 
+Experimenten Raten mit dem folgenden Theorem für
+[cite Problem von Bartels bzw ROF-Modell] vergleichen.
+\begin{theorem}[\protect{\cite[S. 309, Theorem 10.7]{Bar15}}]
+  \label{thm:errorEstimateCourant}
+  Sei $\Omega\subset\Rbb^2$ sternförmig und $g\in L^\infty$.
+  Sind $u\in\BV(\Omega)\cap L^2(\Omega)$ und $u_h\in S^1(\Tcal)$ [irgendwann
+  Courant noch einführen, x wahrscheinlich bei den Bartels Vergleich] die 
+  Minimiere von $I$ in den entsprechenden Räumen.
+  Dann gilt 
+  \begin{align*}
+    \frac{\alpha}{2}\Vert u-u_h\Vert^2_{L^2(\Omega)}\leq
+    ch^{1/2}.
+  \end{align*}
+\end{theorem}
+\todo[inline]{auf S 310 sagt Bartels noch was dazu, dass die Rate suboptimal 
+ist und im Allgmeinen nicht erreicht wird. Angucken und das dann in der 
+Auswertung einfließen lassen}
+
+Mit den Betrachtungen zum Beginn dieses Kapitels und nach 
+\Cref{thm:convexity}, da $\CR^1_0(\Tcal)\subset\BV(\Omega)\cap\L^2(\Omega)$,
+erhalten wir weiterhin die folgende Aussage.
+
+\begin{corollary}
+  Ist $u\in\BV(\Omega)$ Lösung von \Cref{prob:continuousProblem} und
+  $\ucr\in\CR^1_0(\Tcal)$ Lösung von \Cref{prob:discreteProblem}.
+
+  Dann gilt
+  \begin{align*}
+    \frac{\alpha}{2}\Vert u-\ucr\Vert^2_{L^2(\Omega)}\leq
+    E(\ucr)-E(u)=\Enc(\ucr)+\sum_{F\in\Fcal}\Vert[\ucr]_F\Vert_{L^1(F)}-E(u).
+  \end{align*}
+
+  Insbesondere gilt auch  [nur für mich zur erinnerung für den Moment]
+  \begin{align*}
+    \frac{\alpha}{2}\Vert u-\ucr\Vert^2_{L^2(\Omega)}&\leq
+    E(\ucr)-E(u)=
+    |E(\ucr)-E(u)|=
+    |E(u)-E(\ucr)|\\
+    &=\left|\Enc(\ucr)+\sum_{F\in\Fcal}\Vert[\ucr]_F\Vert_{L^1(F)}-E(u)\right|\\
+    &\leq
+    \left|\Enc(\ucr)-E(u)\right|+
+    \left|\sum_{F\in\Fcal}\Vert[\ucr]_F\Vert_{L^1(F)}\right|.
+  \end{align*}
+\end{corollary}
+
 \section{Verfeinerungsindikator und garantierte untere Energieschranke}
 Prof. Carstensen stellte zur numerischen Untersuchung den folgenden
 Verfeinerungsindikator zur adaptiven Netzverfeinerung  und eine 

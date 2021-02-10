@@ -3,7 +3,8 @@
 \theoremstyle{plain}
 \newtheorem{theorem}{Theorem}[chapter]
 \newtheorem{lemma}[theorem]{Lemma}
-\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{corollary}[theorem]
+            {\ifthenelse{\equal{\lang}{ngerman}}{Korollar}{Corollary}}
 
 \theoremstyle{definition}
 \newtheorem{definition}[theorem]{Definition}
