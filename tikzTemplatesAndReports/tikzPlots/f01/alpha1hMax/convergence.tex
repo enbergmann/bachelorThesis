@@ -86,59 +86,14 @@
     table[x = {hMax}, y = {diffDiscExactE}] 
     {moreOutput/lvl8/lvlOutput.csv}; 
 
-    % % adaptive 0.999
-    % \addplot [densely dotted, cyan, mark = square*] 
-    % table[x = {nrDof}, y = {error4lvl}] 
-    % {1e-5/uniform/lvl7/lvlOutput.csv}; 
-
-    % \addplot [densely dotted, green, mark = square*] 
-    % table[x = {nrDof}, y = {eta}] 
-    % {1e-5/uniform/lvl7/lvlOutput.csv}; 
-
-    % \addplot [densely dotted, red, mark = square*] 
-    % table[x = {nrDof}, y = {etaVol}] 
-    % {1e-5/uniform/lvl7/lvlOutput.csv}; 
-
-    % \addplot [densely dotted, orange, mark = square*] 
-    % table[x = {nrDof}, y = {etaJumps}] 
-    % {1e-5/uniform/lvl7/lvlOutput.csv}; 
-
-    % \addplot [densely dotted, gray, mark = square*] 
-    % table[x = {nrDof}, y = {diffGlebExactE}] 
-    % {1e-5/uniform/lvl7/lvlOutput.csv}; 
-
-  %  % gleb
-  %  add slope triangle
-  %  \draw (axis cs:1e4,7.54e1)
-  %               -- (axis cs:1e6,3e1) 
-  %               -- (axis cs:1e4,3e1) node [midway, below] {\scriptsize$5$} 	 
-  %               -- cycle node [midway, left] {\scriptsize$1$}
-  %               ;
-  %  % eta
-  %  add slope triangle
-  %  \draw (axis cs:1e6,1e0)
-  %               -- (axis cs:1e6,1e-1) node [midway, right] {\scriptsize$1$}
-  %               -- (axis cs:1e4,1e0)
-  %               -- cycle node [midway, above] {\scriptsize$2$}
-  %               ;
-
-  %  % etaJumps
-  %  add slope triangle
-  %  \draw (axis cs:1e6,5e-4)
-  %               -- (axis cs:1e5,5e-4) node [midway, below] {\scriptsize$1$}
-  %               -- (axis cs:1e5,5e-3) node [midway, left] {\scriptsize$1$}
-  %               -- cycle 
-  %               ;
+    % ||u - u_h||^2_{L^2(\Omega)}
+    add slope triangle
+    \draw (axis cs:1e-2,2e-4)
+                 -- (axis cs:1e-1,2e-4) node [midway, below] {\scriptsize$1$} 	 
+                 -- (axis cs:1e-1,2e-2) node [midway, right] {\scriptsize$2$}
+                 -- cycle
+                 ;
   \end{loglogaxis}
 \end{tikzpicture}
-
-%\begin{tikzpicture}
-%  \begin{loglogaxis}
-%    \addplot
-%    table[x={nrDof}, y={error4lvl}]  
-%    {f01/epsModerate/lvl15_nrDof1209309/lvlOutput.txt}
-%  \end{loglogaxis}
-%\end{tikzpicture}
-
 \end{document}
 
