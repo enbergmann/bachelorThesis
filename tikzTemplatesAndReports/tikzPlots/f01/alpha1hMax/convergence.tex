@@ -32,7 +32,7 @@
 \begin{tikzpicture}
   \begin{loglogaxis}[legend pos = outer north east, 
     scale = 2, xlabel = {h},
-    ymin = 1e-4,
+    ymin = 4e-5,
     ymajorgrids=true,
     legend entries = {$\theta = 1$,
                      $\Vert u - u_h\Vert_{L^2(\Omega)}$,
@@ -56,35 +56,35 @@
     % uniform
     \addplot [densely dashed, cyan, mark = square*] 
     table[x  expr=\thisrow{hMax}, y expr=\thisrow{error4lvl}] 
-    {moreOutput/lvl8/lvlOutput.csv}; 
+    {moreOutput/lvl9/lvlOutput.csv}; 
 
     \addplot [densely dashed, blue, mark = square*] 
     table[x  expr=\thisrow{hMax}, y expr=\thisrow{error4lvl}^2] 
-    {moreOutput/lvl8/lvlOutput.csv}; 
+    {moreOutput/lvl9/lvlOutput.csv}; 
 
     \addplot [densely dashed, green, mark = square*] 
     table[x = {hMax}, y = {eta}] 
-    {moreOutput/lvl8/lvlOutput.csv}; 
+    {moreOutput/lvl9/lvlOutput.csv}; 
 
     \addplot [densely dashed, red, mark = square*] 
     table[x = {hMax}, y = {etaVol}] 
-    {moreOutput/lvl8/lvlOutput.csv}; 
+    {moreOutput/lvl9/lvlOutput.csv}; 
 
     \addplot [densely dashed, orange, mark = square*] 
     table[x = {hMax}, y = {etaJumps}] 
-    {moreOutput/lvl8/lvlOutput.csv}; 
+    {moreOutput/lvl9/lvlOutput.csv}; 
 
     \addplot [densely dashed, gray, ultra thick, mark = square*] 
     table[x = {hMax}, y = {diffGlebExactE}] 
-    {moreOutput/lvl8/lvlOutput.csv}; 
+    {moreOutput/lvl9/lvlOutput.csv}; 
     
     \addplot [densely dashed, lightgray, ultra thin, mark = square*] 
     table[x = {hMax}, y = {diffGlebDiscreteE}] 
-    {moreOutput/lvl8/lvlOutput.csv}; 
+    {moreOutput/lvl9/lvlOutput.csv}; 
 
     \addplot [densely dashed, brown, mark = square*] 
     table[x = {hMax}, y = {diffDiscExactE}] 
-    {moreOutput/lvl8/lvlOutput.csv}; 
+    {moreOutput/lvl9/lvlOutput.csv}; 
 
     % ||u - u_h||^2_{L^2(\Omega)}
     add slope triangle
