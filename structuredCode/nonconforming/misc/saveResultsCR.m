@@ -70,7 +70,9 @@ function saveResultsCR(params, currData, ...
   dirName = sprintf('../../results/nonconforming/%s/%s/lvl%d', ...
     expName, dirInfoName, currLvl);
     % startAlgorithmNC run from .../structuredcode/nonconforming
-  mkdir(sprintf('%s/mesh', dirName));
+  if nrDof<1e6 % to avoid clogging results with large files
+    mkdir(sprintf('%s/mesh', dirName)); 
+  end
   mkdir(sprintf('%s/iteration', dirName));
   warning('on', 'MATLAB:MKDIR:DirectoryExists');
     
@@ -259,12 +261,14 @@ function saveResultsCR(params, currData, ...
   fName = sprintf('%s/triangulation.png', dirName);
   saveas(triangFig, fName);
 
-  dlmwrite(sprintf('%s/mesh/c4n.txt', dirName), c4n, 'Delimiter', '\t');
-  dlmwrite(sprintf('%s/mesh/n4e.txt', dirName), n4e, 'Delimiter', '\t');
-  dlmwrite(sprintf('%s/mesh/n4eM.txt', dirName), n4e-1, 'Delimiter', '\t');
-  dlmwrite(sprintf('%s/mesh/n4sDb.txt', dirName), n4sDb, 'Delimiter', '\t');
-  dlmwrite(sprintf('%s/mesh/n4sNb.txt', dirName), n4sNb, 'Delimiter', '\t');
-  dlmwrite(sprintf('%s/mesh/s4e.txt', dirName), s4e, 'Delimiter', '\t');
+  if nrDof<1e6 % to avoid clogging results with large files
+    dlmwrite(sprintf('%s/mesh/c4n.txt', dirName), c4n, 'Delimiter', '\t');
+    dlmwrite(sprintf('%s/mesh/n4e.txt', dirName), n4e, 'Delimiter', '\t');
+    dlmwrite(sprintf('%s/mesh/n4eM.txt', dirName), n4e-1, 'Delimiter', '\t');
+    dlmwrite(sprintf('%s/mesh/n4sDb.txt', dirName), n4sDb, 'Delimiter', '\t');
+    dlmwrite(sprintf('%s/mesh/n4sNb.txt', dirName), n4sNb, 'Delimiter', '\t');
+    dlmwrite(sprintf('%s/mesh/s4e.txt', dirName), s4e, 'Delimiter', '\t');
+  end
 
   % save AFEM results
   tableStruct = outputLvlInfo;

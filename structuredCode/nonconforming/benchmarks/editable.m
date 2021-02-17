@@ -59,7 +59,7 @@ function params = editable %#ok<*MSNU,FNDEF>
   saveScreenshots        = 0; 
                               
   % information about experiment for saving and documentation.
-  expName                = 'moreOutputTest';
+  expName                = 'saveDiscSpaceTest';
   %dirInfoName            = sprintf('alpha=%d', parAlpha);
   dirInfoName            = sprintf('%s', ...
     datestr(now, 'yy_mm_dd_HH_MM_SS'));
