@@ -37,6 +37,7 @@
     legend entries = {$\theta = 0.5$,
                      $\theta = 1$,
                      $\Vert u - u_h\Vert_{L^2(\Omega)}$,
+                     $\Vert u - u_h\Vert_{L^2(\Omega)}^2$,
                      $\eta$,
                      $\eta_\text{Vol}$,
                      $\eta_\text{Jumps}$,
@@ -46,6 +47,7 @@
     \addlegendimage{solid, mark=*}
     \addlegendimage{densely dashed, mark=square*}
     \addlegendimage{no markers, ultra thick, cyan}
+    \addlegendimage{no markers, ultra thick, blue}
     \addlegendimage{no markers, ultra thick, green}
     \addlegendimage{no markers, ultra thick, red}
     \addlegendimage{no markers, ultra thick, orange}
@@ -85,6 +87,10 @@
     % uniform
     \addplot [densely dashed, cyan, mark = square*] 
     table[x = {nrDof}, y = {error4lvl}] 
+    {1e-4/uniform/lvl8/lvlOutput.csv}; 
+
+    \addplot [densely dashed, blue, mark = square*] 
+    table[x  expr=\thisrow{nrDof}, y expr=\thisrow{error4lvl}^2] 
     {1e-4/uniform/lvl8/lvlOutput.csv}; 
 
     \addplot [densely dashed, green, mark = square*] 
