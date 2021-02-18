@@ -73,8 +73,9 @@ function gleb = computeGleb(params, currData, output)
 
   termScaledDifference = sum(...
     max([length4s(s4e(:, 1)), length4s(s4e(:, 2)), length4s(s4e(:, 3))], ...
-    [], 2).*normDiffRhsSolCrSquared4e);
+    [], 2).^2.*normDiffRhsSolCrSquared4e);
     % ||h_\\mathcal{T}(f - \alpha u_{CR})||^2_{L^2(\Omega)}
+    % TODO square ergänzt
 
   % compute gleb
   gleb = discreteEnergy - ...

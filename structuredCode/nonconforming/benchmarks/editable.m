@@ -35,7 +35,7 @@ function params = editable %#ok<*MSNU,FNDEF>
 
   % algorithm parameters
   u0Mode         = 'zeros'; 
-  initialEpsStop = 1e-4; 
+  initialEpsStop = 1e-3; 
   stopCrit       = ["Exact Error Difference", ...
                     "weighted energy difference"]; 
   parTau         = 1/2;
@@ -59,7 +59,7 @@ function params = editable %#ok<*MSNU,FNDEF>
   saveScreenshots        = 0; 
                               
   % information about experiment for saving and documentation.
-  expName                = 'saveDiscSpaceTest';
+  expName                = 'testGLEB';
   %dirInfoName            = sprintf('alpha=%d', parAlpha);
   dirInfoName            = sprintf('%s', ...
     datestr(now, 'yy_mm_dd_HH_MM_SS'));
