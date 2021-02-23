@@ -16,7 +16,9 @@ function absNodeJumps4s = ...
 %
 % output: absNodeJumps4s - '(nrElems x 2)-dimensional double array' where the
 %                          j-th row contains the two absolute jumps in the two
-%                          nodes of the j-th side of the triangulation
+%                          nodes of the j-th side of the triangulation (if a
+%                          side is an outer edge the jump in a node is the 
+%                          value of v in that node)
 
 %% INIT
   absNodeJumps4s = zeros(size(e4s));
@@ -43,7 +45,8 @@ function absNodeJumps4s = ...
     else
       indMinus1 = n4e(tMinus, :) == node1;
       indMinus2 = n4e(tMinus, :) == node2;
-        % find the local node numbers of node1 and node2 on tPlus
+        % find the local node numbers of node1 and node2 on tMinus if side
+        % is an inner edge
       valMinus1 = nodeValues4e(tMinus, indMinus1);
       valMinus2 = nodeValues4e(tMinus, indMinus2);
         % the values of v in node1 and node2 on tMinus if side is an inner edge
