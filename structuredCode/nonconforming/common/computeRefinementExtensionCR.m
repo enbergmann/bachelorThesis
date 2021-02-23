@@ -37,7 +37,8 @@ function vNew = computeRefinementExtensionCR(c4n, n4e, c4nNew, n4eNew, v)
   val = transpose(computeNodeValuesCR4e(s4e, v));
     % NOTE nodeValues4e could already be known in startAlgorithmCR but for this
     % computeRefinementExtension to be more intuitive with v as input and vNew
-    % as output it's computed again here
+    % as output it is computed again here
+    % also, this makes this method more usable outside the program
 
 %% MAIN
   val = val(:); 
