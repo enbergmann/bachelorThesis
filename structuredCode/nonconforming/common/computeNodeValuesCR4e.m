@@ -18,7 +18,5 @@ function nodeValues4e = computeNodeValuesCR4e(s4e, u)
   nodeValues4e = [u(s4e(:, 3)) + u(s4e(:, 1)) - u(s4e(:, 2)), ... 
                   u(s4e(:, 1)) + u(s4e(:, 2)) - u(s4e(:, 3)), ...
                   u(s4e(:, 2)) + u(s4e(:, 3)) - u(s4e(:, 1))]; 
-    % the value in a midpoint of a side = conv(node1, node2) is
-    % (node1-node2)/2, hence 3 sides of a triangle yield 3 equations 
-    % solve those for node1, node 2, and node 3 to obtain above formula
+    % cf. thesis
 end

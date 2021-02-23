@@ -310,6 +310,32 @@ welche Stellen wird also umnummeriert
 \section{Aufstellung des zu lösenden LGS}
 Aufstellung der Gradienten etc.
  
+\section{Berechnung der Werte einer CR Funktion auf einem Element in den Knoten}
+Sei $T\in\Tcal$ mit $T = \conv\{P_1, P_2, P_3\}$. Die Seiten 
+von $T$ seien $F_1 = \conv\{P_1,P_2\}$, $F_2 = \conv\{P_2,P_3\}$ und $F_3 =
+\conv\{P_3,P_1\}$. Die Funktion
+$\ucr\in\CR^1(\Tcal)$ habe in den Mittelpunkte der Seiten die Werte $u_j =
+\ucr(\Mid(F_j))$ für alle $j=1,2,3$. Gesucht sind die Werte in den Knoten
+$\ucr(P_1)$, $\ucr(P_2)$ und $\ucr(P_3)$.
+
+Da $\ucr\in\CR^1(\Tcal)$ affin-linear ist, gilt für eine Kante
+$F=\conv\{P,Q\}$, dass der Wert $\ucr(\Mid(F))$ von $\ucr$ im Mittlpunkt 
+der Kante gegeben ist durch den Mittelwert der Werte von $\ucr$ in $P$ und $Q$.
+
+Somit erhalten wir die drei Gleichungen
+\begin{align*}
+  u_1 &= \frac{\ucr(P_1)+\ucr(P_2)}{2},  
+  &u_2 &= \frac{\ucr(P_2)+\ucr(P_3)}{2},  
+  &u_3 &= \frac{\ucr(P_3)+\ucr(P_1)}{2}.
+\end{align*}
+Sind $u_1$, $u_2$ und $u_3$ bekannt, können wir dieses Gleichungssystem nach 
+$\ucr(P_1)$, $\ucr(P_2)$ und $\ucr(P_3)$ lösen und erhalten
+\begin{align*}
+ \ucr(P_1)&=u_1+u_3-u_2, &\ucr(P_2)&= u_1+u_2-u_3,&\ucr(P_3)&=u_2+u_3-u_1.
+\end{align*}
+
+Dies wird realisiert in der Methode \texttt{computeNodeValuesCR4e}.
+
 \section{Berechnung der L1 Norm der Sprünge}
 Für die Berechnung des Verfeinerungsindikators [verweis auf entsprechende
 section] und zur Auswertung der kontinuierlichen Energie $E(\vcr)$ einer 
