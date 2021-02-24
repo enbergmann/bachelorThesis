@@ -14,7 +14,7 @@ function absNodeJumps4s = ...
 %                       entry of the j-th row contains the value of v in the
 %                       k-th local node of the j-th triangle of the mesh
 %
-% output: absNodeJumps4s - '(nrElems x 2)-dimensional double array' where the
+% output: absNodeJumps4s - '(nrSides x 2)-dimensional double array' where the
 %                          j-th row contains the two absolute jumps in the two
 %                          nodes of the j-th side of the triangulation (if a
 %                          side is an outer edge the jump in a node is the 
