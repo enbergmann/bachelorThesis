@@ -172,9 +172,9 @@ function startAlgorithmCR(benchmark)
 
     % ESTIMATE
     
-    %TODO compute jumps only once and give them to estimate
-    outputLvlHidden.sumL1NormOfJumps(end+1, 1) = ...
-      sum(computeL1NormOfJump4s(currData, output));
+    l1NormOfJump4s = computeL1NormOfJump4s(currData, output);
+    currData.l1NormOfJump4s = l1NormOfJump4s;
+    outputLvlHidden.sumL1NormOfJumps(end+1, 1) = sum(l1NormOfJump4s);
 
     [eta4e, etaVol4e, etaJumps4e] = ...
       estimateErrorCR4e(params, currData, output);
