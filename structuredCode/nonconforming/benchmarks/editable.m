@@ -17,7 +17,7 @@ function params = editable %#ok<*MSNU,FNDEF>
     % not effective if showPlots == false
   showProgress           = true; 
   degree4Integrate       = 10; 
-  plotGivenFunctions     = false;
+  plotGivenFunctions     = true;
   refinementLevel4Plots  = 8; % 11 is very close to the limit
     % not effective if plotGivenFunctions == false
   debugIfError           = false;
@@ -47,11 +47,11 @@ function params = editable %#ok<*MSNU,FNDEF>
     % whiteSquare.tif, cameraman.tif
   parAlpha               = 1e0; 
   parBeta                = 1;
-  rhsGradientKnown       = true;
+  rhsGradientKnown       = false;
     % set automatically to false if useImage == true
   exactSolutionKnown     = true; %#ok<NASGU>
     % set automatically to false if useImage == true
-  useExactEnergy         = true; %#ok<NASGU>
+  useExactEnergy         = false; %#ok<NASGU>
     % set automatically to false if exactSolutionKnown == false
   exactEnergy            = -2.058034062391; %#ok<NASGU> % 7 significant digits
     % set automatically to NaN if exactSolutionKnown == false
@@ -59,7 +59,7 @@ function params = editable %#ok<*MSNU,FNDEF>
   saveScreenshots        = 0; 
                               
   % information about experiment for saving and documentation.
-  expName                = 'testGLEB';
+  expName                = 'regularityTests';
   %dirInfoName            = sprintf('alpha=%d', parAlpha);
   dirInfoName            = sprintf('%s', ...
     datestr(now, 'yy_mm_dd_HH_MM_SS'));
