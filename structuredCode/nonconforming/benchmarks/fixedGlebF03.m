@@ -53,13 +53,13 @@ function params = editable %#ok<*MSNU,FNDEF>
     % set automatically to false if useImage == true
   useExactEnergy         = true; %#ok<NASGU>
     % set automatically to false if exactSolutionKnown == false
-  exactEnergy            = -0.33410588627094; %#ok<NASGU> % 7 significant digits
+  exactEnergy            = -0.3341058858667; %#ok<NASGU> % 8 significant digits
     % set automatically to NaN if exactSolutionKnown == false
     % not effective if useExactEnergy == false
   saveScreenshots        = 0; 
                               
   % information about experiment for saving and documentation.
-  expName                = 'f04Alpha1FixedGLEB';
+  expName                = 'f03Alpha1FixedGLEB';
   %dirInfoName            = sprintf('alpha=%d', parAlpha);
   dirInfoName            = sprintf('%s', ...
     datestr(now, 'yy_mm_dd_HH_MM_SS'));
@@ -67,17 +67,17 @@ function params = editable %#ok<*MSNU,FNDEF>
 
   % function handles (not effective if useImage == true)
   function y = rightHandSide(x)
-    y =  f04(x, parAlpha);
+    y =  f03(x, parAlpha);
   end
 
   function y = gradientRightHandSide(x)
     % not effective if useExactEnergy == false
-    y =  f04Gradient(x, parAlpha);
+    y =  f03Gradient(x, parAlpha);
   end
 
   function y = exactSolution(x)
     % not effective if exactSolutionKnown == false
-    y = f04ExactSolution(x);
+    y = f03ExactSolution(x);
   end
    
 %% DOCUMENTATION OF PARAMETERS
