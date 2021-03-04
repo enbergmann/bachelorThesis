@@ -49,15 +49,16 @@ function computeExactEnergyBV(geometry, fStr, fStrParams, uStr, uStrParams, ...
     degree4Integrate = 20;
     if nargin < 10
       minPrecision = 2;
-      if nargin < 9
-        minNrInnerEdges = 1e4;
-      end
+      if nargin < 9, minNrInnerEdges = 1e4; end
     end
   end
 
-  f = @(x) feval(fStr, x, fStrParams); 
-  u = @(x) feval(uStr, x, uStrParams); 
-  gradU = @(x) feval(gradUStr ,x, gradUStrParams);
+  if isempty(fStr), f = @(x) feval(fStr, x, fStrParams); 
+  else f = @(x) feval(fStr, x, fStrParams); end
+  if isempty(uStrParams), u = @(x) feval(uStr, x); 
+  else, u = @(x) feval(uStr, x, uStrParams); end
+  if isempty(gradUStrParams), gradU = @(x) feval(gradUStr, x);
+  else, gradU = @(x) feval(gradUStr, x, gradUStrParams); end
 
   if strcmp(geometry, 'Polygon')
     [c4n, n4e, n4sDb, n4sNb] = ...
