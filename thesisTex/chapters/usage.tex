@@ -219,7 +219,7 @@ und damit
 \end{align*} 
 es muss also nur $\partial_r g$ bestimmt werden.
 
-Die entsprechenden Ableitung lauten
+Die entsprechenden Ableitungen lauten
 \begin{align*}
   \partial_r f_1(r) &= 
   \begin{cases}
@@ -259,8 +259,31 @@ Die entsprechenden Ableitung lauten
     0,&\text{wenn }0\leq r\leq\frac{1-\beta}{2},\\
     -\frac{1}{\beta},&
     \text{wenn } \frac{1-\beta}{2}\leq r\leq \frac{1+\beta}{2},\\
-    0,&\text{wenn } \frac{1+\beta}{2}\leq r.
-  \end{cases}
+    0,&\text{wenn } \frac{1+\beta}{2}\leq r,
+  \end{cases}\\
+  \partial_r f_3(r) &=
+  \begin{cases}
+    - 432r + 81, & \text{wenn } 0\leq r\leq\frac{1}{3},\\
+    \alpha\left(162r^2 - 162r + 36\right) - \frac{1}{r^2}, & 
+    \text{wenn } \frac{1}{3}\leq r\leq \frac{2}{3},\\
+    432r - 405 + \frac{27}{r^2}, & 
+    \text{wenn } \frac{2}{3}\leq r\leq 1,
+  \end{cases}\\
+  \partial_r f_4(r) &=
+  \begin{cases}
+    34992r^3 - 18225r^2 + 2160r, & \text{wenn } 0\leq r\leq\frac{1}{3},\\
+    \alpha\left(162r^2 - 162r + 36\right) - \frac{1}{r^2}, & 
+    \text{wenn } \frac{1}{3}\leq r\leq \frac{2}{3},\\
+    3645r^2 - 6048r + 2592 - 864 - \frac{81}{r^2}, & 
+    \text{wenn } \frac{2}{3}\leq r\leq 1,
+  \end{cases}\\
+  \partial_r u_{3,4}(r) &=
+  \begin{cases}
+    0, & \text{wenn } 0\leq r\leq\frac{1}{3},\\
+    162r^2 - 162r + 36, & 
+    \text{wenn } \frac{1}{3}\leq r\leq \frac{2}{3},\\
+    0, & \text{wenn } \frac{2}{3}\leq r\leq 1,
+  \end{cases}\\
 \end{align*}
 
 Mit diesen Informationen kann mit \texttt{computeExactEnergyBV.m} die exakte 
