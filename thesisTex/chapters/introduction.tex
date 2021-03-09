@@ -1,97 +1,119 @@
 In der Bildverarbeitung kann ein gegebenes Signal häufig nur durch eine
-unstetige Funktion dargestellt werden.
-Sobolev-Funktionen, obwohl im Allgemeinen nicht unbedingt stetig\todo{Quelle
-für Beispiel für unstetige Funktionen sind nicht immer
-Sobolev?},
-lassen die oftmals benötigten Sprünge über ein-kodimensionale Mengen nicht
-zu. Die Menge der Funktionen von beschränkter Variation ist 
-eine echte Obermenge des Sobolev-Raums der einmal schwach differenzierbaren 
-Funktionen und hat sich als geeignet für diese und weitere Anwendungen erwiesen 
-(cf. \cites[398]{ABM14}[42]{AK06}[297]{Bar15}[S. 1 f.]{Bra98}).
+unstetige Funktion dargestellt werden. Deshalb stellt sich zunächst die Frage,
+welcher Funktionenraum zum Beschreiben dieser Signale geeignet ist.
 
-\todo[inline]{Genauer sein, also schon $\Omega$ und alles definieren? 
-soll man die Sachen zitieren, wenn die Formulierung davor von diesen 
-Werken inspiriert ist? Sollen noch Kapitel angegeben werden?}
+Ist $\Omega\subset\Rbb^2$ ein beschränktes Lipschitz-Gebiet und $g:\Omega\to
+\Rbb$ stellt ein gegebenes Signal auf $\Omega$ dar, so könnte $g$ im
+Sobolev-Raum $W^{1,1}(\Omega)$ vermutet werden, da Elemente dieses Raums im
+Allgemeinen nicht stetig sein müssen \cite[297]{Bar15}. 
+Allerdings lassen Sobolev-Funktionen die oftmals benötigten Sprünge über
+ein-kodimensionale Teilmengen von $\Omega$ nicht zu \cite[393]{ABM14}.
+Dieses Problem kann gelöst werden, indem der Raum der Funktionen von
+beschränkter Variation $\BV(\Omega)$ betrachtet wird. Dieser ist eine echte
+Obermenge von $W^{1,1}(\Omega)$ und hat sich als geeignet für die Modellierung 
+von Signalen in der Bildverarbeitung und weitere Anwendungen erwiesen (cf.
+\cites[393]{ABM14}[42]{AK06}[297]{Bar15}[S. 1 f.]{Bra98}).
 
 Eine mögliche Problemstellung in der Bildverarbeitung ist die 
 Rauschunterdrück\-ung, das heißt der Versuch unerwünschtes Rauschen in einem
-Signal zu verringern. Das ROF-Modell ist ein Modell-Problem dafür und sucht
-eine Funtion $u:\Omega\to\Rbb$ die das Funktional
+Signal zu verringern.
+In \cite{ROF92} beschrieben Rudin, Osher und Fatemi 1992 ein
+Modell-Problem dafür, welches deshalb als ROF-Modell bezeichnet wird (cf.
+\cites[1217]{Bar15a}[132]{CP10}[S. 74 f.]{Get12}).
+Dabei ist für das gegebene Signal $g\in L^2(\Omega)$ und 
+eine Funktion $v\in\BV(\Omega)\cap L^2(\Omega)$ die Minimierung
+von zwei Termen relevant.
+Der erste Term ist die
+Seminorm $|v|_{\BV(\Omega)}$ von $v$ auf $\BV(\Omega)$, die der
+totalen Variation der distributionellen Ableitung $Dv$ von $v$ entspricht,
+falls $v\in W^{1,1}(\Omega)$ mit der Seminorm auf $W^{1,1}(\Omega)$
+übereinstimmt und deren Minimierung Oszillation verhindert aber Unstetigkeiten
+zulässt \cite[72]{Get12}. Der zweite Term misst den Unterschied von $v$ und $g$ in 
+$L^2(\Omega)$.
+Damit und mit einen Parameter
+$\alpha\in\Rbb_+$, der das Verhältnis zwischen Rauschverminderung und
+Ähnlichkeit der Lösung zum Eingangssignal gewichtet, sucht das ROF-Modell
+eine Funktion $u\in\BV(\Omega)\cap L^2(\Omega)$, die das Funktional
 \begin{align*}
-  I(u)\coloneqq |u|_{\BV(\Omega)}+\frac{\alpha}{2}\Vert
-  u-g\Vert_{L^2(\Omega)}^2
+  I(v)\coloneqq |v|_{\BV(\Omega)}+\frac{\alpha}{2}\Vert
+  v-g\Vert_{L^2(\Omega)}^2
 \end{align*}
-minimiert,
-wobei $g\in L^2(\Omega)$ das gegebene verrauschte Bild beschreibt und 
-$\alpha\in \Rbb_+$ ein Parameter ist, mit dem gewichtet werden kann, wie 
-stark Oszillationen minimiert werden sollen, beschrieben durch den Term
-$|u|_{\BV(\Omega)}$ (der aber Unstetigkeiten zulässt) und wie nahe die Lösung
-$u$ an der Eingabe $g$ liegen soll, beschrieben durch den Term $\Vert
-u-g\Vert_{L^2(\Omega)}^2$. (tradeoff between regularization and data fitting)
+unter allen $v\in\BV(\Omega)\cap L^2(\Omega)$ minimiert.
 
-Die Wahl von einem zu kleinen $\alpha$ führt zu einer zu glatten, verwaschen
-aussehenden Lösung, zu sehen zum Beispiel in den Abbildungen
-\ref{fig:snr10alpha100} und \ref{fig:snr10alpha1000}, während die Wahl von
-einem zu großen $\alpha$ das Rauschen kaum verringert, zu sehen zum Beispiel in
-den Abbildungen \ref{fig:snr10alpha5000} und \ref{fig:snr10alpha10000}.
-Für weitere Details und Referenzen zur Rauschunterdrückung und auch zu 
-Möglichkeiten $\alpha$ gegebenfalls zu bestimmen, siehe \cite{Get12}.
+Wird hierbei $\alpha$ zu klein gewählt, führt das zu einer zu stark
+geglätteten, verwaschen aussehenden Lösung, zu sehen zum Beispiel in den
+Abbildungen \ref{fig:snr10alpha100} und \ref{fig:snr10alpha1000}, während das
+Rauschen im Vergleich zum Eingangssignal $g$ kaum verringert wird, falls
+$\alpha$ zu groß gewählt wird, zu sehen zum Beispiel in den Abbildungen
+\ref{fig:snr10alpha5000} und \ref{fig:snr10alpha10000}.
 
-Benannt ist das ROF-Modell nach Rudin, Osher und Fatemi, die dieses 
-Problem 1992 in \cite{ROF92} vorschlugen 
-(cf. \cites[1217]{Bar15a}[132]{CP10}[S. 74 f.]{Get12}).
-\todo[inline]{ Vielleicht auch den Press Release zum Schwarzen Loch Bild
-erwähnen oder ist das zu random?}
+Für weitere Details und Referenzen zur Rauschunterdrückung und zur Wahl von
+$\alpha$ siehe \cite{Get12}.
 
-In \cite{Bar15}  das ROF MOdell mit Courant Elementen \todo{zitiere Courant 
-Methode}
-approximiert und den Algorithmus basierend auf (Quelle) anwendet.
-Wir betrachten folgende leicht andere Formuliereung des ROF Modell 
-(Problem)
-und nutzen die CR FEM um die Lösung des nichtkonformen Problem
-(Problem) zu bestimmen.
+\medskip
+--------------------------------
+\medskip
 
-\begin{remark}
-  In \cite[Kapitel~10.1.3]{Bar15} wird \Cref{prob:continuousProblem} für ein
-  gegebenes $g\in L^2(\Omega)$ formuliert
-  mit dem Funktional 
-  \begin{align*}
-    I(v)\coloneqq |v|_{\BV(\Omega)} + \frac{\alpha}{2}\int_\Omega (v-g)^2\dx
-  \end{align*}
-  für $v\in \BV(\Omega)\cap L^2(\Omega)$.
+Was wurde bisher gemacht für dieses PRoblem. 
+übergang zu Bartels und Courant, was im folgenden weitergeht
 
-  Nun wählen wir $f = \alpha g$. Dann gilt
-  $I(v) = E(v) - \Vert v\Vert_{L^1(\partial \Omega)}+ 
-  \frac{\alpha}{2}\Vert g\Vert_{L^2(\Omega)}^2$ für alle 
-  $v\in \BV(\Omega)\cap L^2(\Omega)$. Da der Term $\frac{\alpha}{2}\Vert
-  g\Vert_{L^2(\Omega)}^2$ konstant ist, haben die Funktionale $E$ und $I$ somit
-  die gleichen Minimierer in $\left\{v\in\BV(\Omega)\cap L^2(\Omega)\mid 
-  \Vert v\Vert_{L^1(\partial\Omega)}=0\right\}$.
-\end{remark}
+\medskip
+--------------------------------
+---`\cite[Kapitel~10.1.3]{Bar15}
+\medskip
 
-In dieser Arbeit werden in Kapitel 2 (todo refs machen für Kapitel und nutzen)
-zunächst die benötigten theoretischen Grundlangen zur Variationsrechnung und
-Optimierung in Banachräumen als auch die relevanten Eigenschaften des
-Raumes der Funktionen von beschränkter Variation (ggf. ergänzen, falls noch
-mehr passiert irgendwann.
+In \cite[Kapitel 10]{Bar15} wird zur Diskretisierung des
+ROF-Modell die Courant Finite-Elemente-Methode genutzt und eine primale-duale
+Iteration zur numerischen Lösung verwendet.
 
-In Kapitel 3 folgt die Formulierung des konitnuierlichen Problems und des
-Existenz- und Eindeutigkeitsbeweis für Minimiert des Problems. Außerdem 
-wird die starke Konverxität des Energiefunktinals gezeigt für die später
-numerische Auswerung.
+In dieser Arbeit möchten wir die Konvergenzeigenschaften eines adaptiven
+Algorithmus untersuchen, bei dem wir die primale-duale Iteration auf jedem
+Level anwenden auf eine nichtkonforme Formulierung des ROF-Modells und eine
+Diskretisierung mit der Crouzeix-Raviart Finite-Elemente Methode.
+Dafür verwenden wir einen von Prof. Carstens zur Verfügung gestellten 
+Verfeinerungsindikator. Die Implemtation basiert auf \cite{Car09a}.
+Dabei sei angemerkt, dass wir folgende, leicht andere Formulierung des 
+ROF-Modells betrachten. Wir minimieren das Funktional
+\begin{align*}
+  E(v)\coloneqq \frac{\alpha}{2}\Vert v\Vert_{L^2(\Omega)}^2 + |v|_{\BV(\Omega)}
+  +\Vert v\Vert_{L^1(\partial\Omega)}-\int_\Omega fv\dx
+\end{align*}
+unter allen $v\in\BV(\Omega)\cap L^2(\Omega)$.
+Für $f = \alpha g$ und alle $v\in \BV(\Omega)\cap
+L^2(\Omega)$ gilt dann $I(v) =
+E(v) - \Vert v\Vert_{L^1(\partial \Omega)}+ \frac{\alpha}{2}\Vert
+g\Vert_{L^2(\Omega)}^2$. 
+Der Zusammenhang mit dem ROF-Modell ist, aufgrund der Konstanz des Terms
+$\frac{\alpha}{2}\Vert g\Vert_{L^2(\Omega)}^2$, folglich, dass die Funktionale
+$E$ und $I$ die gleichen Minimierer in $\left\{v\in\BV(\Omega)\cap
+L^2(\Omega)\mid \Vert v\Vert_{L^1(\partial\Omega)}=0\right\}$ besitzen.
 
-Die Diskretisierung der nichtkonformen (sic?) Formulierung  des Problems 
-und der Beweis der Existenz und Eindeutigkeit von Minimierern des 
-diskreten Problems geschieht anschließend in Kapitel 4.
+Außerdem erlaubt uns die nichtkonforme Formulierung die Betrachtung einer
+garantierten unteren Energieschranke.
 
-Kapitel 5 beschreibt den Algorithmus und beweist Konvergenz der 
-Iterate. 
+\medskip
+--------------------------------
+\medskip
 
-Kapitel 6 Implementierung und erklärt, wie das Programm genutzt werden kann.
-Insbesondere wird auch erläutert, wie die Ergebnisse, die in 
-\Cref{fig:exampleDenoising} zu sehen sind, reproduziert werden können.
+Dafür wird, nachdem in \Cref{chap:theoreticalBasics} zunächst die Notationen
+eingeführt und die theoretischen Grundlagen aus der Optimierung und zu den
+Funktionen beschränkter Variation zusammengetragen wurden, in
+\Cref{chap:continuousProblem} bewiesen, dass für unsere Formulierung des
+ROF-Modells ein eindeutiger
+Minimierer existiert.
+Anschließend folgt in \Cref{chap:discreteProblem} die nichtkonforme Formulierung
+und Diskretisierung des Minimierungsproblems. Mithilfe eines
+äquivalenten Sattelpunktsproblems werden äquivalente Charakterisierung, 
+Existenz und Eindeutigkeit für den diskreten Minimierer bewiesen. Außerdem
+werden die zu untersuchenden Konvergenzraten, der Verfeinerungsindikator und
+die garantierte untere Energieschranke aufgeührt.
+In \Cref{chap:algorithm} wird die primale-duale Iteration formuliert und bewiesen,
+dass diese gegen den diskreten Minimierer konvergiert. 
+Es folgen Hinweise zur Benutzung des Programm und Details zur Implementation
+des Algorithmus in \Cref{chap:implementation} und schließlich in
+\Cref{chap:experiments} die Darstellung der Experimente und deren Auswerung in
+\Cref{chap:review}.
 
-Kapitel 7 nutzt das Programm für Experimente, die dort ausgewertet werden.
 
 \begin{figure}[h]
   \centering
@@ -148,14 +170,3 @@ Kapitel 7 nutzt das Programm für Experimente, die dort ausgewertet werden.
 
 \todo[inline]{Experimente länger rechnen und vielleicht 9 Wahlen für alpha mit
 einem ernsthaften Versuch, ein gut aussehendes entrauschtes Bild zu bekommen}
-
-\begin{figure}
-  \includegraphics[trim = 60 0 60 0, clip, width=\linewidth]
-    {pictures/introBeta/triangulation/triangulation.png}
-  \label{fig:exampleTriangulation}
-  \caption{Triangulierung mit 40300 Freiheitsgraden erzeugt vom adaptiven
-  Algorithmus für rauschfreien Input}
-\end{figure}
-
-\todo[inline]{diese Triangulierungs Figure lieber in den Experimente und hier
-(und zwar ausschließlich hier) die verrauschungsbeispiele bringen}
