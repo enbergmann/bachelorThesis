@@ -28,7 +28,7 @@ Seminorm $|v|_{\BV(\Omega)}$ von $v$ auf $\BV(\Omega)$, die der
 totalen Variation der distributionellen Ableitung $Dv$ von $v$ entspricht,
 falls $v\in W^{1,1}(\Omega)$ mit der Seminorm auf $W^{1,1}(\Omega)$
 übereinstimmt und deren Minimierung Oszillation verhindert aber Unstetigkeiten
-zulässt \cite[72]{Get12}. Der zweite Term misst den Unterschied von $v$ und $g$ in 
+zulässt \cite[72]{Get12}. Der zweite Term misst den Abstand von $v$ und $g$ in 
 $L^2(\Omega)$.
 Damit und mit einen Parameter
 $\alpha\in\Rbb_+$, der das Verhältnis zwischen Rauschverminderung und
@@ -54,14 +54,26 @@ $\alpha$ siehe \cite{Get12}.
 --------------------------------
 \medskip
 
-Was wurde bisher gemacht für dieses PRoblem. 
-übergang zu Bartels und Courant, was im folgenden weitergeht
+Alternative Ansätze und deren Vor- und Nachteile zur numerischen Behandlung
+dieses Problems sowie weitere
+Referenzen dazu werden in \cite[1165]{Bar12} beschrieben.
+Diese beinhalten eine Regularisierung des Problems indem 
+der Betrag $|\bullet|$ in der totalen Variation durch eine
+differenzierbare Approximation ersetzt $\bullet|_\varepsilon$ wird, wodurch
+Standardmethoden anwendbar werden,
+oder die Nutzung von höheren Ableitungen. 
 
+\todo[inline]{Im wesentlichen auf S.1165 der gesamte mittlere Absatz ist,
+was ich schreiben muss hier, aber bevor ich das mache und die Quellen alle
+abklapper (was ich trotzdem machen werde um die Regularisierung etc.
+wenigstens mal gesehen zu haben) schreibe ich mit Zitat Bartels ab und
+sage wie oben, dass da weitere Referenzen und Details sind}
 \medskip
 --------------------------------
 ---`\cite[Kapitel~10.1.3]{Bar15}
 \medskip
 
+Ein Ansatz mit Finiten-Elementen vermeidet dies.
 In \cite[Kapitel 10]{Bar15} wird zur Diskretisierung des
 ROF-Modell die Courant Finite-Elemente-Methode genutzt und eine primale-duale
 Iteration zur numerischen Lösung verwendet.
@@ -71,7 +83,7 @@ Algorithmus untersuchen, bei dem wir die primale-duale Iteration auf jedem
 Level anwenden auf eine nichtkonforme Formulierung des ROF-Modells und eine
 Diskretisierung mit der Crouzeix-Raviart Finite-Elemente Methode.
 Dafür verwenden wir einen von Prof. Carstens zur Verfügung gestellten 
-Verfeinerungsindikator. Die Implemtation basiert auf \cite{Car09a}.
+Verfeinerungsindikator. Die Implementation basiert auf \cite{Car09}.
 Dabei sei angemerkt, dass wir folgende, leicht andere Formulierung des 
 ROF-Modells betrachten. Wir minimieren das Funktional
 \begin{align*}
@@ -89,7 +101,8 @@ $E$ und $I$ die gleichen Minimierer in $\left\{v\in\BV(\Omega)\cap
 L^2(\Omega)\mid \Vert v\Vert_{L^1(\partial\Omega)}=0\right\}$ besitzen.
 
 Außerdem erlaubt uns die nichtkonforme Formulierung die Betrachtung einer
-garantierten unteren Energieschranke.
+garantierten unteren Energieschranke, welche ebenfalls von Prof. Carstensen
+zur Verfügung gestellt wurde.
 
 \medskip
 --------------------------------
