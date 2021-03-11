@@ -1,0 +1,1125 @@
+\subsection{Iterative solve}
+Theorem
+\ref{thm:characterizationDiscreteSolutions}.c
+characterizes the discrete solution to  
+\eqref{e:defnonconfEintro} 
+by $u_{\textup{CR}}\in\textup{CR}^1_0(\mathcal T)$ and 
+the existence of some 
+$
+  \Lambda_0\in\operatorname{sign}\nabla_{\textup{NC}}u_{\textup{CR}}
+$ 
+with \eqref{eqLambda}
+% \begin{equation}
+%   \alpha (u_{\textup{CR}},v_{\textup{CR}})_{L^2(\Omega)} + (\Lambda_0,\nabla_{\textup{NC}}
+%   v_{\textup{CR}})_{L^2(\Omega)}
+%   =(f,v_{\textup{CR}})_{L^2(\Omega)}
+% \end{equation}
+for all $v_{\textup{CR}}\in\textup{CR}^1_0(\mathcal{T})$.
+The pair $(u_\textup{CR},\Lambda_0)$ is unique in the first component $u_\textup{CR}$
+and computed with the following algorithm with input $(u_0,\Lambda_0)$.
+
+
+\begin{algorithm}[primal-dual iteration]\label{alg:PrimalDualIteration}
+\begin{algorithmic}\\
+  \Require $u_0\in\textup{CR}_0^1(\mathcal{T}),$
+  $\Lambda_0\in P_0(\mathcal{T};
+  \overline{B(0,1)}),\tau>0$  \\
+  Initialize $v_0\coloneqq 0$ in $\textup{CR}^1_0(\mathcal T)$.
+  \For{$j = 1,2,\dots$}
+  \begin{equation}
+    \label{equ:PrimalDualAlgUj}
+    \tilde{u}_j\coloneqq u_{j-1}+\tau v_{j-1},
+  \end{equation}
+  \begin{equation}
+    \label{equ:PrimalDualAlgLambdaJ}
+    \Lambda_j\coloneqq
+    (\Lambda_{j-1}+\tau\nabla_{\textup{NC}} \tilde{u}_j)/
+      (\operatorname{max}\{1,|\Lambda_{j-1}+\tau\nabla_{\textup{NC}}\tilde{u}_j|\}),
+  \end{equation}
+      \State
+  \State solve linear system of equations
+  \begin{align}
+    \label{equ:linSysPrimalDualAlg}
+    \frac{1}{\tau}&a_{\textup{NC}}(u_j,\bullet)+\alpha(u_j,\bullet)_{L^2(\Omega)}
+    \notag \\
+    &=
+    \frac{1}{\tau}a_{\textup{NC}}(u_{j-1},\bullet) + (f,\bullet)_{L^2(\Omega)}
+    - (\Lambda_j,\nabla_{\textup{NC}}\bullet)_{L^2(\Omega)} 
+  \end{align}
+in $\textup{CR}^1_0(\mathcal{T})$ for $u_j\in\textup{CR}^1_0(\mathcal{T})$
+with the abbreviation
+$v_j\coloneqq(u_j-u_{j-1})/\tau$.\\
+  \EndFor
+  \Ensure sequence $(u_j,\Lambda_j)_{j\in\mathbb N}$ in $\textup{CR}^1_0(\mathcal{T})\times
+  P_0(\mathcal{T};\overline{B(0,1)})$   
+  \end{algorithmic}
+\end{algorithm}
+
+\subsection{Convergence analysis}
+
+\begin{theorem}[convergence of Algorithm \ref{alg:PrimalDualIteration}]
+  Let $u_{\textup{CR}}\in \textup{CR}^1_0(\mathcal T)$ solve \eqref{eqLambda}
+  and $\Lambda_0\in\operatorname{sign}\nabla_\textup{NC}u_\textup{CR}$.
+  If $0 < \tau \leq 1$, then the iterates of Algorithm
+  \ref{alg:PrimalDualIteration} converge to $u_{\textup{CR}}$.
+\end{theorem}
+
+\begin{proof}
+  Set $e_j \coloneqq u_{\textup{CR}}-u_j$, $E_j\coloneqq \Lambda_0-\Lambda_j$.\\
+  Test \eqref{equ:linSysPrimalDualAlg} with $e_j$ for
+  \begin{align*}
+    a_\textup{NC}(v_j,e_j) + \alpha(u_j,e_j)_{L^2(\Omega)} 
+    + (\Lambda_j,\nabla_\textup{NC}e_j)_{L^2(\Omega)}
+    = 
+    (f,e_j)_{L^2(\Omega)}.
+  \end{align*}
+  Since $u_{\textup{CR}}$ solves \eqref{eqLambda} this is equivalent to
+  \begin{align}
+    \label{equ:convProofE}
+    a_\textup{NC}(v_j,e_j) &= 
+    \alpha(u_\textup{CR}-u_j,e_j)_{L^2(\Omega)} 
+    + (\Lambda_0-\Lambda_j,\nabla_\textup{NC}e_j)_{L^2(\Omega)} \notag\\
+    &= 
+    \alpha\Vert e_j\Vert_{L^2(\Omega)}^2
+    + (E_j,\nabla_\textup{NC}e_j)_{L^2(\Omega)}.
+  \end{align}
+  Abbreviate $\mu_j\coloneqq \max\{1,|\Lambda_{j-1}+\tau
+  \nabla_\textup{NC}\tilde{u}_j|\}$.
+  Utilize \eqref{equ:PrimalDualAlgLambdaJ} to compute
+  \begin{align}
+    \label{equ:convProofA}
+    \Lambda_{j-1}-\Lambda_j+\tau \nabla_\textup{NC}\tilde{u}_j 
+    = (\mu_j-1)\Lambda_j \quad\text{ a.e. in }\Omega.
+  \end{align}
+  For all $x\in\Omega$ the Cauchy-Schwarz inequality yields
+  $\Lambda_j(x)\cdot\Lambda_0(x)\leq|\Lambda_j(x)|$ 
+  and by definition of $\Lambda_j$ a simple case distinction leads to
+  $(1-|\Lambda_j(x)|)(\mu_j(x)-1)=0$.
+  Test \eqref{equ:convProofA} with $E_j$ to compute
+  \begin{align*}
+    ( (\Lambda_{j-1}-\Lambda_j)/\tau+\nabla_\textup{NC}\tilde{u}_j,
+    E_j)_{L^2(\Omega)}
+    &= 
+    1/\tau ( (\mu_j-1)\Lambda_j,\Lambda_0-\Lambda_j)_{L^2(\Omega)}\\
+    &\leq
+    1/\tau \int_\Omega (\mu_j-1)(|\Lambda_j|-|\Lambda_j|^2)\,\mathrm dx\\
+    &=
+    1/\tau \int_\Omega |\Lambda_j|
+    \underbrace{(1-|\Lambda_j|)(\mu_j-1)}_{=0}\,\mathrm dx =0.
+  \end{align*}
+  With $\Lambda_{j-1}-\Lambda_j=E_j-E_{j-1}$, 
+  $\tilde{u}_j=u_{j-1}+\tau v_{j-1}=u_{j-1}-(-u_{j-1}+u_{j-2})=
+  u_{j-1}-(e_{j-1}-e_{j-2})$
+  for $j\geq 2$ (and for $j=1$ the convention $e_{-1}\coloneqq e_0$)
+  this leads for all $j\in \mathbb N$ to
+  \begin{align}
+    \label{equ:convProofB}
+    ( (E_j-E_{j-1})/\tau-\nabla_\textup{NC}(e_{j-1}-e_{j-2})+
+    \nabla_\textup{NC}u_{j-1},E_j)_{L^2(\Omega)}\leq 0.
+  \end{align}
+  For $|\nabla_\textup{NC}u_\textup{CR}|\neq 0$ it holds
+  \begin{align*}
+    \gradnc\ucr\cdot E_j 
+    &=
+    \gradnc\ucr\cdot\Lambda_0 - \gradnc\ucr\cdot\Lambda_j\\
+    &\geq 
+    \gradnc\ucr\cdot\Lambda_0 - |\gradnc\ucr||\Lambda_j| \tag{Cauchy-Schwarz inequality}\\
+    &=
+    |\gradnc\ucr|^2/|\gradnc\ucr|-|\gradnc\ucr||\Lambda_j| 
+    \tag{$\Lambda_0\in\operatorname{sign}\gradnc\ucr$}\\
+    &= 
+    |\gradnc\ucr|(1-|\Lambda_j|)\\
+    &\geq
+    0 \tag{$|\Lambda_j|\leq 1$},
+  \end{align*}
+  while for $|\gradnc\ucr|=0$ the inequality is trivial.
+  Hence,
+  \begin{align}
+    \label{equ:convProofC}
+    (\gradnc\ucr,E_j)_{L^2(\Omega)}=\int_\Omega \gradnc\ucr\cdot E_j\geq 0.
+  \end{align}
+  With \eqref{equ:convProofB} and \eqref{equ:convProofC} it follows for all
+  $j\in\mathbb N$
+  \begin{align*}
+    ( (E_j-E_{j-1})/\tau-\nabla_\nc(e_{j-1}-e_{j-2})+
+    \nabla_\nc u_{j-1},E_j)_{L^2(\Omega)}
+    \leq
+    (\gradnc\ucr,E_j)_{L^2(\Omega)}
+  \end{align*}
+  which, by definiton of $e_{j-1}$, is equivalent to
+  \begin{align}
+    \label{equ:convProofD}
+    ( (E_j-E_{j-1})/\tau -\gradnc(2e_{j-1}-e_{j-2}),E_j)_{L^2(\Omega)}\leq 0.
+  \end{align}
+  Elementary algebra and $-v_j=(e_j-e_{j-1})/\tau$ result in
+  \begin{align*}
+    &(\vvvert e_j \vvvert^2_\nc   -
+    \vvvert e_{j-1}\vvvert_\nc^2 +
+    \Vert E_j \Vert_{L^2(\Omega)}^2 - \Vert E_{j-1}\Vert_{L^2(\Omega)}^2 +
+    \vvvert e_j-e_{j-1}\vvvert_\nc^2 +
+    \Vert E_j - E_{j-1} \Vert_{L^2(\Omega)}^2)/(2\tau) \\
+    &\quad =
+    \tau^{-1}a_\nc(e_j,e_j-e_{j-1}) + \tau^{-1}(E_j,E_j-E_{j-1})_{L^2(\Omega)}\\
+    &\quad =
+    -a_\nc(e_j,v_j) + \tau^{-1}(E_j,E_j-E_{j-1})_{L^2(\Omega)}\\
+    &\quad =
+    -\alpha\Vert e_j\Vert_{L^2(\Omega)}^2 + (E_j,
+    -\nabla_\nc e_j+(E_j-E_{j-1})/\tau)_{L^2(\Omega)} 
+    \tag{use \eqref{equ:convProofE}}\\
+    &\quad \leq
+    -\alpha\Vert e_j\Vert_{L^2(\Omega)}^2 + (E_j,
+    -\nabla_\nc e_j+(E_j-E_{j-1})/\tau)_{L^2(\Omega)}\\ 
+    &\quad\quad -( (E_j-E_{j-1})/\tau -\gradnc(2e_{j-1}-e_{j-2}),E_j)_{L^2(\Omega)}
+    \tag{use \eqref{equ:convProofD}}\\
+    &\quad =
+    -\alpha\Vert e_j\Vert_{L^2(\Omega)}^2 - 
+    (E_j,\gradnc(e_j-2e_{j-1}+e_{j-2}),E_j)_{L^2(\Omega)}
+  \end{align*}
+
+  \noindent The sum over $j=1,\ldots,J$ reads
+  \begin{align}
+    \label{equ:convProofF}
+    &\vvvert e_J \vvvert^2_\nc +\Vert E_J \Vert_{L^2(\Omega)}^2 
+    +\sum_{j=1}^J(\vvvert e_j-e_{j-1} \vvvert_\nc^2 + 
+    \Vert E_j-E_{j-1}\Vert_{L^2(\Omega)}^2)\notag \\
+    &\quad \leq 
+    \vvvert e_0 \vvvert_\nc^2 + \Vert E_0 \Vert_{L^2(\Omega)}^2 
+    -2\tau\alpha\sum_{j=1}^J \Vert e_j\Vert^2_{L^2(\Omega)}\notag \\
+    &\quad\quad
+    -2\tau \sum_{j=1}^J(E_j,\gradnc (e_j-2e_{j-1}+e_{j-2}))_{L^2(\Omega)}.
+  \end{align}
+
+  \noindent The last sum is equal to
+  \begin{align*}
+    &2\tau\sum_{j=1}^J(E_j,\gradnc(-e_j+e_{j-1}))_{L^2(\Omega)} +
+    2\tau\sum_{j=0}^{J-1}(E_{j+1},\gradnc(e_j-e_{j-1}))_{L^2(\Omega)} \\
+    &\quad = 
+    2\tau\left( 
+    \sum_{j=1}^{J-1} 
+    (E_{j+1}-E_j,\gradnc(e_j-e_{j-1}))_{L^2(\Omega)}
+    -(E_J,\gradnc(e_J-e_{J-1}))\right)\\
+    &\quad\quad +
+    \underbrace{2\tau(E_1,
+    \gradnc(e_0-e_{-1}))_{L^2(\Omega)}}_{=0 \text{ (since 
+    $e_{-1}\coloneqq e_0$)}}
+  \end{align*}
+
+  \noindent and since the left-hand side of
+  \eqref{equ:convProofF} is non-negative it holds for $0<\tau\leq 1$ 
+  \begin{align*}
+    &\tau\left(\vvvert e_J \vvvert^2_\nc +\Vert E_J \Vert_{L^2(\Omega)}^2 
+    +\sum_{j=1}^J(\vvvert e_j-e_{j-1} \vvvert_\nc^2 + 
+    \Vert E_j-E_{j-1}\Vert_{L^2(\Omega)}^2)\right) \\
+    &\quad \leq 
+    \vvvert e_0 \vvvert_\nc^2 + \Vert E_0 \Vert_{L^2(\Omega)}^2 
+    -2\tau\alpha\sum_{j=1}^J \Vert e_j\Vert^2_{L^2(\Omega)} \\
+    &\quad\quad
+    2\tau\left( 
+    \sum_{j=1}^{J-1} 
+    (E_{j+1}-E_j,\gradnc(e_j-e_{j-1}))_{L^2(\Omega)}
+    -(E_J,\gradnc(e_J-e_{J-1}))_{L^2(\Omega)}\right)
+  \end{align*}
+  
+  \noindent Division by $\tau$ yields
+  \begin{align}
+    \label{equ:convProofG}
+    &\vvvert e_J \vvvert^2_\nc +\Vert E_J \Vert_{L^2(\Omega)}^2 
+    +\sum_{j=1}^J(\vvvert e_j-e_{j-1} \vvvert_\nc^2 + 
+    \Vert E_j-E_{j-1}\Vert_{L^2(\Omega)}^2) \notag\\
+    &\quad \leq 
+    \tau^{-1}(\vvvert e_0 \vvvert_\nc^2 + \Vert E_0 \Vert_{L^2(\Omega)}^2 )
+    -2\alpha\sum_{j=1}^J \Vert e_j\Vert^2_{L^2(\Omega)} \\
+    &\quad\quad
+    2 
+    \sum_{j=1}^{J-1} 
+    (E_{j+1}-E_j,\gradnc(e_j-e_{j-1}))_{L^2(\Omega)}
+    -2(E_J,\gradnc(e_J-e_{J-1}))_{L^2(\Omega)}.\notag
+  \end{align}
+
+%  \begin{align*}
+%    &2\tau\sum_{j=1}^J(E_j,\gradnc(-e_j+e_{j-1}))_{L^2(\Omega)} +
+%    2\tau\sum_{j=0}^{J-1}(E_{j+1},\gradnc(e_j-e_{j-1}))_{L^2(\Omega)}\\
+%    &\quad \le
+%    2\sum_{j=1}^J(E_j,\gradnc(-e_j+e_{j-1}))_{L^2(\Omega)} +
+%    2\sum_{j=0}^{J-1}(E_{j+1},\gradnc(e_j-e_{j-1}))_{L^2(\Omega)}\\
+%    &\quad =
+%    2\sum_{j=1}^J(E_j,\gradnc(-e_j+e_{j-1}))_{L^2(\Omega)} 
+%    +
+%    2\sum_{j=1}^{J-1}(E_{j+1},\gradnc(e_j-e_{j-1}))_{L^2(\Omega)} 
+%    \tag{since $e_{-1}\coloneqq e_0$}\\
+%    &\quad =
+%    2\sum_{j=1}^{J-1}(E_{j+1}-E_j,\gradnc(e_j-e_{j-1}))_{L^2(\Omega)}
+%    -2(E_{J},\gradnc(e_J-e_{J-1}))_{L^2(\Omega)}
+%    .
+%  \end{align*}
+
+  \noindent which implies
+  \begin{align*}
+    &2\alpha\sum_{j=1}^J\Vert e_j\Vert^2_{L^2(\Omega)} \\
+    &\quad\leq
+    \Vert E_J + \gradnc(e_J-e_{J-1}) \Vert_{L^2(\Omega)}^2 
+    + \vvvert e_J-e_{J-1} \vvvert^2_\nc 
+    + \Vert E_1 - E_0 \Vert^2_{L^2(\Omega)} \\
+    &\quad\quad 
+    + \sum_{j=1}^{J-1}  
+      \Vert \gradnc(e_j-e_{j-1}) - (E_{j+1} - E_j ) \Vert^2_{L^2(\Omega)} 
+    + 2\alpha\sum_{j=1}^J\Vert e_j\Vert^2_{L^2(\Omega)}\\
+    &\quad = 
+    \vvvert e_J - e_{J-1} \vvvert^2_\nc + \Vert E_J \Vert_{L^2(\Omega)}^2 
+    + 2(E_{J},\gradnc(e_J-e_{J-1}))_{L^2(\Omega)} \\
+    &\quad\quad 
+    + \sum_{j=1}^J ( \vvvert e_j-e_{j-1} \vvvert^2_\nc
+    + \Vert E_j - E_{j-1} \Vert^2_{L^2(\Omega)} )
+    + 2\alpha\sum_{j=1}^J\Vert e_j\Vert^2_{L^2(\Omega)}\\
+    &\quad\quad 
+    - 2\sum_{j=1}^{J-1}(E_{j+1}-E_j,\gradnc(e_j-e_{j-1}))_{L^2(\Omega)}\\
+    &\quad\leq
+    \tau^{-1}(\vvvert e_0\vvvert^2_\nc + \Vert E_0\Vert^2_{L^2(\Omega)})
+    \tag{by \eqref{equ:convProofG}}.
+  \end{align*}
+
+  \noindent This proves that 
+  $\sum_{j=1}^\infty \Vert e_j\Vert _{L^2(\Omega)}^2$ is bounded
+  proving convergence $\Vert e_j\Vert_{L^2(\Omega)}\rightarrow 0$
+  as $j\rightarrow \infty$.
+\end{proof}
+
+\subsection{Data structures }
+The realization of Algorithm \ref{alg:PrimalDualIteration} utilizes the data
+structures \texttt{c4n}, 
+\texttt{n4e}, \texttt{s4e}, \texttt{n4s}, \texttt{n4sDb}, \texttt{n4sNb}, \texttt{s4n},
+and \texttt{area4e}
+from \cite{Carstensen2017script} and Section 7.8 of \cite{CarstensenBrennerFEM}.\\
+Let $\mathcal{T}$ be a regular triangulation of the polygonal bounded
+Lipschitz domain $\Omega\subset \mathbb R^2$ into triangles with set of nodes
+$\mathcal{N}$,
+set of edges
+$\mathcal{E}$, and the set of inner nodes $\mathcal{N}(\Omega)$, and set of
+inner edges
+$\mathcal{E}(\Omega)$. 
+The data structure of $\mathcal T$ and $\mathcal E$ is described
+as follows.\\
+The $j$-th row \texttt{c4n(j,:)=[$x$ $y$]} of \texttt{c4n} contains the
+coordinates of the $j$-th 
+node $z_j=(x,y)$  
+of $\mathcal T$.
+\texttt{n4e(j,:)=[$\alpha$ $\beta$ $\gamma$]} contains
+the three node numbers of the $j$-th triangle 
+$T_j=\operatorname{conv}\{P_\alpha,P_\beta,P_\gamma\}$
+in counterclockwise order with the refinement edge
+$E_\textup{Ref}=\operatorname{conv}
+\{P_\alpha,P_\beta\}$
+of
+$T_j$.
+Similar  for
+$\mathcal E(T_j) = \{ E_\alpha,E_\beta,E_\gamma\}$
+the $j$-th row 
+\texttt{s4e(j,:)=[$\alpha$ $\beta$ $\gamma$]} 
+of \texttt{s4e}
+contains
+the three side numbers of the $j$-th triangle $T_j$
+in counterclockwise order 
+where
+$E_\textup{Ref}=E_\alpha$
+is the refinement edge of
+$T_j$. 
+\texttt{n4s(j,:):=[$\alpha$ $\beta$]} contains
+the two node numbers of the \(j\)-th edge 
+$E_j = \operatorname*{conv} \{ P_\alpha, P_\beta \}$
+of $\mathcal T$.
+For a boundary edge
+\(E_j = \operatorname*{conv} \{ P_\alpha, P_\beta \}\in\mathcal{E}\setminus\mathcal{E}(\Omega)\)
+choose $\alpha$ and $\beta$ such that the domain \(\Omega\) is on the left hand side
+of the vector from \(P_\alpha\) to \(P_\beta\).
+The following three lines of Matlab code compute \texttt{n4s}.
+\begin{lstlisting}[frame=single,numbers=none]
+allSides=[n4e(:,[1 2]); n4e(:,[2 3]); n4e(:,[3 1])];
+[b,ind]=unique(sort(allSides,2),'rows','first');
+n4s=allSides(sort(ind),:);
+\end{lstlisting}
+\texttt{n4sDb} contains the numbers of the edges with Dirichlet boundary data and 
+\texttt{n4sNb} contains those of the edges with Neumann boundary data.
+With \texttt{n4s} the computation of the data
+structure \texttt{s4n} is possible which satisfies
+\begin{align*}
+\texttt{s4n($\alpha$,$\beta$)} =
+\texttt{s4n($\beta$,$\alpha$)} =
+\begin{cases}
+ \ell & \text{if there exist } E_\ell = \operatorname*{conv} \{ P_\alpha, P_\beta \},\\
+    0 & \text{else}
+\end{cases}
+\end{align*}
+for any given nodes $\alpha,\beta\in\mathcal{N}$.
+\texttt{s4n=sparse(n4s(:,1),n4s(:,2),1:S,N,N)}
+creates a sparse matrix with
+\begin{equation*}
+  \texttt{s4n(n4s(j,1),n4s(j,2))} = \texttt j \quad \text{ for } j = 1,\ldots,M := \lvert 
+  \mathcal{E} \rvert
+\end{equation*}
+and the last two parameters ensure that the resulting
+Matrix is \(N \times N\) with
+$
+\texttt N = \lvert \mathcal{N} \rvert
+$. 
+\begin{lstlisting}[frame=single,numbers=none]
+M=size(n4s,1); N=size(c4n,1);
+s4n=sparse(n4s(:,1),n4s(:,2),1:M,N,N);
+s4n=s4n + s4n';
+\end{lstlisting}
+The AFEM function \texttt{computeArea4e.m} computes the 
+array \texttt{area4e} that contains the area of the $j$-th 
+triangle of $\mathcal T$ 
+in its $j$-th row.
+\subsection{Basis of Crouzeix-Raviart functions \cite{Carstensen2017script}}
+Given an edge $E\in\mathcal E$, the associated edge-oriented basis function
+$\psi_E\in\textup{CR}^1(\mathcal T)$ is characterized by
+\[
+\psi_E(\operatorname{mid}(F))=\delta_{EF} \text{ for all } F\in\mathcal E.
+\]
+Then $(\psi_j)_{j=1,\dots,|\mathcal{E}|}$ is a basis of $\textup{CR}^1(\Omega)$
+and $(\psi_j \, | \, E_j\in\mathcal{E}(\Omega))$ is a basis of $\textup{CR}^1_0(\Omega)$.
+It is established that on a triangle $T\in\mathcal T$ with $E\in\mathcal E (T)$ the
+function
+$\psi_E$ has the representation
+\[
+\psi_E = 1-2\varphi_P \text{ in } T
+\] using the barycentric coordinate $\varphi_P$ with respect to 
+the corner $P\in\mathcal N (T)$ of $T$ opposite to $E$.
+
+\subsection{Discrete gradients }\label{sec:DiscreteGradients}
+
+To compute the non-conforming gradient of a Crouzeix-Raviart function, the
+gradients of the conforming basis $(\phi_1,\phi_2,\phi_3)$ functions on a triangle $T\in\mathcal T$
+are (\cite{Carstensen2017script,CarstensenBrennerFEM})
+\begin{equation*}
+  \begin{pmatrix}
+    1 & 1 & 1\\
+    P_1 & P_2 & P_3
+  \end{pmatrix}
+  \begin{pmatrix}
+    \nabla \varphi_1\\
+    \nabla \varphi_2\\
+    \nabla \varphi_3\\
+  \end{pmatrix}
+  =
+  \begin{pmatrix}
+    0 & 0 \\
+    1 & 0\\
+    0&1
+  \end{pmatrix}.
+\end{equation*}
+Consequently
+\begin{equation*}
+  \begin{pmatrix}
+    1 & 1 & 1\\
+    P_1 & P_2 & P_3
+  \end{pmatrix}
+  \begin{pmatrix}
+    \nabla \psi_1|_T\\
+    \nabla \psi_2|_T\\
+    \nabla \psi_3|_T\\
+  \end{pmatrix}
+  =
+  \begin{pmatrix}
+    1 & 1 & 1\\
+    P_1 & P_2 & P_3
+  \end{pmatrix}
+  \begin{pmatrix}
+   -2 \nabla \varphi_1\\
+   -2 \nabla \varphi_2\\
+   -2 \nabla \varphi_3\\
+  \end{pmatrix}
+  =
+  \begin{pmatrix}
+    0 & 0 \\
+    -2 & 0\\
+    0&-2
+  \end{pmatrix}
+\end{equation*}
+computes the gradients of the CR basis functions. 
+$\texttt{c4n(n4e(j,:),:)}\in\mathbb R^{3\times 2}$ 
+are the coordinates of the nodes of a triangle
+$T=\operatorname{conv}\{P_\alpha,P_\beta,P_\gamma\}$ with 
+\texttt{n4e(elem,:)=[$\alpha$ $\beta$ $\gamma$]}, i.e. 
+\[
+\texttt{c4n(n4e(j,:),:)=[$P_\alpha^T$; $P_\beta^T$; $P_\gamma^T$]}.
+\]
+Hence for the triangle $T\in\mathcal T$ of number $j$,
+\[
+\texttt{[ones(1,3); c4n(n4e(j,:),:)']\textbackslash[zeros(1,2); -2*eye(2)]}
+\]
+are the gradients of the CR basis functions on $T$.
+
+These can be used to calculate the gradient of 
+$u_{\textup{CR}} \in \textup{CR}^1(\mathcal T)$ on $T$
+since $u_{\textup{CR}}$ on $T$ can be represented as
+\[
+u_{\textup{CR}}|_T = \sum_{E\in\mathcal E (T)}u_E\psi_E|_T.
+\]
+Therefore
+\[
+\nabla u_{\textup{CR}}|_T = \sum_{E\in\mathcal E (T)}u_E\nabla\psi_E|_T.
+\]
+\texttt{u(s4e(j,:))} determines the three
+coefficients $(u_E|E\in\mathcal E)$ of $u_{\textup{CR}}$
+on $T$.
+\texttt{s4e(j,:)} contains the global edge numbers 
+of $T$ in counterclockwise order and
+the first global edge number of $T$ in \texttt{s4e(j,:)} is the number
+of the refinement edge $E_\textup{Ref}$.
+This implies 
+$$
+\texttt{u(s4e(j,1))}=u_{E_\textup{Ref}}.
+$$
+On the other hand 
+\begin{lstlisting}[frame = single, numbers = none]
+[ones(1,3); c4n(n4e(j,:),:)']\[zeros(1,2); -2*eye(2)]
+\end{lstlisting}
+computes the three gradients of the basis functions on $T$ in counterclockwise 
+order and the first gradient with respect to
+the edge opposit to the first global node in \texttt{n4e(j,:)}, i.e. the
+first of the gradients is not with respect to the refinement edge of $T$. \\
+\texttt{c4n(n4e(j,[3 1 2]),:)'} permutates the coordinates of the nodes such that the
+order of the gradients computed by
+\begin{lstlisting}[frame = single, numbers = none]
+[ones(1,3); c4n(n4e(j,[3 1 2]),:)']\[zeros(1,2); -2*eye(2)]
+\end{lstlisting}
+matches the order of the coefficients.
+Hence
+\begin{lstlisting}[frame=single,numbers=none]
+du(j,:) = u(s4e(j,:))' * ...
+    [ones(1,3); c4n(n4e(j,[3 1 2]),:)']\[zeros(1,2); -2*eye(2)]
+\end{lstlisting}
+computes the gradient of $u_{\textup{CR}}$ on the $j$-th element $T$.
+The function \texttt{GradientNC.m}
+uses this to compute the gradients of $u_{\textup{CR}}$ on every triangle
+$T\in\mathcal T$. The inputs of the function are \texttt{c4n},
+\texttt{n4e}, \texttt{s4e}, the number of elements \texttt{nrElems} in $\mathcal T$,
+and the edge-oriented components of $u_{\textup{CR}}$ in \texttt{u}.
+The output of the function is the array 
+$\texttt{du}\in\mathbb R^{|\mathcal T|\times 2}$. It contains
+the gradient of $u_{\textup{CR}}$ on
+  the $j$-th element in the $j$-th component.
+\begin{lstlisting}[frame = single,numbers=none]
+function du = GradientNC(c4n,n4e,s4e,nrElems,u)
+  du = zeros(nrElems,2);
+  for elem = 1:nrElems
+    du(elem,:) = u(s4e(elem,:))' * ...
+        [ones(1,3);c4n(n4e(elem,[3 1 2]),:)']\[zeros(1,2);-2*eye(2)];          
+  end
+end
+\end{lstlisting}
+
+
+
+
+\subsection{Finite elemente matrices (\cite{Carstensen2017script},
+\cite{CarstensenBrennerFEM})}
+ 
+The entries of the non-conforming stiffness matrix are
+\begin{equation*}
+  \texttt{A}_{j,k} = 
+  a_{\textup{NC}}(\psi_j,\psi_k)
+  \coloneqq
+  \int_{\Omega}\nabla_{\textup{NC}}\psi_j\cdot\nabla_{\textup{NC}}\psi_k\, \mathrm{dx}
+\end{equation*}
+and the entries of the non-conforming mass matrix are
+\begin{equation*}
+  \texttt{M}_{j,k} = 
+  (\psi_j,\psi_k)_{L^2(\Omega)} =
+  \int_{\Omega}\psi_j\psi_k\, \mathrm{dx}
+\end{equation*}
+
+
+The local non-conforming mass matrix on a triangle $T$ reads
+\begin{equation*}
+  \textup{M}(T) \coloneqq
+  \left(
+  \int_T \psi_j\psi_k \, \mathrm{dx}\right)_{j,k=1,2,3}
+  =
+  \frac{|T|}{3}
+  I_{3\times3}
+\end{equation*}
+
+Furthermore the non-conforming gradient $\nabla_{\textup{NC}}$ of a CR basis function is 
+constant on any triangle $T\in\mathcal{T}$, hence
+\begin{align*}
+  \textup{A}(T) &\coloneqq
+  \left(
+  \int_T \nabla \psi_j\cdot\nabla\psi_k \, \mathrm{dx}\right)_{j,k=1,2,3}
+  =
+   \int_T 1 \, \mathrm{dx}\left( \nabla \psi_j\cdot\nabla\psi_k \right)_{j,k=1,2,3}\\
+ &=
+  |T|
+  \begin{pmatrix}
+    \nabla \psi_1\\
+    \nabla \psi_2\\
+    \nabla \psi_3\\
+  \end{pmatrix}
+  \begin{pmatrix}
+    \nabla \psi_1^T&
+    \nabla \psi_2^T&
+    \nabla \psi_3^T\\
+  \end{pmatrix}.
+\end{align*}
+Using this observations the function \texttt{FeMatrices.m} assembles
+the non-conforming mass matrix and non-conforming stiffness matrix.
+The inputs of the function are \texttt{c4n},
+\texttt{n4e}, \texttt{s4e}, \texttt{area4e}, and the number of elements \texttt{nrElems} in $\mathcal T$.
+The outputs of the function are the non-conforming stiffness matrix \texttt{A} and the
+non-conforming mass matrix \texttt{M} as sparse matrices.
+First
+\begin{lstlisting}[frame = single, numbers = none]
+  Alocal = zeros(3,3,nrElems);
+  Mlocal = zeros(3,3,nrElems);
+\end{lstlisting}
+preallocates memory for the local non-conforming matrices.
+\texttt{Mlocal} and \texttt{Alocal} are both $3\times 3\times 
+|\mathcal{T}|$ arrays. 
+The following loop over all triangles uses this
+and the computation of the discrete gradients in section \ref{sec:DiscreteGradients} 
+to assemble the 
+local non-conforming stiffness and mass matrices. 
+
+\begin{lstlisting}[frame= single, numbers = none]
+  for elem = 1 : nrElems
+      gradsNC = [ones(1,3); c4n(n4e(elem,:),[3 1 2])']\ ...
+          [zeros(1,2); -2*eye(2)]; 
+      Alocal(:,:,elem) = area(elem) * (gradsNC * gradsNC'); 
+      Mlocal(:,:,elem) = area(elem) * Mlocal(:,:,elem); 
+  end
+\end{lstlisting}
+Then the global non-conforming stiffness and mass matrix can be assembled.
+\texttt{I} and \texttt{J} are used to identify local side numbers of the elements
+with the global side numbers of the triangulation by specifying the rows and colums
+the entries must have in the global matrices. Note that while assembling the sparse matrices, 
+in case there already is an entry at a position 
+in the matrix, the \texttt{sparse} function sums up the new number and the already existing one.
+
+\begin{lstlisting}[frame = single, numbers =none]
+  s4eT = s4e';
+  I = [s4eT;s4eT;s4eT];
+  J = [s4eT(:),s4eT(:),s4eT(:)]';
+  A = sparse(I(:),J(:),Alocal(:));
+  M = sparse(I(:),J(:),Mlocal(:));
+\end{lstlisting}
+
+The complete function reads
+\begin{lstlisting}[frame = single, numbers = none]
+function [A,M] = FeMatrices(c4n,n4e,s4e,area4e,nrElems)
+  Alocal = zeros(3,3,nrElems);
+  Mlocal = zeros(3,3,nrElems);
+  
+  for elem = 1 : nrElems
+    gradsNC = [ones(1,3); c4n(n4e(elem,[3 1 2]),:)']\ ...
+        [zeros(1,2); -2*eye(2)]; 
+    Alocal(:,:,elem) = area(elem) * (gradsNC * gradsNC'); 
+    Mlocal(:,:,elem) = area(elem) * eye(3)/3; 
+  end
+  
+  s4eT = s4e';
+  I = [s4eT;s4eT;s4eT];
+  J = [s4eT(:),s4eT(:),s4eT(:)]';
+  A = sparse(I(:),J(:),Alocal(:));
+  M = sparse(I(:),J(:),Mlocal(:));
+end
+\end{lstlisting}
+
+
+
+
+\subsection{Reformulation of Algorithm \ref{alg:PrimalDualIteration} for implementation}
+
+In an iteration step of Algorithm \ref{alg:PrimalDualIteration} with given
+$\Lambda_{j-1}, u_{j-1}$ and $v_{j-1}\coloneqq\frac{u_{j-1}-u_{j-2}}{\tau}$ 
+the equation that is to be solved in $\textup{CR}^1_0(\mathcal T)$ is
+\begin{equation*} 
+\frac{1}{\tau}a_{\textup{NC}}(u_j,\bullet)+\alpha(u_j,\bullet)_{L^2(\Omega)}
+=
+\frac{1}{\tau}a_{\textup{NC}}(u_{j-1},\bullet) + (f,\bullet)_{L^2(\Omega)}
+- (\Lambda_j,\nabla_{\textup{NC}}\bullet)_{L^2(\Omega)}.
+\end{equation*}
+This leads to the problem of finding a solution to
+\begin{equation}\label{equ:LinearSystem}
+\left( \frac{1}{\tau}A+\alpha M\right) x=b  
+\end{equation}
+where
+$b_k\coloneqq
+\left(
+\frac{1}{\tau}
+\nabla_{\textup{NC}}u_{j-1}-\Lambda_j,\nabla_{\textup{NC}}\psi_k
+\right)_{L^2(\Omega)}+(f,\psi_k)_{L^2(\Omega)}
+$.
+
+
+The left-hand side matrix can easily be calculated after the non-conforming
+stiffness and mass matrix are assembled with
+\begin{lstlisting}[style=inline]
+A/tau+alpha*M; 
+\end{lstlisting}
+
+
+
+
+
+\subsection{Right-hand side $b$}
+To obtain $b$ the function \texttt{Integrals.m} evaluates the integrals 
+$$
+\int_T f\psi_k\,\mathrm{dx} \text{ for all } T\in\mathcal T \text{ and for all }
+k=1,\dots,|\mathcal E|.
+$$
+The inputs are a function handle of the function $f$ in \texttt{f}, \texttt{c4n},
+\texttt{n4e}, the algebraic degree of exactness the numerical quadrature will have, and 
+\texttt{area4e}.
+The output is, for $j=1,2,3$, an array 
+\texttt{tempj} that contains the value of the approximation of 
+$
+\int_{T_k} f\psi_j\,\mathrm{dx} 
+$
+in the $k$-th component for $k=1,\dots,|\mathcal T|$.
+
+To use the AFEM packages function \texttt{integrate.m} the integrands have to
+be defined and therefore function handles of the local CR basis functions are needed.
+
+\begin{lstlisting}[frame = single, numbers = none]
+  phi1 = @(x)( x(:,1) );
+  phi2 = @(x)( x(:,2) );
+  phi3 = @(x)( 1 - x(:,1) - x(:,2) );
+  
+  psi1 = @(x)( 1-2*phi3(x) );
+  psi2 = @(x)( 1-2*phi1(x) );
+  psi3 = @(x)( 1-2*phi2(x) );
+\end{lstlisting}
+\texttt{phij} for $j=1,2,3$ are function handles of the barycentric coordinates 
+on the reference triangle
+$T_\textup{Ref}=\operatorname{conv}((0,0),(1,0),(0,1))$. They are used 
+to define the CR basis functions \texttt{psij} for $j=1,2,3$ on $T_{\textup{Ref}}$. 
+The edge numeration convention from \texttt{s4e} is used and therefore the first edge is the 
+refinement edge.\\
+Then the integrands are defined where the CR basis functions will be evaluated on the reference
+triangle \texttt{psij(Gpts4ref)}, $j=1,2,3$, and transformed to a element $T\in\mathcal T$.
+\begin{lstlisting}[frame=single,numbers=none]
+  INT1 = @(n4p,Gpts4p,Gpts4ref) psi1(Gpts4ref).*f(Gpts4p);
+  INT2 = @(n4p,Gpts4p,Gpts4ref) psi2(Gpts4ref).*f(Gpts4p);        
+  INT3 = @(n4p,Gpts4p,Gpts4ref) psi3(Gpts4ref).*f(Gpts4p);
+\end{lstlisting}
+The integrals are evaluated via \texttt{integrate.m} and \texttt{area4e} will be used
+for the transformations from the reference triangle to the elements of $\mathcal T$.
+
+\begin{lstlisting}[frame=single,numbers=none]
+  temp1 = integrate(INT1, c4n, n4e, degree, area4e);
+  temp2 = integrate(INT2, c4n, n4e, degree, area4e);
+  temp3 = integrate(INT3, c4n, n4e, degree, area4e);
+\end{lstlisting}
+The complete function reads
+
+\begin{lstlisting}[frame=single,numbers=none]
+function [temp1,temp2,temp3] = computeIntegrals(f,c4n,n4e,degree,area4e)
+  phi1 = @(x)( x(:,1) );
+  phi2 = @(x)( x(:,2) );
+  phi3 = @(x)( 1 - x(:,1) - x(:,2) );
+  
+  psi1 = @(x)( 1-2*phi3(x) );
+  psi2 = @(x)( 1-2*phi1(x) );
+  psi3 = @(x)( 1-2*phi2(x) );
+  
+  INT1 = @(n4p,Gpts4p,Gpts4ref) psi1(Gpts4ref).*f(Gpts4p);
+  INT2 = @(n4p,Gpts4p,Gpts4ref) psi2(Gpts4ref).*f(Gpts4p);        
+  INT3 = @(n4p,Gpts4p,Gpts4ref) psi3(Gpts4ref).*f(Gpts4p);
+  
+  temp1 = integrate(INT1, c4n, n4e, degree, area4e);
+  temp2 = integrate(INT2, c4n, n4e, degree, area4e);
+  temp3 = integrate(INT3, c4n, n4e, degree, area4e);
+end
+\end{lstlisting}
+
+The function \texttt{RightHandSide.m} uses \texttt{tempj}, $j=1,2,3$, to compute the right-hand
+side $b$ with
+$$
+b_k\coloneqq
+\left(
+\frac{1}{\tau}
+\nabla_{\textup{NC}}u_{j-1}-\Lambda_j,\nabla_{\textup{NC}}\psi_k
+\right)_{L^2(\Omega)}+(f,\psi_k)_{L^2(\Omega)} \text{ for all } k=1,\dots,|\mathcal E|.
+$$
+The inputs of the function are \texttt{c4n},
+\texttt{n4e}, \texttt{s4e}, the number of sides \texttt{nrSides} in $\mathcal T$,
+\texttt{area4e}, the discrete gradient \texttt{du} of $u_{j-1}$ computed by the function
+\texttt{GradientNC} in section \ref{sec:DiscreteGradients}, the parameter $\texttt{tau}=\tau$,
+$\texttt{Lambda}=\Lambda_j$, the number of elements \texttt{nrElems} in $\mathcal T$, and 
+\texttt{tempj}, $j=1,2,3$, the arrays with the value of the integral
+$
+\int_{T_k} f\psi_j\,\mathrm{dx} 
+$
+in the $k$-th component for $k=1,\dots,|\mathcal T|$.
+The outputs are the right-hand side $\texttt{b}=b$ and the vector 
+$\texttt{temp}=\left( \int_\Omega f\, \psi_k \, \mathrm{dx} \right)_{k=1,\dots,|\mathcal E|}$ 
+that will be used to compute the discrete energy.
+
+First memory for \texttt{b} and \texttt{temp} is preallocated.
+\begin{lstlisting}[frame=single,numbers=none]
+b = zeros(nrSides,1);
+temp = zeros(nrSides,1);
+\end{lstlisting}
+Given \texttt{elem} the number of an arbitrary element $T\in\mathcal T$
+\begin{lstlisting}[frame=single,numbers=none]
+gradsNC = [ones(1,3); c4n(n4e(elem,[3 1 2]),:)']\ ...
+    [zeros(1,2); -2*eye(2)];
+\end{lstlisting}
+computes the gradients of the CR basis functions on T as seen in section 
+\ref{sec:DiscreteGradients}. Furthermore 
+for all $k=1,\dots,|\mathcal E|$
+\begin{align*}
+\tilde{b}_k 
+&\coloneqq
+\left(
+\frac{1}{\tau}
+\nabla_{\textup{NC}}u_{j-1}-\Lambda_j,\nabla_{\textup{NC}}\psi_k
+\right)_{L^2(\Omega)}\\
+&=
+\sum_{T\in\mathcal T}
+\left(
+\frac{1}{\tau}
+\nabla u_{j-1}|_T-\Lambda_j,\nabla \psi_k|_T
+\right)_{L^2(T)} \\
+&=
+\sum_{T\in\mathcal T}
+|T|
+\left(\frac{1}{\tau}
+\nabla u_{j-1}|_T-\Lambda_j\right)\cdot\nabla \psi_k|_T\\
+&=
+\sum_{\texttt{elem}=1}^{|\mathcal T|} \texttt{area4e(elem)}
+\left(\texttt{du(elem,:)/tau-Lambda(elem,:)}\right)\texttt{gradsNC'}_k
+\end{align*}
+and
+\begin{align*}
+  \texttt{temp} &=(f,\psi_k)_{L^2(\Omega)} 
+=\sum_{T\in\mathcal T}(f,\psi_k)_{L^2(T)} \\
+.
+\end{align*}
+Note that $ b = \tilde{b}+\texttt{temp}.$
+Therefore \begin{lstlisting}[frame=single,numbers=none]
+for elem = 1 : nrElems
+    gradsNC = [ones(1,3); c4n(n4e(elem,[3 1 2]),:)']\ ...
+        [zeros(1,2); -2*eye(2)];
+    bLocal = ( du(elem,:)/tau - Lambda(elem,:) ) * gradsNC';  
+    temp(s4e(elem,:)) = temp(s4e(elem,:)) + ...
+        [temp1(elem),temp2(elem),temp3(elem)]';
+    b(s4e(elem,:)) = b(s4e(elem,:)) + area4e(elem)*bLocal'; 
+end
+b = b + temp;
+\end{lstlisting}
+computes \texttt{b} in a loop over all triangles in $\mathcal T$.
+
+The complete function reads
+\begin{lstlisting}[frame=single,numbers=none]
+function [b,temp] = RightHandSide(c4n,n4e,s4e,nrSides,area4e,du,tau, ...
+    Lambda,nrElems,temp1,temp2,temp3)
+  b = zeros(nrSides,1);
+  temp = zeros(nrSides,1);
+  for elem = 1 : nrElems
+      gradsNC = [ones(1,3); c4n(n4e(elem,[3 1 2]),:)']\ ...
+          [zeros(1,2); -2*eye(2)];
+      bLocal = ( du(elem,:)/tau - Lambda(elem,:) ) * gradsNC';  
+      temp(s4e(elem,:)) = temp(s4e(elem,:)) + ...
+          [temp1(elem),temp2(elem),temp3(elem)]';
+      b(s4e(elem,:)) = b(s4e(elem,:)) + area4e(elem)*bLocal'; 
+  end
+  b = b + temp;
+end
+\end{lstlisting}
+
+\subsection{Degrees of freedom}
+Since the solution $u_j$ of the linear system of equations in algorithm 
+\ref{alg:PrimalDualIteration} is a function in $\textup{CR}^1_0(\mathcal T)$ 
+only the edge-oriented coefficients for non-Dirchlet edges, the 
+degrees of freedom for this system, have to be computed.
+The function \texttt{DegreesOfFreedom.m} has the inputs 
+\texttt{n4e}, the number of sides \texttt{nrSides} of the triangulation $\mathcal T$, and
+\texttt{n4sDb} and computes the degrees of freedom \texttt{dof} as output as a vector
+that contains the global numbers of the sides in $\mathcal E$ that are not Dirichlet sides.
+First \texttt{s4n} is assemled to compute the Dirichlet boundary sides in \texttt{DbSides}.
+For the $j$-th pair of nodes in \texttt{n4sDb} 
+\begin{lstlisting}[frame=single,numbers=none]
+DbSides(j) = s4n(n4sDb(j,1),n4sDb(j,2));
+\end{lstlisting}
+computes the global number of the side that has this pair of nodes as end points.
+This number is saved in \texttt{DbSides(j)} as the number of the $j$-Dirichlet boundary
+side.
+\begin{lstlisting}[frame=single,numbers=none]
+s4n = computeS4n(n4e);
+
+DbSides = zeros(1,size(n4sDb,1));
+for j = 1:size(n4sDb,1)
+    DbSides(j) = s4n(n4sDb(j,1),n4sDb(j,2));
+end
+\end{lstlisting}
+Now the line
+\begin{lstlisting}[frame=single,numbers=none]
+dof = setdiff(1:nrSides,DbSides);
+\end{lstlisting}
+removes all numbers of Dirichlet boundary sides from a vector 
+\texttt{1:nrSides = [1 2 3 ... nrSides]} and yields an array \texttt{dof} that
+only contains the
+global numbers of the degrees of freedom.
+The complete code reads.
+
+\begin{lstlisting}[frame=single,numbers=none]
+function dof = DegreesOfFreedom(n4e,nrSides,n4sDb)
+  s4n = computeS4n(n4e);
+  
+  DbSides = zeros(1,size(n4sDb,1));
+  for i = 1:size(n4sDb,1)
+      DbSides(i) = s4n(n4sDb(i,1),n4sDb(i,2));
+  end
+
+  dof = setdiff(1:nrSides,DbSides);
+end
+\end{lstlisting}
+
+\section{Solving of \ref{equ:LinearSystem}}
+With the left-hand side matrix
+$
+ \frac{1}{\tau}A+\alpha M
+$
+, the right-hand side $b$ 
+and the degrees of freedom of the linear system \ref{equ:LinearSystem} computed
+it is now solved for all non-Dirichlet boundary sides.
+The solution \texttt{uNew} contains the edge-oriented components of $u_j\in\textup{CR}^1_0(
+\mathcal T)$ and is initialized as
+\begin{lstlisting}[frame=single, numbers=none]
+uNew = zeros(nrSides,1);
+\end{lstlisting}
+The system is only solved for the degrees of freedom \texttt{dof} and the zeros remain
+for the components with respect do Dirichlet boundary sides.
+\begin{lstlisting}[frame=single, numbers=none]
+uNew(dof) = A(dof,dof)\b(dof);
+\end{lstlisting}
+
+\section{Discrete energy}
+
+The function \texttt{Energy.m} computes the discrete energy
+\begin{align*}
+  E_\nc (u) 
+  &=    
+  \frac{\alpha}{2}   \|  u \|_{L^2(\Omega)}^2 
+  + | u |_{1,1,\nc }  -\int_\Omega f\,  u \dx. \\
+\end{align*}
+The inputs are
+\texttt{area4e},
+the edge-oriented components \texttt{u} of a Crouzeix-Raviart function $u_{\textup{CR}}
+\in \textup{CR}^1_0(\mathcal T)$, the gradient \texttt{du} of $u_{\textup{CR}}$, 
+an array \texttt{temp} that contains the value of the integral
+$
+\int_{\Omega} f\psi_j\,\mathrm{dx} 
+$
+in the $j$-th component for $j=1,\dots,|\mathcal E|$,
+$\texttt{alpha}=\alpha$,
+and the non-conforming mass matrix \texttt{MAMANC}.
+It holds for $u\in\textup{CR}^1(\mathcal T)$
+\begin{align*}
+  E_\nc (u) 
+  &=    
+  \frac{\alpha}{2}   \|  u \|_{L^2(\Omega)}^2 
+  + | u |_{1,1,\nc }  -\int_\Omega f\,  u \dx \\
+  &=
+  \frac{\alpha}{2} (u,u)_{L^2(\Omega)} 
+  + \int_\Omega |\nabla_{\textup{NC}}u|\,\mathrm{dx} 
+  - \sum_{j=1}^{|\mathcal E|}\texttt{u(j)} \int_\Omega f\psi_j\,\mathrm{dx} \\
+  &= 
+  \frac{\alpha}{2} 
+  \sum_{j,k=1}^{|\mathcal E|}\texttt{u(j)}(\psi_j,\psi_k)_{L^2(\Omega)}\texttt{u(k)}
+  + \sum_{T \in \mathcal T}\int_T |\nabla u|_T| \,\mathrm{dx} 
+  - \sum_{j=1}^{|\mathcal E|}\texttt{u(j)} \texttt{temp(j)} \\
+  &= 
+  \frac{\alpha}{2} 
+  \texttt{u'*MAMANC*u}
+  + \sum_{j=1}^{|\mathcal T|}|T_j||\texttt{du(j,:)}|
+  - \texttt{u'*temp}\\
+  &=
+  \frac{\texttt{alpha}}{2} \texttt{u'*MAMANC*u}
+  + \texttt{area4e'*sqrt(sum(du.$\wedge$2,2))}
+  - \texttt{u'*temp}.
+\end{align*}
+Therefore the complete function reads.
+\begin{lstlisting}[frame=single,numbers=none]
+function ENew = Energy(area4e,u,du,temp,alpha,MAMANC)
+  ENew = alpha/2 * u'*MAMANC*u + area4e'*sqrt(sum(du.^2,2)) - u'*temp;
+end
+\end{lstlisting}
+
+
+\section{Main function}\label{fct:tvRegPrimalDual}
+
+The function \texttt{tvRegPrimalDual.m} realizes Algorithm \ref{alg:PrimalDualIteration}.
+Its inputs are \texttt{c4n}, \texttt{n4e}, \texttt{n4sDb}, the initial data 
+$\texttt{u}=u_0$ and $\texttt{Lambda}=\Lambda_0$, 
+$\texttt{f}=f$, $\texttt{alpha}=\alpha$, and \texttt{epsStop} for the termination criterion
+of the iteration. The outputs are the solution of the iteration \texttt{u}, 
+the value \texttt{corr} of the last iteration step that satisfies $\texttt{corr}<\texttt{epsStop}$,
+and arrays \texttt{corrVec} and \texttt{energyVec} that contain the values of $\texttt{corr}_j$
+and the discrete energy $E_{\textup{NC}}(u_j)$ in the $j$-th component. 
+
+First $\tau$ is choosen and the function computes the number \texttt{nrElems} 
+of triangles in $\mathcal T$.
+Then the AFEM functions \texttt{computeArea4e.m} and 
+\texttt{computeS4e.m} compute the data structures
+\texttt{area4e} and \texttt{s4e}. The function uses \texttt{s4e} to compute the number 
+\texttt{nrSides} of edges of $\mathcal T$ in $\mathcal E$.
+\begin{lstlisting}[frame=single,numbers=none]
+tau = 1/2;
+
+nrElems = size(n4e,1);
+area4e = computeArea4e(c4n,n4e);
+s4e = computeS4e(n4e);
+nrSides = max(max(s4e));
+\end{lstlisting}
+The function \texttt{DegreesOfFreedom.m} computes \texttt{dof} that contains 
+the global side numbers of non-Dirichlet sides, the function \texttt{FeMatrices.m} computes 
+the non-conforming stiffness and mass matrices, and the function \texttt{computeIntegrals.m} 
+computes
+for $j=1,2,3$ the array
+\texttt{tempj} that contains the value of the approximation of 
+$
+\int_{T_k} f\psi_j\,\mathrm{dx} 
+$
+in the $k$-th component for $k=1,\dots,|\mathcal T|$.
+\begin{lstlisting}[frame=single,numbers=none]
+dof = DegreesOfFreedom(n4e,nrSides,n4sDb);
+
+[STIMANC,MAMANC] = FeMatrices(c4n,n4e,s4e,area4e,nrElems);
+A = STIMANC/tau+alpha*MAMANC; 
+
+[temp1,temp2,temp3] = computeIntegrals(f,c4n,n4e,200,area4e);
+\end{lstlisting}
+Then the function \texttt{GradientNC.m} computes the gradients of $u_0$ on every triangle 
+in $\mathcal T$, $v_0=0$ is 
+initialized, the value \texttt{corr} is initialized, \texttt{corrVec} and \texttt{energyVec} 
+to save the corresponding information during the iteration are initialized, 
+and the energy \texttt{E} is
+initialized.
+
+\begin{lstlisting}[frame=single,numbers=none]
+du = GradientNC(c4n,n4e,u);
+
+v = zeros(nrSides,1);    
+
+corr = epsStop+1; 
+corrVec = [];
+energyVec = [];
+
+E = 1;
+\end{lstlisting}
+After the initializations are completed a while loop realizes the iteration
+described in Algorithm \ref{alg:PrimalDualIteration}. The termination criterion
+is reached when 
+$$
+\texttt{epsStop}\geq|E_\textup{NC}(u_j)-E_\textup{NC}(u_{j-1}|).
+$$
+In the beginning of the loop the gradient of $v_{j-1}$ and 
+$M=\Lambda +\tau\nabla_\textup{NC}+\tau^2\nabla_\textup{NC}$ are
+computed.
+
+\begin{lstlisting}[frame=single,numbers=none]
+dv = GradientNC(c4n,n4e,v);
+M = Lambda + tau*(du + tau*dv);
+\end{lstlisting}
+
+The line
+\begin{lstlisting}[frame=single,numbers=none]
+Lambda = bsxfun(@rdivide,M,max(1,sqrt(sum(M.^2,2))));
+\end{lstlisting}
+of MATLAB code computes $\Lambda_j$ by row-wise division of \texttt{M} by 
+$\operatorname{max}\{1,|\texttt{M}_j|$\}.
+The function \texttt{RightHandSide.m} computes the right-hand side $b$ and 
+an array \texttt{temp} that contains the value of the integral
+$
+\int_{\Omega} f\psi_j\,\mathrm{dx} 
+$
+in the $j$-th component for $j=1,\dots,|\mathcal E|$.
+\begin{lstlisting}[frame=single,numbers=none]
+[b,temp] = RightHandSide(c4n,n4e,s4e,nrSides,area4e,du, ...
+    tau,Lambda,nrElems,temp1,temp2,temp3);     
+\end{lstlisting}
+Now
+\begin{lstlisting}[frame=single,numbers=none]
+uNew = zeros(nrSides,1);
+uNew(dof) = A(dof,dof)\b(dof);
+\end{lstlisting}
+computes $u_j=\texttt{uNew}$,
+\begin{lstlisting}[frame=single,numbers=none]
+v=(uNew-u)/tau;        
+\end{lstlisting}
+computes $v_j=\texttt{v}$, and
+\begin{lstlisting}[frame=single,numbers=none]
+u = uNew;
+
+du = GradientNC(c4n,n4e,u);
+ENew = Energy(area4e,u,du,temp,alpha,MAMANC);
+\end{lstlisting}
+computes the gradient \texttt{du} of $u_{j}$ for the next iteration step and to compute
+the energy with the function \texttt{Energy.m}.
+With the now computed energy \texttt{E}
+\begin{lstlisting}[frame=single,numbers=none]
+corr = abs(ENew-E);
+E = ENew;
+energyVec(end+1) = E;
+corrVec(end+1) = corr;
+\end{lstlisting}
+computes \texttt{corr} to check wheter to terminate the iteration or not. Also
+the values \texttt{E} and \texttt{corr} are saved in \texttt{energyVec} and 
+\texttt{corrVec} for later use.
+
+The complete function reads
+
+
+\begin{lstlisting}[frame=single,numbers=none]
+function  [u,corr,corrVec,energyVec] = tvRegPrimalDual(c4n,n4e,n4sDb, ...
+    u,Lambda,f,alpha,epsStop) 
+  
+    tau = 1/2;
+
+    nrElems = size(n4e,1);
+    area4e = computeArea4e(c4n,n4e);
+    s4e = computeS4e(n4e);
+    nrSides = max(max(s4e));
+
+    dof = DegreesOfFreedom(n4e,nrSides,n4sDb);
+
+    [STIMANC,MAMANC] = FeMatrices(c4n,n4e,s4e,area4e,nrElems);
+    A = STIMANC/tau+alpha*MAMANC; 
+
+    [temp1,temp2,temp3] = computeIntegrals(f,c4n,n4e,200,area4e);
+
+    du = GradientNC(c4n,n4e,u);
+
+    v = zeros(nrSides,1);    
+
+    corr = epsStop+1; 
+    corrVec = [];
+    energyVec = [];
+
+    E = 1;
+    while corr > epsStop
+        dv = GradientNC(c4n,n4e,v);
+        M = Lambda + tau*(du + tau*dv);
+        Lambda = bsxfun(@rdivide,M,max(1,sqrt(sum(M.^2,2))));
+        
+        [b,temp] = RightHandSide(c4n,n4e,s4e,nrSides,area4e,du, ...
+            tau,Lambda,nrElems,temp1,temp2,temp3);     
+
+        uNew = zeros(nrSides,1);
+        uNew(dof) = A(dof,dof)\b(dof);
+        v=(uNew-u)/tau;        
+        u = uNew;
+
+        du = GradientNC(c4n,n4e,u);
+        ENew = Energy(area4e,u,du,temp,alpha,MAMANC);
+
+        corr = abs(ENew-E);
+        E = ENew;
+        energyVec(end+1) = E;
+        corrVec(end+1) = corr;
+    end
+end
+\end{lstlisting}
