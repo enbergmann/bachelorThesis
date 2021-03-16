@@ -2,12 +2,13 @@ In der Bildverarbeitung kann ein gegebenes Signal häufig nur durch eine
 unstetige Funktion dargestellt werden. Deshalb stellt sich zunächst die Frage,
 welcher Funktionenraum zum Beschreiben dieser Signale geeignet ist.
 
-Ist $\Omega\subset\Rbb^2$ ein beschränktes Lipschitz-Gebiet und $g:\Omega\to
-\Rbb$ stellt ein gegebenes Signal auf $\Omega$ dar, so könnte $g$ im
+Sei $\Omega\subset\Rbb^2$ ein beschränktes Lipschitz-Gebiet und $g:\Omega\to
+\Rbb$ stelle ein gegebenes Signal auf $\Omega$ dar. Das Signal $g$ könnte im
 Sobolev-Raum $W^{1,1}(\Omega)$ vermutet werden, da Elemente dieses Raums im
-Allgemeinen nicht stetig sein müssen \cite[297]{Bar15}. 
+Allgemeinen nicht stetig sein müssen\todo{Quelle?}. 
 Allerdings lassen Sobolev-Funktionen die oftmals benötigten Sprünge über
-ein-kodimensionale Teilmengen von $\Omega$ nicht zu \cite[393]{ABM14}.
+Teilmengen niedrigerer Dimension von $\Omega$ nicht zu
+\cite[297]{Bar15}\todo{Quelle?}.
 Dieses Problem kann gelöst werden, indem der Raum der Funktionen von
 beschränkter Variation $\BV(\Omega)$ betrachtet wird. Dieser ist eine echte
 Obermenge von $W^{1,1}(\Omega)$ und hat sich als geeignet für die Modellierung 
@@ -15,22 +16,35 @@ von Signalen in der Bildverarbeitung und weitere Anwendungen erwiesen (cf.
 \cites[393]{ABM14}[42]{AK06}[297]{Bar15}[S. 1 f.]{Bra98}).
 
 Eine mögliche Problemstellung in der Bildverarbeitung ist die 
-Rauschunterdrück\-ung, das heißt der Versuch unerwünschtes Rauschen in einem
+Rauschunterdrü\-ckung, das heißt der Versuch unerwünschtes Rauschen in einem
 Signal zu verringern.
-In \cite{ROF92} beschrieben Rudin, Osher und Fatemi 1992 ein
-Modell-Problem dafür, welches deshalb als ROF-Modell bezeichnet wird (cf.
+In \cite{ROF92} beschrieben Rudin, Osher und Fatemi 1992 das heute als
+ROF-Modell bekannte Minimierungsproblem dafür (cf.
 \cites[1217]{Bar15a}[132]{CP10}[S. 74 f.]{Get12}).
 Dabei ist für das gegebene Signal $g\in L^2(\Omega)$ und 
 eine Funktion $v\in\BV(\Omega)\cap L^2(\Omega)$ die Minimierung
-von zwei Termen relevant.
+der Summe der zwei folgenden Terme relevant.
 Der erste Term ist die
-Seminorm $|v|_{\BV(\Omega)}$ von $v$ auf $\BV(\Omega)$, die der
-totalen Variation der distributionellen Ableitung $Dv$ von $v$ entspricht,
-falls $v\in W^{1,1}(\Omega)$ mit der Seminorm auf $W^{1,1}(\Omega)$
-übereinstimmt und deren Minimierung Oszillation verhindert aber Unstetigkeiten
-zulässt \cite[72]{Get12}. Der zweite Term misst den Abstand von $v$ und $g$ in 
-$L^2(\Omega)$.
-Damit und mit einen Parameter
+Seminorm
+\begin{align*}
+  \label{eq:boundedVariation}
+  |v|_{\BV(\Omega)}
+  \coloneqq
+  \sup_{\substack{\phi\in C^\infty_0(\Omega;\Rbb^2)\\
+  |\phi|\leq 1}}\int_\Omega v\Div (\phi)\dx
+  <
+  \infty.
+\end{align*}\todo{Verweis auf später?}
+von $v$ auf $\BV(\Omega)$ \cite[1162]{Bar12}. Diese entspricht der
+totalen Variation der distributionellen Ableitung $Dv$ von $v$ und
+ihre Minimierung verhindert Oszillationen in der Lösung, lässt aber
+Unstetigkeiten zu \cite[72]{Get12}.
+Außerdem stimmt diese, falls $v\in W^{1,1}(\Omega)$, mit der Seminorm auf
+$W^{1,1}(\Omega)$ überein\todo{Quelle? Verweis auf später?}. Der zweite Term 
+$\Vert v-g\Vert_{L^2(\Omega)}^2$ misst den Abstand von $v$ und $g$ in
+$L^2(\Omega)$. Die Minimierung dieses Terms bewirkt, dass die Lösung
+dem Eingangssignal ähnelt.
+Mit diesen Termen und mit einen Parameter
 $\alpha\in\Rbb_+$, der das Verhältnis zwischen Rauschverminderung und
 Ähnlichkeit der Lösung zum Eingangssignal gewichtet, sucht das ROF-Modell
 eine Funktion $u\in\BV(\Omega)\cap L^2(\Omega)$, die das Funktional
@@ -42,49 +56,48 @@ unter allen $v\in\BV(\Omega)\cap L^2(\Omega)$ minimiert.
 
 Wird hierbei $\alpha$ zu klein gewählt, führt das zu einer zu stark
 geglätteten, verwaschen aussehenden Lösung, zu sehen zum Beispiel in den
-Abbildungen \ref{fig:snr10alpha100} und \ref{fig:snr10alpha1000}, während das
-Rauschen im Vergleich zum Eingangssignal $g$ kaum verringert wird, falls
-$\alpha$ zu groß gewählt wird, zu sehen zum Beispiel in den Abbildungen
+Abbildungen \ref{fig:snr10alpha100} und \ref{fig:snr10alpha1000}. Wird
+andererseits $\alpha$ zu groß gewählt, ist die Verminderung des Rauschens im
+Vergleich zum Eingangssignal $g$ nur gering, zu sehen zum Beispiel in den
+Abbildungen
 \ref{fig:snr10alpha5000} und \ref{fig:snr10alpha10000}.
 
 Für weitere Details und Referenzen zur Rauschunterdrückung und zur Wahl von
 $\alpha$ siehe \cite{Get12}.
 
-\medskip
---------------------------------
-\medskip
+Zur numerischen Behandlung dieses Problems gibt es bereits einige Ansätze.
+Dazu gehören die Regularisierung der Seminorm
+$|\bullet|_{\BV(\Omega)}$, indem die Betragsfunktion $|\bullet|$ durch eine
+stetig differenzierbare Approximation $|\bullet|_\varepsilon$ ersetzt 
+wird, und die Nutzung von höheren Ableitungen in der Definition von
+$|\bullet|_{\BV(\Omega)}$.
+Vor- und Nachteile dieser Ansätze und entsprechende Referenzen werden in
+\cite[1165]{Bar12} zusammengefasst. Außerdem wird ebenda auf Arbeiten
+verwiesen, in denen verschieden iterative Lösungsmethoden für das 
+ROF-Modell-Problem diskutiert werden.
 
-Alternative Ansätze und deren Vor- und Nachteile zur numerischen Behandlung
-dieses Problems sowie weitere
-Referenzen dazu werden in \cite[1165]{Bar12} beschrieben.
-Diese beinhalten eine Regularisierung des Problems indem 
-der Betrag $|\bullet|$ in der totalen Variation durch eine
-differenzierbare Approximation ersetzt $\bullet|_\varepsilon$ wird, wodurch
-Standardmethoden anwendbar werden,
-oder die Nutzung von höheren Ableitungen. 
+Professor Bartels selbst untersucht in \cite[Kapitel 10.2]{Bar15} eine
+$W^{1,1}$-konforme Diskretisierung des ROF-Modells mit der
+Courant-Finite-Elemente-Methode. Zur numerischen Lösung dieser diskreten 
+Formulierung nutzt er eine primale-duale Iteration, welche motiviert ist durch
+Betachtung der primalen und der dualen Formulierung des Minimierungsproblems.
+Eine Regularisierung oder die Nutzung höherer Ableitungen für die
+$\BV$-Seminorm werden dabei nicht benötigt.
 
-\todo[inline]{Im wesentlichen auf S.1165 der gesamte mittlere Absatz ist,
-was ich schreiben muss hier, aber bevor ich das mache und die Quellen alle
-abklapper (was ich trotzdem machen werde um die Regularisierung etc.
-wenigstens mal gesehen zu haben) schreibe ich mit Zitat Bartels ab und
-sage wie oben, dass da weitere Referenzen und Details sind}
-\medskip
---------------------------------
----`\cite[Kapitel~10.1.3]{Bar15}
-\medskip
+In dieser Arbeit möchte wir die Anwendung dieser primalen-dualen Iteration auf
+eine nichtkonforme Formulierung des ROF-Modells und einer Diskretisierung
+mit der Crouzeix-Raviart-Finite-Elemente-Methode untersuchen.
+Dabei nutzen wir einen von Professor Carstensen zur Verfügung gestellten
+Verfeinerungsindikator, um die Iteration sukzessiv auf einer Folge von uniform
+oder adaptiv verfeinerten Netzen anzuwenden. 
+Außerdem erlaubt uns die nichtkonforme Formulierung die Betrachtung einer
+garantierten unteren Energieschranke, welche ebenfalls von Professor Carstensen
+zur Verfügung gestellt wurde.
 
-Ein Ansatz mit Finiten-Elementen vermeidet dies.
-In \cite[Kapitel 10]{Bar15} wird zur Diskretisierung des
-ROF-Modell die Courant Finite-Elemente-Methode genutzt und eine primale-duale
-Iteration zur numerischen Lösung verwendet.
+Die Implementation des adaptiven Algorithmus basiert auf dem
+Matlab-Soft\-ware\-pa\-ket \cite{Car09}. 
 
-In dieser Arbeit möchten wir die Konvergenzeigenschaften eines adaptiven
-Algorithmus untersuchen, bei dem wir die primale-duale Iteration auf jedem
-Level anwenden auf eine nichtkonforme Formulierung des ROF-Modells und eine
-Diskretisierung mit der Crouzeix-Raviart Finite-Elemente Methode.
-Dafür verwenden wir einen von Prof. Carstens zur Verfügung gestellten 
-Verfeinerungsindikator. Die Implementation basiert auf \cite{Car09}.
-Dabei sei angemerkt, dass wir folgende, leicht andere Formulierung des 
+Abschließend sei angemerkt, dass wir folgende, leicht andere Formulierung des 
 ROF-Modells betrachten. Wir minimieren das Funktional
 \begin{align*}
   E(v)\coloneqq \frac{\alpha}{2}\Vert v\Vert_{L^2(\Omega)}^2 + |v|_{\BV(\Omega)}
@@ -100,86 +113,83 @@ $\frac{\alpha}{2}\Vert g\Vert_{L^2(\Omega)}^2$, folglich, dass die Funktionale
 $E$ und $I$ die gleichen Minimierer in $\left\{v\in\BV(\Omega)\cap
 L^2(\Omega)\mid \Vert v\Vert_{L^1(\partial\Omega)}=0\right\}$ besitzen.
 
-Außerdem erlaubt uns die nichtkonforme Formulierung die Betrachtung einer
-garantierten unteren Energieschranke, welche ebenfalls von Prof. Carstensen
-zur Verfügung gestellt wurde.
-
-\medskip
---------------------------------
-\medskip
-
-Dafür wird, nachdem in \Cref{chap:theoreticalBasics} zunächst die Notationen
+Die Struktur dieser Arbeit ist wie folgt.
+Nachdem in \Cref{chap:theoreticalBasics} zunächst die Notationen
 eingeführt und die theoretischen Grundlagen aus der Optimierung und zu den
-Funktionen beschränkter Variation zusammengetragen wurden, in
-\Cref{chap:continuousProblem} bewiesen, dass für unsere Formulierung des
-ROF-Modells ein eindeutiger
-Minimierer existiert.
+Funktionen beschränkter Variation zusammengetragen wurden, wird in
+\Cref{chap:continuousProblem} bewiesen, dass für unsere 
+Formulierung des ROF-Modells ein eindeutiger Minimierer existiert.
 Anschließend folgt in \Cref{chap:discreteProblem} die nichtkonforme Formulierung
-und Diskretisierung des Minimierungsproblems. Mithilfe eines
-äquivalenten Sattelpunktsproblems werden äquivalente Charakterisierung, 
-Existenz und Eindeutigkeit für den diskreten Minimierer bewiesen. Außerdem
-werden die zu untersuchenden Konvergenzraten, der Verfeinerungsindikator und
-die garantierte untere Energieschranke aufgeührt.
-In \Cref{chap:algorithm} wird die primale-duale Iteration formuliert und bewiesen,
-dass diese gegen den diskreten Minimierer konvergiert. 
-Es folgen Hinweise zur Benutzung des Programm und Details zur Implementation
-des Algorithmus in \Cref{chap:implementation} und schließlich in
+und Diskretisierung des Minimierungsproblems. Mithilfe der
+Sattelpunktsformulierung des diskreten Problems werden äquivalente
+Charakterisierungen, Existenz und Eindeutigkeit für den diskreten Minimierer
+bewiesen. Außerdem werden die zu untersuchenden Konvergenzraten, der
+Verfeinerungsindikator und die garantierte untere Energieschranke aufgeführt.
+In \Cref{chap:algorithm} wird die primale-duale Iteration formuliert und
+bewiesen, dass diese gegen den diskreten Minimierer konvergiert. 
+Es folgen in \Cref{chap:implementation} Hinweise zur Benutzung des Programm und
+Details zur Implementation des Algorithmus und schließlich in
 \Cref{chap:experiments} die Darstellung der Experimente und deren Auswerung in
 \Cref{chap:review}.
 
-
-\begin{figure}[h]
+\begin{figure}[!ht]
   \centering
   \begin{subfigure}[b]{.4\linewidth}
-    \caption{\url{https://homepages.cae.wisc.edu/~ece533/images/cameraman.tif}}
+    \caption{Originalbild}
     \includegraphics[width=\linewidth]{pictures/introBeta/cameraman.png}
     \label{fig:camerman}
   \end{subfigure}
   \quad
   \begin{subfigure}[b]{.4\linewidth}
-    \caption{$\snr=10$}
+    \caption{Originalbild mit AWGN}
     \includegraphics[width=\linewidth]{pictures/introBeta/snr10.png}
     \label{fig:camermanSNR10}
   \end{subfigure}
 
   \begin{subfigure}{.3\linewidth}
     \caption{$\alpha=100$}
-    \includegraphics[trim = 60 0 60 20, clip, width=\linewidth]
+    \includegraphics[trim = 60 20 60 20, clip, width=\linewidth]
       {pictures/introBeta/snr10/00100.png}
     \label{fig:snr10alpha100}
   \end{subfigure}
   \begin{subfigure}{.3\linewidth}
     \caption{$\alpha=1000$}
-    \includegraphics[trim = 60 0 60 20, clip, width=\linewidth]
+    \includegraphics[trim = 60 20 60 20, clip, width=\linewidth]
       {pictures/introBeta/snr10/01000.png}
     \label{fig:snr10alpha1000}
   \end{subfigure}
   \begin{subfigure}{.3\linewidth}
     \caption{$\alpha=2500$}
-    \includegraphics[trim = 60 0 60 20, clip, width=\linewidth]
+    \includegraphics[trim = 60 20 60 20, clip, width=\linewidth]
       {pictures/introBeta/snr10/02500.png}
     \label{fig:snr10alpha2500}
   \end{subfigure}
 
   \begin{subfigure}{.3\linewidth}
+    \caption{$\alpha=5000$}
     \includegraphics[trim = 60 0 60 20, clip, width=\linewidth]
       {pictures/introBeta/snr10/05000.png}
-    \caption{$\alpha=5000$}
     \label{fig:snr10alpha5000}
   \end{subfigure}
   \begin{subfigure}{.3\linewidth}
+    \caption{$\alpha=10000$}
     \includegraphics[trim = 60 0 60 20, clip, width=\linewidth]
       {pictures/introBeta/snr10/10000.png}
-    \caption{$\alpha=10000$}
     \label{fig:snr10alpha10000}
   \end{subfigure}
-  \caption{Originalbild (a) und Originalbild mit additiven weißen gaußschen
-  Rauschen (b) mit einem Signal-Rausch-Verhältnis (eng.\ signal-to-noise
-  ratio, SNR) von 10, jeweils mit nachträglich hinzugefügten graduellen
-  Übergang zu schwarzen Rand, was Nullranddaten entspricht und drei Ergebnisse
-  (c)-(g) des adaptiven Algorithmus mit verschiedenen Werten von $\alpha$}
+  \caption{Originalbild\protect\footnotemark (a) und
+    Originalbild mit additiven weißen gaußschen Rauschen (b) mit einem
+    Signal-Rausch-Verhältnis (eng.\ signal-to-noise ratio, SNR) von 10, jeweils
+    mit nachträglich hinzugefügten graduellen Übergang zu schwarzen Rand, um 
+    Nullranddaten zu garantierten. Außerdem fünf Ergebnisse (c)-(g) des adaptiven
+    Algorithmus mit verschiedenen Werten von $\alpha$.}
   \label{fig:exampleDenoising}
 \end{figure}
 
+\footnotetext{ \includegraphics[height=5mm]{pictures/introBeta/cameraman.png}
+\url{https://homepages.cae.wisc.edu/~ece533/images/cameraman.tif}}
+
 \todo[inline]{Experimente länger rechnen und vielleicht 9 Wahlen für alpha mit
-einem ernsthaften Versuch, ein gut aussehendes entrauschtes Bild zu bekommen}
+einem ernsthaften Versuch, ein gut aussehendes entrauschtes Bild zu bekommen.
+Formatierung des Figure und die Captions hier überarbeiten und überlegen, wie
+die Bildquelle sinnvoll zitiert werden kann (mglw. als Fußnote).}
