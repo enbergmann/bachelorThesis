@@ -1,32 +1,76 @@
+\section{Vorausgesetztes Wissen}
+In dieser Arbeit werden Kentnisse zu Banach- und Hilberträumen
+sowie zu Lebesgue- und Sobolevräumen varausgesetzt. Dazu gehören insbesondere
+grundlegende Einbettungssätze, die Dualraumtheorie auf diesen Räumen, der
+Rieszsche Darstellungssatz und Aussagen zur schwachen Konvergenz.
+Grundlegende Aussagen zu Banach- und Hilberträumen können beispielsweise
+in \cite{Zei86} und alles Weitere eben genannte in \cite{Zei90a} und
+\cite{Zei90b} nachgeschlagen werden. Dabei eignet sich der Index von
+\cite{Zei90b} hervorragend zum schnellen Auffinden von Begriffen in allen eben
+aufgeführten Referenzen.
+
+\todo[inline]{Falls in den Räumen noch weitere Begriffe benötigt werden, 
+dann oben ergänzen. Zeidler II B kann mit Steuerung+F und Appendix eigentlich
+alles finden in den Zeidler Werken, wenn nötig. Mit Suche findet man da alles,
+auch Young sehr Allgemein, CSU (dort nur Schwarzsche Ungleichung) usw.}
+
+
 \section{Notation}
+Wir wählen für die natürlichen Zahlen die Konvention
+$\Nbb=\{1,2,3,\ldots\}$ und $\Nbb_0=\Nbb\cup\{0\}$. 
+Die Menge der positiven reellen Zahlen notieren wir mit $\Rbb_+$.
+Um auszudrücken, dass eine Menge $A$ Teilmenge einer Menge $B$ ist, 
+schreiben wir $A\subseteq B$. Ist $A$ sogar eine echte Teilmenge von $B$, so 
+schreiben wir $A\subset B$.
+Sollte die Dimension eines endlichdimensionalen Vektorraums $V$
+nicht explizit bestimmt sein, so bezeichnen wir diese mit $d\in\Nbb$.
+Für das euklidische Skalarprodukt zweier Vektoren $v,w\in \Rbb^d$ schreiben wir
+$v\cdot w$.
 
-Sobolev Zeidler II A (21.1) (insbesodere für
-eine beliebige offene Menge $G\subseteq\Omega$), da sind auch Embedding Theorem
-und Riesz und alles drin. Alles was ich in diesem Kapitel brauche wird da und
-den anderen Zeidler Büchern zu finden sein
 
-Lebesgue space p 771 Zeidler 1 mit Verweis auf Zeidler 2 A für Integral
-und alles
+Mit der Menge $\Omega\subset\Rbb^2$ bezeichnen wir stets ein polygonal
+berandetes Lipschitz-Gebiet. Den Rand von $\Omega$ notieren wir dabei mit
+$\partial\Omega$.
+Weiterhin nutzen wir die Notation $\Tcal$ für eine reguläre Triangulierung von
+$\Omega$ im Sinne von Philippe Ciarlet in eine Menge von abgeschlossenen
+Dreiecken (cf. \cite[Kapitel 1.3.1]{Car09b}).
 
-\todo[inline]{TODO usw alle Notationen einführen, die in der ganzen Arbeit
-gelten, vergleiche Bringmann 2.1 Einleitung. Da wir aber erst sehr allgemein
-sind bzw hier für Subdiffs und Variationsrechnung etc zwischen Räumen 
-umhersprigen, dieses Kapitel doch lieber nicht machen sondern diese Themen (eben
-theoretische Grundlagen) abarbeiten und dann immer weiter einschränken Kapitel
-weise (continuous Problem schränkt Omega ein, dann discrete schränkt zu 2D ein
-und führt CR ein, usw.) Notation hier also mglw einstampfen und on the fly 
-machen}
-\todo[inline]{FRAGE Dann zB CR Notation erst im entsprechenden Kapitel 
-einführen oder auch das schon hier? Oder hier nur ABSOLUTE Grundlagen, extrem 
-basic, und alles andere dann on the fly?}
+Die Menge der stückweisen konstanten Funktionen auf der Triangulierung $\Tcal$
+notieren wir dann mit $\Pbb_0(\Tcal)$ und die Menge der stückweisen affinen
+Funktionen auf $\Tcal$ mit $\Pbb_1(\Tcal)$.
 
-\todo[inline]{TODO
- nur die Sachen rausschreiben/zusammentragen/zitieren (um später Theoreme und
- Gleichungen zitieren zu können statt Bücher) die auch wirklich gebraucht 
- werden später in Beweisen. Insbesondere am Ende nochmal durchgucken, was 
- wirklich gebraucht wurde und ungebrauchtes und/oder uninteressanter und/oder
- unwichtiges rauswerfen}
+Für ein Dreieck $T\in\Tcal$ sei
+der Mittelpunkt $\Mid(T)$ und die längste Seitenlänge $h_T$.
+Damit können wir die stückweise konstante Funktion $h_\Tcal\in\Pbb_0(\Tcal)$
+für alle $T\in\Tcal$ durch $h_\Tcal|_T\coloneqq h_T$ definieren.
 
+Die Menge der Knoten der Triangulierung sei $\Ncal$, wobei die Menge
+der inneren Knoten mit $\Ncal(\Omega)$, die Menge der Randknoten mit
+$\Ncal(\partial\Omega)$ und die Menge der Knoten eines
+Dreiecks $T\in\Tcal$ mit $\Ncal(T)$ bezeichnet werde. 
+Für die Kanten der Triangulierung seien die Mengen $\Fcal$, $\Fcal(\Omega)$,
+$\Fcal(\partial\Omega)$ und $\Fcal(T)$ analog definiert. 
+
+Der Normaleneinheitsvektor auf dem Rand eines Dreiecks $T\in\Tcal$ sei
+$\nu_T$ und der Normaleneinheitsvektor auf einer Kante $F\in\Fcal$ sei
+$\nu_F$. Für eine Innenkante $F\in\Fcal(\Omega)$ bezeichnen wir dann
+die beiden Dreiecke, die $F$ als gemeinsame Kanten haben, so
+mit $T_+$ und $T_-$, dass $\nu_{T_+}$ und $\nu_F$ gleichorientiert sind, 
+also $\nu_{T_+}\cdot\nu_F=1$ gilt.
+
+Damit können wir den Sprung entlang einer Innenkante $F\in\Fcal(\Omega)$
+definieren als $[\bullet]_F\coloneqq \bullet|_{T_+} -\bullet|_{T_-}$.
+Für eine Randkante $F\in\Fcal(\partial\Omega)$ definieren wir
+$[\bullet]_F\coloneqq \bullet|_F$.
+
+Mit $|\bullet|$ bezeichnen wir, je nach Argument, die euklidischen Norm eines
+Vektors $v\in\Rbb^d$, den Inhalt eines Dreiecks $T\in\Tcal$ oder die Länge
+einer Kante $F\in\Fcal.$
+
+
+Weiterhin benutzen wir
+\todo[inline]{Hier noch Sachen ergänzen die doch nochmal vorkommen bzw.
+nochmal durchgehen, ob alle hier aufgeführten Sachen tatsächlich vorkommen.}
 
 \section{Benötigte Begriffe der Variationsrechnung in Banachräumen}
 \todo[inline]{im Zeidler lokal konvex Raum. Das irgendwie noch ausdrücken und
@@ -64,7 +108,7 @@ $\varphi_h(t)\coloneqq F(u+th)$ für alle $t\in\Rbb$.
   \end{align*}
   $F'(u)$ heißt dann Fr\'echet-Differential von $F$ an der Stelle $u$.
   Das Fr\'echet-Differential von $F$ an der Stelle $u$ in Richtung $h\in X$
-  ist definiert durch $dF(u;h)\coloneq \langle F'(u),h\rangle.$
+  ist definiert durch $dF(u;h)\coloneqq \langle F'(u),h\rangle.$
 \end{definition}
 
 Die wichtigsten Eigenschaften sind noch einmal in folgender Bemerkung 
@@ -134,7 +178,7 @@ $F:X\to [-\infty,\infty]$ ein Funktional auf $X$.
   Für $u\in X$ mit $F(u)\neq\pm\infty$ heißt
   \begin{equation}
     \label{eq:subdifferential}
-    \partial F(u)\coloneq 
+    \partial F(u)\coloneqq
     \{u^\ast\in X^\ast\ |\ 
     \forall v\in X\quad F(v)\geq F(u)+\langle u^\ast,v-u\rangle\}  
   \end{equation}
