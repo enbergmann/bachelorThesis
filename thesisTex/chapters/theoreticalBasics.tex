@@ -1,13 +1,17 @@
 \section{Vorausgesetztes Wissen}
 In dieser Arbeit werden Kentnisse zu Banach- und Hilberträumen
-sowie zu Lebesgue- und Sobolevräumen varausgesetzt. Dazu gehören insbesondere
+sowie zu Lebesgue- und Sobolev-Räumen varausgesetzt. Dazu gehören insbesondere
 grundlegende Einbettungssätze, die Dualraumtheorie auf diesen Räumen, der
 Rieszsche Darstellungssatz und Aussagen zur schwachen Konvergenz.
+
 Grundlegende Aussagen zu Banach- und Hilberträumen können beispielsweise
 in \cite{Zei86} und alles Weitere eben genannte in \cite{Zei90a} und
 \cite{Zei90b} nachgeschlagen werden. Dabei eignet sich der Index von
 \cite{Zei90b} hervorragend zum schnellen Auffinden von Begriffen in allen eben
 aufgeführten Referenzen.
+\todo{Im Zeidler suchen ob es Sobolev von offener Menge nach beliebigen VR
+gibt, falls nicht, dann doch nicht so perfekt schreiben am Ende des Kapitels 
+bzw andersweitig über diese Unzulänglichkeit hinwegtäuschen}
 
 \todo[inline]{Falls in den Räumen noch weitere Begriffe benötigt werden, 
 dann oben ergänzen. Zeidler II B kann mit Steuerung+F und Appendix eigentlich
@@ -19,58 +23,77 @@ auch Young sehr Allgemein, CSU (dort nur Schwarzsche Ungleichung) usw.}
 Wir wählen für die natürlichen Zahlen die Konvention
 $\Nbb=\{1,2,3,\ldots\}$ und $\Nbb_0=\Nbb\cup\{0\}$. 
 Die Menge der positiven reellen Zahlen notieren wir mit $\Rbb_+$.
+
+
 Um auszudrücken, dass eine Menge $A$ Teilmenge einer Menge $B$ ist, 
 schreiben wir $A\subseteq B$. Ist $A$ sogar eine echte Teilmenge von $B$, so 
 schreiben wir $A\subset B$.
-Sollte die Dimension eines endlichdimensionalen Vektorraums $V$
-nicht explizit bestimmt sein, so bezeichnen wir diese mit $d\in\Nbb$.
+
+Sollte die Dimension eines endlichdimensionalen Vektorraums $V$ nicht explizit
+bestimmt sein, so bezeichnen wir diese in der Regel mit $d\in\Nbb$. 
+
 Für das euklidische Skalarprodukt zweier Vektoren $v,w\in \Rbb^d$ schreiben wir
 $v\cdot w$.
 
+Für den Rest dieses Abschnitts seien $k,m\in\Nbb$, $p\in[1,\infty]$ und $U$ 
+eine offene Teilmenge von $\Rbb^d$.
+\todo{unnötig, rausnehmen und nochmal sinnvoll überarbeiten}
 
 Mit der Menge $\Omega\subset\Rbb^2$ bezeichnen wir stets ein polygonal
 berandetes Lipschitz-Gebiet. Den Rand von $\Omega$ notieren wir dabei mit
 $\partial\Omega$.
+
 Weiterhin nutzen wir die Notation $\Tcal$ für eine reguläre Triangulierung von
 $\Omega$ im Sinne von Philippe Ciarlet in eine Menge von abgeschlossenen
 Dreiecken (cf. \cite[Kapitel 1.3.1]{Car09b}).
-
 Die Menge der stückweisen konstanten Funktionen auf der Triangulierung $\Tcal$
-notieren wir dann mit $\Pbb_0(\Tcal)$ und die Menge der stückweisen affinen
-Funktionen auf $\Tcal$ mit $\Pbb_1(\Tcal)$.
-
+mit Werten in $\Rbb^m$ notieren wir dann mit $\Pbb_0(\Tcal,\Rbb^m)$ und die
+Menge der stückweisen affinen Funktionen auf $\Tcal$ mit Werten in $\Rbb^m$ mit
+$\Pbb_1(\Tcal,\Rbb^m)$.
 Für ein Dreieck $T\in\Tcal$ sei
 der Mittelpunkt $\Mid(T)$ und die längste Seitenlänge $h_T$.
 Damit können wir die stückweise konstante Funktion $h_\Tcal\in\Pbb_0(\Tcal)$
 für alle $T\in\Tcal$ durch $h_\Tcal|_T\coloneqq h_T$ definieren.
-
 Die Menge der Knoten der Triangulierung sei $\Ncal$, wobei die Menge
 der inneren Knoten mit $\Ncal(\Omega)$, die Menge der Randknoten mit
 $\Ncal(\partial\Omega)$ und die Menge der Knoten eines
 Dreiecks $T\in\Tcal$ mit $\Ncal(T)$ bezeichnet werde. 
 Für die Kanten der Triangulierung seien die Mengen $\Fcal$, $\Fcal(\Omega)$,
 $\Fcal(\partial\Omega)$ und $\Fcal(T)$ analog definiert. 
-
 Der Normaleneinheitsvektor auf dem Rand eines Dreiecks $T\in\Tcal$ sei
 $\nu_T$ und der Normaleneinheitsvektor auf einer Kante $F\in\Fcal$ sei
 $\nu_F$. Für eine Innenkante $F\in\Fcal(\Omega)$ bezeichnen wir dann
 die beiden Dreiecke, die $F$ als gemeinsame Kanten haben, so
 mit $T_+$ und $T_-$, dass $\nu_{T_+}$ und $\nu_F$ gleichorientiert sind, 
-also $\nu_{T_+}\cdot\nu_F=1$ gilt.
-
+also $\nu_{T_+}\cdot\nu_F=1$.
 Damit können wir den Sprung entlang einer Innenkante $F\in\Fcal(\Omega)$
 definieren als $[\bullet]_F\coloneqq \bullet|_{T_+} -\bullet|_{T_-}$.
 Für eine Randkante $F\in\Fcal(\partial\Omega)$ definieren wir
 $[\bullet]_F\coloneqq \bullet|_F$.
 
 Mit $|\bullet|$ bezeichnen wir, je nach Argument, die euklidischen Norm eines
-Vektors $v\in\Rbb^d$, den Inhalt eines Dreiecks $T\in\Tcal$ oder die Länge
+Vektors $v\in\Rbb^m$, den Inhalt eines Dreiecks $T\in\Tcal$ oder die Länge
 einer Kante $F\in\Fcal.$
 
+Ist $V$ ein normierter Vektorraum, so bezeichnen wir die entsprechende Norm
+mit $\Vert\bullet\Vert_V$. 
+Falls $V$ sogar ein Prähilbertraum ist, bezeichnen
+wir das Skalarprodukt, welches $\Vert\bullet\Vert_V$ induziert, mit
+$(\bullet,\bullet)_V$.
 
-Weiterhin benutzen wir
+Weiterhin benutzen wir die übliche Notation für Lebesgue-Räume
+$L^p(U;\Rbb^m)$ und die Sobolev-Räume $W^{k,p}(U,\Rbb^m)$ und
+$H^k(U;\Rbb^m)\coloneqq W^{k,2}(U;\Rbb^m)$.
+\todo{nochmal nachgucken, ob das mit U so in Zeidler hinkommt}
+
+Betrachten wir einen Funktionenraum mit Werten in $\Rbb$, so verzichten wir auf
+$\Rbb$ beim Schreiben des Funktionenraums. Zum Beispiel notieren wir 
+$L^p(U)\coloneqq L^p(U;\Rbb)$.
+
 \todo[inline]{Hier noch Sachen ergänzen die doch nochmal vorkommen bzw.
-nochmal durchgehen, ob alle hier aufgeführten Sachen tatsächlich vorkommen.}
+nochmal durchgehen, ob alle hier aufgeführten Sachen tatsächlich vorkommen. 
+Sicherghen, dass Sobolev und Lebesgue-Funktionen in dieser Arbeit wirklich 
+ausschließlich nach $\Rbb$ gehen}
 
 \section{Benötigte Begriffe der Variationsrechnung in Banachräumen}
 \todo[inline]{im Zeidler lokal konvex Raum. Das irgendwie noch ausdrücken und
