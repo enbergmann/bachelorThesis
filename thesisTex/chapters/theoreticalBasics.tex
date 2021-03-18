@@ -1,48 +1,53 @@
 \section{Vorausgesetztes Wissen}
-In dieser Arbeit werden Kentnisse zu Banach- und Hilberträumen
-sowie zu Lebesgue- und Sobolev-Räumen varausgesetzt. Dazu gehören insbesondere
-grundlegende Einbettungssätze, die Dualraumtheorie auf diesen Räumen, der
-Rieszsche Darstellungssatz und Aussagen zur schwachen Konvergenz.
+\label{sec:basicKnowledge}
 
-Grundlegende Aussagen zu Banach- und Hilberträumen können beispielsweise
-in \cite{Zei86} und alles Weitere eben genannte in \cite{Zei90a} und
-\cite{Zei90b} nachgeschlagen werden. Dabei eignet sich der Index von
-\cite{Zei90b} hervorragend zum schnellen Auffinden von Begriffen in allen eben
-aufgeführten Referenzen.
-\todo{Im Zeidler suchen ob es Sobolev von offener Menge nach beliebigen VR
-gibt, falls nicht, dann doch nicht so perfekt schreiben am Ende des Kapitels 
-bzw andersweitig über diese Unzulänglichkeit hinwegtäuschen}
+In dieser Arbeit werden Grundbegriffe in topologischen Räumen und Kentnisse zu
+Banach- und Hilberträumen sowie zu Lebesgue- und Sobolev-Räumen vorausgesetzt.
+Dazu gehören insbesondere wichtige Ungleichungen (z.B.\ Cauchy-Schwarz, Hölder,
+Young), grundlegende Einbettungssätze, Dualraumtheorie, Aussagen zur schwachen
+Konvergenz sowie der Rieszsche Darstellungssatz und seine Implikationen.
+Außerdem sollte ein grundlegendes Verständnis von Konzepten in der Optimierung
+vorhanden sein.
 
-\todo[inline]{Falls in den Räumen noch weitere Begriffe benötigt werden, 
-dann oben ergänzen. Zeidler II B kann mit Steuerung+F und Appendix eigentlich
-alles finden in den Zeidler Werken, wenn nötig. Mit Suche findet man da alles,
-auch Young sehr Allgemein, CSU (dort nur Schwarzsche Ungleichung) usw.}
+Benötigte topologische Begriffe und grundlegende Aussagen zu Banach- und
+Hilberträumen können beispielsweise in \cite{Zei86} nachgeschlagen werden.
+Grundlagen der Optimierung sind in in \cite{Zei85} nachlesbar und alles Weitere
+eben genannte in \cite{Zei90a} und \cite{Zei90b}. 
+
+Dabei eignen sich die Register von \cite{Zei90b} und \cite{Zei85} hervorragend
+zum schnellen Auffinden von Begriffen in allen eben aufgeführten
+Referenzen.
 
 
 \section{Notation}
+
 Wir wählen für die natürlichen Zahlen die Konvention
 $\Nbb=\{1,2,3,\ldots\}$ und $\Nbb_0=\Nbb\cup\{0\}$. 
 Die Menge der positiven reellen Zahlen notieren wir mit $\Rbb_+$.
-
 
 Um auszudrücken, dass eine Menge $A$ Teilmenge einer Menge $B$ ist, 
 schreiben wir $A\subseteq B$. Ist $A$ sogar eine echte Teilmenge von $B$, so 
 schreiben wir $A\subset B$.
 
-Sollte die Dimension eines endlichdimensionalen Vektorraums $V$ nicht explizit
-bestimmt sein, so bezeichnen wir diese in der Regel mit $d\in\Nbb$. 
+Ist $A$ Teilmenge eines topologischen Raumes, so notieren wir den Rand von $A$
+mit $\partial A$ das innere von $A$ mit $\interior(A)$.
+Wir nennen weiterhin eine Teilmenge $B\subseteq A$ Umgebung eines Punktes $x\in
+A$, wenn es eine offene Teilmenge von $B$ gibt, die $x$ enthält.
 
-Für das euklidische Skalarprodukt zweier Vektoren $v,w\in \Rbb^d$ schreiben wir
+Für den Rest dieses Abschnitts seien $d,m\in\Nbb$, $k\in\Nbb_0$,
+$p\in[1,\infty]$ und $U$ eine nichtleere, offene Teilmenge von $\Rbb^d$.
+
+Für das euklidische Skalarprodukt zweier Vektoren $v,w\in \Rbb^m$ schreiben wir
 $v\cdot w$.
 
-Für den Rest dieses Abschnitts seien $k,m\in\Nbb$, $p\in[1,\infty]$ und $U$ 
-eine offene Teilmenge von $\Rbb^d$.
-\todo{unnötig, rausnehmen und nochmal sinnvoll überarbeiten}
+Betrachten wir einen Funktionenraum mit Werten in $\Rbb$, so verzichten wir auf
+$\Rbb$ beim Notieren des Funktionenraums. Zum Beispiel schreiben wir 
+$C(U)\coloneqq C(U;\Rbb)$ für den Raum der stetigen Funktionen von $U$ nach
+$\Rbb$.
+
 
 Mit der Menge $\Omega\subset\Rbb^2$ bezeichnen wir stets ein polygonal
-berandetes Lipschitz-Gebiet. Den Rand von $\Omega$ notieren wir dabei mit
-$\partial\Omega$.
-
+berandetes Lipschitz-Gebiet. 
 Weiterhin nutzen wir die Notation $\Tcal$ für eine reguläre Triangulierung von
 $\Omega$ im Sinne von Philippe Ciarlet in eine Menge von abgeschlossenen
 Dreiecken (cf. \cite[Kapitel 1.3.1]{Car09b}).
@@ -50,22 +55,22 @@ Die Menge der stückweisen konstanten Funktionen auf der Triangulierung $\Tcal$
 mit Werten in $\Rbb^m$ notieren wir dann mit $\Pbb_0(\Tcal,\Rbb^m)$ und die
 Menge der stückweisen affinen Funktionen auf $\Tcal$ mit Werten in $\Rbb^m$ mit
 $\Pbb_1(\Tcal,\Rbb^m)$.
-Für ein Dreieck $T\in\Tcal$ sei
-der Mittelpunkt $\Mid(T)$ und die längste Seitenlänge $h_T$.
+Für ein Dreieck $T\in\Tcal$ sei der Mittelpunkt $\Mid(T)$ und die längste
+Seitenlänge $h_T$.
 Damit können wir die stückweise konstante Funktion $h_\Tcal\in\Pbb_0(\Tcal)$
 für alle $T\in\Tcal$ durch $h_\Tcal|_T\coloneqq h_T$ definieren.
-Die Menge der Knoten der Triangulierung sei $\Ncal$, wobei die Menge
-der inneren Knoten mit $\Ncal(\Omega)$, die Menge der Randknoten mit
-$\Ncal(\partial\Omega)$ und die Menge der Knoten eines
-Dreiecks $T\in\Tcal$ mit $\Ncal(T)$ bezeichnet werde. 
+Die Menge der Knoten der Triangulierung sei $\Ncal$, wobei die Menge der
+inneren Knoten mit $\Ncal(\Omega)$, die Menge der Randknoten mit
+$\Ncal(\partial\Omega)$ und die Menge der Knoten eines Dreiecks $T\in\Tcal$ mit
+$\Ncal(T)$ bezeichnet werde. 
 Für die Kanten der Triangulierung seien die Mengen $\Fcal$, $\Fcal(\Omega)$,
 $\Fcal(\partial\Omega)$ und $\Fcal(T)$ analog definiert. 
 Der Normaleneinheitsvektor auf dem Rand eines Dreiecks $T\in\Tcal$ sei
 $\nu_T$ und der Normaleneinheitsvektor auf einer Kante $F\in\Fcal$ sei
-$\nu_F$. Für eine Innenkante $F\in\Fcal(\Omega)$ bezeichnen wir dann
-die beiden Dreiecke, die $F$ als gemeinsame Kanten haben, so
-mit $T_+$ und $T_-$, dass $\nu_{T_+}$ und $\nu_F$ gleichorientiert sind, 
-also $\nu_{T_+}\cdot\nu_F=1$.
+$\nu_F$. 
+Für eine Innenkante $F\in\Fcal(\Omega)$ bezeichnen wir dann die beiden
+Dreiecke, die $F$ als gemeinsame Kanten haben, so mit $T_+$ und $T_-$, dass
+$\nu_{T_+}$ und $\nu_F$ gleichorientiert sind, also $\nu_{T_+}\cdot\nu_F=1$.
 Damit können wir den Sprung entlang einer Innenkante $F\in\Fcal(\Omega)$
 definieren als $[\bullet]_F\coloneqq \bullet|_{T_+} -\bullet|_{T_-}$.
 Für eine Randkante $F\in\Fcal(\partial\Omega)$ definieren wir
@@ -75,48 +80,65 @@ Mit $|\bullet|$ bezeichnen wir, je nach Argument, die euklidischen Norm eines
 Vektors $v\in\Rbb^m$, den Inhalt eines Dreiecks $T\in\Tcal$ oder die Länge
 einer Kante $F\in\Fcal.$
 
-Ist $V$ ein normierter Vektorraum, so bezeichnen wir die entsprechende Norm
-mit $\Vert\bullet\Vert_V$. 
-Falls $V$ sogar ein Prähilbertraum ist, bezeichnen
-wir das Skalarprodukt, welches $\Vert\bullet\Vert_V$ induziert, mit
-$(\bullet,\bullet)_V$.
+Ist $V$ ein normierter Vektorraum, so bezeichnen wir die entsprechende Norm auf
+$V$ mit $\Vert\bullet\Vert_V$. 
+Falls $V$ sogar ein Prähilbertraum ist, bezeichnen wir das Skalarprodukt auf
+$V$, welches $\Vert\bullet\Vert_V$ induziert, mit $(\bullet,\bullet)_V$.
+
+Für den Dualraum eines Banachraums $X$ über $\Rbb$ 
+schreiben wir $X^\ast$. Die Auswertung eines Funktionals $f\in X^\ast$ an
+der Stelle $u\in X$ notieren wir, vor eventueller 
+Anwendung des Rieszschen Darstellungssatzes, mit $\langle f,u\rangle$.
 
 Weiterhin benutzen wir die übliche Notation für Lebesgue-Räume
-$L^p(U;\Rbb^m)$ und die Sobolev-Räume $W^{k,p}(U,\Rbb^m)$ und
-$H^k(U;\Rbb^m)\coloneqq W^{k,2}(U;\Rbb^m)$.
-\todo{nochmal nachgucken, ob das mit U so in Zeidler hinkommt}
+$L^p(U)$ und die So\-bo\-lev-Räume $W^{k,p}(U)$ sowie
+$H^k(U)\coloneqq W^{k,2}(U)$.
+Falls $p=2$, schreiben wir auch $\Vert\bullet\Vert \coloneqq
+\Vert\bullet\Vert_{L^2(\Omega)}$
+und $(\bullet,\bullet)\coloneqq(\bullet,\bullet)_{L^2(\Omega)}$.
 
-Betrachten wir einen Funktionenraum mit Werten in $\Rbb$, so verzichten wir auf
-$\Rbb$ beim Schreiben des Funktionenraums. Zum Beispiel notieren wir 
-$L^p(U)\coloneqq L^p(U;\Rbb)$.
 
-\todo[inline]{Hier noch Sachen ergänzen die doch nochmal vorkommen bzw.
-nochmal durchgehen, ob alle hier aufgeführten Sachen tatsächlich vorkommen. 
-Sicherghen, dass Sobolev und Lebesgue-Funktionen in dieser Arbeit wirklich 
-ausschließlich nach $\Rbb$ gehen}
+\section{Variationsrechnung auf Banachräumen}
+\label{sec:variationalCalculus}
 
-\section{Benötigte Begriffe der Variationsrechnung in Banachräumen}
-\todo[inline]{im Zeidler lokal konvex Raum. Das irgendwie noch ausdrücken und
-die Aussage, dass B-spaces lokal konvex sind, einmal rechtzeitig erwähnen.}
+Wie in \Cref{sec:basicKnowledge} beschrieben, setzen wir in dieser Arbeit
+Kentnisse über die Variationsrechung voraus. 
+Da wir aber einige Aussagen auch für Funktionale benötigen, die auf
+unedlichdimensionalen reellen Banachräumen definiert sind, führen
+wir in diesen Abschnitt die grundlegenden Notationen dafür ein und formulieren
+schließlich die notwendige Optimalitätsbedingung erster Ordnung.
 
-Die folgenden Aussagen basieren auf \cite[S. 189-192]{Zei85}.
-Wir betrachten einen Banachraum $X$, eine Teilmenge $V\subseteq X$ und ein
-Funktional $F:V\to\Rbb$. Sei $u$ ein innerer Punkt von $V$. Außerdem
-definieren wir für $h\in X$ die Funktion $\varphi_h:\Rbb\to\Rbb$ durch 
-$\varphi_h(t)\coloneqq F(u+th)$ für alle $t\in\Rbb$.
+Dabei folgen wir \cite[S. 189-194]{Zei85}. \todo{noch sagen, dass Beweise da zu
+finden sind oder ist das mit dem Satz schon klar?}
+Dort werden die Aussagen auf einen reellen lokal konvexen
+Raum formuliert. Da nach \cite[S. 781, (43)]{Zei86} alle Banachräume 
+lokal konvex sind und wir die Aussagen in dieser Arbeit
+nur auf Banachräumen benötigen, formulieren wir sie hier auf einen reellen 
+Banachraum $X$. 
+Außerdem betrachten wir eine Teilmenge $V\subseteq X$, einen
+inneren Punkt $u$ von $V$ und ein Funktional $F:V\to\Rbb$. 
+Schließlich definieren wir noch für alle $h\in X$ eine Funktion
+$\varphi_h:\Rbb\to\Rbb$, die für alle $t\in\Rbb$ gegeben ist durch
+$\varphi_h(t)\coloneqq F(u+th)$.
+
+Damit können wir die $n$-te Variation, das G\^ateaux- und das 
+Fr\'echet-Differential von $F$ definieren.
 
 \begin{definition}[$n$-te Variation]
-  Die $n$-te Variation von $F$ an der Stelle $u$ in Richtung $h\in X$ ist 
+  Die $n$-te Variation von $F$ an der Stelle $u$ in Richtung $h\in X$ ist,
+  falls die $n$-te Ableitung $\varphi_h^{(n)}(0)$ von $\varphi_h$ in $0$
+  existiert, definiert durch 
   \begin{align*}
     \delta^n F(u;h)\coloneqq \varphi_h^{(n)}(0)=
-    \left. \frac{d^n F(u+th)}{dt^n}\right|_{t=0},
+    \left. \frac{d^n F(u+th)}{dt^n}\right|_{t=0}.
   \end{align*}
-  falls $\varphi_h^{(n)}(0)$ existiert. Wir schreiben $\delta$ für $\delta^1$.
+
+  Wir schreiben $\delta$ für $\delta^1$.
 \end{definition}
 
 \begin{definition}[G\^ateaux- und Fr\'echet-Differential]
   $F$ heißt G\^ateaux-differenzierbar an der Stelle $u$, falls ein 
-  Funktional $F'(u)\in X^\ast$ existiert mit 
+  Funktional $F'(u)\in X^\ast$ existiert, sodass
   \begin{align*}
     \lim_{t\to 0}\frac{F(u+th)-F(u)}{t} = \langle F'(u), h\rangle\quad
     \text{für alle } h\in X.
@@ -134,69 +156,65 @@ $\varphi_h(t)\coloneqq F(u+th)$ für alle $t\in\Rbb$.
   ist definiert durch $dF(u;h)\coloneqq \langle F'(u),h\rangle.$
 \end{definition}
 
-Die wichtigsten Eigenschaften sind noch einmal in folgender Bemerkung 
-zusammengefasst.
-
 \begin{remark}
-  \begin{itemize}
-    \item Existiert das Fr\'echet-Differential $F'(u)$ von $F$ an der Stelle
-      $u$, so ist $F'(u)$ auch das G\^ateaux-Differential von $F$ an der Stelle
-      $u$ und es gilt 
-      \begin{align*}
-        \delta F(u;h)=dF(u;h)=\langle F'(u),h\rangle\quad\text{für alle } h\in
-        X.
-      \end{align*}
-%      Außerdem ist $F$ dann stetig an der Stelle $u$.
-  \end{itemize}
+  Existiert das Fr\'echet-Differential $F'(u)$ von $F$ an der Stelle
+    $u$, so ist $F'(u)$ auch das G\^ateaux-Differential von $F$ an der Stelle
+    $u$ und es gilt 
+    \begin{align*}
+      \delta F(u;h)=dF(u;h)=\langle F'(u),h\rangle\quad\text{für alle } h\in X.
+    \end{align*}
 \end{remark}
 
-Damit können wir eine wichtige Aussage der Variationsrechnung formulieren,
-basierend auf \cite[S. 193ff., Theorem 40.A, Theorem 40.B]{Zei85}.
+Nachdem die relevante Notation eingeführt ist, können wir zum Abschluss
+die notwendige Bedingung erster Ordnung für einen lokalen Minimierer von $F$
+formulieren.
 
 \begin{theorem}[Notwendige Optimalitätsbedingung erster Ordnung]
   \label{thm:necessaryConditionFreeLocalExtrema}
   Sei $u\in \interior(V)$ lokaler Minimierer von $F$, das heißt
   es existiere eine Umgebung 
-  \todo[inline]{Definiere Umgebung so wie in Zeilder 'neigborhood', 
-  \cite[S. 751, (5)]{Zei86} (also es gibt eine offene Menge in der Umgebung,
-  die den Punkt enthällt} 
-  $U$ von $u$, so dass $F(v)\geq F(u)$ für alle $v\in U$. Dann gilt für alle
+  $U$ von $u$, sodass $F(v)\geq F(u)$ für alle $v\in U$. Dann gilt für alle
   $h\in X$, dass $\delta F(u;h) = 0$, falls diese Variation für alle $h\in X$
   existiert, beziehungsweise $F'(u) = 0$, falls $F'(u)$ als 
   G\^ateaux- oder Fr\'echet-Differential existiert.
 \end{theorem}
 
-\section{Subdifferential}
-In diesem Abschnitt trage ich die in dieser Arbeit benötigten Eigenschaften 
-des Subdifferentials eines Funktionals $F:X\to [-\infty,\infty]$ 
-auf einem Banachraum 
-$(X,\Vert\bullet\Vert_X)$ und die dafür benötigten Begriffe zusammen.
+\section{Subdifferentiale}
 
-Zunächst eine grundlegende Definition.
+Für diesen Abschnitt betrachten wir stets einen reellen Banachraum $X$ und,
+falls nicht anders spezifiziert, ein Funktional $F:X\to [-\infty,\infty]$.
+
+Wir wollen die in dieser Arbeit benötigten Notationen und
+Eigenschaften des Subdifferentials von $F$ zusammentragen.
+
+Zuvor starten wir mit einer grundlegenden Definition.
 
 \begin{definition}[\protect{\cite[S. 245, Definition 42.1]{Zei85}}]
-  Sei $X$ ein Vektorraum, $M\subseteq X$ und $F:M\to\Rbb$. 
+  Sei $V$ ein Vektorraum, $M\subseteq V$ und $F:M\to\Rbb$. 
   
   Dann heißt die Menge $M$ konvex, wenn für alle $u,v\in M$ und alle $t\in
-  [0,1]$ gilt $(1-t)u+tv\in M$.
+  [0,1]$ gilt $$(1-t)u+tv\in M.$$
 
   Ist $M$ konvex, so heißt $F$ konvex, falls für alle $u,v\in M$ und alle
-  $t\in[0,1]$ gilt $F\big( (1-t)u+tv\big)\leq (1-t)F(u)+t F(v).$
+  $t\in[0,1]$ gilt 
+  \begin{equation}
+    \label{eq:convexity}
+    F\big( (1-t)u+tv\big)\leq (1-t)F(u)+t F(v).
+  \end{equation}
+  Gilt Ungleichung \eqref{eq:convexity} mit \glqq$<$\grqq, so heißt
+  $F$ strikt konvex. Falls $-F$ konvex ist, so heißt $F$ konkav.
 \end{definition}
 
-In \cite{Zei85} werden einige der folgenden Aussagen auf reellen lokal konvexen
-Räumen $X$ formuliert.
-Da nach \cite[S. 781, (43)]{Zei86} alle Banachräume 
-(in \cite{Zei86} und \cite{Zei85} genannt \glqq B-spaces\grqq, \cite[S.
-786]{Zei86}) lokal
-konvex sind und in dieser Arbeit die Aussagen nur auf Banachräumen benötigt
-werden, beschränke ich
-die folgenden Aussagen, falls nicht anders spezifiziert, wie folgt.
-Sei $(X,\Vert\bullet\Vert_X)$ ein reeller Banachraum und
-$F:X\to [-\infty,\infty]$ ein Funktional auf $X$.
+Für den Rest dieses Abschnitts folgen wir \cite[S. 385-397]{Zei85}. \todo{noch
+sagen, dass Beweise da zu finden sind oder ist das mit dem Satz schon klar? 
+Besser sowas sagen wie 'Die Aussagen stammen aus'?}
+Analog zur Begründung zum Beginn von \Cref{sec:variationalCalculus}, schränken
+wir auch hier die Definitionen und Aussagen, die in \cite{Zei85} auf reellen
+lokal konvexen Räumen formuliert sind, auf den reellen Banachraum $X$ ein.
 
-\begin{definition}[Subdifferential, \protect{\cite[S. 385,
-  Definition 47.8]{Zei85}}]
+Zunächst definieren wir das Subdifferential von $F$ an einer Stelle $u\in X$.
+
+\begin{definition}[Subdifferential]
   \label{def:subdifferential}
   Für $u\in X$ mit $F(u)\neq\pm\infty$ heißt
   \begin{equation}
@@ -205,35 +223,27 @@ $F:X\to [-\infty,\infty]$ ein Funktional auf $X$.
     \{u^\ast\in X^\ast\ |\ 
     \forall v\in X\quad F(v)\geq F(u)+\langle u^\ast,v-u\rangle\}  
   \end{equation}
-  Subdifferential von $F$ an der Stelle $u$. Für $F(u)=\pm\infty$ definiere
+  Subdifferential von $F$ an der Stelle $u$. Für $F(u)=\pm\infty$ ist
   $\partial F(u)\coloneq\emptyset$.
 
   Ein Element $u^\ast\in\partial F(u)$ heißt Subgradient von $F$ an der Stelle
   $u$.
 \end{definition}
 
-\begin{theorem}[\protect{\cite[S. 387, Proposition 47.12]{Zei85}}]
+Es folgen für Optimierungsprobleme wichtige Aussagen über das Subdifferential 
+von $F$.
+
+\begin{theorem}
   \label{thm:extremalprinciple}
   Falls $F: X\to (-\infty,\infty]$ mit $F\nequiv\infty$, gilt
   $F(u)=\inf_{v\in X}F(v)$ genau dann, wenn $0\in\partial F(u)$.
 \end{theorem}
 
-\begin{theorem}[\protect{\cite[S. 387, Proposition 47.13]{Zei85}}]
+\begin{theorem}
   \label{thm:subdiffGateaux}
   Falls $F$ konvex ist und G\^{a}teaux-differenzierbar
-  (in \cite{Zei86} und \cite{Zei85} genannt \glqq G-differentiable\grqq, \cite[S.
-  135f.]{Zei86})
   an der Stelle $u\in X$ mit G\^{a}teaux-Differential $F'(u)$,
   gilt $\partial F(u)=\{F'(u)\}$.
-  \todo[inline]{TODO checke Notation und Definition mit der
-  Gateaux/Frechet-differenzierbarkeit, für die ich mich entschieden habe (d.h.
-  meint Zeidler das gleiche  
-  
-  Bemerke, die Prop liefert noch wann das umgekehrte gilt, aber nur
-  aufschreiben, wenn das mal benötigt wird in dieser Arbeit
-
-  nutze vielleicht Zeidler I als Quelle für die Differentiale und vielleicht
-  auch Notation?}
 \end{theorem}
 
 Das folgende Theorem folgt aus \cite[S. 389, Theorem 47.B]{Zei85} unter 
@@ -245,10 +255,10 @@ Menge in $X^\ast$ kommutieren.
   \label{thm:subdifferentialSumRule}
   Seien für $n\geq 2$ die Funktionale $F_1,F_2,\ldots,F_n: X\to
   (-\infty,\infty]$ konvex und es existiere
-  ein $u_0\in X$ und ein $j\in\{1,2,\ldots,n\}$ mit $F_k(u_0)<\infty$
-  für alle $k\in\{1,2\ldots,n\}$, 
-  sodass für alle $k\in\{1,2,\ldots,n\}\setminus\{j\}$ das Funktional
-  $F_k$ stetig an der Stelle $u_0$ ist.
+  ein $u_0\in X$, sodass $F_k(u_0)<\infty$
+  für alle $k\in\{1,2\ldots,n\}$. 
+  Außerdem seien mindestens $n-1$ der $n$ Funktionale $F_1,F_2,\ldots,F_n$
+  stetig an der Stelle $u_0$.
 
   Dann gilt 
   \begin{align*}
@@ -258,8 +268,9 @@ Menge in $X^\ast$ kommutieren.
   \end{align*}
 \end{theorem}
 
-\begin{theorem}[\protect{\cite[S. 396f., Definition 47.15, Theorem
-  47.F]{Zei85}}]
+Zum Abschluss formulieren wir noch die Monotonie des Subdifferentials.
+
+\begin{theorem}
   \label{thm:subdifferentialMonotonicity}
   Sei $F:X\to (-\infty,\infty]$ konvex und unterhalbstetig mit $F\nequiv\infty$.
 
@@ -271,7 +282,7 @@ Menge in $X^\ast$ kommutieren.
 \end{theorem}
 
 
-\section{Funktionen Beschränkter Variation}
+\section{Funktionen beschränkter Variation}
 
 Dieser Abschnitt präsentiert die für diese Arbeite benötigten Aussagen 
 über Funktionen beschrankter Variation und basiert auf
