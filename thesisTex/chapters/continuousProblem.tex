@@ -1,9 +1,6 @@
 \section{Formulierung}
-Sei nun $\Omega \subset \Rbb^n$ ein offenes, polygonal berandetes
-Lipschitz-Gebiet.
-Wir betrachten für ein gegebenes $\alpha\in\Rbb^+$ und eine Funktion
-$f\in L^2(\Omega)$ das 
-folgende Minimierungsproblem. 
+Für einen Parameter $\alpha\in\Rbb_+$ und eine Funktion
+$f\in L^2(\Omega)$ betrachten wir das folgende Minimierungsproblem. 
 
 \begin{problem}\label{prob:continuousProblem}
   Finde $u\in \BV(\Omega)\cap L^2(\Omega)$, sodass
@@ -14,10 +11,10 @@ folgende Minimierungsproblem.
   \end{align}
   unter allen $v\in\BV(\Omega)\cap L^2(\Omega)$ minimiert.
 
-  Nach \cite[S. 400, Theorem 10.2.1]{ABM14} existiert ein linearer Operator
-  $T:\BV(\Omega)\to L^1(\partial\Omega)$ mit $T(u) = u|_{\partial\Omega}$ für
-  alle $u\in\BV(\Omega)\cap C(\overline\Omega)$. Somit ist der Term $\Vert
-  v\Vert_{L^1(\partial\Omega)}$ wohldefiniert.
+  Dabei ist der Term $\Vert v\Vert_{L^1(\partial\Omega)}$ wohldefiniert, da
+  nach \cite[S. 400, Theorem 10.2.1]{ABM14} ein linearer Operator
+  $T:\BV(\Omega)\to L^1(\partial\Omega)$ existiert mit $T(u) =
+  u|_{\partial\Omega}$ für alle $u\in\BV(\Omega)\cap C(\overline\Omega)$.
 \end{problem}
 
 \begin{remark}
@@ -25,69 +22,42 @@ folgende Minimierungsproblem.
   \todo[inline]{noch fragen, was 1-regular nochmal heißt und ob das hier 
   glatt geht (tut es sehr wahrscheinlich)}
   die Einbettung $\BV(\Omega)\hookrightarrow L^p(\Omega)$ stetig für 
-  $1\leq p\leq n/(n-1)$. 
-  Damit ist $\BV(\Omega)$ für $n=2$ Teilmenge von $L^2(\Omega)$ und die
+  $1\leq p\leq d/(d-1)$. 
+  Damit ist $\BV(\Omega)$ für $d=2$ Teilmenge von $L^2(\Omega)$ und die
   Lösung von \Cref{prob:continuousProblem} kann in
-  $\BV(\Omega)$ gesucht werden. Für beliebige $n\in\Nbb$, die wir in diesem
-  Abschnitt betrachten, ist dies im Allgemeinen nicht gültig.
+  $\BV(\Omega)$ gesucht werden. Für beliebige $d\in\Nbb$, die wir in diesen
+  Abschnitt betrachten, gilt dies im Allgemeinen nicht.
 \end{remark}
 
 \section{Existenz und Eindeutigkeit von Minimierern}
 Zunächst zeigen wir, dass \Cref{prob:continuousProblem} eine Lösung besitzt.
-Dafür benötigen wir die folgenden Ungleichungen.
-\begin{lemma}[Cauchy-Schwarzsche Ungleichung]
-  \label{lem:csu}
-  Sei $V$ ein reeller oder komplexer Vektorraum mit Skalarprodukt
-  $(\cdot,\cdot)_V$. Dann gilt für alle $x,y\in V$
-  \begin{align*}
-    |(x,y)_V|^2\leq (x,x)_V (y,y)_V.
-  \end{align*}
-  Gleichheit gilt genau dann, wenn $x$ und $y$ linear unabhängig sind.
-\end{lemma}
+Dafür benötigen wir die folgende Formulierung der Youngschen Ungleichung.
 
 \begin{lemma}[Youngsche Ungleichung]
   \label{lem:young}
-  Seien $a,b\in\Rbb$ und $\varepsilon>0$ beliebig. Dann gilt
+  Seien $a,b\in\Rbb$ und $\varepsilon\in\Rbb_+$ beliebig. Dann gilt
   \begin{align*}
     ab\leq\frac{1}{\varepsilon}a^2+\frac{\varepsilon}{4}b^2. 
   \end{align*}
 \end{lemma}
 
-\begin{lemma}[Höldersche Ungleichung]
-  \label{lem:hoelder}
-  Seien $p,q\in [1,\infty]$ mit $1/p+1/q=1$, $f\in L^p(\Omega)$ und 
-  $g\in L^q(\Omega)$. Dann gilt $fg\in L^1(\Omega)$ mit 
-  \begin{align*}
-    \Vert fg\Vert_{L^1(\Omega)}\leq 
-    \Vert f\Vert_{L^p(\Omega)}\Vert g\Vert_{L^q(\Omega)}.
-  \end{align*}
-\end{lemma}
-
-\todo[inline]{Q alle drei zitieren mit irgendeiner Quelle mit der passenden
-Formulierung oder ist das zu basic}
-
-\todo[inline]{In Grundlagen einmal darüber reden, wie für fast alle hier zu 
-verstehen ist? Es gibt verschiedene Konventionen und hier ist natürlich 
-gemeint für alle x bis auf die aus Nullmengen}
-
 Außerdem wird im Beweis folgende Aussage benötigt, die direkt aus \cite[S. 183,
-Theorem 1]{EG92} folgt, da $0\in\BV(\Rbb^n\setminus\Omega)$,
-$|0|_{\BV(\Rbb^n\setminus\Omega)}=0$ und $0|_{\partial\Omega}=0$.
-\todo[inline]{Q vielleicht den Trace Operator T immer mitnehmen?}
+Theorem 1]{EG92} folgt, da $0\in\BV(\Rbb^d\setminus\overline\Omega)$,
+$|0|_{\BV(\Rbb^d\setminus\overline\Omega)}=0$ und $0|_{\partial\Omega}=0$.
 
 \begin{lemma}
   \label{lem:bvExtension}
   Sei $v\in\BV(\Omega)$.
-  Definiere, für alle $x\in\Rbb^n$,
+  Definiere, für alle $x\in\Rbb^d$,
   \begin{align*}
     \tilde{v}(x)\coloneqq
     \begin{cases}
       v(x),  &\text{ falls } x\in\Omega,\\
-      0,     &\text{ falls } x\in\Rbb^n\setminus\Omega.
+      0,     &\text{ falls } x\in\Rbb^d\setminus\overline\Omega.
     \end{cases} 
   \end{align*}
-  Dann gilt $\tilde{v}\in\BV\left(\Rbb^n\right)$ und
-  $|\tilde{v}|_{\BV\left(\Rbb^n\right)}
+  Dann gilt $\tilde{v}\in\BV\left(\Rbb^d\right)$ und
+  $|\tilde{v}|_{\BV\left(\Rbb^d\right)}
   = |v|_{\BV(\Omega)}+\Vert v\Vert_{L^1(\partial\Omega)}$.
 \end{lemma}
 
@@ -98,14 +68,14 @@ $|0|_{\BV(\Rbb^n\setminus\Omega)}=0$ und $0|_{\partial\Omega}=0$.
 \end{theorem}
 
 \begin{proof}
-  Für diesen Beweis folgen wir der direkte Methode der Variationsrechnung
-  (cf. cite Dracoragna).
+  Die Beweisidee ist die Anwendung der direkten Methode der Variationsrechnung
+  \todo{(cf. cite Dracoragna) bzw., falls das da nicht so klar ist, bestimmt
+  im Zeidler zu finden} 
+  unter Nutzung der in \Cref{sec:bvFunctions} aufgeführten Eigenschaften
+  der schwachen Konvergenz in $\BV(\Omega)$.
+
   Für alle $v\in L^2(\Omega)\subset L^1(\Omega)$ gilt mit der Hölderschen
-  Ungleichung
-  \todo[inline]{Q wo und wie einmal erwähnen, dass die Lp Räume geschachtelt 
-  sind da Omega bdd ist? In Grundlagenkapitel 'Da bdd gilt hier immer die
-  Inklusion ..' vielleicht einmal allgemein, dann noch mit Zitierung.}
-  (\cref{lem:hoelder}) für $p=q=2$, dass
+  Ungleichung für $p=q=2$, dass
   \begin{equation}\label{eq:hoelderL2BiggerL1}
     \Vert v\Vert_{L^1} 
     = \Vert 1\cdot v\Vert_{L^1(\Omega)}
@@ -113,10 +83,10 @@ $|0|_{\BV(\Rbb^n\setminus\Omega)}=0$ und $0|_{\partial\Omega}=0$.
     =\sqrt{|\Omega|} \Vert v\Vert_{L^2(\Omega)}.
   \end{equation}
 
-  Dann folgt für das Funktional $E$ in \eqref{eq:continuousProblem}
-  für alle $v\in \BV(\Omega)\cap L^2(\Omega)$ durch die
-  Cauchy-Schwarzsche Ungleichung (\cref{lem:csu}), die Youngsche
-  Ungleichung \eqref{lem:young} und \cref{eq:hoelderL2BiggerL1}, dass
+  Dann folgt für das Funktional $E$ in \eqref{eq:continuousProblem} für alle
+  $v\in \BV(\Omega)\cap L^2(\Omega)$ durch die Cauchy-Schwarzsche Ungleichung,
+  die Youngsche Ungleichung aus \cref{lem:young} und Ungleichung
+  \eqref{eq:hoelderL2BiggerL1}, dass
   \begin{equation}
     \label{eq:contProbBddFromBelow}
     \begin{aligned}
@@ -145,16 +115,15 @@ $|0|_{\BV(\Rbb^n\setminus\Omega)}=0$ und $0|_{\partial\Omega}=0$.
 
   Somit ist $E$ nach unten beschränkt, was die Existenz einer infimierenden
   Folge $(u_n)_{n\in\Nbb}\subset\BV(\Omega)\cap L^2(\Omega)$ von $E$ 
-  impliziert, d.h.\
-  $(u_n)_{n\in\Nbb}$ erfüllt $\lim_{n\rightarrow\infty}E(u_n) =
-  \inf_{v\in\BV(\Omega)\cap L^2(\Omega)}E(v)$. 
+  impliziert, das heißt
+  $(u_n)_{n\in\Nbb}$ erfüllt $$\lim_{n\rightarrow\infty}E(u_n) =
+  \inf_{v\in\BV(\Omega)\cap L^2(\Omega)}E(v).$$ 
 
   Ungleichung \eqref{eq:contProbBddFromBelow} impliziert außerdem, dass
-  $E(u_n)\overset{n\to\infty}{\to}\infty$, falls
-  $|u_n|_{\BV(\Omega)}\overset{n\to\infty}{\to}\infty$ oder 
-  $\Vert u_n\Vert_{L^1(\Omega)}\overset{n\to\infty}{\to}\infty$, also 
-  insgesamt, falls
-  $\Vert u_n\Vert_{\BV(\Omega)}\overset{n\to\infty}{\to}\infty$.
+  $E(u_n)\to\infty$ für $n\to\infty$, falls $|u_n|_{\BV(\Omega)}\to\infty$ oder
+  $\Vert u_n\Vert_{L^1(\Omega)}\to\infty$ für $n\to\infty$. 
+  Daraus folgt insbesondere, dass $E(u_n)\to\infty$ für $n\to\infty$, falls
+  $\Vert u_n\Vert_{\BV(\Omega)}\to\infty$ für $n\to\infty$ .
 
   Deshalb muss die Folge $(u_n)_{n\in\Nbb}$ beschränkt in $\BV(\Omega)$ sein.
 
@@ -163,6 +132,7 @@ $|0|_{\BV(\Rbb^n\setminus\Omega)}=0$ und $0|_{\partial\Omega}=0$.
   Teilfolge $(u_{n_k})_{k\in\Nbb}$ von $(u_n)_{n\in\Nbb}$ mit schwachem Grenzwert
   $u\in\BV(\Omega)$. Ohne Beschränkung der Allgemeinheit
   ist $(u_{n_k})_{k\in\Nbb}=(u_n)_{n\in\Nbb}$.
+  \todo{hier vielleicht THm 2.15 anwendbar zum Abkürzen}
   Schwache Konvergenz von $(u_n)_{n\in\Nbb}$ in $\BV(\Omega)$ gegen
   $u$ bedeutet nach Definition insbesondere, dass $(u_n)_{n\in\Nbb}$ stark und
   damit auch schwach in $L^1(\Omega)$ gegen $u$ konvergiert.
@@ -200,12 +170,12 @@ $|0|_{\BV(\Rbb^n\setminus\Omega)}=0$ und $0|_{\partial\Omega}=0$.
   \medbreak
   Nun definieren wir, für alle
   $n\in\Nbb$ und für alle 
-  $x\in\Rbb^n$,
+  $x\in\Rbb^d$,
   \begin{align*}
     \tilde{u}_n(x)\coloneqq
     \begin{cases}
       u_n(x),  &\text{ falls } x\in\Omega,\\
-      0,     &\text{ falls } x\in\Rbb^n\setminus\Omega
+      0,     &\text{ falls } x\in\Rbb^d\setminus\Omega
     \end{cases} 
   \end{align*}
   und
@@ -213,45 +183,45 @@ $|0|_{\BV(\Rbb^n\setminus\Omega)}=0$ und $0|_{\partial\Omega}=0$.
     \tilde{u}(x)\coloneqq
     \begin{cases}
       u(x),  &\text{ falls } x\in\Omega,\\
-      0,     &\text{ falls } x\in\Rbb^n\setminus\Omega.
+      0,     &\text{ falls } x\in\Rbb^d\setminus\Omega.
     \end{cases} 
   \end{align*}
 
-  Dann gilt nach \cref{lem:bvExtension} sowohl $\tilde{u}\in\BV(\Rbb^n)$ und
-  $|\tilde{u}|_{\BV\left(\Rbb^n\right)} = |u|_{\BV(\Omega)}+\Vert
-  u\Vert_{L^1(\partial\Omega)}$ als auch $\tilde{u}_n\in\BV(\Rbb^n)$
+  Dann gilt nach \cref{lem:bvExtension} sowohl $\tilde{u}\in\BV(\Rbb^d)$ und
+  $|\tilde{u}|_{\BV\left(\Rbb^d\right)} = |u|_{\BV(\Omega)}+\Vert
+  u\Vert_{L^1(\partial\Omega)}$ als auch $\tilde{u}_n\in\BV(\Rbb^d)$
    und
-   $|\tilde{u}_n|_{\BV\left(\Rbb^n\right)}
+   $|\tilde{u}_n|_{\BV\left(\Rbb^d\right)}
   = |u_n|_{\BV(\Omega)}+\Vert u_n\Vert_{L^1(\partial\Omega)}$ für alle
   $n\in\Nbb$.
   Da $(u_n)_{n\in \Nbb}$ infimierende Folge von $E$ ist, muss aufgrund der
   Form von $E$ die Folge
-  $(|\tilde{u}_n|_{\BV(\Rbb^n)})_{n\in\Nbb} = (|u_n|_{\BV(\Omega)}+\Vert
+  $(|\tilde{u}_n|_{\BV(\Rbb^d)})_{n\in\Nbb} = (|u_n|_{\BV(\Omega)}+\Vert
   u_n\Vert_{L^1(\partial\Omega)})_{n\in\Nbb}$
   beschränkt sein.
   Außerdem gilt $\tilde{u}_n \overset{n\to\infty}{\to} \tilde{u}$ in
-  $L^1(\Rbb^n)$, da aus der Definition von $\tilde{u}$ und 
+  $L^1(\Rbb^d)$, da aus der Definition von $\tilde{u}$ und 
   $\tilde{u}_n$ für alle $n\in\Nbb$ und der bereits bekannten Eigenschaft 
   $u_n\overset{n\to\infty}{\to} u$ folgt
   \begin{align*}
-    \Vert \tilde{u}_n - \tilde{u}\Vert_{L^1(\Rbb^n)} 
-    &= \int_{\Rbb^n} |\tilde{u}_n - \tilde{u}|\dx\\
+    \Vert \tilde{u}_n - \tilde{u}\Vert_{L^1(\Rbb^d)} 
+    &= \int_{\Rbb^d} |\tilde{u}_n - \tilde{u}|\dx\\
     &= \int_\Omega |u_n - u|\dx\\
     &= \Vert u_n - u\Vert_{L^1(\Omega)} \overset{n\to\infty}{\to} 0.
   \end{align*}
 
-  Insgesamt ist also $(\tilde{u}_n)_{n\in\Nbb}$ eine Folge in $\BV(\Rbb^n)$,
-  die in $L^1(\Rbb^n)$ gegen $\tilde{u}\in\BV(\Rbb^n)\subset
-  L^1(\Rbb^n)$ konvergiert und 
-  erfüllt, dass $(|\tilde{u}_n|_{\BV(\Rbb^n)})_{n\in\Nbb}$ beschränkt
+  Insgesamt ist also $(\tilde{u}_n)_{n\in\Nbb}$ eine Folge in $\BV(\Rbb^d)$,
+  die in $L^1(\Rbb^d)$ gegen $\tilde{u}\in\BV(\Rbb^d)\subset
+  L^1(\Rbb^d)$ konvergiert und 
+  erfüllt, dass $(|\tilde{u}_n|_{\BV(\Rbb^d)})_{n\in\Nbb}$ beschränkt
   ist. Somit folgt mit
   \cref{thm:wlsc}  
   \begin{equation}
     \label{eq:wlscOfExtension}
     \begin{aligned}
       |u|_{\BV(\Omega)} +\Vert u\Vert_{L^1(\partial\Omega)}
-      = |\tilde{u}|_{\BV(\Rbb^n)}
-      &\leq\liminf_{n\to\infty} |\tilde{u}_n|_{\BV(\Rbb^n)}\\
+      = |\tilde{u}|_{\BV(\Rbb^d)}
+      &\leq\liminf_{n\to\infty} |\tilde{u}_n|_{\BV(\Rbb^d)}\\
       &= \liminf_{n\to\infty} (|u_n|_{\BV(\Omega)} +
       \Vert u_n\Vert_{L^1(\partial\Omega)}).
     \end{aligned}
