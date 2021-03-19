@@ -46,39 +46,39 @@ $C(U)\coloneqq C(U;\Rbb)$ für den Raum der stetigen Funktionen von $U$ nach
 $\Rbb$.
 
 
-Mit der Menge $\Omega\subset\Rbb^2$ bezeichnen wir stets ein polygonal
+Mit der Menge $\Omega\subset\Rbb^d$ bezeichnen wir stets ein polygonal
 berandetes Lipschitz-Gebiet. 
-Weiterhin nutzen wir die Notation $\Tcal$ für eine reguläre Triangulierung von
-$\Omega$ im Sinne von Philippe Ciarlet in eine Menge von abgeschlossenen
-Dreiecken (cf. \cite[Kapitel 1.3.1]{Car09b}).
+Falls $\Omega\subset\Rbb^2$, nutzen wir die Notation $\Tcal$ für eine reguläre
+Triangulierung von $\Omega$ im Sinne von Philippe Ciarlet in eine Menge von
+abgeschlossenen Dreiecken (cf. \cite[Kapitel 1.3.1]{Car09b}).
 Die Menge der stückweisen konstanten Funktionen auf der Triangulierung $\Tcal$
 mit Werten in $\Rbb^m$ notieren wir dann mit $\Pbb_0(\Tcal,\Rbb^m)$ und die
 Menge der stückweisen affinen Funktionen auf $\Tcal$ mit Werten in $\Rbb^m$ mit
 $\Pbb_1(\Tcal,\Rbb^m)$.
-Für ein Dreieck $T\in\Tcal$ sei der Mittelpunkt $\Mid(T)$ und die längste
-Seitenlänge $h_T$.
+Für ein Dreieck $T\in\Tcal$ sei die längste Seitenlänge $h_T$.
 Damit können wir die stückweise konstante Funktion $h_\Tcal\in\Pbb_0(\Tcal)$
 für alle $T\in\Tcal$ durch $h_\Tcal|_T\coloneqq h_T$ definieren.
 Die Menge der Knoten der Triangulierung sei $\Ncal$, wobei die Menge der
 inneren Knoten mit $\Ncal(\Omega)$, die Menge der Randknoten mit
 $\Ncal(\partial\Omega)$ und die Menge der Knoten eines Dreiecks $T\in\Tcal$ mit
 $\Ncal(T)$ bezeichnet werde. 
-Für die Kanten der Triangulierung seien die Mengen $\Fcal$, $\Fcal(\Omega)$,
-$\Fcal(\partial\Omega)$ und $\Fcal(T)$ analog definiert. 
+Für die Kanten der Triangulierung seien die Mengen $\Ecal$, $\Ecal(\Omega)$,
+$\Ecal(\partial\Omega)$ und $\Ecal(T)$ analog definiert. 
+Den Mittelpunkt einer Kante $E\in\Fcal$ bezeichnen wir mit $\Mid(E)$.
 Der Normaleneinheitsvektor auf dem Rand eines Dreiecks $T\in\Tcal$ sei
-$\nu_T$ und der Normaleneinheitsvektor auf einer Kante $F\in\Fcal$ sei
-$\nu_F$. 
-Für eine Innenkante $F\in\Fcal(\Omega)$ bezeichnen wir dann die beiden
-Dreiecke, die $F$ als gemeinsame Kanten haben, so mit $T_+$ und $T_-$, dass
-$\nu_{T_+}$ und $\nu_F$ gleichorientiert sind, also $\nu_{T_+}\cdot\nu_F=1$.
-Damit können wir den Sprung entlang einer Innenkante $F\in\Fcal(\Omega)$
-definieren als $[\bullet]_F\coloneqq \bullet|_{T_+} -\bullet|_{T_-}$.
-Für eine Randkante $F\in\Fcal(\partial\Omega)$ definieren wir
-$[\bullet]_F\coloneqq \bullet|_F$.
+$\nu_T$ und der Normaleneinheitsvektor auf einer Kante $E\in\Ecal$ sei
+$\nu_E$. 
+Für eine Innenkante $E\in\Ecal(\Omega)$ bezeichnen wir dann die beiden
+Dreiecke, die $E$ als gemeinsame Kanten haben, so mit $T_+$ und $T_-$, dass
+$\nu_{T_+}$ und $\nu_E$ gleichorientiert sind, also $\nu_{T_+}\cdot\nu_E=1$.
+Damit können wir den Sprung entlang einer Innenkante $E\in\Ecal(\Omega)$
+definieren als $[\bullet]_E\coloneqq \bullet|_{T_+} -\bullet|_{T_-}$.
+Für eine Randkante $E\in\Ecal(\partial\Omega)$ definieren wir
+$[\bullet]_E\coloneqq \bullet|_E$.
 
 Mit $|\bullet|$ bezeichnen wir, je nach Argument, die euklidischen Norm eines
 Vektors $v\in\Rbb^m$, den Inhalt eines Dreiecks $T\in\Tcal$ oder die Länge
-einer Kante $F\in\Fcal.$
+einer Kante $E\in\Ecal.$
 
 Ist $V$ ein normierter Vektorraum, so bezeichnen wir die entsprechende Norm auf
 $V$ mit $\Vert\bullet\Vert_V$. 
@@ -86,13 +86,13 @@ Falls $V$ sogar ein Prähilbertraum ist, bezeichnen wir das Skalarprodukt auf
 $V$, welches $\Vert\bullet\Vert_V$ induziert, mit $(\bullet,\bullet)_V$.
 
 Für den Dualraum eines Banachraums $X$ über $\Rbb$ 
-schreiben wir $X^\ast$. Die Auswertung eines Funktionals $f\in X^\ast$ an
+schreiben wir $X^\ast$. Die Auswertung eines Funktionals $F\in X^\ast$ an
 der Stelle $u\in X$ notieren wir, vor eventueller 
-Anwendung des Rieszschen Darstellungssatzes, mit $\langle f,u\rangle$.
+Anwendung des Rieszschen Darstellungssatzes, mit $\langle F,u\rangle$.
 
 Weiterhin benutzen wir die übliche Notation für Lebesgue-Räume
 $L^p(U)$ und die So\-bo\-lev-Räume $W^{k,p}(U)$ sowie
-$H^k(U)\coloneqq W^{k,2}(U)$.
+$H^k(U)\coloneqq W^{k,2}(U)$ und $H^k_0(U)$.
 Falls $p=2$, schreiben wir auch $\Vert\bullet\Vert \coloneqq
 \Vert\bullet\Vert_{L^2(\Omega)}$
 und $(\bullet,\bullet)\coloneqq(\bullet,\bullet)_{L^2(\Omega)}$.
@@ -284,100 +284,105 @@ Zum Abschluss formulieren wir noch die Monotonie des Subdifferentials.
 
 \section{Funktionen beschränkter Variation}
 
-Dieser Abschnitt präsentiert die für diese Arbeite benötigten Aussagen 
-über Funktionen beschrankter Variation und basiert auf
-Kapitel 10
-in \cite{ABM14}.
-\todo[inline]{Schreibe vlt noch sowas wie ,Für weitere Aussagen und Details
-zu BV Funktionen und den maßtheoretischen Grundlagen dafür siehe [EG92,
-Braides, ABM14]'}
-Dabei sei $\Omega$ eine offene Teilmenge des $\Rbb^n$.
-Der Raum aller $\Rbb^n$-wertigen Borelmaße wird bezeichnet mit
-$M(\Omega;\Rbb^n)$ und ist nach Riesz identifizierbar mit dem Dualraum von
-$C_0(\Omega;\Rbb^n)$ ausgestattet mit der Norm
-$\Vert\phi\Vert_\infty\coloneqq
-(\sum_{j=1}^n\sup_{x\in\Omega}|\phi_j(x)|^2)^{1/2}$ für $\phi\in
-C_0(\Omega;\Rbb^n)$.
+In diesen Abschnitt führen wir den Raum der Funktionen beschränkter Variation
+ein.
+Wir vermeiden dabei, soweit möglich, für den weiteren Verlauf dieser Arbeit
+nicht benötigte Notation und Theorie, indem wir die Definitionen und Aussagen 
+entsprechend aus- und umformulieren.
+Für weit detailliertere Ausführungen und die
+maßtheoretischen Hintergründe siehe zum Beispiel \cite{ABM14, EG92, Bra98}. 
 
-Die folgende Definition basiert auf \cite[S. 393 f.]{ABM14}.
-\todo[inline]{Wenn einmal gesagt wurde worauf diese Section basiert, sind
-dann noch Zitate wie dieses notwendig? Ich würde einfach nur noch zitieren,
-wenn eine Aussage mal aus einer anderen Quelle kommt.}
+Soweit nicht anders angegeben, folgen die Definitionen und Aussagen
+dieses Abschnitts aus \cite[S. 393-395]{ABM14}
+\todo{noch sagen, dass Beweise da zu finden sind oder ist das mit dem Satz
+schon klar? Besser sowas sagen wie 'Die Aussagen stammen aus'?}
+
+Sei im Weiteren $U$ eine offene Teilmenge des $\Rbb^d$.
+
+Zunächst definieren wir den Raum der Funktionen beschränkter Variation.
 
 \begin{definition}[Funktionen beschränkter Variation]
-  Eine Funktion $u\in L^1(\Omega)$ ist von beschränkter Variation, wenn ihre
-  distributionelle Ableitung $Du$ ein Element in $M(\Omega;\Rbb^n)$ definiert.
-  Das ist äquivalent zu der Bedingung
+  Eine Funktion $u\in L^1(U)$ ist von beschränkter Variation, wenn   
   \begin{align}
     \label{eq:boundedVariation}
-    |u|_{\BV(\Omega)}
+    |u|_{\BV(U)}
     \coloneqq
-    \sup_{\substack{\phi\in C^1_C(\Omega;\Rbb^n)\\
-    \Vert\phi\Vert_{L^\infty(\Omega)}\leq 1}}\int_\Omega u\Div (\phi)\dx
+    \sup_{\substack{\phi\in C^1_C(U;\Rbb^d)\\
+    \Vert\phi\Vert_{L^\infty(U)}\leq 1}}\int_U u\Div (\phi)\dx
     <
     \infty.
   \end{align}
-
-  Durch $|\bullet|_{\BV(\Omega)}$ ist eine Seminorm auf $\BV(\Omega)$
-  gegeben.
-
-  Der Raum aller Funktionen beschränkter Variation $\BV(\Omega)$
-  ist ausgestattet mit der Norm 
-  \begin{align*}
-    \Vert u \Vert_{\BV(\Omega)} \coloneqq \Vert u\Vert_{L^1(\Omega)} +
-    |u|_{\BV(\Omega)}
-  \end{align*}
-  für $u\in\BV(\Omega)$.
-
-  Nach \cite[S. 395, Theorem 10.1.1.]{ABM14} ist $(\BV(\Omega),
-  \Vert\bullet\Vert_{\BV(\Omega)})$ ein Banachraum.
+  Die Menge aller Funktionen beschränkter Variation ist $\BV(U)$.
 \end{definition}
 
 \begin{remark}
-  Es gilt $W^{1,1}(\Omega)\subset\BV(\Omega)$ und 
-  $\Vert u \Vert_{\BV(\Omega)}=\Vert u \Vert_{W^{1,1}(\Omega)}$ für alle
-  $u\in W^{1,1}(\Omega)$. (\cite[S. 394]{ABM14})
+  Durch $|\bullet|_{\BV(U)}$ ist eine Seminorm auf $\BV(U)$
+  gegeben.
+
+  Ausgestattet mit der Norm
+  \begin{align*}
+    \Vert \bullet \Vert_{\BV(U)} \coloneqq \Vert \bullet\Vert_{L^1(U)} +
+    |\bullet|_{\BV(U)}
+  \end{align*}
+  ist $\BV(U)$ ein Banachraum.
+
+  Außerdem gilt $W^{1,1}(U)\subset\BV(U)$ und 
+  $\Vert u \Vert_{\BV(U)}=\Vert u \Vert_{W^{1,1}(U)}$ für alle
+  $u\in W^{1,1}(U)$.
 \end{remark}
 
+In der Anwendung ist Konvergenz in $\BV(U)$ bezüglich der Norm
+$\Vert\bullet\Vert_{\BV(U)}$ zu restriktiv (cf. \cite[300]{Bar15}). 
+Deshalb führen wir zwei schwächere Konvergenzbegriffe ein.
+
 \begin{definition}
-  Sei $(u_n)_{n\in\Nbb}\subset \BV(\Omega)$ und sei $u\in \BV(\Omega)$ mit
-  $u_n\rightarrow u$ in $L^1(\Omega)$ für $n\rightarrow\infty$.
+  Sei $(u_n)_{n\in\Nbb}\subset \BV(U)$ und sei $u\in \BV(U)$ mit
+  $u_n\rightarrow u$ in $L^1(U)$ für $n\rightarrow\infty$.
   \begin{itemize}
     \item[(i)]
       Die Folge $(u_n)_{n\in\Nbb}$ konvergiert strikt gegen $u$,
-      wenn $|u_n|_{\BV(\Omega)}\rightarrow |u|_{\BV(\Omega)}$ für
-      $n\rightarrow\infty$
-      (unter Beachtung von \cite[Remark 10.1.1]{ABM14}).
+      wenn $|u_n|_{\BV(U)}\rightarrow |u|_{\BV(U)}$ für
+      $n\rightarrow\infty$. 
+      \todo[inline]{Nochmal gucken, das wird glaube ich nirgends gebraucht.
+      Falls das stimmt, rausnehmen. Wird für Dichte von $C^\infty$ usw in $BV$
+      gebraucht bzgl dieser Konvergenz. Gucken, ob das relevant wird. Falls
+      es rausgenomme wird, Text vor und nach dieser Def noch anpassen}
     \item[(ii)] Die Folge $(u_n)_{n\in\Nbb}$ konvergiert
-      schwach gegen $u$, wenn
-      $Du_n$ in 
-      $M(\Omega;\Rbb^n)$ schwach gegen $Du$ konvergiert.
+      schwach gegen $u$, wenn für alle $\phi\in C_0(U;\Rbb^d)$ gilt, dass
+      $\int_U u_n\Div(\phi)\dx\rightarrow \int_U u\Div(\phi)\dx$ für
+      $n\to\infty$. Wir schreiben dann $u_n\rightharpoonup u$ für $n\to\infty$.
   \end{itemize}
 \end{definition}
 
-\begin{theorem}[Schwache Unterhalbstetigkeit, Prop. 10.1.1]
-  \label{thm:wlsc}
-  Sei $(u_n)_{n\in\Nbb}$ eine Folge in $\BV(\Omega)$ mit
-  $\sup_{n\in\Nbb}|u_n|_{\BV(\Omega)}< \infty$ und $u\in L^1(\Omega)$ 
-  mit $u_n\rightarrow u$ in $L^1(\Omega)$ für $n\rightarrow\infty$.
+Damit können wir das folgende Theorem formulieren, welches unmittelbar die
+schwache Unterhalbstetigkeit der Seminorm $|\bullet|_{\BV(U)}$ auf $\BV(U)$
+impliziert.
 
-  Dann gilt $u\in\BV(\Omega)$ und $|u|_{\BV(\Omega)}\leq
-  \liminf_{n\rightarrow\infty}|u_n|_{\BV(\Omega)}.$
-  Außerdem konvergiert $u_n$ schwach gegen $u$ in $\BV(\Omega)$.
+\begin{theorem}
+  \label{thm:wlsc}
+  Sei $u\in L^1(U)$ und sei $(u_n)_{n\in\Nbb}\subset\BV(U)$ mit
+  $\sup_{n\in\Nbb}|u_n|_{\BV(U)}< \infty$ und
+  $u_n\rightarrow u$ in $L^1(U)$ für $n\rightarrow\infty$.
+
+  Dann gilt $u\in\BV(U)$ und $|u|_{\BV(U)}\leq
+  \liminf_{n\rightarrow\infty}|u_n|_{\BV(U)}.$
+  Außerdem gilt dann $u_n\rightharpoonup u$ in $\BV(U)$.
 \end{theorem}
 
-Mit Blick auf die folgenden Kapitel, sei $\Omega\subset\Rbb^n$ nun ein
-polygonal berandetes Lipschitz-Gebiet.
+Mit Blick auf die folgenden Kapitel betrachten wir nun
+das polygonal berandete Lip\-schitz-Gebiet $\Omega\subset\Rbb^d$. 
+Unter dieser Voraussetzung können wir zeigen, dass jede in $\BV(\Omega)$
+beschränkte Folge eine in $\BV(\Omega)$ schwach konvergente Teilfolge besitzt
+mit schwachen Grenzwert in $\BV(\Omega)$. Für den Beweis dieser Aussage 
+benötigen wir noch das folgende Theorem aus \cite[S. 176, Theorem 4]{EG92}.
+
 \todo[inline]{Nochmal nachfragen: das heißt tatsächlich offen, beschränkt mit
 Lipschitz Rand, korrekt?}
 \todo[inline]{Nochmal nachfragen: $\sup u_k<\infty\Leftrightarrow u_k$ bounded,
 korrekt? Ich übersehe da nichts, oder? Falls doch, alle Theoreme nochmal 
 nachschlagen und sichergehen, dass sie richtig zitiert sind.}
-\todo[inline]{Die BV Aussagen aus den nächsten Kapitel wieder hierher holen, soweit 
-sinnvoll. Vielleicht auch nur die Spuroperator Aussage. Kann kopiert werden
-aus delTexts.tex.}
 
-\begin{theorem}[\protect{\cite[S. 176, Theorem 4]{EG92}}]
+\begin{theorem}
   \label{thm:l1ConvergentSubsequence}
   Sei $(u_n)_{n\in\Nbb}\subset \BV(\Omega)$ eine beschränkte Folge. Dann 
   existiert eine Teilfolge $(u_{n_k})_{k\in\Nbb}$ von
@@ -387,6 +392,7 @@ aus delTexts.tex.}
 \todo[inline]{Das kann vielleciht auch noch im kontinuierlichen Existenzbeweis 
 eingebracht werden und den etwas vereinfachen/verkürzen. Prüf das Zukunfts-Ich}
 
+Damit können wir nun das folgende Theorem beweisen.
 \begin{theorem}
   \label{thm:compactness}
   Sei $(u_n)_{n\in\Nbb}\subset \BV(\Omega)$ eine beschränkte Folge. Dann 
@@ -398,11 +404,11 @@ eingebracht werden und den etwas vereinfachen/verkürzen. Prüf das Zukunfts-Ich
   Nach \Cref{thm:l1ConvergentSubsequence} besitzt $(u_n)_{n\in\Nbb}$ eine
   Teilfolge $(u_{n_k})_{k\in\Nbb}$, die in $L^1(\Omega)$ gegen ein
   $u\in\BV(\Omega)$ konvergiert.
-  Diese Folge ist nach Voraussetzung ebenfalls beschränkt in 
+  Diese Teilfolge ist nach Voraussetzung ebenfalls beschränkt in 
   $\BV(\Omega)$, woraus nach Definition der Norm auf $\BV(\Omega)$ insbesondere
   folgt, dass
   $\sup_{k\in\Nbb}|u_{n_k}|_{\BV(\Omega)}< \infty$. 
   
-  Insgesamt liefert \Cref{thm:wlsc} dann die schwache Konvergenz von
+  Somit ist \Cref{thm:wlsc} anwendbar und impliziert die schwache Konvergenz von
   $(u_{n_k})_{k\in\Nbb}$ in $\BV(\Omega)$ gegen $u\in\BV(\Omega)$.
 \end{proof}

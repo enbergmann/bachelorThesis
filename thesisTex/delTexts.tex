@@ -387,3 +387,135 @@ Die folgende Definition basiert auf \cite[S. 393 f.]{ABM14}.
 aber für CCs Funktional offensichtlich gebraucht, es gibt noch weitere Aussagen
 in Bartels (zB integration by parts aber erstmal nur Existens und Stetigkeit 
 hier (wie gesagt, nur was gebraucht wird zitieren, oder?)}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%BV Chapter with measure stuff
+
+\section{Funktionen beschränkter Variation}
+
+In diesen Abschnitt führen wir den Raum der Funktionen beschränkter Variation
+ein und formulieren die in dieser Arbeit benötigten Aussagen über diesen.
+Dabei beschränken wir unsere Ausführungen 
+Für weit detailliertere Ausführung und die benötigten
+maßtheoretischen Grundlagen siehe zum Beispiel \cite{ABM14, EG92, Bra98}. 
+
+Soweit nicht anders angegeben, folgen wir \cite[S. 393]{ABM14}
+\todo{noch sagen, dass Beweise da zu finden sind oder ist das mit dem Satz
+schon klar?  Besser sowas sagen wie 'Die Aussagen stammen aus'?}
+
+Dazu sei in den folgenden Definitionen und Aussagen $U$ eine offene Teilmenge
+des $\Rbb^d$.
+
+Der Raum aller $\Rbb^d$-wertigen Borelmaße wird bezeichnet mit
+$M(U;\Rbb^d)$.
+Statten wir $C_0(U;\Rbb^d)$ mit der Norm $\Vert\phi\Vert_\infty\coloneqq
+(\sum_{j=1}^n\sup_{x\in U}|\phi_j(x)|^2)^{1/2}$ für $\phi\in C_0(U;\Rbb^d)$ 
+aus, so ist $M(U;\Rbb^d)$ identifizierbar mit dem Dualraum von $C_0(U;\Rbb^d)$.
+
+Zunächst können wir damit den Raum der Funktionen beschränkter Variation
+definieren.
+
+\begin{definition}[Funktionen beschränkter Variation]
+  Eine Funktion $u\in L^1(U)$ ist von beschränkter Variation, wenn ihre
+  distributionelle Ableitung $Du$ ein Element in $M(U;\Rbb^d)$ definiert. Das 
+  ist äquivalent zu der Bedingung
+  \begin{align}
+    \label{eq:boundedVariation}
+    |u|_{\BV(U)}
+    \coloneqq
+    \sup_{\substack{\phi\in C^1_C(U;\Rbb^d)\\
+    \Vert\phi\Vert_{L^\infty(U)}\leq 1}}\int_U u\Div (\phi)\dx
+    <
+    \infty.
+  \end{align}
+\end{definition}
+
+\begin{remark}
+  Durch $|\bullet|_{\BV(U)}$ ist eine Seminorm auf $\BV(U)$
+  gegeben.
+
+  Der Raum aller Funktionen beschränkter Variation $\BV(U)$
+  ist ausgestattet mit der Norm 
+  \begin{align*}
+    \Vert u \Vert_{\BV(U)} \coloneqq \Vert u\Vert_{L^1(U)} +
+    |u|_{\BV(U)}
+  \end{align*}
+  für $u\in\BV(U)$.
+
+  Nach \cite[S. 395, Theorem 10.1.1.]{ABM14} ist $(\BV(U),
+  \Vert\bullet\Vert_{\BV(U)})$ ein Banachraum.
+  Es gilt $W^{1,1}(U)\subset\BV(U)$ und 
+  $\Vert u \Vert_{\BV(U)}=\Vert u \Vert_{W^{1,1}(U)}$ für alle
+  $u\in W^{1,1}(U)$. (\cite[S. 394]{ABM14})
+\end{remark}
+
+\begin{definition}
+  Sei $(u_n)_{n\in\Nbb}\subset \BV(U)$ und sei $u\in \BV(U)$ mit
+  $u_n\rightarrow u$ in $L^1(U)$ für $n\rightarrow\infty$.
+  \begin{itemize}
+    \item[(i)]
+      Die Folge $(u_n)_{n\in\Nbb}$ konvergiert strikt gegen $u$,
+      wenn $|u_n|_{\BV(U)}\rightarrow |u|_{\BV(U)}$ für
+      $n\rightarrow\infty$
+      (unter Beachtung von \cite[Remark 10.1.1]{ABM14}).
+    \item[(ii)] Die Folge $(u_n)_{n\in\Nbb}$ konvergiert
+      schwach gegen $u$, wenn
+      $Du_n$ in 
+      $M(U;\Rbb^d)$ schwach gegen $Du$ konvergiert.
+  \end{itemize}
+\end{definition}
+
+\begin{theorem}[Schwache Unterhalbstetigkeit, Prop. 10.1.1]
+  \label{thm:wlsc}
+  Sei $(u_n)_{n\in\Nbb}$ eine Folge in $\BV(U)$ mit
+  $\sup_{n\in\Nbb}|u_n|_{\BV(U)}< \infty$ und $u\in L^1(U)$ 
+  mit $u_n\rightarrow u$ in $L^1(U)$ für $n\rightarrow\infty$.
+
+  Dann gilt $u\in\BV(U)$ und $|u|_{\BV(U)}\leq
+  \liminf_{n\rightarrow\infty}|u_n|_{\BV(U)}.$
+  Außerdem konvergiert $u_n$ schwach gegen $u$ in $\BV(U)$.
+\end{theorem}
+
+Mit Blick auf die folgenden Kapitel, betrachten wir nun
+das polygonal berandete Lipschitz-Gebiet $\Omega\subset\Rbb^d$.
+
+\todo[inline]{Nochmal nachfragen: das heißt tatsächlich offen, beschränkt mit
+Lipschitz Rand, korrekt?}
+\todo[inline]{Nochmal nachfragen: $\sup u_k<\infty\Leftrightarrow u_k$ bounded,
+korrekt? Ich übersehe da nichts, oder? Falls doch, alle Theoreme nochmal 
+nachschlagen und sichergehen, dass sie richtig zitiert sind.}
+\todo[inline]{Die BV Aussagen aus den nächsten Kapitel wieder hierher holen, soweit 
+sinnvoll. Vielleicht auch nur die Spuroperator Aussage. Kann kopiert werden
+aus delTexts.tex.}
+
+\begin{theorem}[\protect{\cite[S. 176, Theorem 4]{EG92}}]
+  \label{thm:l1ConvergentSubsequence}
+  Sei $(u_n)_{n\in\Nbb}\subset \BV(\Omega)$ eine beschränkte Folge. Dann 
+  existiert eine Teilfolge $(u_{n_k})_{k\in\Nbb}$ von
+  $(u_n)_{n\in\Nbb}$ und ein $u\in\BV(\Omega)$, sodass
+  $u_{n_k}\to u$ in $L^1(\Omega)$ für $k\to \infty$.
+\end{theorem}
+\todo[inline]{Das kann vielleciht auch noch im kontinuierlichen Existenzbeweis 
+eingebracht werden und den etwas vereinfachen/verkürzen. Prüf das Zukunfts-Ich}
+
+\begin{theorem}
+  \label{thm:compactness}
+  Sei $(u_n)_{n\in\Nbb}\subset \BV(\Omega)$ eine beschränkte Folge. Dann 
+  existiert eine Teilfolge $(u_{n_k})_{k\in\Nbb}$ und ein $u\in\BV(\Omega)$,
+  sodass $u_{n_k}\rightharpoonup u$ in $\BV(\Omega)$ für $k\rightarrow\infty$.
+\end{theorem}
+
+\begin{proof}
+  Nach \Cref{thm:l1ConvergentSubsequence} besitzt $(u_n)_{n\in\Nbb}$ eine
+  Teilfolge $(u_{n_k})_{k\in\Nbb}$, die in $L^1(\Omega)$ gegen ein
+  $u\in\BV(\Omega)$ konvergiert.
+  Diese Folge ist nach Voraussetzung ebenfalls beschränkt in 
+  $\BV(\Omega)$, woraus nach Definition der Norm auf $\BV(\Omega)$ insbesondere
+  folgt, dass
+  $\sup_{k\in\Nbb}|u_{n_k}|_{\BV(\Omega)}< \infty$. 
+  
+  Insgesamt liefert \Cref{thm:wlsc} dann die schwache Konvergenz von
+  $(u_{n_k})_{k\in\Nbb}$ in $\BV(\Omega)$ gegen $u\in\BV(\Omega)$.
+\end{proof}
