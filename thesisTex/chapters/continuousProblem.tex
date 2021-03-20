@@ -6,13 +6,13 @@ $f\in L^2(\Omega)$ betrachten wir das folgende Minimierungsproblem.
   Finde $u\in \BV(\Omega)\cap L^2(\Omega)$, sodass
   $u$ das Funktional
   \begin{align}\label{eq:continuousProblem}
-    E(v)\coloneqq \frac{\alpha}{2}\Vert v\Vert_{L^2(\Omega)}^2 + |v|_{\BV(\Omega)}
+    E(v)\coloneqq \frac{\alpha}{2}\Vert v\Vert^2 + |v|_{\BV(\Omega)}
     +\Vert v\Vert_{L^1(\partial\Omega)}-\int_\Omega fv\dx
   \end{align}
   unter allen $v\in\BV(\Omega)\cap L^2(\Omega)$ minimiert.
 
   Dabei ist der Term $\Vert v\Vert_{L^1(\partial\Omega)}$ wohldefiniert, da
-  nach \cite[S. 400, Theorem 10.2.1]{ABM14} ein linearer Operator
+  nach \cite[S. 400, Theorem 10.2.1]{ABM14} eine lineare, stetige Abbildung
   $T:\BV(\Omega)\to L^1(\partial\Omega)$ existiert mit $T(u) =
   u|_{\partial\Omega}$ für alle $u\in\BV(\Omega)\cap C(\overline\Omega)$.
 \end{problem}
@@ -42,8 +42,10 @@ Dafür benötigen wir die folgende Formulierung der Youngschen Ungleichung.
 \end{lemma}
 
 Außerdem wird im Beweis folgende Aussage benötigt, die direkt aus \cite[S. 183,
-Theorem 1]{EG92} folgt, da $0\in\BV(\Rbb^d\setminus\overline\Omega)$,
-$|0|_{\BV(\Rbb^d\setminus\overline\Omega)}=0$ und $0|_{\partial\Omega}=0$.
+Theorem 1]{EG92} folgt, da
+$0\in\BV\left(\Rbb^d\setminus\overline\Omega\right)$,
+$|0|_{\BV\left(\Rbb^d\setminus\overline\Omega\right)}=0$ und
+$0|_{\partial\Omega}=0$.
 
 \begin{lemma}
   \label{lem:bvExtension}
@@ -57,7 +59,7 @@ $|0|_{\BV(\Rbb^d\setminus\overline\Omega)}=0$ und $0|_{\partial\Omega}=0$.
     \end{cases} 
   \end{align*}
   Dann gilt $\tilde{v}\in\BV\left(\Rbb^d\right)$ und
-  $|\tilde{v}|_{\BV\left(\Rbb^d\right)}
+  $\left|\tilde{v}\right|_{\BV\left(\Rbb^d\right)}
   = |v|_{\BV(\Omega)}+\Vert v\Vert_{L^1(\partial\Omega)}$.
 \end{lemma}
 
@@ -69,50 +71,47 @@ $|0|_{\BV(\Rbb^d\setminus\overline\Omega)}=0$ und $0|_{\partial\Omega}=0$.
 
 \begin{proof}
   Die Beweisidee ist die Anwendung der direkten Methode der Variationsrechnung
-  \todo{(cf. cite Dracoragna) bzw., falls das da nicht so klar ist, bestimmt
-  im Zeidler zu finden} 
-  unter Nutzung der in \Cref{sec:bvFunctions} aufgeführten Eigenschaften
-  der schwachen Konvergenz in $\BV(\Omega)$.
+  (cf.\ z.B.\ \cite{Dac89}) unter Nutzung der in \Cref{sec:bvFunctions}
+  aufgeführten Eigenschaften der schwachen Konvergenz in $\BV(\Omega)$.
 
-  Für alle $v\in L^2(\Omega)\subset L^1(\Omega)$ gilt mit der Hölderschen
+  Für alle $v\in L^2(\Omega)\subseteq L^1(\Omega)$ gilt mit der Hölderschen
   Ungleichung für $p=q=2$, dass
   \begin{equation}\label{eq:hoelderL2BiggerL1}
-    \Vert v\Vert_{L^1} 
+    \Vert v\Vert_{L^1(\Omega)} 
     = \Vert 1\cdot v\Vert_{L^1(\Omega)}
-    \leq \Vert 1\Vert_{L^2(\Omega)}\Vert v\Vert_{L^2(\Omega)}
-    =\sqrt{|\Omega|} \Vert v\Vert_{L^2(\Omega)}.
+    \leq \Vert 1\Vert\Vert v\Vert
+    =\sqrt{|\Omega|} \Vert v\Vert.
   \end{equation}
-
   Dann folgt für das Funktional $E$ in \eqref{eq:continuousProblem} für alle
   $v\in \BV(\Omega)\cap L^2(\Omega)$ durch die Cauchy-Schwarzsche Ungleichung,
   die Youngsche Ungleichung aus \cref{lem:young} und Ungleichung
   \eqref{eq:hoelderL2BiggerL1}, dass
+
   \begin{equation}
     \label{eq:contProbBddFromBelow}
     \begin{aligned}
-      E(v)&=\frac{\alpha}{2}\Vert v\Vert_{L^2(\Omega)}^2 + |v|_{\BV(\Omega)}
+      E(v)&=\frac{\alpha}{2}\Vert v\Vert^2 + |v|_{\BV(\Omega)}
       +\Vert v\Vert_{L^1(\partial\Omega)}-\int_\Omega fv\dx\\
       &\geq 
-      \frac{\alpha}{2}\Vert v\Vert_{L^2(\Omega)}^2 + |v|_{\BV(\Omega)}
+      \frac{\alpha}{2}\Vert v\Vert^2 + |v|_{\BV(\Omega)}
       +\Vert v\Vert_{L^1(\partial\Omega)}
-      -\Vert f\Vert_{L^2(\Omega)}\Vert v\Vert_{L^2(\Omega)}\\
+      -\Vert f\Vert\Vert v\Vert\\
       &\geq 
-      \frac{\alpha}{2}\Vert v\Vert_{L^2(\Omega)}^2 + |v|_{\BV(\Omega)}
+      \frac{\alpha}{2}\Vert v\Vert^2 + |v|_{\BV(\Omega)}
       +\Vert v\Vert_{L^1(\partial\Omega)}
-      -\frac{1}{\alpha}\Vert f\Vert_{L^2(\Omega)}^2
-      -\frac{\alpha}{4}\Vert v\Vert_{L^2(\Omega)}^2\\
+      -\frac{1}{\alpha}\Vert f\Vert^2
+      -\frac{\alpha}{4}\Vert v\Vert^2\\
       &\geq 
-      \frac{\alpha}{4}\Vert v\Vert_{L^2(\Omega)}^2 + |v|_{\BV(\Omega)}
+      \frac{\alpha}{4}\Vert v\Vert^2 + |v|_{\BV(\Omega)}
       +\Vert v\Vert_{L^1(\partial\Omega)}-\frac{1}{\alpha}\Vert
-      f\Vert_{L^2(\Omega)}^2\\
+      f\Vert^2\\
       &\geq 
       \frac{\alpha}{4|\Omega|}\Vert v\Vert_{L^1(\Omega)}^2 + |v|_{\BV(\Omega)}
       +\Vert v\Vert_{L^1(\partial\Omega)}-\frac{1}{\alpha}\Vert
-      f\Vert_{L^2(\Omega)}^2\\
-      &\geq -\frac{1}{\alpha}\Vert f\Vert_{L^2(\Omega)}^2.
+      f\Vert^2\\
+      &\geq -\frac{1}{\alpha}\Vert f\Vert^2.
     \end{aligned}
   \end{equation}
-
   Somit ist $E$ nach unten beschränkt, was die Existenz einer infimierenden
   Folge $(u_n)_{n\in\Nbb}\subset\BV(\Omega)\cap L^2(\Omega)$ von $E$ 
   impliziert, das heißt
@@ -124,133 +123,136 @@ $|0|_{\BV(\Rbb^d\setminus\overline\Omega)}=0$ und $0|_{\partial\Omega}=0$.
   $\Vert u_n\Vert_{L^1(\Omega)}\to\infty$ für $n\to\infty$. 
   Daraus folgt insbesondere, dass $E(u_n)\to\infty$ für $n\to\infty$, falls
   $\Vert u_n\Vert_{\BV(\Omega)}\to\infty$ für $n\to\infty$ .
-
   Deshalb muss die Folge $(u_n)_{n\in\Nbb}$ beschränkt in $\BV(\Omega)$ sein.
 
-  \medbreak
   Nun garantiert \cref{thm:compactness} die Existenz einer schwach konvergenten
-  Teilfolge $(u_{n_k})_{k\in\Nbb}$ von $(u_n)_{n\in\Nbb}$ mit schwachem Grenzwert
-  $u\in\BV(\Omega)$. Ohne Beschränkung der Allgemeinheit
-  ist $(u_{n_k})_{k\in\Nbb}=(u_n)_{n\in\Nbb}$.
-  \todo{hier vielleicht THm 2.15 anwendbar zum Abkürzen}
-  Schwache Konvergenz von $(u_n)_{n\in\Nbb}$ in $\BV(\Omega)$ gegen
-  $u$ bedeutet nach Definition insbesondere, dass $(u_n)_{n\in\Nbb}$ stark und
-  damit auch schwach in $L^1(\Omega)$ gegen $u$ konvergiert.
+  Teilfolge $(u_{n_k})_{k\in\Nbb}$ von $(u_n)_{n\in\Nbb}$ mit schwachen
+  Grenzwert $u\in\BV(\Omega)$. 
+  Ohne Beschränkung der Allgemeinheit ist
+  $(u_{n_k})_{k\in\Nbb}=(u_n)_{n\in\Nbb}$.
+  Aus der schwachen Konvergenz von $(u_n)_{n\in\Nbb}$ in $\BV(\Omega)$ gegen
+  $u$ folgt nach Definition, dass $(u_n)_{n\in\Nbb}$ stark, und damit
+  insbesondere auch schwach, in $L^1(\Omega)$ gegen $u$ konvergiert.
 
-  \medbreak
   Weiterhin folgt aus (\ref{eq:contProbBddFromBelow}), dass
-  $E(v)\rightarrow\infty$ für
-  $\Vert v\Vert_{L^2(\Omega)}\rightarrow\infty$. Somit muss $(u_n)_{n\in\Nbb}$ 
-  auch beschränkt sein bezüglich der Norm $\Vert\bullet\Vert_{L^2(\Omega)}$ und
-  besitzt deshalb, wegen der Reflexivität von $L^2(\Omega)$,
-  eine Teilfolge (ohne Beschränkung der Allgemeinheit weiterhin bezeichnet mit
-  $(u_n)_{n\in\Nbb}$), die
-  in $L^2(\Omega)$ schwach gegen einen Grenzwert 
-  $\tilde{u}\in L^2(\Omega)$ konvergiert. Somit gilt für alle $w\in
-  L^2(\Omega)\cong L^2(\Omega)^\ast$ und, da $L^\infty(\Omega)\subset
-  L^2(\Omega)$, insbesondere 
-  auch für alle $w\in
+  $E(v)\rightarrow\infty$ für $\Vert v\Vert\rightarrow\infty$. 
+  Somit muss $(u_n)_{n\in\Nbb}$ auch beschränkt sein bezüglich der Norm
+  $\Vert\bullet\Vert$ und besitzt deshalb, wegen der Reflexivität von
+  $L^2(\Omega)$, eine Teilfolge (ohne Beschränkung der Allgemeinheit weiterhin
+  bezeichnet mit $(u_n)_{n\in\Nbb}$), die in $L^2(\Omega)$ schwach gegen einen
+  Grenzwert $\overline{u}\in L^2(\Omega)$ konvergiert. 
+  Damit gilt für alle $w\in L^2(\Omega)\cong L^2(\Omega)^\ast$ und, da
+  $L^\infty(\Omega)\subseteq L^2(\Omega)$, insbesondere auch für alle $w\in
   L^\infty(\Omega)\cong L^1(\Omega)^\ast$, dass 
-  $\int_\Omega u_n w\dx \overset{n\to\infty}{\to}\int_\Omega \tilde{u} w\dx$. 
-  Damit konvergiert $(u_n)_{n\in\Nbb}$ also auch schwach in $L^1(\Omega)$ gegen
-  $\tilde{u}\in L^2(\Omega)\subset L^1(\Omega)$. 
+  \begin{align*}
+    \lim_{n\to\infty}\int_\Omega u_n w\dx =\int_\Omega \overline{u} w\dx.
+  \end{align*}
+  Das bedeutet, dass $(u_n)_{n\in\Nbb}$ auch schwach in $L^1(\Omega)$ gegen
+  $\overline{u}\in L^2(\Omega)\subseteq L^1(\Omega)$ konvergiert. 
 
-  \medbreak
-  Da schwache Grenzwerte eindeutig bestimmt sind, gilt insgesamt $u=\tilde u
+  Da schwache Grenzwerte eindeutig bestimmt sind, gilt insgesamt $u=\overline u
   \in L^2(\Omega)$, das heißt $u\in\BV(\Omega)\cap
   L^2(\Omega)$.
 
-  %\medbreak
-  %Wir wissen, dass $(u_n)_{n\in\Nbb}$ beschränkt in $\BV(\Omega)$
-  %ist und in $L^1(\Omega)$ gegen $u\in \BV(\Omega)\cap L^2(\Omega)\subset
-  %L^1(\Omega)$ konvergiert. \cref{thm:wlsc} impliziert unter diesen 
-  %Voraussetzungen, dass $|u|_{\BV(\Omega)}\leq \liminf_{n\to\infty} 
-  %|u_n|_{\BV(\Omega)}$.
-
-  \medbreak
-  Nun definieren wir, für alle
+  Nun definieren wir für alle
   $n\in\Nbb$ und für alle 
-  $x\in\Rbb^d$,
+  $x\in\Rbb^d$
   \begin{align*}
-    \tilde{u}_n(x)\coloneqq
+    \tilde{u}_n(x)
+    &\coloneqq
     \begin{cases}
       u_n(x),  &\text{ falls } x\in\Omega,\\
-      0,     &\text{ falls } x\in\Rbb^d\setminus\Omega
+      0,     &\text{ falls } x\in\Rbb^d\setminus\overline\Omega
     \end{cases} 
-  \end{align*}
-  und
-  \begin{align*}
-    \tilde{u}(x)\coloneqq
+    &&\text{und }
+    &\tilde{u}(x)
+    &\coloneqq
     \begin{cases}
       u(x),  &\text{ falls } x\in\Omega,\\
-      0,     &\text{ falls } x\in\Rbb^d\setminus\Omega.
+      0,     &\text{ falls } x\in\Rbb^d\setminus\overline\Omega.
     \end{cases} 
   \end{align*}
 
-  Dann gilt nach \cref{lem:bvExtension} sowohl $\tilde{u}\in\BV(\Rbb^d)$ und
-  $|\tilde{u}|_{\BV\left(\Rbb^d\right)} = |u|_{\BV(\Omega)}+\Vert
-  u\Vert_{L^1(\partial\Omega)}$ als auch $\tilde{u}_n\in\BV(\Rbb^d)$
-   und
-   $|\tilde{u}_n|_{\BV\left(\Rbb^d\right)}
-  = |u_n|_{\BV(\Omega)}+\Vert u_n\Vert_{L^1(\partial\Omega)}$ für alle
-  $n\in\Nbb$.
-  Da $(u_n)_{n\in \Nbb}$ infimierende Folge von $E$ ist, muss aufgrund der
-  Form von $E$ die Folge
-  $(|\tilde{u}_n|_{\BV(\Rbb^d)})_{n\in\Nbb} = (|u_n|_{\BV(\Omega)}+\Vert
-  u_n\Vert_{L^1(\partial\Omega)})_{n\in\Nbb}$
-  beschränkt sein.
-  Außerdem gilt $\tilde{u}_n \overset{n\to\infty}{\to} \tilde{u}$ in
-  $L^1(\Rbb^d)$, da aus der Definition von $\tilde{u}$ und 
-  $\tilde{u}_n$ für alle $n\in\Nbb$ und der bereits bekannten Eigenschaft 
-  $u_n\overset{n\to\infty}{\to} u$ folgt
+  Dann gilt nach \cref{lem:bvExtension} sowohl
   \begin{align*}
-    \Vert \tilde{u}_n - \tilde{u}\Vert_{L^1(\Rbb^d)} 
-    &= \int_{\Rbb^d} |\tilde{u}_n - \tilde{u}|\dx\\
-    &= \int_\Omega |u_n - u|\dx\\
-    &= \Vert u_n - u\Vert_{L^1(\Omega)} \overset{n\to\infty}{\to} 0.
+    \tilde{u}_n
+    &\in
+    \BV\left(\Rbb^d\right)
+    &&\text{und}
+    &\left|\tilde{u}_n\right|_{\BV\left(\Rbb^d\right)} 
+    &= 
+    |u_n|_{\BV(\Omega)}+\Vert u_n\Vert_{L^1(\partial\Omega)}
+    \quad\text{für alle }n\in\Nbb \text{ als auch}\\
+    \tilde{u}
+    &\in
+    \BV\left(\Rbb^d\right)
+    &&\text{und}
+    &\left|\tilde{u}\right|_{\BV\left(\Rbb^d\right)} 
+    &=
+    |u|_{\BV(\Omega)}+\Vert u\Vert_{L^1(\partial\Omega)}.
   \end{align*}
+  Da $(u_n)_{n\in \Nbb}$ infimierende Folge von $E$ ist, muss die Folge
+  \begin{align*}
+    \left(\left|\tilde{u}_n\right|_{\BV\left(\Rbb^d\right)}\right)_{n\in\Nbb} 
+    = \left(|u_n|_{\BV(\Omega)}+
+    \Vert u_n\Vert_{L^1(\partial\Omega)}\right)_{n\in\Nbb}
+  \end{align*}
+  beschränkt sein.
+  Außerdem folgt aus den Definitionen von $\tilde{u}$ und 
+  $\tilde{u}_n$ für alle $n\in\Nbb$ und der bereits bekannten Eigenschaft 
+  $u_n\to u$ in $L^1(\Omega)$ für $n\to\infty$, dass
+  \begin{align*}
+    \left\Vert \tilde{u}_n - \tilde{u}\right\Vert_{L^1\left(\Rbb^d\right)} 
+    &= \int_{\Rbb^d} \left|\tilde{u}_n - \tilde{u}\right|\dx
+    = \int_\Omega |u_n - u|\dx
+    = \Vert u_n - u\Vert_{L^1(\Omega)}\to 0\quad\text{für }n\to\infty,
+  \end{align*}
+  das heißt $\tilde{u}_n \to \tilde{u}$ in $L^1\left(\Rbb^d\right)$ für
+  $n\to\infty$.
 
-  Insgesamt ist also $(\tilde{u}_n)_{n\in\Nbb}$ eine Folge in $\BV(\Rbb^d)$,
-  die in $L^1(\Rbb^d)$ gegen $\tilde{u}\in\BV(\Rbb^d)\subset
-  L^1(\Rbb^d)$ konvergiert und 
-  erfüllt, dass $(|\tilde{u}_n|_{\BV(\Rbb^d)})_{n\in\Nbb}$ beschränkt
-  ist. Somit folgt mit
+  Insgesamt ist also $\left(\tilde{u}_n\right)_{n\in\Nbb}$ eine Folge in
+  $\BV\left(\Rbb^d\right)$, die in $L^1\left(\Rbb^d\right)$ gegen
+  $\tilde{u}\in\BV\left(\Rbb^d\right)\subseteq L^1\left(\Rbb^d\right)$
+  konvergiert und 
+  $\sup_{n\in\Nbb} \left|\tilde{u}_n\right|_{\BV\left(\Rbb^d\right)}<\infty$
+  erfüllt.
+  Somit folgt mit
   \cref{thm:wlsc}  
   \begin{equation}
     \label{eq:wlscOfExtension}
     \begin{aligned}
       |u|_{\BV(\Omega)} +\Vert u\Vert_{L^1(\partial\Omega)}
-      = |\tilde{u}|_{\BV(\Rbb^d)}
-      &\leq\liminf_{n\to\infty} |\tilde{u}_n|_{\BV(\Rbb^d)}\\
-      &= \liminf_{n\to\infty} (|u_n|_{\BV(\Omega)} +
-      \Vert u_n\Vert_{L^1(\partial\Omega)}).
+      = \left|\tilde{u}\right|_{\BV\left(\Rbb^d\right)}
+      &\leq\liminf_{n\to\infty}
+      \left|\tilde{u}_n\right|_{\BV\left(\Rbb^d\right)}\\
+      &= \liminf_{n\to\infty} \left(|u_n|_{\BV(\Omega)} +
+      \Vert u_n\Vert_{L^1(\partial\Omega)}\right).
     \end{aligned}
   \end{equation}
 
-  \medbreak
-  Die Funktionen $\Vert\bullet\Vert_{L^2(\Omega)}^2$ und $-\int_\Omega
+  Die Funktionen $\Vert\bullet\Vert^2$ und $-\int_\Omega
   f\bullet\dx$ sind auf $L^2(\Omega)$ stetig und konvex, was impliziert,
   dass sie schwach unterhalbstetig auf $L^2(\Omega)$ sind. Da wir bereits
-  wissen, dass $u_n \overset{n\to\infty}{\rightharpoonup} u$ in $L^2(\Omega)$, 
-  folgt daraus 
+  wissen, dass $u_n\rightharpoonup u$ in $L^2(\Omega)$ für $n\to\infty$, 
+  folgt
   \begin{align*}
-    \frac{\alpha}{2}\Vert u\Vert_{L^2(\Omega)}-\int_\Omega fu\dx
+    \frac{\alpha}{2}\Vert u\Vert-\int_\Omega fu\dx
     \leq \liminf_{n\to\infty}
-    \left(\frac{\alpha}{2}\Vert u_n\Vert_{L^2(\Omega)}
+    \left(\frac{\alpha}{2}\Vert u_n\Vert
     -\int_\Omega fu_n\dx\right).
   \end{align*}
   
-  \medbreak
-  Damit und mit \cref{eq:wlscOfExtension} gilt insgesamt
+  Damit und mit Ungleichung \eqref{eq:wlscOfExtension} gilt insgesamt
   \begin{align*}
     \inf_{v\in\BV(\Omega)\cap L^2(\Omega)}E(v)\leq
-    E(u)\leq\liminf_{n\rightarrow\infty} E(u_n) =
-    \lim_{n\rightarrow\infty}E(u_n) = \inf_{v\in\BV(\Omega)\cap
+    E(u)\leq\liminf_{n\rightarrow\infty} E\left(u_n\right) =
+    \lim_{n\rightarrow\infty}E\left(u_n\right) = \inf_{v\in\BV(\Omega)\cap
     L^2(\Omega)}E(v),
   \end{align*}
-  d.h.\ $\min_{v\in\BV(\Omega)\cap L^2(\Omega)} E(v) = E(u)$.
+  das heißt $\min_{v\in\BV(\Omega)\cap L^2(\Omega)} E(v) = E(u)$.
 \end{proof}
 
+\todo{hier}
 \begin{theorem}[Stabilität und Eindeutigkeit]
   \label{thm:contProbStabAndUniqu}
   Seien $u_1,u_2\in \BV(\Omega)\cap L^2(\Omega)$ die Minimierer des Problems
@@ -258,8 +260,8 @@ $|0|_{\BV(\Rbb^d\setminus\overline\Omega)}=0$ und $0|_{\partial\Omega}=0$.
 
   Dann gilt 
   \begin{align*}
-    \Vert u_1 - u_2\Vert_{L^2(\Omega)} 
-    \leq\frac{1}{\alpha}\Vert f_1-f_2\Vert_{L^2(\Omega)}.
+    \Vert u_1 - u_2\Vert 
+    \leq\frac{1}{\alpha}\Vert f_1-f_2\Vert.
   \end{align*}
 \end{theorem}
 
@@ -269,30 +271,17 @@ $|0|_{\BV(\Rbb^d\setminus\overline\Omega)}=0$ und $0|_{\partial\Omega}=0$.
   $G_\ell:\BV(\Omega)\cap L^2(\Omega)\to \Rbb$, $\ell=1,2$, durch
   \begin{align*}
     F(u) &\coloneqq |u|_{\BV(\Omega)} + \Vert u \Vert_{L^1(\partial\Omega)},&
-    G_\ell(u)\coloneqq \frac{\alpha}{2}\Vert u\Vert_{L^2(\Omega)}^2 -
+    G_\ell(u)\coloneqq \frac{\alpha}{2}\Vert u\Vert^2 -
     \int_\Omega f_\ell u\dx.
   \end{align*}
   Bezeichne $E_\ell\coloneqq F+G_\ell$.
 
-  $G_\ell$ ist Fr\'echet-differenzierbar 
-
-  \todo[inline]{TODO nachrechnen,
-  Gateaux ist klar, aber auch Frechet? EDIT: nachgerechnet, es funktioniert
-  nach WIKI Def.
-  
-  Außerdem: Im Grundlagen Kapitel noch einführen, was hier in dieser Arbeit
-  mit Gateaux, Frechet etc gemeint ist? (ist ja von Autor zu Autor anders (cf
-  Wiki)) und insbesondere irgendwo einmal alle Notationen einführen, was ist 
-  welche Ableitung} 
-
-  und die Fr\'echet-Ableitung $G_\ell'(u):
-  L^2(\Omega)\to\Rbb$ von $G_\ell$ an der
-  Stelle
-  $u\in \BV(\Omega)\cap L^2(\Omega)$ ist 
-  für alle $v\in L^2(\Omega)$ gegeben durch
+  $G_\ell$ ist Fr\'echet-differenzierbar und die Fr\'echet-Ableitung
+  $G_\ell'(u): L^2(\Omega)\to\Rbb$ von $G_\ell$ an der Stelle $u\in
+  \BV(\Omega)\cap L^2(\Omega)$ ist für alle $v\in L^2(\Omega)$ gegeben durch
   \begin{align*}
-    dG_\ell(u;v) = \alpha (u,v)_{L^2(\Omega)} - \int_\Omega f_\ell v\dx 
-    = (\alpha u-f_\ell ,v)_{L^2(\Omega)}.
+    dG_\ell(u;v) = \alpha (u,v) - \int_\Omega f_\ell v\dx 
+    = (\alpha u-f_\ell ,v).
   \end{align*}
 
   Das Funktional $F$ ist konvex 
@@ -302,11 +291,8 @@ $|0|_{\BV(\Rbb^d\setminus\overline\Omega)}=0$ und $0|_{\partial\Omega}=0$.
   $\partial F$ von $F$ monoton, das heißt für alle $\mu_\ell\in \partial
   F(u_\ell)$, $\ell=1,2$, gilt
   \begin{align}\label{eq:stabilityAndUniqueness:monotonicityOfSubdifferential}
-    (\mu_1-\mu_2,u_1-u_2)_{L^2(\Omega)}\geq 0.
+    (\mu_1-\mu_2,u_1-u_2)\geq 0.
   \end{align}
-  \todo[inline]{TODO eigentlich auch mal über Dualraumtheorie reden,
-  insbesondere für Lp Räume und wie die Sachen identifiziert werden können 
-  nach Riesz?} 
 
   Für $\ell=1,2$ wird $E_\ell$ von $u_\ell$ minimiert und $G_\ell$ ist stetig.
   Nach \cref{thm:extremalprinciple} und
@@ -318,21 +304,21 @@ $|0|_{\BV(\Rbb^d\setminus\overline\Omega)}=0$ und $0|_{\partial\Omega}=0$.
   Daraus folgt zusammen mit
   \eqref{eq:stabilityAndUniqueness:monotonicityOfSubdifferential}
   \begin{align*}
-    \big( -(\alpha u_1 - f_1) + (\alpha u_2 - f_2), u_1 - u_2\big)_{L^2(\Omega)}
+    \big( -(\alpha u_1 - f_1) + (\alpha u_2 - f_2), u_1 - u_2\big)
     \geq 0.
   \end{align*}
   Umformen und Anwenden der Cauchy-Schwarzschen Ungleichung impliziert
   \begin{align*}
-    \alpha \Vert u_1 - u_2 \Vert_{L^2(\Omega)}^2
+    \alpha \Vert u_1 - u_2 \Vert^2
     &\leq
-    \big(f_1 -f_2, u_1-u_2 \big)_{L^2(\Omega)}\\
+    \big(f_1 -f_2, u_1-u_2 \big)\\
     &\leq
-    \Vert f_1-f_2\Vert_{L^2(\Omega)}\Vert u_1 - u_2\Vert_{L^2(\Omega)}.
+    \Vert f_1-f_2\Vert\Vert u_1 - u_2\Vert.
   \end{align*}
 
-  Falls $\Vert u_1 - u_2 \Vert_{L^2(\Omega)} = 0$, gilt der Satz.
+  Falls $\Vert u_1 - u_2 \Vert = 0$, gilt der Satz.
   Ansonsten führt Division durch\\
-  $\alpha\Vert u_1 - u_2 \Vert_{L^2(\Omega)}\neq 0$ den 
+  $\alpha\Vert u_1 - u_2 \Vert\neq 0$ den 
   Beweis zum Abschluss.
 \end{proof}
 
@@ -343,7 +329,7 @@ $|0|_{\BV(\Rbb^d\setminus\overline\Omega)}=0$ und $0|_{\partial\Omega}=0$.
 
   Dann gilt 
   \begin{align*}
-    \frac{\alpha}{2}\Vert u-v\Vert_{L^2(\Omega)}^2 \leq E(v)-E(u)\quad
+    \frac{\alpha}{2}\Vert u-v\Vert^2 \leq E(v)-E(u)\quad
     \text{für alle } v\in\BV(\Omega)\cap L^2(\Omega).
   \end{align*}
 \end{theorem}
@@ -354,7 +340,7 @@ $|0|_{\BV(\Rbb^d\setminus\overline\Omega)}=0$ und $0|_{\partial\Omega}=0$.
   $G:\BV(\Omega)\cap L^2(\Omega)\to \Rbb$ durch
   \begin{align*}
     F(u) &\coloneqq |u|_{\BV(\Omega)} + \Vert u \Vert_{L^1(\partial\Omega)},&
-    G(u)\coloneqq \frac{\alpha}{2}\Vert u\Vert_{L^2(\Omega)}^2 -
+    G(u)\coloneqq \frac{\alpha}{2}\Vert u\Vert^2 -
     \int_\Omega f u\dx.
   \end{align*}
   Es gilt $E= F+G$.
@@ -365,13 +351,13 @@ $|0|_{\BV(\Rbb^d\setminus\overline\Omega)}=0$ und $0|_{\partial\Omega}=0$.
   $u\in \BV(\Omega)\cap L^2(\Omega)$ ist 
   für alle $v\in L^2(\Omega)$ gegeben durch
   \begin{align*}
-    dG(u;v) = \alpha (u,v)_{L^2(\Omega)} - \int_\Omega f v\dx 
-    = (\alpha u-f ,v)_{L^2(\Omega)}.
+    dG(u;v) = \alpha (u,v) - \int_\Omega f v\dx 
+    = (\alpha u-f ,v).
   \end{align*}
 
   Das impliziert mit wenigen Rechenschritten
   \begin{align}\label{eq:strongConvexityG}
-    dG(u;v-u) +\frac{\alpha}{2}\Vert u-v\Vert^2_{L^2(\Omega)}+G(u) 
+    dG(u;v-u) +\frac{\alpha}{2}\Vert u-v\Vert^2+G(u) 
     =
     G(v)
   \end{align}
@@ -394,7 +380,7 @@ $|0|_{\BV(\Rbb^d\setminus\overline\Omega)}=0$ und $0|_{\partial\Omega}=0$.
 
   Daraus folgt zusammen mit \Cref{eq:strongConvexityG}, dass
   \begin{align*}
-    \frac{\alpha}{2}\Vert u-v\Vert_{L^2(\Omega)}^2+G(u)-G(v)+F(u)
+    \frac{\alpha}{2}\Vert u-v\Vert^2+G(u)-G(v)+F(u)
     = -dG(u;v-u)+F(u)\leq F(v)
   \end{align*}
   für alle $v\in \BV(\Omega)\cap L^2(\Omega)$.

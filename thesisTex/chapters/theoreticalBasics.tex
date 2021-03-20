@@ -25,12 +25,12 @@ Wir wählen für die natürlichen Zahlen die Konvention
 $\Nbb=\{1,2,3,\ldots\}$ und $\Nbb_0=\Nbb\cup\{0\}$. 
 Die Menge der positiven reellen Zahlen notieren wir mit $\Rbb_+$.
 
-Um auszudrücken, dass eine Menge $A$ Teilmenge einer Menge $B$ ist, 
-schreiben wir $A\subseteq B$. Ist $A$ sogar eine echte Teilmenge von $B$, so 
-schreiben wir $A\subset B$.
+Um auszudrücken, dass eine Menge $A$ Teilmenge einer Menge $B$ ist, schreiben
+wir $A\subseteq B$. Falls wir hervorheben wollen, dass $A$ sogar eine echte
+Teilmenge von $B$ ist, so schreiben wir $A\subset B$.
 
 Ist $A$ Teilmenge eines topologischen Raumes, so notieren wir den Rand von $A$
-mit $\partial A$, das innere von $A$ mit $\interior(A)$ und den Abschluss
+mit $\partial A$, das Innere von $A$ mit $\interior(A)$ und den Abschluss
 von $A$ mit $\overline A$.
 Wir nennen weiterhin eine Teilmenge $B\subseteq A$ Umgebung eines Punktes $x\in
 A$, wenn es eine offene Teilmenge von $B$ gibt, die $x$ enthält.
@@ -51,7 +51,7 @@ Mit der Menge $\Omega\subset\Rbb^d$ bezeichnen wir stets ein polygonal
 berandetes Lipschitz-Gebiet. 
 Falls $\Omega\subset\Rbb^2$, nutzen wir die Notation $\Tcal$ für eine reguläre
 Triangulierung von $\Omega$ im Sinne von Philippe Ciarlet in eine Menge von
-abgeschlossenen Dreiecken (cf. \cite[Kapitel 1.3.1]{Car09b}).
+abgeschlossenen Dreiecken (cf.\ \cite[Kapitel 1.3.1]{Car09b}).
 Die Menge der stückweisen konstanten Funktionen auf der Triangulierung $\Tcal$
 mit Werten in $\Rbb^m$ notieren wir dann mit $\Pbb_0(\Tcal,\Rbb^m)$ und die
 Menge der stückweisen affinen Funktionen auf $\Tcal$ mit Werten in $\Rbb^m$ mit
@@ -78,8 +78,8 @@ Für eine Randkante $E\in\Ecal(\partial\Omega)$ definieren wir
 $[\bullet]_E\coloneqq \bullet|_E$.
 
 Mit $|\bullet|$ bezeichnen wir, je nach Argument, die euklidischen Norm eines
-Vektors $v\in\Rbb^m$, den Inhalt eines Dreiecks $T\in\Tcal$ oder die Länge
-einer Kante $E\in\Ecal.$
+Vektors $v\in\Rbb^m$, den Inhalt eines Dreiecks $T\in\Tcal$, die Länge
+einer Kante $E\in\Ecal$ oder $|\Omega|=\int_\Omega 1\dx$.
 
 Ist $V$ ein normierter Vektorraum, so bezeichnen wir die entsprechende Norm auf
 $V$ mit $\Vert\bullet\Vert_V$. 
@@ -90,6 +90,8 @@ Für den Dualraum eines Banachraums $X$ über $\Rbb$
 schreiben wir $X^\ast$. Die Auswertung eines Funktionals $F\in X^\ast$ an
 der Stelle $u\in X$ notieren wir, vor eventueller 
 Anwendung des Rieszschen Darstellungssatzes, mit $\langle F,u\rangle$.
+Identifizieren wir einen Raum $Y$ mit dem Dualraum $X^\ast$, so schreiben
+wir $Y\cong X^\ast$.
 
 Weiterhin benutzen wir die übliche Notation für Lebesgue-Räume
 $L^p(U)$ und die So\-bo\-lev-Räume $W^{k,p}(U)$ sowie
@@ -334,7 +336,7 @@ Zunächst definieren wir den Raum der Funktionen beschränkter Variation.
 \end{remark}
 
 In der Anwendung ist Konvergenz in $\BV(U)$ bezüglich der Norm
-$\Vert\bullet\Vert_{\BV(U)}$ zu restriktiv (cf. \cite[300]{Bar15}). 
+$\Vert\bullet\Vert_{\BV(U)}$ zu restriktiv (cf.\ \cite[300]{Bar15}). 
 Deshalb führen wir zwei schwächere Konvergenzbegriffe ein.
 
 \begin{definition}
@@ -391,8 +393,6 @@ nachschlagen und sichergehen, dass sie richtig zitiert sind.}
   $(u_n)_{n\in\Nbb}$ und ein $u\in\BV(\Omega)$, sodass
   $u_{n_k}\to u$ in $L^1(\Omega)$ für $k\to \infty$.
 \end{theorem}
-\todo[inline]{Das kann vielleciht auch noch im kontinuierlichen Existenzbeweis 
-eingebracht werden und den etwas vereinfachen/verkürzen. Prüf das Zukunfts-Ich}
 
 Damit können wir nun das folgende Theorem beweisen.
 \begin{theorem}
