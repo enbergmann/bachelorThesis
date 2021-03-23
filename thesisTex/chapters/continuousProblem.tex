@@ -252,7 +252,9 @@ $0|_{\partial\Omega}=0$.
   das heißt $\min_{v\in\BV(\Omega)\cap L^2(\Omega)} E(v) = E(u)$.
 \end{proof}
 
-\todo{hier}
+Nachdem wir gezeigt haben, dass für \Cref{prob:continuousProblem} eine
+Lösung existiert, beweisen wir als nächstes ein Theorem, das direkt impliziert,
+dass diese Lösung eindeutig ist. 
 \begin{theorem}[Stabilität und Eindeutigkeit]
   \label{thm:contProbStabAndUniqu}
   Seien $u_1,u_2\in \BV(\Omega)\cap L^2(\Omega)$ die Minimierer des Problems
@@ -266,19 +268,26 @@ $0|_{\partial\Omega}=0$.
 \end{theorem}
 
 \begin{proof}
-  Definiere die konvexen Funktionale $F:\BV(\Omega)\cap L^2(\Omega)\to \Rbb$
-  und 
-  $G_\ell:\BV(\Omega)\cap L^2(\Omega)\to \Rbb$, $\ell=1,2$, durch
+  Wir folgen der Argumentation im Beweis von \cite[S. 304, Theorem 10.6]{Bar15}.
+
+  Zunächst definieren wir die konvexen Funktionale $F:\BV(\Omega)\cap
+  L^2(\Omega)\to \Rbb$ und 
+  $G_\ell:\BV(\Omega)\cap L^2(\Omega)\to \Rbb$, $\ell\in\{1,2\}$, für alle
+  $u\in\BV(\Omega)\cap L^2(\Omega)$ durch
   \begin{align*}
-    F(u) &\coloneqq |u|_{\BV(\Omega)} + \Vert u \Vert_{L^1(\partial\Omega)},&
-    G_\ell(u)\coloneqq \frac{\alpha}{2}\Vert u\Vert^2 -
+    F(u) &\coloneqq |u|_{\BV(\Omega)} + \Vert u \Vert_{L^1(\partial\Omega)}
+    &&\text{und}
+    &G_\ell(u)\coloneqq \frac{\alpha}{2}\Vert u\Vert^2 -
     \int_\Omega f_\ell u\dx.
   \end{align*}
-  Bezeichne $E_\ell\coloneqq F+G_\ell$.
+  Außerdem definieren wir für $\ell\in\{1,2\}$ das
+  Funktional $E_\ell\coloneqq F+G_\ell$.
 
-  $G_\ell$ ist Fr\'echet-differenzierbar und die Fr\'echet-Ableitung
-  $G_\ell'(u): L^2(\Omega)\to\Rbb$ von $G_\ell$ an der Stelle $u\in
-  \BV(\Omega)\cap L^2(\Omega)$ ist für alle $v\in L^2(\Omega)$ gegeben durch
+\todo{hier}
+  Für $\ell\in\{1,2\}$ ist $G_\ell$ Fr\'echet-differenzierbar und die
+  Fr\'echet-Ableitung $G_\ell'(u): L^2(\Omega)\to\Rbb$ von $G_\ell$ an der
+  Stelle $u\in \BV(\Omega)\cap L^2(\Omega)$ ist für alle $v\in L^2(\Omega)$
+  gegeben durch
   \begin{align*}
     dG_\ell(u;v) = \alpha (u,v) - \int_\Omega f_\ell v\dx 
     = (\alpha u-f_\ell ,v).
