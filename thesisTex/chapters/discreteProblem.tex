@@ -1,3 +1,36 @@
+\section{Crouzeix-Raviart-Finite-Elemente-Methode}
+Bevor wir \Cref{prob:continuousProblem} diskretisieren, rufen wir uns den dafür
+benötigten Crouzeix-Raviart-Finite-Elemente-Raum und einige wichtige
+Eigenschaften über diesen in Erinnerung.
+
+\begin{definition}
+  Die Räume der Crouzeix-Raviart-Finite-Elemente-Funktion sind 
+  \begin{align*}
+    \CR^1(\Tcal)
+    &\coloneqq
+    \{\vcr\in\Pbb_1(\Tcal)\,\mid\, \vcr \text{ ist stetig in }\Mid(E)\text{ für
+    alle } E\in\Ecal\} \quad\text{und}\\
+    \CR^1_0(\Tcal)
+    &\coloneqq
+    \{\vcr\in\CR^1(\Tcal)\,\mid\, \forall E\in\Ecal(\partial\Omega)\quad
+    \vcr(\Mid(E))=0\}.
+  \end{align*}
+  Für eine Kante $E\in\Ecal$ ist die Crouzeix-Raviart-Basisfunktion
+  $\psi_E\in\CR^1(\Tcal)$ auf einem Dreieck $T\in\Tcal$ gegeben durch lineare
+  Interpolation der Werte in den Kantenmittelpunkten $F\in\Ecal(T)$, die 
+  definiert sind als
+  \begin{align*}
+    \psi_E(\Mid(F))
+    \coloneqq
+    \begin{cases}
+      1,&\text{ falls } F=E,\\
+      0,&\text{ falls } F\neq E.
+    \end{cases}
+  \end{align*}
+\end{definition}
+
+\todo[inline]{nc Differentialoperatoren, diskrete Norm/Energienorm, CR
+Basisfunktionen}
 
 \section{Formulierung}
 \todo[inline]{Quote all CR and discretisation stuff right here somewhere (mglw
@@ -28,8 +61,8 @@ durch
   darauf vielleicht noch kurz in der Auswertung eingehen ,man sieht, dass die
   Sprünge tatsächlch im nonkonformen Problem nicht minimiert werden oder so'}
 
-Betrachte für gegebenes $\alpha>0$ und rechte Seite $f\in L^2(\Omega)$ 
-folgende Diskretisierung von \Cref{prob:continuousProblem}. 
+Betrachte für einen Parameter $\alpha\in\Rbb_+$ und die rechte Seite $f\in
+L^2(\Omega)$ folgende Diskretisierung von \Cref{prob:continuousProblem}. 
 
 \begin{problem}\label{prob:discreteProblem}
   Finde $\ucr\in \CR^1_0(\Tcal)$,
@@ -41,8 +74,7 @@ folgende Diskretisierung von \Cref{prob:continuousProblem}.
   unter allen $\vcr\in \CR^1_0(\Tcal)$ minimiert.
 \end{problem}
 
-
-\section{Existenz und eindeutige Lösbarkeit}
+\section{Charakterisierung und Existenz eines eindeutigen Minimierers}
 
 Definiere für $\vcr\in\CR^1_0(\Tcal)$, $\Lambda\in\Pbb_0(\Tcal;\Rbb^n)\subset
 L^\infty(\Omega;\Rbb^n)$ \todo{stimmt das?},
