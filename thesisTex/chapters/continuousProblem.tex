@@ -278,8 +278,9 @@ dass diese Lösung eindeutig ist.
 \begin{proof}
   Wir folgen der Argumentation im Beweis von \cite[S. 304, Theorem 10.6]{Bar15}.
 
-  Zunächst definieren wir die konvexen Funktionale $F: L^2(\Omega)\to \Rbb$ und 
-  $G_\ell:L^2(\Omega)\to \Rbb$, $\ell\in\{1,2\}$, für alle
+  Zunächst definieren wir die Funktionale $F: L^2(\Omega)\to
+  \Rbb\cup\{\infty\}$ und $G_\ell:L^2(\Omega)\to \Rbb$, $\ell\in\{1,2\}$, für
+  alle
   $u\in L^2(\Omega)$ durch
   \begin{align*}
     F(u) 
@@ -340,11 +341,20 @@ dass diese Lösung eindeutig ist.
   \end{align*}
 
   Falls $\Vert u_1 - u_2 \Vert = 0$, gilt die zu zeigende Aussage.
-  Ansonsten führt Division durch\\
-  $\alpha\Vert u_1 - u_2 \Vert\neq 0$ den 
+  Ansonsten führt Division durch $\alpha\Vert u_1 - u_2 \Vert\neq 0$ den
   Beweis zum Abschluss.
 \end{proof}
 
+Zum Abschluss dieses Abschnitts wollen wir noch beweisen, dass der Abstand
+zwischen einer Lösung $u$ von \Cref{prob:continuousProblem} und einer
+beliebigen Funktion $v\in\BV(\Omega)\cap L^2(\Omega)$  in $L^2(\Omega)$
+beschränkt werden kann durch die Differenz der Werte des Funktionals
+$E$ an den Stellen $u$ und $v$.
+Damit wollen zum Ende des nächsen Abschnitts \todo{noch mit Verweis auf das
+Korollar?}
+folgern, 
+wie der Abstand in $L^2(\Omega)$ zwischen den Lösungen des kontinuierlichen 
+und des diskreten Problems kontrolliert werden kann.
 \begin{theorem}
   \label{thm:convexity}
   Sei $u\in\BV(\Omega)\cap L^2(\Omega)$ Lösung von 
@@ -358,21 +368,21 @@ dass diese Lösung eindeutig ist.
 \end{theorem}
 
 \begin{proof}
-  Definiere die konvexen Funktionale $F:\BV(\Omega)\cap L^2(\Omega)\to \Rbb$
-  und 
-  $G:\BV(\Omega)\cap L^2(\Omega)\to \Rbb$ durch
-  \begin{align*}
-    F(u) &\coloneqq |u|_{\BV(\Omega)} + \Vert u \Vert_{L^1(\partial\Omega)},&
-    G(u)\coloneqq \frac{\alpha}{2}\Vert u\Vert^2 -
-    \int_\Omega f u\dx.
-  \end{align*}
-  Es gilt $E= F+G$.
+  Wir folgen der Argumentation im Beweis von \cite[S. 309, Lemma 10.2]{Bar15}.
+  Da viele der Schritte ähnlich zum vorhergehenden Beweis sind, präsentieren 
+  wir die entsprechenden Argumente verkürzt.
 
-  $G$ ist Fr\'echet-differenzierbar und die Fr\'echet-Ableitung $G'(u):
-  L^2(\Omega)\to\Rbb$ von $G$ an der
-  Stelle
-  $u\in \BV(\Omega)\cap L^2(\Omega)$ ist 
-  für alle $v\in L^2(\Omega)$ gegeben durch
+  Wir definieren die konvexen Funktionale
+  $F:L^2(\Omega)\to \Rbb\cup\{\infty\}$ und $G:L^2(\Omega)\to \Rbb$, wobei 
+  $F$ wie im vorherigen Beweis definiert ist und $G$ gegeben ist durch
+  \begin{align*}
+    G(u)\coloneqq \frac{\alpha}{2}\Vert u\Vert^2 - \int_\Omega f u\dx.
+  \end{align*}
+  Es gilt $E = F+G$.
+
+  Die Fr\'echet-Ableitung $G'(u): L^2(\Omega)\to\Rbb$ von $G$ an der Stelle
+  $u\in \BV(\Omega)\cap L^2(\Omega)$ ist für alle $v\in L^2(\Omega)$ gegeben
+  durch
   \begin{align*}
     dG(u;v) = \alpha (u,v) - \int_\Omega f v\dx 
     = (\alpha u-f ,v).
@@ -384,18 +394,18 @@ dass diese Lösung eindeutig ist.
     =
     G(v)
   \end{align}
-  für alle $u,v\in \BV(\Omega)\cap L^2(\Omega)$.
+  für alle $v\in L^2(\Omega)$.
 
-  Da $u$ Minimierer von $E$ ist, gilt mit \Cref{thm:extremalprinciple},
-  \Cref{thm:subdifferentialSumRule} und \Cref{thm:subdiffGateaux}, dass
+  Da $u$ Minimierer von $E$ ist, erhalten wir mit \Cref{thm:extremalprinciple},
+  \Cref{thm:subdifferentialSumRule} und \Cref{thm:subdiffGateaux} wieder
   \begin{align*}
     0\in\partial E(u) = \partial F(u)+\{G'(u)\},
   \end{align*}
   woraus folgt 
   \begin{align*}
-    -G'(u)\in\partial F(u),
+    -G'(u)\in\partial F(u).
   \end{align*}
-  was nach \Cref{def:subdifferential} äquivalent ist zu
+  Das ist nach \Cref{def:subdifferential} äquivalent zu
   \begin{align*}
     -dG(u;v-u)\leq F(v)-F(u)\quad\text{für alle }v\in\BV(\Omega)\cap
     L^2(\Omega).
@@ -408,5 +418,5 @@ dass diese Lösung eindeutig ist.
   \end{align*}
   für alle $v\in \BV(\Omega)\cap L^2(\Omega)$.
 
-  Da $E=F+G$, folgt daraus die Aussage.
+  Da $E=F+G$, folgt daraus die zu zeigende Aussage.
 \end{proof}
