@@ -125,9 +125,9 @@ $0|_{\partial\Omega}=0$.
   $\Vert u_n\Vert_{\BV(\Omega)}\to\infty$ für $n\to\infty$ .
   Deshalb muss die Folge $(u_n)_{n\in\Nbb}$ beschränkt in $\BV(\Omega)$ sein.
 
-  Nun garantiert \cref{thm:compactness} die Existenz einer schwach konvergenten
-  Teilfolge $(u_{n_k})_{k\in\Nbb}$ von $(u_n)_{n\in\Nbb}$ mit schwachen
-  Grenzwert $u\in\BV(\Omega)$. 
+  Nun garantiert \cref{thm:compactness} die Existenz einer in $\BV(\Omega)$
+  schwach konvergenten Teilfolge $(u_{n_k})_{k\in\Nbb}$ von $(u_n)_{n\in\Nbb}$
+  mit schwachen Grenzwert $u\in\BV(\Omega)$. 
   Ohne Beschränkung der Allgemeinheit ist
   $(u_{n_k})_{k\in\Nbb}=(u_n)_{n\in\Nbb}$.
   Aus der schwachen Konvergenz von $(u_n)_{n\in\Nbb}$ in $\BV(\Omega)$ gegen
@@ -258,7 +258,15 @@ dass diese Lösung eindeutig ist.
 \begin{theorem}[Stabilität und Eindeutigkeit]
   \label{thm:contProbStabAndUniqu}
   Seien $u_1,u_2\in \BV(\Omega)\cap L^2(\Omega)$ die Minimierer des Problems
-  \ref{prob:continuousProblem} mit $f_1,f_2\in L^2(\Omega)$ anstelle von $f$.
+  \ref{prob:continuousProblem} mit $f_1,f_2\in L^2(\Omega)$ anstelle von $f$,
+  das heißt für $\ell\in\{1,2\}$ minimiere $u_\ell$ das Funktional
+  \begin{align*}
+    E_\ell
+    \coloneqq 
+    \frac{\alpha}{2}\Vert v\Vert^2 + |v|_{\BV(\Omega)} 
+    + \Vert v\Vert_{L^1(\partial\Omega)} - \int_\Omega f_\ell v\dx
+  \end{align*}
+  unter allen $v\in\BV(\Omega)\cap L^2(\Omega)$.
 
   Dann gilt 
   \begin{align*}
@@ -270,53 +278,59 @@ dass diese Lösung eindeutig ist.
 \begin{proof}
   Wir folgen der Argumentation im Beweis von \cite[S. 304, Theorem 10.6]{Bar15}.
 
-  Zunächst definieren wir die konvexen Funktionale $F:\BV(\Omega)\cap
-  L^2(\Omega)\to \Rbb$ und 
-  $G_\ell:\BV(\Omega)\cap L^2(\Omega)\to \Rbb$, $\ell\in\{1,2\}$, für alle
-  $u\in\BV(\Omega)\cap L^2(\Omega)$ durch
+  Zunächst definieren wir die konvexen Funktionale $F: L^2(\Omega)\to \Rbb$ und 
+  $G_\ell:L^2(\Omega)\to \Rbb$, $\ell\in\{1,2\}$, für alle
+  $u\in L^2(\Omega)$ durch
   \begin{align*}
-    F(u) &\coloneqq |u|_{\BV(\Omega)} + \Vert u \Vert_{L^1(\partial\Omega)}
-    &&\text{und}
-    &G_\ell(u)\coloneqq \frac{\alpha}{2}\Vert u\Vert^2 -
-    \int_\Omega f_\ell u\dx.
+    F(u) 
+    &\coloneqq 
+    \begin{cases}
+      |u|_{\BV(\Omega)} + \Vert u \Vert_{L^1(\partial\Omega)}, 
+      &\text{ falls } u\in\BV(\Omega)\cap L^2(\Omega),\\
+      \infty,&\text{ falls } u\in L^2(\Omega)\setminus\BV(\Omega)
+    \end{cases}
+    \quad\text{und }\\
+    G_\ell(u)
+    &\coloneqq 
+    \frac{\alpha}{2}\Vert u\Vert^2 - \int_\Omega f_\ell u\dx.
   \end{align*}
-  Außerdem definieren wir für $\ell\in\{1,2\}$ das
-  Funktional $E_\ell\coloneqq F+G_\ell$.
+  Damit gilt für $\ell\in\{1,2\}$ und alle
+  $u\in\BV(\Omega)\cap L^2(\Omega)$, dass $E_\ell(u) =  F(u)+G_\ell(u)$.
 
-\todo{hier}
   Für $\ell\in\{1,2\}$ ist $G_\ell$ Fr\'echet-differenzierbar und die
   Fr\'echet-Ableitung $G_\ell'(u): L^2(\Omega)\to\Rbb$ von $G_\ell$ an der
-  Stelle $u\in \BV(\Omega)\cap L^2(\Omega)$ ist für alle $v\in L^2(\Omega)$
+  Stelle $u\in L^2(\Omega)$ ist für alle $v\in L^2(\Omega)$
   gegeben durch
   \begin{align*}
     dG_\ell(u;v) = \alpha (u,v) - \int_\Omega f_\ell v\dx 
     = (\alpha u-f_\ell ,v).
   \end{align*}
 
-  Das Funktional $F$ ist konvex 
-  und stetig, also insbesondere unterhalbstetig, deshalb 
-  ist nach \cref{thm:subdifferentialMonotonicity} das
-  Subdifferential
+  Das Funktional $F$ ist konvex, unterhalbstetig und es gilt $F\nequiv\infty$.
+  Deshalb ist nach \cref{thm:subdifferentialMonotonicity} das Subdifferential
   $\partial F$ von $F$ monoton, das heißt für alle $\mu_\ell\in \partial
-  F(u_\ell)$, $\ell=1,2$, gilt
+  F(u_\ell)$, $\ell\in\{1,2\}$, gilt
   \begin{align}\label{eq:stabilityAndUniqueness:monotonicityOfSubdifferential}
     (\mu_1-\mu_2,u_1-u_2)\geq 0.
   \end{align}
 
-  Für $\ell=1,2$ wird $E_\ell$ von $u_\ell$ minimiert und $G_\ell$ ist stetig.
-  Nach \cref{thm:extremalprinciple} und
-  \cref{thm:subdifferentialSumRule} gilt deshalb $0\in\partial E_\ell(u_\ell)
-  = \partial F(u_\ell)+\partial G_\ell(u_\ell)=\partial F(u_\ell)+
-  \{G_\ell'(u_\ell)\}$ 
-  und es folgt
+  Für $\ell\in\{1,2\}$ gilt, dass $E_\ell$ konvex ist und von $u_\ell$ in
+  $\BV(\Omega)\cap L^2(\Omega)$ minimiert wird. 
+  Außerdem gilt $E_\ell\nequiv\infty$ und $G_\ell$ ist stetig.
+  Somit gilt nach \cref{thm:extremalprinciple}, 
+  \cref{thm:subdifferentialSumRule} und \cref{thm:subdiffGateaux}, dass
+  $0\in\partial E_\ell(u_\ell) = \partial F(u_\ell)+\partial
+  G_\ell(u_\ell)=\partial F(u_\ell)+ \{G_\ell'(u_\ell)\}.$ 
+  Daraus folgt
   $-G_\ell'(u_\ell)\in\partial F(u_\ell)$.
-  Daraus folgt zusammen mit
+  Zusammen mit Ungleichung
   \eqref{eq:stabilityAndUniqueness:monotonicityOfSubdifferential}
+  impliziert das
   \begin{align*}
-    \big( -(\alpha u_1 - f_1) + (\alpha u_2 - f_2), u_1 - u_2\big)
+    \big( -(\alpha u_1 - f_1) -(- (\alpha u_2 - f_2)), u_1 - u_2\big)
     \geq 0.
   \end{align*}
-  Umformen und Anwenden der Cauchy-Schwarzschen Ungleichung impliziert
+  Durch Umformen und Anwenden der Cauchy-Schwarzschen Ungleichung erhalten wir
   \begin{align*}
     \alpha \Vert u_1 - u_2 \Vert^2
     &\leq
@@ -325,7 +339,7 @@ dass diese Lösung eindeutig ist.
     \Vert f_1-f_2\Vert\Vert u_1 - u_2\Vert.
   \end{align*}
 
-  Falls $\Vert u_1 - u_2 \Vert = 0$, gilt der Satz.
+  Falls $\Vert u_1 - u_2 \Vert = 0$, gilt die zu zeigende Aussage.
   Ansonsten führt Division durch\\
   $\alpha\Vert u_1 - u_2 \Vert\neq 0$ den 
   Beweis zum Abschluss.
