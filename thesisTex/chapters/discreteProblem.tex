@@ -37,7 +37,7 @@ L^2(\Omega)$.
   Finde $\ucr\in \CR^1_0(\Tcal)$,
   sodass $\ucr$ das Funktional
   \begin{align}\label{eq:discreteProblem}
-    \Enc(\vcr)\coloneqq \frac{\alpha}{2}\Vert \vcr\Vert_{L^2(\Omega)}^2
+    \Enc(\vcr)\coloneqq \frac{\alpha}{2}\Vert \vcr\Vert^2
     +\Vert \gradnc\vcr\Vert_{L^1(\Omega)}-\int_\Omega f\vcr\dx
   \end{align}
   unter allen $\vcr\in \CR^1_0(\Tcal)$ minimiert.
@@ -45,63 +45,83 @@ L^2(\Omega)$.
 
 \section{Charakterisierung und Existenz eines eindeutigen Minimierers}
 
-Definiere für $\vcr\in\CR^1_0(\Tcal)$, $\Lambda\in\Pbb_0(\Tcal;\Rbb^n)\subset
-L^\infty(\Omega;\Rbb^n)$ 
+In diesen Abschnitt führen wir die Argumente in \cite[S. 313]{Bar15}, angepasst
+für unsere Formulierung in \Cref{prob:discreteProblem}, detailiert aus. 
+
+Bevor wir die Existenz und Eindeutigkeit einer Lösung von
+\Cref{prob:discreteProblem} sowie äqui\-va\-lente Charakterisierungen für diese 
+beweisen können, leiten wir ein zu \Cref{prob:discreteProblem} äquivalentes
+Sattelpunktsproblem her.
+
+Dafür definieren wir zunächst die konvexe Menge 
 \begin{align*}
-  K_1(0)
-  &\coloneqq 
-  \{\Lambda\in L^\infty(\Omega;\Rbb^n)\ | \ |\Lambda(\bullet)|
-  \leq 1 \text{ fast überall in }\Omega\},\\
-  I_{K_1(0)}(\Lambda)
+  K
+  \coloneqq 
+  \left\{\Lambda\in L^\infty\left(\Omega;\Rbb^2\right)
+  \,\middle|\,|\Lambda(\bullet)| \leq 1 \text{ fast überall in }\Omega\right\}
+\end{align*}
+und das dazugehörige Indikatorfunktional
+$I_K:L^\infty(\Omega;\Rbb^2)\to\Rbb\cup\{\infty\}$, das für $\Lambda\in
+L^\infty(\Omega;\Rbb^2)$ gegeben ist durch
+\begin{align*}
+  I_K(\Lambda)
   &\coloneqq
   \begin{cases}
-    \infty, & \text{falls } \Lambda\notin K_1(0),\\
-    0,       & \text{falls } \Lambda\in K_1(0)
+    \infty, & \text{falls } \Lambda\notin K,\\
+    0,       & \text{falls } \Lambda\in K
   \end{cases}
-\end{align*}
-und das Funktional $\Lcal_h:\CR^1_0(\Tcal)\times \Pbb_0(\Tcal;\Rbb^n)\to
-[-\infty,\infty)$ durch
+\end{align*} 
+und aufgrund der Konvexität von $K$ konvex ist.
+Für $\vcr\in\CR^1_0(\Tcal)$ 
+und $\Lambda\in P_0(\Tcal;\Rbb^2)\subset L^\infty(\Omega;\Rbb^2)$ können
+wir damit das Funktional
+$L:\CR^1_0(\Tcal)\times  P_0(\Tcal;\Rbb^2)\to [-\infty,\infty)$ 
+definieren durch
 \begin{align}\label{eq:discreteProblemLagrangeFunctional}
-  \Lcal_h(\vcr,\Lambda) \coloneqq \int_\Omega\Lambda\cdot\gradnc\vcr\dx +
-  \frac{\alpha}{2}\Vert \vcr\Vert^2_{L^2(\Omega)} -\int_\Omega f\vcr\dx
-  - I_{K_1(0)}(\Lambda).
+  L(\vcr,\Lambda) \coloneqq \int_\Omega\Lambda\cdot\gradnc\vcr\dx +
+  \frac{\alpha}{2}\Vert \vcr\Vert^2 -\int_\Omega f\vcr\dx
+  - I_K(\Lambda).
 \end{align}
 
-Falls $\Lambda\notin K_1(0)$, gilt $\Lcal(\vcr,\Lambda)=-\infty$. Da
-außerdem für beliebige $\Lambda\in\Pbb_0(\Tcal;\Rbb^n)\cap K_1(0)$ (d.h.\
-$|\Lambda|\leq 1$ fast überall in $\Omega$ und
-außerdem $I_{K_1(0)}(\Lambda)=0$) mit
-der CSU \todo{stimmt das so} gilt, dass 
+Dabei gilt $L(\vcr,\Lambda)>-\infty$ genau dann, wenn $\Lambda\in K$. 
+Außerdem gilt mit der Cauchy-Schwarzschen Ungleichung für beliebige
+$\Lambda\in P_0(\Tcal;\Rbb^2)\cap K$, dass
 \begin{align*}
   \int_\Omega \Lambda\cdot\gradnc\vcr\dx
   \leq \int_\Omega |\Lambda\cdot\gradnc\vcr|\dx
   &\leq \int_\Omega |\Lambda||\gradnc\vcr|\dx\\
   &\leq \int_\Omega 1|\gradnc\vcr|\dx\
-  = \Vert\gradnc\vcr\Vert_{L^1(\Omega)},
+  = \Vert\gradnc\vcr\Vert_{L^1(\Omega)}.
 \end{align*}
-folgt zunächst 
+Insgesamt folgt
 \begin{align*}
-  \sup_{\Lambda\in\Pbb_0(\Tcal;\Rbb^n)}\Lcal(\vcr,\Lambda)=
-  \sup_{\Lambda\in\Pbb_0(\Tcal;\Rbb^n)\cap K_1(0)}\Lcal(\vcr,\Lambda)
+  \sup_{\Lambda\in P_0(\Tcal;\Rbb^2)}L(\vcr,\Lambda)=
+  \sup_{\Lambda\in P_0(\Tcal;\Rbb^2)\cap K}L(\vcr,\Lambda)
   \leq \Enc(\vcr).
 \end{align*}
 
-Weiterhin gilt für $\Lambda\in\sign(\gradnc\vcr)\subset \Pbb_0(\Tcal;\Rbb^n)\cap
-K_1(0)$, dass
-$\Enc(\vcr)=\Lcal(\vcr,\Lambda)$ und deshalb
-$\Enc(\vcr)\leq\sup_{\Lambda\in\Pbb_0(\Tcal;\Rbb^n)}\Lcal(\vcr,\Lambda)$
+Weiterhin gilt für alle $\vcr\in\CR^1_0(\Tcal)$, wenn wir
+$\Lambda\in P_0(\Tcal;\Rbb^2)\cap K$ elementweise auf allen $T\in\Tcal$
+definieren durch $\Lambda(x)\in\sign\left(\gradnc\vcr(x)\right)$ für alle
+$x\in \interior(T)$, dass $L(\vcr,\Lambda)=\Enc(\vcr)$ und deshalb auch
+$\Enc(\vcr)\leq\sup_{\Lambda\in P_0(\Tcal;\Rbb^2)}L(\vcr,\Lambda)$.
 
 Somit ist das folgende Sattelpunktsproblem äquivalent zu
 \Cref{prob:discreteProblem}.
 \begin{problem}\label{prob:discreteSaddlepointProblem}
-  Löse
+  Finde $\ucr\in\CR^1_0(\Tcal)$ und $\Lambda\in P_0(\Tcal;\Rbb^2)$, sodass
   \begin{align*}
-    \inf_{\vcr\in\CR^1_0(\Tcal)}\sup_{\Lambda\in\Pbb_0(\Tcal;\Rbb^n)} 
-    \Lcal_h(\vcr,\Lambda).
+    L(\ucr,\Lambda) 
+    = 
+    \inf_{\vcr\in\CR^1_0(\Tcal)}\sup_{\Lambda\in P_0(\Tcal;\Rbb^2)}
+    L(\vcr,\Lambda).
   \end{align*}
 \end{problem}
 
-\begin{theorem}[Charakterisierung diskreter Lösungen]
+Nachdem diese Vorbereitungen abgeschlossen sind, können wir nun beweisen,
+dass \Cref{prob:discreteProblem} eine eindeutige Lösung besitzt und
+äquivalente Charakterisierungen für diese zeigen.
+\begin{theorem}
   \label{thm:discProbCharacterizationOfDiscreteSolutions}
   Es existiert eine eindeutige Lösung $\ucr\in\CR^1_0(\Tcal)$ von
   \Cref{prob:discreteProblem}.
@@ -111,7 +131,8 @@ Somit ist das folgende Sattelpunktsproblem äquivalent zu
   \begin{itemize}
     \item[(i)] \Cref{prob:discreteProblem} wird von $\ucr$ gelöst.
     \item[(ii)] Es existiert ein
-      $\bar\Lambda\in\Pbb_0(\Tcal;\Rbb^n)$ mit $|\bar\Lambda(\bullet)|\leq 1$
+      $\bar\Lambda\in P_0(\Tcal;\Rbb^2)$ mit
+      $\left|\bar\Lambda(\bullet)\right|\leq 1$
       fast überall in $\Omega$, sodass
       \begin{equation}
         \label{eq:discreteMultiplierScalerProductEquality}
@@ -137,118 +158,116 @@ Somit ist das folgende Sattelpunktsproblem äquivalent zu
   \end{itemize}
 \end{theorem}
 
-\begin{proof}
+\begin{proof} 
   Mit analogen Abschätzungen wie in Ungleichung \eqref{eq:contProbBddFromBelow}
   erhalten wir für das Funktional $\Enc$ aus \Cref{prob:discreteProblem} 
   für alle $\vcr\in\CR^1_0(\Tcal)\subset L^2(\Omega)$ die Abschätzung 
   \begin{equation*}
-    \Enc(\vcr) \geq -\frac{1}{\alpha}\Vert f\Vert_{L^2(\Omega)}^2.
+    \Enc(\vcr) \geq -\frac{1}{\alpha}\Vert f\Vert^2.
   \end{equation*}
   Somit ist $\Enc$ nach unten beschränkt und es existiert eine infimierende
-  Folge $(v_k)_{k\in\Nbb} \subset \CR^1_0(\Tcal)$ von $\Enc$. Aufgrund der
-  Form von $\Enc$ ist diese Folge beschränkt bezüglich der Norm
-  $\Vert\bullet\Vert_{L^2(\Omega)}$ und wegen der  Reflexivität des
-  abgeschlossenen Unterraums $\CR^1_0(\Tcal)$ des reflexiven
-  Raums $L^2(\Omega)$ besitzt diese Folge eine schwach konvergente 
-  Teilfolge in $\CR^1_0(\Tcal)$
-  bezüglich der Norm $L^2(\Omega)$, welche auch stark konvergent ist, da 
-  $\CR^1_0(\Tcal)$ endlichdimensional ist. Der Grenzwert dieser Folge
-  liegt aufgrund der Abgeschlossenheit von $\CR^1_0(\Tcal)$ in
-  $\CR^1_0(\Tcal)$ und minimiert $\Enc$, da 
-  $\Enc$ stetig ist bezüglich der Konvergenz in $L^2(\Omega)$.
+  Folge $(v_n)_{n\in\Nbb} \subset \CR^1_0(\Tcal)$ von $\Enc$. 
+  Aufgrund der Form von $\Enc$ ist diese Folge beschränkt bezüglich der Norm
+  $\Vert\bullet\Vert$. 
 
-  \todo[inline]{Absatz above: Sachen noch näher begründen? All die benutzten 
-  grundlegenden Aussagen noch zusammen suchen und zitieren irgendwo?}
+  Der endlichdimensionale Raum $\CR^1_0(\Tcal)$ ist, ausgestattet mit der Norm
+  $\Vert\bullet\Vert$, ein Banachraum und damit reflexiv. 
+  Demnach existiert eine in $\CR^1_0(\Tcal)$ schwach konvergente Teilfolge von
+  $(v_n)_{n\in\Nbb}$.
+  Da $\CR^1_0(\Tcal)$ endlichdimensional ist, konvergiert diese sogar stark
+  in $L^2(\Omega)$. 
+  Weil $\CR^1_0(\Tcal)$ ein Banachraum und damit abgeschlossen bezüglich der
+  Konvergenz in $\Vert\bullet\Vert$ ist, gilt für den Grenzwert $\ucr$ dieser
+  Teilfolge, dass $\ucr\in\CR^1_0(\Tcal)$.
 
-  Die Lösung $\ucr\in \CR^1_0(\Tcal)$ ist eindeutig, da das Funktional $\Enc$
-  aus \Cref{prob:discreteProblem} strikt konvex ist {\color{red} der erste
-  Term ist quadratisch, also strikt konvex, der zweite ist konvex und der 
-  dritte linear, also ist deren Summe strikt konvex}.
-  \todo[inline]{grundlegende Aussagen der Optimierung wie diese noch zitieren?
-  Beweis ist einfach bei dieser, schneller Widerspruchsbeweis}
+  Außerdem ist $\Enc$ stetig bezüglich der Konvergenz in $L^2(\Omega)$,
+  was impliziert, dass $\ucr$ Minimierer von $\Enc$ in $\CR^1_0(\Tcal)$ sein
+  muss.
 
+  Die Lösung $\ucr\in \CR^1_0(\Tcal)$ ist eindeutig, da $\Enc$ strikt konvex
+  ist.
+
+  \todo{hier}
   Nachdem wir die Existenz eines eindeutigen Minimierers
   $\ucr\in\CR^1_0(\Tcal)$ von \Cref{prob:discreteProblem} bewiesen haben,
   zeigen wir nun die äquivalenten Charakterisierung von $\ucr$.
 
-  \bigskip
   \textit{(i) $\Rightarrow$ (ii).}
   Zunächst sei erwähnt, dass aus der Existenz des Minimierers $\ucr$ von 
   \Cref{prob:discreteProblem} und der Äquivalenz des Minimierungsproblems
   \ref{prob:discreteProblem} und des
   Sattelpunktsproblems \ref{prob:discreteSaddlepointProblem},
   wobei wir insbesondere bereits gezeigt haben, dass 
-  $\Enc(\vcr) = \sup_{\Lambda\in\Pbb_0(\Tcal;\Rbb^n)}\Lcal_h(\vcr,\Lambda)$
+  $\Enc(\vcr) = \sup_{\Lambda\in P_0(\Tcal;\Rbb^2)}L(\vcr,\Lambda)$
   für alle $\vcr\in\CR^1_0(\Tcal)$, folgt,
-  dass $\bar\Lambda\in\Pbb_0(\Tcal;\Rbb^n)\cap K_1(0)$ {\color{red} (denn
+  dass $\bar\Lambda\in P_0(\Tcal;\Rbb^2)\cap K$ {\color{red} (denn
   sonst ist das innere $\sup$ nicht erfüllt, da sonst
-  $-I_{K_1(0)}(\bar\Lambda)=-\infty$})
+  $-I_K (\bar\Lambda)=-\infty$})
   existiert mit 
   \begin{align*}
-    \Lcal_h\left(\ucr,\bar\Lambda\right)=
-    \inf_{\vcr\in\CR^1_0(\Tcal)}\sup_{\Lambda\in\Pbb_0(\Tcal;\Rbb^n)} 
-    \Lcal_h(\vcr,\Lambda).
+    L\left(\ucr,\bar\Lambda\right)=
+    \inf_{\vcr\in\CR^1_0(\Tcal)}\sup_{\Lambda\in P_0(\Tcal;\Rbb^2)} 
+    L(\vcr,\Lambda).
   \end{align*}
   Da nach \cite[S. 379, Lemma 36.1]{Roc70} gilt, dass
   \begin{align*}
-    \inf_{\vcr\in\CR^1_0(\Tcal)}\sup_{\Lambda\in\Pbb_0(\Tcal;\Rbb^n)} 
-    \Lcal_h(\vcr,\Lambda)
+    \inf_{\vcr\in\CR^1_0(\Tcal)}\sup_{\Lambda\in P_0(\Tcal;\Rbb^2)} 
+    L(\vcr,\Lambda)
     \geq 
-    \sup_{\Lambda\in\Pbb_0(\Tcal;\Rbb^n)} \inf_{\vcr\in\CR^1_0(\Tcal)} 
-    \Lcal_h(\vcr,\Lambda),
+    \sup_{\Lambda\in P_0(\Tcal;\Rbb^2)} \inf_{\vcr\in\CR^1_0(\Tcal)} 
+    L(\vcr,\Lambda),
   \end{align*}
   folgt insgesamt
   \begin{align*}
-    \inf_{\vcr\in\CR^1_0(\Tcal)}\sup_{\Lambda\in\Pbb_0(\Tcal;\Rbb^n)} 
-    \Lcal_h(\vcr,\Lambda)
+    \inf_{\vcr\in\CR^1_0(\Tcal)}\sup_{\Lambda\in P_0(\Tcal;\Rbb^2)} 
+    L(\vcr,\Lambda)
     =
-    \Lcal_h\left(\ucr,\bar\Lambda\right)
+    L\left(\ucr,\bar\Lambda\right)
     =
-    \sup_{\Lambda\in\Pbb_0(\Tcal;\Rbb^n)} \inf_{\vcr\in\CR^1_0(\Tcal)} 
-    \Lcal_h(\vcr,\Lambda).
+    \sup_{\Lambda\in P_0(\Tcal;\Rbb^2)} \inf_{\vcr\in\CR^1_0(\Tcal)} 
+    L(\vcr,\Lambda).
   \end{align*}
   Somit ist $\left(\ucr,\bar\Lambda\right)\in 
-  \CR^1_0(\Tcal)\times (\Pbb_0(\Tcal;\Rbb^n)\cap K_1(0))$ nach \cite[S. 380,
+  \CR^1_0(\Tcal)\times ( P_0(\Tcal;\Rbb^2)\cap K)$ nach \cite[S. 380,
   Lemma
   36.2]{Roc70} Sattelpunkt 
-  von $\Lcal_h$ bezüglich der Maximierung über $\Pbb_0(\Tcal;\Rbb^n)$ und
+  von $L$ bezüglich der Maximierung über $ P_0(\Tcal;\Rbb^2)$ und
   der Minimierung über $\CR^1_0(\Tcal)$. 
   Das bedeutet nach \cite[380]{Roc70} insbesondere, dass $\ucr$ Minimierer von 
-  $\Lcal_h(\bullet, \bar\Lambda)$ in $\CR^1_0(\Tcal)$ ist und $\bar\Lambda$
-  Maximierer von $\Lcal_h(\ucr,\bullet)$ über $\Pbb_0(\Tcal;\Rbb^n)$.
+  $L(\bullet, \bar\Lambda)$ in $\CR^1_0(\Tcal)$ ist und $\bar\Lambda$
+  Maximierer von $L(\ucr,\bullet)$ über $ P_0(\Tcal;\Rbb^2)$.
 
-  \medskip
-  In der zweiten Komponente ist $\Lcal_h$ konkav {(\color{red} $K_1(0)$ ist 
-  konvex, somit ist $I_{K_1(0)}$ konvex, also $-I_{K_1(0)}$ konkav. Die 
+  In der zweiten Komponente ist $L$ konkav {(\color{red} $K$ ist 
+  konvex, somit ist $I_K $ konvex, also $-I_K $ konkav. Die 
   restlichen Terme sind konstant oder linear in $\Lambda$)}
   \todo[inline]{diese grundlegende Aussage über Indikatorfunktionen irgendwo
   (vielleicht sogar in Grundlagen) einmal zitieren}.
-  Da wir bereits wissen, dass $\Lcal_h(\ucr,\bullet)$ von $\bar\Lambda$ in
-  $\Pbb_0(\Tcal;\Rbb^n)$ maximiert wird, wird das konvexe Funktional 
-  $-\Lcal_h(\ucr,\bullet)$ 
+  Da wir bereits wissen, dass $L(\ucr,\bullet)$ von $\bar\Lambda$ in
+  $ P_0(\Tcal;\Rbb^2)$ maximiert wird, wird das konvexe Funktional 
+  $-L(\ucr,\bullet)$ 
   \todo[inline]{zitieren, was konkav ist und das -konvex=konkav}
-  von $\bar\Lambda$ in $\Pbb_0(\Tcal;\Rbb^n)$ minimiert 
+  von $\bar\Lambda$ in $ P_0(\Tcal;\Rbb^2)$ minimiert 
   \todo[inline]{auch diese basic optimierungsaussage noch zitieren}.
   Nach den Theoremen \ref{thm:extremalprinciple},
   \ref{thm:subdifferentialSumRule} und \ref{thm:subdiffGateaux} gilt somit
   \begin{align*}
-    0\in \partial \left(-\Lcal_h(\ucr,\bullet)\right)(\bar\Lambda) 
+    0\in \partial \left(-L(\ucr,\bullet)\right)(\bar\Lambda) 
     =
-    \{-(\gradnc\ucr,\bullet)_{L^2(\Omega)}\}+\partial I_{K_1(0)}(\bar\Lambda).
+    \{-(\gradnc\ucr,\bullet)_{L^2(\Omega)}\}+\partial I_K (\bar\Lambda).
   \end{align*}
   Äquivalent zu dieser Aussage ist, dass
   $(\gradnc\ucr,\bullet)_{L^2(\Omega)}\in \partial
-  I_{K_1(0)}(\bar\Lambda)$, das heißt nach \Cref{def:subdifferential} gilt für
-  alle $\Lambda\in \Pbb_0(\Tcal;\Rbb^n)$ 
+  I_K (\bar\Lambda)$, das heißt nach \Cref{def:subdifferential} gilt für
+  alle $\Lambda\in  P_0(\Tcal;\Rbb^2)$ 
   \begin{align*}
     (\gradnc\ucr,\Lambda-\bar\Lambda)_{L^2(\Omega)} 
     \leq 
-    I_{K_1(0)}(\Lambda) - I_{K_1(0)}(\bar\Lambda)
+    I_K (\Lambda) - I_K (\bar\Lambda)
     =
-    I_{K_1(0)}(\Lambda),
+    I_K (\Lambda),
   \end{align*}
-  da $\bar\Lambda\in K_1(0)$.
-  Für $\Lambda\in \Pbb_0(\Tcal;\Rbb^n)\cap K_1(0)$ folgt insbesondere
+  da $\bar\Lambda\in K$.
+  Für $\Lambda\in  P_0(\Tcal;\Rbb^2)\cap K$ folgt insbesondere
   \begin{align*}
     (\gradnc\ucr,\Lambda-\bar\Lambda)_{L^2(\Omega)} 
     &\leq 0,\quad\text{also }\\ 
@@ -256,7 +275,7 @@ Somit ist das folgende Sattelpunktsproblem äquivalent zu
     &\leq(\gradnc\ucr,\bar\Lambda)_{L^2(\Omega)}.
   \end{align*}
   Damit und der Wahl $\Lambda\in \sign\left(\gradnc\ucr\right)\subset 
-  \Pbb_0(\Tcal;\Rbb^n)\cap K_1(0)$
+   P_0(\Tcal;\Rbb^2)\cap K$
   impliziert die Cauchy-Schwarzsche Ungleichung, dass
   \begin{align*}
     \int_\Omega|\gradnc\ucr|\dx
@@ -279,7 +298,7 @@ Somit ist das folgende Sattelpunktsproblem äquivalent zu
   Außerdem gilt mit der Cauchy-Schwarzschen Ungleichung auf allen $T\in\Tcal$,
   dass $(\gradnc\ucr\cdot
   \bar\Lambda)|_T\leq\big|(\gradnc\ucr)|_{T}\big|$, da
-  $\bar\Lambda\in K_1(0)$.
+  $\bar\Lambda\in K$.
   Dementsprechend muss {\color{red} (da somit alle Summanden der rechten Summe
   kleiner-gleich den entsprechenden Summanden (d.h. zum gleichen $T$) der
   linken Summe sind und Gleichheit der Summen somit nur noch möglich ist, wenn
@@ -292,22 +311,21 @@ Somit ist das folgende Sattelpunktsproblem äquivalent zu
 
   Damit ist \Cref{eq:discreteMultiplierScalerProductEquality} gezeigt.
 
-  \medskip
   In der ersten Komponente ist das Lagrange-Funktional \todo{'Lagrange' 
   weglassen, falls nicht doch noch benötigt? Keine Quelle nannte das bisher so}
   Fr\'echet-\\
   differenzierbar {\color{red} (und für $\bar\Lambda$ ist das Funktional
   reellwertig und nimmt nicht $-\infty$ an, also ist Zeidler anwendbar)} mit 
   \begin{align*}
-    d\Lcal_h(\bullet,\bar\Lambda)(\ucr;\vcr)=
+    dL(\bullet,\bar\Lambda)(\ucr;\vcr)=
     \int_\Omega\bar\Lambda\cdot \gradnc\vcr\dx
     +\alpha (\ucr,\vcr)_{L^2(\Omega)} - \int_\Omega f\vcr\dx
   \end{align*}
   für alle $\vcr\in\CR^1_0(\Tcal)$.
-  Da $\ucr$ Minimierer von  $\Lcal_h(\bullet, \bar\Lambda)$ {\color{red}
+  Da $\ucr$ Minimierer von  $L(\bullet, \bar\Lambda)$ {\color{red}
   (reellwertig!!!)} in $\CR^1_0(\Tcal)$
   ist, gilt nach \Cref{thm:necessaryConditionFreeLocalExtrema}, dass $0 =
-  d\Lcal_h(\bullet,\bar\Lambda)(\ucr;\vcr)$ .
+  dL(\bullet,\bar\Lambda)(\ucr;\vcr)$ .
 
   
   Diese Bedingung ist für alle $\vcr\in\CR^1_0(\Tcal)$ äquivalent zu
@@ -319,7 +337,6 @@ Somit ist das folgende Sattelpunktsproblem äquivalent zu
 
   Somit ist \Cref{eq:discreteMultiplierL2Equality} gezeigt.
 
-  \bigskip
   \textit{(ii) $\Rightarrow$ (iii).}
   Für alle $\vcr\in\CR^1_0(\Tcal)$ gilt mit
   \Cref{eq:discreteMultiplierL2Equality}, der CSU,
@@ -350,7 +367,6 @@ Somit ist das folgende Sattelpunktsproblem äquivalent zu
   Damit löst $\ucr$ Ungleichung \eqref{eq:discreteVariationalInequality}
   für alle $\vcr\in\CR^1_0(\Tcal)$ in $\CR^1_0(\Tcal)$.
 
-  \bigskip
   \textit{(iii) $\Rightarrow$ (i)}.
   Sei $\ucr\in\CR^1_0(\Tcal)$ Lösung von
   \Cref{prob:discreteProblem}.
@@ -365,7 +381,6 @@ Somit ist das folgende Sattelpunktsproblem äquivalent zu
   \Cref{prob:discreteProblem} ist, das heißt zu zeigen ist
   $\tilde{u}_\CR=\ucr$.
 
-  \medskip
   Für ein solches $\tilde{u}_\CR$ gilt
   \begin{align*}
     \left(f-\alpha\ucr,\tilde{u}_\CR-\ucr\right)_{L^2(\Omega)} 
@@ -387,12 +402,12 @@ Somit ist das folgende Sattelpunktsproblem äquivalent zu
   \end{align*}
   welche äquivalent ist zu
   \begin{align*}
-    \alpha\left\Vert\tilde{u}_\CR-\ucr\right\Vert_{L^2(\Omega)}^2
+    \alpha\left\Vert\tilde{u}_\CR-\ucr\right\Vert^2
     \leq
     0.
   \end{align*}
   Da $\alpha>0$, impliziert das
-  $\left\Vert\tilde{u}_\CR-\ucr\right\Vert_{L^2(\Omega)}^2=0$, also
+  $\left\Vert\tilde{u}_\CR-\ucr\right\Vert^2=0$, also
   $\tilde{u}_\CR=\ucr$ in $\CR^1_0(\Tcal)$.
 \end{proof}
 
@@ -433,7 +448,7 @@ Experimenten Raten mit dem folgenden Theorem für
   Minimiere von $I$ in den entsprechenden Räumen.
   Dann gilt 
   \begin{align*}
-    \frac{\alpha}{2}\Vert u-u_h\Vert^2_{L^2(\Omega)}\leq
+    \frac{\alpha}{2}\Vert u-u_h\Vert^2\leq
     ch^{1/2}.
   \end{align*}
 \end{theorem}
@@ -451,13 +466,13 @@ erhalten wir weiterhin die folgende Aussage.
 
   Dann gilt
   \begin{align*}
-    \frac{\alpha}{2}\Vert u-\ucr\Vert^2_{L^2(\Omega)}\leq
+    \frac{\alpha}{2}\Vert u-\ucr\Vert^2\leq
     E(\ucr)-E(u)=\Enc(\ucr)+\sum_{F\in\Fcal}\Vert[\ucr]_F\Vert_{L^1(F)}-E(u).
   \end{align*}
 
   Insbesondere gilt auch  [nur für mich zur erinnerung für den Moment]
   \begin{align*}
-    \frac{\alpha}{2}\Vert u-\ucr\Vert^2_{L^2(\Omega)}&\leq
+    \frac{\alpha}{2}\Vert u-\ucr\Vert^2&\leq
     E(\ucr)-E(u)=
     |E(\ucr)-E(u)|=
     |E(u)-E(\ucr)|\\
@@ -493,16 +508,16 @@ garantierte untere Energieschranke zur Verfügung.
   $\Enc(\ucr)$, dann gilt
   \begin{align}
     \label{eq:gleb}
-    \Enc(\ucr)+\frac{\alpha}{2}\Vert u-\ucr\Vert_{L^2(\Omega)}^2
+    \Enc(\ucr)+\frac{\alpha}{2}\Vert u-\ucr\Vert^2
     -\frac{\kappa_\CR}{\alpha}\Vert
-    h_\Tcal(f-\alpha\ucr)\Vert_{L^2(\Omega)} |f|_{1,2}\leq E(u),
+    h_\Tcal(f-\alpha\ucr)\Vert |f|_{1,2}\leq E(u),
   \end{align}
-  wobei $|\bullet|_{1,2}=\Vert\nabla \bullet\Vert_{L^2(\Omega)}$.
+  wobei $|\bullet|_{1,2}=\Vert\nabla \bullet\Vert$.
   
   Insbesondere gilt für 
   $\Egleb \coloneqq 
     \Enc(\ucr) - \frac{\kappa_\CR}{\alpha}\Vert
-    h_\Tcal(f-\alpha\ucr)\Vert_{L^2(\Omega)} |f|_{1,2}$, dass
+    h_\Tcal(f-\alpha\ucr)\Vert |f|_{1,2}$, dass
     $\Enc(\ucr)\geq \Egleb$ und $E(u)\geq \Egleb$.
     \todo[inline]{$\kappa_\CR$ (Bessel Nullstelle) zitieren und wohl noch was
     zur Regularität der Lösung bei dieser RHS sagen, also das Lösung 

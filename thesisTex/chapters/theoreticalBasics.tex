@@ -7,7 +7,7 @@ Die Räume der Crouzeix-Raviart-Finite-Elemente-Funktionen sind definiert durch
 \begin{align*}
   \CR^1(\Tcal)
   &\coloneqq
-  \{\vcr\in\Pbb_1(\Tcal)\,\mid\, \vcr \text{ ist stetig in }\Mid(E)\text{ für
+  \{\vcr\in P_1(\Tcal)\,\mid\, \vcr \text{ ist stetig in }\Mid(E)\text{ für
   alle } E\in\Ecal\} \quad\text{und}\\
   \CR^1_0(\Tcal)
   &\coloneqq
@@ -98,11 +98,11 @@ Falls $\Omega\subset\Rbb^2$, nutzen wir die Notation $\Tcal$ für eine reguläre
 Triangulierung von $\Omega$ im Sinne von Philippe Ciarlet in eine Menge von
 abgeschlossenen Dreiecken (cf.\ \cite[Kapitel 1.3.1]{Car09b}).
 Die Menge der stückweisen konstanten Funktionen auf der Triangulierung $\Tcal$
-mit Werten in $\Rbb^m$ notieren wir dann mit $\Pbb_0(\Tcal,\Rbb^m)$ und die
+mit Werten in $\Rbb^m$ notieren wir dann mit $ P_0(\Tcal,\Rbb^m)$ und die
 Menge der stückweisen affinen Funktionen auf $\Tcal$ mit Werten in $\Rbb^m$ mit
-$\Pbb_1(\Tcal,\Rbb^m)$.
+$ P_1(\Tcal,\Rbb^m)$.
 Für ein Dreieck $T\in\Tcal$ sei die längste Seitenlänge $h_T$.
-Damit können wir die stückweise konstante Funktion $h_\Tcal\in\Pbb_0(\Tcal)$
+Damit können wir die stückweise konstante Funktion $h_\Tcal\in P_0(\Tcal)$
 für alle $T\in\Tcal$ durch $h_\Tcal|_T\coloneqq h_T$ definieren.
 Die Menge der Knoten der Triangulierung sei $\Ncal$, wobei die Menge der
 inneren Knoten mit $\Ncal(\Omega)$, die Menge der Randknoten mit
@@ -126,6 +126,16 @@ Mit $|\bullet|$ bezeichnen wir, je nach Argument, die euklidischen Norm eines
 Vektors $v\in\Rbb^m$, den Inhalt eines Dreiecks $T\in\Tcal$, die Länge
 einer Kante $E\in\Ecal$, die Kardinalität einer endlichen Menge $A$
 oder $|\Omega|=\int_\Omega 1\dx$.
+
+Die Signumfunktion auf dem $\Rbb^m$ definieren wir für einen Vektor
+$v\in\Rbb^m$ durch
+\begin{align*}
+  \sign(v)\coloneqq
+  \begin{cases}
+    \left\{\frac{v}{|v|}\right\},&\text{ falls }v\in\Rbb^m\setminus\{0\},\\
+    \left\{w\in\Rbb^m\,\middle|\,|w|\leq 1\right\},&\text{ sonst.}
+  \end{cases}
+\end{align*}
 
 Ist $V$ ein normierter Vektorraum, so bezeichnen wir die entsprechende Norm auf
 $V$ mit $\Vert\bullet\Vert_V$. 
