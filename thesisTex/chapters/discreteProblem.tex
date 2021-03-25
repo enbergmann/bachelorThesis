@@ -1,68 +1,37 @@
-\section{Crouzeix-Raviart-Finite-Elemente-Methode}
-Bevor wir \Cref{prob:continuousProblem} diskretisieren, rufen wir uns den dafür
-benötigten Crouzeix-Raviart-Finite-Elemente-Raum und einige wichtige
-Eigenschaften über diesen in Erinnerung.
-
-\begin{definition}
-  Die Räume der Crouzeix-Raviart-Finite-Elemente-Funktion sind 
-  \begin{align*}
-    \CR^1(\Tcal)
-    &\coloneqq
-    \{\vcr\in\Pbb_1(\Tcal)\,\mid\, \vcr \text{ ist stetig in }\Mid(E)\text{ für
-    alle } E\in\Ecal\} \quad\text{und}\\
-    \CR^1_0(\Tcal)
-    &\coloneqq
-    \{\vcr\in\CR^1(\Tcal)\,\mid\, \forall E\in\Ecal(\partial\Omega)\quad
-    \vcr(\Mid(E))=0\}.
-  \end{align*}
-  Für eine Kante $E\in\Ecal$ ist die Crouzeix-Raviart-Basisfunktion
-  $\psi_E\in\CR^1(\Tcal)$ auf einem Dreieck $T\in\Tcal$ gegeben durch lineare
-  Interpolation der Werte in den Kantenmittelpunkten $F\in\Ecal(T)$, die 
-  definiert sind als
-  \begin{align*}
-    \psi_E(\Mid(F))
-    \coloneqq
-    \begin{cases}
-      1,&\text{ falls } F=E,\\
-      0,&\text{ falls } F\neq E.
-    \end{cases}
-  \end{align*}
-\end{definition}
-
-\todo[inline]{nc Differentialoperatoren, diskrete Norm/Energienorm, CR
-Basisfunktionen}
-
 \section{Formulierung}
-\todo[inline]{Quote all CR and discretisation stuff right here somewhere (mglw
-in einer subsection)}
+Für den Rest dieser Arbeit sei $\Omega\subset\Rbb^2$.
 
-bevor wir das diskrete problem von (cref probcont) formulieren, bemerken wir,
-dass jede CR Funtkion in BV ist, was induktiv aus
-\cite[S. 404, Example 10.2.1]{ABM14} folgt unter Nutzung (noch irgendwas
-Dichte Argument mäßiges für die totale Variation)
+Bevor wir \Cref{prob:continuousProblem} diskretisieren, merken wir an,
+dass $\CR^1(\Tcal)\subset\BV(\Omega)$, da
 \begin{align*}
-  |\vcr|_{\BV(\Omega)} = \Vert \gradnc \vcr\Vert_{L^1(\Omega)} +
-  \sum_{F\in\Fcal(\Omega)}\int_F |[\vcr]_F|\ds,
-\end{align*}
-woraus folgt
+  |\vcr|_{\BV(\Omega)} 
+  = 
+  \Vert \gradnc \vcr\Vert_{L^1(\Omega)} 
+  + \sum_{E\in\Ecal(\Omega)}\Vert[\vcr]_E\Vert_{L^1(E)}
+  \quad\text{für alle }\vcr\in\CR^1(\Tcal).
+\end{align*} 
+Dies wird für $|\Tcal|=2$ zum Beispiel von \cites[S. 404, Example
+10.2.1]{ABM14}[S. 301, Proposition 10.1]{Bar15} impliziert und kann
+analog für beliebige reguläre Triangulierungen von $\Omega$ bewiesen
+werden.
+Damit gilt dann insbesondere
 \begin{align*}
   |\vcr|_{\BV(\Omega)} +\Vert\vcr\Vert_{L^1(\partial\Omega)} 
   = \Vert \gradnc \vcr\Vert_{L^1(\Omega)} +
-  \sum_{F\in\Fcal}\int_F |[\vcr]_F|\ds,
+  \sum_{E\in\Ecal}\Vert[\vcr]_E\Vert_{L^1(E)}.
 \end{align*}
-Wir betrachten eine nichtkonforme Diskretisierung, da wir die Sprungterme
-weglassen, wenn wir 
-  $|\vcr|_{\BV(\Omega)} +\Vert\vcr\Vert_{L^1(\partial\Omega)}$
-durch 
-  $\Vert \gradnc \vcr\Vert_{L^1(\Omega)}$ ersetzen.
-  Somit erhalten wir:
-  \todo[inline]{Above was just WIP, write that properly and cite stuff.
-  Programm gibt Sprungtermsumme aus, z.B. stagnierend bei 11 auf allen Leveln,
-  darauf vielleicht noch kurz in der Auswertung eingehen ,man sieht, dass die
-  Sprünge tatsächlch im nonkonformen Problem nicht minimiert werden oder so'}
 
-Betrachte für einen Parameter $\alpha\in\Rbb_+$ und die rechte Seite $f\in
-L^2(\Omega)$ folgende Diskretisierung von \Cref{prob:continuousProblem}. 
+Um eine nichtkonforme Formulierung von \Cref{prob:continuousProblem} zu 
+erhalten, ersetzen wir die Terme 
+$|\bullet|_{\BV(\Omega)} +\Vert\bullet\Vert_{L^1(\partial\Omega)}$ des
+Funktionals $E$ durch 
+$\Vert \gradnc \bullet\Vert_{L^1(\Omega)}$, das heißt wir vernachlässigen
+bei der nichtkonformen Formulierung die Terme
+$\sum_{E\in\Ecal}\Vert[\bullet]_E\Vert_{L^1(E)}$.
+
+Somit erhalten wir das folgende Minimierungsproblem für den Parameter
+$\alpha\in\Rbb_+$ und die rechte Seite $f\in
+L^2(\Omega)$.
 
 \begin{problem}\label{prob:discreteProblem}
   Finde $\ucr\in \CR^1_0(\Tcal)$,
@@ -77,7 +46,7 @@ L^2(\Omega)$ folgende Diskretisierung von \Cref{prob:continuousProblem}.
 \section{Charakterisierung und Existenz eines eindeutigen Minimierers}
 
 Definiere für $\vcr\in\CR^1_0(\Tcal)$, $\Lambda\in\Pbb_0(\Tcal;\Rbb^n)\subset
-L^\infty(\Omega;\Rbb^n)$ \todo{stimmt das?},
+L^\infty(\Omega;\Rbb^n)$ 
 \begin{align*}
   K_1(0)
   &\coloneqq 

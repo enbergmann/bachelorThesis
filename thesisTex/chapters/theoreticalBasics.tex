@@ -1,3 +1,43 @@
+Bevor wir eine Diskretisierung von \Cref{prob:continuousProblem} formulieren,
+rufen wir uns den dafür benötigten
+Crou\-zeix\--Ra\-vi\-art\--Fi\-ni\-te-Ele\-men\-te-Raum und
+einige relevante Eigenschaften über diesen in Erinnerung.
+
+Die Räume der Crouzeix-Raviart-Finite-Elemente-Funktionen sind definiert durch
+\begin{align*}
+  \CR^1(\Tcal)
+  &\coloneqq
+  \{\vcr\in\Pbb_1(\Tcal)\,\mid\, \vcr \text{ ist stetig in }\Mid(E)\text{ für
+  alle } E\in\Ecal\} \quad\text{und}\\
+  \CR^1_0(\Tcal)
+  &\coloneqq
+  \{\vcr\in\CR^1(\Tcal)\,\mid\, \forall E\in\Ecal(\partial\Omega)\quad
+  \vcr(\Mid(E))=0\}.
+\end{align*}
+
+Für eine Kante $E\in\Ecal$ definieren wir für alle $F\in\Ecal$ einen Wert
+\begin{align*}
+  \psi_E(\Mid(F))
+  \coloneqq
+  \begin{cases}
+    1,&\text{ falls } F=E,\\
+    0,&\text{ falls } F\neq E.
+  \end{cases}
+\end{align*}
+Damit ist die Crouzeix-Raviart-Basisfunktion $\psi_E\in\CR^1(\Tcal)$
+gegeben durch elementweise lineare Interpolation dieser Werte in den
+Mittelpunkten der drei Kanten eines jeden Dreiecks $T\in\Tcal$.
+
+Die Menge $\{\psi_E\,\mid\,E\in\Ecal(\Omega)\}$ bildet eine Basis von
+$\CR^1_0(\Tcal)$.
+
+Da die Funktionen 
+\todo[inline]{nc Differentialoperatoren, diskrete Norm/Energienorm, CR
+Basisfunktionen, $\anc$}
+\todo[inline]{Eigenes CR Kapitel wenn Quelle gefunden, direkt nach BV
+Funktionen Section. Wie Courant einbinden. Vielleicht section 
+Courant- und Crouzeix-Raviart-Finite-Elemente-Methode}
+
 \section{Vorausgesetztes Wissen}
 \label{sec:basicKnowledge}
 
@@ -18,8 +58,13 @@ Dabei eignen sich die Register von \cite{Zei90b} und \cite{Zei85} hervorragend
 zum schnellen Auffinden von Begriffen in allen eben aufgeführten
 Referenzen.
 
+Des Weiteren CR in \ldots
+Im folgenden \Cref{sec:notation} gehen wir auf die in dieser Arbeit benutzte
+Notation ein.
+
 
 \section{Notation}
+\label{sec:notation}
 
 Wir wählen für die natürlichen Zahlen die Konvention
 $\Nbb=\{1,2,3,\ldots\}$ und $\Nbb_0=\Nbb\cup\{0\}$. 
@@ -79,7 +124,8 @@ $[\bullet]_E\coloneqq \bullet|_E$.
 
 Mit $|\bullet|$ bezeichnen wir, je nach Argument, die euklidischen Norm eines
 Vektors $v\in\Rbb^m$, den Inhalt eines Dreiecks $T\in\Tcal$, die Länge
-einer Kante $E\in\Ecal$ oder $|\Omega|=\int_\Omega 1\dx$.
+einer Kante $E\in\Ecal$, die Kardinalität einer endlichen Menge $A$
+oder $|\Omega|=\int_\Omega 1\dx$.
 
 Ist $V$ ein normierter Vektorraum, so bezeichnen wir die entsprechende Norm auf
 $V$ mit $\Vert\bullet\Vert_V$. 
