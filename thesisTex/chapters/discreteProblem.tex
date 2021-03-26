@@ -73,9 +73,9 @@ L^\infty(\Omega;\Rbb^2)$ gegeben ist durch
 \end{align*} 
 und aufgrund der Konvexität von $K$ konvex ist.
 Für $\vcr\in\CR^1_0(\Tcal)$ 
-und $\Lambda\in P_0(\Tcal;\Rbb^2)\subset L^\infty(\Omega;\Rbb^2)$ können
+und $\Lambda\in P_0\left(\Tcal;\Rbb^2\right)\subset L^\infty(\Omega;\Rbb^2)$ können
 wir damit das Funktional
-$L:\CR^1_0(\Tcal)\times  P_0(\Tcal;\Rbb^2)\to [-\infty,\infty)$ 
+$L:\CR^1_0(\Tcal)\times  P_0\left(\Tcal;\Rbb^2\right)\to [-\infty,\infty)$ 
 definieren durch
 \begin{align}\label{eq:discreteProblemLagrangeFunctional}
   L(\vcr,\Lambda) \coloneqq \int_\Omega\Lambda\cdot\gradnc\vcr\dx +
@@ -85,7 +85,7 @@ definieren durch
 
 Dabei gilt $L(\vcr,\Lambda)>-\infty$ genau dann, wenn $\Lambda\in K$. 
 Außerdem gilt mit der Cauchy-Schwarzschen Ungleichung für beliebige
-$\Lambda\in P_0(\Tcal;\Rbb^2)\cap K$, dass
+$\Lambda\in P_0\left(\Tcal;\Rbb^2\right)\cap K$, dass
 \begin{align*}
   \int_\Omega \Lambda\cdot\gradnc\vcr\dx
   \leq \int_\Omega |\Lambda\cdot\gradnc\vcr|\dx
@@ -95,32 +95,45 @@ $\Lambda\in P_0(\Tcal;\Rbb^2)\cap K$, dass
 \end{align*}
 Insgesamt folgt
 \begin{align*}
-  \sup_{\Lambda\in P_0(\Tcal;\Rbb^2)}L(\vcr,\Lambda)=
-  \sup_{\Lambda\in P_0(\Tcal;\Rbb^2)\cap K}L(\vcr,\Lambda)
+  \sup_{\Lambda\in P_0\left(\Tcal;\Rbb^2\right)}L(\vcr,\Lambda)=
+  \sup_{\Lambda\in P_0\left(\Tcal;\Rbb^2\right)\cap K}L(\vcr,\Lambda)
   \leq \Enc(\vcr).
 \end{align*}
 
 Weiterhin gilt für alle $\vcr\in\CR^1_0(\Tcal)$, wenn wir
-$\Lambda\in P_0(\Tcal;\Rbb^2)\cap K$ elementweise auf allen $T\in\Tcal$
+$\Lambda\in P_0\left(\Tcal;\Rbb^2\right)\cap K$ elementweise auf allen $T\in\Tcal$
 definieren durch $\Lambda(x)\in\sign\left(\gradnc\vcr(x)\right)$ für alle
 $x\in \interior(T)$, dass $L(\vcr,\Lambda)=\Enc(\vcr)$ und deshalb auch
-$\Enc(\vcr)\leq\sup_{\Lambda\in P_0(\Tcal;\Rbb^2)}L(\vcr,\Lambda)$.
+$\Enc(\vcr)\leq\sup_{\Lambda\in P_0\left(\Tcal;\Rbb^2\right)}L(\vcr,\Lambda)$.
 
-Somit ist das folgende Sattelpunktsproblem äquivalent zu
+Insgesamt können wir festhalten, dass für alle $\vcr\in\CR^1_0(\Tcal)$ gilt
+\begin{equation}
+  \label{eq:discreteEnergySaddlefunctionalEquality}
+  \Enc(\vcr)
+  =\sup_{\Lambda\in P_0\left(\Tcal;\Rbb^2\right)\cap K}L(\vcr,\Lambda)
+  =\sup_{\Lambda\in P_0\left(\Tcal;\Rbb^2\right)}L(\vcr,\Lambda).
+\end{equation}
+
+Insbesondere ist damit die Funktion $\ucr\in\CR^1_0(\Tcal)$ 
+aus der Lösung $\left( \ucr,\Lambda \right)\in\CR^1_0(\Tcal)\times
+ P_0\left(\Tcal;\Rbb^2\right)$ des folgenden Sattelpunktsproblems Lösung von
 \Cref{prob:discreteProblem}.
 \begin{problem}\label{prob:discreteSaddlepointProblem}
-  Finde $\ucr\in\CR^1_0(\Tcal)$ und $\Lambda\in P_0(\Tcal;\Rbb^2)$, sodass
+  Finde $\left( \ucr,\Lambda \right)\in\CR^1_0(\Tcal)\times
+  P_0\left(\Tcal;\Rbb^2\right)$,
+  sodass
   \begin{align*}
     L(\ucr,\Lambda) 
     = 
-    \inf_{\vcr\in\CR^1_0(\Tcal)}\sup_{\Lambda\in P_0(\Tcal;\Rbb^2)}
+    \inf_{\vcr\in\CR^1_0(\Tcal)}\sup_{\Lambda\in P_0\left(\Tcal;\Rbb^2\right)}
     L(\vcr,\Lambda).
   \end{align*}
 \end{problem}
 
 Nachdem diese Vorbereitungen abgeschlossen sind, können wir nun beweisen,
 dass \Cref{prob:discreteProblem} eine eindeutige Lösung besitzt und
-äquivalente Charakterisierungen für diese zeigen.
+äquivalente Charakterisierungen für diese zeigen. Der Inhalt des folgenden
+Theorems wurde von Professor Carstensen formuliert.
 \begin{theorem}
   \label{thm:discProbCharacterizationOfDiscreteSolutions}
   Es existiert eine eindeutige Lösung $\ucr\in\CR^1_0(\Tcal)$ von
@@ -131,7 +144,7 @@ dass \Cref{prob:discreteProblem} eine eindeutige Lösung besitzt und
   \begin{itemize}
     \item[(i)] \Cref{prob:discreteProblem} wird von $\ucr$ gelöst.
     \item[(ii)] Es existiert ein
-      $\bar\Lambda\in P_0(\Tcal;\Rbb^2)$ mit
+      $\bar\Lambda\in P_0\left(\Tcal;\Rbb^2\right)$ mit
       $\left|\bar\Lambda(\bullet)\right|\leq 1$
       fast überall in $\Omega$, sodass
       \begin{equation}
@@ -182,60 +195,65 @@ dass \Cref{prob:discreteProblem} eine eindeutige Lösung besitzt und
 
   Außerdem ist $\Enc$ stetig bezüglich der Konvergenz in $L^2(\Omega)$,
   was impliziert, dass $\ucr$ Minimierer von $\Enc$ in $\CR^1_0(\Tcal)$ sein
-  muss.
+  muss. \todo{noch erklären, warum stetig oder reicht das so? S. 17 im Ausdruck}
 
   Die Lösung $\ucr\in \CR^1_0(\Tcal)$ ist eindeutig, da $\Enc$ strikt konvex
   ist.
 
-  \todo{hier}
   Nachdem wir die Existenz eines eindeutigen Minimierers
   $\ucr\in\CR^1_0(\Tcal)$ von \Cref{prob:discreteProblem} bewiesen haben,
   zeigen wir nun die äquivalenten Charakterisierung von $\ucr$.
 
   \textit{(i) $\Rightarrow$ (ii).}
-  Zunächst sei erwähnt, dass aus der Existenz des Minimierers $\ucr$ von 
-  \Cref{prob:discreteProblem} und der Äquivalenz des Minimierungsproblems
-  \ref{prob:discreteProblem} und des
-  Sattelpunktsproblems \ref{prob:discreteSaddlepointProblem},
-  wobei wir insbesondere bereits gezeigt haben, dass 
-  $\Enc(\vcr) = \sup_{\Lambda\in P_0(\Tcal;\Rbb^2)}L(\vcr,\Lambda)$
-  für alle $\vcr\in\CR^1_0(\Tcal)$, folgt,
-  dass $\bar\Lambda\in P_0(\Tcal;\Rbb^2)\cap K$ {\color{red} (denn
-  sonst ist das innere $\sup$ nicht erfüllt, da sonst
-  $-I_K (\bar\Lambda)=-\infty$})
-  existiert mit 
+  Sei $\ucr\in\CR^1_0(\Tcal)$ Lösung von \Cref{prob:discreteProblem}.
+
+  Durch \Cref{eq:discreteEnergySaddlefunctionalEquality} wissen wir bereits,
+  dass $\Enc(\vcr) = \sup_{\Lambda\in
+  P_0\left(\Tcal;\Rbb^2\right)}L(\vcr,\Lambda)$ für alle
+  $\vcr\in\CR^1_0(\Tcal)$.
+  Somit existiert für $\ucr$ ein $\bar\Lambda\in
+  P_0\left(\Tcal;\Rbb^2\right)\cap K$ mit $\Enc(\ucr) =
+  L\left(\ucr,\bar\Lambda\right)$. 
+  Da $\ucr$ \Cref{prob:discreteProblem} löst, folgt insgesamt
   \begin{align*}
-    L\left(\ucr,\bar\Lambda\right)=
-    \inf_{\vcr\in\CR^1_0(\Tcal)}\sup_{\Lambda\in P_0(\Tcal;\Rbb^2)} 
+    L\left(\ucr,\bar\Lambda\right)
+    &=
+    \Enc(\ucr)
+    =
+    \inf_{\vcr\in\CR^1_0(\Tcal)}\Enc(\vcr)
+    =
+    \inf_{\vcr\in\CR^1_0(\Tcal)}\sup_{\Lambda\in P_0\left(\Tcal;\Rbb^2\right)} 
     L(\vcr,\Lambda).
   \end{align*}
+
+  \todo{hier}
   Da nach \cite[S. 379, Lemma 36.1]{Roc70} gilt, dass
   \begin{align*}
-    \inf_{\vcr\in\CR^1_0(\Tcal)}\sup_{\Lambda\in P_0(\Tcal;\Rbb^2)} 
+    \inf_{\vcr\in\CR^1_0(\Tcal)}\sup_{\Lambda\in P_0\left(\Tcal;\Rbb^2\right)} 
     L(\vcr,\Lambda)
     \geq 
-    \sup_{\Lambda\in P_0(\Tcal;\Rbb^2)} \inf_{\vcr\in\CR^1_0(\Tcal)} 
+    \sup_{\Lambda\in P_0\left(\Tcal;\Rbb^2\right)} \inf_{\vcr\in\CR^1_0(\Tcal)} 
     L(\vcr,\Lambda),
   \end{align*}
   folgt insgesamt
   \begin{align*}
-    \inf_{\vcr\in\CR^1_0(\Tcal)}\sup_{\Lambda\in P_0(\Tcal;\Rbb^2)} 
+    \inf_{\vcr\in\CR^1_0(\Tcal)}\sup_{\Lambda\in P_0\left(\Tcal;\Rbb^2\right)} 
     L(\vcr,\Lambda)
     =
     L\left(\ucr,\bar\Lambda\right)
     =
-    \sup_{\Lambda\in P_0(\Tcal;\Rbb^2)} \inf_{\vcr\in\CR^1_0(\Tcal)} 
+    \sup_{\Lambda\in P_0\left(\Tcal;\Rbb^2\right)} \inf_{\vcr\in\CR^1_0(\Tcal)} 
     L(\vcr,\Lambda).
   \end{align*}
   Somit ist $\left(\ucr,\bar\Lambda\right)\in 
-  \CR^1_0(\Tcal)\times ( P_0(\Tcal;\Rbb^2)\cap K)$ nach \cite[S. 380,
+  \CR^1_0(\Tcal)\times ( P_0\left(\Tcal;\Rbb^2\right)\cap K)$ nach \cite[S. 380,
   Lemma
   36.2]{Roc70} Sattelpunkt 
-  von $L$ bezüglich der Maximierung über $ P_0(\Tcal;\Rbb^2)$ und
+  von $L$ bezüglich der Maximierung über $ P_0\left(\Tcal;\Rbb^2\right)$ und
   der Minimierung über $\CR^1_0(\Tcal)$. 
   Das bedeutet nach \cite[380]{Roc70} insbesondere, dass $\ucr$ Minimierer von 
   $L(\bullet, \bar\Lambda)$ in $\CR^1_0(\Tcal)$ ist und $\bar\Lambda$
-  Maximierer von $L(\ucr,\bullet)$ über $ P_0(\Tcal;\Rbb^2)$.
+  Maximierer von $L(\ucr,\bullet)$ über $ P_0\left(\Tcal;\Rbb^2\right)$.
 
   In der zweiten Komponente ist $L$ konkav {(\color{red} $K$ ist 
   konvex, somit ist $I_K $ konvex, also $-I_K $ konkav. Die 
@@ -243,10 +261,10 @@ dass \Cref{prob:discreteProblem} eine eindeutige Lösung besitzt und
   \todo[inline]{diese grundlegende Aussage über Indikatorfunktionen irgendwo
   (vielleicht sogar in Grundlagen) einmal zitieren}.
   Da wir bereits wissen, dass $L(\ucr,\bullet)$ von $\bar\Lambda$ in
-  $ P_0(\Tcal;\Rbb^2)$ maximiert wird, wird das konvexe Funktional 
+  $ P_0\left(\Tcal;\Rbb^2\right)$ maximiert wird, wird das konvexe Funktional 
   $-L(\ucr,\bullet)$ 
   \todo[inline]{zitieren, was konkav ist und das -konvex=konkav}
-  von $\bar\Lambda$ in $ P_0(\Tcal;\Rbb^2)$ minimiert 
+  von $\bar\Lambda$ in $ P_0\left(\Tcal;\Rbb^2\right)$ minimiert 
   \todo[inline]{auch diese basic optimierungsaussage noch zitieren}.
   Nach den Theoremen \ref{thm:extremalprinciple},
   \ref{thm:subdifferentialSumRule} und \ref{thm:subdiffGateaux} gilt somit
@@ -258,7 +276,7 @@ dass \Cref{prob:discreteProblem} eine eindeutige Lösung besitzt und
   Äquivalent zu dieser Aussage ist, dass
   $(\gradnc\ucr,\bullet)_{L^2(\Omega)}\in \partial
   I_K (\bar\Lambda)$, das heißt nach \Cref{def:subdifferential} gilt für
-  alle $\Lambda\in  P_0(\Tcal;\Rbb^2)$ 
+  alle $\Lambda\in  P_0\left(\Tcal;\Rbb^2\right)$ 
   \begin{align*}
     (\gradnc\ucr,\Lambda-\bar\Lambda)_{L^2(\Omega)} 
     \leq 
@@ -267,7 +285,7 @@ dass \Cref{prob:discreteProblem} eine eindeutige Lösung besitzt und
     I_K (\Lambda),
   \end{align*}
   da $\bar\Lambda\in K$.
-  Für $\Lambda\in  P_0(\Tcal;\Rbb^2)\cap K$ folgt insbesondere
+  Für $\Lambda\in  P_0\left(\Tcal;\Rbb^2\right)\cap K$ folgt insbesondere
   \begin{align*}
     (\gradnc\ucr,\Lambda-\bar\Lambda)_{L^2(\Omega)} 
     &\leq 0,\quad\text{also }\\ 
@@ -275,7 +293,7 @@ dass \Cref{prob:discreteProblem} eine eindeutige Lösung besitzt und
     &\leq(\gradnc\ucr,\bar\Lambda)_{L^2(\Omega)}.
   \end{align*}
   Damit und der Wahl $\Lambda\in \sign\left(\gradnc\ucr\right)\subset 
-   P_0(\Tcal;\Rbb^2)\cap K$
+   P_0\left(\Tcal;\Rbb^2\right)\cap K$
   impliziert die Cauchy-Schwarzsche Ungleichung, dass
   \begin{align*}
     \int_\Omega|\gradnc\ucr|\dx
