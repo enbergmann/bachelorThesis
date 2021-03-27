@@ -156,15 +156,15 @@ Theorems wurde von Professor Carstensen formuliert.
       und
       \begin{equation}
         \label{eq:discreteMultiplierL2Equality}
-        \left(\bar\Lambda,\gradnc\vcr\right)_{L^2(\Omega)}
+        \left(\bar\Lambda,\gradnc\vcr\right)
         = \left(f-\alpha\ucr,
-        \vcr\right)_{L^2(\Omega)}
+        \vcr\right)
         \quad\text{für alle } \vcr\in\CR^1_0(\Tcal).
       \end{equation}
     \item[(iii)] Für alle $\vcr\in\CR^1_0(\Tcal)$ gilt
       \begin{equation}
         \label{eq:discreteVariationalInequality}
-        (f-\alpha\ucr,\vcr-\ucr)_{L^2(\Omega)}\leq
+        (f-\alpha\ucr,\vcr-\ucr)\leq
         \Vert\gradnc\vcr\Vert_{L^1(\Omega)} -
         \Vert\gradnc\ucr\Vert_{L^1(\Omega)}.
       \end{equation}
@@ -214,8 +214,9 @@ Theorems wurde von Professor Carstensen formuliert.
   Somit existiert für $\ucr$ ein $\bar\Lambda\in
   P_0\left(\Tcal;\Rbb^2\right)\cap K$ mit $\Enc(\ucr) =
   L\left(\ucr,\bar\Lambda\right)$. 
-  Da $\ucr$ \Cref{prob:discreteProblem} löst, folgt insgesamt
-  \begin{align*}
+  Da außerdem $\ucr$ \Cref{prob:discreteProblem} löst, folgt insgesamt
+  \begin{align}
+    \label{eq:lagrangianEqualsInfSup}
     L\left(\ucr,\bar\Lambda\right)
     &=
     \Enc(\ucr)
@@ -224,18 +225,17 @@ Theorems wurde von Professor Carstensen formuliert.
     =
     \inf_{\vcr\in\CR^1_0(\Tcal)}\sup_{\Lambda\in P_0\left(\Tcal;\Rbb^2\right)} 
     L(\vcr,\Lambda).
-  \end{align*}
+  \end{align}
 
-  \todo{hier}
-  Da nach \cite[S. 379, Lemma 36.1]{Roc70} gilt, dass
+  Weiterhin gilt nach \cite[S. 379, Lemma 36.1]{Roc70}, dass
   \begin{align*}
     \inf_{\vcr\in\CR^1_0(\Tcal)}\sup_{\Lambda\in P_0\left(\Tcal;\Rbb^2\right)} 
     L(\vcr,\Lambda)
     \geq 
     \sup_{\Lambda\in P_0\left(\Tcal;\Rbb^2\right)} \inf_{\vcr\in\CR^1_0(\Tcal)} 
-    L(\vcr,\Lambda),
+    L(\vcr,\Lambda).
   \end{align*}
-  folgt insgesamt
+  Zusammen mit \Cref{eq:lagrangianEqualsInfSup} impliziert das
   \begin{align*}
     \inf_{\vcr\in\CR^1_0(\Tcal)}\sup_{\Lambda\in P_0\left(\Tcal;\Rbb^2\right)} 
     L(\vcr,\Lambda)
@@ -247,87 +247,98 @@ Theorems wurde von Professor Carstensen formuliert.
   \end{align*}
   Somit ist $\left(\ucr,\bar\Lambda\right)\in 
   \CR^1_0(\Tcal)\times ( P_0\left(\Tcal;\Rbb^2\right)\cap K)$ nach \cite[S. 380,
-  Lemma
-  36.2]{Roc70} Sattelpunkt 
+  Lemma 36.2]{Roc70} Sattelpunkt 
   von $L$ bezüglich der Maximierung über $ P_0\left(\Tcal;\Rbb^2\right)$ und
   der Minimierung über $\CR^1_0(\Tcal)$. 
   Das bedeutet nach \cite[380]{Roc70} insbesondere, dass $\ucr$ Minimierer von 
   $L(\bullet, \bar\Lambda)$ in $\CR^1_0(\Tcal)$ ist und $\bar\Lambda$
   Maximierer von $L(\ucr,\bullet)$ über $ P_0\left(\Tcal;\Rbb^2\right)$.
+  Mit dieser Erkenntnis können wir nun die entsprechenden
+  Optimalitätsbedingungen diskutieren.
 
-  In der zweiten Komponente ist $L$ konkav {(\color{red} $K$ ist 
-  konvex, somit ist $I_K $ konvex, also $-I_K $ konkav. Die 
-  restlichen Terme sind konstant oder linear in $\Lambda$)}
-  \todo[inline]{diese grundlegende Aussage über Indikatorfunktionen irgendwo
-  (vielleicht sogar in Grundlagen) einmal zitieren}.
-  Da wir bereits wissen, dass $L(\ucr,\bullet)$ von $\bar\Lambda$ in
-  $ P_0\left(\Tcal;\Rbb^2\right)$ maximiert wird, wird das konvexe Funktional 
-  $-L(\ucr,\bullet)$ 
-  \todo[inline]{zitieren, was konkav ist und das -konvex=konkav}
-  von $\bar\Lambda$ in $ P_0\left(\Tcal;\Rbb^2\right)$ minimiert 
-  \todo[inline]{auch diese basic optimierungsaussage noch zitieren}.
+  Zunächst bemerken wir, dass $L(\ucr,\bullet):P_0\left(\Tcal;\Rbb^2\right)\to
+  [-\infty,\infty)$ konkav ist.
+  Da $\bar\Lambda$ Maximierer von $L(\ucr,\bullet)$ in 
+  $ P_0\left(\Tcal;\Rbb^2\right)$ ist, wird das konvexe Funktional
+  $-L(\ucr,\bullet):P_0\left(\Tcal;\Rbb^2\right)\to
+  (-\infty,\infty]$ von $\bar\Lambda$ in $ P_0\left(\Tcal;\Rbb^2\right)$
+  minimiert.
   Nach den Theoremen \ref{thm:extremalprinciple},
   \ref{thm:subdifferentialSumRule} und \ref{thm:subdiffGateaux} gilt somit
   \begin{align*}
-    0\in \partial \left(-L(\ucr,\bullet)\right)(\bar\Lambda) 
+    0\in \partial \left(-L(\ucr,\bullet)\right)\left(\bar\Lambda\right) 
     =
-    \{-(\gradnc\ucr,\bullet)_{L^2(\Omega)}\}+\partial I_K (\bar\Lambda).
+    \{-(\gradnc\ucr,\bullet)\}+\partial I_K
+    \left(\bar\Lambda\right).
   \end{align*}
   Äquivalent zu dieser Aussage ist, dass
-  $(\gradnc\ucr,\bullet)_{L^2(\Omega)}\in \partial
-  I_K (\bar\Lambda)$, das heißt nach \Cref{def:subdifferential} gilt für
-  alle $\Lambda\in  P_0\left(\Tcal;\Rbb^2\right)$ 
+  $(\gradnc\ucr,\bullet)\in \partial
+  I_K \left(\bar\Lambda\right)$. 
+  Da $\bar\Lambda\in K$, folgt mit \Cref{def:subdifferential},
+  dass für alle $\Lambda\in  P_0\left(\Tcal;\Rbb^2\right)$ gilt
   \begin{align*}
-    (\gradnc\ucr,\Lambda-\bar\Lambda)_{L^2(\Omega)} 
+    (\gradnc\ucr,\Lambda-\bar\Lambda) 
     \leq 
     I_K (\Lambda) - I_K (\bar\Lambda)
     =
-    I_K (\Lambda),
+    I_K (\Lambda).
   \end{align*}
-  da $\bar\Lambda\in K$.
-  Für $\Lambda\in  P_0\left(\Tcal;\Rbb^2\right)\cap K$ folgt insbesondere
-  \begin{align*}
-    (\gradnc\ucr,\Lambda-\bar\Lambda)_{L^2(\Omega)} 
-    &\leq 0,\quad\text{also }\\ 
-    (\gradnc\ucr,\Lambda)_{L^2(\Omega)}
-    &\leq(\gradnc\ucr,\bar\Lambda)_{L^2(\Omega)}.
-  \end{align*}
-  Damit und der Wahl $\Lambda\in \sign\left(\gradnc\ucr\right)\subset 
-   P_0\left(\Tcal;\Rbb^2\right)\cap K$
-  impliziert die Cauchy-Schwarzsche Ungleichung, dass
-  \begin{align*}
+  Falls $\Lambda\in  P_0\left(\Tcal;\Rbb^2\right)\cap K$, folgt insbesondere
+  \begin{align}
+    \label{eq:scalarProductInequDiscreteProof}
+    \left(\gradnc\ucr,\Lambda-\bar\Lambda\right) 
+    &\leq 
+    0,\quad\text{also }\notag\\ 
+    \left(\gradnc\ucr,\Lambda\right)
+    &\leq
+    \left(\gradnc\ucr,\bar\Lambda\right).
+  \end{align}
+  Sei nun $\Lambda\in P_0\left(\Tcal;\Rbb^2\right)\cap K$ elementweise auf
+  allen $T\in\Tcal$ durch $\Lambda(x)\in\sign\left(\gradnc\ucr(x)\right)$
+  definiert für alle $x\in\interior(T)$.
+  Mit dieser Wahl von $\Lambda$, Ungleichung
+  \eqref{eq:scalarProductInequDiscreteProof}, der Cauchy\--Schwarz\-schen
+  Ungleichung und $\bar\Lambda\in K$ erhalten wir die Abschätzung
+  \begin{align}
+    \label{eq:sumOverAllTrianglesDualVariable}
     \int_\Omega|\gradnc\ucr|\dx
     &=
-    (\gradnc\ucr,\Lambda)_{L^2(\Omega)}
-    \leq 
-    (\gradnc\ucr,\bar\Lambda)_{L^2(\Omega)}\\
+    \int_\Omega\gradnc\ucr\cdot\Lambda\dx
+    =
+    (\gradnc\ucr,\Lambda)\notag\\
     &\leq 
-    \int_\Omega|\gradnc\ucr|\,|\bar\Lambda|\dx
+    \left(\gradnc\ucr,\bar\Lambda\right)
+    =
+    \int_\Omega\gradnc\ucr\cdot\bar\Lambda\dx \notag\\
+    &\leq 
+    \int_\Omega|\gradnc\ucr|\,\left|\bar\Lambda\right|\dx
     \leq
-    \int_\Omega|\gradnc\ucr|\dx,\quad\text{also }\\
+    \int_\Omega|\gradnc\ucr|\dx,\quad\text{das heißt }\notag\\
     \int_\Omega|\gradnc\ucr|\dx 
     &= 
-    (\gradnc\ucr,\bar\Lambda)_{L^2(\Omega)}
-    \quad\text{beziehungsweise }\\
-    \sum_{T\in\Tcal}|T|\,\big|(\gradnc\ucr)|_T\big|
+    \int_\Omega\gradnc\ucr\cdot\bar\Lambda\dx
+    \quad\text{beziehungsweise }\notag\\
+    \sum_{T\in\Tcal}|T|\,\big|(\gradnc\ucr)\!|_T\big|
     &=
-    \sum_{T\in\Tcal}|T|\,(\gradnc\ucr\cdot \bar\Lambda)|_T.
+    \sum_{T\in\Tcal}|T|\,\left(\gradnc\ucr\cdot \bar\Lambda\right)\!\!|_T.
+  \end{align}
+  Außerdem gilt für alle $T\in\Tcal$ mit der Cauchy-Schwarzschen Ungleichung
+  und $\bar\Lambda\in K$, dass 
+  \begin{align*}
+  \left(\gradnc\ucr\cdot \bar\Lambda\right)\!\!|_T
+  \leq
+  \big|(\gradnc\ucr)\!|_{T}\big|\,\left|\bar\Lambda\!|_T\right|
+  \leq
+  \big|(\gradnc\ucr)\!|_{T}\big|.
   \end{align*}
-  Außerdem gilt mit der Cauchy-Schwarzschen Ungleichung auf allen $T\in\Tcal$,
-  dass $(\gradnc\ucr\cdot
-  \bar\Lambda)|_T\leq\big|(\gradnc\ucr)|_{T}\big|$, da
-  $\bar\Lambda\in K$.
-  Dementsprechend muss {\color{red} (da somit alle Summanden der rechten Summe
-  kleiner-gleich den entsprechenden Summanden (d.h. zum gleichen $T$) der
-  linken Summe sind und Gleichheit der Summen somit nur noch möglich ist, wenn
-  die entsprechenden Summanden tatsächlich gleich sind)} für alle
-  $T\in\Tcal$ gelten, dass
-  $(\gradnc\ucr\cdot \bar\Lambda)|_T=\big|(\gradnc\ucr)|_T\big|$,
-  das heißt fast überall
-  in $\Omega$ gilt $\bar\Lambda(\bullet)\cdot\gradnc\ucr(\bullet)
+  Mit \Cref{eq:sumOverAllTrianglesDualVariable} folgt daraus für alle
+  $T\in\Tcal$, dass $\left(\gradnc\ucr\cdot
+  \bar\Lambda\right)\!\!|_T=\big|(\gradnc\ucr)\!|_T\big|$, das heißt fast
+  überall in $\Omega$ gilt $\bar\Lambda(\bullet)\cdot\gradnc\ucr(\bullet)
   =|\gradnc\ucr(\bullet)|$. 
 
   Damit ist \Cref{eq:discreteMultiplierScalerProductEquality} gezeigt.
+  \todo{hier}
 
   In der ersten Komponente ist das Lagrange-Funktional \todo{'Lagrange' 
   weglassen, falls nicht doch noch benötigt? Keine Quelle nannte das bisher so}
@@ -337,7 +348,7 @@ Theorems wurde von Professor Carstensen formuliert.
   \begin{align*}
     dL(\bullet,\bar\Lambda)(\ucr;\vcr)=
     \int_\Omega\bar\Lambda\cdot \gradnc\vcr\dx
-    +\alpha (\ucr,\vcr)_{L^2(\Omega)} - \int_\Omega f\vcr\dx
+    +\alpha (\ucr,\vcr) - \int_\Omega f\vcr\dx
   \end{align*}
   für alle $\vcr\in\CR^1_0(\Tcal)$.
   Da $\ucr$ Minimierer von  $L(\bullet, \bar\Lambda)$ {\color{red}
@@ -348,9 +359,9 @@ Theorems wurde von Professor Carstensen formuliert.
   
   Diese Bedingung ist für alle $\vcr\in\CR^1_0(\Tcal)$ äquivalent zu
   \begin{align*}
-    (\bar\Lambda,\gradnc\vcr)_{L^2(\Omega)}
+    (\bar\Lambda,\gradnc\vcr)
     =
-    (f-\alpha \ucr,\vcr)_{L^2(\Omega)}.
+    (f-\alpha \ucr,\vcr).
   \end{align*}
 
   Somit ist \Cref{eq:discreteMultiplierL2Equality} gezeigt.
@@ -361,13 +372,13 @@ Theorems wurde von Professor Carstensen formuliert.
   \Cref{eq:discreteMultiplierScalerProductEquality} und
   $\left|\bar\Lambda(\bullet)\right|\leq 1$ fast überall in $\Omega$ , dass
   \begin{align*}
-    (f-\alpha\ucr,\vcr-\ucr)_{L^2(\Omega)} 
+    (f-\alpha\ucr,\vcr-\ucr) 
     &= 
-    (f-\alpha\ucr,\vcr)_{L^2(\Omega)} 
-    - (f-\alpha\ucr,\ucr)_{L^2(\Omega)} \\
+    (f-\alpha\ucr,\vcr) 
+    - (f-\alpha\ucr,\ucr) \\
     &=
-    \left(\bar\Lambda,\gradnc\vcr\right)_{L^2(\Omega)}
-    - \left(\bar\Lambda,\gradnc\ucr\right)_{L^2(\Omega)}\\
+    \left(\bar\Lambda,\gradnc\vcr\right)
+    - \left(\bar\Lambda,\gradnc\ucr\right)\\
     &=
     \int_\Omega\bar\Lambda\cdot\gradnc\vcr\dx
     - \int_\Omega\bar\Lambda\cdot\gradnc\ucr\dx\\
@@ -401,11 +412,11 @@ Theorems wurde von Professor Carstensen formuliert.
 
   Für ein solches $\tilde{u}_\CR$ gilt
   \begin{align*}
-    \left(f-\alpha\ucr,\tilde{u}_\CR-\ucr\right)_{L^2(\Omega)} 
+    \left(f-\alpha\ucr,\tilde{u}_\CR-\ucr\right) 
     &\leq
     \left\Vert\gradnc\tilde{u}_\CR\right\Vert_{L^1(\Omega)}
     -\Vert\gradnc\ucr\Vert_{L^1(\Omega)}\quad\text{und }\\
-    \left(f-\alpha\tilde{u}_\CR,\ucr-\tilde{u}_\CR\right)_{L^2(\Omega)} 
+    \left(f-\alpha\tilde{u}_\CR,\ucr-\tilde{u}_\CR\right) 
     &\leq
     \left\Vert\gradnc\ucr\right\Vert_{L^1(\Omega)}
     -\Vert\gradnc\tilde{u}_\CR\Vert_{L^1(\Omega)}. 
@@ -413,8 +424,8 @@ Theorems wurde von Professor Carstensen formuliert.
   Addition dieser Ungleichungen
   liefert die Ungleichung
   \begin{align*}
-    \left(-\alpha\ucr,\tilde{u}_\CR-\ucr\right)_{L^2(\Omega)} 
-    + \left(-\alpha\tilde{u}_\CR,\ucr-\tilde{u}_\CR\right)_{L^2(\Omega)} 
+    \left(-\alpha\ucr,\tilde{u}_\CR-\ucr\right) 
+    + \left(-\alpha\tilde{u}_\CR,\ucr-\tilde{u}_\CR\right) 
     \leq
     0,
   \end{align*}
