@@ -200,12 +200,16 @@ Theorems wurde von Professor Carstensen formuliert.
   Die Lösung $\ucr\in \CR^1_0(\Tcal)$ ist eindeutig, da $\Enc$ strikt konvex
   ist.
 
-  Nachdem wir die Existenz eines eindeutigen Minimierers
-  $\ucr\in\CR^1_0(\Tcal)$ von \Cref{prob:discreteProblem} bewiesen haben,
-  zeigen wir nun die äquivalenten Charakterisierung von $\ucr$.
+  Nachdem wir die Existenz eines eindeutigen Minimierers von
+  \Cref{prob:discreteProblem} bewiesen haben, zeigen wir nun die äquivalenten
+  Charakterisierung für diesen.
+
+  Für den Rest dieses Beweises sei $\ucr\in\CR^1_0(\Tcal)$, falls
+  nicht anderes angegeben, eine beliebige Funktion in $\CR^1_0(\Tcal)$, das
+  heißt insbesondere nicht unbedingt Lösung von \Cref{prob:discreteProblem}.
 
   \textit{(i) $\Rightarrow$ (ii).}
-  Sei $\ucr\in\CR^1_0(\Tcal)$ Lösung von \Cref{prob:discreteProblem}.
+  Sei $\ucr$ Lösung von \Cref{prob:discreteProblem}.
 
   Durch \Cref{eq:discreteEnergySaddlefunctionalEquality} wissen wir bereits,
   dass $\Enc(\vcr) = \sup_{\Lambda\in
@@ -336,41 +340,36 @@ Theorems wurde von Professor Carstensen formuliert.
   \bar\Lambda\right)\!\!|_T=\big|(\gradnc\ucr)\!|_T\big|$, das heißt fast
   überall in $\Omega$ gilt $\bar\Lambda(\bullet)\cdot\gradnc\ucr(\bullet)
   =|\gradnc\ucr(\bullet)|$. 
-
   Damit ist \Cref{eq:discreteMultiplierScalerProductEquality} gezeigt.
-  \todo{hier}
 
-  In der ersten Komponente ist das Lagrange-Funktional \todo{'Lagrange' 
-  weglassen, falls nicht doch noch benötigt? Keine Quelle nannte das bisher so}
-  Fr\'echet-\\
-  differenzierbar {\color{red} (und für $\bar\Lambda$ ist das Funktional
-  reellwertig und nimmt nicht $-\infty$ an, also ist Zeidler anwendbar)} mit 
+  Als Nächstes betrachten wir das reellwertige Funktional
+  $L\left(\bullet,\bar\Lambda\right):\CR^1_0(\Tcal)\to\Rbb$.
+  Es ist Fr\'echet-differenzierbar mit
   \begin{align*}
     dL(\bullet,\bar\Lambda)(\ucr;\vcr)=
     \int_\Omega\bar\Lambda\cdot \gradnc\vcr\dx
     +\alpha (\ucr,\vcr) - \int_\Omega f\vcr\dx
   \end{align*}
   für alle $\vcr\in\CR^1_0(\Tcal)$.
-  Da $\ucr$ Minimierer von  $L(\bullet, \bar\Lambda)$ {\color{red}
-  (reellwertig!!!)} in $\CR^1_0(\Tcal)$
-  ist, gilt nach \Cref{thm:necessaryConditionFreeLocalExtrema}, dass $0 =
-  dL(\bullet,\bar\Lambda)(\ucr;\vcr)$ .
-
-  
+  Da $\ucr$ Minimierer von  $L\left(\bullet, \bar\Lambda\right)$ in
+  $\CR^1_0(\Tcal)$ ist, gilt nach
+  \Cref{thm:necessaryConditionFreeLocalExtrema}, dass $0 =
+  dL(\bullet,\bar\Lambda)(\ucr;\vcr)$ für alle $\vcr\in\CR^1_0(\Tcal)$.
   Diese Bedingung ist für alle $\vcr\in\CR^1_0(\Tcal)$ äquivalent zu
-  \begin{align*}
-    (\bar\Lambda,\gradnc\vcr)
-    =
-    (f-\alpha \ucr,\vcr).
-  \end{align*}
-
+    $\left(\bar\Lambda,\gradnc\vcr\right) = (f-\alpha \ucr,\vcr)$.
   Somit ist \Cref{eq:discreteMultiplierL2Equality} gezeigt.
 
   \textit{(ii) $\Rightarrow$ (iii).}
-  Für alle $\vcr\in\CR^1_0(\Tcal)$ gilt mit
-  \Cref{eq:discreteMultiplierL2Equality}, der CSU,
-  \Cref{eq:discreteMultiplierScalerProductEquality} und
-  $\left|\bar\Lambda(\bullet)\right|\leq 1$ fast überall in $\Omega$ , dass
+  Die Funktion $\bar\Lambda\in P_0(\Tcal;\Rbb^2)$ erfülle
+  $\left|\bar\Lambda(\bullet)\right|\leq 1$ fast überall in $\Omega$ sowie
+  die Gleichungen \eqref{eq:discreteMultiplierScalerProductEquality} und 
+  \eqref{eq:discreteMultiplierL2Equality}.
+
+  Dann gilt für alle $\vcr\in\CR^1_0(\Tcal)$ mit
+  \Cref{eq:discreteMultiplierL2Equality},
+  \Cref{eq:discreteMultiplierScalerProductEquality}, der Cauchy-Schwarzschen
+  Ungleichung und $\left|\bar\Lambda(\bullet)\right|\leq 1$ fast überall in
+  $\Omega$ , dass
   \begin{align*}
     (f-\alpha\ucr,\vcr-\ucr) 
     &= 
@@ -382,6 +381,9 @@ Theorems wurde von Professor Carstensen formuliert.
     &=
     \int_\Omega\bar\Lambda\cdot\gradnc\vcr\dx
     - \int_\Omega\bar\Lambda\cdot\gradnc\ucr\dx\\
+    &=
+    \int_\Omega\bar\Lambda\cdot\gradnc\vcr\dx
+    - \int_\Omega|\gradnc\ucr|\dx\\
     &\leq 
     \int_\Omega\left|\bar\Lambda\right|\,|\gradnc\vcr|\dx
     - \int_\Omega|\gradnc\ucr|\dx\\
@@ -392,25 +394,35 @@ Theorems wurde von Professor Carstensen formuliert.
     \Vert\gradnc\vcr\Vert_{L^1(\Omega)}
     -\Vert\gradnc\ucr\Vert_{L^1(\Omega)}.
   \end{align*}
-
-  Damit löst $\ucr$ Ungleichung \eqref{eq:discreteVariationalInequality}
-  für alle $\vcr\in\CR^1_0(\Tcal)$ in $\CR^1_0(\Tcal)$.
+  Somit ist Ungleichung \eqref{eq:discreteVariationalInequality} gezeigt.
 
   \textit{(iii) $\Rightarrow$ (i)}.
-  Sei $\ucr\in\CR^1_0(\Tcal)$ Lösung von
-  \Cref{prob:discreteProblem}.
-  Wir haben bereits gezeigt, dass $\ucr$ stets existiert und außerdem, dass
-  $\ucr$ insbesondere für alle $\vcr\in\CR^1_0(\Tcal)$ eine Lösung von
-  Ungleichung \eqref{eq:discreteVariationalInequality} in $\CR^1_0(\Tcal)$ ist.
+  Es gelte Ungleichung \eqref{eq:discreteVariationalInequality} für alle
+  $\vcr\in\CR^1_0(\Tcal)$, also
+  \begin{align*}
+    \left(f-\alpha\ucr,\vcr-\ucr\right) 
+    \leq
+    \left\Vert\gradnc\vcr\right\Vert_{L^1(\Omega)}
+    -\Vert\gradnc\ucr\Vert_{L^1(\Omega)}.
+  \end{align*}
 
-  Zu zeigen ist somit nur noch, dass eine beliebige Funktion
-  $\tilde{u}_\CR\in\CR^1_0(\Tcal)$, die
-  Ungleichung \eqref{eq:discreteVariationalInequality} in $\CR^1_0(\Tcal)$ für
-  alle $\vcr\in\CR^1_0(\Tcal)$ löst, auch eine Lösung von
-  \Cref{prob:discreteProblem} ist, das heißt zu zeigen ist
-  $\tilde{u}_\CR=\ucr$.
 
-  Für ein solches $\tilde{u}_\CR$ gilt
+  Wir haben in diesen Beweis bereits gezeigt, dass stets eine eindeutige Lösung
+  $\tilde{u}_\CR\in\CR^1_0(\Tcal)$ von \Cref{prob:discreteProblem} existiert
+  und außerdem, dass für diese
+  für alle $\vcr\in\CR^1_0(\Tcal)$ gilt
+  \begin{align*}
+    \left(f-\alpha\tilde{u}_\CR,\vcr-\tilde{u}_\CR\right) 
+    \leq
+    \left\Vert\gradnc\vcr\right\Vert_{L^1(\Omega)}
+    -\Vert\gradnc\tilde{u}_\CR\Vert_{L^1(\Omega)}.
+  \end{align*}
+
+  Um zu beweisen, dass $\ucr$ \Cref{prob:discreteProblem} löst, genügt es
+  aufgrund der Eindeutigkeit der Lösung $\tilde{u}_\CR$ von
+  \Cref{prob:discreteProblem} zu zeigen, dass $\ucr=\tilde{u}_\CR$.
+
+  Es gilt
   \begin{align*}
     \left(f-\alpha\ucr,\tilde{u}_\CR-\ucr\right) 
     &\leq
@@ -440,6 +452,7 @@ Theorems wurde von Professor Carstensen formuliert.
   $\tilde{u}_\CR=\ucr$ in $\CR^1_0(\Tcal)$.
 \end{proof}
 
+\todo{hier}
 Als letztes noch eine von Prof. Carstensen angemerkte äquivalente 
 Charakterisierung der dualen Variable $\bar\Lambda$ aus
   \Cref{thm:discProbCharacterizationOfDiscreteSolutions} zur diskreten Lösung
