@@ -27,7 +27,6 @@ der Summe der zwei folgenden Terme relevant.
 Der erste Term ist die
 Seminorm
 \begin{align*}
-  \label{eq:boundedVariation}
   |v|_{\BV(\Omega)}
   \coloneqq
   \sup_{\substack{\phi\in C^\infty_0(\Omega;\Rbb^2)\\
@@ -48,10 +47,11 @@ Mit diesen Termen und mit einen positiven Parameter
 $\alpha\in\Rbb_+$, der das Verhältnis zwischen Rauschverminderung und
 Ähnlichkeit der Lösung zum Eingangssignal gewichtet, sucht das ROF-Modell
 eine Funktion $u\in\BV(\Omega)\cap L^2(\Omega)$, die das Funktional
-\begin{align*}
+\begin{align}
+  \label{eq:rofModel}
   I(v)\coloneqq |v|_{\BV(\Omega)}+\frac{\alpha}{2}\Vert
   v-g\Vert_{L^2(\Omega)}^2
-\end{align*}
+\end{align}
 unter allen $v\in\BV(\Omega)\cap L^2(\Omega)$ minimiert.
 
 Wird hierbei $\alpha$ zu klein gewählt, führt das zu einer zu stark

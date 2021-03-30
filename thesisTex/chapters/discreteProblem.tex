@@ -1,4 +1,5 @@
 \section{Formulierung}
+\label{sec:discreteProblemFormulation}
 Für den Rest dieser Arbeit sei $\Omega\subset\Rbb^2$.
 
 Bevor wir \Cref{prob:continuousProblem} diskretisieren, merken wir an,
@@ -470,10 +471,10 @@ $\ucr\in\CR^1_0(\Tcal)$ von \Cref{prob:discreteProblem}.
 \end{remark}
 
 \begin{proof}
-  Dass diese Bedingung hinreichend ist, folgt direkt aus der Definition der 
-  Signumfunktion.
+  Dass die genannte Bedingung hinreichend ist, folgt direkt aus der Definition
+  der Signumfunktion.
 
-  Die Notwendigkeit dieser Bedingung folgt aus der folgenden Beobachtung.
+  Ihre Notwendigkeit folgt aus der folgenden Beobachtung.
   Da $\left|\bar\Lambda(\bullet)\right|\leq 1$ fast überall in $\Omega$, ist
   \Cref{eq:discreteMultiplierScalerProductEquality} eine Cauchy-Schwarzsche
   Ungleichung, bei der sogar Gleichheit gilt. 
@@ -482,7 +483,7 @@ $\ucr\in\CR^1_0(\Tcal)$ von \Cref{prob:discreteProblem}.
 \end{proof}
  
 Daraus können wir folgern, unter welchen Umständen die duale Variable
-$\bar\Lambda$ eindeutig bestimmt auf einem Dreieck $T\in\Tcal$ ist.
+$\bar\Lambda$ auf einem Dreieck $T\in\Tcal$ eindeutig bestimmt ist.
 
 \begin{remark}
   Falls $\gradnc\ucr\neq 0$ auf $T\in\Tcal$, gilt nach Definition der
@@ -501,55 +502,140 @@ $\bar\Lambda$ eindeutig bestimmt auf einem Dreieck $T\in\Tcal$ ist.
 
 \section{Kontrolle des Abstandes zwischen diskreter und kontinuierlicher
 Lösung}
-Wir zeigen in dieser Arbeit keine Fehlerabschätzung, können aber in den 
-Experimenten Raten mit dem folgenden Theorem für
-[cite Problem von Bartels bzw ROF-Modell] vergleichen.
-\begin{theorem}[\protect{\cite[S. 309, Theorem 10.7]{Bar15}}]
+Wir möchten in diesen Abschnitt zwei Abschätzungen aufführen, mit denen
+möglicherweise der $L^2$-Abstand zwischen der Lösung des diskreten Problems
+\ref{prob:discreteProblem} und der Lösung des kontinuierlichen Problems
+\ref{prob:continuousProblem} kontrolliert werden kann.
+
+Die Gültigkeit dieser Abschätzungen werden wir in \Cref{chap:experiments}
+untersuchen.
+
+Zunächst betrachten wir \cite[S. 309, Theorem 10.7]{Bar15}. Diese
+Abschätzung kontrolliert den
+$L^2$-Fehler zwischen den Minmierern $u_\C\in S^1(\Tcal)$ und
+$u\in\BV(\Omega)\cap L^2(\Omega)$ des Funktionals $I$ aus \Cref{eq:rofModel} in
+den entsprechenden Räumen. Obwohl wir eine andere Formulierung des ROF-Modells 
+betrachten und sich insbesondere das Funktional $\Enc$ aus unserer diskreten,
+nichtkonformen Formulierung von $I$ unterscheidet, ähneln sich die 
+Probleme möglicherweise genug, um die folgende Rate für unsere Formulierungen
+experimentell feststellen zu können.
+
+\begin{theorem}
   \label{thm:errorEstimateCourant}
-  Sei $\Omega\subset\Rbb^2$ sternförmig und $g\in L^\infty$.
-  Sind $u\in\BV(\Omega)\cap L^2(\Omega)$ und $u_h\in S^1(\Tcal)$ [irgendwann
-  Courant noch einführen, x wahrscheinlich bei den Bartels Vergleich] die 
-  Minimiere von $I$ in den entsprechenden Räumen.
-  Dann gilt 
+  Sei $\Omega\subset\Rbb^2$ sternförmig und $g\in L^\infty(\Omega)$.  Seien
+  weiterhin $u\in\BV(\Omega)\cap L^2(\Omega)$ und $u_\C\in S^1(\Tcal)$ die
+  Minimierer des Funktionals $I$ aus \Cref{eq:rofModel} in den entsprechenden
+  Räumen.
+
+  Dann existiert eine Konstante $c\in\Rbb_+$, sodass
   \begin{align*}
-    \frac{\alpha}{2}\Vert u-u_h\Vert^2\leq
+    \frac{\alpha}{2}\Vert u-u_\C\Vert^2\leq
     ch^{1/2}.
   \end{align*}
 \end{theorem}
-\todo[inline]{auf S 310 sagt Bartels noch was dazu, dass die Rate suboptimal 
-ist und im Allgmeinen nicht erreicht wird. Angucken und das dann in der 
-Auswertung einfließen lassen}
 
-Mit den Betrachtungen zum Beginn dieses Kapitels und nach 
-\Cref{thm:convexity}, da $\CR^1_0(\Tcal)\subset\BV(\Omega)\cap L^2(\Omega)$,
-erhalten wir weiterhin die folgende Aussage.
+Als Nächstes möchten wir beweisen, dass der $L^2$-Abstand zwischen der Lösung
+$u$ von \Cref{prob:continuousProblem} und einer beliebigen Funktion
+$v\in\BV(\Omega)\cap L^2(\Omega)$ beschränkt werden kann durch die Differenz
+der Werte des Funktionals $E$ an den Stellen $u$ und $v$.
+Daraus wollen wir anschließend die zweite Möglichkeit folgern,
+wie der Abstand in $L^2(\Omega)$ zwischen den Lösungen des kontinuierlichen 
+und des diskreten Problems kontrolliert werden kann.
+
+\begin{theorem}
+  \label{thm:convexity}
+  Sei $u\in\BV(\Omega)\cap L^2(\Omega)$ Lösung von 
+  \Cref{prob:continuousProblem}.
+
+  Dann gilt 
+  \begin{align*}
+    \frac{\alpha}{2}\Vert u-v\Vert^2 \leq E(v)-E(u)\quad
+    \text{für alle } v\in\BV(\Omega)\cap L^2(\Omega).
+  \end{align*}
+\end{theorem}
+
+\begin{proof}
+  Wir folgen der Argumentation im Beweis von \cite[S. 309, Lemma 10.2]{Bar15}.
+  Da viele der Schritte ähnlich zum Beweis von \Cref{thm:contProbStabAndUniqu}
+  sind, präsentieren wir die entsprechenden Argumente verkürzt.
+
+  Wir definieren die konvexen Funktionale
+  $F:L^2(\Omega)\to \Rbb\cup\{\infty\}$ und $G:L^2(\Omega)\to \Rbb$, wobei 
+  $F$ wie im Beweis von \Cref{thm:contProbStabAndUniqu} definiert ist und $G$
+  für alle $v\in L^2(\Omega)$ gegeben ist durch 
+  \begin{align*}
+    G(v)\coloneqq \frac{\alpha}{2}\Vert v\Vert^2 - \int_\Omega f v\dx.
+  \end{align*}
+  Es gilt $E = F+G$.
+
+  Die Fr\'echet-Ableitung $G'(u): L^2(\Omega)\to\Rbb$ von $G$ an der Stelle
+  $u\in \BV(\Omega)\cap L^2(\Omega)$ ist für alle $v\in L^2(\Omega)$ gegeben
+  durch
+  \begin{align*}
+    dG(u;v) = \alpha (u,v) - \int_\Omega f v\dx 
+    = (\alpha u-f ,v).
+  \end{align*}
+
+  Das impliziert mit wenigen Rechenschritten
+  \begin{align}\label{eq:strongConvexityG}
+    dG(u;v-u) +\frac{\alpha}{2}\Vert u-v\Vert^2+G(u) 
+    =
+    G(v)
+  \end{align}
+  für alle $v\in L^2(\Omega)$.
+
+  Da $u$ Minimierer von $E$ ist, erhalten wir mit \Cref{thm:extremalprinciple},
+  \Cref{thm:subdifferentialSumRule} und \Cref{thm:subdiffGateaux} die Aussage
+  \begin{align*}
+    0\in\partial E(u) = \partial F(u)+\{G'(u)\},
+  \end{align*}
+  woraus folgt 
+  \begin{align*}
+    -G'(u)\in\partial F(u).
+  \end{align*}
+  Das ist nach \Cref{def:subdifferential} äquivalent zu
+  \begin{align*}
+    -dG(u;v-u)\leq F(v)-F(u)\quad\text{für alle }v\in\BV(\Omega)\cap
+    L^2(\Omega).
+  \end{align*}
+
+  Daraus folgt zusammen mit \Cref{eq:strongConvexityG}, dass
+  \begin{align*}
+    \frac{\alpha}{2}\Vert u-v\Vert^2+G(u)-G(v)+F(u)
+    = -dG(u;v-u)+F(u)\leq F(v)
+  \end{align*}
+  für alle $v\in \BV(\Omega)\cap L^2(\Omega)$.
+
+  Da $E=F+G$, folgt daraus die zu zeigende Aussage.
+\end{proof}
+
+Mit den Betrachtungen in \Cref{sec:discreteProblemFormulation} 
+erhalten wir damit folgendes Korollar.
 
 \begin{corollary}
-  Ist $u\in\BV(\Omega)$ Lösung von \Cref{prob:continuousProblem} und
-  $\ucr\in\CR^1_0(\Tcal)$ Lösung von \Cref{prob:discreteProblem}.
+  Sei $u\in\BV(\Omega)\cap L^2(\Omega)$ Lösung von
+  \Cref{prob:continuousProblem} und $\ucr\in\CR^1_0(\Tcal)$ Lösung von
+  \Cref{prob:discreteProblem}.
 
   Dann gilt
   \begin{align*}
     \frac{\alpha}{2}\Vert u-\ucr\Vert^2\leq
-    E(\ucr)-E(u)=\Enc(\ucr)+\sum_{F\in\Fcal}\Vert[\ucr]_F\Vert_{L^1(F)}-E(u).
+    E(\ucr)-E(u)=\Enc(\ucr)+\sum_{F\in\Ecal}\Vert[\ucr]_F\Vert_{L^1(F)}-E(u).
   \end{align*}
 
-  Insbesondere gilt auch  [nur für mich zur erinnerung für den Moment]
+  Insbesondere gilt auch 
   \begin{align*}
-    \frac{\alpha}{2}\Vert u-\ucr\Vert^2&\leq
-    E(\ucr)-E(u)=
-    |E(\ucr)-E(u)|=
-    |E(u)-E(\ucr)|\\
-    &=\left|\Enc(\ucr)+\sum_{F\in\Fcal}\Vert[\ucr]_F\Vert_{L^1(F)}-E(u)\right|\\
-    &\leq
+    \frac{\alpha}{2}\Vert u-\ucr\Vert^2
+    \leq
     \left|\Enc(\ucr)-E(u)\right|+
-    \left|\sum_{F\in\Fcal}\Vert[\ucr]_F\Vert_{L^1(F)}\right|.
+    \left|\sum_{F\in\Ecal}\Vert[\ucr]_F\Vert_{L^1(F)}\right|.
   \end{align*}
 \end{corollary}
 
 \section{Verfeinerungsindikator und garantierte untere Energieschranke}
-Prof. Carstensen stellte zur numerischen Untersuchung den folgenden
-Verfeinerungsindikator zur adaptiven Netzverfeinerung  und eine 
+In diesen Abschnitt
+Professor Carstensen stellte zur numerischen Untersuchung den folgenden
+Verfeinerungsindikator zur adaptiven Netzverfeinerung und eine 
 garantierte untere Energieschranke zur Verfügung.
 
 \begin{definition}[Verfeinerungsindikator]\label{def:refinementIndicator}
@@ -583,6 +669,7 @@ garantierte untere Energieschranke zur Verfügung.
     \Enc(\ucr) - \frac{\kappa_\CR}{\alpha}\Vert
     h_\Tcal(f-\alpha\ucr)\Vert |f|_{1,2}$, dass
     $\Enc(\ucr)\geq \Egleb$ und $E(u)\geq \Egleb$.
+
     \todo[inline]{$\kappa_\CR$ (Bessel Nullstelle) zitieren und wohl noch was
     zur Regularität der Lösung bei dieser RHS sagen, also das Lösung 
     in H10 falls RHS in H10 (s. CC unausführliche Erwähung).}

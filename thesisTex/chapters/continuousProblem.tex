@@ -29,7 +29,8 @@ $f\in L^2(\Omega)$ betrachten wir das folgende Minimierungsproblem.
   Abschnitt betrachten, gilt dies im Allgemeinen nicht.
 \end{remark}
 
-\section{Existenz und Eindeutigkeit von Minimierern}
+
+\section{Existenz eines eindeutigen Minimierers}
 Zunächst zeigen wir, dass \Cref{prob:continuousProblem} eine Lösung besitzt.
 Dafür benötigen wir die folgende Formulierung der Youngschen Ungleichung.
 
@@ -343,82 +344,4 @@ dass diese Lösung eindeutig ist.
   Falls $\Vert u_1 - u_2 \Vert = 0$, gilt die zu zeigende Aussage.
   Ansonsten führt Division durch $\alpha\Vert u_1 - u_2 \Vert\neq 0$ den
   Beweis zum Abschluss.
-\end{proof}
-
-\todo[inline]{Passt nicht in diese Subsection, mglw als Lemma (wie in Bartels)
-an die entsprechende Stelle im Ratenkapitel schieben}
-Zum Abschluss dieses Kapitels wollen wir noch beweisen, dass der Abstand
-zwischen einer Lösung $u$ von \Cref{prob:continuousProblem} und einer
-beliebigen Funktion $v\in\BV(\Omega)\cap L^2(\Omega)$  in $L^2(\Omega)$
-beschränkt werden kann durch die Differenz der Werte des Funktionals
-$E$ an den Stellen $u$ und $v$.
-Damit wollen zum Ende des nächsen Abschnitts \todo{noch mit Verweis auf das
-Korollar?}
-folgern, 
-wie der Abstand in $L^2(\Omega)$ zwischen den Lösungen des kontinuierlichen 
-und des diskreten Problems kontrolliert werden kann.
-\begin{theorem}
-  \label{thm:convexity}
-  Sei $u\in\BV(\Omega)\cap L^2(\Omega)$ Lösung von 
-  \Cref{prob:continuousProblem}.
-
-  Dann gilt 
-  \begin{align*}
-    \frac{\alpha}{2}\Vert u-v\Vert^2 \leq E(v)-E(u)\quad
-    \text{für alle } v\in\BV(\Omega)\cap L^2(\Omega).
-  \end{align*}
-\end{theorem}
-
-\begin{proof}
-  Wir folgen der Argumentation im Beweis von \cite[S. 309, Lemma 10.2]{Bar15}.
-  Da viele der Schritte ähnlich zum vorhergehenden Beweis sind, präsentieren 
-  wir die entsprechenden Argumente verkürzt.
-
-  Wir definieren die konvexen Funktionale
-  $F:L^2(\Omega)\to \Rbb\cup\{\infty\}$ und $G:L^2(\Omega)\to \Rbb$, wobei 
-  $F$ wie im vorherigen Beweis definiert ist und $G$ gegeben ist durch
-  \begin{align*}
-    G(u)\coloneqq \frac{\alpha}{2}\Vert u\Vert^2 - \int_\Omega f u\dx.
-  \end{align*}
-  Es gilt $E = F+G$.
-
-  Die Fr\'echet-Ableitung $G'(u): L^2(\Omega)\to\Rbb$ von $G$ an der Stelle
-  $u\in \BV(\Omega)\cap L^2(\Omega)$ ist für alle $v\in L^2(\Omega)$ gegeben
-  durch
-  \begin{align*}
-    dG(u;v) = \alpha (u,v) - \int_\Omega f v\dx 
-    = (\alpha u-f ,v).
-  \end{align*}
-
-  Das impliziert mit wenigen Rechenschritten
-  \begin{align}\label{eq:strongConvexityG}
-    dG(u;v-u) +\frac{\alpha}{2}\Vert u-v\Vert^2+G(u) 
-    =
-    G(v)
-  \end{align}
-  für alle $v\in L^2(\Omega)$.
-
-  Da $u$ Minimierer von $E$ ist, erhalten wir mit \Cref{thm:extremalprinciple},
-  \Cref{thm:subdifferentialSumRule} und \Cref{thm:subdiffGateaux} wieder
-  \begin{align*}
-    0\in\partial E(u) = \partial F(u)+\{G'(u)\},
-  \end{align*}
-  woraus folgt 
-  \begin{align*}
-    -G'(u)\in\partial F(u).
-  \end{align*}
-  Das ist nach \Cref{def:subdifferential} äquivalent zu
-  \begin{align*}
-    -dG(u;v-u)\leq F(v)-F(u)\quad\text{für alle }v\in\BV(\Omega)\cap
-    L^2(\Omega).
-  \end{align*}
-
-  Daraus folgt zusammen mit \Cref{eq:strongConvexityG}, dass
-  \begin{align*}
-    \frac{\alpha}{2}\Vert u-v\Vert^2+G(u)-G(v)+F(u)
-    = -dG(u;v-u)+F(u)\leq F(v)
-  \end{align*}
-  für alle $v\in \BV(\Omega)\cap L^2(\Omega)$.
-
-  Da $E=F+G$, folgt daraus die zu zeigende Aussage.
 \end{proof}
