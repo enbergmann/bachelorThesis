@@ -1,4 +1,5 @@
 \section{Primale-duale Iteration}
+\todo{hier start}
 Mehr zur Herleitung des Algorithmus, siehe BartelsBVPaper S. 1163, schwache
 Formulierung der vorletzten Gleichung
 
@@ -29,12 +30,16 @@ Weitere Details dazu finden sich in \cite[S. 118-121]{Bar15}.
 \todo[inline]{Beim Zitieren z.B. 'Remark' lassen, weil es in Bartels so heißt,
 oder das lieber übersetzen? Außerdem natürlich, passt das so als Einleitung 
 für den Alg?}
-\begin{algorithm}[Primale-Duale Iteration]
+\todo{hier ende}
+
+\begin{algorithm}[Primale-duale Iteration]
   \label{alg:primalDualIteration}
 \begin{algorithmic}\\
   \Require $u_0\in\textup{CR}_0^1(\mathcal{T}),$
-  $\Lambda_0\in  P_0(\mathcal{T};
-  \overline{B(0,1)}),\tau>0$  \\
+  $\Lambda_0
+  \in  P_0\!\left(\mathcal{T}; 
+  \left\{w\in\Rbb^2\,\middle|\,|w|\leq 1\right\}\right),
+  \tau>0$  \\
   Initialisiere $v_0\coloneqq 0$ in $\textup{CR}^1_0(\mathcal T)$.
   \For{$j = 1,2,\dots$}
   \begin{equation}
@@ -43,20 +48,22 @@ für den Alg?}
   \end{equation}
   \begin{equation}
     \label{eq:primalDualAlgLambdaJ}
-    \Lambda_j\coloneqq
-    (\Lambda_{j-1}+\tau\nabla_{\textup{NC}} \tilde{u}_j)/
-      (\operatorname{max}\{1,|\Lambda_{j-1}+\tau\nabla_{\textup{NC}}\tilde{u}_j|\}),
+    \Lambda_j
+    \coloneqq
+    \left(\Lambda_{j-1}+\tau\nabla_{\textup{NC}} \tilde{u}_j\right)/
+      \max\left\{1,
+      \left|\Lambda_{j-1}+\tau\nabla_{\textup{NC}}\tilde{u}_j\right|\right\},
   \end{equation}
       \State
   \State bestimme $u_j\in\textup{CR}^1_0(\mathcal{T})$
   als Lösung des linearen Gleichungssystems
   \begin{align}
     \label{eq:linSysPrimalDualAlg}
-    \frac{1}{\tau}&a_{\textup{NC}}(u_j,\bullet)+\alpha(u_j,\bullet)_{L^2(\Omega)}
+    \frac{1}{\tau}&a_{\textup{NC}}(u_j,\bullet)+\alpha(u_j,\bullet)
     \notag \\
     &=
-    \frac{1}{\tau}a_{\textup{NC}}(u_{j-1},\bullet) + (f,\bullet)_{L^2(\Omega)}
-    - (\Lambda_j,\nabla_{\textup{NC}}\bullet)_{L^2(\Omega)} 
+    \frac{1}{\tau}a_{\textup{NC}}(u_{j-1},\bullet) + (f,\bullet)
+    - (\Lambda_j,\nabla_{\textup{NC}}\bullet) 
   \end{align}
   \State in $\CR^1_0(\mathcal{T})$, \\
   \begin{equation*}
@@ -65,22 +72,27 @@ für den Alg?}
   \EndFor
   \Ensure Folge $(u_j,\Lambda_j)_{j\in\mathbb N}$ in
   $\CR^1_0(\mathcal{T})\times
-   P_0(\mathcal{T};\overline{B(0,1)})$   
+   P_0\!\left(\mathcal{T};\left\{w\in\Rbb^2\,\middle|\,|w|\leq
+   1\right\}\right)$   
   \end{algorithmic}
 \end{algorithm}
 
 \section{Konvergenz der Iteration}
 \begin{theorem}
-  Sei $\ucr\in \CR^1_0(\Tcal)$ Lösung von \Cref{prob:discreteProblem}
-  und $\bar\Lambda\in\operatorname{sign}(\gradnc\ucr)$ erfülle Eigenschaft 
-  \textit{(ii)} in \Cref{thm:discProbCharacterizationOfDiscreteSolutions}.
+  Sei $\ucr\in \CR^1_0(\Tcal)$ Lösung von \Cref{prob:discreteProblem} und
+  $\bar\Lambda\in P_0\!\left(\Tcal;\Rbb^2\right)$ erfülle
+  $\left|\bar\Lambda(\bullet)\right|\leq 1$ fast überall in $\Omega$,
+  \Cref{eq:discreteMultiplierScalerProductEquality} und
+  \Cref{eq:discreteMultiplierL2Equality}.
+
   Falls $0 < \tau \leq 1$, dann konvergieren die Iterate $(u_j)_{j\in\Nbb}$ von
   \Cref{alg:primalDualIteration}
   gegen $\ucr.$
 \end{theorem}
 
 \begin{proof}
-  Der Beweis folgt einer Skizze von Prof. Carstensen.
+  \todo{hier start again}
+  Der Beweis folgt einer Skizze von Professor Carstensen.
   
   Seien $\tilde{u}_j$, $v_j$ und $\Lambda_j$ definiert wie in
   \Cref{alg:primalDualIteration}.
@@ -89,20 +101,20 @@ für den Alg?}
 
   Testen wir nun \eqref{eq:linSysPrimalDualAlg} mit $e_j$, erhalten wir
   \begin{align*}
-    \anc(v_j,e_j) + \alpha(u_j,e_j)_{L^2(\Omega)} 
-    + (\Lambda_j,\gradnc e_j)_{L^2(\Omega)}
+    \anc(v_j,e_j) + \alpha(u_j,e_j) 
+    + (\Lambda_j,\gradnc e_j)
     = 
-    (f,e_j)_{L^2(\Omega)}.
+    (f,e_j).
   \end{align*}
   Äquivalent dazu ist, da $\ucr$ \Cref{eq:discreteMultiplierL2Equality} löst, 
   \begin{align}
     \label{eq:convProofE}
     \anc(v_j,e_j) &= 
-    \alpha(\ucr-u_j,e_j)_{L^2(\Omega)} 
-    + (\bar\Lambda-\Lambda_j,\gradnc e_j)_{L^2(\Omega)} \notag\\
+    \alpha(\ucr-u_j,e_j) 
+    + (\bar\Lambda-\Lambda_j,\gradnc e_j) \notag\\
     &= 
-    \alpha\Vert e_j\Vert_{L^2(\Omega)}^2
-    + (E_j,\gradnc e_j)_{L^2(\Omega)}.
+    \alpha\Vert e_j\Vert^2
+    + (E_j,\gradnc e_j).
   \end{align}
   Sei $\mu_j\coloneqq \max\{1,|\Lambda_{j-1}+\tau
   \gradnc \tilde{u}_j|\}$.
@@ -123,9 +135,9 @@ für den Alg?}
   unter Nutzung von $\mu_j\geq 1$ und der CSU damit
   \begin{align*}
     ( \Lambda_{j-1}-\Lambda_j+\tau\gradnc \tilde{u}_j,
-    E_j)_{L^2(\Omega)}
+    E_j)
     &= 
-    ( (\mu_j-1)\Lambda_j,\bar\Lambda-\Lambda_j)_{L^2(\Omega)}\\
+    ( (\mu_j-1)\Lambda_j,\bar\Lambda-\Lambda_j)\\
     &=
     \int_\Omega
     (\mu_j-1)(\Lambda_j\cdot\bar\Lambda-\Lambda_j\cdot\Lambda_j)\,\mathrm dx\\
@@ -146,7 +158,7 @@ für den Alg?}
   \begin{align}
     \label{eq:convProofB}
     \left(\frac{E_j-E_{j-1}}{\tau}+ \gradnc u_{j-1}-\gradnc
-    (e_{j-1}-e_{j-2}),E_j\right)_{L^2(\Omega)}\leq 0\quad\text{für alle }
+    (e_{j-1}-e_{j-2}),E_j\right)\leq 0\quad\text{für alle }
     j\in\Nbb.
   \end{align}
   Falls $|\gradnc \ucr|\neq 0$, gilt somit zusammen mit
@@ -168,123 +180,123 @@ für den Alg?}
   Daraus folgt
   \begin{align}
     \label{eq:convProofC}
-    (\gradnc\ucr,E_j)_{L^2(\Omega)}=\int_\Omega \gradnc\ucr\cdot E_j\dx\geq 0.
+    (\gradnc\ucr,E_j)=\int_\Omega \gradnc\ucr\cdot E_j\dx\geq 0.
   \end{align}
   Mit \eqref{eq:convProofB} und \eqref{eq:convProofC} folgt nun
   \begin{align*}
     \left( \frac{E_j-E_{j-1}}{\tau}+ \gradnc u_{j-1}
-    -\nabla_\nc(e_{j-1}-e_{j-2}),E_j\right)_{L^2(\Omega)}
+    -\nabla_\nc(e_{j-1}-e_{j-2}),E_j\right)
     \leq
-    (\gradnc\ucr,E_j)_{L^2(\Omega)}
+    (\gradnc\ucr,E_j)
   \end{align*}
   für alle $j\in\Nbb$, was nach Definition von $e_{j-1}$
   äquivalent ist zu
   \begin{align}
     \label{eq:convProofD}
     \left( \frac{E_j-E_{j-1}}{\tau} 
-    -\gradnc(2e_{j-1}-e_{j-2}),E_j\right)_{L^2(\Omega)}\leq 0.
+    -\gradnc(2e_{j-1}-e_{j-2}),E_j\right)\leq 0.
   \end{align}
   Unter Nutzung von $-v_j=(e_j-e_{j-1})/\tau$, \eqref{eq:convProofE}, $\tau>0$
   und \eqref{eq:convProofD} erhalten wir 
   \begin{align*}
     &\vvvert e_j \vvvert^2_\nc   -
     \vvvert e_{j-1}\vvvert_\nc^2 +
-    \Vert E_j \Vert_{L^2(\Omega)}^2 - \Vert E_{j-1}\Vert_{L^2(\Omega)}^2 +
+    \Vert E_j \Vert^2 - \Vert E_{j-1}\Vert^2 +
     \vvvert e_j-e_{j-1}\vvvert_\nc^2 +
-    \Vert E_j - E_{j-1} \Vert_{L^2(\Omega)}^2\\
+    \Vert E_j - E_{j-1} \Vert^2\\
     &\quad =
-    2a_\nc(e_j,e_j-e_{j-1}) + 2(E_j,E_j-E_{j-1})_{L^2(\Omega)}\\
+    2a_\nc(e_j,e_j-e_{j-1}) + 2(E_j,E_j-E_{j-1})\\
     &\quad =
-    -2\tau a_\nc(e_j,v_j) + 2(E_j,E_j-E_{j-1})_{L^2(\Omega)}\\
+    -2\tau a_\nc(e_j,v_j) + 2(E_j,E_j-E_{j-1})\\
     &\quad =
-    -2\tau\alpha\Vert e_j\Vert_{L^2(\Omega)}^2 + 2\tau\left(E_j,
-    -\nabla_\nc e_j+\frac{E_j-E_{j-1}}{\tau}\right)_{L^2(\Omega)} \\
+    -2\tau\alpha\Vert e_j\Vert^2 + 2\tau\left(E_j,
+    -\nabla_\nc e_j+\frac{E_j-E_{j-1}}{\tau}\right) \\
     &\quad \leq
-    -2\tau\alpha\Vert e_j\Vert_{L^2(\Omega)}^2 + 2\tau\left(E_j,
-    -\nabla_\nc e_j+\frac{E_j-E_{j-1}}{\tau}\right)_{L^2(\Omega)}\\ 
+    -2\tau\alpha\Vert e_j\Vert^2 + 2\tau\left(E_j,
+    -\nabla_\nc e_j+\frac{E_j-E_{j-1}}{\tau}\right)\\ 
     &\quad\quad -2\tau\left( \frac{E_j-E_{j-1}}{\tau}
-    -\gradnc(2e_{j-1}-e_{j-2}),E_j\right)_{L^2(\Omega)}\\
+    -\gradnc(2e_{j-1}-e_{j-2}),E_j\right)\\
     &\quad =
-    -2\tau\alpha\Vert e_j\Vert_{L^2(\Omega)}^2 - 
-    2\tau\big(E_j,\gradnc(e_j-2e_{j-1}+e_{j-2})\big)_{L^2(\Omega)}.
+    -2\tau\alpha\Vert e_j\Vert^2 - 
+    2\tau\big(E_j,\gradnc(e_j-2e_{j-1}+e_{j-2})\big).
   \end{align*}
   Für jedes $J\in\Nbb$ führt die Summation über $j=1,\ldots,J$ und eine
   Äquivalenz\-umfomung zu
   \begin{align}
     \label{eq:convProofF}
-    &\vvvert e_J \vvvert^2_\nc +\Vert E_J \Vert_{L^2(\Omega)}^2 
+    &\vvvert e_J \vvvert^2_\nc +\Vert E_J \Vert^2 
     +\sum_{j=1}^J\left(\vvvert e_j-e_{j-1} \vvvert_\nc^2 + 
-    \Vert E_j-E_{j-1}\Vert_{L^2(\Omega)}^2\right)\notag \\
+    \Vert E_j-E_{j-1}\Vert^2\right)\notag \\
     &\quad \leq 
-    \vvvert e_0 \vvvert_\nc^2 + \Vert E_0 \Vert_{L^2(\Omega)}^2 
+    \vvvert e_0 \vvvert_\nc^2 + \Vert E_0 \Vert^2 
     -2\tau\alpha\sum_{j=1}^J \Vert e_j\Vert^2 \\
     &\quad\quad
     -2\tau \sum_{j=1}^J\big(E_j,\gradnc
-    (e_j-2e_{j-1}+e_{j-2})\big)_{L^2(\Omega)}.\notag
+    (e_j-2e_{j-1}+e_{j-2})\big).\notag
   \end{align}
   Dabei lässt sich die letzt Summe, unter Beachtung von $e_{-1}=e_0$, umformen
   zu
   \begin{align*}
     &\sum_{j=1}^J\big(E_j,\gradnc
-    (e_j-2e_{j-1}+e_{j-2})\big)_{L^2(\Omega)}\\
-    &\quad=\sum_{j=1}^J(E_j,\gradnc(e_j-e_{j-1}))_{L^2(\Omega)}
+    (e_j-2e_{j-1}+e_{j-2})\big)\\
+    &\quad=\sum_{j=1}^J(E_j,\gradnc(e_j-e_{j-1}))
     -
-    \sum_{j=0}^{J-1}(E_{j+1},\gradnc(e_j-e_{j-1}))_{L^2(\Omega)} \\
+    \sum_{j=0}^{J-1}(E_{j+1},\gradnc(e_j-e_{j-1})) \\
     &\quad = 
     \sum_{j=1}^{J-1} 
-    \big(E_j-E_{j+1},\gradnc(e_j-e_{j-1})\big)_{L^2(\Omega)}
-    +(E_J,\gradnc(e_J-e_{J-1}))_{L^2(\Omega)}\\
+    \big(E_j-E_{j+1},\gradnc(e_j-e_{j-1})\big)
+    +(E_J,\gradnc(e_J-e_{J-1}))\\
     &\quad\quad 
-    - (E_1, \gradnc(e_0-e_{-1}))_{L^2(\Omega)} \\
+    - (E_1, \gradnc(e_0-e_{-1})) \\
     &\quad = 
     \sum_{j=1}^{J-1} 
-    \big(E_j-E_{j+1},\gradnc(e_j-e_{j-1})\big)_{L^2(\Omega)}
-    +(E_J,\gradnc(e_J-e_{J-1}))_{L^2(\Omega)}
+    \big(E_j-E_{j+1},\gradnc(e_j-e_{j-1})\big)
+    +(E_J,\gradnc(e_J-e_{J-1}))
   \end{align*}
   und da die linke Seite von
   \eqref{eq:convProofF} nicht negativ ist, gilt damit
   für jedes $0<\tau\leq 1$, dass
   \begin{align*}
-    &\tau\left(\vvvert e_J \vvvert^2_\nc +\Vert E_J \Vert_{L^2(\Omega)}^2 
+    &\tau\left(\vvvert e_J \vvvert^2_\nc +\Vert E_J \Vert^2 
     +\sum_{j=1}^J\left(\vvvert e_j-e_{j-1} \vvvert_\nc^2 + 
-    \Vert E_j-E_{j-1}\Vert_{L^2(\Omega)}^2\right)\right) \\
+    \Vert E_j-E_{j-1}\Vert^2\right)\right) \\
     &\quad \leq 
-    \vvvert e_0 \vvvert_\nc^2 + \Vert E_0 \Vert_{L^2(\Omega)}^2 
+    \vvvert e_0 \vvvert_\nc^2 + \Vert E_0 \Vert^2 
     -2\tau\alpha\sum_{j=1}^J \Vert e_j\Vert^2 \\
     &\quad\quad
     -2\tau\left( 
     \sum_{j=1}^{J-1} 
-    (E_j-E_{j+1},\gradnc(e_j-e_{j-1}))_{L^2(\Omega)}
-    +(E_J,\gradnc(e_J-e_{J-1}))_{L^2(\Omega)}\right).
+    (E_j-E_{j+1},\gradnc(e_j-e_{j-1}))
+    +(E_J,\gradnc(e_J-e_{J-1}))\right).
   \end{align*}
   Division durch $\tau$ ergibt
   \begin{align}
     \label{eq:convProofG}
-    &\vvvert e_J \vvvert^2_\nc +\Vert E_J \Vert_{L^2(\Omega)}^2 
+    &\vvvert e_J \vvvert^2_\nc +\Vert E_J \Vert^2 
     +\sum_{j=1}^J\left(\vvvert e_j-e_{j-1} \vvvert_\nc^2 + 
-    \Vert E_j-E_{j-1}\Vert_{L^2(\Omega)}^2\right) \notag\\
+    \Vert E_j-E_{j-1}\Vert^2\right) \notag\\
     &\quad \leq 
-    \tau^{-1}(\vvvert e_0 \vvvert_\nc^2 + \Vert E_0 \Vert_{L^2(\Omega)}^2 )
+    \tau^{-1}(\vvvert e_0 \vvvert_\nc^2 + \Vert E_0 \Vert^2 )
     -2\alpha\sum_{j=1}^J \Vert e_j\Vert^2 \\
     &\quad\quad
-    -2 \sum_{j=1}^{J-1} (E_j-E_{j+1},\gradnc(e_j-e_{j-1}))_{L^2(\Omega)}
-    -2(E_J,\gradnc(e_J-e_{J-1}))_{L^2(\Omega)}.\notag
+    -2 \sum_{j=1}^{J-1} (E_j-E_{j+1},\gradnc(e_j-e_{j-1}))
+    -2(E_J,\gradnc(e_J-e_{J-1})).\notag
   \end{align}
 
 %  \begin{align*}
-%    &2\tau\sum_{j=1}^J(E_j,\gradnc(-e_j+e_{j-1}))_{L^2(\Omega)} +
-%    2\tau\sum_{j=0}^{J-1}(E_{j+1},\gradnc(e_j-e_{j-1}))_{L^2(\Omega)}\\
+%    &2\tau\sum_{j=1}^J(E_j,\gradnc(-e_j+e_{j-1})) +
+%    2\tau\sum_{j=0}^{J-1}(E_{j+1},\gradnc(e_j-e_{j-1}))\\
 %    &\quad \le
-%    2\sum_{j=1}^J(E_j,\gradnc(-e_j+e_{j-1}))_{L^2(\Omega)} +
-%    2\sum_{j=0}^{J-1}(E_{j+1},\gradnc(e_j-e_{j-1}))_{L^2(\Omega)}\\
+%    2\sum_{j=1}^J(E_j,\gradnc(-e_j+e_{j-1})) +
+%    2\sum_{j=0}^{J-1}(E_{j+1},\gradnc(e_j-e_{j-1}))\\
 %    &\quad =
-%    2\sum_{j=1}^J(E_j,\gradnc(-e_j+e_{j-1}))_{L^2(\Omega)} 
+%    2\sum_{j=1}^J(E_j,\gradnc(-e_j+e_{j-1})) 
 %    +
-%    2\sum_{j=1}^{J-1}(E_{j+1},\gradnc(e_j-e_{j-1}))_{L^2(\Omega)} 
+%    2\sum_{j=1}^{J-1}(E_{j+1},\gradnc(e_j-e_{j-1})) 
 %    \tag{since $e_{-1}\coloneqq e_0$}\\
 %    &\quad =
-%    2\sum_{j=1}^{J-1}(E_{j+1}-E_j,\gradnc(e_j-e_{j-1}))_{L^2(\Omega)}
-%    -2(E_{J},\gradnc(e_J-e_{J-1}))_{L^2(\Omega)}
+%    2\sum_{j=1}^{J-1}(E_{j+1}-E_j,\gradnc(e_j-e_{j-1}))
+%    -2(E_{J},\gradnc(e_J-e_{J-1}))
 %    .
 %  \end{align*}
 
@@ -295,7 +307,7 @@ für den Alg?}
     &\leq
     2\alpha\sum_{j=1}^J\Vert e_j\Vert^2\\
     &\quad
-    +\Vert E_J + \gradnc(e_J-e_{J-1}) \Vert_{L^2(\Omega)}^2 
+    +\Vert E_J + \gradnc(e_J-e_{J-1}) \Vert^2 
     + \vvvert e_J \vvvert^2_\nc 
     + \Vert E_1 - E_0 \Vert^2 \\
     &\quad 
@@ -304,20 +316,20 @@ für den Alg?}
     & = 
     2\alpha\sum_{j=1}^J\Vert e_j\Vert^2\\
     &\quad 
-    +\vvvert e_J \vvvert^2_\nc + \Vert E_J \Vert_{L^2(\Omega)}^2 
+    +\vvvert e_J \vvvert^2_\nc + \Vert E_J \Vert^2 
     + \sum_{j=1}^J ( \vvvert e_j-e_{j-1} \vvvert^2_\nc
     + \Vert E_j - E_{j-1} \Vert^2 )\\
     &\quad
-    + 2\sum_{j=1}^{J-1}(E_j-E_{j+1},\gradnc(e_j-e_{j-1}))_{L^2(\Omega)}\\
+    + 2\sum_{j=1}^{J-1}(E_j-E_{j+1},\gradnc(e_j-e_{j-1}))\\
     &\quad 
-    + 2(E_{J},\gradnc(e_J-e_{J-1}))_{L^2(\Omega)} \\
+    + 2(E_{J},\gradnc(e_J-e_{J-1})) \\
     &\leq
     \tau^{-1}(\vvvert e_0\vvvert^2_\nc + \Vert E_0\Vert^2).
   \end{align*}
 
   Das zeigt, dass
-  $\sum_{j=1}^\infty \Vert e_j\Vert _{L^2(\Omega)}^2$ nach oben beschränkt ist,
-  was impliziert, dass $\Vert e_j\Vert_{L^2(\Omega)}\rightarrow 0$
+  $\sum_{j=1}^\infty \Vert e_j\Vert^2$ nach oben beschränkt ist,
+  was impliziert, dass $\Vert e_j\Vert\rightarrow 0$
   für $j\rightarrow \infty$.
 \end{proof}
 
