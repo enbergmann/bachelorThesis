@@ -420,7 +420,8 @@ Theorems wurde von Professor Carstensen formuliert.
 
   Um zu beweisen, dass $\ucr$ \Cref{prob:discreteProblem} löst, genügt es
   aufgrund der Eindeutigkeit der Lösung $\tilde{u}_\CR$ von
-  \Cref{prob:discreteProblem} zu zeigen, dass $\ucr=\tilde{u}_\CR$.
+  \Cref{prob:discreteProblem} zu zeigen, dass $\ucr=\tilde{u}_\CR$ in
+  $\CR^1_0(\Tcal)$.
 
   Es gilt
   \begin{align*}
@@ -433,7 +434,7 @@ Theorems wurde von Professor Carstensen formuliert.
     \left\Vert\gradnc\ucr\right\Vert_{L^1(\Omega)}
     -\Vert\gradnc\tilde{u}_\CR\Vert_{L^1(\Omega)}. 
   \end{align*}
-  Addition dieser Ungleichungen
+  Die Addition dieser Ungleichungen
   liefert die Ungleichung
   \begin{align*}
     \left(-\alpha\ucr,\tilde{u}_\CR-\ucr\right) 
@@ -452,33 +453,54 @@ Theorems wurde von Professor Carstensen formuliert.
   $\tilde{u}_\CR=\ucr$ in $\CR^1_0(\Tcal)$.
 \end{proof}
 
-\todo{hier}
-Als letztes noch eine von Prof. Carstensen angemerkte äquivalente 
-Charakterisierung der dualen Variable $\bar\Lambda$ aus
-  \Cref{thm:discProbCharacterizationOfDiscreteSolutions} zur diskreten Lösung
-  $\ucr$.
+Zum Schluss dieses Abschnitts wollen wir noch zwei Bermerkungen von Professor
+Carstensen erwähnen und kurz deren Gültigkeit begründen.
+
+Die erste ist in eine äquivalente Charakterisierung der dualen Variable
+$\bar\Lambda\in P_0\left(\Tcal;\Rbb^2\right)$ aus
+\Cref{thm:discProbCharacterizationOfDiscreteSolutions} zur diskreten Lösung
+$\ucr\in\CR^1_0(\Tcal)$ von \Cref{prob:discreteProblem}.
+
 \begin{remark}
-  Das $\bar\Lambda$ fast überall in $\Omega$
+  Das $\bar\Lambda\in P_0\left(\Tcal;\Rbb^2\right)$ fast überall in $\Omega$
   \Cref{eq:discreteMultiplierScalerProductEquality} und
-  $|\bar\Lambda(\bullet)|\leq 1$ erfüllt, ist äquivalent zu 
-  $\bar\Lambda\in\sign(\gradnc \ucr)$.   
-
-  Die Notwendigkeit folgt hierbei unter anderem daraus, dass Gleichheit in der
-  CSU gilt genau dann, wenn die Vektoren linear abhänigig sind, da
-  $|\bar\Lambda|\leq 1$ gilt.
-
-  Falls $\gradnc\ucr\neq 0$ auf $T\in\Tcal$, gilt somit, nach Definition von
-  $\sign$, dass $\bar\Lambda=\gradnc\ucr/|\gradnc\ucr|$ eindeutig auf
-  $T$.
-
-  Im Allgemeinen ist $\bar\Lambda$ nicht eindeutig. So erfüllt zum Beispiel
-  für $f\equiv 0$ in \Cref{prob:discreteProblem} mit eindeutiger Lösung
-  $\ucr\equiv 0$ die Wahl $\bar\Lambda\coloneqq \Curl(v_\C)$ für ein beliebiges
-  $v_\C\in S^1(\Tcal)$ mit $|\Curl(v_\C)|\leq 1$ die Eigenschaft \textit{(ii)}
-  aus \Cref{thm:discProbCharacterizationOfDiscreteSolutions}.
+  $|\bar\Lambda(\bullet)|\leq 1$ erfüllt, ist äquivalent zu der Bedingung
+  $\bar\Lambda(x)\in\sign(\gradnc \ucr(x))$ für alle $x\in\interior(T)$ für
+  alle $T\in\Tcal$.   
 \end{remark}
 
-\section{Zu untersuchende Raten (WIP Titel)}
+\begin{proof}
+  Dass diese Bedingung hinreichend ist, folgt direkt aus der Definition der 
+  Signumfunktion.
+
+  Die Notwendigkeit dieser Bedingung folgt aus der folgenden Beobachtung.
+  Da $\left|\bar\Lambda(\bullet)\right|\leq 1$ fast überall in $\Omega$, ist
+  \Cref{eq:discreteMultiplierScalerProductEquality} eine Cauchy-Schwarzsche
+  Ungleichung, bei der sogar Gleichheit gilt. 
+  Dies ist genau dann der Fall, wenn $\bar\Lambda(\bullet)$ und
+  $\gradnc\ucr(\bullet)$ fast überall in $\Omega$ linear abhängig sind.
+\end{proof}
+ 
+Daraus können wir folgern, unter welchen Umständen die duale Variable
+$\bar\Lambda$ eindeutig bestimmt auf einem Dreieck $T\in\Tcal$ ist.
+
+\begin{remark}
+  Falls $\gradnc\ucr\neq 0$ auf $T\in\Tcal$, gilt nach Definition der
+  Signumfunktion, dass $\bar\Lambda=\gradnc\ucr/|\gradnc\ucr|$ eindeutig
+  bestimmt ist auf $T$.
+
+  Im Allgemeinen ist $\bar\Lambda$ nicht eindeutig bestimmbar. 
+  Betrachten wir zum Beispiel $f\equiv 0$ in \Cref{prob:discreteProblem} mit
+  eindeutiger Lösung $\ucr\equiv 0$ fast überall in $\Omega$. 
+  Dann erfüllt nach der diskreten Helmholtz Zerlegung \cite[S. 193, Theorem
+  3.32]{Car09b} die Wahl $\bar\Lambda\coloneqq \Curl(v_\C)$ für ein beliebiges
+  $v_\C\in S^1(\Tcal)$ mit $|\Curl(v_\C)|\leq 1$ die Charakterisierung
+  \textit{(ii)} aus \Cref{thm:discProbCharacterizationOfDiscreteSolutions}.
+\end{remark}
+
+
+\section{Kontrolle des Abstandes zwischen diskreter und kontinuierlicher
+Lösung}
 Wir zeigen in dieser Arbeit keine Fehlerabschätzung, können aber in den 
 Experimenten Raten mit dem folgenden Theorem für
 [cite Problem von Bartels bzw ROF-Modell] vergleichen.
