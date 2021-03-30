@@ -8,7 +8,7 @@ dass $\CR^1(\Tcal)\subset\BV(\Omega)$, da
   |\vcr|_{\BV(\Omega)} 
   = 
   \Vert \gradnc \vcr\Vert_{L^1(\Omega)} 
-  + \sum_{E\in\Ecal(\Omega)}\Vert[\vcr]_E\Vert_{L^1(E)}
+  + \sum_{F\in\Ecal(\Omega)}\Vert[\vcr]_F\Vert_{L^1(F)}
   \quad\text{für alle }\vcr\in\CR^1(\Tcal).
 \end{align*} 
 Dies wird für $|\Tcal|=2$ zum Beispiel von \cites[S. 404, Example
@@ -19,7 +19,7 @@ Damit gilt dann insbesondere
 \begin{align*}
   |\vcr|_{\BV(\Omega)} +\Vert\vcr\Vert_{L^1(\partial\Omega)} 
   = \Vert \gradnc \vcr\Vert_{L^1(\Omega)} +
-  \sum_{E\in\Ecal}\Vert[\vcr]_E\Vert_{L^1(E)}.
+  \sum_{F\in\Ecal}\Vert[\vcr]_F\Vert_{L^1(F)}.
 \end{align*}
 
 Um eine nichtkonforme Formulierung von \Cref{prob:continuousProblem} zu 
@@ -28,7 +28,7 @@ $|\bullet|_{\BV(\Omega)} +\Vert\bullet\Vert_{L^1(\partial\Omega)}$ des
 Funktionals $E$ durch 
 $\Vert \gradnc \bullet\Vert_{L^1(\Omega)}$, das heißt wir vernachlässigen
 bei der nichtkonformen Formulierung die Terme
-$\sum_{E\in\Ecal}\Vert[\bullet]_E\Vert_{L^1(E)}$.
+$\sum_{F\in\Ecal}\Vert[\bullet]_F\Vert_{L^1(F)}$.
 
 Somit erhalten wir das folgende Minimierungsproblem für den Parameter
 $\alpha\in\Rbb_+$ und die rechte Seite $f\in
@@ -633,44 +633,55 @@ erhalten wir damit folgendes Korollar.
 \end{corollary}
 
 \section{Verfeinerungsindikator und garantierte untere Energieschranke}
-In diesen Abschnitt
-Professor Carstensen stellte zur numerischen Untersuchung den folgenden
-Verfeinerungsindikator zur adaptiven Netzverfeinerung und eine 
+
+Professor Carstensen stellte für die numerischen Untersuchungen 
+den folgenden Verfeinerungsindikator zur adaptiven Netzverfeinerung und eine 
 garantierte untere Energieschranke zur Verfügung.
 
-\begin{definition}[Verfeinerungsindikator]\label{def:refinementIndicator}
-  Für $n\in\mathbb{N}$ (hier $n=2$) und $0<\gamma\leq 1$ definieren wir den
-  Verfeinerungsindikator $\eta\coloneqq\sum_{T\in\Tcal}\eta(T)$, wobei
+\begin{definition}[Verfeinerungsindikator]
+  \label{def:refinementIndicator}
+  Für $d\in\mathbb{N}$ (in dieser Arbeit $d=2$) und $0<\gamma\leq 1$ definieren
+  wir für alle $T\in\Tcal$ die Funktionen
+  \begin{align*}
+    \eta_\text{V}(T)
+    &\coloneqq
+    |T|^{2/n}\Vert f-\alpha \ucr\Vert^2_{L^2(T)}\quad\text{und }\\
+    \eta_\text{J}(T)
+    &\coloneqq
+    |T|^{\gamma/n}\sum_{F\in\Ecal(T)}\Vert [\ucr]_F\Vert_{L^1(F)}.
+  \end{align*} 
+  Damit definieren wir den Verfeinerungsindikator
+  $\eta\coloneqq\sum_{T\in\Tcal}\eta(T)$, wobei
   \begin{align} \label{eq:refinementIndicator} 
-    \eta (T)\coloneqq
-    \underbrace{|T|^{2/n}\Vert f-\alpha \ucr\Vert^2_{L^2(T)}}_{\eqqcolon
-    \eta_\text{V}(T)} +\underbrace{|T|^{\gamma/n}\sum_{F\in\Fcal(T)}\Vert
-    [\ucr]_F\Vert_{L^1(F)}}_{ \eqqcolon \eta_\text{J}(T)} 
+    \eta (T)
+    \coloneqq
+    \eta_\text{V}(T) + \eta_\text{J}(T)\quad\text{für alle } T\in\Tcal.
   \end{align} 
-  für alle $T\in\Tcal$.
 \end{definition}
 
 \begin{theorem}
   \label{thm:gleb}
+
   Ist $f\in H^1_0(\Omega)$, $u\in H^1_0(\Omega)$ Lösung von
   \Cref{prob:continuousProblem} mit minimaler Energie $E(u)$ und $\ucr\in
   \CR^1_0(\Omega)$ Lösung von \Cref{prob:discreteProblem} mit minimaler Energie
   $\Enc(\ucr)$, dann gilt
-  \begin{align}
-    \label{eq:gleb}
+  \begin{align*}
     \Enc(\ucr)+\frac{\alpha}{2}\Vert u-\ucr\Vert^2
     -\frac{\kappa_\CR}{\alpha}\Vert
-    h_\Tcal(f-\alpha\ucr)\Vert |f|_{1,2}\leq E(u),
-  \end{align}
-  wobei $|\bullet|_{1,2}=\Vert\nabla \bullet\Vert$.
-  
-  Insbesondere gilt für 
-  $\Egleb \coloneqq 
-    \Enc(\ucr) - \frac{\kappa_\CR}{\alpha}\Vert
-    h_\Tcal(f-\alpha\ucr)\Vert |f|_{1,2}$, dass
-    $\Enc(\ucr)\geq \Egleb$ und $E(u)\geq \Egleb$.
+    h_\Tcal(f-\alpha\ucr)\Vert \Vert\nabla f\Vert\leq E(u).
+  \end{align*}
+  Dabei ist mit der kleinsten positiven Nullstelle $j_{1,1}$ der
+  Bessel-Funktion erster Art die Konstante
+  $\kappa_\CR\coloneqq\sqrt{1/48+1/j_{1,1}^2}$.
 
-    \todo[inline]{$\kappa_\CR$ (Bessel Nullstelle) zitieren und wohl noch was
-    zur Regularität der Lösung bei dieser RHS sagen, also das Lösung 
-    in H10 falls RHS in H10 (s. CC unausführliche Erwähung).}
+  Insbesondere gilt dann für 
+  \begin{align}
+    \label{eq:gleb}
+    \Egleb 
+    \coloneqq 
+    \Enc(\ucr) - \frac{\kappa_\CR}{\alpha}\Vert h_\Tcal(f-\alpha\ucr)\Vert
+    \Vert \nabla f\Vert,
+  \end{align}
+    dass $\Enc(\ucr)\geq \Egleb$ und $E(u)\geq \Egleb$.
 \end{theorem}
