@@ -19,8 +19,9 @@ Dabei eignen sich die Register von \cite{Zei90b} und \cite{Zei85} hervorragend
 zum schnellen Auffinden von Begriffen in allen eben aufgeführten
 Referenzen.
 
-Schließlich sollte ein Verständnis des AFEM-Softwarepakets \cite{Car09} und von
-den mathematischen Konzepten hinter dessen Methoden vorhanden sein. 
+Schließlich sollte ein Verständnis des AFEM-Softwarepakets \cite{Car09}, von
+den darin verwendeten Datenstrukturn und von den mathematischen Konzepten
+hinter dessen Methoden vorhanden sein. 
 Dazu sei an dieser Stelle auf die Dokumentation \cite{CGKNRR10} dieses
 Softwarepakets verwiesen.
 Die in dieser Arbeit benötigten Begriffe und Notationen führen wir im nächsten
@@ -67,13 +68,15 @@ Die Menge der stückweisen konstanten Funktionen auf der Triangulierung $\Tcal$
 mit Werten in $\Rbb^m$ notieren wir dann mit $ P_0\!\left(\Tcal,\Rbb^m\right)$
 und die Menge der stückweisen affinen Funktionen auf $\Tcal$ mit Werten in
 $\Rbb^m$ mit $ P_1\!\left(\Tcal,\Rbb^m\right)$. 
-Weiterhin ist der Courant-Finite-Elemente-Raum definiert als
+Weiterhin ist der Courant-Finite-Elemente-Raum (cf. \cite[12]{CGKNRR10})
+definiert als
 \begin{align*}
   S^1(\Tcal)\coloneqq P_1(\Tcal)\cap C\!\left(\bar\Omega\right).
 \end{align*}
-Für ein Dreieck $T\in\Tcal$ sei die längste Seitenlänge $h_T$.
+Für ein Dreieck $T\in\Tcal$ sei die längste Seitenlänge $h_T$. 
 Damit können wir die stückweise konstante Funktion $h_\Tcal\in P_0(\Tcal)$
-für alle $T\in\Tcal$ durch $h_\Tcal|_T\coloneqq h_T$ definieren.
+für alle $T\in\Tcal$ durch $h_\Tcal|_T\coloneqq h_T$ definieren und die längste
+Seitenlänge der Triangulierung $h\coloneqq\max_{T\in\Tcal}h_T$.
 Die Menge der Knoten der Triangulierung sei $\Ncal$, wobei die Menge der
 inneren Knoten mit $\Ncal(\Omega)$, die Menge der Randknoten mit
 $\Ncal(\partial\Omega)$ und die Menge der Knoten eines Dreiecks $T\in\Tcal$ mit
@@ -128,22 +131,26 @@ Identifizieren wir einen Raum $Y$ mit dem Dualraum $X^\ast$, so schreiben
 wir $Y\cong X^\ast$.
 
 Weiterhin benutzen wir die übliche Notation für Lebesgue-Räume
-$L^p(U)$ und die So\-bo\-lev-Räume $W^{k,p}(U)$ sowie
+$L^p\!\left(U;\Rbb^m\right)$ und die So\-bo\-lev-Räume $W^{k,p}(U)$ sowie
 $H^k(U)\coloneqq W^{k,2}(U)$ und $H^k_0(U)$. Die Normen auf diesen Räumen
 definieren wir ebenfalls wie üblich.
-
 Außerdem schreiben wir kurz $\Vert\bullet\Vert \coloneqq
 \Vert\bullet\Vert_{L^2(\Omega)}$
 und $(\bullet,\bullet)\coloneqq(\bullet,\bullet)_{L^2(\Omega)}$.
+
+Mit $H^1(\Tcal)$ bezeichnen wir den Raum der stückweisen $H^1$-Funktionen
+bezeichnet.
 
 
 \section{Crouzeix-Raviart-Finite-Elemente-Funktionen}
 \label{sec:crouzeixRaviartFunctions}
 
-Bevor wir eine Diskretisierung von \Cref{prob:continuousProblem} formulieren,
-rufen wir uns den dafür benötigten
-Crou\-zeix\--Ra\-vi\-art\--Fi\-ni\-te-Ele\-men\-te-Raum und
-einige relevante Eigenschaften über diesen in Erinnerung.
+In \Cref{sec:discreteProblemFormulation} wollen wir für die Diskretisierung
+einer nichtkonformen Formulierung des in
+\Cref{sec:continuousProblemFormulation} genannten Minimierungsproblems die
+Crouzeix-Raviart-Finite-Elemente-Methode nutzen. 
+Die dafür benötigten Definitionen und Aussagen wollen wir in diesen Abschnitt
+aus \cites{Car09b}{CGR12}{CGKNRR10} zusammentragen. 
 
 Die Räume der Crouzeix-Raviart-Finite-Elemente-Funktionen sind definiert durch
 \begin{align*}
@@ -153,34 +160,36 @@ Die Räume der Crouzeix-Raviart-Finite-Elemente-Funktionen sind definiert durch
   alle } E\in\Ecal\} \quad\text{und}\\
   \CR^1_0(\Tcal)
   &\coloneqq
-  \{\vcr\in\CR^1(\Tcal)\,\mid\, \forall E\in\Ecal(\partial\Omega)\quad
-  \vcr(\Mid(E))=0\}.
+  \left\{\vcr\in\CR^1(\Tcal)\,\middle|\, \forall E\in\Ecal(\partial\Omega)\quad
+  \vcr(\Mid(E))=0\right\}.
 \end{align*}
 
-Für eine Kante $E\in\Ecal$ definieren wir für alle $F\in\Ecal$ einen Wert
+Wir wollen $\CR^1_0(\Tcal)$ mit einen diskreten Skalarprodukt ausstatten. 
+Dafür führen wir den stückweisen Gradienten $\gradnc:H^1(\Tcal)\to
+L^2\!\left(\Omega;\Rbb^2\right)$ ein. 
+Dieser ist für alle $v\in H^1(\Tcal)$ und alle $T\in\Tcal$ definiert durch
+$\left(\gradnc v\right)\!|_T\coloneqq \nabla v|_T$.
+
+Das ermöglicht uns die Definition der diskreten Bilinearform
+$\anc(\bullet,\bullet):\CR^1_0(\Tcal)\times\CR^1_0(\Tcal)\to\Rbb$ 
+durch
 \begin{align*}
-  \psi_E(\Mid(F))
-  \coloneqq
-  \begin{cases}
-    1,&\text{ falls } F=E,\\
-    0,&\text{ falls } F\neq E.
-  \end{cases}
+  \anc(\ucr,\vcr)\coloneqq\int_\Omega\gradnc\ucr\cdot\gradnc\vcr\dx
+  \quad\text{für alle } \ucr,\vcr\in\CR^1_0(\Tcal).
 \end{align*}
-Damit ist die Crouzeix-Raviart-Basisfunktion $\psi_E\in\CR^1(\Tcal)$
-gegeben durch elementweise lineare Interpolation dieser Werte in den
-Mittelpunkten der drei Kanten eines jeden Dreiecks $T\in\Tcal$.
+Diese ist ein Skalarprodukt auf $\CR^1_0(\Tcal)$.
 
-Die Menge $\{\psi_E\,\mid\,E\in\Ecal(\Omega)\}$ bildet eine Basis von
+Die von $\anc$ induzierte Norm bezeichnen wir mit $\vvvert\bullet\vvvert_\NC$.
+
+Zum Abschluss definieren wir noch für jede Kante $E\in\Ecal$ eine Funktion
+$\psi_E\in\CR^1(\Tcal)$ durch ihre Werte
+\begin{align*}
+  \psi_E(\Mid(E))&\coloneqq 1 
+  &&\text{sowie} 
+  &\psi_E(\Mid(F))&\coloneqq 0\quad\text{für alle } F\in\Ecal.
+\end{align*}
+Die Menge $\{\psi_E\,\mid\,E\in\Ecal(\Omega)\}$ bildet dann eine Basis von
 $\CR^1_0(\Tcal)$.
-
-Da die Funktionen 
-\todo[inline]{nc Differentialoperatoren, diskrete Norm/Energienorm, CR
-Basisfunktionen, $\anc$}
-\todo[inline]{Eigenes CR Kapitel wenn Quelle gefunden, direkt nach BV
-Funktionen Section. Wie Courant einbinden. Vielleicht section 
-Courant- und Crouzeix-Raviart-Finite-Elemente-Methode}
-\todo[inline]{$S^1(\Tcal)$ auch einführen (wenigstens definieren und erwähnen, 
-dass das Courant ist}
 
 
 \section{Variationsrechnung auf Banachräumen}
