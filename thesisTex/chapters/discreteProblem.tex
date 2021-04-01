@@ -512,7 +512,7 @@ untersuchen.
 
 Zunächst betrachten wir \cite[S. 309, Theorem 10.7]{Bar15}. Diese
 Abschätzung kontrolliert den
-$L^2$-Fehler zwischen den Minmierern $u_\C\in S^1(\Tcal)$ und
+$L^2$-Fehler zwischen den Minimierern $u_\C\in S^1(\Tcal)$ und
 $u\in\BV(\Omega)\cap L^2(\Omega)$ des Funktionals $I$ aus \Cref{eq:rofModel} in
 den entsprechenden Räumen. Obwohl wir eine andere Formulierung des ROF-Modells 
 betrachten und sich insbesondere das Funktional $\Enc$ aus unserer diskreten,
@@ -581,8 +581,8 @@ und des diskreten Problems kontrolliert werden kann.
     dG(u;v-u) +\frac{\alpha}{2}\Vert u-v\Vert^2+G(u) 
     =
     G(v)
+    \quad\text{für alle } v\in L^2(\Omega).
   \end{align}
-  für alle $v\in L^2(\Omega)$.
 
   Da $u$ Minimierer von $E$ ist, erhalten wir mit \Cref{thm:extremalprinciple},
   \Cref{thm:subdifferentialSumRule} und \Cref{thm:subdiffGateaux} die Aussage
@@ -599,17 +599,18 @@ und des diskreten Problems kontrolliert werden kann.
     L^2(\Omega).
   \end{align*}
 
-  Daraus folgt zusammen mit \Cref{eq:strongConvexityG}, dass
+  Daraus folgt zusammen mit \Cref{eq:strongConvexityG} für alle $v\in
+  \BV(\Omega)\cap L^2(\Omega)$, dass
   \begin{align*}
     \frac{\alpha}{2}\Vert u-v\Vert^2+G(u)-G(v)+F(u)
-    = -dG(u;v-u)+F(u)\leq F(v)
+    = -dG(u;v-u)+F(u)\leq F(v).
   \end{align*}
-  für alle $v\in \BV(\Omega)\cap L^2(\Omega)$.
+  
 
   Da $E=F+G$, folgt daraus die zu zeigende Aussage.
 \end{proof}
 
-Mit den Betrachtungen in \Cref{sec:discreteProblemFormulation} 
+Zusammen mit den Betrachtungen in \Cref{sec:discreteProblemFormulation} 
 erhalten wir damit folgendes Korollar.
 
 \begin{corollary}
@@ -640,15 +641,15 @@ garantierte untere Energieschranke zur Verfügung.
 
 \begin{definition}[Verfeinerungsindikator]
   \label{def:refinementIndicator}
-  Für $d\in\mathbb{N}$ (in dieser Arbeit $d=2$) und $0<\gamma\leq 1$ definieren
-  wir für alle $T\in\Tcal$ die Funktionen
+  Für $d\in\mathbb{N}$ (in dieser Arbeit stets $d=2$) und $0<\gamma\leq 1$
+  definieren wir für alle $T\in\Tcal$ die Funktionen
   \begin{align*}
     \eta_\text{V}(T)
     &\coloneqq
     |T|^{2/n}\Vert f-\alpha \ucr\Vert^2_{L^2(T)}\quad\text{und }\\
     \eta_\text{J}(T)
     &\coloneqq
-    |T|^{\gamma/n}\sum_{F\in\Ecal(T)}\Vert [\ucr]_F\Vert_{L^1(F)}.
+    |T|^{\gamma/n}\sum_{F\in\Ecal(T)}\left\Vert [\ucr]_F\right\Vert_{L^1(F)}.
   \end{align*} 
   Damit definieren wir den Verfeinerungsindikator
   $\eta\coloneqq\sum_{T\in\Tcal}\eta(T)$, wobei
@@ -661,11 +662,12 @@ garantierte untere Energieschranke zur Verfügung.
 
 \begin{theorem}
   \label{thm:gleb}
+  Sei $f\in H^1_0(\Omega)$ in \Cref{prob:continuousProblem} mit Lösung 
+  $u\in H^1_0(\Omega)$ und minimaler Energie $E(u)$ sowie in
+  \Cref{prob:discreteProblem} mit Lösung $\ucr\in \CR^1_0(\Omega)$ und
+  minimaler Energie $\Enc(\ucr)$.
 
-  Ist $f\in H^1_0(\Omega)$, $u\in H^1_0(\Omega)$ Lösung von
-  \Cref{prob:continuousProblem} mit minimaler Energie $E(u)$ und $\ucr\in
-  \CR^1_0(\Omega)$ Lösung von \Cref{prob:discreteProblem} mit minimaler Energie
-  $\Enc(\ucr)$, dann gilt
+  Dann gilt
   \begin{align*}
     \Enc(\ucr)+\frac{\alpha}{2}\Vert u-\ucr\Vert^2
     -\frac{\kappa_\CR}{\alpha}\Vert
