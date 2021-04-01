@@ -1,43 +1,25 @@
 \section{Primale-duale Iteration}
-\todo{hier start}
-Mehr zur Herleitung des Algorithmus, siehe BartelsBVPaper S. 1163, schwache
-Formulierung der vorletzten Gleichung
 
-Schreibe sowas wie ,Die GLeichungen basieren auf der primalen dualen
-Formulierung des Problems, auf einem descent flow \ldots usw,
-Details finden sich in barBV, wobei Gleichung (Glg im Alg) die schwache
-Formulierung von (Glg in Bartels bzw der Herleitung)'. d.h. Stichworte
-abklappern, damit Leute mit Ahnung wissen was los ist, aber für Details
-auf andere Leute zeigen.
+In diesen Abschnitt präsentieren wir ein iteratives Verfahren mit den wir
+\Cref{prob:discreteProblem} numerisch lösen möchten. 
+Wir nutzen  die primale-duale Iteration \cite[S. 314, Algorithm
+10.1]{Bar15} unter Beachtung von \cite[S. 314, Remark 10.11]{Bar15}. 
+Diese realisiert Gradientenverfahren zum Finden eines Sattelpunkts, dessen 
+Komponenten die primale und die duale Formulierung des Minimierungsproblems
+lösen. Details dazu und weitere Referenzen finden sich in
+\cites{Bar12}[S. 118-121]{Bar15}.
+\todo{ascent and descent flow, gradient flow heißt doch, dass
+Gradientenverfahren angewendet wurde, richtig?
+Stopping criteria sind in Punkt 6.2}
 
-Weitere Details zur Herleitung auf S. 1168, da noch Details rausschreiben
-aber nur grob aber dafür darauf verweisen für die Herleitung. Nur das 
-nötigste hier.
-
-
-Stopping criteria sind in Punkt 6.2
-
-
-\todo[inline]{Irgendwo, wahrscheinlich bei ,,alles zu $\CR_0$'' muss noch
-$\anc(u,v)\coloneqq\int_\Omega\gradnc u\cdot\gradnc v\dx$ erwähnt werden (und
-warum das ein SP ist muss angerissen werden, Stichwort Friedrichs Ungleichung)} 
-
-Für unsere Formulierung \Cref{prob:discreteProblem} nutzen wir \cite[S. 314,
-Algorithm 10.1]{Bar15} unter Beachtung von \cite[S. 314, Remark 10.11]{Bar15}
-als Algorithmus als iterativen Löser und benutzen als inneres Produkt $\anc$
-(definiert in Kapitel \ldots hier in dieser Arbeit).
-Weitere Details dazu finden sich in \cite[S. 118-121]{Bar15}.
-\todo[inline]{Beim Zitieren z.B. 'Remark' lassen, weil es in Bartels so heißt,
-oder das lieber übersetzen? Außerdem natürlich, passt das so als Einleitung 
-für den Alg?}
-\todo{hier ende}
+Angepasst an unser Problem und die Notation dieser Arbeit lautet der
+Algorithmus wie folgt.
 
 \begin{algorithm}[Primale-duale Iteration]
   \label{alg:primalDualIteration}
 \begin{algorithmic}\\
-  \Require $u_0\in\textup{CR}_0^1(\mathcal{T}),$
-  $\Lambda_0
-  \in  P_0\!\left(\mathcal{T}; 
+  \Require $\left(u_0,\Lambda_0\right)
+  \in\textup{CR}_0^1(\mathcal{T})\times P_0\!\left(\mathcal{T}; 
   \left\{w\in\Rbb^2\,\middle|\,|w|\leq 1\right\}\right),
   \tau>0$  \\
   Initialisiere $v_0\coloneqq 0$ in $\textup{CR}^1_0(\mathcal T)$.
@@ -50,24 +32,23 @@ für den Alg?}
     \label{eq:primalDualAlgLambdaJ}
     \Lambda_j
     \coloneqq
-    \left(\Lambda_{j-1}+\tau\nabla_{\textup{NC}} \tilde{u}_j\right)/
-      \max\left\{1,
-      \left|\Lambda_{j-1}+\tau\nabla_{\textup{NC}}\tilde{u}_j\right|\right\},
+    \frac{\Lambda_{j-1}+\tau\nabla_{\textup{NC}} \tilde{u}_j}
+    {\max\left\{1,
+    \left|\Lambda_{j-1}+\tau\nabla_{\textup{NC}}\tilde{u}_j\right|\right\}},
   \end{equation}
       \State
   \State bestimme $u_j\in\textup{CR}^1_0(\mathcal{T})$
   als Lösung des linearen Gleichungssystems
   \begin{align}
     \label{eq:linSysPrimalDualAlg}
-    \frac{1}{\tau}&a_{\textup{NC}}(u_j,\bullet)+\alpha(u_j,\bullet)
-    \notag \\
+    \frac{1}{\tau}a_{\textup{NC}}(u_j,\bullet)+\alpha(u_j,\bullet)
     &=
     \frac{1}{\tau}a_{\textup{NC}}(u_{j-1},\bullet) + (f,\bullet)
-    - (\Lambda_j,\nabla_{\textup{NC}}\bullet) 
+    - \left(\Lambda_j,\nabla_{\textup{NC}}\bullet\right) 
+    \quad\text{in }\CR^1_0(\Tcal),
   \end{align}
-  \State in $\CR^1_0(\mathcal{T})$, \\
   \begin{equation*}
-    v_j\coloneqq(u_j-u_{j-1})/\tau.
+    v_j\coloneqq\frac{u_j-u_{j-1}}{\tau}.
   \end{equation*}
   \EndFor
   \Ensure Folge $(u_j,\Lambda_j)_{j\in\mathbb N}$ in
@@ -78,6 +59,12 @@ für den Alg?}
 \end{algorithm}
 
 \section{Konvergenz der Iteration}
+In diesen Abschnitt beweisen wir die Konvergenz der Iterate von
+\Cref{alg:primalDualIteration} gegen die Lösung von
+\Cref{prob:discreteProblem}. 
+Dabei bedienen wir uns unter anderem der äquivalenten Charakterisierungen aus
+\Cref{thm:discProbCharacterizationOfDiscreteSolutions}.
+
 \begin{theorem}
   Sei $\ucr\in \CR^1_0(\Tcal)$ Lösung von \Cref{prob:discreteProblem} und
   $\bar\Lambda\in P_0\!\left(\Tcal;\Rbb^2\right)$ erfülle
@@ -86,118 +73,120 @@ für den Alg?}
   \Cref{eq:discreteMultiplierL2Equality}.
 
   Falls $0 < \tau \leq 1$, dann konvergieren die Iterate $(u_j)_{j\in\Nbb}$ von
-  \Cref{alg:primalDualIteration}
-  gegen $\ucr.$
+  \Cref{alg:primalDualIteration} in $L^2(\Omega)$ gegen $\ucr.$
 \end{theorem}
 
 \begin{proof}
-  \todo{hier start again}
   Der Beweis folgt einer Skizze von Professor Carstensen.
   
-  Seien $\tilde{u}_j$, $v_j$ und $\Lambda_j$ definiert wie in
+  Sei $j\in\Nbb$. 
+  Seien weiterhin $\tilde{u}_j$, $v_j$ und $\Lambda_j$ definiert wie in
   \Cref{alg:primalDualIteration}.
-  Definiere außerdem $e_j \coloneqq \ucr-u_j$ und $E_j\coloneqq
-  \bar\Lambda-\Lambda_j$. 
+  Außerdem definieren wir die Abkürzungen $e_j \coloneqq \ucr-u_j$,
+  $E_j\coloneqq \bar\Lambda-\Lambda_j$ und $\mu_j\coloneqq
+  \max\{1,|\Lambda_{j-1}+\tau \gradnc \tilde{u}_j|\}$.
+  Dabei nutzen wir die Konvention $e_{-1}\coloneqq e_0$.
 
-  Testen wir nun \eqref{eq:linSysPrimalDualAlg} mit $e_j$, erhalten wir
+  Wir testen zunächst \eqref{eq:linSysPrimalDualAlg} mit $e_j$ und formen das
+  Resultat um. 
+  Damit erhalten wir
   \begin{align*}
     \anc(v_j,e_j) + \alpha(u_j,e_j) 
     + (\Lambda_j,\gradnc e_j)
     = 
     (f,e_j).
   \end{align*}
-  Äquivalent dazu ist, da $\ucr$ \Cref{eq:discreteMultiplierL2Equality} löst, 
-  \begin{align}
+  Zusammen mit \Cref{eq:discreteMultiplierL2Equality} folgt daraus
+  \begin{equation}
     \label{eq:convProofE}
-    \anc(v_j,e_j) &= 
-    \alpha(\ucr-u_j,e_j) 
-    + (\bar\Lambda-\Lambda_j,\gradnc e_j) \notag\\
-    &= 
-    \alpha\Vert e_j\Vert^2
-    + (E_j,\gradnc e_j).
-  \end{align}
-  Sei $\mu_j\coloneqq \max\{1,|\Lambda_{j-1}+\tau
-  \gradnc \tilde{u}_j|\}$.
-  Nutzen wir \eqref{eq:primalDualAlgLambdaJ} erhalten wir damit
+    \begin{aligned}
+      \anc(v_j,e_j) &= 
+      \alpha(\ucr-u_j,e_j) 
+      + \left(\bar\Lambda-\Lambda_j,\gradnc e_j\right) \\
+      &= 
+      \alpha\Vert e_j\Vert^2 + \left(E_j,\gradnc e_j\right).
+    \end{aligned}
+  \end{equation}
+
+  Als Nächstes betrachten wir \Cref{eq:primalDualAlgLambdaJ}. Es gilt
   \begin{align}
     \label{eq:convProofA}
     \Lambda_{j-1}-\Lambda_j+\tau \gradnc \tilde{u}_j 
     = (\mu_j-1)\Lambda_j \quad\text{fast überall in }\Omega.
   \end{align}
-  Für fast alle $x\in\Omega$ liefert die CSU, da $|\bar\Lambda|\leq 1$ fast
-  überall in $\Omega$,
-  $\Lambda_j(x)\cdot\bar\Lambda(x)\leq|\Lambda_j(x)|$ und damit folgt 
-  aus \Cref{eq:primalDualAlgLambdaJ} und einer einfachen Fallunterscheidung
-  zwischen $1\geq |\Lambda_{j-1}+\tau\gradnc \tilde{u}_j|$ und
-  $1< |\Lambda_{j-1}+\tau\gradnc \tilde{u}_j|$,
-  dass $(1-|\Lambda_j(x)|)(\mu_j(x)-1)=0$.
-  Testen wir nun \eqref{eq:convProofA} mit $E_j$, erhalten wir 
-  unter Nutzung von $\mu_j\geq 1$ und der CSU damit
+  Außerdem folgt aus \Cref{eq:primalDualAlgLambdaJ} und einer einfachen
+  Fallunterscheidung zwischen $1\geq |\Lambda_{j-1}+\tau\gradnc \tilde{u}_j|$
+  und $1< |\Lambda_{j-1}+\tau\gradnc \tilde{u}_j|$, dass
+  \begin{align}
+    \label{eq:convergenceIterationMuProductZero}
+    \left(1-|\Lambda_j|\right)(\mu_j-1)=0
+    \quad\text{fast überall in } \Omega.
+  \end{align}
+
+  Testen wir nun \Cref{eq:convProofA} in $L^2(\Omega)$ mit $E_j$, erhalten wir 
+  unter Nutzung von $\mu_j\geq 1$, der Cauchy-Schwarzschen Ungleichung,
+  $\left|\bar\Lambda(\bullet)\right|\leq 1$ fast überall in $\Omega$ und
+  \Cref{eq:convergenceIterationMuProductZero}, dass
   \begin{align*}
-    ( \Lambda_{j-1}-\Lambda_j+\tau\gradnc \tilde{u}_j,
-    E_j)
+    \left( \Lambda_{j-1}-\Lambda_j+\tau\gradnc \tilde{u}_j, E_j\right)
     &= 
-    ( (\mu_j-1)\Lambda_j,\bar\Lambda-\Lambda_j)\\
+    \left( (\mu_j-1)\Lambda_j,\bar\Lambda-\Lambda_j\right)\\
     &=
     \int_\Omega
     (\mu_j-1)(\Lambda_j\cdot\bar\Lambda-\Lambda_j\cdot\Lambda_j)\,\mathrm dx\\
     &\leq
     \int_\Omega (\mu_j-1)(|\Lambda_j|-|\Lambda_j|^2)\,\mathrm dx\\
     &=
-    \int_\Omega |\Lambda_j|
-    (1-|\Lambda_j|)(\mu_j-1)\,\mathrm dx \\
+    \int_\Omega |\Lambda_j| (1-|\Lambda_j|)(\mu_j-1)\,\mathrm dx \\
     &=
-    \int_\Omega |\Lambda_j|\cdot
-    0\,\mathrm dx =0.
+    0.
   \end{align*}
-  Damit und mit $\Lambda_{j-1}-\Lambda_j=E_j-E_{j-1}$, 
-  $\tilde{u}_j=u_{j-1}+\tau v_{j-1}=u_{j-1}+u_{j-1}-u_{j-2}=
-  u_{j-1}-(e_{j-1}-e_{j-2})$
-  für $j\geq 2$ und der Konvention $e_{-1}\coloneqq e_0$ für $j=1$ erhalten wir
-  insgesamt
+  Daraus folgt mit $\Lambda_{j-1}-\Lambda_j = E_j-E_{j-1}$ und $\tilde{u}_j =
+  u_{j-1}-(e_{j-1}-e_{j-2})$, dass nach Division durch $\tau$ gilt
   \begin{align}
     \label{eq:convProofB}
     \left(\frac{E_j-E_{j-1}}{\tau}+ \gradnc u_{j-1}-\gradnc
-    (e_{j-1}-e_{j-2}),E_j\right)\leq 0\quad\text{für alle }
-    j\in\Nbb.
+    (e_{j-1}-e_{j-2}),E_j\right)\leq 0.
   \end{align}
-  Falls $|\gradnc \ucr|\neq 0$, gilt somit zusammen mit
-  der CSU, $\bar\Lambda\in\sign\gradnc\ucr$ und $|\Lambda_j|\leq 1$,  dass
+
+  Aus der Cauchy-Schwarzschen Ungleichung,
+  $\bar\Lambda(x)\in\sign\left(\gradnc\ucr(x)\right)$ für alle
+  $x\in\interior(T)$ für alle $T\in\Tcal$ und $|\Lambda_j(\bullet)|\leq
+  1$ fast überall in $\Omega$ folgt, dass
   \begin{align*}
     \gradnc\ucr\cdot E_j 
     &=
     \gradnc\ucr\cdot\bar\Lambda - \gradnc\ucr\cdot\Lambda_j\\
     &\geq 
     \gradnc\ucr\cdot\bar\Lambda - |\gradnc\ucr||\Lambda_j| \\
-    &=
-    |\gradnc\ucr|^2/|\gradnc\ucr|-|\gradnc\ucr||\Lambda_j| \\
     &= 
     |\gradnc\ucr|(1-|\Lambda_j|)\\
     &\geq
-    0. 
+    0\quad\text{fast überall in }\Omega.
   \end{align*}
-  Falls $|\gradnc\ucr|=0$, gilt diese Ungleichung ebenfalls.
   Daraus folgt
   \begin{align}
     \label{eq:convProofC}
     (\gradnc\ucr,E_j)=\int_\Omega \gradnc\ucr\cdot E_j\dx\geq 0.
   \end{align}
-  Mit \eqref{eq:convProofB} und \eqref{eq:convProofC} folgt nun
+
+  Aus den Ungleichungen \eqref{eq:convProofB} und \eqref{eq:convProofC} folgt
+  insgesamt
   \begin{align*}
     \left( \frac{E_j-E_{j-1}}{\tau}+ \gradnc u_{j-1}
     -\nabla_\nc(e_{j-1}-e_{j-2}),E_j\right)
     \leq
-    (\gradnc\ucr,E_j)
+    (\gradnc\ucr,E_j).
   \end{align*}
-  für alle $j\in\Nbb$, was nach Definition von $e_{j-1}$
-  äquivalent ist zu
+  Das ist äquivalent zu
   \begin{align}
     \label{eq:convProofD}
     \left( \frac{E_j-E_{j-1}}{\tau} 
     -\gradnc(2e_{j-1}-e_{j-2}),E_j\right)\leq 0.
   \end{align}
-  Unter Nutzung von $-v_j=(e_j-e_{j-1})/\tau$, \eqref{eq:convProofE}, $\tau>0$
-  und \eqref{eq:convProofD} erhalten wir 
+
+  Unter Nutzung von $-\tau v_j=e_j-e_{j-1}$, \Cref{eq:convProofE} und
+  Ungleichung \eqref{eq:convProofD} zusammen mit $\tau>0$ erhalten wir 
   \begin{align*}
     &\vvvert e_j \vvvert^2_\nc   -
     \vvvert e_{j-1}\vvvert_\nc^2 +
@@ -220,42 +209,41 @@ für den Alg?}
     -2\tau\alpha\Vert e_j\Vert^2 - 
     2\tau\big(E_j,\gradnc(e_j-2e_{j-1}+e_{j-2})\big).
   \end{align*}
-  Für jedes $J\in\Nbb$ führt die Summation über $j=1,\ldots,J$ und eine
-  Äquivalenz\-umfomung zu
-  \begin{align}
+  Für jedes $J\in\Nbb$ führt die Summation dieser Ungleichung über
+  $j=1,\ldots,J$ und eine Äquivalenzumfomung zu
+  \begin{equation}
     \label{eq:convProofF}
-    &\vvvert e_J \vvvert^2_\nc +\Vert E_J \Vert^2 
-    +\sum_{j=1}^J\left(\vvvert e_j-e_{j-1} \vvvert_\nc^2 + 
-    \Vert E_j-E_{j-1}\Vert^2\right)\notag \\
-    &\quad \leq 
-    \vvvert e_0 \vvvert_\nc^2 + \Vert E_0 \Vert^2 
-    -2\tau\alpha\sum_{j=1}^J \Vert e_j\Vert^2 \\
-    &\quad\quad
-    -2\tau \sum_{j=1}^J\big(E_j,\gradnc
-    (e_j-2e_{j-1}+e_{j-2})\big).\notag
-  \end{align}
-  Dabei lässt sich die letzt Summe, unter Beachtung von $e_{-1}=e_0$, umformen
-  zu
+    \begin{aligned}
+      &\vvvert e_J \vvvert^2_\nc +\Vert E_J \Vert^2 
+      +\sum_{j=1}^J\left(\vvvert e_j-e_{j-1} \vvvert_\nc^2 + 
+      \Vert E_j-E_{j-1}\Vert^2\right)\\
+      &\quad \leq 
+      \vvvert e_0 \vvvert_\nc^2 + \Vert E_0 \Vert^2 
+      -2\tau\alpha\sum_{j=1}^J \Vert e_j\Vert^2 
+      -2\tau \sum_{j=1}^J\big(E_j,\gradnc
+      (e_j-2e_{j-1}+e_{j-2})\big).
+    \end{aligned}
+  \end{equation}
+  Die letzte Summe auf der rechten Seite dieser Ungleichung können wir, unter
+  Beachtung von $e_{-1}=e_0$, umformen durch
   \begin{align*}
     &\sum_{j=1}^J\big(E_j,\gradnc
     (e_j-2e_{j-1}+e_{j-2})\big)\\
-    &\quad=\sum_{j=1}^J(E_j,\gradnc(e_j-e_{j-1}))
+    &\quad=\sum_{j=1}^J\big(E_j,\gradnc(e_j-e_{j-1})\big)
     -
-    \sum_{j=0}^{J-1}(E_{j+1},\gradnc(e_j-e_{j-1})) \\
+    \sum_{j=0}^{J-1}\big(E_{j+1},\gradnc(e_j-e_{j-1})\big) \\
     &\quad = 
     \sum_{j=1}^{J-1} 
     \big(E_j-E_{j+1},\gradnc(e_j-e_{j-1})\big)
-    +(E_J,\gradnc(e_J-e_{J-1}))\\
-    &\quad\quad 
-    - (E_1, \gradnc(e_0-e_{-1})) \\
+    +\big(E_J,\gradnc(e_J-e_{J-1})\big)
+    - \big(E_1, \gradnc(e_0-e_{-1})\big) \\
     &\quad = 
     \sum_{j=1}^{J-1} 
     \big(E_j-E_{j+1},\gradnc(e_j-e_{j-1})\big)
-    +(E_J,\gradnc(e_J-e_{J-1}))
+    +\big(E_J,\gradnc(e_J-e_{J-1})\big).
   \end{align*}
-  und da die linke Seite von
-  \eqref{eq:convProofF} nicht negativ ist, gilt damit
-  für jedes $0<\tau\leq 1$, dass
+  Mit dieser Umformung folgt für jedes $0<\tau\leq 1$ aus Ungleichung
+  \eqref{eq:convProofF}, dass
   \begin{align*}
     &\tau\left(\vvvert e_J \vvvert^2_\nc +\Vert E_J \Vert^2 
     +\sum_{j=1}^J\left(\vvvert e_j-e_{j-1} \vvvert_\nc^2 + 
@@ -266,71 +254,51 @@ für den Alg?}
     &\quad\quad
     -2\tau\left( 
     \sum_{j=1}^{J-1} 
-    (E_j-E_{j+1},\gradnc(e_j-e_{j-1}))
-    +(E_J,\gradnc(e_J-e_{J-1}))\right).
+    \big(E_j-E_{j+1},\gradnc(e_j-e_{j-1})\big)
+    +\big(E_J,\gradnc(e_J-e_{J-1})\big)\right).
   \end{align*}
   Division durch $\tau$ ergibt
-  \begin{align}
+  \begin{equation}
     \label{eq:convProofG}
-    &\vvvert e_J \vvvert^2_\nc +\Vert E_J \Vert^2 
-    +\sum_{j=1}^J\left(\vvvert e_j-e_{j-1} \vvvert_\nc^2 + 
-    \Vert E_j-E_{j-1}\Vert^2\right) \notag\\
-    &\quad \leq 
-    \tau^{-1}(\vvvert e_0 \vvvert_\nc^2 + \Vert E_0 \Vert^2 )
-    -2\alpha\sum_{j=1}^J \Vert e_j\Vert^2 \\
-    &\quad\quad
-    -2 \sum_{j=1}^{J-1} (E_j-E_{j+1},\gradnc(e_j-e_{j-1}))
-    -2(E_J,\gradnc(e_J-e_{J-1})).\notag
-  \end{align}
+    \begin{aligned}
+      &\vvvert e_J \vvvert^2_\nc +\Vert E_J \Vert^2 
+      +\sum_{j=1}^J\left(\vvvert e_j-e_{j-1} \vvvert_\nc^2 + 
+      \Vert E_j-E_{j-1}\Vert^2\right) \\
+      &\quad \leq 
+      \tau^{-1}\left(\vvvert e_0 \vvvert_\nc^2 + \Vert E_0 \Vert^2 \right)
+      -2\alpha\sum_{j=1}^J \Vert e_j\Vert^2 \\
+      &\quad\quad
+      -2 \sum_{j=1}^{J-1} \big(E_j-E_{j+1},\gradnc(e_j-e_{j-1})\big)
+      -2\big(E_J,\gradnc(e_J-e_{J-1})\big).
+    \end{aligned}
+  \end{equation}
 
-%  \begin{align*}
-%    &2\tau\sum_{j=1}^J(E_j,\gradnc(-e_j+e_{j-1})) +
-%    2\tau\sum_{j=0}^{J-1}(E_{j+1},\gradnc(e_j-e_{j-1}))\\
-%    &\quad \le
-%    2\sum_{j=1}^J(E_j,\gradnc(-e_j+e_{j-1})) +
-%    2\sum_{j=0}^{J-1}(E_{j+1},\gradnc(e_j-e_{j-1}))\\
-%    &\quad =
-%    2\sum_{j=1}^J(E_j,\gradnc(-e_j+e_{j-1})) 
-%    +
-%    2\sum_{j=1}^{J-1}(E_{j+1},\gradnc(e_j-e_{j-1})) 
-%    \tag{since $e_{-1}\coloneqq e_0$}\\
-%    &\quad =
-%    2\sum_{j=1}^{J-1}(E_{j+1}-E_j,\gradnc(e_j-e_{j-1}))
-%    -2(E_{J},\gradnc(e_J-e_{J-1}))
-%    .
-%  \end{align*}
-
-  Schließlich ergibt eine Abschätzung unter Nutzung von \eqref{eq:convProofG}, 
-  dass
+  Schließlich ergibt eine Abschätzung unter Nutzung von Ungleichung
+  \eqref{eq:convProofG}, dass
   \begin{align*}
-    2\alpha\sum_{j=1}^J\Vert e_j\Vert^2 
-    &\leq
-    2\alpha\sum_{j=1}^J\Vert e_j\Vert^2\\
-    &\quad
+    &2\alpha\sum_{j=1}^J\Vert e_j\Vert^2 \\
+    &\quad\leq
+    2\alpha\sum_{j=1}^J\Vert e_j\Vert^2
     +\Vert E_J + \gradnc(e_J-e_{J-1}) \Vert^2 
     + \vvvert e_J \vvvert^2_\nc 
     + \Vert E_1 - E_0 \Vert^2 \\
-    &\quad 
+    &\quad\quad
     + \sum_{j=1}^{J-1}  
       \Vert \gradnc(e_j-e_{j-1}) - (E_{j+1} - E_j ) \Vert^2 \\
-    & = 
-    2\alpha\sum_{j=1}^J\Vert e_j\Vert^2\\
-    &\quad 
+    & \quad= 
+    2\alpha\sum_{j=1}^J\Vert e_j\Vert^2
     +\vvvert e_J \vvvert^2_\nc + \Vert E_J \Vert^2 
-    + \sum_{j=1}^J ( \vvvert e_j-e_{j-1} \vvvert^2_\nc
-    + \Vert E_j - E_{j-1} \Vert^2 )\\
-    &\quad
-    + 2\sum_{j=1}^{J-1}(E_j-E_{j+1},\gradnc(e_j-e_{j-1}))\\
-    &\quad 
-    + 2(E_{J},\gradnc(e_J-e_{J-1})) \\
-    &\leq
-    \tau^{-1}(\vvvert e_0\vvvert^2_\nc + \Vert E_0\Vert^2).
+    + \sum_{j=1}^J \left( \vvvert e_j-e_{j-1} \vvvert^2_\nc
+    + \Vert E_j - E_{j-1} \Vert^2 \right)\\
+    &\quad\quad
+    + 2\sum_{j=1}^{J-1}\big(E_j-E_{j+1},\gradnc(e_j-e_{j-1})\big)
+    + 2\big(E_{J},\gradnc(e_J-e_{J-1})\big) \\
+    &\quad\leq
+    \tau^{-1}\left(\vvvert e_0\vvvert^2_\nc + \Vert E_0\Vert^2\right).
   \end{align*}
-
-  Das zeigt, dass
-  $\sum_{j=1}^\infty \Vert e_j\Vert^2$ nach oben beschränkt ist,
-  was impliziert, dass $\Vert e_j\Vert\rightarrow 0$
-  für $j\rightarrow \infty$.
+  Daraus folgt, dass $\sum_{j=1}^\infty \Vert e_j\Vert^2$ nach oben beschränkt
+  ist, was impliziert $\Vert\ucr-u_j\Vert=\Vert e_j\Vert\rightarrow 0$ für
+  $j\rightarrow \infty$.
 \end{proof}
 
 
