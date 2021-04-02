@@ -58,6 +58,54 @@ Algorithmus wie folgt.
   \end{algorithmic}
 \end{algorithm}
 
+\begin{remark} Mit den kantenorientierten Crouzeix-Raviart-Basisfunktionen
+  $\{\psi_E\,\mid\,E\in\Ecal\}$ aus \Cref{sec:crouzeixRaviartFunctions} können
+  wir die Steifigkeitsmatrix $A\in\Rbb^{|\Ecal|\times|\Ecal|}$ und die
+  Massematix $M\in\Rbb^{|\Ecal|\times|\Ecal|}$ für alle
+  $k,\ell\in\{1,2,\ldots,|\Ecal|\}$ definieren durch
+  \begin{align*}
+    A_{k\ell}\coloneqq \anc\!\left(\psi_{E_k},\psi_{E_\ell}\right)
+    \quad\text{und}\quad
+    M_{k\ell}\coloneqq \left(\psi_{E_k},\psi_{E_\ell}\right).
+  \end{align*}
+  Außerdem definieren wir mit $u_{j-1}$ und $\Lambda_j$ aus
+  \Cref{alg:primalDualIteration} den Vektor $b\in\Rbb^{|\Ecal|}$ für alle
+  $k\in\Nbb$ durch
+  \begin{align*}
+    b_k\coloneqq 
+    \left(\frac{1}{\tau}\gradnc u_{j-1}-\Lambda_j,\gradnc\psi_k\right)
+    + \left( f,\psi_k \right).
+  \end{align*}
+
+  Sei nun $\Ecal=\left\{E_1,E_2,\ldots,E_{|\Ecal|}\right\}$ und sei ohne
+  Beschränkung der Allgemeinheit 
+  $\Ecal(\Omega)\coloneqq\left\{E_1,E_2,\ldots,E_{|\Ecal(\Omega)|}\right\}$.  
+  Dann ist $J\coloneqq\{|\Ecal(\Omega)|+1,|\Ecal(\Omega)|+2,\ldots,|\Ecal|\}$
+  die Menge der Indizes der Randkanten in $\Ecal$.
+
+  Damit definieren wir die Matrix $\bar
+  A\in\Rbb^{|\Ecal(\Omega)|\times|\Ecal(\Omega)|}$, die durch Streichen der
+  Zeilen und Spalten von $A$ mit den Indizes aus $J$ entsteht, die Matrix $\bar
+  M\in\Rbb^{|\Ecal(\Omega)|\times|\Ecal(\Omega)|}$, die ebenso aus $M$
+  hervorgeht und den Vektor $\bar b\in\Rbb^{|\Ecal(\Omega)|}$, der durch
+  Streichen der Komponenten von $b$ mit Indizes in $J$ entsteht.
+
+  Weiterhin sei $x\in\Rbb^{|\Ecal(\Omega)|}$, wobei $x_k$ für alle
+  $k\in\{1,2\ldots,|\Ecal(\Omega)|\}$ der Koeffizient der Lösung $u_j$ des
+  Gleichungssystems \eqref{eq:linSysPrimalDualAlg} zur $k$-ten Basisfunktion
+  von $\CR^1_0(\Tcal)$ sei, das heißt es gelte
+  \begin{align*}
+    u_j=\sum_{k=1}^{|\Ecal(\Omega)|} x_k\psi_{E_k}.
+  \end{align*}
+
+  Da wir die das Gleichungssystem \eqref{eq:linSysPrimalDualAlg} in 
+  $\CR^1_0(\Tcal)$ lösen, lässt es sich damit äquivalent umformulieren zu
+  \begin{align}
+    \label{eq:linSysPrimalDualAlgMatrixEq}
+    \left(\frac{1}{\tau}\bar A+\alpha \bar M\right)x=\bar b.
+  \end{align}
+\end{remark}
+
 \section{Konvergenz der Iteration}
 In diesen Abschnitt beweisen wir die Konvergenz der Iterate von
 \Cref{alg:primalDualIteration} gegen die Lösung von
@@ -296,7 +344,7 @@ Dabei bedienen wir uns unter anderem der äquivalenten Charakterisierungen aus
     &\quad\leq
     \tau^{-1}\left(\vvvert e_0\vvvert^2_\nc + \Vert E_0\Vert^2\right).
   \end{align*}
-  Daraus folgt, dass $\sum_{j=1}^\infty \Vert e_j\Vert^2$ nach oben beschränkt
+  Daraus folgt, dass $\sum_{j=1}^\infty \Vert e_j\Vert^2$ beschränkt
   ist, was impliziert $\Vert\ucr-u_j\Vert=\Vert e_j\Vert\rightarrow 0$ für
   $j\rightarrow \infty$.
 \end{proof}
