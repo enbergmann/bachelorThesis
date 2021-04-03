@@ -91,15 +91,18 @@ Algorithmus wie folgt.
   Streichen der Komponenten von $b$ mit Indizes in $J$ entsteht.
 
   Weiterhin sei $x\in\Rbb^{|\Ecal(\Omega)|}$, wobei $x_k$ für alle
-  $k\in\{1,2\ldots,|\Ecal(\Omega)|\}$ der Koeffizient der Lösung $u_j$ des
+  $k\in\{1,2\ldots,|\Ecal(\Omega)|\}$ der Koeffizient der Lösung 
+  $u_j\in\CR^1_0(\Tcal)$ des
   Gleichungssystems \eqref{eq:linSysPrimalDualAlg} zur $k$-ten Basisfunktion
   von $\CR^1_0(\Tcal)$ sei, das heißt es gelte
   \begin{align*}
     u_j=\sum_{k=1}^{|\Ecal(\Omega)|} x_k\psi_{E_k}.
   \end{align*}
 
-  Da wir die das Gleichungssystem \eqref{eq:linSysPrimalDualAlg} in 
-  $\CR^1_0(\Tcal)$ lösen, lässt es sich damit äquivalent umformulieren zu
+  Da wir das Gleichungssystem \eqref{eq:linSysPrimalDualAlg} in
+  $\CR^1_0(\Tcal)$ lösen, lässt sich somit $u_j$ durch Lösen einer
+  Matrixgleichung nach $x$ bestimmen. 
+  Diese lautet
   \begin{align}
     \label{eq:linSysPrimalDualAlgMatrixEq}
     \left(\frac{1}{\tau}\bar A+\alpha \bar M\right)x=\bar b.
@@ -290,22 +293,8 @@ Dabei bedienen wir uns unter anderem der äquivalenten Charakterisierungen aus
     \big(E_j-E_{j+1},\gradnc(e_j-e_{j-1})\big)
     +\big(E_J,\gradnc(e_J-e_{J-1})\big).
   \end{align*}
-  Mit dieser Umformung folgt für jedes $0<\tau\leq 1$ aus Ungleichung
-  \eqref{eq:convProofF}, dass
-  \begin{align*}
-    &\tau\left(\vvvert e_J \vvvert^2_\nc +\Vert E_J \Vert^2 
-    +\sum_{j=1}^J\left(\vvvert e_j-e_{j-1} \vvvert_\nc^2 + 
-    \Vert E_j-E_{j-1}\Vert^2\right)\right) \\
-    &\quad \leq 
-    \vvvert e_0 \vvvert_\nc^2 + \Vert E_0 \Vert^2 
-    -2\tau\alpha\sum_{j=1}^J \Vert e_j\Vert^2 \\
-    &\quad\quad
-    -2\tau\left( 
-    \sum_{j=1}^{J-1} 
-    \big(E_j-E_{j+1},\gradnc(e_j-e_{j-1})\big)
-    +\big(E_J,\gradnc(e_J-e_{J-1})\big)\right).
-  \end{align*}
-  Division durch $\tau$ ergibt
+  Mit dieser Umformung erhalten wir aus Ungleichung \eqref{eq:convProofF} für
+  jedes $\tau\in(0,1]$, das heißt $\tau^{-1}\geq 1$, dass
   \begin{equation}
     \label{eq:convProofG}
     \begin{aligned}
