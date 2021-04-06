@@ -347,7 +347,10 @@ dass diese Lösung eindeutig ist.
   Beweis zum Abschluss.
 \end{proof}
 
-\section{Konstruktion eines Eingangssignals für eine gegebene Lösung}
+\section{Konstruktion eines Experiments mit bekannter Lösung}
+%\section{Konstruktion eines Eingangssignals für eine gegebene Lösung}
+\label{sec:constructionInputSignal}
+
 Für die numerische Untersuchung der primalen-dualen Iteration aus
 \Cref{chap:algorithm} ist es sinnvoll
 Eingangssignale $f$ für \Cref{prob:continuousProblem} gegeben zu haben, für die
@@ -355,221 +358,74 @@ der entsprechende gesuchte Minimierer bekannt ist.
 Als Grundlage für die Konstruktion solcher Signale nutzen wir die folgende 
 Aussage von Professor Carstensen.
 
-Sei $u$ gegeben als Funktion in Polarkoordinaten. 
-Dabei beschränken wir uns auf vom Polarwinkel unabhängige Funktionen
-$u:[0,\infty)\to\Rbb$ des Radius $r$ mit $u(r)=0$ falls $r\geq 1$, deren
-partielle Ableitungen $\partial_r u$ fast überall in $[0,\infty)$ existiere.
+Sei $u:\Omega\to\Rbb$ gegeben als Funktion in Polarkoordinaten. 
+Dabei beschränken wir uns auf vom Polarwinkel unabhängige Funktionen, das heißt
+für alle $x\in\Omega$ gelte
+$u(x)\coloneqq u_P\big(|x|\big)$ für $u_P:[0,\infty)\to\Rbb$. 
+Weiterhin fordern wir $u_P(r)=0$ für $r\geq 1$ und die Existenz
+der partiellen Ableitung $\partial_r u_P$ fast überall in $[0,\infty)$.
 Außerdem existiere auch fast überall in $[0,\infty)$ die partielle Ableitung
 des für $r\in[0,\infty)$ definierten Ausdrucks
 \begin{align*}
-  \sgn\big(\partial_r u(r)\big)
+  \sgn\big(\partial_r u_P(r)\big)
   \coloneqq
   \begin{cases}
-    -1 &\text{für }\partial_r u(r)<0,\\
-    x\in[0,1] &\text{für }\partial_r u(r)=0,\\ 
-    1 &\text{für }\partial_r u(r)>0.
+    -1 &\text{für }\partial_r u_P(r)<0,\\
+    x\in[0,1] &\text{für }\partial_r u_P(r)=0,\\ 
+    1 &\text{für }\partial_r u_P(r)>0.
   \end{cases}
 \end{align*}
+Des Weiteren fordern wir $\sgn\big(\partial_r u_P(r)\big)/r\to 0$ für $r\to 0$, 
+damit $f_P$ in der folgenden Definition stetig in $0$ fortgesetzt werden kann.
 
-Dann ist $u$ Lösung von \Cref{prob:continuousProblem}, wenn das Eingangssignal
-auf $\Omega\supseteq \left\{w\in\Rbb^2\,\middle|\, |w|\leq
-1\right\}$ für fast alle $x\in\Omega$ gegeben ist durch $f(x)=g(|x|)$ mit
-\begin{align*}
-  g(r)
+Sei $f_P:[0,\infty)\to\Rbb$ gegeben durch
+\begin{align}
+  \label{eq:constructionInputSignal}
+  f_P(r)
   \coloneqq 
-  \alpha u(r) - \partial_r\left(\sgn\big(\partial_r u(r)\big)\right) 
-  - \frac{\sgn\big(\partial_r u(r)\big)}{r}
+  \alpha u_P(r) - \partial_r\left(\sgn\big(\partial_r u_P(r)\big)\right) 
+  - \frac{\sgn\big(\partial_r u_P(r)\big)}{r}
   \quad\text{für alle }r\in[0,\infty).
+\end{align}
+Dann ist $u$ Lösung von \Cref{prob:continuousProblem}, wenn das Eingangssignal
+auf $\Omega\supseteq \left\{w\in\Rbb^2\,\middle|\, |w|\leq 1\right\}$ für fast
+alle $x\in\Omega$ gegeben ist durch $f(x)\coloneqq f_P\big(|x|\big)$.
+
+In unseren Experimenten wird uns die garantierte untere Energieschranke aus
+\Cref{thm:gleb} interessieren. 
+Da dieses Theorem für das Eingangssignal voraussetzt, dass $f\in
+H^1_0(\Omega)$, müssen wir noch die folgenden Bedingungen an $u_P$ formulieren.
+Hinreichend für $f\in H^1_0(\Omega)$ ist nach \Cref{eq:constructionInputSignal},
+dass  $u_P$, $\partial_r\big(\sgn(\partial_r u_P)\big)$ und $\sgn(\partial_r
+u_P)$ stetig sind und 
+\begin{align*}
+  u_P(1)
+  =
+  \partial_r\left( \sgn\big(\partial_r u_P(1)\big)\right)
+  =
+  \sgn\big(\partial_r u_P(1)\big)
+  =
+  0.
 \end{align*}
 
-Damit können wir nun weitere Einschränkungen für $u$ formulieren,
-um Experimente zu konstruieren, mit denen wir für uns interessante
-Eigenschaften von \Cref{alg:primalDualIteration} untersuchen können.
-\todo{hier}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\todo[inline]{Beschreibe hier nur das allgemeine Vorgehen und die 
-mathematischen Hintergründe und schreibe die genutzten Beispiele an
-entsprechender Stelle in Numerische Beispiele oder so. Die ungenutzten Beispiele 
-die trotzdem im Ordner liegen können in einem extra Abschnitt aufgezählt werden}
-Schema ist dann: Nach section Konstruktion einer exakten Lösung erhalten wir
-für die Wahl u mit sgn bla die rechte Seite f.
-Die Details bei bestimmten Konstruktionen, etwa ,,um H2 zu erhalten fordern wir
-noch`` ergänzen beim Vorstellen des entsprechenden Experimentes, hier nur das 
-allgemeinste, das, was CC wirklich geschrieben hat.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Wir wollen damit Experimente konstruieren um Aussagen in \ldots oder \ldots
-zu prüfen, entsprechend müssen wir noch fordern
-Da in den Kapiteln GLEB und bla u in H10 relevant wird, fordern wir
-weiterhin \ldots
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Professor Carstensen stellte folgende KOnsturkution \ldots
-Um eine rechte Seite zu finden, zu der die exakte Lösung bekannt
-ist, wähle eine Funktion des Radius $u\in H^1_0([0,1])$ mit Träger im 
-zweidimensionalen Einheitskreis. Insbesondere muss damit gelten $u(1)=0$ und
-$u$ stetig.
-Die rechte Seite als Funktion des Radius $f\in L^2([0,1])$ ist dann gegeben
+Mit diesen Einschränkung gilt insbesondere $u\in H^1_0(\Omega)$, weshalb 
+die exakte Energie $E(u)$ nach \Cref{rem:bvSeminorm} berechnet werden kann
 durch 
 \begin{align*}
-  f \coloneqq 
-  \alpha u - \partial_r(\sgn(\partial_r u)) - \frac{\sgn(\partial_r u)}{r},
-\end{align*}
-wobei für $F\in\Rbb^2\setminus\{0\}$ gilt 
-$\sgn(F)\coloneqq \left\{\frac{F}{|F|}\right\}$ 
-und $\sgn(0)\in B_1(0)$.
-Damit außerdem gilt $f\in H^1_0([0,1])$, was z.B.\ für GLEB relevant ist, 
-muss also noch Stetigkeit von $\sgn(\partial_r u)$ und 
-$\partial_r(\sgn(\partial_r u))$ verlangt werden und 
-$\partial_r(\sgn(\partial_r u(1))=\sgn(\partial_r u(1))=0$.
-Damit $f$ in $0$ definierbar ist, muss auch gelten 
-$\sgn(\partial_r u) \in o(r)$ für $r\to 0$.
-
-Damit erhält man für die Funktion
-\begin{align*}
-  u_1(r)\coloneqq
-  \begin{cases}
-    1, & \text{wenn } 0\leq r\leq\frac{1}{6},\\
-    1+(6r-1)^\beta, & \text{wenn } \frac{1}{6}\leq r\leq\frac{1}{3},\\
-    2, &\text{wenn } \frac{1}{3}\leq r\leq\frac{1}{2},\\
-    2(\frac{5}{2}-3r)^\beta, &\text{wenn } \frac{1}{2}\leq r\leq\frac{5}{6},\\
-    0, &\text{wenn } \frac{5}{6}\leq r,
-  \end{cases}
-\end{align*}
-wobei $\beta\geq 1/2$, mit der Wahl
-\begin{align*}
-  \sgn(\partial_r u_1(r)) =
-  \begin{cases}
-    12r-36r^2, & \text{wenn } 0\leq r\leq\frac{1}{6},\\
-    1, & \text{wenn } \frac{1}{6}\leq r\leq\frac{1}{3},\\
-    \cos(\pi(6r-2)), &\text{wenn } \frac{1}{3}\leq r\leq\frac{1}{2},\\
-    -1, &\text{wenn } \frac{1}{2}\leq r\leq\frac{5}{6},\\
-    -\frac{1+\cos(\pi(6r-5))}{2}, &\text{wenn } \frac{5}{6}\leq r\leq 1,
-  \end{cases}
-\end{align*}
-die rechte Seite
-\begin{align*}
-  f_1(r)\coloneqq 
-  \begin{cases}
-    \alpha-12(2-9r), & \text{wenn } 0\leq r\leq\frac{1}{6},\\
-    \alpha(1+(6r-1)^\beta)-\frac{1}{r}, & \text{wenn } \frac{1}{6}\leq r\leq
-    \frac{1}{3},\\
-    2\alpha+6\pi\sin(\pi(6r-2))-\frac{1}{r}\cos(\pi(6r-2)), &
-    \text{wenn } \frac{1}{3}\leq r\leq\frac{1}{2},\\
-    2\alpha(\frac{5}{2}-3r)^\beta+\frac{1}{r},&
-    \text{wenn } \frac{1}{2}\leq r\leq\frac{5}{6},\\
-    -3\pi\sin(\pi(6r-5))+\frac{1+\cos(\pi(6r-5))}{2r}, &
-    \text{wenn } \frac{5}{6}\leq r\leq 1.
-  \end{cases}
+  E(u)
+  =
+  \frac{\alpha}{2}\Vert u\Vert^2 + \Vert u\Vert_{W^{1,1}(\Omega)} 
+  - \int fu\dx.
 \end{align*}
 
-Für die Funktion
-\begin{align*}
-  u_2(r)\coloneqq 
-  \begin{cases}
-    1, & \text{wenn } 0\leq r\leq\frac{1-\beta}{2},\\
-    -\frac{1}{\beta}r + \frac{1+\beta}{2\beta}, & 
-    \text{wenn } \frac{1-\beta}{2}\leq r\leq \frac{1+\beta}{2},\\
-    0, & \text{wenn } \frac{1+\beta}{2}\leq r,
-  \end{cases}
-\end{align*}
-erhält man mit der Wahl
-\begin{align*}
-  \sgn&(\partial_r u_2(r)) \\
-  &\coloneqq 
-  \begin{cases}
-    \frac{4}{1-\beta}r\left(\frac{1}{1-\beta}r -1\right), &
-    \text{wenn } 0\leq r\leq\frac{1-\beta}{2},\\
-    -1, & \text{wenn } \frac{1-\beta}{2}\leq r\leq \frac{1+\beta}{2},\\
-    \frac{4}{(\beta-1)^3}
-    \left( 4r^3-3(\beta+3)r^2 +6(\beta+1)r-3\beta-1\right), & 
-    \text{wenn } \frac{1+\beta}{2}\leq r\leq 1,
-  \end{cases}
-\end{align*}
-die rechte Seite
-\begin{align*}
-  f_2(r)\coloneqq 
-  \begin{cases}
-    \alpha - \frac{4}{1-\beta}\left(\frac{3}{1-\beta}r - 2\right), &
-    \text{wenn } 0\leq r\leq\frac{1-\beta}{2},\\
-    -\frac{\alpha}{\beta}\left( r-\frac{1+\beta}{2} \right) +\frac{1}{r}, & 
-    \text{wenn } \frac{1-\beta}{2}\leq r\leq \frac{1+\beta}{2},\\
-    \frac{-4}{(\beta-1)^3}
-    \left( 16r^2 -9(\beta+3)r + 12(\beta+1) - \frac{3\beta+1}{r}\right), & 
-    \text{wenn } \frac{1+\beta}{2}\leq r\leq 1.
-  \end{cases}
-\end{align*}
-
-Es folgen zwei Beispiele mit exakter Lösung $u_3=u_4 \in H^2_0((0,1)^2)$, 
-gegeben durch 
-\begin{align*}
-  u_3(r)=u_4(r)\coloneqq 
-  \begin{cases}
-    1, & \text{wenn } 0\leq r\leq\frac{1}{3},\\
-    54r^3 - 81r^2 + 36r - 4, & 
-    \text{wenn } \frac{1}{3}\leq r\leq \frac{2}{3},\\
-    0, & \text{wenn } \frac{2}{3}\leq r.
-  \end{cases}
-\end{align*}
-Mit der Wahl
-\begin{align*}
-  \sgn&(\partial_r u_3(r)) \\
-  &\coloneqq 
-  \begin{cases}
-    54r^3-27r^2, & \text{wenn } 0\leq r\leq\frac{1}{3},\\
-    -1, & \text{wenn } \frac{1}{3}\leq r\leq \frac{2}{3},\\
-    -54r^3 + 135r^2 - 108r + 27, & \text{wenn } \frac{2}{3}\leq r\leq 1,
-  \end{cases}
-\end{align*}
-erhalten wir die rechte Seite
-\begin{align*}
-  f_3(r)\coloneqq 
-  \begin{cases}
-    \alpha - 216r^2 + 81r, &
-    \text{wenn } 0\leq r\leq\frac{1}{3},\\
-    \alpha\left(54r^3 - 81r^2 + 36r - 4\right)) + \frac{1}{r}, & 
-    \text{wenn } \frac{1}{3}\leq r\leq \frac{2}{3},\\
-    216r^2 - 405r + 216 - \frac{27}{r}, & 
-    \text{wenn } \frac{2}{3}\leq r\leq 1,
-  \end{cases}
-\end{align*}
-für die gilt $f_3\in H^1_0$
-und mit der Wahl
-\begin{align*}
-  \sgn&(\partial_r u_4(r)) \\
-  &\coloneqq 
-  \begin{cases}
-    -1458r^5 + 1215r^4 - 270r^3, & \text{wenn } 0\leq r\leq\frac{1}{3},\\
-    -1, & \text{wenn } \frac{1}{3}\leq r\leq \frac{2}{3},\\
-    -243r^4 + 756r^3 - 864r^2 + 432r - 81, 
-    & \text{wenn } \frac{2}{3}\leq r\leq 1,
-  \end{cases}
-\end{align*}
-erhalten wir die rechte Seite
-\begin{align*}
-  f_4(r)\coloneqq 
-  \begin{cases}
-    \alpha + 8748r^4 - 6075r^3 + 1080r^2, &
-    \text{wenn } 0\leq r\leq\frac{1}{3},\\
-    \alpha\left(54r^3 - 81r^2 + 36r - 4\right) + \frac{1}{r}, & 
-    \text{wenn } \frac{1}{3}\leq r\leq \frac{2}{3},\\
-    1215r^3 - 3024r^2 + 2592r - 864 + \frac{81}{r}, & 
-    \text{wenn } \frac{2}{3}\leq r\leq 1,
-  \end{cases}
-\end{align*}
-für die gilt $f_4\in H^2_0$.
-
-Damit können Experimente durchgeführt werden bei denen 
-\texttt{exactSolutionKnown = true} gesetzt werden kann und entsprechend auch 
-der $L^2$-Fehler berechnet wird.
-
-Soll nun auch die Differenz der exakten Energie mit der garantierten unteren 
-Energie Schranke (GLEB) berechnet werden, dann werden die stückweisen
-Gradienten der exakten Lösung und der rechten Seite benötigt.
-
-Dabei gelten folgende Ableitungsregeln für die Ableitungen einer Funktion 
-$g$, wenn man ihr Argument $x=(x_1,x_2)\in\Rbb^2$ in Polarkoordinaten mit Länge
-$r=\sqrt{x_1^2+x_2^2}$ und Winkel
-$\varphi = \atan(x_2,x_1)$, wobei 
+Um also $E(u)$ berechnen zu können, wird der schwache Gradient $\nabla u$ von
+$u$ benötigt und um die garantierte untere Energieschranke $\Egleb$ aus
+\Cref{eq:gleb} zu berechnen, wird der schwache Gradient $\nabla f$ von $f$
+benötigt.
+Deshalb betrachten wir zum Abschluss an dieser Stelle noch kurz die benötigten
+Zusammenhänge zwischen den partiellen Ableitungen in kartesischen Koordianten
+und in Polarkoordinaten für eine hinreichend glatte Funktion $g_P$.
+Sei
 \begin{align*}
   \atan(x_2,x_1)\coloneqq
   \begin{cases}
@@ -578,104 +434,72 @@ $\varphi = \atan(x_2,x_1)$, wobei
     \arctan\left( \frac{x_2}{x_1} \right) -\pi,& \text{wenn }x_1<0,x_2<0,\\
     \frac{\pi}{2},& \text{wenn }x_1=0,x_2>0,\\
     -\frac{\pi}{2},& \text{wenn }x_1=0,x_2<0,\\
-    \text{undefiniert},& \text{wenn }x_1=x_2=0,\\
+    \text{undefiniert},& \text{wenn }x_1=x_2=0.
   \end{cases}
 \end{align*}
-auffasst,
+Ein Argument $x=(x_1,x_2)\in\Rbb^2$ von $g_P$ kann dann in Polarkoordinaten 
+charakterisiert werden durch die Länge $r=\sqrt{x_1^2+x_2^2}$ und den Winkel
+$\varphi = \atan(x_2,x_1)$.
+Mit dieser Notation gelten für die partiellen Ableitungen die Zusammenhänge
 \begin{align*}
   \partial_{x_1} &= 
-  \cos(\varphi)\partial_r - \frac{1}{r}\sin(\varphi)\partial_\varphi,\\
+  \cos(\varphi)\partial_r - \frac{1}{r}\sin(\varphi)\partial_\varphi
+  \quad\text{und }\\
   \partial_{x_2} &= 
   \sin(\varphi)\partial_r - \frac{1}{r}\cos(\varphi)\partial_\varphi.
 \end{align*}
-Ist $g$ vom Winkel $\varphi$ unabhängig, so ergibt sich
+Ist nun $g_P$ vom Winkel $\varphi$ unabhängig, so erhalten wir
 \begin{align*}
-  \nabla_{(x_1,x_2)}g = (\cos(\varphi),\sin(\varphi))\partial_r g.
+  \begin{pmatrix}
+    \partial_{x_1}\\
+    \partial_{x_2}
+  \end{pmatrix}
+  g_P 
+  = 
+  \begin{pmatrix}
+    \cos(\varphi)\\
+    \sin(\varphi)
+  \end{pmatrix}
+  \partial_r g_P.
 \end{align*}
 Unter Beachtung der trigonometrischen Zusammenhänge
 \begin{align*}
-  \sin(\arctan(y)) = \frac{y}{\sqrt{1+y^2}},\\
-  \cos(\arctan(y)) = \frac{1}{\sqrt{1+y^2}}
+  \sin\big(\arctan(y)\big) &= \frac{y}{\sqrt{1+y^2}},\\
+  \cos\big(\arctan(y)\big) &= \frac{1}{\sqrt{1+y^2}}
 \end{align*}
 ergibt sich 
 \begin{align*}
-  (\cos(\varphi),\sin(\varphi)) = (x_1,x_2)\frac{1}{r}
+  \begin{pmatrix}
+    \cos(\varphi)\\
+    \sin(\varphi)
+  \end{pmatrix}
+  = 
+  \frac{1}{r}
+  \begin{pmatrix}
+    x_1\\
+    x_2
+  \end{pmatrix}
 \end{align*}
-und damit 
+und somit 
 \begin{align*}
-  \nabla_{(x_1,x_2)}g = (x_1,x_2)\frac{\partial_r g}{r},
+  \begin{pmatrix}
+    \partial_{x_1}\\
+    \partial_{x_2}
+  \end{pmatrix}
+  g_P
+  = 
+  \frac{\partial_r g_P}{r}
+  \begin{pmatrix}
+    x_1\\
+    x_2
+  \end{pmatrix}.
 \end{align*} 
-es muss also nur $\partial_r g$ bestimmt werden.
 
-Die entsprechenden Ableitungen lauten
-\begin{align*}
-  \partial_r f_1(r)&=
-  \begin{cases}
-    108,&
-    \text{für } r\in\left[0,\frac{1}{6}\right],\\
-    6\alpha\beta(6r-1)^{\beta-1} +\frac{1}{r^2}, &
-    \text{für } r\in\left[\frac{1}{6},\frac{1}{3}\right],\\
-    (36\pi^2+\frac{1}{r^2})\cos(\pi(6r-2))+
-    \frac{6\pi}{r}\sin(\pi(6r-2)), &
-    \text{für } r\in\left[\frac{1}{3},\frac{1}{2}\right],\\
-    -\left(6\alpha\beta\left( \frac{5}{2}-3r \right)^{\beta-1}+
-    \frac{1}{r^2}\right),&
-    \text{für } r\in\left[\frac{1}{2},\frac{5}{6}\right],\\
-    -\left( \left( 18\pi^2+\frac{1}{2r^2} \right)\cos(\pi(6r-5))
-    +\frac{1}{2r^2} + \frac{3\pi}{r}\sin(\pi(6r-5))\right), 
-    &\text{für } r\in\left[\frac{5}{6},1\right],
-  \end{cases}\\
-  \partial_r u_1(r) &= 
-  \begin{cases}
-    0,&\text{wenn }0\leq r\leq\frac{1}{6},\\
-    6\beta(6r-1)^{\beta-1}, &\text{wenn } \frac{1}{6}\leq r\leq\frac{1}{3},\\
-    0, &\text{wenn } \frac{1}{3}\leq r\leq\frac{1}{2},\\
-    -6\beta\left( \frac{5}{2}-3r \right)^{\beta-1},&
-    \text{wenn } \frac{1}{2}\leq r\leq\frac{5}{6},\\
-    0,&\text{wenn } \frac{5}{6}\leq r,
-  \end{cases}\\
-  \partial_r f_2(r) &= 
-  \begin{cases}
-    -\frac{12}{(1-\beta)^2},&\text{wenn }0\leq r\leq\frac{1-\beta}{2},\\
-    -\frac{\alpha}{\beta}-\frac{1}{r^2},&
-    \text{wenn } \frac{1-\beta}{2}\leq r\leq \frac{1+\beta}{2},\\
-    -\frac{4}{(1-\beta)^3}\left( 32r-9(\beta+3)+\frac{3\beta+1}{r^2} \right),&
-    \text{wenn } \frac{1+\beta}{2}\leq r\leq 1,\\
-  \end{cases}\\
-  \partial_r u_2(r) &= 
-  \begin{cases}
-    0,&\text{wenn }0\leq r\leq\frac{1-\beta}{2},\\
-    -\frac{1}{\beta},&
-    \text{wenn } \frac{1-\beta}{2}\leq r\leq \frac{1+\beta}{2},\\
-    0,&\text{wenn } \frac{1+\beta}{2}\leq r,
-  \end{cases}\\
-  \partial_r f_3(r) &=
-  \begin{cases}
-    - 432r + 81, & \text{wenn } 0\leq r\leq\frac{1}{3},\\
-    \alpha\left(162r^2 - 162r + 36\right) - \frac{1}{r^2}, & 
-    \text{wenn } \frac{1}{3}\leq r\leq \frac{2}{3},\\
-    432r - 405 + \frac{27}{r^2}, & 
-    \text{wenn } \frac{2}{3}\leq r\leq 1,
-  \end{cases}\\
-  \partial_r f_4(r) &=
-  \begin{cases}
-    34992r^3 - 18225r^2 + 2160r, & \text{wenn } 0\leq r\leq\frac{1}{3},\\
-    \alpha\left(162r^2 - 162r + 36\right) - \frac{1}{r^2}, & 
-    \text{wenn } \frac{1}{3}\leq r\leq \frac{2}{3},\\
-    3645r^2 - 6048r + 2592 - 864 - \frac{81}{r^2}, & 
-    \text{wenn } \frac{2}{3}\leq r\leq 1,
-  \end{cases}\\
-  \partial_r u_{3,4}(r) &=
-  \begin{cases}
-    0, & \text{wenn } 0\leq r\leq\frac{1}{3},\\
-    162r^2 - 162r + 36, & 
-    \text{wenn } \frac{1}{3}\leq r\leq \frac{2}{3},\\
-    0, & \text{wenn } \frac{2}{3}\leq r\leq 1,
-  \end{cases}\\
-\end{align*}
+Zum Bestimmen der partiellen Ableitungen in kartesischen Koordianten einer
+in Polarkoordinaten gegegebenen Funktion $g_P$, die
+vom Polarwinkel unabhängig ist, muss also lediglich 
+die partielle Ableitung $\partial_r g_P$ berechnet werden.
 
-Mit diesen Informationen kann mit \texttt{computeExactEnergyBV.m} die exakte 
-Energie berechnet werden und somit durch eintragen der exakten Energie
-in die Variable \texttt{exact\-Energy} im Benchmark und setzen der Flag
-\texttt{useExactEnergy=true} das Experiment durch anschließendes Ausführen
-von \texttt{startAlgorithmCR.m} gestartet werden.
+Konkrete Beispiele formulieren wir in \Cref{chap:experiments}.
+\todo[inline]{Sind Quellen für diese Ableitungsaussagen notwendig oder 
+darf das als Grundwissen aus z.B. Analysis I abgetan werden?}
