@@ -1,21 +1,99 @@
 \section{Hinweise zur Benutzung des Programms}
-\subsection{Aufbau des Programms}
+%\subsection{Aufbau des Programms}
+Ziel der für diese Arbeit implementierten Methoden ist die Realisierung von
+\Cref{alg:primalDualIteration} für den Solve-Schritt des AFEM-Algorithmus aus
+Abbildung \ldots. Wir gehen davon aus, dass der AFEM-Algorithmus und die im
+AFEM-Softwarepaket realisierten Methoden sowie deren Datenstrukturen bekannt
+sind und verweisen für weitere Details auf \cite{CGKNRR10}.
+
+Die zur korrekten Funktionsweise dieses Programms nötigen Methoden und
+Dateien des AFEM-Softwarepakets sind enthalten im Ordner
+\texttt{./utils/afemPackage/} sowie \texttt{./utils/geometries/}.
+
+Die ausführbare Methode, welche den AFEM-Algorithmus realisiert, ist
+\begin{center}
+  \texttt{./nonconforming/startAlgorithmCR.m}.\\ 
+\end{center}
+Als optionale Eingabe ist dabei ein 
+String \texttt{benchmark} möglich. Wird die Methode ohne Eingabe ausgeführt, 
+so wird \texttt{benchmark = 'editable'} gesetzt.
+Alle nötigen Parameter und Einstellungen für das jeweilige
+Experiment werden nach Ausführen von \texttt{startAlgorithmCR} aus der
+entsprechenden Benchmark-Datei im Ordner 
+\begin{center}
+  \texttt{./nonconforming/benchmarks/}
+\end{center}
+geladen und als Felder des Structure Arrays \texttt{params} übergeben. Für
+jedes in dieser Arbeit dokumentierte Experiment verweisen wir in
+\Cref{chap:experiments} an entsprechender Stelle auf das dafür benutzte 
+Benchmark, welches in \texttt{./nonconforming/benchmarks/} zu finden ist und
+somit die Reproduzierbarkeit des Experiments garantiert. Die wählbaren
+Paramter und Einstellungen sind in
+\begin{center}
+  \texttt{./nonconforming/benchmarks/editable.m}
+\end{center}
+dokumentiert.
+
+Dass die zahlreichen Paramter, die während des Pro\-gramm\-ab\-laufs
+über- oder ausgegeben werden müssen, als Felder von
+Struc\-ture Ar\-rays gespeichert werden, dient der Modifizierbarkeit des
+Programms. 
+So haben Korrekturen und Ergänzungen am Programm häufig nur zur Folge, dass
+einige \texttt{structs} um Felder ergänzt werden müssen während die 
+Methodenköpfe unverändert bleiben können.
+\todo{alle Benchmark einstellungen hier in einer Tabelle auflisten und
+dokumentieren?}
+
+Das Eingangssignal $f$ und eventuell weitere Funktionen, wie etwa die exakte
+Lösung $u$ von \Cref{prob:continuousProblem} und ihre schwache Ableitung
+$\nabla u$, welche in einer Benchmark-Datei angegeben werden müssen um sie dem
+Programm zu übergeben, sind zu finden in 
+\begin{center}
+  \texttt{./utils/functions/}.
+\end{center}
+
+Ist eine Lösung $u$ von $\Cref{prob:continuousProblem}$ bekannt, so kann die
+exakte Energie $E(u)$ approximiert werden mit der Methode
+\begin{center}
+  \texttt{./nonconforming/computeExactEnergyBV.m}.
+\end{center}
+Die so berechneten Energien werden gespeichert in 
+\begin{center}
+  \texttt{./nonconforming/knownExactEnergies/}
+\end{center}
+und können anschließend manuell in ein Benchmark aufgenommen werden.
+\todo{$f=\alpha g$ und weiter Details zur Umwandlung von Bildern? Hier oder
+bei Details zu ausgewählten Funktionen?}
+
+Soll als Eingangssignal kein \texttt{function\_handle} sondern ein
+Graufarbenbild gegeben werden, so muss es gespeichert werden in 
+\begin{center}
+  \texttt{./utils/functions/images/}.
+\end{center}
+Um Dirichlet-Nullranddaten des Bildes zu garantierten, was einem schwarzen Rand
+entspricht, kann die Methode 
+\begin{center}
+  \texttt{./utils/functions/images/addBoundary2image.m}
+\end{center}
+genutzt werden. Diese fügt einen graduellen Übergang zu schwarzen Rand auf den 
+äußeren 25 Pixeln des Bildes hinzu.
+
+Um additives weißes gaußsches Rauschen zu einen Bild hinzuzufügen, kann die
+Methode
+\begin{center}
+  \texttt{./utils/functions/images/addNoise2image.m}
+\end{center}
+genutzt werden. 
+
+\bigskip
+%%%%%%%%%%%%%%%%%%%%%%%%%
 cd Realisierungschapter PB
 
 Tabelle 4.2 (PB) artige Übersicht über die benutzten AFEM 
 Datenstrukturen, die im Programm nicht extra dokumentiert wurden. Für alle
 anderen In- und Outputs verweise auf Dokumentation in den Docstrings
 
-SOWAS WIE
 
-alle Pfade sind relativ zum Ordner ,,Grundordner``
-
-basiert auf AFEM Paket 
-
-nutzt structs und alle Einstellungen werden in Benchmarks getroffen. 
-
-Alle benutzten Benchmarks sind zu finden im Ordner \ldots und für alle
-Experimente wird angegeben, welches Benchmark dazu gehört.
 
 Die Ausführbare Funktionen werden im nächsten Kapitel beschrieben.
 
@@ -36,7 +114,6 @@ Verweis auf die nächste Section (in der dann sagen, welche Flags gesetzt werden
 können)
 
 
-\subsection{Ausführbare Funktionen}
 \subsubsection{\texttt{startAlgorithmCR.m}}
 \texttt{test}
 \subsubsection{\texttt{computeExactEnergyBV.m}}
