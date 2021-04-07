@@ -5,7 +5,9 @@ Ziel der für diese Arbeit implementierten Methoden ist die Realisierung von
 \Cref{fig:afemLoop}. 
 Wir gehen davon aus, dass dieser und die im
 AFEM-Softwarepaket realisierten Methoden sowie deren Datenstrukturen bekannt
-sind und verweisen für weitere Details auf \cite{CGKNRR10}.
+sind und verweisen für weitere Details auf \cite{CGKNRR10}. 
+Im Refine-Schritt nutzten wir anstelle eines Fehlerschätzers den
+Verfeinerungsindikator aus \Cref{def:refinementIndicator}.
 
 \begin{figure}[h]
   \centering
@@ -52,7 +54,8 @@ dokumentiert.
 \todo{alle Benchmark einstellungen hier in einer Tabelle auflisten und
 dokumentieren? Wahrscheinlich ja, so kann dokumentiert werden, dass zB 
 Prolongation möglich ist. ``Alle Einstellungen und Paramter dokumentieren wir
-in Abschnitt \ldots''. Dort kann dann auch, vlt auch erst wenn CC das will,
+in Abschnitt \ldots''/,,Die Einstellungen dokumentieren wir in den Tabellen
+\ldots``. Dort kann dann auch, vlt auch erst wenn CC das will,
 gesagt werden zB sowas wie prolongiert wird}
 
 Dass die zahlreichen Parameter, die während des Pro\-gramm\-ab\-laufs
@@ -147,13 +150,13 @@ Tabelle ala PB Realisierungstabelle. Tabellen vlt trennen nach Art der paramter
 Beispielhaft für eine der Paramter Arten machen um Tien fragen zu können
 
 
-\section{Mathematische Grundlagen ausgewählter Funktionen}
+\section{Mathematische Grundlagen ausgewählter Methoden}
 \label{sec:mathematicalBasicsForMethods}
 \todo{Funktionsname in den Sections als Überschrift oder Nutzen der 
 entsprechenden Methode in die Überschrift?}
 
 
-\subsection{\texttt{computeNodeValuesCR4e}}
+\subsection{Berechnung lokaler Knotenwerte einer Crouzeix-Raviart-Funktion}
 
 Sei $\ucr\in\CR^1(\Tcal)$.
 
@@ -161,10 +164,6 @@ Für die in dieser Arbeit implementierte Prolongation von $\ucr$ auf eine
 Verfeinerung der Triangulierung $\Tcal$ oder für die Berechnung der $L^1$-Norm
 der Kantensprünge von $\ucr$ benötigen wir für jedes Dreieck $T\in\Tcal$ die
 Werte von $\ucr$ in den Knoten von $T$. 
-Diese berechnen wir mit der Methode
-\begin{center}
-  \texttt{./nonconforming/common/computeNodeValuesCR4e.m}
-\end{center} 
 
 Dazu sei $T = \conv\{P_1, P_2, P_3\}$ mit den Kanten
 $E_1 = \conv\{P_1,P_2\}$, $E_2 = \conv\{P_2,P_3\}$ und $E_3 =
@@ -173,7 +172,7 @@ Die Funktion $u\coloneqq\ucr|_T$ habe in den Mittelpunkten der Kanten die Werte
 $u_j\coloneqq u\left(\Mid(E_j)\right)$ für alle $j\in\{1,2,3\}$. 
 Gesucht sind damit die Werte $u(P_1)$, $u(P_2)$ und $u(P_3)$.
 
-Da $\ucr\in\CR^1(\Tcal)$, ist $u$ affin-linear. Damit gilt für eine Kante
+Da $\ucr\in\CR^1(\Tcal)$, ist $u$ affin. Damit gilt für eine Kante
 $E=\conv\{P,Q\}\in\{E_1,E_2,E_3\}$, dass $u(\Mid(E))$ gegeben ist durch den
 Mittelwert von $u(P)$ und $u(Q)$.
 
@@ -189,94 +188,93 @@ $u(P_1)$, $u(P_2)$ und $u(P_3)$ lösen und erhalten die gesuchten Werte
  u(P_1)&=u_1+u_3-u_2, &u(P_2)&= u_1+u_2-u_3,&u(P_3)&=u_2+u_3-u_1.
 \end{align*}
 
+Wir realisieren dies mit der Methode
+\begin{center}
+  \texttt{./nonconforming/common/computeNodeValuesCR4e.m}.
+\end{center} 
 
-\subsection{Berechnung der L1 Norm der Sprünge}
-\todo{hier}
-Für die Berechnung des Verfeinerungsindikators [verweis auf entsprechende
-section] und zur Auswertung der kontinuierlichen Energie $E(\vcr)$ einer 
-Crouzeix-Raviart Funktion $\vcr$, deren diskrete Energie $\Enc(\vcr)$
-bereits bekannt ist, werden die $L^1$ Normen der Kantensprünge 
-$[\vcr]_F$ für alle Kanten $F\in\Fcal$ der Triangulierung benötigt,
-wobei für eine Innenkante $F\in\Fcal(\Omega)$, die gemeinsame Kante der
-Dreiecke $T_+$ und $T_-$ ist, gilt
-$[\vcr]_F\coloneqq (\vcr|_{T_+})|_F-(\vcr|_{T_-})|_F$
-und $[\vcr]_F \coloneqq \vcr|_F$ für eine Randkante
-$F\in\Fcal(\partial\Omega)$. Die Konvention der Wahl von
-$T_+$ und $T_-$ ist hier irrelevant, da wir
-zur Berechung von $\Vert [\vcr]_F\Vert_{L^1(\Omega)}$
-ausschließlich den Betrag $|[\vcr]_F|$ benötigen.
+\subsection{Berechnung von Sprungtermen}
 
-Da $\vcr\in\CR^1(\Tcal)$,
-ist $[\vcr]_F$ affin linear und es gilt $[\vcr]_F(\Mid(F))=0$ für 
-alle Innenkanten $F\in\Fcal(\Omega)$ und, falls 
-$\vcr\in\CR^1_0(\Tcal)$, auch für alle Randkanten $F\in\Fcal(\partial\Omega)$.
+Insbesondere für die Berechnung des Verfeinerungsindikators aus
+\Cref{def:refinementIndicator} benötigen wir eine Methode, die
+für eine Crouzeix-Raviart-Funktion
+$\vcr\in\CR^1_0(\Tcal)$
+%und zur Auswertung der kontinuierlichen Energie $E(\vcr)$ einer 
+%Crouzeix-Raviart Funktion $\vcr$, deren diskrete Energie $\Enc(\vcr)$
+%bereits bekannt ist, 
+für alle Kanten $F\in\Ecal$ die Terme $\Vert [\vcr]_F\Vert_{L^1(F)}$ 
+bestimmt.
 
-Die folgenden Aussagen gelten also für Innenkanten beliebiger
-Crouzeix-Raviart Funktionen, wir beschränken uns aber von nun
-an auf Funktionen $\vcr\in\CR^1_0(\Tcal)$.
+Da $\vcr\in\CR^1_0(\Tcal)$, ist $[\vcr]_F$ affin und es gilt
+$[\vcr]_F\big(\Mid(F)\big)=0$ für alle Kanten $F\in\Ecal$.
 
-Betrachten wir also eine beliebige Kante $F\in\Fcal$
-mit $F=\conv\{P_1,P_2\}$. 
-Wir definieren eine Parametrisierung $\gamma:[0,2]\to\Rbb^2$ von $F$ durch
-$\gamma(t)\coloneqq \frac{t}{2}(P_2-P_1)+P_1$. 
-Es gilt $|\gamma'|\equiv \frac{1}{2}|P_2-P_1|=\frac{1}{2}|F|$.
+Betrachten wir nun eine beliebige Kante $F\in\Ecal$ mit $F=\conv\{P_1,P_2\}$. 
+Wir definieren eine Parametrisierung $\xi:[0,2]\to\Rbb^2$ von $F$ durch
+$\xi(t)\coloneqq \frac{t}{2}(P_2-P_1)+P_1$. 
+Es gilt $\left|\xi'\right|\equiv \frac{1}{2}|P_2-P_1|=\frac{1}{2}|F|$.
 
 Sei außerdem
-$p(t)\coloneqq [\vcr]_F(\gamma(t))$. Dann gilt nach
- [cite Wegintegrale] 
+$p(t)\coloneqq [\vcr]_F\big(\xi(t)\big)$. Dann gilt
 \begin{align*}
   \Vert [\vcr]_F\Vert_{L^1(F)} 
   &=
   \int_F |[\vcr]_F|\ds 
-  = \int_0^2 |p(t)|\,|\gamma'(t)|\dt
+  = \int_0^2 |p(t)|\left|\xi'(t)\right|\dt
   = \frac{|F|}{2}\int_0^2 |p(t)|\dt\\
   &= \frac{|F|}{2}\left(\int_0^1 |p(t)|\dt + \int_1^2 |p(t)|\dt\right).
 \end{align*}
 
-Da $\vcr\in\CR^1_0(\Tcal)$, ist $|p|$ auf $[0,1]$ und $[1,2]$ jeweils
-ein Polynom
-vom Grad $1$ mit $p(1)=[\vcr]_F(\Mid(F))=0$, womit sich $|p|$ jeweils
-explizit ausdrücken lässt durch
-$|p|(t)=(1-t)|p|(0)$ für alle $t\in[0,1]$ und 
-$|p|(t)=(t-1)|p|(2)$ für alle $t\in[1,2]$.
-Die Mittelpunktsregel $\int_a^b f(x)\dx\approx (b-a)f( (a+b)/2)$ [cite] ist
-exakt für Polynome vom Grad $1$ und somit gilt
+Da $\vcr\in\CR^1_0(\Tcal)$, ist $|p(\bullet)|$ auf $[0,1]$ und $[1,2]$ jeweils
+ein Polynom von Grad $1$ mit $|p(1)|=\left|[\vcr]_F\big(\Mid(F)\big)\right|=0$. 
+Somit können wir $|p|$ explizit ausdrücken durch
+\begin{align*}
+  |p(t)|&=(1-t)|p(0)| \quad\text{für alle }t\in[0,1] \quad\text{und }\\
+  |p(t)|&=(t-1)|p(2)| \quad\text{für alle }t\in[1,2].
+\end{align*}
+Damit erhalten wir, aufgrund der Exaktheit der Mittelpunktsregel für Polynome
+von Grad 1, dass
 \begin{align*}
   \int_0^1 |p(t)|\dt 
   &= 
-  (1-0)|p|\left( \frac{1}{2} \right)
+  (1-0)\left|p\left( \frac{1}{2} \right)\right|
   =
-  \frac{|p|(0)}{2}\quad\text{und }\\
+  \frac{|p(0)|}{2}\quad\text{und }\\
   \int_1^2 |p(t)|\dt 
   &= 
-  (2-1)|p|\left( \frac{3}{2} \right)
+  (2-1)\left|p\left( \frac{3}{2} \right)\right|
   =
-  \frac{|p|(2)}{2}.
+  \frac{|p(2)|}{2}.
 \end{align*}
 
-Somit erhalten wir insgesamt 
+Insgesamt gilt also
 \begin{align*}
-  \Vert [\vcr]_F\Vert_{L^1(F)} 
+  \left\Vert [\vcr]_F\right\Vert_{L^1(F)} 
   &=
-  \frac{|F|}{2}\left(\frac{|p|(0)}{2} + \frac{|p|(2)}{2}\right)
+  \frac{|F|}{2}\left(\frac{|p(0)|}{2} + \frac{|p(2)|}{2}\right)
   =
-  \frac{|F|}{4}(|p|(0)+|p|(2))\\
+  \frac{|F|}{4}\big(|p(0)|+|p(2)|\big)\\
   &= 
-  \frac{|F|}{4}\big(|[\vcr]_F|(P_1)+|[\vcr]_F|(P_2)\big),
+  \frac{|F|}{4}\big(|[\vcr]_F(P_1)|+|[\vcr]_F(P_2)|\big),
 \end{align*}
 beziehungsweise 
   $\Vert [\vcr]_F\Vert_{L^1(F)} =
-  \frac{|F|}{4}\big(|\vcr|(P_1)+|\vcr|(P_2)\big)$ für eine Randkanten
-  $F\in\Fcal(\partial\Omega)$.
+  \frac{|F|}{4}\big(|\vcr(P_1)|+|\vcr(P_2)|\big)$ für eine Randkanten
+  $F\in\Ecal(\partial\Omega)$.
 
-Diese Berechnung ist realisiert durch die 
-Funktionen \texttt{computeBlaJumps}, die die absoluten Sprünge
-in den Endpunkte einer Kante berchnet, \texttt{computeAbsJumps}, die \ldots,
-und \texttt{computeL1NormOfJumps}, die schließlich die $L^1$ Norm aller
-Kantensprünge berechnet\ldots.
+Realisiert wird dies in der Methode
+\begin{center}
+  \texttt{./nonconforming/common/computeL1NormOfJump4s.m}.
+\end{center}
+Dabei werden für $\vcr\in\CR^1_0(\Tcal)$ für jede Kante $F\in\Ecal$ mit
+$F=\conv\{P_1,P_2\}$ die Terme $|[\vcr]_F(P_1)|$ und $|[\vcr]_F(P_2)|$
+berechnet in
+\begin{center}
+  \texttt{./nonconforming/common/computeAbsNodeJumps4s.m}.
+\end{center}
 
 
-
+\todo{STOP, before continuing prepare a sample table for some benchmarks 
+parameters in the first section of this chapter}
 \subsection{Implementation der GLEB}
 
 \subsection{Implementation des Refinement Indicators}
