@@ -1,48 +1,67 @@
 \section{Hinweise zur Benutzung des Programms}
 %\subsection{Aufbau des Programms}
 Ziel der für diese Arbeit implementierten Methoden ist die Realisierung von
-\Cref{alg:primalDualIteration} für den Solve-Schritt des AFEM-Algorithmus aus
-Abbildung \ldots. Wir gehen davon aus, dass der AFEM-Algorithmus und die im
+\Cref{alg:primalDualIteration} im Solve-Schritt des AFEM-Algorithmus aus
+\Cref{fig:afemLoop}. 
+Wir gehen davon aus, dass dieser und die im
 AFEM-Softwarepaket realisierten Methoden sowie deren Datenstrukturen bekannt
 sind und verweisen für weitere Details auf \cite{CGKNRR10}.
+
+\begin{figure}[h]
+  \centering
+  \input{pictures/chapImplementation/afemloop.tex}
+  \caption{AFEM-Schleife}
+  \label{fig:afemLoop}
+\end{figure}
 
 Die zur korrekten Funktionsweise dieses Programms nötigen Methoden und
 Dateien des AFEM-Softwarepakets sind enthalten im Ordner
 \texttt{./utils/afemPackage/} sowie \texttt{./utils/geometries/}.
 
+Alle Ein- und Ausgabeparameter der im Rahmen dieser Arbeit implementierten
+Methoden sind in den entsprechenden Dateien detailiert dokumentiert. 
+Ausgenommen davon sind die Standard-Datenstrukturen aus dem AFEM-Softwarepaket,
+die dort lediglich namentlich genannt werden.
+Die mathematischen Grundlagen für die Realisierung einiger Methoden diskutieren
+wir in \Cref{sec:mathematicalBasicsForMethods}.
+
 Die ausführbare Methode, welche den AFEM-Algorithmus realisiert, ist
 \begin{center}
-  \texttt{./nonconforming/startAlgorithmCR.m}.\\ 
+  \texttt{./nonconforming/startAlgorithmCR.m}.
 \end{center}
-Als optionale Eingabe ist dabei ein 
-String \texttt{benchmark} möglich. Wird die Methode ohne Eingabe ausgeführt, 
-so wird \texttt{benchmark = 'editable'} gesetzt.
-Alle nötigen Parameter und Einstellungen für das jeweilige
-Experiment werden nach Ausführen von \texttt{startAlgorithmCR} aus der
-entsprechenden Benchmark-Datei im Ordner 
+Als optionaler Eingabeparameter ist dabei ein String \texttt{benchmark}
+möglich. 
+Wird die Methode ohne Übergabe eines solchen Parameters ausgeführt, nutzt
+sie als Standardwert \texttt{benchmark = 'editable'}.
+Nach Ausführen von \texttt{startAlgorithmCR(benchmark)} werden die nötigen
+Parameter und Einstellungen für das jeweilige Experiment aus der Datei
 \begin{center}
-  \texttt{./nonconforming/benchmarks/}
+  \texttt{./nonconforming/benchmarks/benchmark.m}
 \end{center}
 geladen und als Felder des Structure Arrays \texttt{params} übergeben. Für
 jedes in dieser Arbeit dokumentierte Experiment verweisen wir in
 \Cref{chap:experiments} an entsprechender Stelle auf das dafür benutzte 
 Benchmark, welches in \texttt{./nonconforming/benchmarks/} zu finden ist und
-somit die Reproduzierbarkeit des Experiments garantiert. Die wählbaren
-Paramter und Einstellungen sind in
+somit die Reproduzierbarkeit des Experiments garantiert. Als Muster für 
+eine Bechmark-Datei dient
 \begin{center}
-  \texttt{./nonconforming/benchmarks/editable.m}
+  \texttt{./nonconforming/benchmarks/editable.m}.
 \end{center}
+In dieser Datei sind auch die wählbaren Parameter und Einstellungen
 dokumentiert.
+\todo{alle Benchmark einstellungen hier in einer Tabelle auflisten und
+dokumentieren? Wahrscheinlich ja, so kann dokumentiert werden, dass zB 
+Prolongation möglich ist. ``Alle Einstellungen und Paramter dokumentieren wir
+in Abschnitt \ldots''. Dort kann dann auch, vlt auch erst wenn CC das will,
+gesagt werden zB sowas wie prolongiert wird}
 
-Dass die zahlreichen Paramter, die während des Pro\-gramm\-ab\-laufs
+Dass die zahlreichen Parameter, die während des Pro\-gramm\-ab\-laufs
 über- oder ausgegeben werden müssen, als Felder von
 Struc\-ture Ar\-rays gespeichert werden, dient der Modifizierbarkeit des
 Programms. 
 So haben Korrekturen und Ergänzungen am Programm häufig nur zur Folge, dass
 einige \texttt{structs} um Felder ergänzt werden müssen während die 
 Methodenköpfe unverändert bleiben können.
-\todo{alle Benchmark einstellungen hier in einer Tabelle auflisten und
-dokumentieren?}
 
 Das Eingangssignal $f$ und eventuell weitere Funktionen, wie etwa die exakte
 Lösung $u$ von \Cref{prob:continuousProblem} und ihre schwache Ableitung
@@ -66,7 +85,7 @@ und können anschließend manuell in ein Benchmark aufgenommen werden.
 bei Details zu ausgewählten Funktionen?}
 
 Soll als Eingangssignal kein \texttt{function\_handle} sondern ein
-Graufarbenbild gegeben werden, so muss es gespeichert werden in 
+Graufarbenbild gegeben werden, so muss es gespeichert sein in 
 \begin{center}
   \texttt{./utils/functions/images/}.
 \end{center}
@@ -85,71 +104,94 @@ Methode
 \end{center}
 genutzt werden. 
 
-\bigskip
-%%%%%%%%%%%%%%%%%%%%%%%%%
-cd Realisierungschapter PB
+%\bigskip
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+%cd Realisierungschapter PB
+%
+%Tabelle 4.2 (PB) artige Übersicht über die benutzten AFEM 
+%Datenstrukturen, die im Programm nicht extra dokumentiert wurden. Für alle
+%anderen In- und Outputs verweise auf Dokumentation in den Docstrings
+%
+%
+%
+%Die Ausführbare Funktionen werden im nächsten Kapitel beschrieben.
+%
+%%\subsection{Erstellen eines lauffähigen Benchmarks (Minimalbeispeil)}
+%Beschreibung der wichtigsten Parameter
+%und Idee hinter structs
+%
+%Ordner, in denen die Funktionen für rechte Seite, Gradient, exakte
+%Lösung etc liegen müsssen
+%
+%Wahrscheinlich flag für flag durchgehen, erklären, welche automatisch gesetzt 
+%werden u.U., und wann immer nötig sagen, was man vorher machen muss, wo man
+%Funktionen erstellen muss etc.
+%
+%fur exakte Lösungs Beispiel usw.
+%Berechnung der exakten Energie, also alles was nur mehr Möglichkeiten bietet,
+%Verweis auf die nächste Section (in der dann sagen, welche Flags gesetzt werden 
+%können)
+%
+%
+%\subsubsection{\texttt{startAlgorithmCR.m}}
+%\texttt{test}
+%\subsubsection{\texttt{computeExactEnergyBV.m}}
+%\subsubsection{\texttt{addNoise2image.m}}
+%\subsubsection{\texttt{addBoundary2image.m}}
 
-Tabelle 4.2 (PB) artige Übersicht über die benutzten AFEM 
-Datenstrukturen, die im Programm nicht extra dokumentiert wurden. Für alle
-anderen In- und Outputs verweise auf Dokumentation in den Docstrings
 
-
-
-Die Ausführbare Funktionen werden im nächsten Kapitel beschrieben.
-
-%\subsection{Erstellen eines lauffähigen Benchmarks (Minimalbeispeil)}
-Beschreibung der wichtigsten Parameter
-und Idee hinter structs
-
-Ordner, in denen die Funktionen für rechte Seite, Gradient, exakte
-Lösung etc liegen müsssen
-
-Wahrscheinlich flag für flag durchgehen, erklären, welche automatisch gesetzt 
-werden u.U., und wann immer nötig sagen, was man vorher machen muss, wo man
-Funktionen erstellen muss etc.
-
-fur exakte Lösungs Beispiel usw.
-Berechnung der exakten Energie, also alles was nur mehr Möglichkeiten bietet,
-Verweis auf die nächste Section (in der dann sagen, welche Flags gesetzt werden 
-können)
-
-
-\subsubsection{\texttt{startAlgorithmCR.m}}
-\texttt{test}
-\subsubsection{\texttt{computeExactEnergyBV.m}}
-\subsubsection{\texttt{addNoise2image.m}}
-\subsubsection{\texttt{addBoundary2image.m}}
-
+\section{Erstellen einer Benchmark-Datei}
+Vielleicht (das heißt wahrscheinlich) in der 'Hinweise' Section in einer
+Tabelle ala PB Realisierungstabelle. Tabellen vlt trennen nach Art der paramter
+(AFEM Params, Exp Params, Funktionen, misc usw.)
+Beispielhaft für eine der Paramter Arten machen um Tien fragen zu können
 
 
 \section{Mathematische Grundlagen ausgewählter Funktionen}
-\subsection{Berechnung der Werte einer CR Funktion auf einem Element in den Knoten}
-Sei $T\in\Tcal$ mit $T = \conv\{P_1, P_2, P_3\}$. Die Seiten 
-von $T$ seien $F_1 = \conv\{P_1,P_2\}$, $F_2 = \conv\{P_2,P_3\}$ und $F_3 =
-\conv\{P_3,P_1\}$. Die Funktion
-$\ucr\in\CR^1(\Tcal)$ habe in den Mittelpunkte der Seiten die Werte $u_j =
-\ucr(\Mid(F_j))$ für alle $j=1,2,3$. Gesucht sind die Werte in den Knoten
-$\ucr(P_1)$, $\ucr(P_2)$ und $\ucr(P_3)$.
+\label{sec:mathematicalBasicsForMethods}
+\todo{Funktionsname in den Sections als Überschrift oder Nutzen der 
+entsprechenden Methode in die Überschrift?}
 
-Da $\ucr\in\CR^1(\Tcal)$ affin-linear ist, gilt für eine Kante
-$F=\conv\{P,Q\}$, dass der Wert $\ucr(\Mid(F))$ von $\ucr$ im Mittlpunkt 
-der Kante gegeben ist durch den Mittelwert der Werte von $\ucr$ in $P$ und $Q$.
+
+\subsection{\texttt{computeNodeValuesCR4e}}
+
+Sei $\ucr\in\CR^1(\Tcal)$.
+
+Für die in dieser Arbeit implementierte Prolongation von $\ucr$ auf eine
+Verfeinerung der Triangulierung $\Tcal$ oder für die Berechnung der $L^1$-Norm
+der Kantensprünge von $\ucr$ benötigen wir für jedes Dreieck $T\in\Tcal$ die
+Werte von $\ucr$ in den Knoten von $T$. 
+Diese berechnen wir mit der Methode
+\begin{center}
+  \texttt{./nonconforming/common/computeNodeValuesCR4e.m}
+\end{center} 
+
+Dazu sei $T = \conv\{P_1, P_2, P_3\}$ mit den Kanten
+$E_1 = \conv\{P_1,P_2\}$, $E_2 = \conv\{P_2,P_3\}$ und $E_3 =
+\conv\{P_3,P_1\}$. 
+Die Funktion $u\coloneqq\ucr|_T$ habe in den Mittelpunkten der Kanten die Werte
+$u_j\coloneqq u\left(\Mid(E_j)\right)$ für alle $j\in\{1,2,3\}$. 
+Gesucht sind damit die Werte $u(P_1)$, $u(P_2)$ und $u(P_3)$.
+
+Da $\ucr\in\CR^1(\Tcal)$, ist $u$ affin-linear. Damit gilt für eine Kante
+$E=\conv\{P,Q\}\in\{E_1,E_2,E_3\}$, dass $u(\Mid(E))$ gegeben ist durch den
+Mittelwert von $u(P)$ und $u(Q)$.
 
 Somit erhalten wir die drei Gleichungen
 \begin{align*}
-  u_1 &= \frac{\ucr(P_1)+\ucr(P_2)}{2},  
-  &u_2 &= \frac{\ucr(P_2)+\ucr(P_3)}{2},  
-  &u_3 &= \frac{\ucr(P_3)+\ucr(P_1)}{2}.
+  u_1 &= \frac{u(P_1)+u(P_2)}{2},  
+  &u_2 &= \frac{u(P_2)+u(P_3)}{2},  
+  &u_3 &= \frac{u(P_3)+u(P_1)}{2}.
 \end{align*}
 Sind $u_1$, $u_2$ und $u_3$ bekannt, können wir dieses Gleichungssystem nach 
-$\ucr(P_1)$, $\ucr(P_2)$ und $\ucr(P_3)$ lösen und erhalten
+$u(P_1)$, $u(P_2)$ und $u(P_3)$ lösen und erhalten die gesuchten Werte
 \begin{align*}
- \ucr(P_1)&=u_1+u_3-u_2, &\ucr(P_2)&= u_1+u_2-u_3,&\ucr(P_3)&=u_2+u_3-u_1.
+ u(P_1)&=u_1+u_3-u_2, &u(P_2)&= u_1+u_2-u_3,&u(P_3)&=u_2+u_3-u_1.
 \end{align*}
 
-Dies wird realisiert in der Methode \texttt{computeNodeValuesCR4e}.
 
 \subsection{Berechnung der L1 Norm der Sprünge}
+\todo{hier}
 Für die Berechnung des Verfeinerungsindikators [verweis auf entsprechende
 section] und zur Auswertung der kontinuierlichen Energie $E(\vcr)$ einer 
 Crouzeix-Raviart Funktion $\vcr$, deren diskrete Energie $\Enc(\vcr)$
