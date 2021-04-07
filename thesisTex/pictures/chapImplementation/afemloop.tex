@@ -1,0 +1,16 @@
+\tikzstyle{block} = [rectangle, text width=5em, text centered, rounded corners,
+  thick, draw = black]
+\tikzstyle{line} = [draw = black, thick, -Triangle, rounded corners]
+
+\begin{tikzpicture}[node distance = 3.5cm]
+	%Placing nodes
+  \node [block] (solve) {\texttt{Solve}};
+  \node [block, right of=solve] (estimate) {\texttt{Estimate}};
+  \node [block, right of=estimate] (mark) {\texttt{Mark}};
+  \node [block, right of=mark] (refine) {\texttt{Refine}};
+	
+	\path [line] (solve) -- (estimate);
+	\path [line] (estimate) -- (mark);
+	\path [line] (mark) -- (refine);
+	\path [line] (refine) |- (0,-1) -| (solve);
+\end{tikzpicture}
