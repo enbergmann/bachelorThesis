@@ -111,6 +111,59 @@ Methode
 \end{center}
 genutzt werden. 
 
+Eine Ausführung des Programms, bei der alle relevanten Methoden gebraucht
+werden, verläuft wie folgt. 
+Im Benchmark müssen die exakte Lösung $u\in H^1_0(\Omega)$, die schwachen
+Gradienten von $u$ und $f\in H^1_0(\Omega)$ und die exakte Energie
+$E(u)$ gegeben sein. 
+Außerdem müssen einige Paramter wie folgt gewählt werden.
+\begin{itemize}
+  \item \texttt{useExactEnergy = true}
+  \item \texttt{useImage = false}
+  \item \texttt{rhsGradientKnown = true}
+  \item \texttt{exactSolutionKnown = true}
+  \item \texttt{useExactEnergy = true}
+\end{itemize}
+Noch in der Benchmark-Datei werden mit den gewählten Einstellungen die
+benötigten geometrischen Datenstrukturen initialisiert. 
+Diese werden mit 
+allen weiteren Informationen als Felder eines Structure Arrays
+gespeichert und an \texttt{startAlgorithmCR} übergeben. 
+Anschließend werden Structure Arrays mit Feldern für die benötigten Daten
+während der AFEM-Routine sowie deren Ergebnisse erstellt. 
+Nach dem Berechnen einiger weiterer Informationen beginnt die AFEM-Schleife.
+
+Zu Beginn der Schleife werden die für das aktuelle Level benötigten Daten
+ermittelt, zum Beispiel die Flächen der Dreiecke und die Freiheitsgrade der
+aktuellen Triangulierung. 
+Insbesondere werden die Gradienten der lokalen
+Crouzeix-Raviart-Basisfunktionen auf den Dreiecken in
+\begin{center}
+  \texttt{./nonconforming/common/computeGradsCR4e.m}
+\end{center}
+sowie damit der nichtkonforme Gradient des aktuellen Iterats in
+\begin{center}
+  \texttt{./nonconforming/common/gradientCR.m}
+\end{center}
+und die Crouzeix-Raviart-Steifigkeits- und Massematrix 
+\begin{center}
+  \texttt{./nonconforming/common/computeFeMatricesCR.m}
+\end{center}
+berechnet. 
+
+Codezeile ca 115
+
+
+als Kompromiss zwischen Performance und Genauigkeit.
+
+
+\ldots
+(Ende von PB Realisierung Chapter artig hier was schreiben, auch integrate
+entsprechend erwähnen)
+Insbesondere erwähnen, wenn Terme die öfter gebraucht berechnet werden und
+bei Bedarf auf die folgenden Sections verweisen, in denen mathematische
+Grundlagen erklärt werden.
+
 %\bigskip
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 %cd Realisierungschapter PB
@@ -339,9 +392,10 @@ berechnet in
 \end{center}
 
 
-\todo{STOP, before continuing prepare a sample table for some benchmarks 
-parameters in the first section of this chapter}
 \subsection{Implementation der GLEB}
+\begin{center}
+  \texttt{./nonconforming/common/computeGleb.m}.
+\end{center}
 
 \subsection{Implementation des Refinement Indicators}
 
