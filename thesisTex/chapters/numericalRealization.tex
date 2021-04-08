@@ -44,13 +44,15 @@ geladen und als Felder des Structure Arrays \texttt{params} übergeben. Für
 jedes in dieser Arbeit dokumentierte Experiment verweisen wir in
 \Cref{chap:experiments} an entsprechender Stelle auf das dafür benutzte 
 Benchmark, welches in \texttt{./nonconforming/benchmarks/} zu finden ist und
-somit die Reproduzierbarkeit des Experiments garantiert. Als Muster für 
-eine Bechmark-Datei dient
+somit die Reproduzierbarkeit des Experiments garantiert. 
+Als Muster für eine Bechmark-Datei dient
 \begin{center}
   \texttt{./nonconforming/benchmarks/editable.m}.
 \end{center}
-In dieser Datei sind auch die wählbaren Parameter und Einstellungen
-dokumentiert.
+Eine Übersicht über die wählbaren Parameter in einer Benchmark-Datei ist
+zu finden in den Tabellen \ref{tab:paramsAFEM}, \ref{tab:paramsAFEM}, \ldots
+und \ref{tab:paramsAFEM}. 
+Weitere Details zu den Datentypen sind in \texttt{editable.m} zu finden.
 \todo{alle Benchmark einstellungen hier in einer Tabelle auflisten und
 dokumentieren? Wahrscheinlich ja, so kann dokumentiert werden, dass zB 
 Prolongation möglich ist. ``Alle Einstellungen und Paramter dokumentieren wir
@@ -68,8 +70,10 @@ Methodenköpfe unverändert bleiben können.
 
 Das Eingangssignal $f$ und eventuell weitere Funktionen, wie etwa die exakte
 Lösung $u$ von \Cref{prob:continuousProblem} und ihre schwache Ableitung
-$\nabla u$, welche in einer Benchmark-Datei angegeben werden müssen um sie dem
-Programm zu übergeben, sind zu finden in 
+$\nabla u$, müssen in der Benchmark-Datei angegeben werden um sie dem
+Programm zu übergeben. 
+Die für die Experimente in \Cref{chap:experiments} genutzten Funktionen sind zu
+finden in 
 \begin{center}
   \texttt{./utils/functions/}.
 \end{center}
@@ -142,12 +146,74 @@ genutzt werden.
 %\subsubsection{\texttt{addNoise2image.m}}
 %\subsubsection{\texttt{addBoundary2image.m}}
 
+\begin{table}
+  \centering
+  \begin{tabular}{c|p{9cm}}
+    \hline
+    Parametername  & Beschreibung\\  
+    \hline
+    \texttt{geometry} &
+    Name der Geometrie auf deren Triangulierung der AFEM-Algorithmus
+    angewendet werden soll 
+    \newline(cf. \texttt{loadGeometry} in \cite{CGKNRR10})\\
+    \texttt{initialRefinementLevel} &
+    Anzahl der Rotverfeinerungen die auf die Triangulierung der Geometrie
+    \texttt{geometry} angewendet werden sollen vor Start des AFEM\--Algorithmus 
+    \newline(cf. \texttt{loadGeometry} in \cite{CGKNRR10})\\
+    \texttt{parTheta}& Bulk-Parameter $\theta$ für den Mark-Schritt des
+    AFEM-Algorithmus ($\theta\in(0,1)$ für adaptive und $\theta=1$ für uniforme
+    Netzverfeinerung)\\
+    \texttt{minNrDof}& 
+    Anzahl der Freiheitsgrade der Triangulierung eines Levels, die mindestens
+    erreicht werden soll, bevor der AFEM-Algorithmus abbricht\\
+    \texttt{useProlongation}&
+    \texttt{true}, wenn eine Prolongation der Lösung der pri\-ma\-len-dualen 
+    Iteration als Startwert für die Iteration des nächsten Levels genutzt
+    werden soll, sonst \texttt{false}\\
+    \texttt{beta4Estimate}& 
+    Paramter $\gamma$ aus \Cref{def:refinementIndicator}\\
+    \texttt{n4Estimate}& 
+    Parameter $d$ aus \Cref{def:refinementIndicator}\\
+    \hline
+  \end{tabular}
+  \caption{Parameter für den AFEM-Algorithmus}
+  \label{tab:paramsAFEM}
+\end{table} 
+
 
 \section{Erstellen einer Benchmark-Datei}
 Vielleicht (das heißt wahrscheinlich) in der 'Hinweise' Section in einer
 Tabelle ala PB Realisierungstabelle. Tabellen vlt trennen nach Art der paramter
 (AFEM Params, Exp Params, Funktionen, misc usw.)
 Beispielhaft für eine der Paramter Arten machen um Tien fragen zu können
+
+Datentypen weglassen mit Verweis auf Details in editable?
+  %\begin{tabular}{c||p{4cm}|p{5cm}}
+  %  \hline
+  %  Parametername & Datentypen & Beschreibung\\  
+  %  \hline
+  %  \texttt{geometry} &
+  %  \texttt{string} /\newline einzeiliges \texttt{char array} 
+  %  & Name der Geometrie auf deren Triangulierung der AFEM-Algorithmus
+  %  angewendet werden soll 
+  %  \newline(cf. \texttt{loadGeometry} 
+  %  \newline
+  %  in \cite{CGKNRR10})\\
+  %  \texttt{initialRefinementLevel} 
+  %  &\texttt{uint64}
+  %  &Anzahl der Rotverfeinerungen 
+  %  \newline(cf. \texttt{loadGeometry} 
+  %  \newline in \cite{CGKNRR10})\\
+  %  \texttt{parTheta}&\texttt{double}\\
+  %  \texttt{minNrDof}&\texttt{uint64}\\
+  %  \texttt{useProlongation}&\texttt{logical}\\
+  %  \texttt{beta4Estimate}&\texttt{double}\\
+  %  \texttt{n4Estimate}&\texttt{uint64}\\
+  %  \hline
+  %\end{tabular}
+
+Paramter weglassen die nicht garantiert geändert werden sollen/können ohne
+Anpassungen des Programms?
 
 
 \section{Mathematische Grundlagen ausgewählter Methoden}
