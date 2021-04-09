@@ -55,7 +55,7 @@ und \ref{tab:paramsAFEM}.
 Weitere Details zu den Datentypen sind in \texttt{editable.m} zu finden.
 \todo{alle Benchmark einstellungen hier in einer Tabelle auflisten und
 dokumentieren? Wahrscheinlich ja, so kann dokumentiert werden, dass zB 
-Prolongation möglich ist. ``Alle Einstellungen und Paramter dokumentieren wir
+Prolongation möglich ist. ``Alle Einstellungen und Parameter dokumentieren wir
 in Abschnitt \ldots''/,,Die Einstellungen dokumentieren wir in den Tabellen
 \ldots``. Dort kann dann auch, vlt auch erst wenn CC das will,
 gesagt werden zB sowas wie prolongiert wird}
@@ -111,12 +111,51 @@ Methode
 \end{center}
 genutzt werden. 
 
-Eine Ausführung des Programms, bei der alle relevanten Methoden gebraucht
-werden, verläuft wie folgt. 
-Im Benchmark müssen die exakte Lösung $u\in H^1_0(\Omega)$, die schwachen
-Gradienten von $u$ und $f\in H^1_0(\Omega)$ und die exakte Energie
-$E(u)$ gegeben sein. 
-Außerdem müssen einige Paramter wie folgt gewählt werden.
+\begin{table}[ht]
+  \centering
+  \begin{tabular}{c|p{9cm}}
+    \hline
+    Parametername  & Beschreibung\\  
+    \hline
+    \texttt{geometry} &
+    Name der Geometrie auf deren Triangulierung der AFEM-Algorithmus
+    angewendet werden soll 
+    \newline(cf. \texttt{loadGeometry} in \cite{CGKNRR10})\\
+    \texttt{initialRefinementLevel} &
+    Anzahl der Rotverfeinerungen die auf die Triangulierung der Geometrie
+    \texttt{geometry} angewendet werden sollen vor Start des AFEM\--Algorithmus 
+    \newline(cf. \texttt{loadGeometry} in \cite{CGKNRR10})\\
+    \texttt{parTheta}& Bulk-Parameter $\theta$ für den Mark-Schritt des
+    AFEM-Algorithmus ($\theta\in(0,1)$ für adaptive und $\theta=1$ für uniforme
+    Netzverfeinerung)\\
+    \texttt{minNrDof}& 
+    Anzahl der Freiheitsgrade der Triangulierung eines Levels, die mindestens
+    erreicht werden soll, bevor der AFEM-Algorithmus abbricht\\
+    \texttt{useProlongation}&
+    \texttt{true}, wenn eine Prolongation der Lösung der pri\-ma\-len-dualen 
+    Iteration als Startwert für die Iteration des nächsten Levels genutzt
+    werden soll, sonst \texttt{false}\\
+    \texttt{beta4Estimate}& 
+    Parameter $\gamma$ aus \Cref{def:refinementIndicator}\\
+    \texttt{n4Estimate}& 
+    Parameter $d$ aus \Cref{def:refinementIndicator}\\
+    \hline
+  \end{tabular}
+  \caption{Parameter für den AFEM-Algorithmus}
+  \label{tab:paramsAFEM}
+\end{table} 
+
+
+\section{Programmablauf}
+
+In diesen Abschnitt betrachten wir eine beispielhafte Ausführung des Programms,
+bei der alle relevanten Methoden genutzt werden.
+
+In der Benchmark-Datei für den Programmaufruf müssen, neben den Eingangssignal
+$f\in H^1_0(\Omega)$, die Lösung $u\in H^1_0(\Omega)$, die exakte Energie
+$E(u)$ und der schwache Gradient von $f$ gegeben sein. 
+Damit diese Informationen tatsächlich genutzt werden, müssen zusätzlich einige
+Parameter wie folgt gewählt werden.
 \begin{itemize}
   \item \texttt{useExactEnergy = true}
   \item \texttt{useImage = false}
@@ -124,32 +163,39 @@ Außerdem müssen einige Paramter wie folgt gewählt werden.
   \item \texttt{exactSolutionKnown = true}
   \item \texttt{useExactEnergy = true}
 \end{itemize}
+
 Noch in der Benchmark-Datei werden mit den gewählten Einstellungen die
 benötigten geometrischen Datenstrukturen initialisiert. 
-Diese werden mit 
-allen weiteren Informationen als Felder eines Structure Arrays
+Diese werden mit allen weiteren Informationen als Felder eines Structure Arrays
 gespeichert und an \texttt{startAlgorithmCR} übergeben. 
-Anschließend werden Structure Arrays mit Feldern für die benötigten Daten
+
+Dort werden zunächst Structure Arrays mit Feldern für die benötigten Daten
 während der AFEM-Routine sowie deren Ergebnisse erstellt. 
 Nach dem Berechnen einiger weiterer Informationen beginnt die AFEM-Schleife.
 
 Zu Beginn der Schleife werden die für das aktuelle Level benötigten Daten
-ermittelt, zum Beispiel die Flächen der Dreiecke und die Freiheitsgrade der
-aktuellen Triangulierung. 
-Insbesondere werden die Gradienten der lokalen
-Crouzeix-Raviart-Basisfunktionen auf den Dreiecken in
+ermittelt, zum Beispiel die Flächeninhalte der Dreiecke und die Freiheitsgrade
+der aktuellen Triangulierung. 
+Insbesondere werden die auf dem Level mehrmals benötigten Gradienten der
+lokalen Crouzeix-Raviart-Basisfunktionen auf allen Dreiecken berechnet (cf.
+\cite[Abschnitt 1.4.2]{CGKNRR10}) in
 \begin{center}
-  \texttt{./nonconforming/common/computeGradsCR4e.m}
+  \texttt{./nonconforming/common/computeGradsCR4e.m}.
 \end{center}
-sowie damit der nichtkonforme Gradient des aktuellen Iterats in
+
+Mit diesen wird der nichtkonforme Gradient des aktuellen Iterats 
+berechnet in
 \begin{center}
-  \texttt{./nonconforming/common/gradientCR.m}
+  \texttt{./nonconforming/common/gradientCR.m}.
 \end{center}
-und die Crouzeix-Raviart-Steifigkeits- und Massematrix 
+
+Außerdem werden die Steifigkeits- und Massematrix aus
+\Cref{rem:primalDualMatrixEquations} aufgestellt in
 \begin{center}
-  \texttt{./nonconforming/common/computeFeMatricesCR.m}
+  \texttt{./nonconforming/common/computeFeMatricesCR.m}.
 \end{center}
-berechnet. 
+Dafür nutzen wir (hier die Formeln dafür schreiben, auf AFEM-Doku verweisen
+oder eigene section dafür schreiben und auf diese verweisen)
 
 Codezeile ca 115
 
@@ -199,46 +245,12 @@ Grundlagen erklärt werden.
 %\subsubsection{\texttt{addNoise2image.m}}
 %\subsubsection{\texttt{addBoundary2image.m}}
 
-\begin{table}
-  \centering
-  \begin{tabular}{c|p{9cm}}
-    \hline
-    Parametername  & Beschreibung\\  
-    \hline
-    \texttt{geometry} &
-    Name der Geometrie auf deren Triangulierung der AFEM-Algorithmus
-    angewendet werden soll 
-    \newline(cf. \texttt{loadGeometry} in \cite{CGKNRR10})\\
-    \texttt{initialRefinementLevel} &
-    Anzahl der Rotverfeinerungen die auf die Triangulierung der Geometrie
-    \texttt{geometry} angewendet werden sollen vor Start des AFEM\--Algorithmus 
-    \newline(cf. \texttt{loadGeometry} in \cite{CGKNRR10})\\
-    \texttt{parTheta}& Bulk-Parameter $\theta$ für den Mark-Schritt des
-    AFEM-Algorithmus ($\theta\in(0,1)$ für adaptive und $\theta=1$ für uniforme
-    Netzverfeinerung)\\
-    \texttt{minNrDof}& 
-    Anzahl der Freiheitsgrade der Triangulierung eines Levels, die mindestens
-    erreicht werden soll, bevor der AFEM-Algorithmus abbricht\\
-    \texttt{useProlongation}&
-    \texttt{true}, wenn eine Prolongation der Lösung der pri\-ma\-len-dualen 
-    Iteration als Startwert für die Iteration des nächsten Levels genutzt
-    werden soll, sonst \texttt{false}\\
-    \texttt{beta4Estimate}& 
-    Paramter $\gamma$ aus \Cref{def:refinementIndicator}\\
-    \texttt{n4Estimate}& 
-    Parameter $d$ aus \Cref{def:refinementIndicator}\\
-    \hline
-  \end{tabular}
-  \caption{Parameter für den AFEM-Algorithmus}
-  \label{tab:paramsAFEM}
-\end{table} 
-
 
 \section{Erstellen einer Benchmark-Datei}
 Vielleicht (das heißt wahrscheinlich) in der 'Hinweise' Section in einer
 Tabelle ala PB Realisierungstabelle. Tabellen vlt trennen nach Art der paramter
 (AFEM Params, Exp Params, Funktionen, misc usw.)
-Beispielhaft für eine der Paramter Arten machen um Tien fragen zu können
+Beispielhaft für eine der Parameter Arten machen um Tien fragen zu können
 
 Datentypen weglassen mit Verweis auf Details in editable?
   %\begin{tabular}{c||p{4cm}|p{5cm}}
@@ -265,7 +277,7 @@ Datentypen weglassen mit Verweis auf Details in editable?
   %  \hline
   %\end{tabular}
 
-Paramter weglassen die nicht garantiert geändert werden sollen/können ohne
+Parameter weglassen die nicht garantiert geändert werden sollen/können ohne
 Anpassungen des Programms?
 
 
