@@ -84,7 +84,7 @@ exakte Energie $E(u)$ approximiert werden mit der Methode
 \begin{center}
   \texttt{./nonconforming/computeExactEnergyBV.m}.
 \end{center}
-Die so berechneten Energien werden gespeichert in 
+Die so berechneten Energien werden gespeichert im Ordner
 \begin{center}
   \texttt{./nonconforming/knownExactEnergies/}
 \end{center}
@@ -144,7 +144,7 @@ genutzt werden.
     \texttt{initialRefinementLevel} &
     Anzahl der Rotverfeinerungen die auf die Triangulierung der Geometrie
     \texttt{geometry} angewendet werden sollen vor Start des AFEM\--Algorithmus 
-    \newline(cf. \texttt{loadGeometry} in \cite{CGKNRR10})\\
+    \newline(cf. \texttt{loadGeometry} in \cite[Abschnitt 1.9.1]{CGKNRR10})\\
     \texttt{parTheta}& Bulk-Parameter $\theta$ für den Mark-Schritt des
     AFEM-Algorithmus ($\theta\in(0,1)$ für adaptive und $\theta=1$ für uniforme
     Netzverfeinerung)\\
@@ -269,20 +269,37 @@ lokalen Crouzeix-Raviart-Basisfunktionen auf allen Dreiecken berechnet (cf.
 \begin{center}
   \texttt{./nonconforming/common/computeGradsCR4e.m}.
 \end{center}
-
-Mit diesen wird der nichtkonforme Gradient des aktuellen Iterats 
-berechnet in
+Mit diesen wird der stückweise Gradient des Startwerts $u_0$ aus
+\Cref{alg:primalDualIteration} berechnet in
 \begin{center}
   \texttt{./nonconforming/common/gradientCR.m}.
 \end{center}
+Mit $\gradnc u_0$ wird anschließend $\Lambda_0$ aus
+\Cref{alg:primalDualIteration} auf allen $T\in\Tcal$ initialisiert als 
+\begin{align*}
+  \Lambda_0|_T\coloneqq
+  \begin{cases}
+    \frac{\nabla u_0|_T}{|\nabla u_0|_T|},&\text{falls }\nabla u_0|_T\neq 0\\
+    0,&\text{falls }\nabla u_0|_T= 0.
+  \end{cases}
+\end{align*}
 
 Außerdem werden die Steifigkeits- und Massematrix aus
 \Cref{rem:primalDualMatrixEquations} aufgestellt in
 \begin{center}
   \texttt{./nonconforming/common/computeFeMatricesCR.m}.
 \end{center}
-Dafür nutzen wir (hier die Formeln dafür schreiben, auf AFEM-Doku verweisen
-oder eigene section dafür schreiben und auf diese verweisen)
+Dabei benutzten wir für jedes $T\in\Tcal$, dass die lokale Massematrix auf
+$T$ berechnet werden kann durch
+\begin{align*}
+  A_T
+  =
+  \frac{|T|}{3}I_3.
+\end{align*}
+Die Aufstellung der lokalen Steifigkeitsmatrizen sowie die Berechnung der
+globalen Stei\-fig\-keits- und Massematrix aus ihren lokalen Versionen geschieht
+analog zu \cite[Abschnitt 1.4.2]{CGKNRR10}).
+
 
 Codezeile ca 115
 
