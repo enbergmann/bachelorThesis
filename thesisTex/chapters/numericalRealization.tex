@@ -49,9 +49,10 @@ Als Muster für eine Bechmark-Datei dient
 \begin{center}
   \texttt{./nonconforming/benchmarks/editable.m}.
 \end{center}
-Eine Übersicht über die wählbaren Parameter in einer Benchmark-Datei ist
-zu finden in den Tabellen \ref{tab:paramsAFEM}, \ref{tab:paramsAFEM}, \ldots
-und \ref{tab:paramsAFEM}. 
+Eine Übersicht über die in einer Benchmark-Datei wählbaren Parameter ist
+zu finden in den Tabellen \ref{tab:paramsMisc}, \ref{tab:paramsAFEM}, 
+\ref{tab:paramsIteration}, \ref{tab:paramsExperiment} und \ref{tab:paramsDoc}
+sowie über die definierbaren Funktion in \Cref{tab:paramsFunctions}.
 Weitere Details zu den Datentypen sind in \texttt{editable.m} zu finden.
 \todo{alle Benchmark einstellungen hier in einer Tabelle auflisten und
 dokumentieren? Wahrscheinlich ja, so kann dokumentiert werden, dass zB 
@@ -70,7 +71,7 @@ Methodenköpfe unverändert bleiben können.
 
 Das Eingangssignal $f$ und eventuell weitere Funktionen, wie etwa die exakte
 Lösung $u$ von \Cref{prob:continuousProblem} und ihre schwache Ableitung
-$\nabla u$, müssen in der Benchmark-Datei angegeben werden um sie dem
+$\nabla u$, müssen in der Benchmark-Datei angegeben werden, um sie dem
 Programm zu übergeben. 
 Die für die Experimente in \Cref{chap:experiments} genutzten Funktionen sind zu
 finden in 
@@ -111,7 +112,26 @@ Methode
 \end{center}
 genutzt werden. 
 
-\begin{table}[ht]
+\begin{table}
+  \centering
+  \begin{tabular}{c|p{9cm}}
+    \hline
+    Parametername  & Beschreibung\\  
+    \hline
+    \texttt{showPlots} & \\
+    \texttt{plotModeGrayscale} & \\
+    \texttt{showProgress}& \\
+    \texttt{degree4Integrate}& \\
+    \texttt{plotGivenFunctions}&\\
+    \texttt{refinementLevel4Plots}& \\
+    \texttt{debugIfError}& \\
+    \hline
+  \end{tabular}
+  \caption{Diverse Parameter zur Kontrolle des Programmablaufs}
+  \label{tab:paramsMisc}
+\end{table} 
+
+\begin{table}
   \centering
   \begin{tabular}{c|p{9cm}}
     \hline
@@ -143,6 +163,73 @@ genutzt werden.
   \end{tabular}
   \caption{Parameter für den AFEM-Algorithmus}
   \label{tab:paramsAFEM}
+\end{table} 
+
+\begin{table}
+  \centering
+  \begin{tabular}{c|p{9cm}}
+    \hline
+    Parametername  & Beschreibung\\  
+    \hline
+    \texttt{u0Mode} & \\
+    \texttt{initialEpsStop} & \\
+    %\texttt{stopCrit} & \\
+    \texttt{parTau}& \\
+    \hline
+  \end{tabular}
+  \caption{Parameter für die Einstellungen der Iteration}
+  \label{tab:paramsIteration}
+\end{table} 
+
+\begin{table}
+  \centering
+  \begin{tabular}{c|p{9cm}}
+    \hline
+    Parametername  & Beschreibung\\  
+    \hline
+    \texttt{useImage} & \\
+    \texttt{imageName} & \\
+    \texttt{parAlpha}& \\
+    \texttt{parBeta} & \\
+    \texttt{rhsGradientKnown} & \\
+    \texttt{exactSolutionKnown}& \\
+    \texttt{useExactEnergy} & \\
+    \texttt{exactEnergy} & \\
+    %\texttt{saveScreenshots} & \\
+    \hline
+  \end{tabular}
+  \caption{Parameter des Experiments}
+  \label{tab:paramsExperiment}
+\end{table} 
+
+\begin{table}
+  \centering
+  \begin{tabular}{c|p{9cm}}
+    \hline
+    Parametername  & Beschreibung\\  
+    \hline
+    \texttt{expName} & \\
+    \texttt{dirInfoName} & \\
+    %\texttt{errorNorm}& \\
+    \hline
+  \end{tabular}
+  \caption{Parameter zum Speichern der Ergebnisse}
+  \label{tab:paramsDoc}
+\end{table} 
+
+\begin{table}
+  \centering
+  \begin{tabular}{c|p{9cm}}
+    \hline
+    Parametername  & Beschreibung\\  
+    \hline
+    \texttt{rightHandSide} & \\
+    \texttt{gradientRightHandSide} & \\
+    \texttt{exactSolution}& \\
+    \hline
+  \end{tabular}
+  \caption{Definierbare \texttt{function\_handles}}
+  \label{tab:paramsFunctions}
 \end{table} 
 
 
