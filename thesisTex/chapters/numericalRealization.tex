@@ -300,19 +300,71 @@ Die Aufstellung der lokalen Steifigkeitsmatrizen sowie die Berechnung der
 globalen Stei\-fig\-keits- und Massematrix aus ihren lokalen Versionen geschieht
 analog zu \cite[Abschnitt 1.4.2]{CGKNRR10}).
 
+Danach werden für jedes Dreieck $T\in\Tcal$ mit den 
+lokalen Crouzeix-Raviart-Basis\-funk\-tio\-nen $\psi_{T,k}$, $k\in\{1,2,3\}$,
+die Integrale $ \int_T f\psi_{T,k}\dx$ berechnet. 
+Mit diesen wird außerdem für alle Crouzeix-Raviart-Basisfunktionen
+$\psi_F$, $F\in\Ecal$, das Integral $\int_\Omega f\psi_F\dx$ berechnet.
+Dies alles geschieht mithilfe der \texttt{integrate} Methode 
+\cite[Abschnitt 1.8.2]{CGKNRR10} des AFEM-Softwarepakets in 
+\begin{center}
+  \texttt{./nonconforming/common/integralsWithF4e.m}.
+\end{center}
+\todo{Extra Section mit Details (insb wie die CR Funktionen dort implementiert
+sind)?}
 
-Codezeile ca 115
+Damit sind alle notwendigen Daten ermittelt um die primale-duale Iteration 
+zur Lösung auf dem Level zu starten. Genutzt wird dafür die Methode
+\begin{center}
+  \texttt{./nonconforming/main/solvePrimalDualFormulation.m}.
+\end{center}
+Details dazu diskutieren wir in Abschnitt \ldots (verarbeite u.a. Kommentar
+aus Methode für die rechte Seite $b$, auch auf Energie Berechnung darin 
+eingehen und die Methode dann erwähnen, mglw mit Verweis auf eigenen Abschnitt)
+
+\bigskip output des level etc werden belegt
+
+\bigskip
+\begin{center}
+  \texttt{./nonconforming/common/computeNormDiffRhsSolCrSquared4e.m}
+\end{center}
+
+\bigskip GLEB
+\begin{center}
+  \texttt{./nonconforming/common/computeGleb.m}
+\end{center}
+
+\bigskip  Verfeinerungsindikator, dafür zunächst (mit Verweis auf die section
+dafür)
+\begin{center}
+  \texttt{./nonconforming/common/computeL1NormOfJump4s.m}
+\end{center}
+und dann 
+\begin{center}
+  \texttt{./nonconforming/estimate/estimateErrorCR4e.m}
+\end{center}
+
+\bigskip error nutzt \texttt{error4eCRL2} mit cite des Abschnitts in
+\cite{CGKNRR10}.
+
+\bigskip gebe information über das Level auf der Konsole aus und
+speichere die Resulate
+
+\bigskip checke termination crit
+
+\bigskip mark (mit verweis auf genutzte Methode aus AFEM)
+
+\bigskip refine (mit verweis auf genutzte Methode aus AFEM)
+
+\bigskip prolongation (mit kurzer Erläuterung, mit welcher Idee die passiert)
+
+auch darauf eingehen, wie u0 gewählt wird wenn keine Prolongation?
+
+\bigskip polygonmesh ignorieren? 
 
 
-als Kompromiss zwischen Performance und Genauigkeit.
 
 
-\ldots
-(Ende von PB Realisierung Chapter artig hier was schreiben, auch integrate
-entsprechend erwähnen)
-Insbesondere erwähnen, wenn Terme die öfter gebraucht berechnet werden und
-bei Bedarf auf die folgenden Sections verweisen, in denen mathematische
-Grundlagen erklärt werden.
 
 %\bigskip
 %%%%%%%%%%%%%%%%%%%%%%%%%%
