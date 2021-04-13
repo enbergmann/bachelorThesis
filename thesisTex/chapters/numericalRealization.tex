@@ -321,8 +321,6 @@ zur Lösung auf dem Level zu starten. Genutzt wird dafür die Methode
 \end{center}
 Details dazu diskutieren wir in \Cref{sec:implementationPrimalDualIteration}.
 
-\bigskip computeDiscreteEnergy aus solvePrimalDualFormulation noch kommentieren
-
 \bigskip output des level etc werden belegt
 
 \bigskip
@@ -366,12 +364,12 @@ auch darauf eingehen, wie u0 gewählt wird wenn keine Prolongation?
 
 \section{Realisierung der primalen-dualen Iteration}
 \label{sec:implementationPrimalDualIteration}
-In diesen Abschnitt beschreiben wir kurz die 
-Umsetzung von \Cref{alg:primalDualIteration} in der Methode
+In diesen Abschnitt beschreiben wir die Methode
 \begin{center}
   \texttt{./nonconforming/main/solvePrimalDualFormulation.m}.
 \end{center}
-Dabei benutzen wir die Bezeichnungen aus \Cref{alg:primalDualIteration}.
+Dabei benutzen wir die Bezeichnungen aus \Cref{alg:primalDualIteration}, der
+in dieser Methode realisiert wird.
 
 Wie in \Cref{sec:programFlow} beschrieben, sind vor Aufruf von
 \texttt{solvePrimalDualFormulation} bereits alle benötigten Informationen
@@ -407,36 +405,57 @@ Da die Terme
 bereits berechnet wurden, können wir somit die rechte Seite $\overline b$
 implementieren.
 
-Der verbleibende Teil von \Cref{alg:primalDualIteration} kann
-ohne Weiteres realisiert werden. Sonstige Informationen, wie etwa
-das Abbruchkriterium, diskutieren wir in
-\Cref{chap:experiments}.
+Es ist direkt ersichtlich wie der verbleibende Teil von
+\Cref{alg:primalDualIteration} implementiert werden kann.
+Sonstige Informationen über die Iteration, wie etwa das Abbruchkriterium,
+diskutieren wir in \Cref{chap:experiments}.
 
-Energie Berechnung darin eingehen und die Methode dann erwähnen, mglw mit
-Verweis auf eigenen Abschnitt)
+Es bleibt anzumerken, dass in \texttt{solvePrimalDualFormulation}, neben 
+\Cref{alg:primalDualIteration}, der Ausgabe des Fortschritts sowie
+der Übergabe von Ergebnissen der Iteration, auch die Berechnung der
+nichtkonformen Energie $\Enc(u_j)$ der Iterate realisiert wird. 
+Dies geschieht in der Methode
+\begin{center}
+  \texttt{./nonconforming/common/computeDiscreteEnergyCR.m}.
+\end{center}
+Dabei werden die Massematrix $M$ und die Integrale 
+$\int_\Omega f\psi_{F}\dx$, $F\in\Ecal$, wie folgt genutzt.
+Sei $\vcr\in\CR^1_0(\Tcal)$ und $v\in\Rbb^{|\Ecal|}$
+enthalte die Koordinaten von $\vcr$ bezüglich der Basis
+$\left\{\psi_{E_1},\psi_{E_2},\ldots,\psi_{E_{|\Ecal|}}\right\}$, das heißt
+$\vcr=\sum_{k=1}^{|\Ecal|}v_k \psi_{E_k}$.
+Dann gilt
+\begin{align*}
+  \Enc(\vcr)
+  &=
+  \frac{\alpha}{2}\Vert \vcr\Vert^2
+  + \Vert\gradnc \vcr\Vert_{L^1(\Omega)}
+  -\int_\Omega f\vcr\dx\\
+  &=
+  \frac{\alpha}{2}
+  \sum_{k=1}^{|\Ecal|} 
+  \sum_{\ell=1}^{|\Ecal|} 
+  v_k\left( \psi_{E_k}, \psi_{E_\ell} \right)v_\ell
+  + \sum_{T\in\Tcal}
+   \int_T\left|\gradnc \vcr\right|\dx
+  -\sum_{k=1}^{|\Ecal|}v_k\int_\Omega f\psi_{E_k}\dx\\
+  &=
+  \frac{\alpha}{2} v\cdot Mv
+  + \sum_{T\in\Tcal}|T| \left|\gradnc \vcr\right|
+  -\sum_{k=1}^{|\Ecal|}v_k\int_\Omega f\psi_{E_k}\dx.
+\end{align*}
 
 
 
-
-
-%\bigskip
-%%%%%%%%%%%%%%%%%%%%%%%%%%
-%cd Realisierungschapter PB
+%cf Realisierungschapter PB
 %
 %Tabelle 4.2 (PB) artige Übersicht über die benutzten AFEM 
 %Datenstrukturen, die im Programm nicht extra dokumentiert wurden. Für alle
 %anderen In- und Outputs verweise auf Dokumentation in den Docstrings
 %
-%
-%
 %Die Ausführbare Funktionen werden im nächsten Kapitel beschrieben.
 %
 %%\subsection{Erstellen eines lauffähigen Benchmarks (Minimalbeispeil)}
-%Beschreibung der wichtigsten Parameter
-%und Idee hinter structs
-%
-%Ordner, in denen die Funktionen für rechte Seite, Gradient, exakte
-%Lösung etc liegen müsssen
 %
 %Wahrscheinlich flag für flag durchgehen, erklären, welche automatisch gesetzt 
 %werden u.U., und wann immer nötig sagen, was man vorher machen muss, wo man
@@ -446,13 +465,6 @@ Verweis auf eigenen Abschnitt)
 %Berechnung der exakten Energie, also alles was nur mehr Möglichkeiten bietet,
 %Verweis auf die nächste Section (in der dann sagen, welche Flags gesetzt werden 
 %können)
-%
-%
-%\subsubsection{\texttt{startAlgorithmCR.m}}
-%\texttt{test}
-%\subsubsection{\texttt{computeExactEnergyBV.m}}
-%\subsubsection{\texttt{addNoise2image.m}}
-%\subsubsection{\texttt{addBoundary2image.m}}
 
 
 \section{Erstellen einer Benchmark-Datei}
@@ -488,7 +500,6 @@ Datentypen weglassen mit Verweis auf Details in editable?
 
 Parameter weglassen die nicht garantiert geändert werden sollen/können ohne
 Anpassungen des Programms?
-
 
 \section{Mathematische Grundlagen ausgewählter Methoden}
 \label{sec:mathematicalBasicsForMethods}
