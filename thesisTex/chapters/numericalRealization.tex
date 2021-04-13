@@ -234,6 +234,7 @@ genutzt werden.
 
 
 \section{Programmablauf}
+\label{sec:programFlow}
 
 In diesen Abschnitt betrachten wir eine beispielhafte Ausführung des Programms,
 bei der alle relevanten Methoden genutzt werden.
@@ -279,7 +280,7 @@ Mit $\gradnc u_0$ wird anschließend $\Lambda_0$ aus
 \begin{align*}
   \Lambda_0|_T\coloneqq
   \begin{cases}
-    \frac{\nabla u_0|_T}{|\nabla u_0|_T|},&\text{falls }\nabla u_0|_T\neq 0\\
+    \frac{\nabla u_0|_T}{|\nabla u_0|_T|},&\text{falls }\nabla u_0|_T\neq 0,\\
     0,&\text{falls }\nabla u_0|_T= 0.
   \end{cases}
 \end{align*}
@@ -318,9 +319,9 @@ zur Lösung auf dem Level zu starten. Genutzt wird dafür die Methode
 \begin{center}
   \texttt{./nonconforming/main/solvePrimalDualFormulation.m}.
 \end{center}
-Details dazu diskutieren wir in Abschnitt \ldots (verarbeite u.a. Kommentar
-aus Methode für die rechte Seite $b$, auch auf Energie Berechnung darin 
-eingehen und die Methode dann erwähnen, mglw mit Verweis auf eigenen Abschnitt)
+Details dazu diskutieren wir in \Cref{sec:implementationPrimalDualIteration}.
+
+\bigskip computeDiscreteEnergy aus solvePrimalDualFormulation noch kommentieren
 
 \bigskip output des level etc werden belegt
 
@@ -361,6 +362,58 @@ speichere die Resulate
 auch darauf eingehen, wie u0 gewählt wird wenn keine Prolongation?
 
 \bigskip polygonmesh ignorieren? 
+
+
+\section{Realisierung der primalen-dualen Iteration}
+\label{sec:implementationPrimalDualIteration}
+In diesen Abschnitt beschreiben wir kurz die 
+Umsetzung von \Cref{alg:primalDualIteration} in der Methode
+\begin{center}
+  \texttt{./nonconforming/main/solvePrimalDualFormulation.m}.
+\end{center}
+Dabei benutzen wir die Bezeichnungen aus \Cref{alg:primalDualIteration}.
+
+Wie in \Cref{sec:programFlow} beschrieben, sind vor Aufruf von
+\texttt{solvePrimalDualFormulation} bereits alle benötigten Informationen
+über die aktuelle Triangulierung $\Tcal$ bekannt sowie
+die Steifigkeits- und Massematix aus \Cref{rem:primalDualMatrixEquations} und
+die Integrale $\int_\Omega f\psi_F\dx$ für alle
+Crouzeix-Raviart-Basisfunktionen $\psi_F$, $F\in\Ecal$.
+
+Mit der Steifigkeits- und Massematrix ist direkt ersichtlich,
+wie die Koeffizientenmatrix des Gleichungssystems
+\eqref{eq:linSysPrimalDualAlgMatrixEq} implementiert werden kann.
+Für die Implementation der rechten Seite dieses Systems nutzten wir die
+folgende Beobachtung.
+Sei für alle $F\in\Ecal$ die Menge der Dreiecke in $\Tcal$, die $F$ als Kante
+haben, gegeben durch $\Tcal(F)$. 
+Für alle $k\in\{1,2,\cdots,|\Ecal|\}$ gilt damit, da $\gradnc u_{j-1}$,
+$\Lambda_j$ und $\gradnc \psi_{E_k}$ stückweise konstant sind,
+\begin{align*}
+  \left(\frac{1}{\tau}\gradnc u_{j-1}-\Lambda_j,\gradnc\psi_{E_k}\right)
+  &=
+  \sum_{T\in\Tcal}
+  \left(\frac{1}{\tau}\gradnc u_{j-1}-\Lambda_j,
+  \gradnc\psi_{E_k}\right)_{L^2(T)}\\
+  &=
+  \sum_{T\in\Tcal(F)} |T|
+  \frac{1}{\tau}\left(\gradnc u_{j-1}-\Lambda_j\right)\!|_T\cdot
+  \nabla\psi_{E_k}|_T.
+\end{align*}
+Da die Terme
+\begin{align*}
+  \left(f,\psi_{E_k}\right)=\int_\Omega f\psi_{E_k}\dx
+\end{align*}
+bereits berechnet wurden, können wir somit die rechte Seite $\overline b$
+implementieren.
+
+Der verbleibende Teil von \Cref{alg:primalDualIteration} kann
+ohne Weiteres realisiert werden. Sonstige Informationen, wie etwa
+das Abbruchkriterium, diskutieren wir in
+\Cref{chap:experiments}.
+
+Energie Berechnung darin eingehen und die Methode dann erwähnen, mglw mit
+Verweis auf eigenen Abschnitt)
 
 
 
