@@ -54,12 +54,6 @@ zu finden in den Tabellen \ref{tab:paramsMisc}, \ref{tab:paramsAFEM},
 \ref{tab:paramsIteration}, \ref{tab:paramsExperiment} und \ref{tab:paramsDoc}
 sowie über die definierbaren Funktion in \Cref{tab:paramsFunctions}.
 Weitere Details zu den Datentypen sind in \texttt{editable.m} zu finden.
-\todo{alle Benchmark einstellungen hier in einer Tabelle auflisten und
-dokumentieren? Wahrscheinlich ja, so kann dokumentiert werden, dass zB 
-Prolongation möglich ist. ``Alle Einstellungen und Parameter dokumentieren wir
-in Abschnitt \ldots''/,,Die Einstellungen dokumentieren wir in den Tabellen
-\ldots``. Dort kann dann auch, vlt auch erst wenn CC das will,
-gesagt werden zB sowas wie prolongiert wird}
 
 Dass die zahlreichen Parameter, die während des Pro\-gramm\-ab\-laufs
 über- oder ausgegeben werden müssen, als Felder von
@@ -89,8 +83,6 @@ Die so berechneten Energien werden gespeichert im Ordner
   \texttt{./nonconforming/knownExactEnergies/}
 \end{center}
 und können anschließend manuell in ein Benchmark aufgenommen werden.
-\todo{$f=\alpha g$ und weiter Details zur Umwandlung von Bildern? Hier oder
-bei Details zu ausgewählten Funktionen?}
 
 Soll als Eingangssignal kein \texttt{function\_handle} sondern ein
 Graufarbenbild gegeben werden, so muss es gespeichert sein in 
@@ -328,6 +320,7 @@ Details dazu diskutieren wir in \Cref{sec:implementationPrimalDualIteration}.
   \texttt{./nonconforming/common/computeNormDiffRhsSolCrSquared4e.m}
 \end{center}
 
+
 \bigskip GLEB
 \begin{center}
   \texttt{./nonconforming/common/computeGleb.m}
@@ -503,8 +496,6 @@ Anpassungen des Programms?
 
 \section{Mathematische Grundlagen ausgewählter Methoden}
 \label{sec:mathematicalBasicsForMethods}
-\todo{Funktionsname in den Sections als Überschrift oder Nutzen der 
-entsprechenden Methode in die Überschrift?}
 
 
 \subsection{Berechnung lokaler Knotenwerte einer Crouzeix-Raviart-Funktion}

@@ -206,8 +206,7 @@ unedlichdimensionalen reellen Banachräumen definiert sind, führen
 wir in diesen Abschnitt die grundlegenden Notationen dafür ein und formulieren
 schließlich die notwendige Optimalitätsbedingung erster Ordnung.
 
-Dabei folgen wir \cite[S. 189-194]{Zei85}. \todo{noch sagen, dass Beweise da zu
-finden sind oder ist das mit dem Satz schon klar?}
+Dabei folgen wir \cite[S. 189-194]{Zei85}. 
 Dort werden die Aussagen auf einen reellen lokal konvexen
 Raum formuliert. Da nach \cite[S. 781, (43)]{Zei86} alle Banachräume 
 lokal konvex sind und wir die Aussagen in dieser Arbeit
@@ -303,9 +302,7 @@ Zuvor starten wir mit einer grundlegenden Definition.
   $F$ strikt konvex. Falls $-F$ konvex ist, so heißt $F$ konkav.
 \end{definition}
 
-Für den Rest dieses Abschnitts folgen wir \cite[S. 385-397]{Zei85}. \todo{noch
-sagen, dass Beweise da zu finden sind oder ist das mit dem Satz schon klar? 
-Besser sowas sagen wie 'Die Aussagen stammen aus'?}
+Für den Rest dieses Abschnitts folgen wir \cite[S. 385-397]{Zei85}. 
 Analog zur Begründung zum Beginn von \Cref{sec:variationalCalculus}, schränken
 wir auch hier die Definitionen und Aussagen, die in \cite{Zei85} auf reellen
 lokal konvexen Räumen formuliert sind, auf den reellen Banachraum $X$ ein.
@@ -393,8 +390,6 @@ maßtheoretischen Hintergründe siehe zum Beispiel \cite{ABM14, EG92, Bra98}.
 
 Soweit nicht anders angegeben, folgen die Definitionen und Aussagen
 dieses Abschnitts aus \cite[S. 393-395]{ABM14}
-\todo{noch sagen, dass Beweise da zu finden sind oder ist das mit dem Satz
-schon klar? Besser sowas sagen wie 'Die Aussagen stammen aus'?}
 
 Sei im Weiteren $U$ eine offene Teilmenge des $\Rbb^d$.
 
@@ -433,26 +428,39 @@ Zunächst definieren wir den Raum der Funktionen beschränkter Variation.
 
 In der Anwendung ist Konvergenz in $\BV(U)$ bezüglich der Norm
 $\Vert\bullet\Vert_{\BV(U)}$ zu restriktiv (cf.\ \cite[300]{Bar15}). 
-Deshalb führen wir zwei schwächere Konvergenzbegriffe ein.
+Deshalb führen wir einen schwächeren Konvergenzbegriff ein.
 
 \begin{definition}
   Sei $(u_n)_{n\in\Nbb}\subset \BV(U)$ und sei $u\in \BV(U)$ mit
   $u_n\rightarrow u$ in $L^1(U)$ für $n\rightarrow\infty$.
-  \begin{itemize}
-    \item[(i)]
-      Die Folge $(u_n)_{n\in\Nbb}$ konvergiert strikt gegen $u$,
-      wenn $|u_n|_{\BV(U)}\rightarrow |u|_{\BV(U)}$ für
-      $n\rightarrow\infty$. 
-      \todo[inline]{Nochmal gucken, das wird glaube ich nirgends gebraucht.
-      Falls das stimmt, rausnehmen. Wird für Dichte von $C^\infty$ usw in $BV$
-      gebraucht bzgl dieser Konvergenz. Gucken, ob das relevant wird. Falls
-      es rausgenomme wird, Text vor und nach dieser Def noch anpassen}
-    \item[(ii)] Die Folge $(u_n)_{n\in\Nbb}$ konvergiert
-      schwach gegen $u$, wenn für alle $\phi\in C_0(U;\Rbb^d)$ gilt, dass
-      $\int_U u_n\Div(\phi)\dx\rightarrow \int_U u\Div(\phi)\dx$ für
-      $n\to\infty$. Wir schreiben dann $u_n\rightharpoonup u$ für $n\to\infty$.
-  \end{itemize}
+  Dann konvergiert die Folge $(u_n)_{n\in\Nbb}$ schwach gegen $u$ in $\BV(U)$,
+  wenn für alle $\phi\in C_0(U;\Rbb^d)$ gilt, dass $\int_U
+  u_n\Div(\phi)\dx\rightarrow \int_U u\Div(\phi)\dx$ für $n\to\infty$. 
+  Wir schreiben dann $u_n\rightharpoonup u$ für $n\to\infty$.
 \end{definition}
+
+%In der Anwendung ist Konvergenz in $\BV(U)$ bezüglich der Norm
+%$\Vert\bullet\Vert_{\BV(U)}$ zu restriktiv (cf.\ \cite[300]{Bar15}). 
+%Deshalb führen wir zwei schwächere Konvergenzbegriffe ein.
+%
+%\begin{definition}
+%  Sei $(u_n)_{n\in\Nbb}\subset \BV(U)$ und sei $u\in \BV(U)$ mit
+%  $u_n\rightarrow u$ in $L^1(U)$ für $n\rightarrow\infty$.
+%  \begin{itemize}
+%    \item[(i)]
+%      Die Folge $(u_n)_{n\in\Nbb}$ konvergiert strikt gegen $u$,
+%      wenn $|u_n|_{\BV(U)}\rightarrow |u|_{\BV(U)}$ für
+%      $n\rightarrow\infty$. 
+%      \todo[inline]{Nochmal gucken, das wird glaube ich nirgends gebraucht.
+%      Falls das stimmt, rausnehmen. Wird für Dichte von $C^\infty$ usw in $BV$
+%      gebraucht bzgl dieser Konvergenz. Gucken, ob das relevant wird. Falls
+%      es rausgenomme wird, Text vor und nach dieser Def noch anpassen}
+%    \item[(ii)] Die Folge $(u_n)_{n\in\Nbb}$ konvergiert
+%      schwach gegen $u$, wenn für alle $\phi\in C_0(U;\Rbb^d)$ gilt, dass
+%      $\int_U u_n\Div(\phi)\dx\rightarrow \int_U u\Div(\phi)\dx$ für
+%      $n\to\infty$. Wir schreiben dann $u_n\rightharpoonup u$ für $n\to\infty$.
+%  \end{itemize}
+%\end{definition}
 
 Damit können wir das folgende Theorem formulieren, welches unmittelbar die
 schwache Unterhalbstetigkeit der Seminorm $|\bullet|_{\BV(U)}$ auf $\BV(U)$
@@ -475,12 +483,6 @@ Unter dieser Voraussetzung können wir zeigen, dass jede in $\BV(\Omega)$
 beschränkte Folge eine in $\BV(\Omega)$ schwach konvergente Teilfolge besitzt
 mit schwachen Grenzwert in $\BV(\Omega)$. Für den Beweis dieser Aussage 
 benötigen wir noch das folgende Theorem aus \cite[S. 176, Theorem 4]{EG92}.
-
-\todo[inline]{Nochmal nachfragen: das heißt tatsächlich offen, beschränkt mit
-Lipschitz Rand, korrekt?}
-\todo[inline]{Nochmal nachfragen: $\sup u_k<\infty\Leftrightarrow u_k$ bounded,
-korrekt? Ich übersehe da nichts, oder? Falls doch, alle Theoreme nochmal 
-nachschlagen und sichergehen, dass sie richtig zitiert sind.}
 
 \begin{theorem}
   \label{thm:l1ConvergentSubsequence}

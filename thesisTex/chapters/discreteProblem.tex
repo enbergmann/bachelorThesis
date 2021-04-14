@@ -196,7 +196,8 @@ Theorems wurde von Professor Carstensen formuliert.
 
   Außerdem ist $\Enc$ stetig bezüglich der Konvergenz in $L^2(\Omega)$,
   was impliziert, dass $\ucr$ Minimierer von $\Enc$ in $\CR^1_0(\Tcal)$ sein
-  muss. \todo{noch erklären, warum stetig oder reicht das so? S. 17 im Ausdruck}
+  muss. \todo{Stetigkeit von $\Vert\gradnc\bullet\Vert_{L^1(\Omega)}$ bzgl
+  $L^2$ Konvergenz, S. 17 im Ausdruck}
 
   Die Lösung $\ucr\in \CR^1_0(\Tcal)$ ist eindeutig, da $\Enc$ strikt konvex
   ist.
@@ -636,30 +637,8 @@ erhalten wir damit folgendes Korollar.
 \section{Verfeinerungsindikator und garantierte untere Energieschranke}
 
 Professor Carstensen stellte für die numerischen Untersuchungen 
-den folgenden Verfeinerungsindikator zur adaptiven Netzverfeinerung und eine 
-garantierte untere Energieschranke zur Verfügung.
-
-\begin{definition}[Verfeinerungsindikator]
-  \label{def:refinementIndicator}
-  Für $d\in\mathbb{N}$ (in dieser Arbeit stets $d=2$) und $0<\gamma\leq 1$
-  definieren wir für alle $T\in\Tcal$ und $\ucr\in\CR^1_0(\Tcal)$ die
-  Funktionen
-  \begin{align*}
-    \eta_\text{V}(T)
-    &\coloneqq
-    |T|^{2/d}\Vert f-\alpha \ucr\Vert^2_{L^2(T)}\quad\text{und }\\
-    \eta_\text{J}(T)
-    &\coloneqq
-    |T|^{\gamma/d}\sum_{F\in\Ecal(T)}\left\Vert [\ucr]_F\right\Vert_{L^1(F)}.
-  \end{align*} 
-  Damit definieren wir den Verfeinerungsindikator
-  $\eta\coloneqq\sum_{T\in\Tcal}\eta(T)$, wobei
-  \begin{align} \label{eq:refinementIndicator} 
-    \eta (T)
-    \coloneqq
-    \eta_\text{V}(T) + \eta_\text{J}(T)\quad\text{für alle } T\in\Tcal.
-  \end{align} 
-\end{definition}
+einen Verfeinerungsindikator zur adaptiven Netzverfeinerung und eine 
+Aussage über eine garantierte untere Energieschranke zur Verfügung.
 
 \begin{theorem}
   \label{thm:gleb}
@@ -688,3 +667,26 @@ garantierte untere Energieschranke zur Verfügung.
   \end{align}
     dass $\Enc(\ucr)\geq \Egleb$ und $E(u)\geq \Egleb$.
 \end{theorem}
+
+\begin{definition}[Verfeinerungsindikator]
+  \label{def:refinementIndicator}
+  Für $d\in\mathbb{N}$ (in dieser Arbeit stets $d=2$) und $0<\gamma\leq 1$
+  definieren wir für alle $T\in\Tcal$ und $\ucr\in\CR^1_0(\Tcal)$ die
+  Funktionen
+  \begin{align*}
+    \eta_\text{V}(T)
+    &\coloneqq
+    |T|^{2/d}\Vert f-\alpha \ucr\Vert^2_{L^2(T)}\quad\text{und }\\
+    \eta_\text{J}(T)
+    &\coloneqq
+    |T|^{\gamma/d}\sum_{F\in\Ecal(T)}\left\Vert [\ucr]_F\right\Vert_{L^1(F)}.
+  \end{align*} 
+  Damit definieren wir den Verfeinerungsindikator
+  $\eta\coloneqq\sum_{T\in\Tcal}\eta(T)$, wobei
+  \begin{align} \label{eq:refinementIndicator} 
+    \eta (T)
+    \coloneqq
+    \eta_\text{V}(T) + \eta_\text{J}(T)\quad\text{für alle } T\in\Tcal.
+  \end{align} 
+\end{definition}
+
