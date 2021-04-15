@@ -17,8 +17,10 @@ Verfeinerungsindikator aus \Cref{def:refinementIndicator}.
 \end{figure}
 
 Die zur korrekten Funktionsweise dieses Programms nötigen Methoden und
-Dateien des AFEM-Softwarepakets sind enthalten im Ordner
-\texttt{./utils/afemPackage/} sowie \texttt{./utils/geometries/}.
+Dateien des AFEM-Softwarepakets sind enthalten in den Ordnern
+\begin{center}
+    \texttt{./utils/afemPackage/} sowie \texttt{./utils/geometries/}.
+\end{center}
 
 Alle Ein- und Ausgabeparameter der im Rahmen dieser Arbeit implementierten
 Methoden sind in den entsprechenden Dateien detailiert dokumentiert. 
@@ -53,7 +55,7 @@ Eine Übersicht über die in einer Benchmark-Datei wählbaren Parameter ist
 zu finden in den Tabellen \ref{tab:paramsMisc}, \ref{tab:paramsAFEM}, 
 \ref{tab:paramsIteration}, \ref{tab:paramsExperiment} und \ref{tab:paramsDoc}
 sowie über die definierbaren Funktion in \Cref{tab:paramsFunctions}.
-Weitere Details zu den Datentypen sind in \texttt{editable.m} zu finden.
+Details zu den Datentypen sind in \texttt{editable.m} aufgeführt.
 
 Dass die zahlreichen Parameter, die während des Pro\-gramm\-ab\-laufs
 über- oder ausgegeben werden müssen, als Felder von
@@ -132,7 +134,7 @@ genutzt werden.
     \texttt{geometry} &
     Name der Geometrie auf deren Triangulierung der AFEM-Algorithmus
     angewendet werden soll 
-    \newline(cf. \texttt{loadGeometry} in \cite{CGKNRR10})\\
+    \newline(cf. \texttt{loadGeometry} in \cite[Abschnitt 1.9.1]{CGKNRR10})\\
     \texttt{initialRefinementLevel} &
     Anzahl der Rotverfeinerungen die auf die Triangulierung der Geometrie
     \texttt{geometry} angewendet werden sollen vor Start des AFEM\--Algorithmus 
@@ -293,18 +295,28 @@ Die Aufstellung der lokalen Steifigkeitsmatrizen sowie die Berechnung der
 globalen Stei\-fig\-keits- und Massematrix aus ihren lokalen Versionen geschieht
 analog zu \cite[Abschnitt 1.4.2]{CGKNRR10}).
 
-Danach werden für jedes Dreieck $T\in\Tcal$ mit den 
-lokalen Crouzeix-Raviart-Basis\-funk\-tio\-nen $\psi_{T,k}$, $k\in\{1,2,3\}$,
-die Integrale $ \int_T f\psi_{T,k}\dx$ berechnet. 
-Mit diesen wird außerdem für alle Crouzeix-Raviart-Basisfunktionen
-$\psi_F$, $F\in\Ecal$, das Integral $\int_\Omega f\psi_F\dx$ berechnet.
-Dies alles geschieht mithilfe der \texttt{integrate} Methode 
-\cite[Abschnitt 1.8.2]{CGKNRR10} des AFEM-Softwarepakets in 
+Danach werden in
 \begin{center}
-  \texttt{./nonconforming/common/integralsWithF4e.m}.
+  \texttt{./nonconforming/common/integralsWithF4e.m}
 \end{center}
-\todo{Extra Section mit Details (insb wie die CR Funktionen dort implementiert
-sind)?}
+mit den Crouzeix-Raviart-Basisfunktionen
+$\psi_F$, $F\in\Ecal$, für jedes Dreieck $T\in\Tcal$ mit Kanten
+$\Ecal(T)=\{E_1,E_2,E_3\}$ die Integrale $\int_T f\psi_{E_k}\!|_T\dx$,
+$k\in\{1,2,3\}$, berechnet. 
+Dies geschieht mithilfe der \texttt{integrate} Methode \cite[Abschnitt
+1.8.2]{CGKNRR10} des AFEM-Softwarepakets.
+Die Berechnung der dafür benötigten lokalen Crouzeix-Raviart-Basisfunktionen
+$\psi_{E_k}\!|_T$, $k\in\{1,2,3\}$ diskutieren wir in
+\Cref{sec:localCRBasisRealization}.
+Anschließend kann für alle $F\in\Ecal$ das Integral 
+\begin{align*}
+  \int_\Omega f\psi_F\dx
+  &=
+  \sum_{T\in\Tcal}\int_T f\psi_F\!|_T\dx
+  =
+  \sum_{T\in\Tcal(F)}\int_T f\psi_F\!|_T\dx
+\end{align*}
+bestimmt werden.
 
 Damit sind alle notwendigen Daten ermittelt um die primale-duale Iteration 
 zur Lösung auf dem Level zu starten. Genutzt wird dafür die Methode
@@ -376,9 +388,7 @@ wie die Koeffizientenmatrix des Gleichungssystems
 \eqref{eq:linSysPrimalDualAlgMatrixEq} implementiert werden kann.
 Für die Implementation der rechten Seite dieses Systems nutzten wir die
 folgende Beobachtung.
-Sei für alle $F\in\Ecal$ die Menge der Dreiecke in $\Tcal$, die $F$ als Kante
-haben, gegeben durch $\Tcal(F)$. 
-Für alle $k\in\{1,2,\cdots,|\Ecal|\}$ gilt damit, da $\gradnc u_{j-1}$,
+Für alle $k\in\{1,2,\cdots,|\Ecal|\}$ gilt, da $\gradnc u_{j-1}$,
 $\Lambda_j$ und $\gradnc \psi_{E_k}$ stückweise konstant sind,
 \begin{align*}
   \left(\frac{1}{\tau}\gradnc u_{j-1}-\Lambda_j,\gradnc\psi_{E_k}\right)
@@ -387,15 +397,12 @@ $\Lambda_j$ und $\gradnc \psi_{E_k}$ stückweise konstant sind,
   \left(\frac{1}{\tau}\gradnc u_{j-1}-\Lambda_j,
   \gradnc\psi_{E_k}\right)_{L^2(T)}\\
   &=
-  \sum_{T\in\Tcal(F)} |T|
+  \sum_{T\in\Tcal(E_k)} |T|
   \frac{1}{\tau}\left(\gradnc u_{j-1}-\Lambda_j\right)\!|_T\cdot
   \nabla\psi_{E_k}|_T.
 \end{align*}
-Da die Terme
-\begin{align*}
-  \left(f,\psi_{E_k}\right)=\int_\Omega f\psi_{E_k}\dx
-\end{align*}
-bereits berechnet wurden, können wir somit die rechte Seite $\overline b$
+Da die Terme $\left(f,\psi_{E_k}\right)=\int_\Omega f\psi_{E_k}\dx$ bereits
+berechnet wurden, können wir somit die rechte Seite $\overline b$
 implementieren.
 
 Es ist direkt ersichtlich wie der verbleibende Teil von
@@ -405,9 +412,9 @@ diskutieren wir in \Cref{chap:experiments}.
 
 Es bleibt anzumerken, dass in \texttt{solvePrimalDualFormulation}, neben 
 \Cref{alg:primalDualIteration}, der Ausgabe des Fortschritts sowie
-der Übergabe von Ergebnissen der Iteration, auch die Berechnung der
-nichtkonformen Energie $\Enc(u_j)$ der Iterate realisiert wird. 
-Dies geschieht in der Methode
+der Übergabe von Ergebnissen der Iteration, auch die
+nichtkonformen Energien $\Enc(u_j)$ der Iterate berechnet werden. 
+Diese Berechnung ist realisiert in
 \begin{center}
   \texttt{./nonconforming/common/computeDiscreteEnergyCR.m}.
 \end{center}
@@ -439,95 +446,101 @@ Dann gilt
 \end{align*}
 
 
-
-%cf Realisierungschapter PB
-%
-%Tabelle 4.2 (PB) artige Übersicht über die benutzten AFEM 
-%Datenstrukturen, die im Programm nicht extra dokumentiert wurden. Für alle
-%anderen In- und Outputs verweise auf Dokumentation in den Docstrings
-%
-%Die Ausführbare Funktionen werden im nächsten Kapitel beschrieben.
-%
-%%\subsection{Erstellen eines lauffähigen Benchmarks (Minimalbeispeil)}
-%
-%Wahrscheinlich flag für flag durchgehen, erklären, welche automatisch gesetzt 
-%werden u.U., und wann immer nötig sagen, was man vorher machen muss, wo man
-%Funktionen erstellen muss etc.
-%
-%fur exakte Lösungs Beispiel usw.
-%Berechnung der exakten Energie, also alles was nur mehr Möglichkeiten bietet,
-%Verweis auf die nächste Section (in der dann sagen, welche Flags gesetzt werden 
-%können)
-
-
-\section{Erstellen einer Benchmark-Datei}
-Vielleicht (das heißt wahrscheinlich) in der 'Hinweise' Section in einer
-Tabelle ala PB Realisierungstabelle. Tabellen vlt trennen nach Art der paramter
-(AFEM Params, Exp Params, Funktionen, misc usw.)
-Beispielhaft für eine der Parameter Arten machen um Tien fragen zu können
-
-Datentypen weglassen mit Verweis auf Details in editable?
-  %\begin{tabular}{c||p{4cm}|p{5cm}}
-  %  \hline
-  %  Parametername & Datentypen & Beschreibung\\  
-  %  \hline
-  %  \texttt{geometry} &
-  %  \texttt{string} /\newline einzeiliges \texttt{char array} 
-  %  & Name der Geometrie auf deren Triangulierung der AFEM-Algorithmus
-  %  angewendet werden soll 
-  %  \newline(cf. \texttt{loadGeometry} 
-  %  \newline
-  %  in \cite{CGKNRR10})\\
-  %  \texttt{initialRefinementLevel} 
-  %  &\texttt{uint64}
-  %  &Anzahl der Rotverfeinerungen 
-  %  \newline(cf. \texttt{loadGeometry} 
-  %  \newline in \cite{CGKNRR10})\\
-  %  \texttt{parTheta}&\texttt{double}\\
-  %  \texttt{minNrDof}&\texttt{uint64}\\
-  %  \texttt{useProlongation}&\texttt{logical}\\
-  %  \texttt{beta4Estimate}&\texttt{double}\\
-  %  \texttt{n4Estimate}&\texttt{uint64}\\
-  %  \hline
-  %\end{tabular}
-
-Parameter weglassen die nicht garantiert geändert werden sollen/können ohne
-Anpassungen des Programms?
-
 \section{Mathematische Grundlagen ausgewählter Methoden}
 \label{sec:mathematicalBasicsForMethods}
 
 
+\subsection{Berechnung lokaler Crouzeix-Raviart-Basisfunktionen}
+\label{sec:localCRBasisRealization}
+
+In der Methode
+\begin{center}
+  \texttt{./nonconforming/common/integralsWithF4e.m}
+\end{center}
+werden auf allen Dreiecken der Triangulierung die lokalen
+Crouzeix-Raviart-Basis\-funk\-tio\-nen benötigt. Die Berechnung dieser geschieht 
+im Programm wie folgt.
+
+Sei $T\in\Tcal$ mit $T=\conv\left(\{P_1,P_2,P_3\}\right)$. Zunächst bestimmen
+wir die baryzentrischen Koordinaten $\lambda_j\in P_1(T)$, $j\in\{1,2,3\}$,
+die für $j,k\in\{1,2,3\}$ charakterisiert sind durch
+\begin{align*}
+  \lambda_j(P_k)
+  =
+  \begin{cases}
+    1,&\text{falls }  j=k,\\
+    0,&\text{sonst.}
+  \end{cases}
+\end{align*}
+Dafür betrachten wir das Referenzdreieck, das 
+definiert ist durch
+\begin{align*}
+  \Tref \coloneqq
+  \conv\left(\left\{
+  \begin{pmatrix}
+   1\\0 
+  \end{pmatrix},
+  \begin{pmatrix}
+   0\\1 
+  \end{pmatrix},
+  \begin{pmatrix}
+   0\\0 
+  \end{pmatrix}
+  \right\}\right),
+\end{align*}
+und, mit der Matrix $B\coloneqq (P_1-P_3,P_2-P_3)$, die affine Transformation
+$p:\Tref \to T$, $x \mapsto Bx+P_3$. 
+Mithilfe der Umkehrabbildung von $p$, die gegeben ist durch $p^{-1}:T\to\Tref$,
+$x\mapsto B^{-1}(x-P_3)$, können die baryzentrischen Koordinaten für alle $x\in
+T$ berechnet werden durch 
+\begin{align*}
+  \begin{pmatrix}
+    \lambda_1(x)\\
+    \lambda_2(x)
+  \end{pmatrix}
+  &=
+  p^{-1}(x) &&\text{und}
+  &\lambda_3(x)
+  &=1-\lambda_1(x)-\lambda_2(x).
+\end{align*}
+
+Seien die Kanten $E_1,E_2$ und $E_3$ von $T$ nun so gewählt, dass für
+$j\in\{1,2,3\}$ die Kante $E_j$ gegenüber von $P_j$ liegt. 
+Dann können wir die lokale Crouzeix-Raviart-Basisfunktionen 
+$\psi_{E_j}\!|_T$, $j\in\{1,2,3\}$, für alle $x\in T$ berechnen durch
+$\psi_{E_j}\!|_T(x)=1-2\lambda_j(x)$.
+
+
 \subsection{Berechnung lokaler Knotenwerte einer Crouzeix-Raviart-Funktion}
 
-Sei $\ucr\in\CR^1(\Tcal)$.
+Sei $\vcr\in\CR^1(\Tcal)$.
 
-Für die in dieser Arbeit implementierte Prolongation von $\ucr$ auf eine
+Für die in dieser Arbeit implementierte Prolongation von $\vcr$ auf eine
 Verfeinerung der Triangulierung $\Tcal$ oder für die Berechnung der $L^1$-Norm
-der Kantensprünge von $\ucr$ benötigen wir für jedes Dreieck $T\in\Tcal$ die
-Werte von $\ucr$ in den Knoten von $T$. 
+der Kantensprünge von $\vcr$ benötigen wir für jedes Dreieck $T\in\Tcal$ die
+Werte von $\vcr$ in den Knoten von $T$. 
 
 Dazu sei $T = \conv\{P_1, P_2, P_3\}$ mit den Kanten
 $E_1 = \conv\{P_1,P_2\}$, $E_2 = \conv\{P_2,P_3\}$ und $E_3 =
 \conv\{P_3,P_1\}$. 
-Die Funktion $u\coloneqq\ucr|_T$ habe in den Mittelpunkten der Kanten die Werte
-$u_j\coloneqq u\left(\Mid(E_j)\right)$ für alle $j\in\{1,2,3\}$. 
-Gesucht sind damit die Werte $u(P_1)$, $u(P_2)$ und $u(P_3)$.
+Die Funktion $v\coloneqq\vcr|_T$ habe in den Mittelpunkten der Kanten die Werte
+$v_j\coloneqq v\left(\Mid(E_j)\right)$ für alle $j\in\{1,2,3\}$. 
+Gesucht sind damit die Werte $v(P_1)$, $v(P_2)$ und $v(P_3)$.
 
-Da $\ucr\in\CR^1(\Tcal)$, ist $u$ affin. Damit gilt für eine Kante
-$E=\conv\{P,Q\}\in\{E_1,E_2,E_3\}$, dass $u(\Mid(E))$ gegeben ist durch den
-Mittelwert von $u(P)$ und $u(Q)$.
+Da $\vcr\in\CR^1(\Tcal)$, ist $v$ affin. Damit gilt für eine Kante
+$E=\conv\{P,Q\}\in\{E_1,E_2,E_3\}$, dass $v(\Mid(E))$ gegeben ist durch den
+Mittelwert von $v(P)$ und $v(Q)$.
 
 Somit erhalten wir die drei Gleichungen
 \begin{align*}
-  u_1 &= \frac{u(P_1)+u(P_2)}{2},  
-  &u_2 &= \frac{u(P_2)+u(P_3)}{2},  
-  &u_3 &= \frac{u(P_3)+u(P_1)}{2}.
+  v_1 &= \frac{v(P_1)+v(P_2)}{2},  
+  &v_2 &= \frac{v(P_2)+v(P_3)}{2},  
+  &v_3 &= \frac{v(P_3)+v(P_1)}{2}.
 \end{align*}
-Sind $u_1$, $u_2$ und $u_3$ bekannt, können wir dieses Gleichungssystem nach 
-$u(P_1)$, $u(P_2)$ und $u(P_3)$ lösen und erhalten die gesuchten Werte
+Sind $v_1$, $v_2$ und $v_3$ bekannt, können wir dieses Gleichungssystem nach 
+$v(P_1)$, $v(P_2)$ und $v(P_3)$ lösen und erhalten die gesuchten Werte
 \begin{align*}
- u(P_1)&=u_1+u_3-u_2, &u(P_2)&= u_1+u_2-u_3,&u(P_3)&=u_2+u_3-u_1.
+ v(P_1)&=v_1+v_3-v_2, &v(P_2)&= v_1+v_2-v_3,&v(P_3)&=v_2+v_3-v_1.
 \end{align*}
 
 Wir realisieren dies mit der Methode
