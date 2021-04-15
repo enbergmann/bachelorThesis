@@ -112,13 +112,32 @@ genutzt werden.
     \hline
     Parametername  & Beschreibung\\  
     \hline
-    \texttt{showPlots} & \\
-    \texttt{plotModeGrayscale} & \\
-    \texttt{showProgress}& \\
-    \texttt{degree4Integrate}& \\
-    \texttt{plotGivenFunctions}&\\
-    \texttt{refinementLevel4Plots}& \\
-    \texttt{debugIfError}& \\
+    \texttt{showPlots} 
+    & \texttt{true}, wenn während des Programmablaufs Plots angezeigt werden
+    sollen, sonst \texttt{false}\\
+    \texttt{plotModeGrayscale} 
+    & \texttt{true}, wenn während des Programmablaufs Plots von Funktionen
+    als Graufarbenbilder angezeigt werden sollen, sonst \texttt{false} 
+    (Wahl irrelevant, wenn \texttt{showPlots == false})\\
+    \texttt{showProgress}
+    & \texttt{true}, wenn während der primalen-dualen Iteration Information
+    über den aktuellen Iterationsschritt angezeigt werden sollen, sonst
+    \texttt{false} \\
+    \texttt{degree4Integrate}
+    & algebraischer Exaktheitsgrad für Aufrufe der Methode \texttt{in\-tegrate} 
+    \cite[Abschnitt 1.8.2]{CGKNRR10} des AFEM-Soft\-ware\-pakets\\
+    \texttt{plotGivenFunctions}
+    & \texttt{true}, wenn Plots des Eingangssignals $f$ und, falls angegeben,
+    der Lösung $u$ von \Cref{prob:continuousProblem} erstellt und gespeichert
+    werden sollen, sonst \texttt{false}\\
+    \texttt{refinementLevel4Plots}
+    & Anzahl der Rotverfeinerungen der geladenen Geometrie um Plots des
+    Eingangssignal $f$ und, falls angegeben, der Lösung $u$ von
+    \Cref{prob:continuousProblem} zu erstellen (Wahl irrelevant, falls
+    \texttt{plotGivenFunctions == false})\\
+    \texttt{debugIfError}
+    & \texttt{true}, wenn Matlab beim Auftreten eines Fehlers den Debug-Modus
+    starten soll, sonst \texttt{false}\\
     \hline
   \end{tabular}
   \caption{Diverse Parameter zur Kontrolle des Programmablaufs}
@@ -152,7 +171,8 @@ genutzt werden.
     \texttt{beta4Estimate}& 
     Parameter $\gamma$ aus \Cref{def:refinementIndicator}\\
     \texttt{n4Estimate}& 
-    Parameter $d$ aus \Cref{def:refinementIndicator}\\
+    Parameter $d$ aus \Cref{def:refinementIndicator} (muss für diese 
+    Implementierung stets 2 sein)\\
     \hline
   \end{tabular}
   \caption{Parameter für den AFEM-Algorithmus}
@@ -165,10 +185,16 @@ genutzt werden.
     \hline
     Parametername  & Beschreibung\\  
     \hline
-    \texttt{u0Mode} & \\
-    \texttt{initialEpsStop} & \\
+    \texttt{u0Mode} 
+    & Startwert $u_0$ für \Cref{alg:primalDualIteration} auf dem ersten Level
+    und, falls \texttt{useProlongation == true}, für die Iteration auf allen
+    Level der AFEM-Routine (\texttt{'zeroes'} für $u_0=0$ und
+    \texttt{'interpolationRhs'}, falls für $u_0$ die nichtkonforme Interpolation
+    des Eingangssignals $f$ genutzt werden soll)\\
+    \texttt{initialEpsStop} & Parameter $\epsstop$ für das Abbruchkriterium
+    aus \Cref{chap:experiments}\\
     %\texttt{stopCrit} & \\
-    \texttt{parTau}& \\
+    \texttt{parTau}& Parameter $\tau$ aus \Cref{alg:primalDualIteration}\\
     \hline
   \end{tabular}
   \caption{Parameter für die Einstellungen der Iteration}
@@ -308,7 +334,7 @@ Dies geschieht mithilfe der \texttt{integrate} Methode \cite[Abschnitt
 Die Berechnung der dafür benötigten lokalen Crouzeix-Raviart-Basisfunktionen
 $\psi_{E_k}\!|_T$, $k\in\{1,2,3\}$ diskutieren wir in
 \Cref{sec:localCRBasisRealization}.
-Anschließend kann für alle $F\in\Ecal$ das Integral 
+Anschließend kann für alle $F\in\Ecal$ auch das Integral 
 \begin{align*}
   \int_\Omega f\psi_F\dx
   &=
@@ -324,6 +350,8 @@ zur Lösung auf dem Level zu starten. Genutzt wird dafür die Methode
   \texttt{./nonconforming/main/solvePrimalDualFormulation.m}.
 \end{center}
 Details dazu diskutieren wir in \Cref{sec:implementationPrimalDualIteration}.
+
+\todo{hier}
 
 \bigskip output des level etc werden belegt
 
@@ -363,6 +391,8 @@ speichere die Resulate
 \bigskip prolongation (mit kurzer Erläuterung, mit welcher Idee die passiert)
 
 auch darauf eingehen, wie u0 gewählt wird wenn keine Prolongation?
+
+insbesondere auch auf interpolationCR noch kurz eingehen
 
 \bigskip polygonmesh ignorieren? 
 
