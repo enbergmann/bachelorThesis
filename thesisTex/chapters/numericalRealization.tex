@@ -164,8 +164,8 @@ genutzt werden.
     \texttt{minNrDof}& 
     Anzahl der Freiheitsgrade der Triangulierung eines Levels, die mindestens
     erreicht werden soll, bevor der AFEM-Algorithmus abbricht\\
-    \texttt{useProlongation}&
-    \texttt{true}, wenn eine Prolongation der Lösung der pri\-ma\-len-dualen 
+    \texttt{useProlongation}
+    & \texttt{true}, wenn eine Prolongation der Lösung der pri\-ma\-len-dualen
     Iteration als Startwert für die Iteration des nächsten Levels genutzt
     werden soll, sonst \texttt{false}\\
     \texttt{beta4Estimate}& 
@@ -207,14 +207,37 @@ genutzt werden.
     \hline
     Parametername  & Beschreibung\\  
     \hline
-    \texttt{useImage} & \\
-    \texttt{imageName} & \\
-    \texttt{parAlpha}& \\
-    \texttt{parBeta} & \\
-    \texttt{rhsGradientKnown} & \\
-    \texttt{exactSolutionKnown}& \\
-    \texttt{useExactEnergy} & \\
-    \texttt{exactEnergy} & \\
+    \texttt{useImage}
+    & \texttt{true}, wenn für das Eingangssignal $f$ ein Graufarbenbild statt
+    eines \texttt{function\_handle} genutzt werden soll,
+    sonst \texttt{false}\\
+    \texttt{imageName} 
+    & Name (mit Dateiendung) des Graufarbenbildes im Ordner
+    \texttt{./utils/functions/images/}, das als Eingangssignal $f$
+    genutzt werden soll (Wahl irrelevant, falls
+    \texttt{useImage == false})\\
+    \texttt{parAlpha}
+    & Parameter $\alpha$ aus \Cref{prob:continuousProblem} und
+    \Cref{prob:discreteProblem}\\
+    \texttt{parBeta} 
+    & Parameter $\beta$ einiger Experimente aus \Cref{chap:experiments}\\
+    \texttt{rhsGradientKnown}
+    & \texttt{true}, wenn ein \texttt{function\_handle} des schwachen
+    Gradienten $\nabla f$ eines Eingangssignals $f\in H^1_0(\Omega)$ gegeben
+    ist und zur Berechnung von $\Egleb$ aus \Cref{thm:gleb} genutzt werden
+    soll, sonst \texttt{false}\\
+    \texttt{exactSolutionKnown}
+    & \texttt{true}, wenn die Lösung $u$ von \Cref{prob:continuousProblem}
+    bekannt ist und zur Berechnung von exakten Fehlern zu Iteraten von
+    \Cref{alg:primalDualIteration} genutzt werden soll, sonst \texttt{false}\\
+    \texttt{useExactEnergy}
+    & \texttt{true}, wenn die Energie $E(u)$ der Lösung $u$ von
+    \Cref{prob:continuousProblem} bekannt ist und in Auswertungen der
+    Ergebnisse genutzt werden soll, sonst \texttt{false} (wird \texttt{false}
+    gesetzt, falls \texttt{exactSolutionKnown == false})\\ 
+    \texttt{exactEnergy} 
+    & Wert $E(u)$ für die Lösung $u$ von \Cref{prob:continuousProblem} (Wahl
+    irrelevant, falls \texttt{useExactEnergy == false})\\
     %\texttt{saveScreenshots} & \\
     \hline
   \end{tabular}
@@ -228,8 +251,14 @@ genutzt werden.
     \hline
     Parametername  & Beschreibung\\  
     \hline
-    \texttt{expName} & \\
-    \texttt{dirInfoName} & \\
+    \texttt{expName} 
+    & Name des Ordners der im Ordner\newline 
+    \texttt{../results/nonconforming/}\newline 
+    erstellt werden soll zum Speichern der Ergebnisse des Programms\\
+    \texttt{dirInfoName} 
+    & Name des Ordners der im Ordner\newline 
+    \texttt{../results/nonconforming/expName/}\newline
+    erstellt werden soll zum Speichern der Ergebnisse eines Levels\\
     %\texttt{errorNorm}& \\
     \hline
   \end{tabular}
@@ -243,9 +272,19 @@ genutzt werden.
     \hline
     Parametername  & Beschreibung\\  
     \hline
-    \texttt{rightHandSide} & \\
-    \texttt{gradientRightHandSide} & \\
-    \texttt{exactSolution}& \\
+    \texttt{rightHandSide} 
+    & \texttt{function\_handle} des Eingangssignals $f$ (Wahl irrelevant, falls
+    \texttt{useImage == true})\\
+    \texttt{gradientRightHandSide} 
+    & \texttt{function\_handle} des schwachen Gradienten $\nabla f$ des
+    Eingangssignals $f$ (Wahl irrelevant, falls\newline
+    \texttt{rhsGradientKnown == false} oder\newline \texttt{useImage ==
+    true})\\ 
+    \texttt{exactSolution}
+    & \texttt{function\_handle} der Lösung $u$ von
+    \Cref{prob:continuousProblem} (Wahl irrelevant, falls\newline
+    \texttt{exactSolutionKnown == false} oder\newline \texttt{useImage ==
+    true})\\
     \hline
   \end{tabular}
   \caption{Definierbare \texttt{function\_handles}}

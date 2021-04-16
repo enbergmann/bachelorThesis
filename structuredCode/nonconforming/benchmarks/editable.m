@@ -140,7 +140,7 @@ function params = editable %#ok<*MSNU,FNDEF>
 %                        in the folder '../utils/functions/images/' must be
 %                        used as right-hand side f for the experiment
 %   imageName          - 'char array with exactly one row' containing the name
-%                        of the 
+%                        of the image 
 %   parAlpha           - 'double' containing the parameter \alpha from the
 %                        problem
 %   parbeta            - 'double' containing the parameter \beta from the
