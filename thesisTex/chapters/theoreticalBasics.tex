@@ -140,12 +140,11 @@ $\Tcal$.
 \section{Crouzeix-Raviart-Finite-Elemente-Funktionen}
 \label{sec:crouzeixRaviartFunctions}
 
-In \Cref{sec:discreteProblemFormulation} wollen wir für die Diskretisierung
-einer nichtkonformen Formulierung des in
-\Cref{sec:continuousProblemFormulation} genannten Minimierungsproblems die
-Crouzeix-Raviart-Finite-Elemente-Methode nutzen. 
+In \Cref{sec:discreteProblemFormulation} wollen wir für eine nichtkonforme
+Diskretisierung des in \Cref{sec:continuousProblemFormulation} genannten
+Minimierungsproblems die Crouzeix-Raviart-Finite-Elemente-Methode nutzen. 
 Die dafür benötigten Definitionen und Aussagen wollen wir in diesen Abschnitt
-aus \cites{Car09b}{CGR12}{CGKNRR10} zusammentragen. 
+zusammentragen aus \cites{Car09b}{CGR12}{CGKNRR10}. 
 
 Die Räume der Crouzeix-Raviart-Finite-Elemente-Funktionen sind definiert durch
 \begin{align*}
@@ -158,13 +157,11 @@ Die Räume der Crouzeix-Raviart-Finite-Elemente-Funktionen sind definiert durch
   \left\{\vcr\in\CR^1(\Tcal)\,\middle|\, \forall E\in\Ecal(\partial\Omega)\quad
   \vcr(\Mid(E))=0\right\}.
 \end{align*}
-
 Wir wollen $\CR^1_0(\Tcal)$ mit einen diskreten Skalarprodukt ausstatten. 
 Dafür führen wir den stückweisen Gradienten $\gradnc:H^1(\Tcal)\to
 L^2\!\left(\Omega;\Rbb^2\right)$ ein. 
 Dieser ist für alle $v\in H^1(\Tcal)$ und alle $T\in\Tcal$ definiert durch
 $\left(\gradnc v\right)\!|_T\coloneqq \nabla v|_T$.
-
 Das ermöglicht uns die Definition der diskreten Bilinearform
 $\anc(\bullet,\bullet):\CR^1_0(\Tcal)\times\CR^1_0(\Tcal)\to\Rbb$ 
 durch
@@ -173,7 +170,6 @@ durch
   \quad\text{für alle } \ucr,\vcr\in\CR^1_0(\Tcal).
 \end{align*}
 Diese ist ein Skalarprodukt auf $\CR^1_0(\Tcal)$.
-
 Die von $\anc$ induzierte Norm bezeichnen wir mit $\vvvert\bullet\vvvert_\NC$.
 
 Zum Abschluss definieren wir noch für jede Kante $E\in\Ecal$ eine Funktion
@@ -199,7 +195,7 @@ wir in diesen Abschnitt die grundlegenden Notationen dafür ein und formulieren
 schließlich die notwendige Optimalitätsbedingung erster Ordnung.
 
 Dabei folgen wir \cite[S. 189-194]{Zei85}. 
-Dort werden die Aussagen auf einen reellen lokal konvexen
+Dort werden einige der Aussagen auf einen reellen lokal konvexen
 Raum formuliert. Da nach \cite[S. 781, (43)]{Zei86} alle Banachräume 
 lokal konvex sind und wir die Aussagen in dieser Arbeit
 nur auf Banachräumen benötigen, formulieren wir sie hier auf einen reellen 
@@ -209,7 +205,6 @@ inneren Punkt $u$ von $V$ und ein Funktional $F:V\to\Rbb$.
 Schließlich definieren wir noch für alle $h\in X$ eine Funktion
 $\varphi_h:\Rbb\to\Rbb$, die für alle $t\in\Rbb$ gegeben ist durch
 $\varphi_h(t)\coloneqq F(u+th)$.
-
 Damit können wir die $n$-te Variation, das G\^ateaux- und das 
 Fr\'echet-Differential von $F$ definieren.
 
@@ -221,7 +216,6 @@ Fr\'echet-Differential von $F$ definieren.
     \delta^n F(u;h)\coloneqq \varphi_h^{(n)}(0)=
     \left. \frac{d^n F(u+th)}{dt^n}\right|_{t=0}.
   \end{align*}
-
   Wir schreiben $\delta$ für $\delta^1$.
 \end{definition}
 
@@ -233,9 +227,8 @@ Fr\'echet-Differential von $F$ definieren.
     \text{für alle } h\in X.
   \end{align*}
   $F'(u)$ heißt dann G\^ateaux-Differential von $F$ an der Stelle $u$.
-
-  $F$ heißt Fr\'echet-differenzierbar an der Stelle $u$, falls ein Funktional
-  $F'(u)\in X^\ast$ existiert, sodass
+  $F$ heißt Fr\'echet-dif\-fe\-ren\-zier\-bar an der Stelle $u$, falls ein
+  Funktional $F'(u)\in X^\ast$ existiert, sodass
   \begin{align*}
     \lim_{\Vert h\Vert_X\to 0}\frac{|F(u+th)-F(u)-
     \langle F'(u),h\rangle|}{\Vert h\Vert_X} =0.
@@ -268,37 +261,39 @@ formulieren.
   G\^ateaux- oder Fr\'echet-Differential existiert.
 \end{theorem}
 
+\begin{proof}
+  Die Aussage folgt direkt aus \cite[S. 193 f., Theorem 40.A, Theorem
+  40.B]{Zei85}.
+\end{proof}
+
+
 \section{Subdifferentiale}
 
 Für diesen Abschnitt betrachten wir stets einen reellen Banachraum $X$ und,
 falls nicht anders spezifiziert, ein Funktional $F:X\to [-\infty,\infty]$.
-
 Wir wollen die in dieser Arbeit benötigten Notationen und
 Eigenschaften des Subdifferentials von $F$ zusammentragen.
-
 Zuvor starten wir mit einer grundlegenden Definition.
 
 \begin{definition}[\protect{\cite[S. 245, Definition 42.1]{Zei85}}]
   Sei $V$ ein Vektorraum, $M\subseteq V$ und $F:M\to\Rbb$. 
-  
   Dann heißt die Menge $M$ konvex, wenn für alle $u,v\in M$ und alle $t\in
   [0,1]$ gilt $$(1-t)u+tv\in M.$$
-
   Ist $M$ konvex, so heißt $F$ konvex, falls für alle $u,v\in M$ und alle
   $t\in[0,1]$ gilt 
   \begin{equation}
     \label{eq:convexity}
     F\big( (1-t)u+tv\big)\leq (1-t)F(u)+t F(v).
   \end{equation}
-  Gilt Ungleichung \eqref{eq:convexity} mit \glqq$<$\grqq, so heißt
-  $F$ strikt konvex. Falls $-F$ konvex ist, so heißt $F$ konkav.
+  Gilt Ungleichung \eqref{eq:convexity} für alle $t\in
+  (0,1)$mit \glqq$<$\grqq, so heißt $F$ strikt konvex. 
+  Falls $-F$ konvex ist, so heißt $F$ konkav.
 \end{definition}
 
 Für den Rest dieses Abschnitts folgen wir \cite[S. 385-397]{Zei85}. 
 Analog zur Begründung zum Beginn von \Cref{sec:variationalCalculus}, schränken
 wir auch hier die Definitionen und Aussagen, die in \cite{Zei85} auf reellen
 lokal konvexen Räumen formuliert sind, auf den reellen Banachraum $X$ ein.
-
 Zunächst definieren wir das Subdifferential von $F$ an einer Stelle $u\in X$.
 
 \begin{definition}[Subdifferential]
@@ -312,7 +307,6 @@ Zunächst definieren wir das Subdifferential von $F$ an einer Stelle $u\in X$.
   \end{equation}
   Subdifferential von $F$ an der Stelle $u$. Für $F(u)=\pm\infty$ ist
   $\partial F(u)\coloneq\emptyset$.
-
   Ein Element $u^\ast\in\partial F(u)$ heißt Subgradient von $F$ an der Stelle
   $u$.
 \end{definition}
@@ -320,17 +314,16 @@ Zunächst definieren wir das Subdifferential von $F$ an einer Stelle $u\in X$.
 Es folgen für Optimierungsprobleme wichtige Aussagen über das Subdifferential 
 von $F$.
 
-\begin{theorem}
+\begin{theorem}[\protect{\cite[S. 387, Proposition 47.12]{Zei85}}]
   \label{thm:extremalprinciple}
   Falls $F: X\to (-\infty,\infty]$ mit $F\nequiv\infty$, gilt
   $F(u)=\inf_{v\in X}F(v)$ genau dann, wenn $0\in\partial F(u)$.
 \end{theorem}
 
-\begin{theorem}
+\begin{theorem}[\protect{\cite[S. 387, Proposition 47.13 (i)]{Zei85}}]
   \label{thm:subdiffGateaux}
-  Falls $F$ konvex ist und G\^{a}teaux-differenzierbar
-  an der Stelle $u\in X$ mit G\^{a}teaux-Differential $F'(u)$,
-  gilt $\partial F(u)=\{F'(u)\}$.
+  Falls $F$ konvex und G\^{a}teaux-differenzierbar an der Stelle $u\in X$ mit
+  G\^{a}teaux-Differential $F'(u)$ ist, gilt $\partial F(u)=\{F'(u)\}$.
 \end{theorem}
 
 Das folgende Theorem folgt aus \cite[S. 389, Theorem 47.B]{Zei85} unter 
@@ -341,12 +334,10 @@ Menge in $X^\ast$ kommutieren.
 \begin{theorem}
   \label{thm:subdifferentialSumRule}
   Seien für $n\geq 2$ die Funktionale $F_1,F_2,\ldots,F_n: X\to
-  (-\infty,\infty]$ konvex und es existiere
-  ein $u_0\in X$, sodass $F_k(u_0)<\infty$
-  für alle $k\in\{1,2\ldots,n\}$. 
+  (-\infty,\infty]$ konvex und es existiere ein $u_0\in X$, sodass
+  $F_k(u_0)<\infty$ für alle $k\in\{1,2\ldots,n\}$. 
   Außerdem seien mindestens $n-1$ der $n$ Funktionale $F_1,F_2,\ldots,F_n$
   stetig an der Stelle $u_0$.
-
   Dann gilt 
   \begin{align*}
     \partial (F_1+F_2+\ldots+ F_n)(u) 
@@ -356,11 +347,11 @@ Menge in $X^\ast$ kommutieren.
 \end{theorem}
 
 Zum Abschluss formulieren wir noch die Monotonie des Subdifferentials.
+Diese folgt aus \cite[S. 396 f., Definition 47.15, Theorem 47.F (1)]{Zei85}.
 
 \begin{theorem}
   \label{thm:subdifferentialMonotonicity}
   Sei $F:X\to (-\infty,\infty]$ konvex und unterhalbstetig mit $F\nequiv\infty$.
-
   Dann ist $\partial F(\bullet)$ monoton, das heißt 
   \begin{align*}
     \langle u^\ast-v^\ast,u-v\rangle\geq 0\quad \text{für alle } u,v\in X, 
@@ -372,6 +363,7 @@ Zum Abschluss formulieren wir noch die Monotonie des Subdifferentials.
 \section{Funktionen beschränkter Variation}
 \label{sec:bvFunctions}
 
+\todo[inline]{hier. Mit $\Omega$ aufpassen neu in Notations Kapitel}
 In diesen Abschnitt führen wir den Raum der Funktionen beschränkter Variation
 ein.
 Wir vermeiden dabei, soweit möglich, für den weiteren Verlauf dieser Arbeit
