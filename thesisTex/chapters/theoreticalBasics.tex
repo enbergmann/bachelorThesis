@@ -1,20 +1,13 @@
-\section{Vorausgesetztes Wissen}
-\label{sec:basicKnowledge}
-
 In dieser Arbeit werden Grundbegriffe in topologischen Räumen und Kentnisse zu
 Banach- und Hilberträumen sowie zu Lebesgue- und Sobolev-Räumen vorausgesetzt.
 Dazu gehören insbesondere wichtige Ungleichungen (beispielsweise
 Cauchy-Schwarz, Hölder, Young), grundlegende Einbettungssätze, Dualraumtheorie,
 Aussagen zur schwachen Konvergenz sowie der Rieszsche Darstellungssatz und
 seine Implikationen.
-Außerdem sollte ein grundlegendes Verständnis von Konzepten in der Optimierung
-vorhanden sein.
-
 Benötigte topologische Begriffe und grundlegende Aussagen zu Banach- und
 Hilberträumen können beispielsweise in \cite{Zei86} nachgeschlagen werden.
 Grundlagen der Optimierung sind in in \cite{Zei85} nachlesbar und alles Weitere
 eben genannte in \cite{Zei90a} und \cite{Zei90b}. 
-
 Dabei eignen sich die Register von \cite{Zei90b} und \cite{Zei85} hervorragend
 zum schnellen Auffinden von Begriffen in allen eben aufgeführten
 Referenzen.
@@ -36,11 +29,9 @@ Crouzeix-Raviart-Finite-Elemente-Raum einen separaten
 Wir wählen für die natürlichen Zahlen die Konvention
 $\Nbb=\{1,2,3,\ldots\}$ und $\Nbb_0=\Nbb\cup\{0\}$. 
 Die Menge der positiven reellen Zahlen notieren wir mit $\Rbb_+$.
-
 Um auszudrücken, dass eine Menge $A$ Teilmenge einer Menge $B$ ist, schreiben
 wir $A\subseteq B$. Falls wir hervorheben wollen, dass $A$ sogar eine echte
 Teilmenge von $B$ ist, so schreiben wir $A\subset B$.
-
 Ist $A$ Teilmenge eines topologischen Raumes, so notieren wir den Rand von $A$
 mit $\partial A$, das Innere von $A$ mit $\interior(A)$ und den Abschluss
 von $A$ mit $\overline A$.
@@ -49,36 +40,24 @@ A$, wenn es eine offene Teilmenge von $B$ gibt, die $x$ enthält.
 
 Für den Rest dieses Abschnitts seien $d,m\in\Nbb$, $k\in\Nbb_0$,
 $p\in[1,\infty]$ und $U$ eine nichtleere, offene Teilmenge von $\Rbb^d$.
-
 Die Einheitsmatrix in $\Rbb^{m\times m}$ bezeichnen wir mit $I_m$.
-
 Für das euklidische Skalarprodukt zweier Vektoren $v,w\in \Rbb^m$ schreiben wir
 $v\cdot w$.
-
 Betrachten wir einen Funktionenraum mit Werten in $\Rbb$, so verzichten wir auf
 $\Rbb$ beim Notieren des Funktionenraums. Zum Beispiel schreiben wir 
 $C(U)\coloneqq C(U;\Rbb)$ für den Raum der stetigen Funktionen von $U$ nach
 $\Rbb$.
 
-
-Mit der Menge $\Omega\subset\Rbb^d$ bezeichnen wir stets ein polygonal
-berandetes Lipschitz-Gebiet. 
-Falls $\Omega\subset\Rbb^2$, nutzen wir die Notation $\Tcal$ für eine reguläre
-Triangulierung von $\Omega$ im Sinne von Philippe Ciarlet in eine Menge von
-abgeschlossenen Dreiecken (cf.\ \cites[34]{Car09b}[345]{CGR12}[8]{CGKNRR10}).
-Die Menge der stückweisen konstanten Funktionen auf der Triangulierung $\Tcal$
-mit Werten in $\Rbb^m$ notieren wir dann mit $ P_0\!\left(\Tcal,\Rbb^m\right)$
-und die Menge der stückweisen affinen Funktionen auf $\Tcal$ mit Werten in
-$\Rbb^m$ mit $ P_1\!\left(\Tcal,\Rbb^m\right)$. 
-Weiterhin ist der Courant-Finite-Elemente-Raum (cf. \cite[12]{CGKNRR10})
-definiert als
+Mit $\Omega\subset\Rbb^2$ bezeichnen wir stets ein polygonal berandetes
+Lipschitz-Gebiet. 
+Eine reguläre Triangulierung $\Tcal$ von $\Omega$ im Sinne von Ciarlet (cf.\
+\cites[34]{Car09b}[345]{CGR12}[8]{CGKNRR10}) ist eine endliche Menge von
+abgeschlossenen Dreiecken $T$ mit positiven Flächeninhalt $|T|$, sodass
 \begin{align*}
-  S^1(\Tcal)\coloneqq P_1(\Tcal)\cap C\!\left(\bar\Omega\right).
+  \bigcup_{T\in\Tcal} T=\overline{\Omega}
 \end{align*}
-Für ein Dreieck $T\in\Tcal$ sei die längste Seitenlänge $h_T$. 
-Damit können wir die stückweise konstante Funktion $h_\Tcal\in P_0(\Tcal)$
-für alle $T\in\Tcal$ durch $h_\Tcal|_T\coloneqq h_T$ definieren und die längste
-Seitenlänge der Triangulierung $h\coloneqq\max_{T\in\Tcal}h_T$.
+und zwei Dreiecke $T_1,T_2\in\Tcal$ mit $T_1\neq T_2$ und $T_1\cap
+T_2\neq\emptyset$ eine gemeinsame Ecke oder eine gemeinsame Kante haben.
 Die Menge der Knoten der Triangulierung sei $\Ncal$, wobei die Menge der
 inneren Knoten mit $\Ncal(\Omega)$, die Menge der Randknoten mit
 $\Ncal(\partial\Omega)$ und die Menge der Knoten eines Dreiecks $T\in\Tcal$ mit
@@ -98,11 +77,23 @@ Damit können wir den Sprung entlang einer Innenkante $E\in\Ecal(\Omega)$
 definieren als $[\bullet]_E\coloneqq \bullet|_{T_+} -\bullet|_{T_-}$.
 Für eine Randkante $E\in\Ecal(\partial\Omega)$ definieren wir
 $[\bullet]_E\coloneqq \bullet|_E$.
+Die Menge der stückweisen konstanten Funktionen auf der Triangulierung $\Tcal$
+mit Werten in $\Rbb^m$ notieren wir dann mit $ P_0\!\left(\Tcal,\Rbb^m\right)$
+und die Menge der stückweisen affinen Funktionen auf $\Tcal$ mit Werten in
+$\Rbb^m$ mit $ P_1\!\left(\Tcal,\Rbb^m\right)$. 
+Weiterhin ist der Courant-Finite-Elemente-Raum (cf. \cite[12]{CGKNRR10})
+definiert als
+\begin{align*}
+  S^1(\Tcal)\coloneqq P_1(\Tcal)\cap C\!\left(\overline{\Omega}\right).
+\end{align*}
+Für ein Dreieck $T\in\Tcal$ sei die längste Seitenlänge $h_T$. 
+Damit können wir die stückweise konstante Funktion $h_\Tcal\in P_0(\Tcal)$
+für alle $T\in\Tcal$ durch $h_\Tcal|_T\coloneqq h_T$ definieren und die längste
+Seitenlänge der Triangulierung $h\coloneqq\max_{T\in\Tcal}h_T$.
 
 Mit $|\bullet|$ bezeichnen wir, je nach Argument, die euklidischen Norm eines
-Vektors $v\in\Rbb^m$, den Inhalt eines Dreiecks $T\in\Tcal$, die Länge
-einer Kante $E\in\Ecal$, die Kardinalität einer endlichen Menge $A$
-oder $|\Omega|=\int_\Omega 1\dx$.
+Vektors $v\in\Rbb^m$, das Lebesgue-Maß einer Menge $M\subset\Rbb^2$, die Länge
+einer Kante $E\in\Ecal$ oder die Kardinalität einer endlichen Menge $A$.
 
 Die Signumfunktion auf dem $\Rbb^m$ definieren wir für einen Vektor
 $v\in\Rbb^m$ durch
@@ -114,11 +105,12 @@ $v\in\Rbb^m$ durch
   \end{cases}
 \end{align*}
 
-Ist $V$ ein normierter Vektorraum, so bezeichnen wir die entsprechende Norm auf
-$V$ mit $\Vert\bullet\Vert_V$. 
-Falls $V$ sogar ein Prähilbertraum ist, bezeichnen wir das Skalarprodukt auf
+Ist $V$ ein Vektorraum, so notieren wir die konvexe Hülle einer Teilmenge
+$X\subseteq V$ mit $\conv\,X$.
+Falls $V$ ein normierter Vektorraum ist, dann bezeichnen wir die entsprechende
+Norm auf $V$ mit $\Vert\bullet\Vert_V$. 
+Ist $V$ sogar ein Prähilbertraum, so bezeichnen wir das Skalarprodukt auf
 $V$, welches $\Vert\bullet\Vert_V$ induziert, mit $(\bullet,\bullet)_V$.
-
 Betrachten wir eine Eigenschaft, für die gegeben sein muss, bezüglich welcher
 Norm Folgen auf $V$ konvergieren, so ist stets die Konvergenz in der Norm
 $\Vert\bullet\Vert_V$ gewählt, sofern nicht anders angegeben.
@@ -141,7 +133,6 @@ definieren wir ebenfalls wie üblich.
 Außerdem schreiben wir kurz $\Vert\bullet\Vert \coloneqq
 \Vert\bullet\Vert_{L^2(\Omega)}$
 und $(\bullet,\bullet)\coloneqq(\bullet,\bullet)_{L^2(\Omega)}$.
-
 Mit $H^1(\Tcal)$ bezeichnen wir den Raum der stückweisen $H^1$-Funktionen auf
 $\Tcal$.
 
@@ -201,8 +192,7 @@ $\CR^1_0(\Tcal)$.
 \section{Variationsrechnung auf Banachräumen}
 \label{sec:variationalCalculus}
 
-Wie in \Cref{sec:basicKnowledge} beschrieben, setzen wir in dieser Arbeit
-Kentnisse über die Variationsrechung voraus. 
+In dieser Arbeit setzen wir Kentnisse über die Variationsrechung voraus. 
 Da wir aber einige Aussagen auch für Funktionale benötigen, die auf
 unedlichdimensionalen reellen Banachräumen definiert sind, führen
 wir in diesen Abschnitt die grundlegenden Notationen dafür ein und formulieren
