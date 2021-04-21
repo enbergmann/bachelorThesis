@@ -363,20 +363,16 @@ Diese folgt aus \cite[S. 396 f., Definition 47.15, Theorem 47.F (1)]{Zei85}.
 \section{Funktionen beschränkter Variation}
 \label{sec:bvFunctions}
 
-\todo[inline]{hier. Mit $\Omega$ aufpassen neu in Notations Kapitel}
 In diesen Abschnitt führen wir den Raum der Funktionen beschränkter Variation
 ein.
 Wir vermeiden dabei, soweit möglich, für den weiteren Verlauf dieser Arbeit
 nicht benötigte Notation und Theorie, indem wir die Definitionen und Aussagen 
 entsprechend aus- und umformulieren.
-Für weit detailliertere Ausführungen und die
+Für detailliertere Ausführungen und die
 maßtheoretischen Hintergründe siehe zum Beispiel \cite{ABM14, EG92, Bra98}. 
-
 Soweit nicht anders angegeben, folgen die Definitionen und Aussagen
-dieses Abschnitts aus \cite[S. 393-395]{ABM14}
-
+dieses Abschnitts aus \cite[S. 393-395]{ABM14}.
 Sei im Weiteren $U$ eine offene Teilmenge des $\Rbb^d$.
-
 Zunächst definieren wir den Raum der Funktionen beschränkter Variation.
 
 \begin{definition}[Funktionen beschränkter Variation]
@@ -397,14 +393,12 @@ Zunächst definieren wir den Raum der Funktionen beschränkter Variation.
   \label{rem:bvSeminorm}
   Durch $|\bullet|_{\BV(U)}$ ist eine Seminorm auf $\BV(U)$
   gegeben.
-
   Ausgestattet mit der Norm
   \begin{align*}
     \Vert \bullet \Vert_{\BV(U)} \coloneqq \Vert \bullet\Vert_{L^1(U)} +
     |\bullet|_{\BV(U)}
   \end{align*}
   ist $\BV(U)$ ein Banachraum.
-
   Außerdem gilt $W^{1,1}(U)\subset\BV(U)$ und 
   $\Vert u \Vert_{\BV(U)}=\Vert u \Vert_{W^{1,1}(U)}$ für alle
   $u\in W^{1,1}(U)$.
@@ -418,8 +412,11 @@ Deshalb führen wir einen schwächeren Konvergenzbegriff ein.
   Sei $(u_n)_{n\in\Nbb}\subset \BV(U)$ und sei $u\in \BV(U)$ mit
   $u_n\rightarrow u$ in $L^1(U)$ für $n\rightarrow\infty$.
   Dann konvergiert die Folge $(u_n)_{n\in\Nbb}$ schwach gegen $u$ in $\BV(U)$,
-  wenn für alle $\phi\in C_0(U;\Rbb^d)$ gilt, dass $\int_U
-  u_n\Div(\phi)\dx\rightarrow \int_U u\Div(\phi)\dx$ für $n\to\infty$. 
+  wenn für alle $\phi\in C_0(U;\Rbb^d)$ gilt, dass 
+  \begin{align*}
+    \int_U u_n\Div(\phi)\dx\rightarrow \int_U u\Div(\phi)\dx 
+    \quad\text{für } n\to\infty. 
+  \end{align*}
   Wir schreiben dann $u_n\rightharpoonup u$ für $n\to\infty$.
 \end{definition}
 
@@ -450,49 +447,45 @@ Damit können wir das folgende Theorem formulieren, welches unmittelbar die
 schwache Unterhalbstetigkeit der Seminorm $|\bullet|_{\BV(U)}$ auf $\BV(U)$
 impliziert.
 
-\begin{theorem}
+\begin{theorem}[\protect{\cite[S. 394, Proposition 10.1.1]{ABM14}}]
   \label{thm:wlsc}
   Sei $u\in L^1(U)$ und sei $(u_n)_{n\in\Nbb}\subset\BV(U)$ mit
   $\sup_{n\in\Nbb}|u_n|_{\BV(U)}< \infty$ und
   $u_n\rightarrow u$ in $L^1(U)$ für $n\rightarrow\infty$.
-
   Dann gilt $u\in\BV(U)$ und $|u|_{\BV(U)}\leq
   \liminf_{n\rightarrow\infty}|u_n|_{\BV(U)}.$
   Außerdem gilt dann $u_n\rightharpoonup u$ in $\BV(U)$.
 \end{theorem}
 
-Mit Blick auf die folgenden Kapitel betrachten wir nun
-das polygonal berandete Lip\-schitz-Gebiet $\Omega\subset\Rbb^d$. 
-Unter dieser Voraussetzung können wir zeigen, dass jede in $\BV(\Omega)$
-beschränkte Folge eine in $\BV(\Omega)$ schwach konvergente Teilfolge besitzt
-mit schwachen Grenzwert in $\BV(\Omega)$. Für den Beweis dieser Aussage 
-benötigen wir noch das folgende Theorem aus \cite[S. 176, Theorem 4]{EG92}.
+Für den Rest dieser Abschnitts sei $U$ ein beschränktes Lip\-schitz-Gebiet.
+Unter dieser Voraussetzung können wir zeigen, dass jede in $\BV(U)$
+beschränkte Folge eine in $\BV(U)$ schwach konvergente Teilfolge besitzt
+mit schwachen Grenzwert in $\BV(U)$. Für den Beweis dieser Aussage 
+benötigen wir zunächst das folgende Theorem. 
 
-\begin{theorem}
+\begin{theorem}[\protect{\cite[S. 176, Theorem 4]{EG92}}]
   \label{thm:l1ConvergentSubsequence}
-  Sei $(u_n)_{n\in\Nbb}\subset \BV(\Omega)$ eine beschränkte Folge. Dann 
+  Sei $(u_n)_{n\in\Nbb}\subset \BV(U)$ eine beschränkte Folge. Dann 
   existiert eine Teilfolge $(u_{n_k})_{k\in\Nbb}$ von
-  $(u_n)_{n\in\Nbb}$ und ein $u\in\BV(\Omega)$, sodass
-  $u_{n_k}\to u$ in $L^1(\Omega)$ für $k\to \infty$.
+  $(u_n)_{n\in\Nbb}$ und ein $u\in\BV(U)$, sodass
+  $u_{n_k}\to u$ in $L^1(U)$ für $k\to \infty$.
 \end{theorem}
 
 Damit können wir nun das folgende Theorem beweisen.
 \begin{theorem}
   \label{thm:compactness}
-  Sei $(u_n)_{n\in\Nbb}\subset \BV(\Omega)$ eine beschränkte Folge. Dann 
-  existiert eine Teilfolge $(u_{n_k})_{k\in\Nbb}$ und ein $u\in\BV(\Omega)$,
-  sodass $u_{n_k}\rightharpoonup u$ in $\BV(\Omega)$ für $k\rightarrow\infty$.
+  Sei $(u_n)_{n\in\Nbb}\subset \BV(U)$ eine beschränkte Folge. Dann 
+  existiert eine Teilfolge $(u_{n_k})_{k\in\Nbb}$ und ein $u\in\BV(U)$,
+  sodass $u_{n_k}\rightharpoonup u$ in $\BV(U)$ für $k\rightarrow\infty$.
 \end{theorem}
 
 \begin{proof}
   Nach \Cref{thm:l1ConvergentSubsequence} besitzt $(u_n)_{n\in\Nbb}$ eine
-  Teilfolge $(u_{n_k})_{k\in\Nbb}$, die in $L^1(\Omega)$ gegen ein
-  $u\in\BV(\Omega)$ konvergiert.
-  Diese Teilfolge ist nach Voraussetzung ebenfalls beschränkt in 
-  $\BV(\Omega)$, woraus nach Definition der Norm auf $\BV(\Omega)$ insbesondere
-  folgt, dass
-  $\sup_{k\in\Nbb}|u_{n_k}|_{\BV(\Omega)}< \infty$. 
-  
+  Teilfolge $(u_{n_k})_{k\in\Nbb}$, die in $L^1(U)$ gegen ein
+  $u\in\BV(U)$ konvergiert.
+  Diese Teilfolge ist nach Voraussetzung ebenfalls beschränkt in $\BV(U)$,
+  woraus nach Definition der Norm $\Vert\bullet\Vert_{\BV(U)}$ insbesondere
+  folgt, dass $\sup_{k\in\Nbb}|u_{n_k}|_{\BV(U)}< \infty$. 
   Somit ist \Cref{thm:wlsc} anwendbar und impliziert die schwache Konvergenz von
-  $(u_{n_k})_{k\in\Nbb}$ in $\BV(\Omega)$ gegen $u\in\BV(\Omega)$.
+  $(u_{n_k})_{k\in\Nbb}$ in $\BV(U)$ gegen $u\in\BV(U)$.
 \end{proof}
