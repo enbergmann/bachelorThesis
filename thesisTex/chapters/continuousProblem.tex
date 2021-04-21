@@ -1,9 +1,5 @@
-In diesen Kapitel formulieren wir unsere Variante des ROF-Modell-Problems und
-beweisen, dass diese eine eindeutige Lösung besitzt. 
-Außerdem beschreiben wir, wie Experimente mit bekannter Lösung konstruiert
-werden können.
-Für einen Parameter $\alpha\in\Rbb_+$ und eine Funktion
-$f\in L^2(\Omega)$ lautet unser Minimierungsproblem wie folgt.
+In diesen Kapitel wollen wir für einen Parameter $\alpha\in\Rbb_+$ und eine
+Funktion $f\in L^2(\Omega)$ folgendes Minimierungsproblem untersuchen.
 
 \begin{problem}\label{prob:continuousProblem}
   Finde $u\in \BV(\Omega)\cap L^2(\Omega)$, sodass
@@ -18,19 +14,28 @@ Dabei ist der Term $\Vert v\Vert_{L^1(\partial\Omega)}$ wohldefiniert, da
 nach \cite[S. 400, Theorem 10.2.1]{ABM14} eine lineare, stetige Abbildung
 $T:\BV(\Omega)\to L^1(\partial\Omega)$ existiert mit $T(v) =
 v|_{\partial\Omega}$ für alle $v\in\BV(\Omega)\cap C(\overline\Omega)$.
+Wie in \Cref{chap:introduction} beschrieben, hat \Cref{prob:continuousProblem}
+für homogene Randdaten die gleichen Minimierer wie das ROF-Modell-Problem mit
+Eingangssignal $g\in L^2(\Omega)$, wenn $f=\alpha g$.
 
 \begin{remark}
   Für $d\in\{2,3\}$ und ein beschränktes Lipschitz-Gebiet $U\subset\Rbb^d$ ist
   nach \cite[S. 302, Remark 10.5 (i)]{Bar15} die Einbettung
   $\BV(U)\hookrightarrow L^p(U)$ stetig, wenn $1\leq p\leq d/(d-1)$. 
-  %Nach \cite[S. 399, Theorem 10.1.3]{ABM14} gilt diese Aussage auch für
-  %$d\in\Nbb$, wenn $U\subset\Rbb^d$ offen, beschränkt und 1-regulär ist.
+  % Nach \cite[S. 399, Theorem 10.1.3]{ABM14} gilt diese Aussage auch für
+  % $d\in\Nbb$, wenn $U\subset\Rbb^d$ offen, beschränkt und 1-regulär ist.
   Damit ist $\BV(\Omega)$ Teilmenge von $L^2(\Omega)$ und die Lösung von
   \Cref{prob:continuousProblem} kann in $\BV(\Omega)$ gesucht werden. 
   Wir vernachlässigen diese Vereinfachung und erreichen dadurch, dass alle
   Aussagen dieses Kapitels auch gelten würden, wenn
   $\Omega\subset\Rbb^d$ mit $d\in\Nbb$ ein beschränktes Lipschitz-Gebiet wäre.
 \end{remark}
+
+In den folgenden Abschnitten zeigen wir, dass
+\Cref{prob:continuousProblem} eine eindeutige Lösung $u\in\BV(\Omega)\cap
+L^2(\Omega)$ besitzt. 
+Außerdem beschreiben wir, wie $f$ für eine gegebene Lösung $u$ konstruiert
+werden kann und welche Eigenschaften $u$ dafür erfüllen muss.
 
 
 \section{Existenz eines eindeutigen Minimierers}
@@ -47,14 +52,14 @@ Dafür benötigen wir die folgende Formulierung der Youngschen Ungleichung.
 
 Außerdem wird im Beweis folgende Aussage benötigt, die direkt aus \cite[S. 183,
 Theorem 1]{EG92} folgt, da
-$0\in\BV\!\left(\Rbb^d\setminus\overline\Omega\right)$,
+$0\in\BV\!\left(\Rbb^d\setminus\overline\Omega\right)$ mit
 $|0|_{\BV\!\left(\Rbb^d\setminus\overline\Omega\right)}=0$ und
 $0|_{\partial\Omega}=0$.
 
 \begin{lemma}
   \label{lem:bvExtension}
   Sei $v\in\BV(\Omega)$.
-  Definiere, für alle $x\in\Rbb^d$,
+  Definere die Fortsetzung $\tilde{v}$ von $v$ für alle $x\in\Rbb^d$ durch
   \begin{align*}
     \tilde{v}(x)\coloneqq
     \begin{cases}
@@ -156,7 +161,7 @@ $0|_{\partial\Omega}=0$.
   L^2(\Omega)$.
   Nun definieren wir für alle
   $n\in\Nbb$ und für alle 
-  $x\in\Rbb^d$
+  $x\in\Rbb^d$ die Fortsetzungen
   \begin{align*}
     \tilde{u}_n(x)
     &\coloneqq
@@ -275,7 +280,7 @@ dass diese Lösung eindeutig ist.
 
   Zunächst definieren wir die Funktionale $F: L^2(\Omega)\to
   \Rbb\cup\{\infty\}$ und $G_\ell:L^2(\Omega)\to \Rbb$, $\ell\in\{1,2\}$, für
-  alle $u\in L^2(\Omega)$, durch
+  alle $u\in L^2(\Omega)$ durch
   \begin{align*}
     F(u) 
     &\coloneqq 
@@ -291,10 +296,9 @@ dass diese Lösung eindeutig ist.
   \end{align*}
   Damit gilt für $\ell\in\{1,2\}$ und alle
   $u\in\BV(\Omega)\cap L^2(\Omega)$, dass $E_\ell(u) =  F(u)+G_\ell(u)$.
-
   Für $\ell\in\{1,2\}$ ist $G_\ell$ Fr\'echet-differenzierbar und die
   Fr\'echet-Ableitung $G_\ell'(u): L^2(\Omega)\to\Rbb$ von $G_\ell$ an der
-  Stelle $u\in L^2(\Omega)$ ist, für alle $v\in L^2(\Omega)$,
+  Stelle $u\in L^2(\Omega)$ ist für alle $v\in L^2(\Omega)$
   gegeben durch
   \begin{align*}
     dG_\ell(u;v) = \alpha (u,v) - \int_\Omega f_\ell v\dx 
@@ -332,7 +336,7 @@ dass diese Lösung eindeutig ist.
     \Vert f_1-f_2\Vert\Vert u_1 - u_2\Vert.
   \end{align*}
   Falls $\Vert u_1 - u_2 \Vert = 0$, gilt die zu zeigende Aussage.
-  Ansonsten führt Division durch $\alpha\Vert u_1 - u_2 \Vert\neq 0$ den
+  Ansonsten führt die Division durch $\alpha\Vert u_1 - u_2 \Vert\neq 0$ den
   Beweis zum Abschluss.
 \end{proof}
 
@@ -353,7 +357,7 @@ für alle $x\in\Omega$ gelte
 $u(x)\coloneqq u_P\big(|x|\big)$ für $u_P:[0,\infty)\to\Rbb$. 
 Weiterhin fordern wir $u_P(r)=0$ für $r\geq 1$ und die Existenz
 der partiellen Ableitung $\partial_r u_P$ fast überall in $[0,\infty)$.
-Außerdem existiere auch fast überall in $[0,\infty)$ die partielle Ableitung
+Außerdem existiere fast überall in $[0,\infty)$ die partielle Ableitung
 des für $r\in[0,\infty)$ definierten Ausdrucks
 \begin{align*}
   \sgn\big(\partial_r u_P(r)\big)
@@ -408,7 +412,7 @@ Um also $E(u)$ berechnen zu können, wird der schwache Gradient $\nabla u$ von
 $u$ benötigt und um die garantierte untere Energieschranke $\Egleb$ aus
 \Cref{eq:gleb} zu berechnen, wird der schwache Gradient $\nabla f$ von $f$
 benötigt.
-Deshalb betrachten wir zum Abschluss an dieser Stelle noch kurz die benötigten
+Deshalb betrachten wir an dieser Stelle noch kurz die benötigten
 Zusammenhänge zwischen den partiellen Ableitungen in kartesischen Koordianten
 und in Polarkoordinaten für eine hinreichend glatte Funktion $g_P$.
 Sei
@@ -446,8 +450,8 @@ Ist nun $g_P$ vom Winkel $\varphi$ unabhängig, so erhalten wir
 \end{align*}
 Unter Beachtung der trigonometrischen Zusammenhänge
 \begin{align*}
-  \sin\big(\arctan(y)\big) &= \frac{y}{\sqrt{1+y^2}},\\
-  \cos\big(\arctan(y)\big) &= \frac{1}{\sqrt{1+y^2}}
+  \sin\big(\arctan(y)\big) &= \frac{y}{\sqrt{1+y^2}} &&\text{und}
+  &\cos\big(\arctan(y)\big) &= \frac{1}{\sqrt{1+y^2}}
 \end{align*}
 ergibt sich 
 \begin{align*}
@@ -472,7 +476,7 @@ und somit
     x_2
   \end{pmatrix}.
 \end{align*} 
-Zum Bestimmen der partiellen Ableitungen in kartesischen Koordianten einer
+Zum Bestimmen des Gradienten in kartesischen Koordianten einer
 in Polarkoordinaten gegegebenen Funktion $g_P$, die
 vom Polarwinkel unabhängig ist, muss also lediglich 
 die partielle Ableitung $\partial_r g_P$ berechnet werden.
