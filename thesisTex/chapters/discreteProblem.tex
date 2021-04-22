@@ -1,7 +1,5 @@
 \section{Formulierung}
 \label{sec:discreteProblemFormulation}
-Für den Rest dieser Arbeit sei $\Omega\subset\Rbb^2$.
-
 Bevor wir \Cref{prob:continuousProblem} diskretisieren, merken wir an,
 dass $\CR^1(\Tcal)\subset\BV(\Omega)$, da
 \begin{align*}
@@ -171,18 +169,28 @@ Theorems wurde von Professor Carstensen formuliert.
       \end{equation}
   \end{itemize}
 \end{theorem}
+\todo{siehe geschachtelten Ausruck: $L^2$ Stetigkeit von $\Enc$ begründen 
+und Theorem aufspalten in ein ,,es existiert eindeutiger Min.'' und ein
+,,äquivalente Charakterisierungen`` Theorem}
 
 \begin{proof} 
   Mit analogen Abschätzungen wie in Ungleichung \eqref{eq:contProbBddFromBelow}
   erhalten wir für das Funktional $\Enc$ aus \Cref{prob:discreteProblem} 
   für alle $\vcr\in\CR^1_0(\Tcal)\subset L^2(\Omega)$ die Abschätzung 
-  \begin{equation*}
-    \Enc(\vcr) \geq -\frac{1}{\alpha}\Vert f\Vert^2.
-  \end{equation*}
+  \begin{equation}
+    \label{eq:discreteEnergyCoercivity}
+    \Enc(\vcr) 
+    \geq 
+    \frac{\alpha}{4}\Vert \vcr\Vert^2
+    +\Vert \gradnc\vcr\Vert_{L^1(\Omega)}
+    -\frac{1}{\alpha}\Vert f\Vert^2
+    \geq 
+    -\frac{1}{\alpha}\Vert f\Vert^2.
+  \end{equation}
   Somit ist $\Enc$ nach unten beschränkt und es existiert eine infimierende
   Folge $(v_n)_{n\in\Nbb} \subset \CR^1_0(\Tcal)$ von $\Enc$. 
-  Aufgrund der Form von $\Enc$ ist diese Folge beschränkt bezüglich der Norm
-  $\Vert\bullet\Vert$. 
+  Ungleichung \eqref{eq:discreteEnergyCoercivity} impliziert außerdem, dass
+  diese Folge beschränkt bezüglich der Norm $\Vert\bullet\Vert$ ist.
 
   Der endlichdimensionale Raum $\CR^1_0(\Tcal)$ ist, ausgestattet mit der Norm
   $\Vert\bullet\Vert$, ein Banachraum und damit reflexiv. 
