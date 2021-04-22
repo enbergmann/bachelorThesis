@@ -20,7 +20,9 @@ Algorithmus wie folgt.
 \begin{algorithmic}\\
   \Require $\left(u_0,\Lambda_0\right)
   \in\textup{CR}_0^1(\mathcal{T})\times P_0\!\left(\mathcal{T}; 
-  \left\{w\in\Rbb^2\,\middle|\,|w|\leq 1\right\}\right),
+  %\left\{w\in\Rbb^2\,\middle|\,|w|\leq 1\right\}\right),
+  \overline{B_{\Rbb^2}}\right),
+  %\overline{B_1(0)}\right),
   \tau>0$  \\
   Initialisiere $v_0\coloneqq 0$ in $\textup{CR}^1_0(\mathcal T)$.
   \For{$j = 1,2,\dots$}
@@ -53,8 +55,7 @@ Algorithmus wie folgt.
   \EndFor
   \Ensure Folge $(u_j,\Lambda_j)_{j\in\mathbb N}$ in
   $\CR^1_0(\mathcal{T})\times
-   P_0\!\left(\mathcal{T};\left\{w\in\Rbb^2\,\middle|\,|w|\leq
-   1\right\}\right)$   
+   P_0\!\left(\mathcal{T};\overline{B_{\Rbb^2}}\right)$   
   \end{algorithmic}
 \end{algorithm}
 

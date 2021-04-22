@@ -95,20 +95,13 @@ Mit $|\bullet|$ bezeichnen wir, je nach Argument, die euklidischen Norm eines
 Vektors $v\in\Rbb^m$, das Lebesgue-Maß einer Menge $M\subset\Rbb^2$, die Länge
 einer Kante $E\in\Ecal$ oder die Kardinalität einer endlichen Menge $A$.
 
-Die Signumfunktion auf dem $\Rbb^m$ definieren wir für einen Vektor
-$v\in\Rbb^m$ durch
-\begin{align*}
-  \sign(v)\coloneqq
-  \begin{cases}
-    \left\{\frac{v}{|v|}\right\},&\text{ falls }v\in\Rbb^m\setminus\{0\},\\
-    \left\{w\in\Rbb^m\,\middle|\,|w|\leq 1\right\},&\text{ sonst.}
-  \end{cases}
-\end{align*}
-
 Ist $V$ ein Vektorraum, so notieren wir die konvexe Hülle einer Teilmenge
 $X\subseteq V$ mit $\conv\,X$.
 Falls $V$ ein normierter Vektorraum ist, dann bezeichnen wir die entsprechende
 Norm auf $V$ mit $\Vert\bullet\Vert_V$. 
+Die Einheitskugel auf $V$ ist damit $B_V\coloneqq\{v\in V\,|\, \Vert v\Vert_V<
+1\}$ und die abgeschlossene Einheitskugel auf $V$ ist
+$\overline{B_V}=\{v\in V\,|\, \Vert v\Vert_V\leq 1\}$.
 Ist $V$ sogar ein Prähilbertraum, so bezeichnen wir das Skalarprodukt auf
 $V$, welches $\Vert\bullet\Vert_V$ induziert, mit $(\bullet,\bullet)_V$.
 Betrachten wir eine Eigenschaft, für die gegeben sein muss, bezüglich welcher
@@ -118,6 +111,16 @@ Beispielsweise meinen wir mit der Folgenstetigkeit eines Funktionals
 $F:V\to\Rbb$ im Detail die Folgenstetigkeit mit der Normkonvergenz
 bezüglich $\Vert\bullet\Vert_V$ in $V$ und der Konvergenz bezüglich $|\bullet|$
 in $\Rbb$.
+
+Die Signumfunktion auf dem $\Rbb^m$ definieren wir für einen Vektor
+$v\in\Rbb^m$ durch
+\begin{align*}
+  \sign(v)\coloneqq
+  \begin{cases}
+    \left\{\frac{v}{|v|}\right\},&\text{ falls }v\in\Rbb^m\setminus\{0\},\\
+    \overline{B_{\Rbb^m}},&\text{ sonst.}
+  \end{cases}
+\end{align*}
 
 Für den Dualraum eines Banachraums $X$ über $\Rbb$ 
 schreiben wir $X^\ast$. Die Auswertung eines Funktionals $F\in X^\ast$ an
