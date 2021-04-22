@@ -1,7 +1,10 @@
 \todo[inline]{Adaptiven Algorithmus nochmal komplett aufschreiben, vgl
 Refinement Indicator Bild von CC. Vielleicht auch einfach nicht, aber 
-nochmal gucken das das marking in der AFEM-Doku übereinstimmt mit CCs Bild}
-\todo[inline]{Noch Anmerkungen aus dem Ausdruck einbringen}
+nochmal gucken das das marking in der AFEM-Doku übereinstimmt mit CCs Bild.
+Gesagt, getan. Stimmt überein.
+Am besten einfach auf markBulk usw Methode an der Stelle in der 
+Programmablauf Section verweisen, das sollte ausreichen. Dabei die Formeln 
+erwähnen}
 
 \section{Hinweise zur Benutzung des Programms}
 %\subsection{Aufbau des Programms}
@@ -13,20 +16,17 @@ AFEM-Softwarepaket realisierten Methoden sowie deren Datenstrukturen bekannt
 sind und verweisen für weitere Details auf \cite{CGKNRR10}. 
 Im Refine-Schritt nutzten wir anstelle eines Fehlerschätzers den
 Verfeinerungsindikator aus \Cref{def:refinementIndicator}.
-
 \begin{figure}[h]
   \centering
   \input{pictures/chapImplementation/afemloop.tex}
   \caption{AFEM-Schleife}
   \label{fig:afemLoop}
 \end{figure}
-
 Die zur korrekten Funktionsweise dieses Programms nötigen Methoden und
 Dateien des AFEM-Softwarepakets sind enthalten in den Ordnern
 \begin{center}
     \texttt{./utils/afemPackage/} sowie \texttt{./utils/geometries/}.
 \end{center}
-
 Alle Ein- und Ausgabeparameter der im Rahmen dieser Arbeit implementierten
 Methoden sind in den entsprechenden Dateien detailiert dokumentiert. 
 Ausgenommen davon sind die Standard-Datenstrukturen aus dem AFEM-Softwarepaket,
@@ -61,7 +61,6 @@ zu finden in den Tabellen \ref{tab:paramsMisc}, \ref{tab:paramsAFEM},
 \ref{tab:paramsIteration}, \ref{tab:paramsExperiment} und \ref{tab:paramsDoc}
 sowie über die definierbaren Funktion in \Cref{tab:paramsFunctions}.
 Details zu den Datentypen sind in \texttt{editable.m} aufgeführt.
-
 Dass die zahlreichen Parameter, die während des Pro\-gramm\-ab\-laufs
 über- oder ausgegeben werden müssen, als Felder von
 Struc\-ture Ar\-rays gespeichert werden, dient der Modifizierbarkeit des
@@ -69,7 +68,6 @@ Programms.
 So haben Korrekturen und Ergänzungen am Programm häufig nur zur Folge, dass
 einige \texttt{structs} um Felder ergänzt werden müssen während die 
 Methodenköpfe unverändert bleiben können.
-
 Das Eingangssignal $f$ und eventuell weitere Funktionen, wie etwa die exakte
 Lösung $u$ von \Cref{prob:continuousProblem} und ihre schwache Ableitung
 $\nabla u$, müssen in der Benchmark-Datei angegeben werden, um sie dem
@@ -79,7 +77,6 @@ finden in
 \begin{center}
   \texttt{./utils/functions/}.
 \end{center}
-
 Ist eine Lösung $u$ von $\Cref{prob:continuousProblem}$ bekannt, so kann die
 exakte Energie $E(u)$ approximiert werden mit der Methode
 \begin{center}
@@ -90,7 +87,6 @@ Die so berechneten Energien werden gespeichert im Ordner
   \texttt{./nonconforming/knownExactEnergies/}
 \end{center}
 und können anschließend manuell in ein Benchmark aufgenommen werden.
-
 Soll als Eingangssignal kein \texttt{function\_handle} sondern ein
 Graufarbenbild gegeben werden, so muss es gespeichert sein in 
 \begin{center}
@@ -103,7 +99,6 @@ entspricht, kann die Methode
 \end{center}
 genutzt werden. Diese fügt einen graduellen Übergang zu schwarzen Rand auf den 
 äußeren 25 Pixeln des Bildes hinzu.
-
 Um additives weißes gaußsches Rauschen zu einen Bild hinzuzufügen, kann die
 Methode
 \begin{center}
@@ -299,6 +294,7 @@ genutzt werden.
 
 \section{Programmablauf}
 \label{sec:programFlow}
+\todo{indents hier weiter}
 
 In diesen Abschnitt betrachten wir eine beispielhafte Ausführung des Programms,
 bei der alle relevanten Methoden genutzt werden.
