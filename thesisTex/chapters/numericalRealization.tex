@@ -294,14 +294,12 @@ genutzt werden.
 
 \section{Programmablauf}
 \label{sec:programFlow}
-\todo{indents hier weiter}
 
 In diesen Abschnitt betrachten wir eine beispielhafte Ausführung des Programms,
 bei der alle relevanten Methoden genutzt werden.
-
-In der Benchmark-Datei für den Programmaufruf müssen, neben den Eingangssignal
-$f\in H^1_0(\Omega)$, die Lösung $u\in H^1_0(\Omega)$, die exakte Energie
-$E(u)$ und der schwache Gradient von $f$ gegeben sein. 
+In der Benchmark-Datei für den Programmaufruf müssen dafür, neben den
+Eingangssignal $f\in H^1_0(\Omega)$, die Lösung $u\in H^1_0(\Omega)$, die
+exakte Energie $E(u)$ und der schwache Gradient von $f$ gegeben sein. 
 Damit diese Informationen tatsächlich genutzt werden, müssen zusätzlich einige
 Parameter wie folgt gewählt werden.
 \begin{itemize}
@@ -311,12 +309,10 @@ Parameter wie folgt gewählt werden.
   \item \texttt{exactSolutionKnown = true}
   \item \texttt{useExactEnergy = true}
 \end{itemize}
-
 Noch in der Benchmark-Datei werden mit den gewählten Einstellungen die
 benötigten geometrischen Datenstrukturen initialisiert. 
 Diese werden mit allen weiteren Informationen als Felder eines Structure Arrays
 gespeichert und an \texttt{startAlgorithmCR} übergeben. 
-
 Dort werden zunächst Structure Arrays mit Feldern für die benötigten Daten
 während der AFEM-Routine sowie deren Ergebnisse erstellt. 
 Nach dem Berechnen einiger weiterer Informationen beginnt die AFEM-Schleife.
@@ -344,7 +340,6 @@ Mit $\gradnc u_0$ wird anschließend $\Lambda_0$ aus
     0,&\text{falls }\nabla u_0|_T= 0.
   \end{cases}
 \end{align*}
-
 Außerdem werden die Steifigkeits- und Massematrix aus
 \Cref{rem:primalDualMatrixEquations} aufgestellt in
 \begin{center}
@@ -360,7 +355,6 @@ $T$ berechnet werden kann durch
 Die Aufstellung der lokalen Steifigkeitsmatrizen sowie die Berechnung der
 globalen Stei\-fig\-keits- und Massematrix aus ihren lokalen Versionen geschieht
 analog zu \cite[Abschnitt 1.4.2]{CGKNRR10}).
-
 Danach werden in
 \begin{center}
   \texttt{./nonconforming/common/integralsWithF4e.m}
@@ -383,7 +377,6 @@ Anschließend kann für alle $F\in\Ecal$ auch das Integral
   \sum_{T\in\Tcal(F)}\int_T f\psi_F\!|_T\dx
 \end{align*}
 bestimmt werden.
-
 Damit sind alle notwendigen Daten ermittelt um die primale-duale Iteration 
 zur Lösung auf dem Level zu starten. Genutzt wird dafür die Methode
 \begin{center}
@@ -445,14 +438,11 @@ In diesen Abschnitt beschreiben wir die Methode
 \end{center}
 Dabei benutzen wir die Bezeichnungen aus \Cref{alg:primalDualIteration}, der
 in dieser Methode realisiert wird.
-
-Wie in \Cref{sec:programFlow} beschrieben, sind vor Aufruf von
-\texttt{solvePrimalDualFormulation} bereits alle benötigten Informationen
-über die aktuelle Triangulierung $\Tcal$ bekannt sowie
-die Steifigkeits- und Massematix aus \Cref{rem:primalDualMatrixEquations} und
-die Integrale $\int_\Omega f\psi_F\dx$ für alle
-Crouzeix-Raviart-Basisfunktionen $\psi_F$, $F\in\Ecal$.
-
+Wie in \Cref{sec:programFlow} beschrieben, sind vor Aufruf der Methode bereits
+alle benötigten Informationen über die aktuelle Triangulierung $\Tcal$
+sowie die Steifig\-keits- und Massematix aus \Cref{rem:primalDualMatrixEquations}
+und die Integrale $\int_\Omega f\psi_F\dx$ für alle
+Crouzeix-Raviart-Basisfunktionen $\psi_F$, $F\in\Ecal$ bekannt.
 Mit der Steifigkeits- und Massematrix ist direkt ersichtlich,
 wie die Koeffizientenmatrix des Gleichungssystems
 \eqref{eq:linSysPrimalDualAlgMatrixEq} implementiert werden kann.
@@ -474,7 +464,6 @@ $\Lambda_j$ und $\gradnc \psi_{E_k}$ stückweise konstant sind,
 Da die Terme $\left(f,\psi_{E_k}\right)=\int_\Omega f\psi_{E_k}\dx$ bereits
 berechnet wurden, können wir somit die rechte Seite $\overline b$
 implementieren.
-
 Es ist direkt ersichtlich wie der verbleibende Teil von
 \Cref{alg:primalDualIteration} implementiert werden kann.
 Sonstige Informationen über die Iteration, wie etwa das Abbruchkriterium,
@@ -530,7 +519,6 @@ In der Methode
 werden auf allen Dreiecken der Triangulierung die lokalen
 Crouzeix-Raviart-Basis\-funk\-tio\-nen benötigt. Die Berechnung dieser geschieht 
 im Programm wie folgt.
-
 Sei $T\in\Tcal$ mit $T=\conv\left(\{P_1,P_2,P_3\}\right)$. Zunächst bestimmen
 wir die baryzentrischen Koordinaten $\lambda_j\in P_1(T)$, $j\in\{1,2,3\}$,
 die für $j,k\in\{1,2,3\}$ charakterisiert sind durch
@@ -573,7 +561,6 @@ T$ berechnet werden durch
   &\lambda_3(x)
   &=1-\lambda_1(x)-\lambda_2(x).
 \end{align*}
-
 Seien die Kanten $E_1,E_2$ und $E_3$ von $T$ nun so gewählt, dass für
 $j\in\{1,2,3\}$ die Kante $E_j$ gegenüber von $P_j$ liegt. 
 Dann können wir die lokale Crouzeix-Raviart-Basisfunktionen 
@@ -584,12 +571,10 @@ $\psi_{E_j}\!|_T(x)=1-2\lambda_j(x)$.
 \subsection{Berechnung lokaler Knotenwerte einer Crouzeix-Raviart-Funktion}
 
 Sei $\vcr\in\CR^1(\Tcal)$.
-
 Für die in dieser Arbeit implementierte Prolongation von $\vcr$ auf eine
 Verfeinerung der Triangulierung $\Tcal$ oder für die Berechnung der $L^1$-Norm
 der Kantensprünge von $\vcr$ benötigen wir für jedes Dreieck $T\in\Tcal$ die
 Werte von $\vcr$ in den Knoten von $T$. 
-
 Dazu sei $T = \conv\{P_1, P_2, P_3\}$ mit den Kanten
 $E_1 = \conv\{P_1,P_2\}$, $E_2 = \conv\{P_2,P_3\}$ und $E_3 =
 \conv\{P_3,P_1\}$. 
@@ -600,7 +585,6 @@ Gesucht sind damit die Werte $v(P_1)$, $v(P_2)$ und $v(P_3)$.
 Da $\vcr\in\CR^1(\Tcal)$, ist $v$ affin. Damit gilt für eine Kante
 $E=\conv\{P,Q\}\in\{E_1,E_2,E_3\}$, dass $v(\Mid(E))$ gegeben ist durch den
 Mittelwert von $v(P)$ und $v(Q)$.
-
 Somit erhalten wir die drei Gleichungen
 \begin{align*}
   v_1 &= \frac{v(P_1)+v(P_2)}{2},  
@@ -612,7 +596,6 @@ $v(P_1)$, $v(P_2)$ und $v(P_3)$ lösen und erhalten die gesuchten Werte
 \begin{align*}
  v(P_1)&=v_1+v_3-v_2, &v(P_2)&= v_1+v_2-v_3,&v(P_3)&=v_2+v_3-v_1.
 \end{align*}
-
 Wir realisieren dies mit der Methode
 \begin{center}
   \texttt{./nonconforming/common/computeNodeValuesCR4e.m}.
@@ -632,12 +615,10 @@ bestimmt.
 
 Da $\vcr\in\CR^1_0(\Tcal)$, ist $[\vcr]_F$ affin und es gilt
 $[\vcr]_F\big(\Mid(F)\big)=0$ für alle Kanten $F\in\Ecal$.
-
 Betrachten wir nun eine beliebige Kante $F\in\Ecal$ mit $F=\conv\{P_1,P_2\}$. 
 Wir definieren eine Parametrisierung $\xi:[0,2]\to\Rbb^2$ von $F$ durch
 $\xi(t)\coloneqq \frac{t}{2}(P_2-P_1)+P_1$. 
 Es gilt $\left|\xi'\right|\equiv \frac{1}{2}|P_2-P_1|=\frac{1}{2}|F|$.
-
 Sei außerdem
 $p(t)\coloneqq [\vcr]_F\big(\xi(t)\big)$. Dann gilt
 \begin{align*}
@@ -648,7 +629,6 @@ $p(t)\coloneqq [\vcr]_F\big(\xi(t)\big)$. Dann gilt
   = \frac{|F|}{2}\int_0^2 |p(t)|\dt\\
   &= \frac{|F|}{2}\left(\int_0^1 |p(t)|\dt + \int_1^2 |p(t)|\dt\right).
 \end{align*}
-
 Da $\vcr\in\CR^1_0(\Tcal)$, ist $|p(\bullet)|$ auf $[0,1]$ und $[1,2]$ jeweils
 ein Polynom von Grad $1$ mit $|p(1)|=\left|[\vcr]_F\big(\Mid(F)\big)\right|=0$. 
 Somit können wir $|p|$ explizit ausdrücken durch
@@ -670,7 +650,6 @@ von Grad 1, dass
   =
   \frac{|p(2)|}{2}.
 \end{align*}
-
 Insgesamt gilt also
 \begin{align*}
   \left\Vert [\vcr]_F\right\Vert_{L^1(F)} 
@@ -685,7 +664,6 @@ beziehungsweise
   $\Vert [\vcr]_F\Vert_{L^1(F)} =
   \frac{|F|}{4}\big(|\vcr(P_1)|+|\vcr(P_2)|\big)$ für eine Randkanten
   $F\in\Ecal(\partial\Omega)$.
-
 Realisiert wird dies in der Methode
 \begin{center}
   \texttt{./nonconforming/common/computeL1NormOfJump4s.m}.
