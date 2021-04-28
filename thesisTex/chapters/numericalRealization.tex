@@ -188,7 +188,7 @@ genutzt werden.
     \texttt{u0Mode} 
     & Startwert $u_0$ für \Cref{alg:primalDualIteration} auf dem ersten Level
     und, falls \texttt{useProlongation == true}, für die Iteration auf allen
-    Level der AFEM-Routine (\texttt{'zeroes'} für $u_0=0$ und
+    Leveln der AFEM-Routine (\texttt{'zeroes'} für $u_0=0$ und
     \texttt{'interpolationRhs'}, falls für $u_0$ die nichtkonforme Interpolation
     des Eingangssignals $f$ genutzt werden soll)\\
     \texttt{initialEpsStop} & Parameter $\epsstop$ für das Abbruchkriterium
@@ -377,7 +377,7 @@ Anschließend kann für alle $F\in\Ecal$ auch das Integral
   \sum_{T\in\Tcal(F)}\int_T f\psi_F\!|_T\dx
 \end{align*}
 bestimmt werden.
-Damit sind alle notwendigen Daten ermittelt um die primale-duale Iteration 
+Damit sind alle notwendigen Daten ermittelt, um die primale-duale Iteration 
 zur Lösung auf dem Level zu starten. Genutzt wird dafür die Methode
 \begin{center}
   \texttt{./nonconforming/main/solvePrimalDualFormulation.m}.
@@ -449,7 +449,7 @@ wie die Koeffizientenmatrix des Gleichungssystems
 Für die Implementierung der rechten Seite dieses Systems nutzten wir die
 folgende Beobachtung.
 Für alle $k\in\{1,2,\cdots,|\Ecal|\}$ gilt, da $\gradnc u_{j-1}$,
-$\Lambda_j$ und $\gradnc \psi_{E_k}$ stückweise konstant sind,
+$\Lambda_j$ und $\gradnc \psi_{E_k}$ stückweise konstant sind, dass
 \begin{align*}
   \left(\frac{1}{\tau}\gradnc u_{j-1}-\Lambda_j,\gradnc\psi_{E_k}\right)
   &=
@@ -457,8 +457,8 @@ $\Lambda_j$ und $\gradnc \psi_{E_k}$ stückweise konstant sind,
   \left(\frac{1}{\tau}\gradnc u_{j-1}-\Lambda_j,
   \gradnc\psi_{E_k}\right)_{L^2(T)}\\
   &=
-  \sum_{T\in\Tcal(E_k)} |T|
-  \frac{1}{\tau}\left(\gradnc u_{j-1}-\Lambda_j\right)\!|_T\cdot
+  \sum_{T\in\Tcal(E_k)}
+  \frac{|T|}{\tau}\left(\gradnc u_{j-1}-\Lambda_j\right)\!|_T\cdot
   \nabla\psi_{E_k}|_T.
 \end{align*}
 Da die Terme $\left(f,\psi_{E_k}\right)=\int_\Omega f\psi_{E_k}\dx$ bereits
@@ -500,7 +500,7 @@ Dann gilt
   -\sum_{k=1}^{|\Ecal|}v_k\int_\Omega f\psi_{E_k}\dx\\
   &=
   \frac{\alpha}{2} v\cdot Mv
-  + \sum_{T\in\Tcal}|T| \left|\gradnc \vcr\right|
+  + \sum_{T\in\Tcal}|T|\, \big|\!\left(\gradnc \vcr\right)\!\!|_T\big|
   -\sum_{k=1}^{|\Ecal|}v_k\int_\Omega f\psi_{E_k}\dx.
 \end{align*}
 
