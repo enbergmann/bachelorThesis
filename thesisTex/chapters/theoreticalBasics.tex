@@ -146,8 +146,8 @@ $\Tcal$.
 In \Cref{sec:discreteProblemFormulation} wollen wir für eine nichtkonforme
 Diskretisierung des Minimierungsproblems \ref{prob:continuousProblem} die
 Crouzeix-Raviart-Finite-Elemente-Methode nutzen. 
-Die dafür benötigten Definitionen und Aussagen wollen wir in diesen Abschnitt
-zusammentragen aus \cites{Car09b}{CGR12}{CGKNRR10}. 
+Die dafür benötigten Definitionen und Aussagen tragen wir in diesen Abschnitt
+aus \cites{Car09b}{CGR12}{CGKNRR10} zusammen. 
 
 Die Räume der Crouzeix-Raviart-Finite-Elemente-Funktionen sind definiert durch
 \begin{align*}
@@ -175,7 +175,7 @@ durch
 Diese ist ein Skalarprodukt auf $\CR^1_0(\Tcal)$.
 Die von $\anc$ induzierte Norm bezeichnen wir mit $\vvvert\bullet\vvvert_\NC$.
 
-Zum Abschluss definieren wir noch für jede Kante $E\in\Ecal$ eine Funktion
+Nun definieren wir für jede Kante $E\in\Ecal$ eine Funktion
 $\psi_E\in\CR^1(\Tcal)$ durch ihre Werte
 \begin{align*}
   \psi_E(\Mid(E))&\coloneqq 1 
@@ -185,7 +185,39 @@ $\psi_E\in\CR^1(\Tcal)$ durch ihre Werte
 Die Menge $\{\psi_E\,\mid\,E\in\Ecal\}$ bildet dann eine Basis von
 $\CR^1(\Tcal)$ und die Menge
 $\{\psi_E\,\mid\,E\in\Ecal(\Omega)\}$ bildet eine Basis von
-$\CR^1_0(\Tcal)$.
+$\CR^1_0(\Tcal)$. 
+Für \Cref{chap:implementation} werden wir außerdem die folgenden Aussagen
+benötigen, mit denen wir diesen Abschnitt abschließen.
+Sei $T\in\Tcal$ mit $T=\conv\left(\{P_1,P_2,P_3\}\right)$. 
+Dann sind die baryzentrischen Koordinaten $\lambda_1,\lambda_2,\lambda_3\in
+P_1(T)$ für $j,k\in\{1,2,3\}$ charakterisiert durch
+\begin{align*}
+  \lambda_j(P_k)
+  =
+  \begin{cases}
+    1,&\text{falls }  j=k,\\
+    0,&\text{sonst.}
+  \end{cases}
+\end{align*}
+Seien die Kanten von $T$ nun so mit $E_1,E_2$ und $E_3$ bezeichnet, dass für
+$j\in\{1,2,3\}$ die Kante $E_j$ gegenüber von $P_j$ liegt. 
+Dann können wir die lokalen Crouzeix-Raviart-Basisfunktionen 
+$\psi_{E_j}\!|_T$, $j\in\{1,2,3\}$, für alle $x\in T$ darstellen durch
+\begin{equation}
+  \label{eq:connectionCrBarycentric}
+  \psi_{E_j}\!|_T(x)=1-2\lambda_j(x).
+\end{equation}
+Dadurch ist für alle $k_1,k_2,k_3\in\Nbb$ die Integrationsformel
+\begin{equation}
+  \label{eq:formulaIntegrationBarycentricCoordinates}
+  \int_T \lambda_1^{k_1}\lambda_2^{k_2}\lambda_3^{k_3}\dx
+  =
+  2|T|\frac{k_1!k_2!k_3!}{(2+k_1+k_2+k_3)!}
+\end{equation}
+auch für die Berechnung von Integralen über die lokalen
+Crouzeix-Raviart-Basisfunktionen auf $T$ hilfreich. Ein Beweis von 
+\Cref{eq:formulaIntegrationBarycentricCoordinates} ist in 
+\cite{EM73} zu finden.
 
 
 \section{Variationsrechnung auf Banachräumen}

@@ -383,15 +383,39 @@ zur Lösung auf dem Level zu starten. Genutzt wird dafür die Methode
   \texttt{./nonconforming/main/solvePrimalDualFormulation.m}.
 \end{center}
 Details dazu diskutieren wir in \Cref{sec:implementationPrimalDualIteration}.
-
-\todo{hier}
-
-\bigskip output des level etc werden belegt
-
-\bigskip
+Mit den letzten Iterat $u_J\in\CR^1_0(\Tcal)$ als Approximation der Lösung von
+\Cref{prob:discreteProblem} auf dem Level berechnen wir anschließend
+$|E(u)-\Enc(u_J)|$ und, mithilfe der Methode \texttt{error4eCRL2}
+\cite[Abschnitt 1.8.3]{CGKNRR10} des AFEM-Soft\-ware\-pakets, den
+Fehler $\Vert u - u_J\Vert$.
+Außerdem werden Informationen über die Iteration und ihre Ergebnisse
+gespeichert und gegebenenfalls ausgegeben. 
+Weiterhin wird zur Berechnung der garantierten unteren Energieschranke $\Egleb$
+aus \Cref{thm:gleb} und des Verfeinerungsindikators aus
+\Cref{def:refinementIndicator} für alle $T\in\Tcal$ der Term $\Vert f-\alpha
+u_J\Vert_{L^2(T)}^2$ benötigt.
+Zur Berechnung dieser Terme nutzen wir die Methode
 \begin{center}
   \texttt{./nonconforming/common/computeNormDiffRhsSolCrSquared4e.m}
 \end{center}
+wie folgt. Sei $T\in\Tcal$ mit $\Ecal{T}=\{E_1,E_2,E_3\}$. die Darstellung 
+\begin{align*}
+  \Vert f-\alpha u_J\Vert_{L^2(T)}^2 
+  &=
+  \Vert f\Vert_{L^2(T)}^2 - 2\alpha\left(f,u_J\right)_{L^2(T)} + \alpha^2 \Vert
+  u_J\Vert_{L^2(T)}^2\\
+  &=
+  \Vert f\Vert_{L^2(T)}^2 
+  - 2\alpha\sum_{F\in\Ecal(T)}u_{J,\ell}\int_F f\psi_F\!|_T\dx
+  + \alpha^2\frac{|T|}{3}\sum_{F\in\Ecal(T)}u_{J,\ell}^2.
+\end{align*}
+Dabei berechnen wir den Term $\Vert f\Vert_{L^2(T)}^2$ mit der 
+\texttt{integrate} Methode des AFEM-Soft\-ware\-pakets und nutzen die bereits 
+ermittelten Terme $\int_T f\psi_{E_k}\!|T\dx$, $k\in\{1,2,3\}$.
+
+Nutzen wir, dass für die baryzentrischen Koordianten aus 
+\Cref{sec:localCRBasisRealization}
+gilt mit der Integrationsformel aus \cite{EM73}
 
 
 \bigskip GLEB
@@ -409,8 +433,6 @@ und dann
   \texttt{./nonconforming/estimate/estimateErrorCR4e.m}
 \end{center}
 
-\bigskip error nutzt \texttt{error4eCRL2} mit cite des Abschnitts in
-\cite{CGKNRR10}.
 
 \bigskip gebe information über das Level auf der Konsole aus und
 speichere die Resulate
@@ -517,21 +539,14 @@ In der Methode
   \texttt{./nonconforming/common/integralsWithF4e.m}
 \end{center}
 werden auf allen Dreiecken der Triangulierung die lokalen
-Crouzeix-Raviart-Basis\-funk\-tio\-nen benötigt. Die Berechnung dieser geschieht 
-im Programm wie folgt.
-Sei $T\in\Tcal$ mit $T=\conv\left(\{P_1,P_2,P_3\}\right)$. Zunächst bestimmen
-wir die baryzentrischen Koordinaten $\lambda_j\in P_1(T)$, $j\in\{1,2,3\}$,
-die für $j,k\in\{1,2,3\}$ charakterisiert sind durch
-\begin{align*}
-  \lambda_j(P_k)
-  =
-  \begin{cases}
-    1,&\text{falls }  j=k,\\
-    0,&\text{sonst.}
-  \end{cases}
-\end{align*}
-Dafür betrachten wir das Referenzdreieck, das 
-definiert ist durch
+Crouzeix-Raviart-Basis\-funk\-tio\-nen benötigt. 
+Sei $T\in\Tcal$ mit $T=\conv\left(\{P_1,P_2,P_3\}\right)$.
+Da nach \Cref{eq:connectionCrBarycentric} die lokalen
+Crouzeix-Raviart-Basisfunktionen $\psi_{F}|_T$, $F\in\Ecal(T)$, darstellbar
+sind durch die baryzentrischen Koordinaten $\lambda_1,\lambda_2,\lambda_3\in
+P_1(T)$ aus \Cref{sec:crouzeixRaviartFunctions}, genügt es hier deren
+Berechnung zu diskutieren.
+Dafür betrachten wir das Referenzdreieck, das definiert ist durch
 \begin{align*}
   \Tref \coloneqq
   \conv\left(\left\{
@@ -561,11 +576,6 @@ T$ berechnet werden durch
   &\lambda_3(x)
   &=1-\lambda_1(x)-\lambda_2(x).
 \end{align*}
-Seien die Kanten $E_1,E_2$ und $E_3$ von $T$ nun so gewählt, dass für
-$j\in\{1,2,3\}$ die Kante $E_j$ gegenüber von $P_j$ liegt. 
-Dann können wir die lokale Crouzeix-Raviart-Basisfunktionen 
-$\psi_{E_j}\!|_T$, $j\in\{1,2,3\}$, für alle $x\in T$ berechnen durch
-$\psi_{E_j}\!|_T(x)=1-2\lambda_j(x)$.
 
 
 \subsection{Berechnung lokaler Knotenwerte einer Crouzeix-Raviart-Funktion}
