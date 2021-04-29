@@ -34,7 +34,8 @@ die dort lediglich namentlich genannt werden.
 Die mathematischen Grundlagen für die Realisierung einiger Methoden diskutieren
 wir in \Cref{sec:mathematicalBasicsForMethods}.
 
-Die ausführbare Methode, welche den AFEM-Algorithmus realisiert, ist
+Das Hauptprogramm, das heißt die ausführbare Methode, welche den
+AFEM\--Al\-go\-rith\-mus realisiert, ist
 \begin{center}
   \texttt{./nonconforming/startAlgorithmCR.m}.
 \end{center}
@@ -311,16 +312,27 @@ Diese Wahlen sind
   \item \texttt{useExactEnergy = true}.
 \end{itemize}
 Noch in der Benchmark-Datei werden mit den gewählten Einstellungen die
-benötigten geometrischen Datenstrukturen initialisiert. 
+benötigten geometrischen Datenstrukturen für die Triangulierung $\Tcal$
+initialisiert. 
 Diese werden mit allen weiteren Informationen als Felder eines Structure Arrays
-gespeichert und an \texttt{startAlgorithmCR} übergeben. 
+gespeichert und an das Hauptprogramm übergeben. 
 Dort werden zunächst Structure Arrays mit Feldern für die benötigten Daten
 während der AFEM-Routine sowie deren Ergebnisse erstellt. 
+Insbesondere wird der Startwert $u_0$ für die primale-duale Iteration
+auf dem ersten Level des AFEM-Algorithmus initialisiert. 
+Dieser hängt von der Wahl des Parameters \texttt{u0Mode} aus
+\Cref{tab:paramsIteration} ab.
+Falls dabei die nichtkonforme Interpolation des Eingangssignals $f$ 
+bezüglich $\Tcal$ genutzt werden soll, wird diese in
+\begin{center}
+  \texttt{./nonconforming/common/interpolationCR.m}
+\end{center}
+ermittelt.
 Nach dem Berechnen einiger weiterer Informationen beginnt die AFEM-Schleife.
 
 Zu Beginn der Schleife werden die für das aktuelle Level benötigten Daten
 ermittelt, zum Beispiel die Flächeninhalte der Dreiecke und die Freiheitsgrade
-der aktuellen Triangulierung. 
+der aktuellen Triangulierung $\Tcal$. 
 Insbesondere werden die auf dem Level mehrmals benötigten Gradienten der
 lokalen Crouzeix-Raviart-Basisfunktionen auf allen Dreiecken berechnet (cf.
 \cite[Abschnitt 1.4.2]{CGKNRR10}) in
@@ -456,8 +468,8 @@ Es folgt die Ausgabe einiger relevanter Informationen über das Level und das
 Abspeichern dieser und weiterer Ergebnisse in den durch die Paramter in
 \Cref{tab:paramsDoc} gewählten Ordnern.
 Endet nun der AFEM-Algorithmus nach Überprüfung des Abbruchkriteriums nicht,
-das heißt übersteigt die Anzahl der Freiheitsgrade der Triangulierung des
-aktuellen Levels die Zahl \texttt{minNrDof} aus \Cref{tab:paramsAFEM} nicht, so
+das heißt ist die Anzahl der Freiheitsgrade der Triangulierung des aktuellen
+Levels geringer als die Zahl \texttt{minNrDof} aus \Cref{tab:paramsAFEM}, so
 werden mithilfe des Verfeinerungsindikators $\eta$ die Dreiecke markiert, die
 verfeinert werden sollen. 
 Dafür nutzen wir die folgenden, in \cite[Abschnitt 1.6]{CGKNRR10}
@@ -466,14 +478,30 @@ Gilt für den Bulk-Parameter $\theta$, gewählt durch \texttt{parTheta} aus
 \Cref{tab:paramsAFEM}, dass $\theta=1$, so nutzen
 wir die Methode \texttt{markUniform}. Gilt $\theta\in(0,1)$, so nutzen wir
 die Methode \texttt{markBulk}.
-Zum Verfeinern wird dann die Methode \texttt{refineRGB} \cite[1.7.2]{CGKNRR10}
-des AFEM-Softwarepakets genutzt.
+Zum Verfeinern der Triangulierung wird anschließend die Methode
+\texttt{refineRGB} \cite[1.7.2]{CGKNRR10} des AFEM-Softwarepakets verwendet.
 
-\bigskip prolongation (mit kurzer Erläuterung, mit welcher Idee die passiert)
-
-auch darauf eingehen, wie u0 gewählt wird wenn keine Prolongation?
-
-insbesondere auch auf interpolationCR noch kurz eingehen
+Zum Abschluss werden bereits Informationen für das nächste Level vorbereitet. 
+Dazu gehören die Datenstrukturen, welche die verfeinerte Triangulierung
+$\hat\Tcal$ beschreiben sowie einige weitere Eigenschaften von
+$\hat\Tcal$, zum Beispiel die Anzahl und Längen der Seiten der Triangulierung.
+Soll als Startwert für das nächste Level die Prolongation $\hat
+u_J\in\CR^1_0\big(\hat\Tcal\big)$ von $u_J$ auf $\hat\Tcal$ genutzt werden,
+festgelegt durch den Parameter \texttt{useProlongation} aus
+\Cref{tab:paramsAFEM}, wird dies durch die Methode
+\begin{center}
+  \texttt{./nonconforming/common/computeRefinementExtensionCR.m}
+\end{center}
+realisiert. 
+Dabei werden für alle $T\in\Tcal$ zunächst die lokalen Werte von $u_J|_T$ in
+den Knoten von $T$ berechnet. 
+Dies geschieht wie in \Cref{sec:localNodalValuesCR} beschrieben.
+Aus diesen Werten werden dann für alle $\hat T\in\hat\Tcal$ die Werte von
+$u_J|_{\hat T}$ in den Knoten von $\hat T$ und daraus die 
+Werte in den Mittelpunkten aller Kanten von $\hat\Tcal$ bestimmt. 
+Diese sind die Koeffizienten von $\hat u_J$ bezüglich der in
+\Cref{sec:crouzeixRaviartFunctions} beschriebenen Basis für die Triangulierung
+$\hat\Tcal$.
 
 
 \section{Realisierung der primalen-dualen Iteration}
@@ -604,6 +632,7 @@ T$ berechnet werden durch
 
 
 \subsection{Berechnung lokaler Knotenwerte einer Crouzeix-Raviart-Funktion}
+\label{sec:localNodalValuesCR}
 
 Sei $\vcr\in\CR^1(\Tcal)$.
 Für die in dieser Arbeit implementierte Prolongation von $\vcr$ auf eine
