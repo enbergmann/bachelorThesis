@@ -301,13 +301,14 @@ In der Benchmark-Datei für den Programmaufruf müssen dafür, neben den
 Eingangssignal $f\in H^1_0(\Omega)$, die Lösung $u\in H^1_0(\Omega)$, die
 exakte Energie $E(u)$ und der schwache Gradient von $f$ gegeben sein. 
 Damit diese Informationen tatsächlich genutzt werden, müssen zusätzlich einige
-Parameter wie folgt gewählt werden.
+Parameter passend gewählt werden. 
+Diese Wahlen sind
 \begin{itemize}
-  \item \texttt{useExactEnergy = true}
-  \item \texttt{useImage = false}
-  \item \texttt{rhsGradientKnown = true}
-  \item \texttt{exactSolutionKnown = true}
-  \item \texttt{useExactEnergy = true}
+  \item \texttt{useExactEnergy = true},
+  \item \texttt{useImage = false},
+  \item \texttt{rhsGradientKnown = true},
+  \item \texttt{exactSolutionKnown = true},
+  \item \texttt{useExactEnergy = true}.
 \end{itemize}
 Noch in der Benchmark-Datei werden mit den gewählten Einstellungen die
 benötigten geometrischen Datenstrukturen initialisiert. 
@@ -346,12 +347,16 @@ Außerdem werden die Steifigkeits- und Massematrix aus
   \texttt{./nonconforming/common/computeFeMatricesCR.m}.
 \end{center}
 Dabei benutzten wir für jedes $T\in\Tcal$, dass die lokale Massematrix auf
-$T$ berechnet werden kann durch
-\begin{align*}
-  A_T
+$T$ mithilfe der Gleichungen
+\eqref{eq:connectionCrBarycentric} und
+\eqref{eq:formulaIntegrationBarycentricCoordinates}
+berechnet werden kann durch
+\begin{align}
+  \label{eq:localMassmatrix}
+  M_T
   =
   \frac{|T|}{3}I_3.
-\end{align*}
+\end{align}
 Die Aufstellung der lokalen Steifigkeitsmatrizen sowie die Berechnung der
 globalen Stei\-fig\-keits- und Massematrix aus ihren lokalen Versionen geschieht
 analog zu \cite[Abschnitt 1.4.2]{CGKNRR10}).
@@ -398,7 +403,10 @@ Zur Berechnung dieser Terme nutzen wir die Methode
 \begin{center}
   \texttt{./nonconforming/common/computeNormDiffRhsSolCrSquared4e.m}
 \end{center}
-wie folgt. Sei $T\in\Tcal$ mit $\Ecal{T}=\{E_1,E_2,E_3\}$. die Darstellung 
+wie folgt. 
+Sei $T\in\Tcal$ mit $\Ecal(T)=\{E_1,E_2,E_3\}$ und $u_J|_T$ habe mit
+$v_1,v_2,v_3\in\Rbb$ die Darstellung $u_J|_T=\sum_{k=1}^3 v_k\psi_{E_k}\!|_T$.
+Dann gilt
 \begin{align*}
   \Vert f-\alpha u_J\Vert_{L^2(T)}^2 
   &=
@@ -406,50 +414,66 @@ wie folgt. Sei $T\in\Tcal$ mit $\Ecal{T}=\{E_1,E_2,E_3\}$. die Darstellung
   u_J\Vert_{L^2(T)}^2\\
   &=
   \Vert f\Vert_{L^2(T)}^2 
-  - 2\alpha\sum_{F\in\Ecal(T)}u_{J,\ell}\int_F f\psi_F\!|_T\dx
-  + \alpha^2\frac{|T|}{3}\sum_{F\in\Ecal(T)}u_{J,\ell}^2.
+  - 2\alpha\sum_{k=1}^3 v_k\int_T f\psi_{E_k}\!|_T\dx
+  + \alpha^2 \sum_{k=1}^3 \sum_{\ell=1}^3 
+  v_k \left(\psi_{E_k}\!|_T,\psi_{E_\ell}|_T\right)_{L^2(T)}v_\ell.
 \end{align*}
-Dabei berechnen wir den Term $\Vert f\Vert_{L^2(T)}^2$ mit der 
-\texttt{integrate} Methode des AFEM-Soft\-ware\-pakets und nutzen die bereits 
-ermittelten Terme $\int_T f\psi_{E_k}\!|T\dx$, $k\in\{1,2,3\}$.
-
-Nutzen wir, dass für die baryzentrischen Koordianten aus 
-\Cref{sec:localCRBasisRealization}
-gilt mit der Integrationsformel aus \cite{EM73}
-
-
-\bigskip GLEB
+Zur Berechung des ersten Terms nutzen wir die \texttt{integrate} Methode des
+AFEM-Soft\-ware\-pakets und für den zweiten Terms merken wir an, dass die
+Integrale $\int_T f\psi_{E_k}\!|_T\dx$, $k\in\{1,2,3\}$, bereits ermittelt
+wurden.
+Der letzte Term vereinfacht sich durch Nutzung der expliziten Darstellung
+\eqref{eq:localMassmatrix} der lokalen Massematrix $M_T$ zu
+\begin{align*}
+  \alpha^2 \sum_{k=1}^3 \sum_{\ell=1}^3 
+    v_k \left(\psi_{E_k}\!|_T,\psi_{E_\ell}|_T\right)_{L^2(T)}v_\ell
+  =
+  \alpha^2 \sum_{k=1}^3 \sum_{\ell=1}^3 
+    v_k M_T v_\ell
+  =
+  \alpha^2\frac{|T|}{3}\sum_{k=1}^3 v_k^2
+\end{align*}
+und es wird damit direkt ersichtlich, wie dieser implementiert werden kann.
+Unter erneuter Zuhilfename der \texttt{integrate} Methode wird anschließend
+in
 \begin{center}
   \texttt{./nonconforming/common/computeGleb.m}
 \end{center}
-
-\bigskip  Verfeinerungsindikator, dafür zunächst (mit Verweis auf die section
-dafür)
+die garantierte untere Energieschranke $\Egleb$ berechnet. 
+Zur Berechnung des Verfeinerungsindikators benötigen wir noch
+für alle $F\in\Ecal$ den Term $\Vert[u_J]_F\Vert_{L^1(F)}$. Diese ermitteln wir
+in der Methode 
 \begin{center}
-  \texttt{./nonconforming/common/computeL1NormOfJump4s.m}
-\end{center}
-und dann 
+  \texttt{./nonconforming/common/computeL1NormOfJump4s.m}.
+\end{center} 
+Details dazu diskutieren wir in \Cref{sec:jumptTermsImplementation}.
+Danach werden der Verfeinerungsindikator
+und seine Anteile $\eta_\textup{V}$ und $\eta_J$ berechnet in der Methode
 \begin{center}
-  \texttt{./nonconforming/estimate/estimateErrorCR4e.m}
+  \texttt{./nonconforming/estimate/estimateErrorCR4e.m}.
 \end{center}
-
-
-\bigskip gebe information über das Level auf der Konsole aus und
-speichere die Resulate
-
-\bigskip checke termination crit
-
-\bigskip mark (mit verweis auf genutzte Methode aus AFEM)
-
-\bigskip refine (mit verweis auf genutzte Methode aus AFEM)
+Es folgt die Ausgabe einiger relevanter Informationen über das Level und das
+Abspeichern dieser und weiterer Ergebnisse in den durch die Paramter in
+\Cref{tab:paramsDoc} gewählten Ordnern.
+Endet nun der AFEM-Algorithmus nach Überprüfung des Abbruchkriteriums nicht,
+das heißt übersteigt die Anzahl der Freiheitsgrade der Triangulierung des
+aktuellen Levels die Zahl \texttt{minNrDof} aus \Cref{tab:paramsAFEM} nicht, so
+werden mithilfe des Verfeinerungsindikators $\eta$ die Dreiecke markiert, die
+verfeinert werden sollen. 
+Dafür nutzen wir die folgenden, in \cite[Abschnitt 1.6]{CGKNRR10}
+beschriebenen, Methoden des AFEM-Softwarepakets.
+Gilt für den Bulk-Parameter $\theta$, gewählt durch \texttt{parTheta} aus
+\Cref{tab:paramsAFEM}, dass $\theta=1$, so nutzen
+wir die Methode \texttt{markUniform}. Gilt $\theta\in(0,1)$, so nutzen wir
+die Methode \texttt{markBulk}.
+Zum Verfeinern wird dann die Methode \texttt{refineRGB} \cite[1.7.2]{CGKNRR10}
+des AFEM-Softwarepakets genutzt.
 
 \bigskip prolongation (mit kurzer Erläuterung, mit welcher Idee die passiert)
 
 auch darauf eingehen, wie u0 gewählt wird wenn keine Prolongation?
 
 insbesondere auch auf interpolationCR noch kurz eingehen
-
-\bigskip polygonmesh ignorieren? 
 
 
 \section{Realisierung der primalen-dualen Iteration}
@@ -503,7 +527,8 @@ Dabei werden die Massematrix $M$ und die Integrale
 $\int_\Omega f\psi_{F}\dx$, $F\in\Ecal$, wie folgt genutzt.
 Sei $\vcr\in\CR^1_0(\Tcal)$ und $v\in\Rbb^{|\Ecal|}$
 enthalte die Koordinaten von $\vcr$ bezüglich der Basis
-$\left\{\psi_{E_1},\psi_{E_2},\ldots,\psi_{E_{|\Ecal|}}\right\}$, das heißt
+$\left\{\psi_{E_1},\psi_{E_2},\ldots,\psi_{E_{|\Ecal|}}\right\}$
+von $\CR^1(\Tcal)$, das heißt
 $\vcr=\sum_{k=1}^{|\Ecal|}v_k \psi_{E_k}$.
 Dann gilt
 \begin{align*}
@@ -612,6 +637,7 @@ Wir realisieren dies mit der Methode
 \end{center} 
 
 \subsection{Berechnung von Sprungtermen}
+\label{sec:jumptTermsImplementation}
 
 Insbesondere für die Berechnung des Verfeinerungsindikators aus
 \Cref{def:refinementIndicator} benötigen wir eine Methode, die
@@ -684,15 +710,3 @@ berechnet in
 \begin{center}
   \texttt{./nonconforming/common/computeAbsNodeJumps4s.m}.
 \end{center}
-
-
-\subsection{Implementierung der GLEB}
-\begin{center}
-  \texttt{./nonconforming/common/computeGleb.m}.
-\end{center}
-
-\subsection{Implementierung des Refinement Indicators}
-
-\subsection{Implementierung der exakten Energie Berechnung}
-
-
