@@ -106,7 +106,8 @@ function startAlgorithmCR(benchmark)
     currData.s4n = computeS4n(n4e);
     currData.s4e = computeS4e(n4e);
 
-    currData.mid4e = computeMid4e(c4n, n4e);
+    currData.mid4e = computeMid4e(c4n, n4e); 
+      % NOTE mid4e only for debugging with plotInitialTriangulation from utils
     currData.s4n = computeS4n(n4e, n4s);
     currData.e4s = computeE4s(n4e);
 

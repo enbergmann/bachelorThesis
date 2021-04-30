@@ -18,7 +18,7 @@ function params = editable %#ok<*MSNU,FNDEF>
   showProgress           = true; 
   degree4Integrate       = 10; 
   plotGivenFunctions     = true;
-  refinementLevel4Plots  = 8; % 11 is very close to the limit
+  refinementLevel4Plots  = 5; % 11 is very close to the limit
     % not effective if plotGivenFunctions == false
   debugIfError           = false;
 
@@ -26,8 +26,8 @@ function params = editable %#ok<*MSNU,FNDEF>
   geometry               = 'BigSquare'; %#ok<NASGU>                     
     % set automatically to 'Square' if useImage == true
   initialRefinementLevel = 0;
-  parTheta               = 1;
-  minNrDof               = 1e9;
+  parTheta               = 0.5;
+  minNrDof               = 1e4;
   useProlongation        = true;
   beta4Estimate          = 1;
   n4Estimate             = 2;
