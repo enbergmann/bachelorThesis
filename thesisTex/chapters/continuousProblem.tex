@@ -83,33 +83,32 @@ $0|_{\partial\Omega}=0$.
   (cf.\ z.B.\ \cite{Dac89}) unter Nutzung der in \Cref{sec:bvFunctions}
   aufgeführten Eigenschaften der schwachen Konvergenz in $\BV(\Omega)$.
 
-  Für alle $v\in L^2(\Omega)\subseteq L^1(\Omega)$ gilt mit der Hölderschen
-  Ungleichung für $p=q=2$, dass
+  Für alle $v\in L^2(\Omega)$ gilt mit der Hölderschen
+  Ungleichung und der Youngschen Ungleichung aus \cref{lem:young}, dass
+  \begin{equation}
+    \label{eq:hoelderYoungL2ScalarProduct}
+    \int_\Omega fv\dx
+    \leq 
+    \Vert f\Vert\Vert v\Vert
+    \leq 
+    \frac{1}{\alpha}\Vert f\Vert^2 + \frac{\alpha}{4}\Vert v\Vert^2.
+  \end{equation}
+  Die Höldersche Ungleichung impliziert außerdem für alle $v\in
+  L^2(\Omega)\subset L^1(\Omega)$, dass
   \begin{equation}\label{eq:hoelderL2BiggerL1}
     \Vert v\Vert_{L^1(\Omega)} 
     = \Vert 1\cdot v\Vert_{L^1(\Omega)}
     \leq \Vert 1\Vert\Vert v\Vert
     =\sqrt{|\Omega|} \Vert v\Vert.
   \end{equation}
-  Dann folgt für das Funktional $E$ in \eqref{eq:continuousProblem} für alle
-  $v\in \BV(\Omega)\cap L^2(\Omega)$ durch die Cauchy-Schwarzsche Ungleichung,
-  die Youngsche Ungleichung aus \cref{lem:young} und Ungleichung
-  \eqref{eq:hoelderL2BiggerL1}, dass
-
+  Für das Funktional $E$ aus \eqref{eq:continuousProblem} folgt dann mit den
+  Ungleichungen \eqref{eq:hoelderYoungL2ScalarProduct} und
+  \eqref{eq:hoelderL2BiggerL1} für alle $v\in \BV(\Omega)\cap L^2(\Omega)$,
+  dass
   \begin{equation}
     \label{eq:contProbBddFromBelow}
     \begin{aligned}
-      E(v)&=\frac{\alpha}{2}\Vert v\Vert^2 + |v|_{\BV(\Omega)}
-      +\Vert v\Vert_{L^1(\partial\Omega)}-\int_\Omega fv\dx\\
-      &\geq 
-      \frac{\alpha}{2}\Vert v\Vert^2 + |v|_{\BV(\Omega)}
-      +\Vert v\Vert_{L^1(\partial\Omega)}
-      -\Vert f\Vert\Vert v\Vert\\
-      &\geq 
-      \frac{\alpha}{2}\Vert v\Vert^2 + |v|_{\BV(\Omega)}
-      +\Vert v\Vert_{L^1(\partial\Omega)}
-      -\frac{1}{\alpha}\Vert f\Vert^2
-      -\frac{\alpha}{4}\Vert v\Vert^2\\
+      E(v)
       &\geq 
       \frac{\alpha}{4}\Vert v\Vert^2 + |v|_{\BV(\Omega)}
       +\Vert v\Vert_{L^1(\partial\Omega)}-\frac{1}{\alpha}\Vert
