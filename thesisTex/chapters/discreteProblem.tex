@@ -13,13 +13,12 @@ Dies wird für $|\Tcal|=2$ zum Beispiel von \cites[S. 404, Example
 10.2.1]{ABM14}[S. 301, Proposition 10.1]{Bar15} impliziert und kann
 analog für beliebige reguläre Triangulierungen von $\Omega$ bewiesen
 werden.
-Damit gilt dann insbesondere
+Damit gilt dann für alle $\vcr\in\CR^1(\Tcal)$ insbesondere
 \begin{align*}
   |\vcr|_{\BV(\Omega)} +\Vert\vcr\Vert_{L^1(\partial\Omega)} 
   = \Vert \gradnc \vcr\Vert_{L^1(\Omega)} +
   \sum_{F\in\Ecal}\Vert[\vcr]_F\Vert_{L^1(F)}.
 \end{align*}
-
 Um eine nichtkonforme Formulierung von \Cref{prob:continuousProblem} zu 
 erhalten, ersetzen wir die Terme 
 $|\bullet|_{\BV(\Omega)} +\Vert\bullet\Vert_{L^1(\partial\Omega)}$ des
@@ -27,7 +26,6 @@ Funktionals $E$ durch
 $\Vert \gradnc \bullet\Vert_{L^1(\Omega)}$, das heißt wir vernachlässigen
 bei der nichtkonformen Formulierung die Terme
 $\sum_{F\in\Ecal}\Vert[\bullet]_F\Vert_{L^1(F)}$.
-
 Somit erhalten wir das folgende Minimierungsproblem für den Parameter
 $\alpha\in\Rbb_+$ und die rechte Seite $f\in
 L^2(\Omega)$.
@@ -47,11 +45,10 @@ L^2(\Omega)$.
 In diesen Abschnitt führen wir die Argumente in \cite[S. 313]{Bar15}, angepasst
 für unsere Formulierung in \Cref{prob:discreteProblem}, detailiert aus. 
 
-Bevor wir die Existenz und Eindeutigkeit einer Lösung von
+Bevor wir die Existenz und Eindeutigkeit einer diskreten  Lösung von
 \Cref{prob:discreteProblem} sowie äqui\-va\-lente Charakterisierungen für diese 
 beweisen können, leiten wir ein zu \Cref{prob:discreteProblem} äquivalentes
 Sattelpunktsproblem her.
-
 Dafür definieren wir zunächst die konvexe Menge 
 \begin{align*}
   K
@@ -67,67 +64,73 @@ L^\infty(\Omega;\Rbb^2)$ gegeben ist durch
   &\coloneqq
   \begin{cases}
     \infty, & \text{falls } \Lambda\notin K,\\
-    0,       & \text{falls } \Lambda\in K
+    0,       & \text{falls } \Lambda\in K.
   \end{cases}
 \end{align*} 
-und aufgrund der Konvexität von $K$ konvex ist.
-Für $\vcr\in\CR^1_0(\Tcal)$ 
-und $\Lambda\in P_0\left(\Tcal;\Rbb^2\right)\subset L^\infty(\Omega;\Rbb^2)$ können
-wir damit das Funktional
+Aufgrund der Konvexität von $K$ ist $I_K$ konvex.
+Für $\vcr\in\CR^1_0(\Tcal)$ und $\Lambda_0\in
+P_0\left(\Tcal;\Rbb^2\right)\subset L^\infty(\Omega;\Rbb^2)$ können wir damit
+das Funktional
 $L:\CR^1_0(\Tcal)\times  P_0\left(\Tcal;\Rbb^2\right)\to [-\infty,\infty)$ 
 definieren durch
 \begin{align}\label{eq:discreteProblemLagrangeFunctional}
-  L(\vcr,\Lambda) \coloneqq \int_\Omega\Lambda\cdot\gradnc\vcr\dx +
+  L(\vcr,\Lambda_0) \coloneqq \int_\Omega\Lambda_0\cdot\gradnc\vcr\dx +
   \frac{\alpha}{2}\Vert \vcr\Vert^2 -\int_\Omega f\vcr\dx
-  - I_K(\Lambda).
+  - I_K(\Lambda_0).
 \end{align}
-
-Dabei gilt $L(\vcr,\Lambda)>-\infty$ genau dann, wenn $\Lambda\in K$. 
-Außerdem gilt mit der Cauchy-Schwarzschen Ungleichung für beliebige
-$\Lambda\in P_0\left(\Tcal;\Rbb^2\right)\cap K$, dass
+Nun wählen wir $\vcr\in\CR^1_0(\Tcal)$ beliebig. 
+Mit der Cauchy-Schwarzschen Ungleichung gilt für alle
+$\Lambda_0\in P_0\left(\Tcal;\Rbb^2\right)\cap K$, dass
 \begin{align*}
-  \int_\Omega \Lambda\cdot\gradnc\vcr\dx
-  \leq \int_\Omega |\Lambda\cdot\gradnc\vcr|\dx
-  &\leq \int_\Omega |\Lambda||\gradnc\vcr|\dx\\
-  &\leq \int_\Omega 1|\gradnc\vcr|\dx\
-  = \Vert\gradnc\vcr\Vert_{L^1(\Omega)}.
+  \int_\Omega \Lambda_0\cdot\gradnc\vcr\dx
+  \leq 
+  \int_\Omega |\Lambda_0||\gradnc\vcr|\dx
+  \leq 
+  \Vert\gradnc\vcr\Vert_{L^1(\Omega)}.
 \end{align*}
-Insgesamt folgt
-\begin{align*}
-  \sup_{\Lambda\in P_0\left(\Tcal;\Rbb^2\right)}L(\vcr,\Lambda)=
-  \sup_{\Lambda\in P_0\left(\Tcal;\Rbb^2\right)\cap K}L(\vcr,\Lambda)
+Daraus folgt
+\begin{align}
+  \label{eq:saddlepointLeqEnergy}
+  \sup_{\Lambda_0\in P_0\left(\Tcal;\Rbb^2\right)\cap K}L(\vcr,\Lambda_0)
   \leq \Enc(\vcr).
-\end{align*}
-
-Weiterhin gilt für alle $\vcr\in\CR^1_0(\Tcal)$, wenn wir
-$\Lambda\in P_0\left(\Tcal;\Rbb^2\right)\cap K$ elementweise auf allen $T\in\Tcal$
-definieren durch $\Lambda(x)\in\sign\left(\gradnc\vcr(x)\right)$ für alle
-$x\in \interior(T)$, dass $L(\vcr,\Lambda)=\Enc(\vcr)$ und deshalb auch
-$\Enc(\vcr)\leq\sup_{\Lambda\in P_0\left(\Tcal;\Rbb^2\right)}L(\vcr,\Lambda)$.
-
-Insgesamt können wir festhalten, dass für alle $\vcr\in\CR^1_0(\Tcal)$ gilt
+\end{align}
+Weiterhin gilt, wenn wir $\Lambda_0\in P_0\left(\Tcal;\Rbb^2\right)\cap K$ mit
+der Signumfunktion aus \Cref{eq:signumFunction} elementweise auf allen
+$T\in\Tcal$ definieren durch $\Lambda_0(x)\in\sign\left(\gradnc\vcr(x)\right)$
+für alle $x\in \interior(T)$, dass $L(\vcr,\Lambda_0)=\Enc(\vcr)$ und deshalb
+auch
+\begin{align}
+  \label{eq:saddlepointGeqEnergy}
+  \Enc(\vcr)
+  \leq
+  \sup_{\Lambda_0\in P_0\left(\Tcal;\Rbb^2\right)\cap K}L(\vcr,\Lambda_0).
+\end{align}
+Außerdem ist $L(\vcr,\Lambda_0)>-\infty$ genau dann, wenn $\Lambda_0\in K$.
+Damit folgt aus den Ungleichungen \eqref{eq:saddlepointLeqEnergy} und
+\eqref{eq:saddlepointGeqEnergy} insgesamt
 \begin{equation}
   \label{eq:discreteEnergySaddlefunctionalEquality}
   \Enc(\vcr)
-  =\sup_{\Lambda\in P_0\left(\Tcal;\Rbb^2\right)\cap K}L(\vcr,\Lambda)
-  =\sup_{\Lambda\in P_0\left(\Tcal;\Rbb^2\right)}L(\vcr,\Lambda).
+  =\sup_{\Lambda_0\in P_0\left(\Tcal;\Rbb^2\right)\cap K}L(\vcr,\Lambda_0)
+  =\sup_{\Lambda_0\in P_0\left(\Tcal;\Rbb^2\right)}L(\vcr,\Lambda_0).
 \end{equation}
-
 Insbesondere ist damit die Funktion $\ucr\in\CR^1_0(\Tcal)$ 
-aus der Lösung $\left( \ucr,\Lambda \right)\in\CR^1_0(\Tcal)\times
+aus der Lösung $\left( \ucr,\bar\Lambda_0 \right)\in\CR^1_0(\Tcal)\times
  P_0\left(\Tcal;\Rbb^2\right)$ des folgenden Sattelpunktsproblems Lösung von
 \Cref{prob:discreteProblem}.
 \begin{problem}\label{prob:discreteSaddlepointProblem}
-  Finde $\left( \ucr,\Lambda \right)\in\CR^1_0(\Tcal)\times
+  Finde $\left( \ucr,\bar\Lambda_0 \right)\in\CR^1_0(\Tcal)\times
   P_0\left(\Tcal;\Rbb^2\right)$,
   sodass
   \begin{align*}
-    L(\ucr,\Lambda) 
+    L(\ucr,\bar\Lambda_0) 
     = 
-    \inf_{\vcr\in\CR^1_0(\Tcal)}\sup_{\Lambda\in P_0\left(\Tcal;\Rbb^2\right)}
-    L(\vcr,\Lambda).
+    \inf_{\vcr\in\CR^1_0(\Tcal)}\sup_{\Lambda_0\in P_0\left(\Tcal;\Rbb^2\right)}
+    L(\vcr,\Lambda_0).
   \end{align*}
 \end{problem}
+
+\todo{hier, Threorem aufspalten (s. Ausdruck) und weiter Tien Remarks einpflegen}
 
 Nachdem diese Vorbereitungen abgeschlossen sind, können wir nun beweisen,
 dass \Cref{prob:discreteProblem} eine eindeutige Lösung besitzt und
