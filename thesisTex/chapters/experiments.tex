@@ -24,6 +24,36 @@ Bei Beschreibung wie die Bilder der Einleitung zur Rauschunterdrückung
 entstanden sind auch erwähnen, dass $f=\alpha g$ eine Rolle spiele usw.
 
 \bigskip
+\todo[inline]{folgendes weniger ausführlich einbringen, wohl
+auch eher im Auswertungskapitel ,,in Bartels wird in
+citeEntsprechendesLemma die garantierte Rate für \ldots bewiesen. In unseren
+Experimenten \ldots}
+
+Zunächst betrachten wir \cite[S. 309, Theorem 10.7]{Bar15}. Diese
+Abschätzung kontrolliert den
+$L^2$-Fehler zwischen den Minimierern $u_\C\in S^1(\Tcal)$ und
+$u\in\BV(\Omega)\cap L^2(\Omega)$ des Funktionals $I$ aus \Cref{eq:rofModel} in
+den entsprechenden Räumen. Obwohl wir eine andere Formulierung des ROF-Modells 
+betrachten und sich insbesondere das Funktional $\Enc$ aus unserer diskreten,
+nichtkonformen Formulierung von $I$ unterscheidet, ähneln sich die 
+Probleme möglicherweise genug, um die folgende Rate für unsere Formulierungen
+experimentell feststellen zu können.
+
+\begin{theorem}
+  \label{thm:errorEstimateCourant}
+  Sei $\Omega\subset\Rbb^2$ sternförmig und $g\in L^\infty(\Omega)$.  Seien
+  weiterhin $u\in\BV(\Omega)\cap L^2(\Omega)$ und $u_\C\in S^1(\Tcal)$ die
+  Minimierer des Funktionals $I$ aus \Cref{eq:rofModel} in den entsprechenden
+  Räumen.
+
+  Dann existiert eine Konstante $c\in\Rbb_+$, sodass
+  \begin{align*}
+    \frac{\alpha}{2}\Vert u-u_\C\Vert^2\leq
+    ch^{1/2}.
+  \end{align*}
+\end{theorem}
+
+\bigskip
 
 Alle Experimentparamter die stets gleich gesetzt sind Eingangs einmal erwähnen,
 insbesondere degree4Integrate, was immer als 10 gesetzt wird, mit ähnlichem 

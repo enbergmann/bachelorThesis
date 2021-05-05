@@ -44,12 +44,108 @@ L^2(\Omega)$.
 
 In diesen Abschnitt führen wir die Argumente in \cite[S. 313]{Bar15}, angepasst
 für unsere Formulierung in \Cref{prob:discreteProblem}, detailiert aus. 
+Zunächst zeigen wir, dass \Cref{prob:discreteProblem} eine eindeutige Lösung
+besitzt. Dafür benötigen wir folgendes Lemma.
+\begin{lemma}
+  \label{lem:normOfGradNcContiuous}
+  Das Funktional $\Enc$ aus \Cref{eq:discreteProblem} ist stetig bezüglich der
+  Konvergenz in $L^2(\Omega)$.
+\end{lemma}
 
-Bevor wir die Existenz und Eindeutigkeit einer diskreten  Lösung von
-\Cref{prob:discreteProblem} sowie äqui\-va\-lente Charakterisierungen für diese 
-beweisen können, leiten wir ein zu \Cref{prob:discreteProblem} äquivalentes
-Sattelpunktsproblem her.
-Dafür definieren wir zunächst die konvexe Menge 
+\begin{proof}
+  Die Folge $(v_n)_{n\in\Nbb}\subset\CR^1_0(\Tcal)$ konvergiere
+  gegen $\vcr\in\CR^1_0(\Tcal)$ bezüglich der Norm $\Vert\bullet\Vert$.
+  Damit ist $(v_n)_{n\in\Nbb}$ insbesondere beschränkt in $L^2(\Omega)$ und es
+  gilt mit einer binomischen Formel und der umgekehrten Dreiecksungleichung,
+  dass
+  \begin{align*}
+    \left|\Vert\vcr\Vert^2-\Vert v_n\Vert^2\right|
+    &=
+    \big|\Vert\vcr\Vert-\Vert v_k\Vert\big|\, 
+    \big|\Vert \vcr\Vert+\Vert v_k\Vert\big|\\
+    &\leq
+    \Vert\vcr- v_k\Vert\, \big|\Vert \vcr\Vert+\Vert v_k\Vert\big|
+    \to 0\quad\text{für }n\to\infty.
+  \end{align*}
+  Außerdem gilt mit der Hölderschen Ungleichung
+  \begin{align*}
+    \left|\int_\Omega f(\vcr-v_k)\dx\right|
+    \leq \Vert f\Vert \Vert\vcr-v_k\Vert\to 0\quad\text{für }n\to\infty.
+  \end{align*}
+  Schließlich gilt für alle $n\in\Nbb$ und alle $T\in\Tcal$ mit der 
+  inversen Ungleichung (cf. \cite[S. 53, Lemma 3.5]{Bar15})
+  mit Konstante $c_T\in\Rbb_+$ und der Hölderschen Ungleichung, dass
+  \begin{equation*}
+    \label{eq:continuityProofTriangleWiseEstimate}
+    \Vert\gradnc(\vcr- v_n)\Vert_{L^1(T)}
+    \leq
+    c_T h_T^{-1}\Vert\vcr- v_n\Vert_{L^1(T)}
+    \leq
+    c_T h_T^{-1}\sqrt{|T|}\Vert\vcr- v_n\Vert_{L^2(T)}.
+  \end{equation*}
+  Damit folgt zusammen mit der umgekehrten Dreiecksungleichung
+  \begin{align*}
+    \left|\Vert\gradnc\vcr\Vert-\Vert \gradnc v_n\Vert\right|
+    &\leq 
+    \Vert\gradnc(\vcr- v_n)\Vert_{L^1(\Omega)}\\
+    &=
+    \sum_{T\in\Tcal}\Vert\gradnc(\vcr- v_n)\Vert_{L^1(T)}\\
+    &\leq
+    \max_{T\in\Tcal}\left(c_T h_T^{-1}\sqrt{|T|}\right)
+    \sum_{T\in\Tcal}\Vert\vcr- v_n\Vert_{L^2(T)}\\
+    &=
+    \max_{T\in\Tcal}\left(c_T h_T^{-1}\sqrt{|T|}\right) \Vert\vcr- v_n\Vert
+    \to 0\quad\text{für }n\to\infty.
+  \end{align*}
+  Somit ist $\Enc$ Summe von drei Termen, die bezüglich der Norm
+  $\Vert\bullet\Vert$ folgenstetig sind, und deshalb stetig bezüglich der
+  Konvergenz in $L^2(\Omega)$.
+\end{proof}
+
+\begin{theorem}
+  \label{thm:discreteProblemExistenceUniqueness}
+  Es existiert eine eindeutige Lösung $\ucr\in\CR^1_0(\Tcal)$ von
+  \Cref{prob:discreteProblem}.
+\end{theorem}
+
+\begin{proof}
+  Mit analogen Abschätzungen wie in \eqref{eq:contProbBddFromBelow}
+  erhalten wir für das Funktional $\Enc$ aus \Cref{prob:discreteProblem} 
+  für alle $\vcr\in\CR^1_0(\Tcal)\subset L^2(\Omega)$ die Ungleichung 
+  \begin{equation}
+    \label{eq:discreteEnergyCoercivity}
+    \Enc(\vcr) 
+    \geq 
+    \frac{\alpha}{4}\Vert \vcr\Vert^2
+    +\Vert \gradnc\vcr\Vert_{L^1(\Omega)}
+    -\frac{1}{\alpha}\Vert f\Vert^2
+    \geq 
+    -\frac{1}{\alpha}\Vert f\Vert^2.
+  \end{equation}
+  Somit ist $\Enc$ nach unten beschränkt und es existiert eine infimierende
+  Folge $(v_n)_{n\in\Nbb} \subset \CR^1_0(\Tcal)$ von $\Enc$. 
+  Ungleichung \eqref{eq:discreteEnergyCoercivity} impliziert weiterhin, dass
+  diese Folge beschränkt bezüglich der Norm $\Vert\bullet\Vert$ sein muss.
+  Der endlichdimensionale Raum $\CR^1_0(\Tcal)$ ist, ausgestattet mit der Norm
+  $\Vert\bullet\Vert$, ein Banachraum und damit reflexiv. 
+  Demnach existiert eine in $\CR^1_0(\Tcal)$ schwach konvergente Teilfolge von
+  $(v_n)_{n\in\Nbb}$.
+  Da $\CR^1_0(\Tcal)$ endlichdimensional ist, konvergiert diese sogar stark
+  in $L^2(\Omega)$. 
+  Weil $\CR^1_0(\Tcal)$ ein Banachraum und damit abgeschlossen bezüglich der
+  Konvergenz in $\Vert\bullet\Vert$ ist, gilt für den Grenzwert $\ucr$ dieser
+  Teilfolge, dass $\ucr\in\CR^1_0(\Tcal)$.
+  Nach \Cref{lem:normOfGradNcContiuous} ist $\Enc$ stetig bezüglich der
+  Konvergenz in $L^2(\Omega)$, was impliziert, dass $\ucr$ Minimierer von
+  $\Enc$ in $\CR^1_0(\Tcal)$ sein muss.   
+  Dieser Minimierer $\ucr$ ist eindeutig, da $\Enc$ strikt konvex ist.
+\end{proof}
+
+Als nächstes wollen wir äquivalente Charakterisierungen der eindeutigen Lösung
+von \Cref{prob:discreteProblem} beweisen, die von Professor Carstensen
+formuliert wurden.
+Dazu leiten wir zunächst ein zu \Cref{prob:discreteProblem} äquivalentes
+Sattelpunktsproblem her. Wir betrachten die konvexe Menge 
 \begin{align*}
   K
   \coloneqq 
@@ -114,10 +210,11 @@ Damit folgt aus den Ungleichungen \eqref{eq:saddlepointLeqEnergy} und
   =\sup_{\Lambda_0\in P_0\left(\Tcal;\Rbb^2\right)\cap K}L(\vcr,\Lambda_0)
   =\sup_{\Lambda_0\in P_0\left(\Tcal;\Rbb^2\right)}L(\vcr,\Lambda_0).
 \end{equation}
-Insbesondere ist damit die Funktion $\ucr\in\CR^1_0(\Tcal)$ 
-aus der Lösung $\left( \ucr,\bar\Lambda_0 \right)\in\CR^1_0(\Tcal)\times
- P_0\left(\Tcal;\Rbb^2\right)$ des folgenden Sattelpunktsproblems Lösung von
-\Cref{prob:discreteProblem}.
+Insbesondere ist damit die Funktion $\ucr\in\CR^1_0(\Tcal)$ aus der Lösung
+$\left( \ucr,\bar\Lambda_0 \right)\in\CR^1_0(\Tcal)\times
+P_0\left(\Tcal;\Rbb^2\right)$ des folgenden Sattelpunktsproblems eine Lösung
+von \Cref{prob:discreteProblem}.
+
 \begin{problem}\label{prob:discreteSaddlepointProblem}
   Finde $\left( \ucr,\bar\Lambda_0 \right)\in\CR^1_0(\Tcal)\times
   P_0\left(\Tcal;\Rbb^2\right)$,
@@ -130,312 +227,262 @@ aus der Lösung $\left( \ucr,\bar\Lambda_0 \right)\in\CR^1_0(\Tcal)\times
   \end{align*}
 \end{problem}
 
-\todo{hier, Threorem aufspalten (s. Ausdruck) und weiter Tien Remarks einpflegen}
+Nachdem diese Vorbereitungen abgeschlossen sind, können wir nun folgendes
+Theorem beweisen.
 
-Nachdem diese Vorbereitungen abgeschlossen sind, können wir nun beweisen,
-dass \Cref{prob:discreteProblem} eine eindeutige Lösung besitzt und
-äquivalente Charakterisierungen für diese zeigen. Der Inhalt des folgenden
-Theorems wurde von Professor Carstensen formuliert.
 \begin{theorem}
   \label{thm:discProbCharacterizationOfDiscreteSolutions}
-  Es existiert eine eindeutige Lösung $\ucr\in\CR^1_0(\Tcal)$ von
-  \Cref{prob:discreteProblem}.
-
-  Außerdem sind die folgenden drei Aussagen
-  für eine Funktion $\ucr\in\CR^1_0(\Tcal)$ äquivalent.
+  Für eine Funktion $\tilde{u}_\CR\in\CR^1_0(\Tcal)$ sind die folgenden drei
+  Aussagen äquivalent.
   \begin{itemize}
-    \item[(i)] \Cref{prob:discreteProblem} wird von $\ucr$ gelöst.
+    \item[(i)] \Cref{prob:discreteProblem} wird von $\tilde{u}_\CR$ gelöst.
     \item[(ii)] Es existiert ein
-      $\bar\Lambda\in P_0\left(\Tcal;\Rbb^2\right)$ mit
-      $\left|\bar\Lambda(\bullet)\right|\leq 1$
+      $\bar\Lambda_0\in P_0\left(\Tcal;\Rbb^2\right)$ mit
+      $\left|\bar\Lambda_0(\bullet)\right|\leq 1$
       fast überall in $\Omega$, sodass
       \begin{equation}
         \label{eq:discreteMultiplierScalerProductEquality}
-        \bar\Lambda(\bullet)\cdot\gradnc\ucr(\bullet)
+        \bar\Lambda_0(\bullet)\cdot\gradnc\tilde{u}_\CR(\bullet)
         =
-        |\gradnc\ucr(\bullet)| \quad\text{fast überall in } \Omega 
+        \left|\gradnc\tilde{u}_\CR(\bullet)\right| 
+        \quad\text{fast überall in } \Omega 
       \end{equation}
       und
       \begin{equation}
         \label{eq:discreteMultiplierL2Equality}
-        \left(\bar\Lambda,\gradnc\vcr\right)
-        = \left(f-\alpha\ucr,
+        \left(\bar\Lambda_0,\gradnc\vcr\right)
+        = \left(f-\alpha\tilde{u}_\CR,
         \vcr\right)
         \quad\text{für alle } \vcr\in\CR^1_0(\Tcal).
       \end{equation}
     \item[(iii)] Für alle $\vcr\in\CR^1_0(\Tcal)$ gilt
       \begin{equation}
         \label{eq:discreteVariationalInequality}
-        (f-\alpha\ucr,\vcr-\ucr)\leq
+        \left(f-\alpha\tilde{u}_\CR,\vcr-\tilde{u}_\CR\right)\leq
         \Vert\gradnc\vcr\Vert_{L^1(\Omega)} -
-        \Vert\gradnc\ucr\Vert_{L^1(\Omega)}.
+        \left\Vert\gradnc\tilde{u}_\CR\right\Vert_{L^1(\Omega)}.
       \end{equation}
   \end{itemize}
 \end{theorem}
-\todo{siehe geschachtelten Ausruck: $L^2$ Stetigkeit von $\Enc$ begründen 
-und Theorem aufspalten in ein ,,es existiert eindeutiger Min.'' und ein
-,,äquivalente Charakterisierungen`` Theorem}
 
 \begin{proof} 
-  Mit analogen Abschätzungen wie in Ungleichung \eqref{eq:contProbBddFromBelow}
-  erhalten wir für das Funktional $\Enc$ aus \Cref{prob:discreteProblem} 
-  für alle $\vcr\in\CR^1_0(\Tcal)\subset L^2(\Omega)$ die Abschätzung 
-  \begin{equation}
-    \label{eq:discreteEnergyCoercivity}
-    \Enc(\vcr) 
-    \geq 
-    \frac{\alpha}{4}\Vert \vcr\Vert^2
-    +\Vert \gradnc\vcr\Vert_{L^1(\Omega)}
-    -\frac{1}{\alpha}\Vert f\Vert^2
-    \geq 
-    -\frac{1}{\alpha}\Vert f\Vert^2.
-  \end{equation}
-  Somit ist $\Enc$ nach unten beschränkt und es existiert eine infimierende
-  Folge $(v_n)_{n\in\Nbb} \subset \CR^1_0(\Tcal)$ von $\Enc$. 
-  Ungleichung \eqref{eq:discreteEnergyCoercivity} impliziert außerdem, dass
-  diese Folge beschränkt bezüglich der Norm $\Vert\bullet\Vert$ ist.
-
-  Der endlichdimensionale Raum $\CR^1_0(\Tcal)$ ist, ausgestattet mit der Norm
-  $\Vert\bullet\Vert$, ein Banachraum und damit reflexiv. 
-  Demnach existiert eine in $\CR^1_0(\Tcal)$ schwach konvergente Teilfolge von
-  $(v_n)_{n\in\Nbb}$.
-  Da $\CR^1_0(\Tcal)$ endlichdimensional ist, konvergiert diese sogar stark
-  in $L^2(\Omega)$. 
-  Weil $\CR^1_0(\Tcal)$ ein Banachraum und damit abgeschlossen bezüglich der
-  Konvergenz in $\Vert\bullet\Vert$ ist, gilt für den Grenzwert $\ucr$ dieser
-  Teilfolge, dass $\ucr\in\CR^1_0(\Tcal)$.
-
-  Außerdem ist $\Enc$ stetig bezüglich der Konvergenz in $L^2(\Omega)$,
-  was impliziert, dass $\ucr$ Minimierer von $\Enc$ in $\CR^1_0(\Tcal)$ sein
-  muss. \todo{Stetigkeit von $\Vert\gradnc\bullet\Vert_{L^1(\Omega)}$ bzgl
-  $L^2$ Konvergenz, S. 17 im Ausdruck}
-
-  Die Lösung $\ucr\in \CR^1_0(\Tcal)$ ist eindeutig, da $\Enc$ strikt konvex
-  ist.
-
-  Nachdem wir die Existenz eines eindeutigen Minimierers von
-  \Cref{prob:discreteProblem} bewiesen haben, zeigen wir nun die äquivalenten
-  Charakterisierung für diesen.
-
-  Für den Rest dieses Beweises sei $\ucr\in\CR^1_0(\Tcal)$, falls
-  nicht anderes angegeben, eine beliebige Funktion in $\CR^1_0(\Tcal)$, das
-  heißt insbesondere nicht unbedingt Lösung von \Cref{prob:discreteProblem}.
+  Sei $\tilde{u}_\CR\in\CR^1_0(\Tcal)$.
 
   \textit{(i) $\Rightarrow$ (ii).}
-  Sei $\ucr$ Lösung von \Cref{prob:discreteProblem}.
-
+  Sei $\tilde{u}_\CR$ Lösung von \Cref{prob:discreteProblem}.
   Durch \Cref{eq:discreteEnergySaddlefunctionalEquality} wissen wir bereits,
-  dass $\Enc(\vcr) = \sup_{\Lambda\in
-  P_0\left(\Tcal;\Rbb^2\right)}L(\vcr,\Lambda)$ für alle
-  $\vcr\in\CR^1_0(\Tcal)$.
-  Somit existiert für $\ucr$ ein $\bar\Lambda\in
-  P_0\left(\Tcal;\Rbb^2\right)\cap K$ mit $\Enc(\ucr) =
-  L\left(\ucr,\bar\Lambda\right)$. 
-  Da außerdem $\ucr$ \Cref{prob:discreteProblem} löst, folgt insgesamt
-  \begin{align}
+  dass 
+  \begin{align*}
+    \Enc(\vcr) = \sup_{\Lambda_0\in
+    P_0\left(\Tcal;\Rbb^2\right)}L(\vcr,\Lambda_0)\quad\text{für alle }
+    \vcr\in\CR^1_0(\Tcal).
+  \end{align*}
+  Somit existiert für $\tilde{u}_\CR$ ein $\bar\Lambda_0\in
+  P_0\left(\Tcal;\Rbb^2\right)\cap K$ mit $\Enc\!\left(\tilde{u}_\CR\right) =
+  L\!\left(\tilde{u}_\CR,\bar\Lambda_0\right)$. 
+  Da außerdem $\tilde{u}_\CR$ \Cref{prob:discreteProblem} löst, folgt insgesamt
+  \begin{equation}
     \label{eq:lagrangianEqualsInfSup}
-    L\left(\ucr,\bar\Lambda\right)
-    &=
-    \Enc(\ucr)
-    =
-    \inf_{\vcr\in\CR^1_0(\Tcal)}\Enc(\vcr)
-    =
-    \inf_{\vcr\in\CR^1_0(\Tcal)}\sup_{\Lambda\in P_0\left(\Tcal;\Rbb^2\right)} 
-    L(\vcr,\Lambda).
-  \end{align}
-
+    \begin{aligned}
+      L\!\left(\tilde{u}_\CR,\bar\Lambda_0\right)
+      =
+      \Enc\!\left(\tilde{u}_\CR\right)
+      &=
+      \inf_{\vcr\in\CR^1_0(\Tcal)}\Enc(\vcr)\\
+      &=
+      \inf_{\vcr\in\CR^1_0(\Tcal)}
+      \sup_{\Lambda_0\in P_0\left(\Tcal;\Rbb^2\right)} L(\vcr,\Lambda_0).
+    \end{aligned}
+  \end{equation}
   Weiterhin gilt nach \cite[S. 379, Lemma 36.1]{Roc70}, dass
   \begin{align*}
-    \inf_{\vcr\in\CR^1_0(\Tcal)}\sup_{\Lambda\in P_0\left(\Tcal;\Rbb^2\right)} 
-    L(\vcr,\Lambda)
+    \inf_{\vcr\in\CR^1_0(\Tcal)}\sup_{\Lambda_0\in P_0\left(\Tcal;\Rbb^2\right)} 
+    L(\vcr,\Lambda_0)
     \geq 
-    \sup_{\Lambda\in P_0\left(\Tcal;\Rbb^2\right)} \inf_{\vcr\in\CR^1_0(\Tcal)} 
-    L(\vcr,\Lambda).
+    \sup_{\Lambda_0\in P_0\left(\Tcal;\Rbb^2\right)} \inf_{\vcr\in\CR^1_0(\Tcal)} 
+    L(\vcr,\Lambda_0).
   \end{align*}
   Zusammen mit \Cref{eq:lagrangianEqualsInfSup} impliziert das
   \begin{align*}
-    \inf_{\vcr\in\CR^1_0(\Tcal)}\sup_{\Lambda\in P_0\left(\Tcal;\Rbb^2\right)} 
-    L(\vcr,\Lambda)
+    \inf_{\vcr\in\CR^1_0(\Tcal)}\sup_{\Lambda_0\in P_0\left(\Tcal;\Rbb^2\right)} 
+    L(\vcr,\Lambda_0)
     =
-    L\left(\ucr,\bar\Lambda\right)
+    L\!\left(\tilde{u}_\CR,\bar\Lambda_0\right)
     =
-    \sup_{\Lambda\in P_0\left(\Tcal;\Rbb^2\right)} \inf_{\vcr\in\CR^1_0(\Tcal)} 
-    L(\vcr,\Lambda).
+    \sup_{\Lambda_0\in P_0\left(\Tcal;\Rbb^2\right)} \inf_{\vcr\in\CR^1_0(\Tcal)} 
+    L(\vcr,\Lambda_0).
   \end{align*}
-  Somit ist $\left(\ucr,\bar\Lambda\right)\in 
+  Somit ist $\left(\tilde{u}_\CR,\bar\Lambda_0\right)\in 
   \CR^1_0(\Tcal)\times ( P_0\left(\Tcal;\Rbb^2\right)\cap K)$ nach \cite[S. 380,
   Lemma 36.2]{Roc70} Sattelpunkt 
   von $L$ bezüglich der Maximierung über $ P_0\left(\Tcal;\Rbb^2\right)$ und
   der Minimierung über $\CR^1_0(\Tcal)$. 
-  Das bedeutet nach \cite[380]{Roc70} insbesondere, dass $\ucr$ Minimierer von 
-  $L(\bullet, \bar\Lambda)$ in $\CR^1_0(\Tcal)$ ist und $\bar\Lambda$
-  Maximierer von $L(\ucr,\bullet)$ über $ P_0\left(\Tcal;\Rbb^2\right)$.
+  Das bedeutet nach \cite[380]{Roc70} insbesondere, dass $\tilde{u}_\CR$
+  Minimierer von $L(\bullet, \bar\Lambda_0)$ in $\CR^1_0(\Tcal)$ ist und
+  $\bar\Lambda_0$ Maximierer von $L\!\left(\tilde{u}_\CR,\bullet\right)$ über $
+  P_0\left(\Tcal;\Rbb^2\right)$.  
   Mit dieser Erkenntnis können wir nun die entsprechenden
   Optimalitätsbedingungen diskutieren.
-
-  Zunächst bemerken wir, dass $L(\ucr,\bullet):P_0\left(\Tcal;\Rbb^2\right)\to
+  Zunächst bemerken wir, dass
+  $L\!\left(\tilde{u}_\CR,\bullet\right):P_0\left(\Tcal;\Rbb^2\right)\to
   [-\infty,\infty)$ konkav ist.
-  Da $\bar\Lambda$ Maximierer von $L(\ucr,\bullet)$ in 
+  Da $\bar\Lambda_0$ Maximierer von $L\!\left(\tilde{u}_\CR,\bullet\right)$ in 
   $ P_0\left(\Tcal;\Rbb^2\right)$ ist, wird das konvexe Funktional
-  $-L(\ucr,\bullet):P_0\left(\Tcal;\Rbb^2\right)\to
-  (-\infty,\infty]$ von $\bar\Lambda$ in $ P_0\left(\Tcal;\Rbb^2\right)$
+  $-L(\tilde{u}_\CR,\bullet):P_0\left(\Tcal;\Rbb^2\right)\to
+  (-\infty,\infty]$ von $\bar\Lambda_0$ in $ P_0\left(\Tcal;\Rbb^2\right)$
   minimiert.
-  Nach den Theoremen \ref{thm:extremalprinciple},
-  \ref{thm:subdifferentialSumRule} und \ref{thm:subdiffGateaux} gilt somit
+  %Nach den Theoremen \ref{thm:extremalprinciple},
+  %\ref{thm:subdifferentialSumRule} und \ref{thm:subdiffGateaux} gilt somit
+  Nach den Theoremen \ref{thm:extremalprinciple} --
+  \ref{thm:subdifferentialSumRule} gilt somit
   \begin{align*}
-    0\in \partial \left(-L(\ucr,\bullet)\right)\left(\bar\Lambda\right) 
+    0
+    \in 
+    \partial \left(-L\!\left(\tilde{u}_\CR,\bullet\right)\right)
+    \left(\bar\Lambda_0\right) 
     =
-    \{-(\gradnc\ucr,\bullet)\}+\partial I_K
-    \left(\bar\Lambda\right).
+    \left\{-\!\left(\gradnc\tilde{u}_\CR,\bullet\right)\right\}+\partial I_K
+    \left(\bar\Lambda_0\right).
   \end{align*}
   Äquivalent zu dieser Aussage ist, dass
-  $(\gradnc\ucr,\bullet)\in \partial
-  I_K \left(\bar\Lambda\right)$. 
-  Da $\bar\Lambda\in K$, folgt mit \Cref{def:subdifferential},
-  dass für alle $\Lambda\in  P_0\left(\Tcal;\Rbb^2\right)$ gilt
+  $\left(\gradnc\tilde{u}_\CR,\bullet\right)\in \partial
+  I_K \left(\bar\Lambda_0\right)$. 
+  Da $\bar\Lambda_0\in K$, folgt mit \Cref{def:subdifferential},
+  dass für alle $\Lambda_0\in  P_0\left(\Tcal;\Rbb^2\right)$ gilt
   \begin{align*}
-    (\gradnc\ucr,\Lambda-\bar\Lambda) 
+    \left(\gradnc\tilde{u}_\CR,\Lambda_0-\bar\Lambda_0\right) 
     \leq 
-    I_K (\Lambda) - I_K (\bar\Lambda)
+    I_K (\Lambda_0) - I_K\!\left(\bar\Lambda_0\right)
     =
-    I_K (\Lambda).
+    I_K (\Lambda_0).
   \end{align*}
-  Falls $\Lambda\in  P_0\left(\Tcal;\Rbb^2\right)\cap K$, folgt insbesondere
+  Falls $\Lambda_0\in  P_0\left(\Tcal;\Rbb^2\right)\cap K$, folgt insbesondere
   \begin{align}
     \label{eq:scalarProductInequDiscreteProof}
-    \left(\gradnc\ucr,\Lambda-\bar\Lambda\right) 
+    \left(\gradnc\tilde{u}_\CR,\Lambda_0-\bar\Lambda_0\right) 
     &\leq 
     0,\quad\text{also }\notag\\ 
-    \left(\gradnc\ucr,\Lambda\right)
+    \left(\gradnc\tilde{u}_\CR,\Lambda_0\right)
     &\leq
-    \left(\gradnc\ucr,\bar\Lambda\right).
+    \left(\gradnc\tilde{u}_\CR,\bar\Lambda_0\right).
   \end{align}
-  Sei nun $\Lambda\in P_0\left(\Tcal;\Rbb^2\right)\cap K$ elementweise auf
-  allen $T\in\Tcal$ durch $\Lambda(x)\in\sign\left(\gradnc\ucr(x)\right)$
+  Sei nun $\Lambda_0\in P_0\left(\Tcal;\Rbb^2\right)\cap K$ elementweise auf
+  allen $T\in\Tcal$ durch $\Lambda_0(x)\in\sign\left(\gradnc\tilde{u}_\CR(x)\right)$
   definiert für alle $x\in\interior(T)$.
-  Mit dieser Wahl von $\Lambda$, Ungleichung
+  Mit dieser Wahl von $\Lambda_0$, Ungleichung
   \eqref{eq:scalarProductInequDiscreteProof}, der Cauchy\--Schwarz\-schen
-  Ungleichung und $\bar\Lambda\in K$ erhalten wir die Abschätzung
+  Ungleichung und $\bar\Lambda_0\in K$ erhalten wir die Abschätzung
   \begin{align}
     \label{eq:sumOverAllTrianglesDualVariable}
-    \int_\Omega|\gradnc\ucr|\dx
+    \int_\Omega\left|\gradnc\tilde{u}_\CR\right|\dx
     &=
-    \int_\Omega\gradnc\ucr\cdot\Lambda\dx
-    =
-    (\gradnc\ucr,\Lambda)\notag\\
+    \int_\Omega\gradnc\tilde{u}_\CR\cdot\Lambda_0\dx
+    \leq 
+    \int_\Omega\gradnc\tilde{u}_\CR\cdot\bar\Lambda_0\dx \notag\\
     &\leq 
-    \left(\gradnc\ucr,\bar\Lambda\right)
-    =
-    \int_\Omega\gradnc\ucr\cdot\bar\Lambda\dx \notag\\
-    &\leq 
-    \int_\Omega|\gradnc\ucr|\,\left|\bar\Lambda\right|\dx
+    \int_\Omega\left|\gradnc\tilde{u}_\CR\right|\left|\bar\Lambda_0\right|\dx
     \leq
-    \int_\Omega|\gradnc\ucr|\dx,\quad\text{das heißt }\notag\\
-    \int_\Omega|\gradnc\ucr|\dx 
+    \int_\Omega\left|\gradnc\tilde{u}_\CR\right|\dx,
+    \quad\text{das heißt }\notag\\
+    \int_\Omega\left|\gradnc\tilde{u}_\CR\right|\dx 
     &= 
-    \int_\Omega\gradnc\ucr\cdot\bar\Lambda\dx
+    \int_\Omega\gradnc\tilde{u}_\CR\cdot\bar\Lambda_0\dx
     \quad\text{beziehungsweise }\notag\\
-    \sum_{T\in\Tcal}|T|\,\big|(\gradnc\ucr)\!|_T\big|
+    \sum_{T\in\Tcal}|T|\,\big|(\gradnc\tilde{u}_\CR)\!|_T\big|
     &=
-    \sum_{T\in\Tcal}|T|\,\left(\gradnc\ucr\cdot \bar\Lambda\right)\!\!|_T.
+    \sum_{T\in\Tcal}|T|\left(\gradnc\tilde{u}_\CR\cdot \bar\Lambda_0\right)\!\!|_T.
   \end{align}
   Außerdem gilt für alle $T\in\Tcal$ mit der Cauchy-Schwarzschen Ungleichung
-  und $\bar\Lambda\in K$, dass 
+  und $\bar\Lambda_0\in K$, dass 
   \begin{align*}
-  \left(\gradnc\ucr\cdot \bar\Lambda\right)\!\!|_T
+    \left(\gradnc\tilde{u}_\CR\cdot \bar\Lambda_0\right)\!\!|_T
   \leq
-  \big|(\gradnc\ucr)\!|_{T}\big|\,\left|\bar\Lambda\!|_T\right|
+  \big|(\gradnc\tilde{u}_\CR)\!|_{T}\big|\,\left|\bar\Lambda_0|_T\right|
   \leq
-  \big|(\gradnc\ucr)\!|_{T}\big|.
+  \big|(\gradnc\tilde{u}_\CR)\!|_{T}\big|.
   \end{align*}
   Mit \Cref{eq:sumOverAllTrianglesDualVariable} folgt daraus für alle
-  $T\in\Tcal$, dass $\left(\gradnc\ucr\cdot
-  \bar\Lambda\right)\!\!|_T=\big|(\gradnc\ucr)\!|_T\big|$, das heißt fast
-  überall in $\Omega$ gilt $\bar\Lambda(\bullet)\cdot\gradnc\ucr(\bullet)
-  =|\gradnc\ucr(\bullet)|$. 
+  $T\in\Tcal$, dass $\left(\gradnc\tilde{u}_\CR\cdot
+  \bar\Lambda_0\right)\!\!|_T=\big|(\gradnc\tilde{u}_\CR)\!|_T\big|$, das heißt fast
+  überall in $\Omega$ gilt $\bar\Lambda_0(\bullet)\cdot\gradnc\tilde{u}_\CR(\bullet)
+  =|\gradnc\tilde{u}_\CR(\bullet)|$. 
   Damit ist \Cref{eq:discreteMultiplierScalerProductEquality} gezeigt.
-
   Als Nächstes betrachten wir das reellwertige Funktional
-  $L\left(\bullet,\bar\Lambda\right):\CR^1_0(\Tcal)\to\Rbb$.
+  $L\left(\bullet,\bar\Lambda_0\right):\CR^1_0(\Tcal)\to\Rbb$.
   Es ist Fr\'echet-differenzierbar mit
   \begin{align*}
-    dL(\bullet,\bar\Lambda)(\ucr;\vcr)=
-    \int_\Omega\bar\Lambda\cdot \gradnc\vcr\dx
-    +\alpha (\ucr,\vcr) - \int_\Omega f\vcr\dx
+    dL\!\left(\bullet,\bar\Lambda_0\right)\!\left(\tilde{u}_\CR;\vcr\right)
+    =
+    \int_\Omega\bar\Lambda_0\cdot \gradnc\vcr\dx
+    +\alpha\! \left(\tilde{u}_\CR,\vcr\right) - \int_\Omega f\vcr\dx
   \end{align*}
   für alle $\vcr\in\CR^1_0(\Tcal)$.
-  Da $\ucr$ Minimierer von  $L\left(\bullet, \bar\Lambda\right)$ in
-  $\CR^1_0(\Tcal)$ ist, gilt nach
+  Da $\tilde{u}_\CR$ Minimierer von  $L\!\left(\bullet, \bar\Lambda_0\right)$
+  in $\CR^1_0(\Tcal)$ ist, gilt nach
   \Cref{thm:necessaryConditionFreeLocalExtrema}, dass $0 =
-  dL(\bullet,\bar\Lambda)(\ucr;\vcr)$ für alle $\vcr\in\CR^1_0(\Tcal)$.
+  dL\!\left(\bullet,\bar\Lambda_0\right)\!\left(\tilde{u}_\CR;\vcr\right)$ für
+  alle $\vcr\in\CR^1_0(\Tcal)$.
   Diese Bedingung ist für alle $\vcr\in\CR^1_0(\Tcal)$ äquivalent zu
-    $\left(\bar\Lambda,\gradnc\vcr\right) = (f-\alpha \ucr,\vcr)$.
-  Somit ist \Cref{eq:discreteMultiplierL2Equality} gezeigt.
+  $\left(\bar\Lambda_0,\gradnc\vcr\right) = (f-\alpha \tilde{u}_\CR,\vcr)$.
+  Somit ist auch \Cref{eq:discreteMultiplierL2Equality} gezeigt.
 
   \textit{(ii) $\Rightarrow$ (iii).}
-  Die Funktion $\bar\Lambda\in P_0(\Tcal;\Rbb^2)$ erfülle
-  $\left|\bar\Lambda(\bullet)\right|\leq 1$ fast überall in $\Omega$ sowie
+  Die Funktion $\bar\Lambda_0\in P_0(\Tcal;\Rbb^2)$ erfülle
+  $\left|\bar\Lambda_0(\bullet)\right|\leq 1$ fast überall in $\Omega$ sowie
   die Gleichungen \eqref{eq:discreteMultiplierScalerProductEquality} und 
-  \eqref{eq:discreteMultiplierL2Equality}.
-
-  Dann gilt für alle $\vcr\in\CR^1_0(\Tcal)$ mit
-  \Cref{eq:discreteMultiplierL2Equality},
-  \Cref{eq:discreteMultiplierScalerProductEquality}, der Cauchy-Schwarzschen
-  Ungleichung und $\left|\bar\Lambda(\bullet)\right|\leq 1$ fast überall in
-  $\Omega$ , dass
+  \eqref{eq:discreteMultiplierL2Equality}. 
+  Sei $\vcr\in\CR^1_0(\Tcal)$.
+  Mit den Gleichungen 
+  \eqref{eq:discreteMultiplierL2Equality} und 
+  \eqref{eq:discreteMultiplierScalerProductEquality} gilt
+  \begin{equation}
+    \label{eq:equivalentCharacterizationApplicationTwoEquations}
+    \begin{aligned}
+      \left(f-\alpha\tilde{u}_\CR,\vcr-\tilde{u}_\CR\right) 
+      &=
+      \left(\bar\Lambda_0,\gradnc\vcr\right)
+      - \left(\bar\Lambda_0,\gradnc\tilde{u}_\CR\right)\\
+      &=
+      \int_\Omega\bar\Lambda_0\cdot\gradnc\vcr\dx
+      - \int_\Omega\left|\gradnc\tilde{u}_\CR\right|\dx.
+    \end{aligned}
+  \end{equation}
+  Weiterhin gilt mit der Cauchy-Schwarzschen
+  Ungleichung und $\left|\bar\Lambda_0(\bullet)\right|\leq 1$ fast überall in
+  $\Omega$, dass
   \begin{align*}
-    (f-\alpha\ucr,\vcr-\ucr) 
-    &= 
-    (f-\alpha\ucr,\vcr) 
-    - (f-\alpha\ucr,\ucr) \\
-    &=
-    \left(\bar\Lambda,\gradnc\vcr\right)
-    - \left(\bar\Lambda,\gradnc\ucr\right)\\
-    &=
-    \int_\Omega\bar\Lambda\cdot\gradnc\vcr\dx
-    - \int_\Omega\bar\Lambda\cdot\gradnc\ucr\dx\\
-    &=
-    \int_\Omega\bar\Lambda\cdot\gradnc\vcr\dx
-    - \int_\Omega|\gradnc\ucr|\dx\\
+    \int_\Omega\bar\Lambda_0\cdot\gradnc\vcr\dx
     &\leq 
-    \int_\Omega\left|\bar\Lambda\right|\,|\gradnc\vcr|\dx
-    - \int_\Omega|\gradnc\ucr|\dx\\
-    &\leq 
-    \int_\Omega|\gradnc\vcr|\dx
-    - \int_\Omega|\gradnc\ucr|\dx\\
-    &=
-    \Vert\gradnc\vcr\Vert_{L^1(\Omega)}
-    -\Vert\gradnc\ucr\Vert_{L^1(\Omega)}.
+    \int_\Omega\left|\bar\Lambda_0\right|\,|\gradnc\vcr|\dx
+    \leq 
+    \int_\Omega|\gradnc\vcr|\dx.
   \end{align*}
-  Somit ist Ungleichung \eqref{eq:discreteVariationalInequality} gezeigt.
+  Zusammen mit \Cref{eq:equivalentCharacterizationApplicationTwoEquations}
+  folgt daraus Ungleichung \eqref{eq:discreteVariationalInequality}.
 
   \textit{(iii) $\Rightarrow$ (i)}.
   Es gelte Ungleichung \eqref{eq:discreteVariationalInequality} für alle
   $\vcr\in\CR^1_0(\Tcal)$, also
+  \begin{align*}
+    \left(f-\alpha\tilde{u}_\CR,\vcr-\tilde{u}_\CR\right) 
+    \leq
+    \left\Vert\gradnc\vcr\right\Vert_{L^1(\Omega)}
+    -\left\Vert\gradnc\tilde{u}_\CR\right\Vert_{L^1(\Omega)}.
+  \end{align*}
+  Nach \Cref{thm:discreteProblemExistenceUniqueness} exisitert eine eindeutige
+  Lösung $\ucr\in\CR^1_0(\Tcal)$ von \Cref{prob:discreteProblem}.
+  Wir haben nun außerdem bereits gezeigt, dass für $\ucr$ und alle
+  $\vcr\in\CR^1_0(\Tcal)$ gilt
   \begin{align*}
     \left(f-\alpha\ucr,\vcr-\ucr\right) 
     \leq
     \left\Vert\gradnc\vcr\right\Vert_{L^1(\Omega)}
     -\Vert\gradnc\ucr\Vert_{L^1(\Omega)}.
   \end{align*}
-
-
-  Wir haben in diesen Beweis bereits gezeigt, dass stets eine eindeutige Lösung
-  $\tilde{u}_\CR\in\CR^1_0(\Tcal)$ von \Cref{prob:discreteProblem} existiert
-  und außerdem, dass für diese
-  für alle $\vcr\in\CR^1_0(\Tcal)$ gilt
-  \begin{align*}
-    \left(f-\alpha\tilde{u}_\CR,\vcr-\tilde{u}_\CR\right) 
-    \leq
-    \left\Vert\gradnc\vcr\right\Vert_{L^1(\Omega)}
-    -\Vert\gradnc\tilde{u}_\CR\Vert_{L^1(\Omega)}.
-  \end{align*}
-
-  Um zu beweisen, dass $\ucr$ \Cref{prob:discreteProblem} löst, genügt es
-  aufgrund der Eindeutigkeit der Lösung $\tilde{u}_\CR$ von
-  \Cref{prob:discreteProblem} zu zeigen, dass $\ucr=\tilde{u}_\CR$ in
+  Um zu beweisen, dass $\tilde{u}_\CR$ \Cref{prob:discreteProblem} löst, genügt es
+  aufgrund der Eindeutigkeit der Lösung $\ucr$ von
+  \Cref{prob:discreteProblem} zu zeigen, dass $\tilde{u}_\CR=\ucr$ in
   $\CR^1_0(\Tcal)$.
-
   Es gilt
   \begin{align*}
     \left(f-\alpha\ucr,\tilde{u}_\CR-\ucr\right) 
@@ -448,117 +495,73 @@ und Theorem aufspalten in ein ,,es existiert eindeutiger Min.'' und ein
     -\Vert\gradnc\tilde{u}_\CR\Vert_{L^1(\Omega)}. 
   \end{align*}
   Die Addition dieser Ungleichungen
-  liefert die Ungleichung
+  impliziert
   \begin{align*}
+    \alpha\left\Vert\tilde{u}_\CR-\ucr\right\Vert^2=
     \left(-\alpha\ucr,\tilde{u}_\CR-\ucr\right) 
     + \left(-\alpha\tilde{u}_\CR,\ucr-\tilde{u}_\CR\right) 
     \leq
-    0,
-  \end{align*}
-  welche äquivalent ist zu
-  \begin{align*}
-    \alpha\left\Vert\tilde{u}_\CR-\ucr\right\Vert^2
-    \leq
     0.
   \end{align*}
-  Da $\alpha>0$, impliziert das
-  $\left\Vert\tilde{u}_\CR-\ucr\right\Vert^2=0$, also
-  $\tilde{u}_\CR=\ucr$ in $\CR^1_0(\Tcal)$.
+  Da $\alpha>0$, folgt daraus $\left\Vert\tilde{u}_\CR-\ucr\right\Vert^2=0$,
+  also $\tilde{u}_\CR=\ucr$ in $\CR^1_0(\Tcal)$.
 \end{proof}
 
 Zum Schluss dieses Abschnitts wollen wir noch zwei Bemerkungen von Professor
 Carstensen erwähnen und kurz deren Gültigkeit begründen.
-
 Die erste ist in eine äquivalente Charakterisierung der dualen Variable
-$\bar\Lambda\in P_0\left(\Tcal;\Rbb^2\right)$ aus
+$\bar\Lambda_0\in P_0\left(\Tcal;\Rbb^2\right)$ aus
 \Cref{thm:discProbCharacterizationOfDiscreteSolutions} zur diskreten Lösung
 $\ucr\in\CR^1_0(\Tcal)$ von \Cref{prob:discreteProblem}.
 
 \begin{remark}
-  Das $\bar\Lambda\in P_0\left(\Tcal;\Rbb^2\right)$ fast überall in $\Omega$
+  Dass $\bar\Lambda_0\in P_0\left(\Tcal;\Rbb^2\right)$ fast überall in $\Omega$
   \Cref{eq:discreteMultiplierScalerProductEquality} und
-  $|\bar\Lambda(\bullet)|\leq 1$ erfüllt, ist äquivalent zu der Bedingung
-  $\bar\Lambda(x)\in\sign(\gradnc \ucr(x))$ für alle $x\in\interior(T)$ für
+  $|\bar\Lambda_0(\bullet)|\leq 1$ erfüllt, ist äquivalent zu der Bedingung
+  $\bar\Lambda_0(x)\in\sign(\gradnc \ucr(x))$ für alle $x\in\interior(T)$ für
   alle $T\in\Tcal$.   
 \end{remark}
 
 \begin{proof}
   Dass die genannte Bedingung hinreichend ist, folgt direkt aus der Definition
   der Signumfunktion.
-
   Ihre Notwendigkeit folgt aus der folgenden Beobachtung.
-  Da $\left|\bar\Lambda(\bullet)\right|\leq 1$ fast überall in $\Omega$, ist
+  Da $\left|\bar\Lambda_0(\bullet)\right|\leq 1$ fast überall in $\Omega$, ist
   \Cref{eq:discreteMultiplierScalerProductEquality} eine Cauchy-Schwarzsche
   Ungleichung, bei der sogar Gleichheit gilt. 
-  Dies ist genau dann der Fall, wenn $\bar\Lambda(\bullet)$ und
+  Dies ist genau dann der Fall, wenn $\bar\Lambda_0(\bullet)$ und
   $\gradnc\ucr(\bullet)$ fast überall in $\Omega$ linear abhängig sind.
 \end{proof}
  
 Daraus können wir folgern, unter welchen Umständen die duale Variable
-$\bar\Lambda$ auf einem Dreieck $T\in\Tcal$ eindeutig bestimmt ist.
+$\bar\Lambda_0$ auf einem Dreieck $T\in\Tcal$ eindeutig bestimmt ist.
 
 \begin{remark}
   Falls $\gradnc\ucr\neq 0$ auf $T\in\Tcal$, gilt nach Definition der
-  Signumfunktion, dass $\bar\Lambda=\gradnc\ucr/|\gradnc\ucr|$ eindeutig
+  Signumfunktion, dass $\bar\Lambda_0=\gradnc\ucr/|\gradnc\ucr|$ eindeutig
   bestimmt ist auf $T$.
-
-  Im Allgemeinen ist $\bar\Lambda$ nicht eindeutig bestimmbar. 
+  Im Allgemeinen ist $\bar\Lambda_0$ allerdings nicht eindeutig bestimmbar. 
   Betrachten wir zum Beispiel $f\equiv 0$ in \Cref{prob:discreteProblem} mit
   eindeutiger Lösung $\ucr\equiv 0$ fast überall in $\Omega$. 
   Dann erfüllt nach der diskreten Helmholtz Zerlegung \cite[S. 193, Theorem
-  3.32]{Car09b} die Wahl $\bar\Lambda\coloneqq \Curl(v_\C)$ für ein beliebiges
-  $v_\C\in S^1(\Tcal)$ mit $|\Curl(v_\C)|\leq 1$ die Charakterisierung
+  3.32]{Car09b} die Wahl $\bar\Lambda_0\coloneqq \Curl v_\C$ für ein beliebiges
+  $v_\C\in S^1(\Tcal)$ mit $|\Curl v_\C|\leq 1$ die Charakterisierung
   \textit{(ii)} aus \Cref{thm:discProbCharacterizationOfDiscreteSolutions}.
 \end{remark}
 
 
 \section{Kontrolle des Abstandes zwischen diskreter und kontinuierlicher
 Lösung}
-Wir möchten in diesen Abschnitt zwei Abschätzungen aufführen, mit denen
-möglicherweise der $L^2$-Abstand zwischen der Lösung des diskreten Problems
+Wir möchten in diesen Abschnitt eine Abschätzungen herleiten, mit welcher
+der $L^2$-Abstand zwischen der Lösung des diskreten Problems
 \ref{prob:discreteProblem} und der Lösung des kontinuierlichen Problems
 \ref{prob:continuousProblem} kontrolliert werden kann.
-
-Die Gültigkeit dieser Abschätzungen werden wir in \Cref{chap:experiments}
-untersuchen.
-
-Zunächst betrachten wir \cite[S. 309, Theorem 10.7]{Bar15}. Diese
-Abschätzung kontrolliert den
-$L^2$-Fehler zwischen den Minimierern $u_\C\in S^1(\Tcal)$ und
-$u\in\BV(\Omega)\cap L^2(\Omega)$ des Funktionals $I$ aus \Cref{eq:rofModel} in
-den entsprechenden Räumen. Obwohl wir eine andere Formulierung des ROF-Modells 
-betrachten und sich insbesondere das Funktional $\Enc$ aus unserer diskreten,
-nichtkonformen Formulierung von $I$ unterscheidet, ähneln sich die 
-Probleme möglicherweise genug, um die folgende Rate für unsere Formulierungen
-experimentell feststellen zu können.
-
-\begin{theorem}
-  \label{thm:errorEstimateCourant}
-  Sei $\Omega\subset\Rbb^2$ sternförmig und $g\in L^\infty(\Omega)$.  Seien
-  weiterhin $u\in\BV(\Omega)\cap L^2(\Omega)$ und $u_\C\in S^1(\Tcal)$ die
-  Minimierer des Funktionals $I$ aus \Cref{eq:rofModel} in den entsprechenden
-  Räumen.
-
-  Dann existiert eine Konstante $c\in\Rbb_+$, sodass
-  \begin{align*}
-    \frac{\alpha}{2}\Vert u-u_\C\Vert^2\leq
-    ch^{1/2}.
-  \end{align*}
-\end{theorem}
-
-Als Nächstes möchten wir beweisen, dass der $L^2$-Abstand zwischen der Lösung
-$u$ von \Cref{prob:continuousProblem} und einer beliebigen Funktion
-$v\in\BV(\Omega)\cap L^2(\Omega)$ beschränkt werden kann durch die Differenz
-der Werte des Funktionals $E$ an den Stellen $u$ und $v$.
-Daraus wollen wir anschließend die zweite Möglichkeit folgern,
-wie der Abstand in $L^2(\Omega)$ zwischen den Lösungen des kontinuierlichen 
-und des diskreten Problems kontrolliert werden kann.
+Dafür benötigen wir zunächst folgendes Theorem.
 
 \begin{theorem}
   \label{thm:convexity}
   Sei $u\in\BV(\Omega)\cap L^2(\Omega)$ Lösung von 
   \Cref{prob:continuousProblem}.
-
   Dann gilt 
   \begin{align*}
     \frac{\alpha}{2}\Vert u-v\Vert^2 \leq E(v)-E(u)\quad
@@ -579,7 +582,6 @@ und des diskreten Problems kontrolliert werden kann.
     G(v)\coloneqq \frac{\alpha}{2}\Vert v\Vert^2 - \int_\Omega f v\dx.
   \end{align*}
   Es gilt $E = F+G$.
-
   Die Fr\'echet-Ableitung $G'(u): L^2(\Omega)\to\Rbb$ von $G$ an der Stelle
   $u\in \BV(\Omega)\cap L^2(\Omega)$ ist für alle $v\in L^2(\Omega)$ gegeben
   durch
@@ -587,7 +589,6 @@ und des diskreten Problems kontrolliert werden kann.
     dG(u;v) = \alpha (u,v) - \int_\Omega f v\dx 
     = (\alpha u-f ,v).
   \end{align*}
-
   Das impliziert mit wenigen Rechenschritten
   \begin{align}\label{eq:strongConvexityG}
     dG(u;v-u) +\frac{\alpha}{2}\Vert u-v\Vert^2+G(u) 
@@ -595,47 +596,41 @@ und des diskreten Problems kontrolliert werden kann.
     G(v)
     \quad\text{für alle } v\in L^2(\Omega).
   \end{align}
-
-  Da $u$ Minimierer von $E$ ist, erhalten wir mit \Cref{thm:extremalprinciple},
-  \Cref{thm:subdifferentialSumRule} und \Cref{thm:subdiffGateaux} die Aussage
+  Da $u$ der Minimierer von $E$ ist, erhalten wir mit den Theoremen
+  %\ref{thm:extremalprinciple}, \ref{thm:subdifferentialSumRule} und
+  %\ref{thm:subdiffGateaux} die Aussage
+  \ref{thm:extremalprinciple} -- \ref{thm:subdifferentialSumRule} die Aussage
   \begin{align*}
     0\in\partial E(u) = \partial F(u)+\{G'(u)\},
   \end{align*}
   woraus folgt 
-  \begin{align*}
-    -G'(u)\in\partial F(u).
-  \end{align*}
+  $ -G'(u)\in\partial F(u).$
   Das ist nach \Cref{def:subdifferential} äquivalent zu
   \begin{align*}
     -dG(u;v-u)\leq F(v)-F(u)\quad\text{für alle }v\in\BV(\Omega)\cap
     L^2(\Omega).
   \end{align*}
-
   Daraus folgt zusammen mit \Cref{eq:strongConvexityG} für alle $v\in
   \BV(\Omega)\cap L^2(\Omega)$, dass
   \begin{align*}
     \frac{\alpha}{2}\Vert u-v\Vert^2+G(u)-G(v)+F(u)
     = -dG(u;v-u)+F(u)\leq F(v).
   \end{align*}
-  
-
   Da $E=F+G$, folgt daraus die zu zeigende Aussage.
 \end{proof}
 
 Zusammen mit den Betrachtungen in \Cref{sec:discreteProblemFormulation} 
-erhalten wir damit folgendes Korollar.
+erhalten wir damit die folgende Abschätzung.
 
 \begin{corollary}
   Sei $u\in\BV(\Omega)\cap L^2(\Omega)$ Lösung von
   \Cref{prob:continuousProblem} und $\ucr\in\CR^1_0(\Tcal)$ Lösung von
   \Cref{prob:discreteProblem}.
-
   Dann gilt
   \begin{align*}
     \frac{\alpha}{2}\Vert u-\ucr\Vert^2\leq
     E(\ucr)-E(u)=\Enc(\ucr)+\sum_{F\in\Ecal}\Vert[\ucr]_F\Vert_{L^1(F)}-E(u).
   \end{align*}
-
   Insbesondere gilt auch 
   \begin{align*}
     \frac{\alpha}{2}\Vert u-\ucr\Vert^2
@@ -657,17 +652,14 @@ Aussage über eine garantierte untere Energieschranke zur Verfügung.
   \Cref{prob:continuousProblem} mit Lösung $u\in H^1_0(\Omega)$ und minimaler
   Energie $E(u)$ sowie für \Cref{prob:discreteProblem} mit Lösung $\ucr\in
   \CR^1_0(\Omega)$ und minimaler Energie $\Enc(\ucr)$.
-
   Dann gilt
   \begin{align*}
     \Enc(\ucr)+\frac{\alpha}{2}\Vert u-\ucr\Vert^2
     -\frac{\kappa_\CR}{\alpha}\Vert
     h_\Tcal(f-\alpha\ucr)\Vert \Vert\nabla f\Vert\leq E(u).
   \end{align*}
-  Dabei ist mit der kleinsten positiven Nullstelle $j_{1,1}$ der
-  Bessel-Funktion erster Art die Konstante
-  $\kappa_\CR\coloneqq\sqrt{1/48+1/j_{1,1}^2}$.
-
+  Dabei ist die Konstante $\kappa_\CR\coloneqq\sqrt{1/48+1/j_{1,1}^2}$ mit der
+  kleinsten positiven Nullstelle $j_{1,1}$ der Bessel-Funktion erster Art.
   Insbesondere gilt dann für 
   \begin{align}
     \label{eq:gleb}
