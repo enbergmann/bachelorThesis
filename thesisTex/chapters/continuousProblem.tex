@@ -116,8 +116,8 @@ $0|_{\partial\Omega}=0$.
       &\geq 
       \frac{\alpha}{4|\Omega|}\Vert v\Vert_{L^1(\Omega)}^2 + |v|_{\BV(\Omega)}
       +\Vert v\Vert_{L^1(\partial\Omega)}-\frac{1}{\alpha}\Vert
-      f\Vert^2\\
-      &\geq -\frac{1}{\alpha}\Vert f\Vert^2.
+      f\Vert^2
+      \geq -\frac{1}{\alpha}\Vert f\Vert^2.
     \end{aligned}
   \end{equation}
   Somit ist $E$ nach unten beschränkt, was die Existenz einer infimierenden
@@ -313,10 +313,14 @@ dass diese Lösung eindeutig ist.
   Für $\ell\in\{1,2\}$ gilt, dass $E_\ell$ konvex ist und von $u_\ell$ in
   $\BV(\Omega)\cap L^2(\Omega)$ minimiert wird. 
   Außerdem gilt $E_\ell\nequiv\infty$ und $G_\ell$ ist stetig.
-  Somit gilt nach \cref{thm:extremalprinciple}, 
-  \cref{thm:subdifferentialSumRule} und \cref{thm:subdiffGateaux}, dass
-  $0\in\partial E_\ell(u_\ell) = \partial F(u_\ell)+\partial
-  G_\ell(u_\ell)=\partial F(u_\ell)+ \{G_\ell'(u_\ell)\}.$ 
+  % Somit gilt nach \cref{thm:extremalprinciple}, 
+  % \cref{thm:subdifferentialSumRule} und \cref{thm:subdiffGateaux}, dass
+  Somit gilt nach den Theoremen \ref{thm:extremalprinciple} --
+  \ref{thm:subdifferentialSumRule}, dass
+  \begin{align*}
+    0\in\partial E_\ell(u_\ell) = \partial F(u_\ell)+\partial
+    G_\ell(u_\ell)=\partial F(u_\ell)+ \{G_\ell'(u_\ell)\}.
+  \end{align*}
   Daraus folgt
   $-G_\ell'(u_\ell)\in\partial F(u_\ell)$.
   Zusammen mit Ungleichung
@@ -330,8 +334,8 @@ dass diese Lösung eindeutig ist.
   \begin{align*}
     \alpha \Vert u_1 - u_2 \Vert^2
     &\leq
-    \big(f_1 -f_2, u_1-u_2 \big)\\
-    &\leq
+    \big(f_1 -f_2, u_1-u_2 \big)
+    \leq
     \Vert f_1-f_2\Vert\Vert u_1 - u_2\Vert.
   \end{align*}
   Falls $\Vert u_1 - u_2 \Vert = 0$, gilt die zu zeigende Aussage.
@@ -433,12 +437,13 @@ Mit dieser Notation gelten für die partiellen Ableitungen die Zusammenhänge
 \begin{align*}
   \partial_{x_1} &= 
   \cos(\varphi)\partial_r - \frac{1}{r}\sin(\varphi)\partial_\varphi
-  \quad\text{und }\\
-  \partial_{x_2} &= 
+  &&\text{und}
+  &\partial_{x_2} &= 
   \sin(\varphi)\partial_r - \frac{1}{r}\cos(\varphi)\partial_\varphi.
 \end{align*}
 Ist nun $g_P$ vom Winkel $\varphi$ unabhängig, so erhalten wir
-\begin{align*}
+\begin{align}
+  \label{eq:gradInPolarCoordinates}
   \nabla g_P 
   = 
   \begin{pmatrix}
@@ -446,13 +451,13 @@ Ist nun $g_P$ vom Winkel $\varphi$ unabhängig, so erhalten wir
     \sin(\varphi)
   \end{pmatrix}
   \partial_r g_P.
-\end{align*}
+\end{align}
 Unter Beachtung der trigonometrischen Zusammenhänge
 \begin{align*}
   \sin\big(\arctan(y)\big) &= \frac{y}{\sqrt{1+y^2}} &&\text{und}
   &\cos\big(\arctan(y)\big) &= \frac{1}{\sqrt{1+y^2}}
 \end{align*}
-ergibt sich 
+gilt
 \begin{align*}
   \begin{pmatrix}
     \cos(\varphi)\\
@@ -463,9 +468,9 @@ ergibt sich
   \begin{pmatrix}
     x_1\\
     x_2
-  \end{pmatrix}
+  \end{pmatrix}.
 \end{align*}
-und somit 
+Aus \Cref{eq:gradInPolarCoordinates} folgt damit
 \begin{align*}
   \nabla g_P
   = 
