@@ -1,11 +1,3 @@
-\todo[inline]{Adaptiven Algorithmus nochmal komplett aufschreiben, vgl
-Refinement Indicator Bild von CC. Vielleicht auch einfach nicht, aber 
-nochmal gucken das das marking in der AFEM-Doku übereinstimmt mit CCs Bild.
-Gesagt, getan. Stimmt überein.
-Am besten einfach auf markBulk usw Methode an der Stelle in der 
-Programmablauf Section verweisen, das sollte ausreichen. Dabei die Formeln 
-erwähnen}
-
 \section{Hinweise zur Benutzung des Programms}
 %\subsection{Aufbau des Programms}
 Ziel der für diese Arbeit implementierten Methoden ist die Realisierung von
@@ -48,9 +40,9 @@ Parameter und Einstellungen für das jeweilige Experiment aus der Datei
 \begin{center}
   \texttt{./nonconforming/benchmarks/benchmark.m}
 \end{center}
-geladen und als Felder des Structure Arrays \texttt{params} übergeben. Für
-jedes in dieser Arbeit dokumentierte Experiment verweisen wir in
-\Cref{chap:experiments} an entsprechender Stelle auf das dafür benutzte 
+geladen und als Felder eines Structure Arrays übergeben. 
+Für jedes in dieser Arbeit dokumentierte Experiment verweisen wir in
+\Cref{chap:experiments} an entsprechender Stelle auf das dafür benutzte
 Benchmark, welches in \texttt{./nonconforming/benchmarks/} zu finden ist und
 somit die Reproduzierbarkeit des Experiments garantiert. 
 Als Muster für eine Bechmark-Datei dient
@@ -58,8 +50,7 @@ Als Muster für eine Bechmark-Datei dient
   \texttt{./nonconforming/benchmarks/editable.m}.
 \end{center}
 Eine Übersicht über die in einer Benchmark-Datei wählbaren Parameter ist
-zu finden in den Tabellen \ref{tab:paramsMisc}, \ref{tab:paramsAFEM}, 
-\ref{tab:paramsIteration}, \ref{tab:paramsExperiment} und \ref{tab:paramsDoc}
+zu finden in den Tabellen \ref{tab:paramsMisc} -- \ref{tab:paramsDoc}
 sowie über die definierbaren Funktion in \Cref{tab:paramsFunctions}.
 Details zu den Datentypen sind in \texttt{editable.m} aufgeführt.
 Dass die zahlreichen Parameter, die während des Pro\-gramm\-ab\-laufs
@@ -67,8 +58,8 @@ Dass die zahlreichen Parameter, die während des Pro\-gramm\-ab\-laufs
 Struc\-ture Ar\-rays gespeichert werden, dient der Modifizierbarkeit des
 Programms. 
 So haben Korrekturen und Ergänzungen am Programm häufig nur zur Folge, dass
-einige \texttt{structs} um Felder ergänzt werden müssen während die 
-Methodenköpfe unverändert bleiben können.
+einige \texttt{structs} um Felder ergänzt werden müssen während Methodenköpfe
+unverändert bleiben können.
 Das Eingangssignal $f$ und eventuell weitere Funktionen, wie etwa die exakte
 Lösung $u$ von \Cref{prob:continuousProblem} und ihre schwache Ableitung
 $\nabla u$, müssen in der Benchmark-Datei angegeben werden, um sie dem
@@ -188,7 +179,7 @@ genutzt werden.
     \hline
     \texttt{u0Mode} 
     & Startwert $u_0$ für \Cref{alg:primalDualIteration} auf dem ersten Level
-    und, falls \texttt{useProlongation == true}, für die Iteration auf allen
+    und, falls \texttt{useProlongation == false}, für die Iteration auf allen
     Leveln der AFEM-Routine (\texttt{'zeroes'} für $u_0=0$ und
     \texttt{'interpolationRhs'}, falls für $u_0$ die nichtkonforme Interpolation
     des Eingangssignals $f$ genutzt werden soll)\\
@@ -296,9 +287,9 @@ genutzt werden.
 \section{Programmablauf}
 \label{sec:programFlow}
 
-In diesen Abschnitt betrachten wir eine beispielhafte Ausführung des Programms,
+In diesem Abschnitt betrachten wir eine beispielhafte Ausführung des Programms,
 bei der alle relevanten Methoden genutzt werden.
-In der Benchmark-Datei für den Programmaufruf müssen dafür, neben den
+In der Benchmark-Datei für den Programmaufruf müssen dafür, neben dem
 Eingangssignal $f\in H^1_0(\Omega)$, die Lösung $u\in H^1_0(\Omega)$, die
 exakte Energie $E(u)$ und der schwache Gradient von $f$ gegeben sein. 
 Damit diese Informationen tatsächlich genutzt werden, müssen zusätzlich einige
@@ -313,8 +304,8 @@ Diese Wahlen sind
 Noch in der Benchmark-Datei werden mit den gewählten Einstellungen die
 benötigten geometrischen Datenstrukturen für die Triangulierung $\Tcal$
 initialisiert. 
-Diese werden mit allen weiteren Informationen als Felder eines Structure Arrays
-gespeichert und an das Hauptprogramm übergeben. 
+Diese werden mit allen weiteren gegebenen Informationen als Felder eines
+Structure Arrays gespeichert und an das Hauptprogramm übergeben. 
 Dort werden zunächst Structure Arrays mit Feldern für die benötigten Daten
 während der AFEM-Routine sowie deren Ergebnisse erstellt. 
 Insbesondere wird der Startwert $u_0$ für die primale-duale Iteration
@@ -428,11 +419,10 @@ Dann gilt
   - 2\alpha\sum_{k=1}^3 v_k\int_T f\psi_{E_k}\!|_T\dx
   + \alpha^2 \sum_{k=1}^3 \sum_{\ell=1}^3 
   v_k \left(\psi_{E_k}\!|_T,\psi_{E_\ell}|_T\right)_{L^2(T)}v_\ell.
-\end{align*}
-Zur Berechung des ersten Terms nutzen wir die \texttt{integrate} Methode des
-AFEM-Soft\-ware\-pakets und für den zweiten Terms merken wir an, dass die
-Integrale $\int_T f\psi_{E_k}\!|_T\dx$, $k\in\{1,2,3\}$, bereits ermittelt
-wurden.
+\end{align*} Zur Berechung des ersten Terms nutzen wir die \texttt{integrate}
+Methode des AFEM-Soft\-ware\-pakets und für die Berechnung des zweiten Terms
+merken wir an, dass die Integrale $\int_T f\psi_{E_k}\!|_T\dx$,
+$k\in\{1,2,3\}$, bereits ermittelt wurden.
 Der letzte Term vereinfacht sich durch Nutzung der expliziten Darstellung
 \eqref{eq:localMassmatrix} der lokalen Massematrix $M_T$ zu
 \begin{align*}
@@ -635,7 +625,7 @@ T$ berechnet werden durch
 
 Sei $\vcr\in\CR^1(\Tcal)$.
 Für die in dieser Arbeit implementierte Prolongation von $\vcr$ auf eine
-Verfeinerung der Triangulierung $\Tcal$ oder für die Berechnung der $L^1$-Norm
+Verfeinerung der Triangulierung $\Tcal$ und für die Berechnung der $L^1$-Norm
 der Kantensprünge von $\vcr$ benötigen wir für jedes Dreieck $T\in\Tcal$ die
 Werte von $\vcr$ in den Knoten von $T$. 
 Dazu sei $T = \conv\{P_1, P_2, P_3\}$ mit den Kanten
