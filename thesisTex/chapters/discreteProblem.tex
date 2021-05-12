@@ -145,7 +145,9 @@ Als nächstes wollen wir äquivalente Charakterisierungen der eindeutigen Lösun
 von \Cref{prob:discreteProblem} beweisen, die von Professor Carstensen
 formuliert wurden.
 Dazu leiten wir zunächst ein zu \Cref{prob:discreteProblem} äquivalentes
-Sattelpunktsproblem her. Wir betrachten die konvexe Menge 
+Sattelpunktsproblem \todo{überlegen, ob ich das wirklich, wie Bartels,
+Sattelpunktsproblem nennen möchte oder einfach von einem 'äquivalenten' Problem
+reden will} her. Wir betrachten die konvexe Menge 
 \begin{align*}
   K
   \coloneqq 
@@ -210,9 +212,12 @@ Damit folgt aus den Ungleichungen \eqref{eq:saddlepointLeqEnergy} und
   =\sup_{\Lambda_0\in P_0\left(\Tcal;\Rbb^2\right)\cap K}L(\vcr,\Lambda_0)
   =\sup_{\Lambda_0\in P_0\left(\Tcal;\Rbb^2\right)}L(\vcr,\Lambda_0).
 \end{equation}
+\todo[inline]{Kopiere sowas wie die eine zu löschende Zeile unten, in der
+auf beiden Seiten noch das Infimum ergänzt wird, hier hoch}
 Insbesondere ist damit die Funktion $\ucr\in\CR^1_0(\Tcal)$ aus der Lösung
 $\left( \ucr,\bar\Lambda_0 \right)\in\CR^1_0(\Tcal)\times
-P_0\left(\Tcal;\Rbb^2\right)$ des folgenden Sattelpunktsproblems eine Lösung
+P_0\left(\Tcal;\Rbb^2\right)$ des folgenden Sattelpunktsproblems
+\todo{siehe oben} eine Lösung
 von \Cref{prob:discreteProblem}.
 
 \begin{problem}\label{prob:discreteSaddlepointProblem}
@@ -270,6 +275,7 @@ Theorem beweisen.
 
   \textit{(i) $\Rightarrow$ (ii).}
   Sei $\tilde{u}_\CR$ Lösung von \Cref{prob:discreteProblem}.
+  \todo[inline]{Lösche von hier\ldots}
   Durch \Cref{eq:discreteEnergySaddlefunctionalEquality} wissen wir bereits,
   dass 
   \begin{align*}
@@ -303,6 +309,12 @@ Theorem beweisen.
     L(\vcr,\Lambda_0).
   \end{align*}
   Zusammen mit \Cref{eq:lagrangianEqualsInfSup} impliziert das
+  \todo[inline]{\ldots bis hier.}
+  \todo[inline]{Es muss noch argumentiert werden, dass die erste Komponente
+  des Sattelpunkts gleich $\tilde{u}_\CR$ ist (folgt aus der Eindeutigkeit der
+  Lösung und daraus (nochmal überlegen), dass jede erste Komponente eines 
+  Sattelpunkts Lösung des diskreten Problems ist}
+  \ldots nach \ldots existiert eine Sattelpunkt (,), d.h. es gilt
   \begin{align*}
     \inf_{\vcr\in\CR^1_0(\Tcal)}\sup_{\Lambda_0\in P_0\left(\Tcal;\Rbb^2\right)} 
     L(\vcr,\Lambda_0)
