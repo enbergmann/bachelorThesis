@@ -1,4 +1,3 @@
-\todo[inline]{Chap 6 nochmal Korrektur lesen und dann Tien schicken}
 Mache alle mögliche Sachen, prüfe Dinge die gelten sollen. Für ein
 Beispiel (z.B. CCs) fange mit basics an, also mal an einem Iterationsplot
 aufzeigen, dass die Energie tatsächlich von oben gegen was konvergiert und 
@@ -19,49 +18,48 @@ Als erste Experimente für CCs Benchmark alle möglichen Parameter untersuchen
 und danach begründen, warum für alle Experimente diese gewählt werden mit
 den Beobachtungen
 
-\bigskip
-Bei Beschreibung wie die Bilder der Einleitung zur Rauschunterdrückung
-entstanden sind auch erwähnen, dass $f=\alpha g$ eine Rolle spiele usw.
-
 \todo{ascent and descent flow, gradient flow heißt doch, dass
 Gradientenverfahren angewendet wurde, richtig?
 Stopping criteria sind in Punkt 6.2 von Bar12}
 \bigskip
-\todo[inline]{folgendes weniger ausführlich einbringen, wohl
-auch eher im Auswertungskapitel ,,in Bartels wird in
-citeEntsprechendesLemma die garantierte Rate für \ldots bewiesen. In unseren
-Experimenten \ldots}
 
-Zunächst betrachten wir \cite[S. 309, Theorem 10.7]{Bar15}. Diese
-Abschätzung kontrolliert den
-$L^2$-Fehler zwischen den Minimierern $u_\C\in S^1(\Tcal)$ und
-$u\in\BV(\Omega)\cap L^2(\Omega)$ des Funktionals $I$ aus \Cref{eq:rofModel} in
-den entsprechenden Räumen. Obwohl wir eine andere Formulierung des ROF-Modells 
-betrachten und sich insbesondere das Funktional $\Enc$ aus unserer diskreten,
-nichtkonformen Formulierung von $I$ unterscheidet, ähneln sich die 
-Probleme möglicherweise genug, um die folgende Rate für unsere Formulierungen
-experimentell feststellen zu können.
+\todo[inline]{Immer nur Beobachtungen aufschreiben, die Raten sagen, 
+Sachverhalte einbringen. Auswertungen dann eben, wie schon der Name sagt,
+in Auswertungen}
+\todo[inline]{Ab hier Content}
 
-\begin{theorem}
-  \label{thm:errorEstimateCourant}
-  Sei $\Omega\subset\Rbb^2$ sternförmig und $g\in L^\infty(\Omega)$.  Seien
-  weiterhin $u\in\BV(\Omega)\cap L^2(\Omega)$ und $u_\C\in S^1(\Tcal)$ die
-  Minimierer des Funktionals $I$ aus \Cref{eq:rofModel} in den entsprechenden
-  Räumen.
-
-  Dann existiert eine Konstante $c\in\Rbb_+$, sodass
-  \begin{align*}
-    \frac{\alpha}{2}\Vert u-u_\C\Vert^2\leq
-    ch^{1/2}.
-  \end{align*}
-\end{theorem}
+Zuerst allgemeines, alle Infromationen, die ggf bei allen Experimten in den 
+folgenden Abschnitten immer gleich sind und möglicherweise kurze Kommentare,
+warum diese entspreched gewählt sind.
 
 \bigskip
 
 Alle Experimentparamter die stets gleich gesetzt sind Eingangs einmal erwähnen,
 insbesondere degree4Integrate, was immer als 10 gesetzt wird, mit ähnlichem 
 Kommentar wie PB auf S 30
+
+\section{Betrachte Probleme}
+Einzelne Experimente in eigenen Subsections
+\bigskip
+
+Hier auch alle möglichen rechten Seiten beschreiben.
+Alle möglichen rechten Seiten hier auflisten, insbesondre die rechten 
+Seite mit exakten Lösungen mit verweise auf Kapitel 3.
+Die Funktionen entsprechend bezeichnen
+
+\bigskip
+
+Vielleicht auch hier dann
+
+\section{Betrachtungen der Iteration}
+
+Hier alles was man so über die Iteration sagen kann. Alles am Beispiel, dass
+
 \section{Bilder als Input und Rauschverminderung}
+
+Bei Beschreibung wie die Bilder der Einleitung zur Rauschunterdrückung
+entstanden sind auch erwähnen, dass $f=\alpha g$ eine Rolle spiele usw.
+
 \section{Alternative Kapitelstruktur: Anwendung am Beispiel der Benchmarks}
 \subsection{Experimente mit exakter Lösung: Benchmarks 'f01Bench' und 'f02'
 Bench}
