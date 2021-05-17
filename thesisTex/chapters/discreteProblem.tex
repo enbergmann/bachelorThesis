@@ -145,9 +145,8 @@ Als nächstes wollen wir äquivalente Charakterisierungen der eindeutigen Lösun
 von \Cref{prob:discreteProblem} beweisen, die von Professor Carstensen
 formuliert wurden.
 Dazu leiten wir zunächst ein zu \Cref{prob:discreteProblem} äquivalentes
-Sattelpunktsproblem \todo{überlegen, ob ich das wirklich, wie Bartels,
-Sattelpunktsproblem nennen möchte oder einfach von einem 'äquivalenten' Problem
-reden will} her. Wir betrachten die konvexe Menge 
+Minimaxproblem (nach \cite[Section 36]{Roc70}) her.
+Wir betrachten die konvexe Menge 
 \begin{align*}
   K
   \coloneqq 
@@ -168,7 +167,7 @@ L^\infty(\Omega;\Rbb^2)$ gegeben ist durch
 Aufgrund der Konvexität von $K$ ist $I_K$ konvex.
 Für $\vcr\in\CR^1_0(\Tcal)$ und $\Lambda_0\in
 P_0\left(\Tcal;\Rbb^2\right)\subset L^\infty(\Omega;\Rbb^2)$ können wir damit
-das Funktional
+die konvex-konkave Sattelfunktion (nach \cite[Section 33]{Roc70}) 
 $L:\CR^1_0(\Tcal)\times  P_0\left(\Tcal;\Rbb^2\right)\to [-\infty,\infty)$ 
 definieren durch
 \begin{align}\label{eq:discreteProblemLagrangeFunctional}
@@ -206,19 +205,27 @@ auch
 Außerdem ist $L(\vcr,\Lambda_0)>-\infty$ genau dann, wenn $\Lambda_0\in K$.
 Damit folgt aus den Ungleichungen \eqref{eq:saddlepointLeqEnergy} und
 \eqref{eq:saddlepointGeqEnergy} insgesamt
-\begin{equation}
+\begin{equation*}
   \label{eq:discreteEnergySaddlefunctionalEquality}
   \Enc(\vcr)
   =\sup_{\Lambda_0\in P_0\left(\Tcal;\Rbb^2\right)\cap K}L(\vcr,\Lambda_0)
   =\sup_{\Lambda_0\in P_0\left(\Tcal;\Rbb^2\right)}L(\vcr,\Lambda_0).
-\end{equation}
-\todo[inline]{Kopiere sowas wie die eine zu löschende Zeile unten, in der
-auf beiden Seiten noch das Infimum ergänzt wird, hier hoch}
-Insbesondere ist damit die Funktion $\ucr\in\CR^1_0(\Tcal)$ aus der Lösung
-$\left( \ucr,\bar\Lambda_0 \right)\in\CR^1_0(\Tcal)\times
-P_0\left(\Tcal;\Rbb^2\right)$ des folgenden Sattelpunktsproblems
-\todo{siehe oben} eine Lösung
-von \Cref{prob:discreteProblem}.
+\end{equation*}
+Insbesondere gilt damit 
+\begin{equation*}
+  \inf_{\vcr\in\CR^1_0(\Tcal)}\Enc(\vcr)
+  =
+  \inf_{\vcr\in\CR^1_0(\Tcal)}
+  \sup_{\Lambda_0\in P_0\left(\Tcal;\Rbb^2\right)}L(\vcr,\Lambda_0),
+\end{equation*}
+das heißt für eine Lösung $\left( \tilde{u}_\CR,\bar\Lambda_0
+\right)\in\CR^1_0(\Tcal)\times P_0\left(\Tcal;\Rbb^2\right)$ des folgenden
+Minimaxproblems gilt für die nach \Cref{thm:discreteProblemExistenceUniqueness} 
+eindeutige Lösung $\ucr\in\CR^1_0(\Tcal)$ von \Cref{prob:discreteProblem}, dass
+$\tilde{u}_\CR = \ucr$ in $\CR^1_0(\Tcal)$.
+\todo{eindeutige Lösung und damit eindeutigkeit der ersten Kopmponente des
+Sattelpunkts (s. Beweis unten) hier schon erwähnen oder lieber nicht?
+Entsprechend auch ucr oder tilde ucr im Problem hier}
 
 \begin{problem}\label{prob:discreteSaddlepointProblem}
   Finde $\left( \ucr,\bar\Lambda_0 \right)\in\CR^1_0(\Tcal)\times
@@ -232,6 +239,7 @@ von \Cref{prob:discreteProblem}.
   \end{align*}
 \end{problem}
 
+\todo{hier}
 Nachdem diese Vorbereitungen abgeschlossen sind, können wir nun folgendes
 Theorem beweisen.
 
