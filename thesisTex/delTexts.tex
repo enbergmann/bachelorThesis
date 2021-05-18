@@ -531,3 +531,37 @@ From continuousProblem.tex
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 From discreteProblem.tex
+
+  Durch \Cref{eq:discreteEnergySaddlefunctionalEquality} wissen wir bereits,
+  dass 
+  \begin{align*}
+    \Enc(\vcr) = \sup_{\Lambda_0\in
+    P_0\left(\Tcal;\Rbb^2\right)}L(\vcr,\Lambda_0)\quad\text{für alle }
+    \vcr\in\CR^1_0(\Tcal).
+  \end{align*}
+  Somit existiert für $\tilde{u}_\CR$ ein $\bar\Lambda_0\in
+  P_0\left(\Tcal;\Rbb^2\right)\cap K$ mit $\Enc\!\left(\tilde{u}_\CR\right) =
+  L\!\left(\tilde{u}_\CR,\bar\Lambda_0\right)$. 
+  Da außerdem $\tilde{u}_\CR$ \Cref{prob:discreteProblem} löst, folgt insgesamt
+  \begin{equation}
+    \label{eq:lagrangianEqualsInfSup}
+    \begin{aligned}
+      L\!\left(\tilde{u}_\CR,\bar\Lambda_0\right)
+      =
+      \Enc\!\left(\tilde{u}_\CR\right)
+      &=
+      \inf_{\vcr\in\CR^1_0(\Tcal)}\Enc(\vcr)\\
+      &=
+      \inf_{\vcr\in\CR^1_0(\Tcal)}
+      \sup_{\Lambda_0\in P_0\left(\Tcal;\Rbb^2\right)} L(\vcr,\Lambda_0).
+    \end{aligned}
+  \end{equation}
+  Weiterhin gilt nach \cite[S. 379, Lemma 36.1]{Roc70}, dass
+  \begin{align*}
+    \inf_{\vcr\in\CR^1_0(\Tcal)}\sup_{\Lambda_0\in P_0\left(\Tcal;\Rbb^2\right)} 
+    L(\vcr,\Lambda_0)
+    \geq 
+    \sup_{\Lambda_0\in P_0\left(\Tcal;\Rbb^2\right)} \inf_{\vcr\in\CR^1_0(\Tcal)} 
+    L(\vcr,\Lambda_0).
+  \end{align*}
+  Zusammen mit \Cref{eq:lagrangianEqualsInfSup} impliziert das

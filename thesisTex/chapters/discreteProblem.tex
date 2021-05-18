@@ -145,17 +145,17 @@ Als nächstes wollen wir äquivalente Charakterisierungen der eindeutigen Lösun
 von \Cref{prob:discreteProblem} beweisen, die von Professor Carstensen
 formuliert wurden.
 Dazu leiten wir zunächst ein zu \Cref{prob:discreteProblem} äquivalentes
-Minimaxproblem (nach \cite[Section 36]{Roc70}) her.
+Minimaxproblem nach \cite[Section 36]{Roc70} her.
 Wir betrachten die konvexe Menge 
 \begin{align*}
   K
   \coloneqq 
-  \left\{\Lambda\in L^\infty\left(\Omega;\Rbb^2\right)
+  \left\{\Lambda\in L^\infty\!\left(\Omega;\Rbb^2\right)
   \,\middle|\,|\Lambda(\bullet)| \leq 1 \text{ fast überall in }\Omega\right\}
 \end{align*}
 und das dazugehörige Indikatorfunktional
-$I_K:L^\infty(\Omega;\Rbb^2)\to\Rbb\cup\{\infty\}$, das für $\Lambda\in
-L^\infty(\Omega;\Rbb^2)$ gegeben ist durch
+$I_K:L^\infty\!\left(\Omega;\Rbb^2\right)\to\Rbb\cup\{\infty\}$, das für
+$\Lambda\in L^\infty\!\left(\Omega;\Rbb^2\right)$ gegeben ist durch
 \begin{align*}
   I_K(\Lambda)
   &\coloneqq
@@ -166,10 +166,10 @@ L^\infty(\Omega;\Rbb^2)$ gegeben ist durch
 \end{align*} 
 Aufgrund der Konvexität von $K$ ist $I_K$ konvex.
 Für $\vcr\in\CR^1_0(\Tcal)$ und $\Lambda_0\in
-P_0\left(\Tcal;\Rbb^2\right)\subset L^\infty(\Omega;\Rbb^2)$ können wir damit
-die konvex-konkave Sattelfunktion (nach \cite[Section 33]{Roc70}) 
-$L:\CR^1_0(\Tcal)\times  P_0\left(\Tcal;\Rbb^2\right)\to [-\infty,\infty)$ 
-definieren durch
+P_0\!\left(\Tcal;\Rbb^2\right)\subset L^\infty\!\left(\Omega;\Rbb^2\right)$
+können wir damit die Sattelfunktion $L:\CR^1_0(\Tcal)\times
+P_0\!\left(\Tcal;\Rbb^2\right)\to [-\infty,\infty)$ nach \cite[Section
+33]{Roc70} definieren durch
 \begin{align}\label{eq:discreteProblemLagrangeFunctional}
   L(\vcr,\Lambda_0) \coloneqq \int_\Omega\Lambda_0\cdot\gradnc\vcr\dx +
   \frac{\alpha}{2}\Vert \vcr\Vert^2 -\int_\Omega f\vcr\dx
@@ -177,7 +177,7 @@ definieren durch
 \end{align}
 Nun wählen wir $\vcr\in\CR^1_0(\Tcal)$ beliebig. 
 Mit der Cauchy-Schwarzschen Ungleichung gilt für alle
-$\Lambda_0\in P_0\left(\Tcal;\Rbb^2\right)\cap K$, dass
+$\Lambda_0\in P_0\!\left(\Tcal;\Rbb^2\right)\cap K$, dass
 \begin{align*}
   \int_\Omega \Lambda_0\cdot\gradnc\vcr\dx
   \leq 
@@ -191,8 +191,8 @@ Daraus folgt
   \sup_{\Lambda_0\in P_0\left(\Tcal;\Rbb^2\right)\cap K}L(\vcr,\Lambda_0)
   \leq \Enc(\vcr).
 \end{align}
-Weiterhin gilt, wenn wir $\Lambda_0\in P_0\left(\Tcal;\Rbb^2\right)\cap K$ mit
-der Signumfunktion aus \Cref{eq:signumFunction} elementweise auf allen
+Weiterhin gilt, wenn wir $\Lambda_0\in P_0\!\left(\Tcal;\Rbb^2\right)\cap K$
+mit der Signumfunktion aus \Cref{eq:signumFunction} elementweise auf allen
 $T\in\Tcal$ definieren durch $\Lambda_0(x)\in\sign\left(\gradnc\vcr(x)\right)$
 für alle $x\in \interior(T)$, dass $L(\vcr,\Lambda_0)=\Enc(\vcr)$ und deshalb
 auch
@@ -211,35 +211,64 @@ Damit folgt aus den Ungleichungen \eqref{eq:saddlepointLeqEnergy} und
   =\sup_{\Lambda_0\in P_0\left(\Tcal;\Rbb^2\right)\cap K}L(\vcr,\Lambda_0)
   =\sup_{\Lambda_0\in P_0\left(\Tcal;\Rbb^2\right)}L(\vcr,\Lambda_0).
 \end{equation*}
-Insbesondere gilt damit 
-\begin{equation*}
-  \inf_{\vcr\in\CR^1_0(\Tcal)}\Enc(\vcr)
-  =
-  \inf_{\vcr\in\CR^1_0(\Tcal)}
-  \sup_{\Lambda_0\in P_0\left(\Tcal;\Rbb^2\right)}L(\vcr,\Lambda_0),
-\end{equation*}
-das heißt für eine Lösung $\left( \tilde{u}_\CR,\bar\Lambda_0
-\right)\in\CR^1_0(\Tcal)\times P_0\left(\Tcal;\Rbb^2\right)$ des folgenden
-Minimaxproblems gilt für die nach \Cref{thm:discreteProblemExistenceUniqueness} 
-eindeutige Lösung $\ucr\in\CR^1_0(\Tcal)$ von \Cref{prob:discreteProblem}, dass
-$\tilde{u}_\CR = \ucr$ in $\CR^1_0(\Tcal)$.
-\todo{eindeutige Lösung und damit eindeutigkeit der ersten Kopmponente des
-Sattelpunkts (s. Beweis unten) hier schon erwähnen oder lieber nicht?
-Entsprechend auch ucr oder tilde ucr im Problem hier}
+Wenn also das folgende Minimaxproblem
+\ref{prob:discreteSaddlepointProblem} eine Lösung $\left(
+\tilde{u}_\CR,\bar\Lambda_0 \right)\in\CR^1_0(\Tcal)\times
+P_0\!\left(\Tcal;\Rbb^2\right)$ hat, dann löst die Funktion $\tilde{u}_\CR$
+\Cref{prob:discreteProblem}.
 
 \begin{problem}\label{prob:discreteSaddlepointProblem}
-  Finde $\left( \ucr,\bar\Lambda_0 \right)\in\CR^1_0(\Tcal)\times
-  P_0\left(\Tcal;\Rbb^2\right)$,
+  Finde $\left( \tilde{u}_\CR,\bar\Lambda_0 \right)\in\CR^1_0(\Tcal)\times
+  P_0\!\left(\Tcal;\Rbb^2\right)$,
   sodass
   \begin{align*}
-    L(\ucr,\bar\Lambda_0) 
+    L(\tilde{u}_\CR,\bar\Lambda_0) 
     = 
     \inf_{\vcr\in\CR^1_0(\Tcal)}\sup_{\Lambda_0\in P_0\left(\Tcal;\Rbb^2\right)}
     L(\vcr,\Lambda_0).
   \end{align*}
 \end{problem}
 
-\todo{hier}
+\begin{lemma}
+  \label{lem:existenceSaddlepoint}
+  Es existiert eine Lösung $\left( \tilde{u}_\CR,\bar\Lambda_0
+  \right)\in\CR^1_0(\Tcal)\times \left(P_0\!\left(\Tcal;\Rbb^2\right)\cap
+  K\right)$ von \Cref{prob:discreteSaddlepointProblem}.
+\end{lemma}
+
+\begin{proof}
+  Die Sattelfunktion $L$ aus \Cref{eq:discreteProblemLagrangeFunctional} ist in
+  ihrer ersten Komponente eine konvexe, unterhalbstetige, auf $\CR^1_0(\Tcal)$
+  reellwertige Funktion und
+  in ihrer zweiten Komponente eine konkave, oberhalbstetige, auf
+  $P_0\!\left(\Tcal;\Rbb^2\right)\cap K$ reellwertige Funktion.
+  Somit ist $L$ in beiden Komponenten abgeschlossen 
+  nach \cite[S. 52, 308]{Roc70}.  
+  Insgesamt ist $L$ damit eine konvex-konkave, propere und abgeschlossene
+  Funktion nach \cite[S. 349, 362 f.]{Roc70}, deren effektiver
+  Definitionsbereich nach \cite[362]{Roc70} die Menge $\CR^1_0(\Tcal)\times
+  \left( P_0\!\left(\Tcal;\Rbb^2\right)\cap K\right)$ ist.
+  Unter Beachtung der Isomorphie von $\CR^1_0(\Tcal)$ zu
+  $\Rbb^{|\Ecal(\Omega)|}$ und der Isomorphie von
+  $P_0\!\left(\Tcal;\Rbb^2\right)$ zu $\Rbb^{2|\Tcal|}$, folgt aus 
+  \cite[S. 397, Theorem 37.6]{Roc70} die Existenz eines Sattelpunkts
+  $\left(\tilde{u}_\CR,\bar\Lambda_0\right)\in \CR^1_0(\Tcal)\times \left(
+  P_0\!\left(\Tcal;\Rbb^2\right)\cap K\right)$ von $L$ nach \cite[380]{Roc70}.
+  Für diesen impliziert \cite[S. 380, Lemma 36.2]{Roc70}, dass 
+  \begin{align*}
+    \sup_{\Lambda_0\in P_0\left(\Tcal;\Rbb^2\right)}\inf_{\vcr\in\CR^1_0(\Tcal)}
+    L(\vcr,\Lambda_0)
+    =
+    L(\tilde{u}_\CR,\bar\Lambda_0) 
+    = 
+    \inf_{\vcr\in\CR^1_0(\Tcal)}\sup_{\Lambda_0\in P_0\left(\Tcal;\Rbb^2\right)}
+    L(\vcr,\Lambda_0).
+  \end{align*}
+  Somit löst $\left(\tilde{u}_\CR,\bar\Lambda_0\right)\in \CR^1_0(\Tcal)\times
+  \left( P_0\!\left(\Tcal;\Rbb^2\right)\cap K\right)$
+  \Cref{prob:discreteSaddlepointProblem}.
+\end{proof}
+
 Nachdem diese Vorbereitungen abgeschlossen sind, können wir nun folgendes
 Theorem beweisen.
 
@@ -250,7 +279,7 @@ Theorem beweisen.
   \begin{itemize}
     \item[(i)] \Cref{prob:discreteProblem} wird von $\tilde{u}_\CR$ gelöst.
     \item[(ii)] Es existiert ein
-      $\bar\Lambda_0\in P_0\left(\Tcal;\Rbb^2\right)$ mit
+      $\bar\Lambda_0\in P_0\!\left(\Tcal;\Rbb^2\right)$ mit
       $\left|\bar\Lambda_0(\bullet)\right|\leq 1$
       fast überall in $\Omega$, sodass
       \begin{equation}
@@ -283,74 +312,32 @@ Theorem beweisen.
 
   \textit{(i) $\Rightarrow$ (ii).}
   Sei $\tilde{u}_\CR$ Lösung von \Cref{prob:discreteProblem}.
-  \todo[inline]{Lösche von hier\ldots}
-  Durch \Cref{eq:discreteEnergySaddlefunctionalEquality} wissen wir bereits,
-  dass 
-  \begin{align*}
-    \Enc(\vcr) = \sup_{\Lambda_0\in
-    P_0\left(\Tcal;\Rbb^2\right)}L(\vcr,\Lambda_0)\quad\text{für alle }
-    \vcr\in\CR^1_0(\Tcal).
-  \end{align*}
-  Somit existiert für $\tilde{u}_\CR$ ein $\bar\Lambda_0\in
-  P_0\left(\Tcal;\Rbb^2\right)\cap K$ mit $\Enc\!\left(\tilde{u}_\CR\right) =
-  L\!\left(\tilde{u}_\CR,\bar\Lambda_0\right)$. 
-  Da außerdem $\tilde{u}_\CR$ \Cref{prob:discreteProblem} löst, folgt insgesamt
-  \begin{equation}
-    \label{eq:lagrangianEqualsInfSup}
-    \begin{aligned}
-      L\!\left(\tilde{u}_\CR,\bar\Lambda_0\right)
-      =
-      \Enc\!\left(\tilde{u}_\CR\right)
-      &=
-      \inf_{\vcr\in\CR^1_0(\Tcal)}\Enc(\vcr)\\
-      &=
-      \inf_{\vcr\in\CR^1_0(\Tcal)}
-      \sup_{\Lambda_0\in P_0\left(\Tcal;\Rbb^2\right)} L(\vcr,\Lambda_0).
-    \end{aligned}
-  \end{equation}
-  Weiterhin gilt nach \cite[S. 379, Lemma 36.1]{Roc70}, dass
-  \begin{align*}
-    \inf_{\vcr\in\CR^1_0(\Tcal)}\sup_{\Lambda_0\in P_0\left(\Tcal;\Rbb^2\right)} 
-    L(\vcr,\Lambda_0)
-    \geq 
-    \sup_{\Lambda_0\in P_0\left(\Tcal;\Rbb^2\right)} \inf_{\vcr\in\CR^1_0(\Tcal)} 
-    L(\vcr,\Lambda_0).
-  \end{align*}
-  Zusammen mit \Cref{eq:lagrangianEqualsInfSup} impliziert das
-  \todo[inline]{\ldots bis hier.}
-  \todo[inline]{Es muss noch argumentiert werden, dass die erste Komponente
-  des Sattelpunkts gleich $\tilde{u}_\CR$ ist (folgt aus der Eindeutigkeit der
-  Lösung und daraus (nochmal überlegen), dass jede erste Komponente eines 
-  Sattelpunkts Lösung des diskreten Problems ist}
-  \ldots nach \ldots existiert eine Sattelpunkt (,), d.h. es gilt
-  \begin{align*}
-    \inf_{\vcr\in\CR^1_0(\Tcal)}\sup_{\Lambda_0\in P_0\left(\Tcal;\Rbb^2\right)} 
-    L(\vcr,\Lambda_0)
-    =
-    L\!\left(\tilde{u}_\CR,\bar\Lambda_0\right)
-    =
-    \sup_{\Lambda_0\in P_0\left(\Tcal;\Rbb^2\right)} \inf_{\vcr\in\CR^1_0(\Tcal)} 
-    L(\vcr,\Lambda_0).
-  \end{align*}
-  Somit ist $\left(\tilde{u}_\CR,\bar\Lambda_0\right)\in 
-  \CR^1_0(\Tcal)\times ( P_0\left(\Tcal;\Rbb^2\right)\cap K)$ nach \cite[S. 380,
-  Lemma 36.2]{Roc70} Sattelpunkt 
-  von $L$ bezüglich der Maximierung über $ P_0\left(\Tcal;\Rbb^2\right)$ und
-  der Minimierung über $\CR^1_0(\Tcal)$. 
+  Nach \Cref{lem:existenceSaddlepoint} existiert eine Lösung
+  $\left(\hat{u}_\CR,\bar\Lambda_0\right)\in \CR^1_0(\Tcal)\times \left(
+  P_0\!\left(\Tcal;\Rbb^2\right)\cap K\right)$ 
+  von \Cref{prob:discreteSaddlepointProblem}. 
+  Außerdem wissen wir, dass damit $\hat{u}_\CR$ Lösung von
+  \Cref{prob:discreteProblem} ist.
+  Daraus folgt, da nach \Cref{thm:discreteProblemExistenceUniqueness} die
+  Lösung von \Cref{prob:discreteProblem} eindeutig ist, dass
+  $\hat{u}_\CR=\tilde{u}_\CR$ in $\CR^1_0(\Tcal)$.
+  Weiterhin wissen wir aus dem Beweis von \Cref{lem:existenceSaddlepoint}, dass
+  $\left(\tilde{u}_\CR,\bar\Lambda_0\right)$ Sattelpunkt der Funktion $L$ aus
+  \Cref{eq:discreteProblemLagrangeFunctional} ist.
   Das bedeutet nach \cite[380]{Roc70} insbesondere, dass $\tilde{u}_\CR$
-  Minimierer von $L(\bullet, \bar\Lambda_0)$ in $\CR^1_0(\Tcal)$ ist und
+  Minimierer von $L(\bullet, \bar\Lambda_0)$ in $\CR^1_0(\Tcal)$ und
   $\bar\Lambda_0$ Maximierer von $L\!\left(\tilde{u}_\CR,\bullet\right)$ über $
-  P_0\left(\Tcal;\Rbb^2\right)$.  
+  P_0\!\left(\Tcal;\Rbb^2\right)$ ist.  
   Mit dieser Erkenntnis können wir nun die entsprechenden
   Optimalitätsbedingungen diskutieren.
-  Zunächst bemerken wir, dass
-  $L\!\left(\tilde{u}_\CR,\bullet\right):P_0\left(\Tcal;\Rbb^2\right)\to
-  [-\infty,\infty)$ konkav ist.
-  Da $\bar\Lambda_0$ Maximierer von $L\!\left(\tilde{u}_\CR,\bullet\right)$ in 
-  $ P_0\left(\Tcal;\Rbb^2\right)$ ist, wird das konvexe Funktional
-  $-L(\tilde{u}_\CR,\bullet):P_0\left(\Tcal;\Rbb^2\right)\to
-  (-\infty,\infty]$ von $\bar\Lambda_0$ in $ P_0\left(\Tcal;\Rbb^2\right)$
-  minimiert.
+  Zunächst gilt, da
+  $L\!\left(\tilde{u}_\CR,\bullet\right):P_0\!\left(\Tcal;\Rbb^2\right)\to
+  [-\infty,\infty)$ konkav und
+  $\bar\Lambda_0$ Maximierer von $L\!\left(\tilde{u}_\CR,\bullet\right)$ in 
+  $ P_0\!\left(\Tcal;\Rbb^2\right)$ ist, dass das konvexe Funktional
+  $-L(\tilde{u}_\CR,\bullet):P_0\!\left(\Tcal;\Rbb^2\right)\to
+  (-\infty,\infty]$ von $\bar\Lambda_0$ in $ P_0\!\left(\Tcal;\Rbb^2\right)$
+  minimiert wird.
   %Nach den Theoremen \ref{thm:extremalprinciple},
   %\ref{thm:subdifferentialSumRule} und \ref{thm:subdiffGateaux} gilt somit
   Nach den Theoremen \ref{thm:extremalprinciple} --
@@ -368,7 +355,7 @@ Theorem beweisen.
   $\left(\gradnc\tilde{u}_\CR,\bullet\right)\in \partial
   I_K \left(\bar\Lambda_0\right)$. 
   Da $\bar\Lambda_0\in K$, folgt mit \Cref{def:subdifferential},
-  dass für alle $\Lambda_0\in  P_0\left(\Tcal;\Rbb^2\right)$ gilt
+  dass für alle $\Lambda_0\in  P_0\!\left(\Tcal;\Rbb^2\right)$ gilt
   \begin{align*}
     \left(\gradnc\tilde{u}_\CR,\Lambda_0-\bar\Lambda_0\right) 
     \leq 
@@ -376,7 +363,7 @@ Theorem beweisen.
     =
     I_K (\Lambda_0).
   \end{align*}
-  Falls $\Lambda_0\in  P_0\left(\Tcal;\Rbb^2\right)\cap K$, folgt insbesondere
+  Falls $\Lambda_0\in  P_0\!\left(\Tcal;\Rbb^2\right)\cap K$, folgt insbesondere
   \begin{align}
     \label{eq:scalarProductInequDiscreteProof}
     \left(\gradnc\tilde{u}_\CR,\Lambda_0-\bar\Lambda_0\right) 
@@ -386,7 +373,7 @@ Theorem beweisen.
     &\leq
     \left(\gradnc\tilde{u}_\CR,\bar\Lambda_0\right).
   \end{align}
-  Sei nun $\Lambda_0\in P_0\left(\Tcal;\Rbb^2\right)\cap K$ elementweise auf
+  Sei nun $\Lambda_0\in P_0\!\left(\Tcal;\Rbb^2\right)\cap K$ elementweise auf
   allen $T\in\Tcal$ durch $\Lambda_0(x)\in\sign\left(\gradnc\tilde{u}_\CR(x)\right)$
   definiert für alle $x\in\interior(T)$.
   Mit dieser Wahl von $\Lambda_0$, Ungleichung
@@ -447,7 +434,7 @@ Theorem beweisen.
   Somit ist auch \Cref{eq:discreteMultiplierL2Equality} gezeigt.
 
   \textit{(ii) $\Rightarrow$ (iii).}
-  Die Funktion $\bar\Lambda_0\in P_0(\Tcal;\Rbb^2)$ erfülle
+  Die Funktion $\bar\Lambda_0\in P_0\!\left(\Tcal;\Rbb^2\right)$ erfülle
   $\left|\bar\Lambda_0(\bullet)\right|\leq 1$ fast überall in $\Omega$ sowie
   die Gleichungen \eqref{eq:discreteMultiplierScalerProductEquality} und 
   \eqref{eq:discreteMultiplierL2Equality}. 
@@ -530,12 +517,12 @@ Theorem beweisen.
 Zum Schluss dieses Abschnitts wollen wir noch zwei Bemerkungen von Professor
 Carstensen erwähnen und kurz deren Gültigkeit begründen.
 Die erste ist in eine äquivalente Charakterisierung der dualen Variable
-$\bar\Lambda_0\in P_0\left(\Tcal;\Rbb^2\right)$ aus
+$\bar\Lambda_0\in P_0\!\left(\Tcal;\Rbb^2\right)$ aus
 \Cref{thm:discProbCharacterizationOfDiscreteSolutions} zur diskreten Lösung
 $\ucr\in\CR^1_0(\Tcal)$ von \Cref{prob:discreteProblem}.
 
 \begin{remark}
-  Dass $\bar\Lambda_0\in P_0\left(\Tcal;\Rbb^2\right)$ fast überall in $\Omega$
+  Dass $\bar\Lambda_0\in P_0\!\left(\Tcal;\Rbb^2\right)$ fast überall in $\Omega$
   \Cref{eq:discreteMultiplierScalerProductEquality} und
   $|\bar\Lambda_0(\bullet)|\leq 1$ erfüllt, ist äquivalent zu der Bedingung
   $\bar\Lambda_0(x)\in\sign(\gradnc \ucr(x))$ für alle $x\in\interior(T)$ für
