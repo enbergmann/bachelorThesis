@@ -63,6 +63,12 @@ function saveResultsCR(params, currData, ...
   u = output.u;
   corrVec = output.corrVec;
   energyVec = output.energyVec;
+  eNcAbsDiffVec = output.otherCorr.eNcAbsDiffVec;
+  bar15TerminationVec = output.otherCorr.bar15TerminationVec;
+  bar15TerminationWithoutL2Vec = output.otherCorr.bar15TerminationWithoutL2Vec; 
+  bar12TerminationVec = output.otherCorr.bar12TerminationVec; 
+  bar12TerminationSqrtVec = output.otherCorr.bar12TerminationSqrtVec; 
+   
 
 %% MAIN
   % create directory
@@ -211,6 +217,52 @@ function saveResultsCR(params, currData, ...
   ylabel('corr');
   fName = sprintf('%s/iteration/corr.png', dirName);
   saveas(corrFig, fName);
+
+  % TODO compare termination criteria
+  name = sprintf('%s/iteration/eNcAbsDiffVec.txt', dirName);
+  file = fopen(name, 'w');
+  fprintf(file, '%.8e\n', eNcAbsDiffVec);
+  fclose(file);
+
+  name = sprintf('%s/iteration/bar15TerminationVec.txt', dirName);
+  file = fopen(name, 'w');
+  fprintf(file, '%.8e\n', bar15TerminationVec);
+  fclose(file);
+
+  name = sprintf('%s/iteration/bar15TerminationWithoutL2Vec.txt', dirName);
+  file = fopen(name, 'w');
+  fprintf(file, '%.8e\n', bar15TerminationWithoutL2Vec);
+  fclose(file);
+
+  name = sprintf('%s/iteration/bar12TerminationVec.txt', dirName);
+  file = fopen(name, 'w');
+  fprintf(file, '%.8e\n', bar12TerminationVec);
+  fclose(file);
+
+  name = sprintf('%s/iteration/bar12TerminationVec.txt', dirName);
+  file = fopen(name, 'w');
+  fprintf(file, '%.8e\n', bar12TerminationSqrtVec);
+  fclose(file);
+
+  terminationFig = figure('visible', figVisible);
+  loglog(corrVec);
+  hold on
+  loglog(eNcAbsDiffVec);
+  loglog(bar15TerminationVec);
+  loglog(bar15TerminationWithoutL2Vec);
+  loglog(bar12TerminationVec);
+  loglog(bar12TerminationSqrtVec);
+  hold off
+  ftitle = sprintf(...
+    'loglog plot - corr for nrDof = %d, \\alpha = %d, \\beta = %d', ...
+    nrDof, parAlpha, parBeta);
+  title(ftitle);
+  xlabel('number of iterations');
+  legend([sprintf("corr"), sprintf("eNcAbsDiff"), sprintf("bar15"), ...
+    sprintf("bar15TerminationWithoutL2"), sprintf("bar12"), sprintf("bar12sqrt")], ...
+    'Location', 'SW');
+  fName = sprintf('%s/iteration/termination.png', dirName);
+  saveas(terminationFig, fName);
   
   % save discrete energies
   name = sprintf('%s/iteration/energyVec.txt', dirName);

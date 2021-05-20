@@ -44,6 +44,7 @@ function startAlgorithmCR(benchmark)
   % initialize outputLvl structs (structs for AFEM output)
 
   outputLvlHidden.hMax = [];
+  outputLvlHidden.hMin = [];
   outputLvlHidden.sumL1NormOfJumps = [];
   
   lvl = 0;
@@ -98,8 +99,11 @@ function startAlgorithmCR(benchmark)
   while(true)
     % initialize remaining current data
     hMax = max(length4s);
+    hMin = min(length4s);
     currData.hMax = hMax;
+    currData.hMin = hMin;
     outputLvlHidden.hMax(end+1, 1) = hMax;
+    outputLvlHidden.hMin(end+1, 1) = hMin;
 
     currData.area4e = computeArea4e(c4n, n4e);
 
@@ -146,7 +150,7 @@ function startAlgorithmCR(benchmark)
 
     % SOLVE (and save output information about the iteration)
     tic;
-    [u, output.corrVec, energyVec] = ...
+    [u, output.corrVec, energyVec, output.otherCorr] = ...
       solvePrimalDualFormulation(params, currData, u0, varLambda);
     outputLvlInfo.time(end+1, 1) = toc;
     outputLvlEnergy.energy(end+1, 1) = energyVec(end);

@@ -27,7 +27,7 @@ function params = editable %#ok<*MSNU,FNDEF>
     % set automatically to 'Square' if useImage == true
   initialRefinementLevel = 0;
   parTheta               = 0.5;
-  minNrDof               = 1e4;
+  minNrDof               = 1e8;
   useProlongation        = true;
   beta4Estimate          = 1;
   n4Estimate             = 2;
@@ -35,7 +35,7 @@ function params = editable %#ok<*MSNU,FNDEF>
 
   % algorithm parameters
   u0Mode         = 'zeros'; 
-  initialEpsStop = 1e-3; 
+  initialEpsStop = 1e-8; 
   stopCrit       = ["Exact Error Difference", ...
                     "weighted energy difference"]; 
   parTau         = 1/2; % Bar15: tau = h^{1/2}/10, time step-size
@@ -64,7 +64,7 @@ function params = editable %#ok<*MSNU,FNDEF>
   saveScreenshots        = 0; 
                               
   % information about experiment for saving and documentation.
-  expName                = 'f01TestTerminationCriteria';
+  expName                = 'f01TestTerminationCriteria_1e-8';
   %dirInfoName            = sprintf('alpha=%d', parAlpha);
   dirInfoName            = sprintf('%s', ...
     datestr(now, 'yy_mm_dd_HH_MM_SS'));

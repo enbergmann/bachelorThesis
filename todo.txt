@@ -1,4 +1,6 @@
 CURRENT TODOS
+Section Name: Convergence of energies (see Bar12, do some experiment chapter
+like that)
 
 find alpha that denoises
 

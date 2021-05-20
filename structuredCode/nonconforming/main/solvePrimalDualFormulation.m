@@ -1,4 +1,4 @@
-function  [u, corrVec, energyVec] = ...
+function  [u, corrVec, energyVec, otherCorr] = ...
     solvePrimalDualFormulation(params, currData, u, varLambda) 
 %% DOC
 % Executes the nonconfomring iteration on the triangulation given
@@ -110,16 +110,27 @@ function  [u, corrVec, energyVec] = ...
   % firstScreenshot = datestr(now, 'yy_mm_dd_HH_MM_SS');
 
   A = stiMaCR/parTau+parAlpha*maMaCR; 
-    %TODO here could be an h in front of stiMaCR
-  %C = maMaCR + h*stiMaCR;
 
   gradCRu = gradientCR(currData, u);
+  E = computeDiscreteEnergyCR(params, currData, u, gradCRu);
 
   v = zeros(nrSides, 1);    
 
   corrVec = [];
-  energyVec = [];
+  energyVec = [E];
 
+  % prepare comparison between different termination criteria
+  otherCorr.eNcAbsDiffVec = [];
+
+  hMin = currData.hMin;
+  C = maMaCR + hMin*stiMaCR;
+  otherCorr.bar15TerminationVec = [];
+  otherCorr.bar15TerminationWithoutL2Vec = []; 
+    % p. 314, Alg. 10.1; p. 316, Prop. 10.8; p. 317, Section 10.2.4
+  otherCorr.bar12TerminationVec = []; 
+    % p. 1173, Section 6.2
+  otherCorr.bar12TerminationSqrtVec = []; 
+    
   % prepare computation of b
   elemPlusForSides = e4s(:, 1);
     % the j-th component contains the number of T_{+} for the j-th edge of the
@@ -222,13 +233,23 @@ function  [u, corrVec, energyVec] = ...
     gradCRu = gradientCR(currData, uNew);
     ENew = computeDiscreteEnergyCR(params, currData, uNew, gradCRu);
 
-    dtU = (u - uNew)/parTau; 
+    dtU = (u - uNew)/parTau; % = -v;
       % TODO here case distinction for termination criteria needs to be done
-    %corr = sqrt(dtU'*C*dtU); % Bartels termination criterion
     corr = sqrt(dtU'*stiMaCR*dtU); % Only gradients
       % TODO gradCRu already computed, so using the stiMa might be unnecessary
       % (cf. Tiens code)
+      
+    % for comparision of termination criteria
 
+    otherCorr.eNcAbsDiffVec(end+1) = abs(E-ENew);
+    otherCorr.bar15TerminationVec(end+1) = sqrt(dtU'*C*dtU);
+    otherCorr.bar15TerminationWithoutL2Vec(end+1) = ...
+      sqrt(hMin*dtU'*stiMaCR*dtU); 
+    otherCorr.bar12TerminationVec(end+1) = dtU'*maMaCR*dtU/energyVec(1); 
+    otherCorr.bar12TerminationSqrtVec(end+1) = ...
+      sqrt(dtU'*maMaCR*dtU)/energyVec(1); 
+
+    % update data
     u = uNew;
     E = ENew;
     energyVec(end+1) = E; %#ok<AGROW>
