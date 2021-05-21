@@ -1,4 +1,6 @@
 CURRENT TODOS
+geometry is automatically Square if useImage muss noch ergänzt werden
+
 Section Name: Convergence of energies (see Bar12, do some experiment chapter
 like that)
 
