@@ -245,9 +245,14 @@ function  [u, corrVec, energyVec, otherCorr] = ...
     otherCorr.bar15TerminationVec(end+1) = sqrt(dtU'*C*dtU);
     otherCorr.bar15TerminationWithoutL2Vec(end+1) = ...
       sqrt(hMin*dtU'*stiMaCR*dtU); 
-    otherCorr.bar12TerminationVec(end+1) = dtU'*maMaCR*dtU/energyVec(1); 
-    otherCorr.bar12TerminationSqrtVec(end+1) = ...
-      sqrt(dtU'*maMaCR*dtU)/energyVec(1); 
+    %otherCorr.bar12TerminationVec(end+1) = dtU'*maMaCR*dtU/energyVec(1); 
+    %otherCorr.bar12TerminationSqrtVec(end+1) = ...
+    %  sqrt(dtU'*maMaCR*dtU)/energyVec(1); 
+    %  TODO should be divided by E(0), which is ||g|| in Bartels but 0 here
+    %     hence use it without division for now (what does a factor even
+    %     matter?)
+    otherCorr.bar12TerminationVec(end+1) = dtU'*maMaCR*dtU; 
+    otherCorr.bar12TerminationSqrtVec(end+1) = sqrt(dtU'*maMaCR*dtU); 
 
     % update data
     u = uNew;

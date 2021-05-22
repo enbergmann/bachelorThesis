@@ -1,4 +1,7 @@
 Kann für größten diam(T) die längste Seite der Triangulierung genommen werden
 bzw für kleinsten diam(T) die kürzeste Seite oder gibt es da Probleme?
 
+bar12 termination, warum durch E(0), wie ist das Teilen durch Konstanten jemals
+relevant 
+das gleiche gilt für h/10, wobei ich das noch eher einsehen kann
 

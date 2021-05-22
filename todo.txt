@@ -1,4 +1,8 @@
 CURRENT TODOS
+E(0) isn't the first energy but obviously the energy evaluated in 0, which
+for Bartels is the L2 norm of the input signal but for out formulation 0
+  (hence either use norm of input or leave it out)
+
 geometry is automatically Square if useImage muss noch ergänzt werden
 
 Section Name: Convergence of energies (see Bar12, do some experiment chapter
