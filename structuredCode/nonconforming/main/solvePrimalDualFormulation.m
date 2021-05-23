@@ -91,6 +91,7 @@ function  [u, corrVec, energyVec, otherCorr] = ...
   showPlots = params.showPlots;
   plotModeGrayscale = params.plotModeGrayscale;
 
+
   % extract necessary information from currData
   stiMaCR = currData.stiMaCR;
   maMaCR = currData.maMaCR;
@@ -130,7 +131,14 @@ function  [u, corrVec, energyVec, otherCorr] = ...
   otherCorr.bar12TerminationVec = []; 
     % p. 1173, Section 6.2
   otherCorr.bar12TerminationSqrtVec = []; 
-    
+  
+  %% TODO
+  %% test parTau = sqrt(h)/10
+  %parTau = sqrt(hMin)/10;
+  %if parTau>1, parTau = 1; end;
+  %A = stiMaCR/parTau+parAlpha*maMaCR; 
+  %% TODO
+
   % prepare computation of b
   elemPlusForSides = e4s(:, 1);
     % the j-th component contains the number of T_{+} for the j-th edge of the
@@ -263,6 +271,8 @@ function  [u, corrVec, energyVec, otherCorr] = ...
     % show miscellaneous information
     if showProgress
       fprintf(repmat('\b', 1, lineLength));
+      %lineLength = fprintf('%e      %f        %d', ...
+      %  corr, E, length(corrVec));
       lineLength = fprintf('%e      %f        %d', ...
         corr, E, length(corrVec));
     end

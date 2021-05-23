@@ -2,6 +2,19 @@ Kann für größten diam(T) die längste Seite der Triangulierung genommen werde
 bzw für kleinsten diam(T) die kürzeste Seite oder gibt es da Probleme?
 
 bar12 termination, warum durch E(0), wie ist das Teilen durch Konstanten jemals
-relevant 
+relevant (verschiebt den Graphen im loglog Plot doch lediglich um eine
+Konstante, meistens nach oben)
 das gleiche gilt für h/10, wobei ich das noch eher einsehen kann
 
+kleine tau und alpha nicht groß lässt die energie nur osszilierend von oben
+konvergieren (s. Ordner)
+wird alpha zu kleinen tau groß gewählt, behebt dass den Effekt.
+Die obere Schranke der Summe im Beweis ist c/(tau*alpha), d.h. die Schranke
+ist für z.B. alpha=1 und tau=1/100 schon relativ groß, wahrscheinlich größer
+als 100
+kann das das verhalten erklären?
+falls ja, wäre dann tau = 1 nicht die ideale Wahl?
+das wäre dann eine Section in Experimenten wert, die das vermutet und dann per
+Experimenten überprüft, ob tau=1 besser ist als tau=1/100 etc
+Gleiches für die Wahl von alpha (nur das alpha noch mehr Anwendung dahinter hat),
+aber große alpha sollten für die Iteration besser sein als kleine 

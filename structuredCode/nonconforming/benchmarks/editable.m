@@ -38,7 +38,7 @@ function params = editable %#ok<*MSNU,FNDEF>
   initialEpsStop = 1e-3; 
   stopCrit       = ["Exact Error Difference", ...
                     "weighted energy difference"]; 
-  parTau         = 1/2; % Bar15: tau = h^{1/2}/10, time step-size
+  parTau         = 1; % Bar15: tau = h^{1/2}/10, time step-size
   % TODO look at proof, tau needs to be between 0 and 1
   % Bar12 has the L2 norm in alg P1 and hence also the L2 norm in the
   % termination criterion (but squared), epsilon is 10^-6
