@@ -1,13 +1,51 @@
-Kann für größten diam(T) die längste Seite der Triangulierung genommen werden
-bzw für kleinsten diam(T) die kürzeste Seite oder gibt es da Probleme?
+corr = ||| uCR - uj ||| / tau                                  (der?)
+eNcAbsDiff = | ENC(uCR) - ENC(uj) |
+bar15 =  sqrt{ || uCR - uj ||/tau + h ||| uCR - uj ||| } / tau
+bar15TerminationWithoutL2 =  h^{1/2} ||| uCR - uj ||| / tau    (oder der?)
+bar12sqrt = || uCR - uj || / tau                               (oder der?)
+bar12 = || uCR - uj ||^2 / tau^2                               
 
-bar12 termination, warum durch E(0), wie ist das Teilen durch Konstanten jemals
-relevant (verschiebt den Graphen im loglog Plot doch lediglich um eine
-Konstante, meistens nach oben)
-das gleiche gilt für h/10, wobei ich das noch eher einsehen kann
+(bar12, bar12sqrt) fälschlicherweise noch jeweils durch ENC(u0) geteilt,
+in bar12 ist es eigentlich druch E(0) (= ||g|| ?) geteilt. Wozu, welche
+Relevanz hat so ein Faktor, der verschiebt doch nur den Konvergenzgraph auf der 
+y-Achse, oder.
 
+0) kann man die Sachen in den folgenden Punkten jeweils so kurz dokumentiern
+   und so die Wahl des Abbruchskriteriums oder z.B. von Parametern begründen?
+
+1) terminatin Criteria Vergleich (f01Term und camTerm)
+    - eNcAbsDiff wegen Oszillation ungeeignet (da das mal 'zu früh') die 
+      Toleranz erreichen kann obwohl es noch nicht soweit ist
+    - die anderen sind alle gleich gut, oder? ist die Höhe der Graphen relevant?
+      (natürlich müsste man epsStop analog kleiner wählen, wenn man z.B. den
+      parallel und niedrigeren bar15TerminationWithoutL2 wählt)
+
+2) Größe von epsStop: dokumentieren, dass z.B. bei 10^{-2} der Fehler irgendwann
+nicht mehr fällt und damit die Wahl 10^{-4} (ca.) begründen.
+Ein Plot, in denen der L^2 Fehler (und/oder Fehler der Energien) verglichen wird
+(untersuchen, ob es da qualitative Unterschiede gibt zwischen -3, -4, -5, ...)
+
+3) |||.||| ~ h^{-1} ||.|| korrekt? Enc stetig bzgl Konvergenz in L2 (Zsmh. 
+   zwischen eNc und bar12sqrt)
+   (discrete Poincare (bar15, Lem 3.7), inverse Ungleichung (bar15, Lem. 3.5)),
+   Bsp. Lvl13 in f01eps10^{-4} hat hMin ~ 10^{-3}, Graphen sehen korrekt verschoben aus
+
+4) Ist ,,Rechnen lassen, bis der Server das Level nicht mehr schafft" legitim
+   (und wie würde man das vielleicht aufschreiben) oder sollte ich mir ein
+   einheitliches Abbruchkriterium für AFEM ausdenken (z.B. 1 Tag Rechenzeit oder
+   700k nrDof)?
+
+5) Kann für größten diam(T) die längste Seite der Triangulierung genommen werden
+   bzw für kleinsten diam(T) die kürzeste Seite oder gibt es da Probleme?
+
+so) bar12 termination, warum durch E(0), wie ist das Teilen durch Konstanten
+    jemals relevant (verschiebt den Graphen im loglog Plot doch lediglich um
+    eine Konstante, meistens nach oben)
+    das gleiche gilt für h/10, wobei ich das noch eher einsehen kann
+
+6)
 kleine tau und alpha nicht groß lässt die energie nur osszilierend von oben
-konvergieren (s. Ordner)
+konvergieren (s. Ordner) (auch tau = h/10 oder so ähnlich (bartels))
 wird alpha zu kleinen tau groß gewählt, behebt dass den Effekt.
 Die obere Schranke der Summe im Beweis ist c/(tau*alpha), d.h. die Schranke
 ist für z.B. alpha=1 und tau=1/100 schon relativ groß, wahrscheinlich größer
