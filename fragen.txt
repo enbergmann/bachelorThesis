@@ -1,6 +1,9 @@
 corr = ||| uCR - uj ||| / tau                                  (der?)
 eNcAbsDiff = | ENC(uCR) - ENC(uj) |
-bar15 =  sqrt{ || uCR - uj ||/tau + h ||| uCR - uj ||| } / tau
+bar15 =  sqrt{ || uCR - uj ||^2/tau + h ||| uCR - uj |||^2 } / tau
+
+M+hS
+
 bar15TerminationWithoutL2 =  h^{1/2} ||| uCR - uj ||| / tau    (oder der?)
 bar12sqrt = || uCR - uj || / tau                               (oder der?)
 bar12 = || uCR - uj ||^2 / tau^2                               

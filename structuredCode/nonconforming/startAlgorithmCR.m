@@ -220,6 +220,7 @@ function startAlgorithmCR(benchmark)
     % REFINE (and prolongate solution to new mesh if needed)
     c4nOld = c4n;
     n4eOld = n4e;
+    n4sDbOld = n4sDb;
 
     [c4n, n4e, n4sDb, n4sNb] = refineRGB(c4n, n4e, n4sDb, n4sNb, n4sMarked);
 
@@ -227,7 +228,8 @@ function startAlgorithmCR(benchmark)
       % compute inital value for the iteration on the next level if
       % useProlongation (needs to be done before projection of the nodes on the
       % edges if polygonMesh, else getParentSide will not work)
-      u0 = computeRefinementExtensionCR(c4nOld, n4eOld, c4n, n4e, u);
+      %u0 = computeRefinementExtensionCR(c4nOld, n4eOld, c4n, n4e, u);
+      u0 = prolongationJ1(c4nOld, n4eOld, n4sDbOld, c4n, n4e, u);
     end
 
     if polygonMesh
