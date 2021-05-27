@@ -54,7 +54,7 @@ function computeExactEnergyBV(geometry, fStr, fStrParams, uStr, uStrParams, ...
   end
 
   if isempty(fStr), f = @(x) feval(fStr, x, fStrParams); 
-  else f = @(x) feval(fStr, x, fStrParams); end
+  else, f = @(x) feval(fStr, x, fStrParams); end
   if isempty(uStrParams), u = @(x) feval(uStr, x); 
   else, u = @(x) feval(uStr, x, uStrParams); end
   if isempty(gradUStrParams), gradU = @(x) feval(gradUStr, x);
