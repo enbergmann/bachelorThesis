@@ -474,24 +474,26 @@ Zum Abschluss werden bereits Informationen für das nächste Level vorbereitet.
 Dazu gehören die Datenstrukturen, welche die verfeinerte Triangulierung
 $\hat\Tcal$ beschreiben sowie einige weitere Eigenschaften von
 $\hat\Tcal$, zum Beispiel die Anzahl und Längen der Seiten der Triangulierung.
-Soll als Startwert für das nächste Level die Prolongation $\hat
+Soll als Startwert für das nächste Level eine Prolongation $\hat
 u_J\in\CR^1_0\big(\hat\Tcal\big)$ von $u_J$ auf $\hat\Tcal$ genutzt werden,
 festgelegt durch den Parameter \texttt{useProlongation} aus
 \Cref{tab:paramsAFEM}, wird dies durch die Methode
 \begin{center}
-  \texttt{./nonconforming/common/computeRefinementExtensionCR.m}
+  \texttt{./nonconforming/common/prolongationJ1.m}
 \end{center}
 realisiert. 
-Dabei werden für alle $T\in\Tcal$ zunächst die lokalen Werte von $u_J|_T$ in
-den Knoten von $T$ berechnet. 
-Dies geschieht wie in \Cref{sec:localNodalValuesCR} beschrieben.
-Aus diesen Werten werden dann für alle $\hat T\in\hat\Tcal$ die Werte von
-$u_J|_{\hat T}$ in den Knoten von $\hat T$ und daraus die 
-Werte in den Mittelpunkten aller Kanten von $\hat\Tcal$ bestimmt. 
-Diese sind die Koeffizienten von $\hat u_J$ bezüglich der in
-\Cref{sec:crouzeixRaviartFunctions} beschriebenen Basis für die Triangulierung
-$\hat\Tcal$.
-
+Dabei wird der Operator $J_1:\CR^1_0(\Tcal)\to P_1(\Tcal)\cap C_0(\Omega)$ 
+aus \cite[1065]{CGS15} genutzt, wobei $J_1\vcr$ für eine Funktion $\vcr\in\CR^1_0(\Tcal)$ 
+in allen Innenknoten $z\in\Ncal(\Omega)$ definiert ist durch
+\begin{align*}
+  J_1\vcr(z)\coloneqq |\Tcal(z)|^{-1}\sum_{T\in\Tcal(z)}\vcr|_T(z).
+\end{align*}
+Als Prolongation wird $\hat u_J\coloneqq J_1 u_J\in P_1(\Tcal)\cap
+C_0(\Omega)\subseteq P_1\big(\hat\Tcal\big)\cap C_0(\Omega)
+\subseteq \CR^1_0\big(\hat\Tcal\big)$
+gewählt.
+Die Berechnung der dabei benötigten lokalen Knotenwerte von $u_J$ geschieht
+wie in \Cref{sec:localNodalValuesCR} beschrieben.
 
 \section{Realisierung der primalen-dualen Iteration}
 \label{sec:implementationPrimalDualIteration}

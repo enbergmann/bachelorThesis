@@ -1,12 +1,30 @@
 function vNew = prolongationJ1(c4n, n4e, n4sB, c4nNew, n4eNew, v)
-  % for any z \in \Ncal(Omega)
-  % J_1 vCR (z) = |\Tcal(z)|^{-1} \sum_{T\in\Tcal(z)}vCR|T(z)
+%% DOC
+% Computes the prolongation of a CR function v with respect to a mesh defined
+% by [c4n, n4e] to a one-level refinement of this mesh defined by [c4nNew,
+% n4eNew] using the enriching operator defined by
+% J_1 v (z) := |\Tcal(z)|^{-1} \sum_{T\in\Tcal(z)}v|_T(z) 
+% for all z\in\Ncal(\Omega).
+%
+% prolongationJ1.m
+% input: c4n    - coordinates for nodes of the coarse mesh
+%        n4e    - nodes for elements of the coarse mesh
+%        n4sB   - nodes for boundary sides of the coarse mesh
+%        c4nNew - coordinates for nodes of the refined mesh
+%        n4eNew - nodes for elements of the refined mesh
+%        v      - '(nrSides of the coarse mesh x 1)-dimensional double array'
+%                 where the j-th row contains the coefficient of the CR
+%                 function w.r.t. the j-th side of the coarse triangulation
+%
+% output: vNew   - '(nrSides of the refined mesh x 1)-dimensional double array'
+%                  where the j-th row contains the coefficient of the CR
+%                  prolongation of v w.r.t. the j-th side of the new
+%                  triangulation
 
 %% INIT
   s4n = computeS4n(n4e);
   n4sNew = computeN4s(n4eNew);
   s4e = computeS4e(n4e); 
-  n4s =  computeN4s(n4e);
   s4eNew = computeS4e(n4eNew);
 
   nrNodes = size(c4n, 1); 
@@ -30,11 +48,7 @@ function vNew = prolongationJ1(c4n, n4e, n4sB, c4nNew, n4eNew, v)
     nodeValuesJ1(indNode) = sum(localVals4node)/length(localVals4node);
   end
   
- 
   % compute prolongation using enriching operator
-  vNew = zeros(nrSidesNew, 1);
-
-  
   val = transpose(nodeValuesJ1); 
   val = val(:);
     % every three entries are w.r.t. to one triangle   
@@ -42,6 +56,7 @@ function vNew = prolongationJ1(c4n, n4e, n4sB, c4nNew, n4eNew, v)
   n4parentSides4n, e4n); 
     % now possible since values in nodes are known
     
+  vNew = zeros(nrSidesNew, 1);
   for elem = 1:nrElemsNew
     sides = s4eNew(elem, :);
     temp = valNew(3*elem - [2 1 0]); % values in nodes of current element
