@@ -1,0 +1,16 @@
+experiment eps 1e-2 (where L2 error stagnates) - to argue that energy difference of iterates and eps 1e-4 isn't far fetched
+
+compare different epsStop (1e-2, 1e-3, 5e-3, 1e-4, 5e-4, 1e-5) and compare the L2 errors. maybe find out that 1e-3 is enough. try to find largest eps such that error reduction is as good as with smaller eps
+
+---
+
+don't present l2 squared in tau comparison (unnecessary if l2 is presented)
+
+---
+
+reaffirm tauSize results for uniform refinement, just to make sure
+---> reaffirmed, same behaviour observed
+
+---
+
+Document that benchmark file name can only contain letters and numbers
