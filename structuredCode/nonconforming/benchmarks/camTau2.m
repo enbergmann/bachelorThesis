@@ -38,7 +38,7 @@ function params = editable %#ok<*MSNU,FNDEF>
   initialEpsStop = 1e-4; 
   stopCrit       = ["Exact Error Difference", ...
                     "weighted energy difference"]; 
-  parTau         = 2; % Bar15: tau = h^{1/2}/10, time step-size
+  parTau         = 1.1; % Bar15: tau = h^{1/2}/10, time step-size
   % TODO look at proof, tau needs to be between 0 and 1
   % Bar12 has the L2 norm in alg P1 and hence also the L2 norm in the
   % termination criterion (but squared), epsilon is 10^-6
@@ -64,10 +64,10 @@ function params = editable %#ok<*MSNU,FNDEF>
   saveScreenshots        = 0; 
                               
   % information about experiment for saving and documentation.
-  expName                = 'tauSize';
-  dirInfoName            = sprintf('cam/tau2');
-  %dirInfoName            = sprintf('%s', ...
-  %  datestr(now, 'yy_mm_dd_HH_MM_SS'));
+  expName                = 'tauSize/cam';
+  %dirInfoName            = sprintf('cam/tau2');
+  dirInfoName            = sprintf('%s', ...
+    datestr(now, 'yy_mm_dd_HH_MM_SS'));
   errorNorm              = ["L2", "energy"]; 
 
   % function handles (not effective if useImage == true)

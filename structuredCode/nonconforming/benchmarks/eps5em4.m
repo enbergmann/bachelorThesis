@@ -35,7 +35,7 @@ function params = editable %#ok<*MSNU,FNDEF>
 
   % algorithm parameters
   u0Mode         = 'zeros'; 
-  initialEpsStop = 1e-2; 
+  initialEpsStop = 5e-4; 
   stopCrit       = ["Exact Error Difference", ...
                     "weighted energy difference"]; 
   parTau         = 1; % Bar15: tau = h^{1/2}/10, time step-size
