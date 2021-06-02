@@ -1,6 +1,4 @@
 CURRENT TODOS
-is there a problem in the proof for tau in (0,1] and alpha = 1?
-
 energy during iteration doesn't strictly converge from above to some value
 for small tau (e.g. 1/100)
 
@@ -8,7 +6,6 @@ s. fragen.txt, Effekt von großen/kleinen alpha bzw. tau
 entsprechend ein paar Experiment mit gleicher Lösung machen und gleichem 
 Input (was alpha irgendwie disqualifiziert, oder?) und raten oder so
 in corr einzeichnen
-
 
 E(0) isn't the first energy but obviously the energy evaluated in 0, which
 for Bartels is the L2 norm of the input signal but for out formulation 0
