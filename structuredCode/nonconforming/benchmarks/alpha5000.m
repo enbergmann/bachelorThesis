@@ -47,7 +47,7 @@ function params = editable %#ok<*MSNU,FNDEF>
 
   % experiment parameters
   useImage               = true;
-  imageName              = 'f2bawgnSnr10cameraman.tif'; %#ok<NASGU> 
+  imageName              = 'f2bawgnSnr20cameraman.tif'; %#ok<NASGU> 
     % not effective if useImage == false
     % whiteSquare.tif, cameraman.tif
   parAlpha               = 5000; 
