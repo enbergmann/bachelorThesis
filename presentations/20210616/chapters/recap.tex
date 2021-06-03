@@ -1,26 +1,185 @@
+\subsection{Functions of Bounded Variation}
 \begin{frame}[noframenumbering]{Table of Contents}
   \tableofcontents[currentsection, currentsubsection]
 \end{frame}
 
-\subsection{Rudin-Osher-Fatemi Model Problem}
 \begin{frame}
-  ROF Problem beschreiben mit kurzer Def von $\BV(\Omega)$, $\alpha$ Bedeutung
-  nachliefern, vielleicht auch hier schon die Bilder zeigen mit Entrauschen (s.
-  Intro BA)
+  Let $U$ be an open subset of $\Rbb^d$. A function $v\in L^1(U)$ is a function
+  of bounded variation iff
+  \begin{align*}
+    |v|_{\BV(U)}
+    \coloneqq
+    \sup_{\substack{\phi\in C^1_C(U;\Rbb^d)\\
+    \Vert\phi\Vert_{L^\infty(U)}\leq 1}}\int_U v\Div (\phi)\dx
+    <
+    \infty.
+  \end{align*}
+  The space of all such functions is denoted by $\BV(U)$.
+  \pause
+  It is a Banach space equipped with the norm $\Vert \bullet
+  \Vert_{\BV(U)} \coloneqq \Vert \bullet\Vert_{L^1(U)} + |\bullet|_{\BV(U)}$.
+
+  \pause
+  \medskip
+  We have $W^{1,1}(\Omega)\subset\BV(\Omega)$ with $\Vert v\Vert_{\BV(\Omega)}=
+  \Vert v\Vert_{W^{1,1}(\Omega)}$ for all $v\in W^{1,1}(\Omega)$.
 \end{frame}
+
+\begin{frame}
+  \fullcite{ABM14}
+
+  \bigskip
+
+  \fullcite{EG92}
+\end{frame}
+
+\subsection{Rudin-Osher-Fatemi Model Problem}
+\begin{frame}[noframenumbering]{Table of Contents}
+  \tableofcontents[currentsection, currentsubsection]
+\end{frame}
+
+\begin{frame}
+  Let $\Omega\subset\Rbb^2$ be a bounded polygonal Lipschitz domain.
+  \begin{block}{Rudin-Osher-Fatemi (ROF) model problem}
+    For a parameter $\alpha\in \Rbb_+$ and an input signal $g\in L^2(\Omega)$
+    minimize the functional
+    \begin{align*}
+      I(v)
+      \coloneqq 
+      {\color<4>{red}{|v|_{\BV(\Omega)}}}
+      +\frac{\alpha}{2}
+      {\color<3>{red}{\Vert v-g\Vert_{L^2(\Omega)}^2}}
+    \end{align*}
+    amongst all $v\in\BV(\Omega)\cap L^2(\Omega)$.
+  \end{block}
+
+  \bigskip
+  \pause
+  \fullcite{ROF92}
+\end{frame}
+
+\begin{frame}
+  \begin{figure}[!ht]
+    \centering
+    \begin{subfigure}{.4\linewidth}
+      \caption*{Original picture$^0$}
+      \includegraphics[width=\linewidth]{pictures/cameraman.png}
+    \end{subfigure}
+    \quad
+    \uncover<2->{
+    \begin{subfigure}{.4\linewidth}
+      \caption*{Input signal}
+      \includegraphics[width=\linewidth]{pictures/snr20.png}
+    \end{subfigure}}
+  \end{figure}
+  \footnotetext{
+  \url{https://homepages.cae.wisc.edu/~ece533/images/cameraman.tif}}
+\uncover<2->{The input signal was created by adding AWGN with a SNR of 20 to
+the original picture.}
+\end{frame}
+
+\begin{frame}
+  \vspace{-4mm}
+    \begin{align*}
+      I(v)
+      \coloneqq 
+      {\color<3>{red}{|v|_{\BV(\Omega)}}}
+      +\frac{\alpha}{2}
+      {\color<2>{red}{\Vert v-g\Vert_{L^2(\Omega)}^2}}
+    \end{align*}
+  \vspace{-7mm}
+  \begin{figure}[!ht]
+    \centering
+    \begin{subfigure}{.3\linewidth}
+      \caption*{Original picture}
+      \vspace{-2mm}
+      \includegraphics[width=\linewidth]{pictures/cameraman.png}
+    \end{subfigure}
+    \quad
+    \begin{subfigure}{.3\linewidth}
+      \caption*{Input signal}
+      \vspace{-2mm}
+      \includegraphics[width=\linewidth]{pictures/snr20.png}
+    \end{subfigure}
+  
+    \vspace{3mm}
+    \uncover<3->{
+    \begin{subfigure}{.3\linewidth}
+      \includegraphics[trim = 60 20 60 20, clip, width=\linewidth]
+        {pictures/snr20/00100.png}
+      \caption*{$\alpha=100$}
+    \end{subfigure}}
+    \uncover<4->{
+    \begin{subfigure}{.3\linewidth}
+      \includegraphics[trim = 60 20 60 20, clip, width=\linewidth]
+        {pictures/snr20/05000.png}
+      \caption*{$\alpha=5000$}
+    \end{subfigure}}
+    \uncover<2->{
+    \begin{subfigure}{.3\linewidth}
+      \includegraphics[trim = 60 20 60 20, clip, width=\linewidth]
+        {pictures/snr20/50000.png}
+      \caption*{$\alpha=50000$}
+    \end{subfigure}}
+  \end{figure}
+\end{frame}
+
+\begin{frame}
+  \fullcite{Get12}
+\end{frame}
+
 \subsection{Continuous Problem}
+\begin{frame}[noframenumbering]{Table of Contents}
+  \tableofcontents[currentsection, currentsubsection]
+\end{frame}
+
+\begin{frame}
+  \begin{block}{Continuous problem}
+    For a parameter $\alpha\in \Rbb_+$ and an input signal $f\in L^2(\Omega)$
+    minimize the functional
+    \begin{align*}\label{eq:continuousProblem}
+      E(v)\coloneqq \frac{\alpha}{2}\Vert v\Vert^2 
+      + |v|_{\BV(\Omega)} 
+      + {\color<2>{red}{\Vert v\Vert_{L^1(\partial\Omega)}}}
+      - \int_\Omega fv\dx
+    \end{align*}
+    amongst all $v\in\BV(\Omega)\cap L^2(\Omega)$.
+  \end{block}
+
+  \bigskip
+  \uncover<3->{
+  For $f=\alpha g$ the functional $E$ has the same minimizers as
+  \begin{align*}
+    I(v)
+    \coloneqq 
+    |v|_{\BV(\Omega)}
+    +\frac{\alpha}{2}
+    \Vert v-g\Vert_{L^2(\Omega)}^2
+  \end{align*}
+  in $\left\{v\in\BV(\Omega)\cap L^2(\Omega) \mid \Vert
+  v\Vert_{L^1(\partial\Omega)}=0\right\}$.}
+\end{frame}
+
 \begin{frame}
   nochmal Existenz und Eindeutigkeitsaussagen zeigen und gaaaanz grob 
   beschreiben, wie die bewiesen werden
 \end{frame}
 
 \subsection{Discrete Problem}
+\begin{frame}[noframenumbering]{Table of Contents}
+  \tableofcontents[currentsection, currentsubsection]
+\end{frame}
+
 \begin{frame}
   nochmal Existenz und Eindeutigkeitsaussagen zeigen und gaaaanz grob 
   beschreiben, wie die bewiesen werden
 \end{frame}
 
 \subsection{Discrete Problem continues}
+\begin{frame}[noframenumbering]{Table of Contents}
+  \tableofcontents[currentsection, currentsubsection]
+\end{frame}
+
 \begin{frame}
   vielleicht in eigener Section: noch die Aussagen aus der Arbeit verarbeiten,
   die über Existenz und Eindeutigkeit hinausgehen
@@ -29,56 +188,9 @@
 
 \begin{frame}
   \fullcite[Chapter 10, p. 297-319]{Bar15}
-
-  \bigskip
-  \pause
-
-  Let $\Omega\subset\Rbb^n$ be a bounded polyhedral Lipschitz domain.
-
-  \medskip
-
-  For given $g\in L^2(\Omega)$ and $\alpha>0$ minimize the functional 
-  \begin{align*}
-    I(v)=|v|_{\BV(\Omega)}+\frac{\alpha}{2}\Vert v-g\Vert^2
-  \end{align*}
-  amongst all $v\in \BV(\Omega)\cap L^2(\Omega)$.
-\end{frame}
-
-\begin{frame}{Functions of Bounded Variation}
-  A function $v\in L^1(\Omega)$ with distributional derivative
-  $Dv:C^{\infty}_C(\Omega;\Rbb^n)\to\Rbb$ is said to be of bounded variation if 
-  there exists $c>0$ such that 
-  \begin{align*}
-    \langle Dv, \phi\rangle\coloneqq -\int_\Omega v\Div(\phi)\dx\leq
-    c\Vert\phi\Vert_{L^\infty(\Omega)}
-  \end{align*}
-  for all $\phi\in C^1_C(\Omega;\Rbb^n)$.
-
-  \pause  
-
-  The minimal constant $c\geq 0$ satisfying this property is called 
-  total variation of $Dv$ and is given by
-  \begin{align*}
-    |v|_{\BV(\Omega)} = \sup_{\substack{\phi\in C^1_C(\Omega;\Rbb^n)\\
-    \Vert\phi\Vert_{L^\infty(\Omega)}\leq 1}}-\int_\Omega v\Div (\phi)\dx.
-  \end{align*}
-
-  \pause
-
-  The space of all such functions is denoted by $\BV(\Omega)$.
 \end{frame}
 
 \begin{frame}{Properties of $\BV(\Omega)$}
-  $\BV(\Omega)$ is a Banach space equipped with the norm
-  \begin{align*}
-    \Vert v \Vert_{\BV(\Omega)} \coloneqq \Vert v\Vert_{L^1(\Omega)} +
-    |v|_{\BV(\Omega)}\quad\text{for all } v\in\BV(\Omega).
-  \end{align*}
-  
-  \pause
-  \medskip
-  $W^{1,1}(\Omega)\subset\BV(\Omega)$ with $\Vert v\Vert_{\BV(\Omega)}=
-  \Vert v\Vert_{W^{1,1}(\Omega)}$ for all $v\in W^{1,1}(\Omega)$.
 \end{frame}
 
 \begin{frame}{Notions of convergence on $\BV(\Omega)$}
