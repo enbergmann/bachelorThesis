@@ -15,7 +15,7 @@ function params = editable %#ok<*MSNU,FNDEF>
   showPlots              = false; 
   plotModeGrayscale      = false; 
     % not effective if showPlots == false
-  showProgress           = false; 
+  showProgress           = true; 
   degree4Integrate       = 10; 
   plotGivenFunctions     = false;
   refinementLevel4Plots  = 0; % 11 is very close to the limit
