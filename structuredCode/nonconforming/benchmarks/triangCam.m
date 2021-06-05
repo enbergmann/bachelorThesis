@@ -47,10 +47,10 @@ function params = editable %#ok<*MSNU,FNDEF>
 
   % experiment parameters
   useImage               = true;
-  imageName              = 'f2bawgnSnr20cameraman.tif'; %#ok<NASGU> 
+  imageName              = 'f2bcameraman.tif'; %#ok<NASGU> 
     % not effective if useImage == false
     % whiteSquare.tif, cameraman.tif
-  parAlpha               = 1000; 
+  parAlpha               = 10000; 
   parBeta                = 1;
   rhsGradientKnown       = true;
     % set automatically to false if useImage == true
@@ -64,8 +64,8 @@ function params = editable %#ok<*MSNU,FNDEF>
   saveScreenshots        = 0; 
                               
   % information about experiment for saving and documentation.
-  expName                = 'alpha4camDenoise';
-  dirInfoName            = sprintf('alpha=%d', parAlpha);
+  expName                = 'triang';
+  dirInfoName            = sprintf('cam');
   %dirInfoName            = sprintf('%s', ...
   %  datestr(now, 'yy_mm_dd_HH_MM_SS'));
   errorNorm              = ["L2", "energy"]; 

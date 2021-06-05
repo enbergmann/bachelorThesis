@@ -27,7 +27,7 @@ function params = editable %#ok<*MSNU,FNDEF>
     % set automatically to 'Square' if useImage == true
   initialRefinementLevel = 0;
   parTheta               = 0.5;
-  minNrDof               = 2e5;
+  minNrDof               = 1e8;
   useProlongation        = true;
   beta4Estimate          = 1;
   n4Estimate             = 2;

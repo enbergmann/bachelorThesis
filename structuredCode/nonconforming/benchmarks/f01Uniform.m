@@ -15,10 +15,10 @@ function params = editable %#ok<*MSNU,FNDEF>
   showPlots              = false; 
   plotModeGrayscale      = false; 
     % not effective if showPlots == false
-  showProgress           = false; 
+  showProgress           = true; 
   degree4Integrate       = 10; 
   plotGivenFunctions     = false;
-  refinementLevel4Plots  = 0; % 11 is very close to the limit
+  refinementLevel4Plots  = 5; % 11 is very close to the limit
     % not effective if plotGivenFunctions == false
   debugIfError           = false;
 
@@ -26,7 +26,7 @@ function params = editable %#ok<*MSNU,FNDEF>
   geometry               = 'BigSquare'; %#ok<NASGU>                     
     % set automatically to 'Square' if useImage == true
   initialRefinementLevel = 0;
-  parTheta               = 0.5;
+  parTheta               = 1;
   minNrDof               = 1e8;
   useProlongation        = true;
   beta4Estimate          = 1;
@@ -43,14 +43,15 @@ function params = editable %#ok<*MSNU,FNDEF>
   % Bar12 has the L2 norm in alg P1 and hence also the L2 norm in the
   % termination criterion (but squared), epsilon is 10^-6
   % tau is h/10 in the paper
+  % 1.1 did still work, 1.2 and bigger no convergence
   tauMode        = 'constant'; % TODO 'Bar15'; 'Bar12'
 
   % experiment parameters
-  useImage               = true;
+  useImage               = false;
   imageName              = 'f2bawgnSnr20cameraman.tif'; %#ok<NASGU> 
     % not effective if useImage == false
     % whiteSquare.tif, cameraman.tif
-  parAlpha               = 1000; 
+  parAlpha               = 1e0; 
   parBeta                = 1;
   rhsGradientKnown       = true;
     % set automatically to false if useImage == true
@@ -64,8 +65,8 @@ function params = editable %#ok<*MSNU,FNDEF>
   saveScreenshots        = 0; 
                               
   % information about experiment for saving and documentation.
-  expName                = 'alpha4camDenoise';
-  dirInfoName            = sprintf('alpha=%d', parAlpha);
+  expName                = 'f01AdaptiveAndUniform';
+  dirInfoName            = sprintf('uniform');
   %dirInfoName            = sprintf('%s', ...
   %  datestr(now, 'yy_mm_dd_HH_MM_SS'));
   errorNorm              = ["L2", "energy"]; 
