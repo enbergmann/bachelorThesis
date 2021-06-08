@@ -16,6 +16,8 @@ code/s1Version/program/evaluation/*.txt
 *.tdo
 *.run.xml
 *.synctex.gz
+*.nav
+*.snm
 results/*
 ccTo/*
 l2Error_1e-*

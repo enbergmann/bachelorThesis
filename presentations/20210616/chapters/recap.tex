@@ -63,13 +63,15 @@
     \centering
     \begin{subfigure}{.4\linewidth}
       \caption*{Original picture$^0$}
-      \includegraphics[width=\linewidth]{pictures/cameraman.png}
+      \includegraphics[width=\linewidth]
+        {pictures/recap/denoiseExample/cameraman.png}
     \end{subfigure}
     \quad
     \uncover<2->{
     \begin{subfigure}{.4\linewidth}
       \caption*{Input signal}
-      \includegraphics[width=\linewidth]{pictures/snr20.png}
+      \includegraphics[width=\linewidth]
+        {pictures/recap/denoiseExample/snr20.png}
     \end{subfigure}}
   \end{figure}
   \footnotetext{
@@ -93,33 +95,35 @@ the original picture.}
     \begin{subfigure}{.3\linewidth}
       \caption*{Original picture}
       \vspace{-2mm}
-      \includegraphics[width=\linewidth]{pictures/cameraman.png}
+      \includegraphics[width=\linewidth]
+        {pictures/recap/denoiseExample/cameraman.png}
     \end{subfigure}
     \quad
     \begin{subfigure}{.3\linewidth}
       \caption*{Input signal}
       \vspace{-2mm}
-      \includegraphics[width=\linewidth]{pictures/snr20.png}
+      \includegraphics[width=\linewidth]
+        {pictures/recap/denoiseExample/snr20.png}
     \end{subfigure}
   
     \vspace{3mm}
     \uncover<3->{
     \begin{subfigure}{.3\linewidth}
       \includegraphics[trim = 60 20 60 20, clip, width=\linewidth]
-        {pictures/snr20/00100.png}
-      \caption*{$\alpha=100$}
+        {pictures/recap/denoiseExample/alpha1e3.png}
+      \caption*{$\alpha=10^3$}
     \end{subfigure}}
     \uncover<4->{
     \begin{subfigure}{.3\linewidth}
       \includegraphics[trim = 60 20 60 20, clip, width=\linewidth]
-        {pictures/snr20/05000.png}
-      \caption*{$\alpha=5000$}
+        {pictures/recap/denoiseExample/alpha1e4.png}
+      \caption*{$\alpha=10^4$}
     \end{subfigure}}
     \uncover<2->{
     \begin{subfigure}{.3\linewidth}
       \includegraphics[trim = 60 20 60 20, clip, width=\linewidth]
-        {pictures/snr20/50000.png}
-      \caption*{$\alpha=50000$}
+        {pictures/recap/denoiseExample/alpha1e5.png}
+      \caption*{$\alpha=10^5$}
     \end{subfigure}}
   \end{figure}
 \end{frame}
@@ -151,7 +155,7 @@ the original picture.}
   For $f=\alpha g$ the functional $E$ has the same minimizers as
   \begin{align*}
     I(v)
-    \coloneqq 
+    = 
     |v|_{\BV(\Omega)}
     +\frac{\alpha}{2}
     \Vert v-g\Vert_{L^2(\Omega)}^2
@@ -161,8 +165,97 @@ the original picture.}
 \end{frame}
 
 \begin{frame}
-  nochmal Existenz und Eindeutigkeitsaussagen zeigen und gaaaanz grob 
-  beschreiben, wie die bewiesen werden
+  \begin{theorem}[Existence and uniqueness]
+    There exists a unique minimizer $u\in\BV(\Omega)\cap L^2(\Omega)$ for
+    $E=\frac{\alpha}{2}\Vert v\Vert^2 
+      + {\color<2>{red}{|v|_{\BV(\Omega)} 
+      + \Vert v\Vert_{L^1(\partial\Omega)}}}
+      - \int_\Omega fv\dx$ in 
+     $v\in\BV(\Omega)\cap L^2(\Omega)$.
+  \end{theorem}
+
+  \pause
+  \medskip
+  \begin{lemma}
+    Let $v\in\BV(\Omega)$.
+    For all $x\in\Rbb^d$, define
+    \begin{align*}
+      \tilde{v}(x)\coloneqq
+      \begin{cases}
+        v(x)  &\text{if } x\in\Omega,\\
+        0     &\text{if } x\in\Rbb^d\setminus\overline\Omega.
+      \end{cases} 
+    \end{align*}
+    Then $\tilde{v}\in\BV\!\left(\Rbb^d\right)$ and
+    $\left|\tilde{v}\right|_{\BV\!\left(\Rbb^d\right)}
+    = |v|_{\BV(\Omega)}+\Vert v\Vert_{L^1(\partial\Omega)}$.
+  \end{lemma}
+\end{frame}
+
+
+\begin{frame}
+  Let $U$ be an open subset of $\Rbb^d$.
+
+  \begin{definition}[Weak convergence in $\BV(U)$]
+    Let $(v_n)_{n\in\Nbb}\subset \BV(U)$ and $v\in \BV(U)$ with
+    $v_n\rightarrow v$ in $L^1(U)$ as $n\rightarrow\infty$.
+    Then $(v_n)_{n\in\Nbb}$ converges weakly to $v$ in $\BV(U)$ iff,
+    for all $\phi\in C_0(U;\Rbb^d)$, it holds
+    \begin{align*}
+      \int_U v_n\Div(\phi)\dx\rightarrow \int_U v\Div(\phi)\dx 
+      \quad\text{as } n\to\infty. 
+    \end{align*}
+    We write $v_n\rightharpoonup v$ as $n\to\infty$.
+  \end{definition}
+\end{frame}
+
+\begin{frame}
+  \begin{theorem}
+    Let $v\in L^1(U)$ and $(v_n)_{n\in\Nbb}\subset\BV(U)$ with
+    $\sup_{n\in\Nbb}|v_n|_{\BV(U)}< \infty$ and
+    $v_n\rightarrow v$ in $L^1(U)$ as $n\rightarrow\infty$.
+    Then $v\in\BV(U)$ and $|v|_{\BV(U)}\leq
+    \liminf_{n\rightarrow\infty}|v_n|_{\BV(U)}.$
+    Furthermore, $v_n\rightharpoonup v$ in $\BV(U)$.
+  \end{theorem}
+
+  \pause
+  \medskip
+  Let $U$ be a bounded Lipschitz domain.
+  
+  \begin{theorem}[\protect{\cite[S. 176, Theorem 4]{EG92}}]
+    \label{thm:l1ConvergentSubsequence}
+    Let $(v_n)_{n\in\Nbb}\subset \BV(U)$ be bounded. Then
+    there exists some subsequence $(v_{n_k})_{k\in\Nbb}$ of
+    $(v_n)_{n\in\Nbb}$ and $v\in\BV(U)$ such that
+    $v_{n_k}\to v$ in $L^1(U)$ as $k\to \infty$.
+  \end{theorem}
+\end{frame}
+
+\begin{frame}
+  \begin{block}{Stability}
+    Let $f_1,f_2\in L^2(\Omega)$.
+    For $\ell\in\{1,2\}$, let $u_\ell\in \BV(\Omega)\cap L^2(\Omega)$ minimize
+    \begin{align*}
+      E_\ell
+      \coloneqq 
+      {\color<3>{red}{\frac{\alpha}{2}\Vert v\Vert^2}}
+      + {\color<4>{red}{|v|_{\BV(\Omega)} 
+      + \Vert v\Vert_{L^1(\partial\Omega)} }}
+      {\color<3>{red}{- \int_\Omega f_\ell v\dx}}
+    \end{align*}
+    amongst all $v\in\BV(\Omega)\cap L^2(\Omega)$.
+    Then
+    \begin{align*}
+      \Vert u_1 - u_2\Vert 
+      \leq\frac{1}{\alpha}\Vert f_1-f_2\Vert.
+    \end{align*}
+  \end{block}
+
+  \medskip
+  \pause
+  \fullcite[Chapter 10]{Bar15}.
+
 \end{frame}
 
 \subsection{Discrete Problem}
