@@ -27,7 +27,7 @@ function params = editable %#ok<*MSNU,FNDEF>
     % set automatically to 'Square' if useImage == true
   initialRefinementLevel = 0;
   parTheta               = 0.5;
-  minNrDof               = 1e7;
+  minNrDof               = 5e3;
   useProlongation        = true;
   beta4Estimate          = 1;
   n4Estimate             = 2;
@@ -35,7 +35,7 @@ function params = editable %#ok<*MSNU,FNDEF>
 
   % algorithm parameters
   u0Mode         = 'zeros'; 
-  initialEpsStop = 1e-2; 
+  initialEpsStop = 1e-4; 
   stopCrit       = ["Exact Error Difference", ...
                     "weighted energy difference"]; 
   parTau         = 1; % Bar15: tau = h^{1/2}/10, time step-size
@@ -65,10 +65,10 @@ function params = editable %#ok<*MSNU,FNDEF>
   saveScreenshots        = 0; 
                               
   % information about experiment for saving and documentation.
-  expName                = 'epsStopSize';
-  dirInfoName            = sprintf('epsStop=%e', initialEpsStop);
-  %dirInfoName            = sprintf('%s', ...
-  %  datestr(now, 'yy_mm_dd_HH_MM_SS'));
+  expName                = 'justOptimizingCOdeDeletable';
+  %dirInfoName            = sprintf('epsStop=%e', initialEpsStop);
+  dirInfoName            = sprintf('%s', ...
+    datestr(now, 'yy_mm_dd_HH_MM_SS'));
   errorNorm              = ["L2", "energy"]; 
 
   % function handles (not effective if useImage == true)
