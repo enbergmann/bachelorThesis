@@ -23,32 +23,38 @@ Algorithmus wie folgt.
   \tau>0$  \\
   Initialisiere $v_0\coloneqq 0$ in $\textup{CR}^1_0(\mathcal T)$.
   \For{$j = 1,2,\dots$}
-  \begin{equation}
-    \label{eq:primalDualAlgUj}
-    \tilde{u}_j\coloneqq u_{j-1}+\tau v_{j-1},
-  \end{equation}
-  \begin{equation}
+  \begin{align}
+    %\label{eq:primalDualAlgUj}
+    \tilde{u}_j&\coloneqq u_{j-1}+\tau v_{j-1},\nonumber\\
     \label{eq:primalDualAlgLambdaJ}
     \Lambda_j
-    \coloneqq
+    &\coloneqq
     \frac{\Lambda_{j-1}+\tau\nabla_{\textup{NC}} \tilde{u}_j}
     {\max\left\{1,
-    \left|\Lambda_{j-1}+\tau\nabla_{\textup{NC}}\tilde{u}_j\right|\right\}},
-  \end{equation}
-      \State
-  \State bestimme $u_j\in\textup{CR}^1_0(\mathcal{T})$
-  als Lösung des linearen Gleichungssystems
-  \begin{align}
+    \left|\Lambda_{j-1}+\tau\nabla_{\textup{NC}}\tilde{u}_j\right|\right\}},\\
+    \text{bestimme }u_j\in\textup{CR}^1_0(\mathcal{T})
+    \text{ a}&\text{ls Lösung des linearen Gleichungssystems }\nonumber\\
     \label{eq:linSysPrimalDualAlg}
     \frac{1}{\tau}a_{\textup{NC}}(u_j,\bullet)+\alpha(u_j,\bullet)
     &=
     \frac{1}{\tau}a_{\textup{NC}}(u_{j-1},\bullet) + (f,\bullet)
     - \left(\Lambda_j,\nabla_{\textup{NC}}\bullet\right) 
-    \quad\text{in }\CR^1_0(\Tcal),
+    \text{ in }\CR^1_0(\Tcal),\\
+    v_j &\coloneqq \frac{u_j-u_{j-1}}{\tau}.\nonumber
   \end{align}
-  \begin{equation*}
-    v_j\coloneqq\frac{u_j-u_{j-1}}{\tau}.
-  \end{equation*}
+  %\State bestimme $u_j\in\textup{CR}^1_0(\mathcal{T})$
+  %als Lösung des linearen Gleichungssystems
+  %\begin{align}
+  %  \label{eq:linSysPrimalDualAlg}
+  %  \frac{1}{\tau}a_{\textup{NC}}(u_j,\bullet)+\alpha(u_j,\bullet)
+  %  &=
+  %  \frac{1}{\tau}a_{\textup{NC}}(u_{j-1},\bullet) + (f,\bullet)
+  %  - \left(\Lambda_j,\nabla_{\textup{NC}}\bullet\right) 
+  %  \quad\text{in }\CR^1_0(\Tcal),
+  %\end{align}
+  %\begin{equation*}
+  %  v_j\coloneqq\frac{u_j-u_{j-1}}{\tau}.
+  %\end{equation*}
   \EndFor
   \Ensure Folge $(u_j,\Lambda_j)_{j\in\mathbb N}$ in
   $\CR^1_0(\mathcal{T})\times
