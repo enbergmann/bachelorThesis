@@ -1,17 +1,17 @@
 % --- AMSTHM ENVIRONMENtS ------------------------------------------------------
 
-\theoremstyle{plain}
-\newtheorem{theorem}{Theorem}[chapter]
-\newtheorem{lemma}[theorem]{Lemma}
-\newtheorem{corollary}[theorem]{Corollary}
-
-\theoremstyle{definition}
-\newtheorem{definition}[theorem]{Definition}
-\newtheorem{problem}[theorem]{Problem}
-
-\theoremstyle{remark}
-\newtheorem{remark}[theorem]
-            {\ifthenelse{\equal{\lang}{ngerman}}{Bemerkung}{Remark}}
+%\theoremstyle{plain}
+%\newtheorem{theorem}{Theorem}[chapter]
+%\newtheorem{lemma}[theorem]{Lemma}
+%\newtheorem{corollary}[theorem]{Corollary}
+%
+%\theoremstyle{definition}
+%\newtheorem{definition}[theorem]{Definition}
+%\newtheorem{problem}[theorem]{Problem}
+%
+%\theoremstyle{remark}
+%\newtheorem{remark}[theorem]
+%            {\ifthenelse{\equal{\lang}{ngerman}}{Bemerkung}{Remark}}
 
 %%% ALGORITHM ENVIRONMENTS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage{algpseudocode}
@@ -56,5 +56,6 @@
 %  {\thmname{#1}\thmnumber{ #2}\thmnote{ (#3)}} % CUSTOM-HEAD-SPEC
 %\theoremstyle{algorithm-style}
 \theoremstyle{plain}
-\newtheorem{algorithm}[theorem]
-            {\ifthenelse{\equal{\lang}{ngerman}}{Algorithmus}{Algorithm}}
+\newtheorem{algorithm}[theorem]{Algorithm}
+%\newtheorem{algorithm}[theorem]
+%            {\ifthenelse{\equal{\lang}{ngerman}}{Algorithmus}{Algorithm}}

@@ -1,7 +1,80 @@
 \subsection{Primal-Dual Iteration}
+\begin{frame}[noframenumbering]{Table of Contents}
+  \tableofcontents[currentsection, currentsubsection]
+\end{frame}
+
 \begin{frame}
-  Algorithmus und mglw LGS dazu, siehe Arbeit
+  \begin{algorithm}[Primal-dual iteration]
+  \begin{algorithmic}
+    \Require $\left(u_0,\Lambda_0\right)
+    \in\textup{CR}_0^1(\mathcal{T})\times P_0\!\left(\mathcal{T}; 
+    %\left\{w\in\Rbb^2\,\middle|\,|w|\leq 1\right\}\right),
+    \overline{B_{\Rbb^2}}\right)$, 
+    %\overline{B_1(0)}\right),
+    \pause$\tau>0$, \only<12>{{\color{red}$\varepsilon_\textup{stop}>0$}}  \\
+    \pause Initialize $v_0\coloneqq 0$ in $\textup{CR}^1_0(\mathcal T)$.
+    \pause\For{$j = 1,2,\dots$}
+    \begin{align*}
+      \tilde{u}_j&\coloneqq u_{j-1}+\tau v_{j-1},
+      &&&\Lambda_j
+      &\coloneqq
+      \frac{\Lambda_{j-1}+\tau\nabla_{\textup{NC}} \tilde{u}_j}
+      {\max\left\{1,
+      \left|\Lambda_{j-1}+\tau\nabla_{\textup{NC}}\tilde{u}_j\right|\right\}},
+    \end{align*}
+    \pause\State solve  % TODO habe Antwort parat für ,,Was ist diese Gleichung
+    \begin{align*}
+      \label{eq:linSysPrimalDualAlg}
+      \frac{1}{\tau}{\color<8,10-11>{red}{a_{\textup{NC}}(u_j,\bullet)}}
+      +\alpha{\color<9>{red}{(u_j,\bullet)}}
+      &=
+      \frac{1}{\tau}{\color<10-11>{red}{a_{\textup{NC}}(u_{j-1},\bullet)}} 
+      + (f,\bullet)
+      - \left(\Lambda_j,\nabla_{\textup{NC}}\bullet\right) 
+    \end{align*}
+    \State in $\CR^1_0(\Tcal)$ for $u_j$, \pause and set
+    \begin{equation*}
+      {\color<11>{green}{v_j\coloneqq\frac{u_j-u_{j-1}}{\tau}}}.
+      {\only<12>{\color{red}\text{ Terminate iteration if }\vvvert v_j\vvvert<
+      \varepsilon_\textup{stop}.}}
+    \end{equation*}
+    \EndFor
+    \pause\Ensure Folge $(u_j,\Lambda_j)_{j\in\mathbb N}$ in
+    $\CR^1_0(\mathcal{T})\times
+     P_0\!\left(\mathcal{T};\overline{B_{\Rbb^2}}\right)$   
+    \end{algorithmic}
+  \end{algorithm}
+\end{frame}
+
+\begin{frame}
+  \begin{theorem}[Convergence of the primal-dual iteration]
+    Let $\ucr\in \CR^1_0(\Tcal)$ solve the discrete problem,
+    $\bar\Lambda_0\in P_0\!\left(\Tcal;\Rbb^2\right)$ satisfy
+    $\left|\bar\Lambda_0(\bullet)\right|\leq 1$ a.e.\ in $\Omega$ as well as
+    \begin{equation*}
+      \bar\Lambda_0(\bullet)\cdot\gradnc\ucr(\bullet)
+      =
+      \left|\gradnc\ucr(\bullet)\right| 
+      \quad\text{a.e.\ in } \Omega 
+    \end{equation*}
+    and
+    \begin{equation*}
+      \left(\bar\Lambda_0,\gradnc\vcr\right)
+      = \left(f-\alpha\ucr,
+      \vcr\right)
+      \quad\text{for all } \vcr\in\CR^1_0(\Tcal),
+    \end{equation*}
+    and $\tau \in (0, 1]$.
+    Then the iterates $(u_j)_{j\in\Nbb}$ of
+    the primal-dual iteration converge to $\ucr$ in $L^2(\Omega)$.
+  \end{theorem}
+\end{frame}
+
+\begin{frame}
+  Beweis skizzieren und insbesondere auf meine Hypothesen bzgl Wahl von $\tau$
+  eingehen und für Prolongation argumentieren, da initiale Fehler da sind etc
 
   wohl auch Konvergenztheorem aufführen, Bereich für $\tau$ kurz erläutern,
   vielleicht beim groben erläutern der Beweisidee
 \end{frame}
+

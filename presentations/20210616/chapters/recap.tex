@@ -141,7 +141,7 @@ the original picture.}
   \begin{block}{Continuous problem}
     For a parameter $\alpha\in \Rbb_+$ and an input signal $f\in L^2(\Omega)$
     minimize the functional
-    \begin{align*}\label{eq:continuousProblem}
+    \begin{align*}
       E(v)\coloneqq \frac{\alpha}{2}\Vert v\Vert^2 
       + |v|_{\BV(\Omega)} 
       + {\color<2>{red}{\Vert v\Vert_{L^1(\partial\Omega)}}}
@@ -165,12 +165,12 @@ the original picture.}
 \end{frame}
 
 \begin{frame}
-  \begin{theorem}[Existence and uniqueness]
+  \begin{theorem}[Existence and uniqueness of a minimizer]
     There exists a unique minimizer $u\in\BV(\Omega)\cap L^2(\Omega)$ for
-    $E=\frac{\alpha}{2}\Vert v\Vert^2 
+    $E(v)=\frac{\alpha}{2}\Vert v\Vert^2 
       + {\color<2>{red}{|v|_{\BV(\Omega)} 
       + \Vert v\Vert_{L^1(\partial\Omega)}}}
-      - \int_\Omega fv\dx$ in 
+      - \int_\Omega fv\dx$ amongst all
      $v\in\BV(\Omega)\cap L^2(\Omega)$.
   \end{theorem}
 
@@ -223,8 +223,7 @@ the original picture.}
   \medskip
   Let $U$ be a bounded Lipschitz domain.
   
-  \begin{theorem}[\protect{\cite[S. 176, Theorem 4]{EG92}}]
-    \label{thm:l1ConvergentSubsequence}
+  \begin{theorem}
     Let $(v_n)_{n\in\Nbb}\subset \BV(U)$ be bounded. Then
     there exists some subsequence $(v_{n_k})_{k\in\Nbb}$ of
     $(v_n)_{n\in\Nbb}$ and $v\in\BV(U)$ such that
@@ -233,11 +232,11 @@ the original picture.}
 \end{frame}
 
 \begin{frame}
-  \begin{block}{Stability}
+  \begin{theorem}[Stability]
     Let $f_1,f_2\in L^2(\Omega)$.
     For $\ell\in\{1,2\}$, let $u_\ell\in \BV(\Omega)\cap L^2(\Omega)$ minimize
     \begin{align*}
-      E_\ell
+      E_\ell(v)
       \coloneqq 
       {\color<3>{red}{\frac{\alpha}{2}\Vert v\Vert^2}}
       + {\color<4>{red}{|v|_{\BV(\Omega)} 
@@ -250,12 +249,11 @@ the original picture.}
       \Vert u_1 - u_2\Vert 
       \leq\frac{1}{\alpha}\Vert f_1-f_2\Vert.
     \end{align*}
-  \end{block}
+  \end{theorem}
 
   \medskip
   \pause
-  \fullcite[Chapter 10]{Bar15}.
-
+  \fullcite[Chapter 10, p. 297-319]{Bar15}.
 \end{frame}
 
 \subsection{Discrete Problem}
@@ -264,64 +262,148 @@ the original picture.}
 \end{frame}
 
 \begin{frame}
-  nochmal Existenz und Eindeutigkeitsaussagen zeigen und gaaaanz grob 
-  beschreiben, wie die bewiesen werden
-\end{frame}
-
-\subsection{Discrete Problem continues}
-\begin{frame}[noframenumbering]{Table of Contents}
-  \tableofcontents[currentsection, currentsubsection]
+  Let $\Tcal$ be a regular triangulation of $\Omega$.
+  \begin{block}{}
+    For all $\vcr\in\CR^1(\Tcal)$,
+    \begin{align*}
+      |\vcr|_{\BV(\Omega)} 
+      = 
+      \Vert \gradnc \vcr\Vert_{L^1(\Omega)} 
+      + \sum_{F\in\Ecal(\Omega)}\Vert[\vcr]_F\Vert_{L^1(F)}.
+    \end{align*} 
+    In particular, $\CR^1(\Tcal)\subset\BV(\Omega)$.
+  \end{block}
 \end{frame}
 
 \begin{frame}
-  vielleicht in eigener Section: noch die Aussagen aus der Arbeit verarbeiten,
-  die über Existenz und Eindeutigkeit hinausgehen
-\end{frame}
+  \begin{align*}
+    E(\vcr) = \frac{\alpha}{2}\Vert \vcr\Vert^2 
+    + {\color<2->{green}{|\vcr|_{\BV(\Omega)} +
+    \Vert \vcr\Vert_{L^1(\partial\Omega)}}}
+      - \int_\Omega f\vcr\dx
+  \end{align*}
 
+  \begin{align*}
+    {\color<2->{green}{|\vcr|_{\BV(\Omega)} +
+    \Vert\vcr\Vert_{L^1(\partial\Omega)} }}
+    = \Vert \gradnc \vcr\Vert_{L^1(\Omega)} +
+    {\color<4->{red}{\sum_{F\in\Ecal}\Vert[\vcr]_F\Vert_{L^1(F)}}}
+  \end{align*}
+
+  \pause
+  \pause
+  
+  \begin{block}{Discrete problem}
+    For a parameter $\alpha\in \Rbb_+$ and an input signal $f\in L^2(\Omega)$
+    minimize the functional
+    \begin{align*}
+      \Enc(\vcr)\coloneqq \frac{\alpha}{2}\Vert \vcr\Vert^2
+      +\Vert \gradnc\vcr\Vert_{L^1(\Omega)}-\int_\Omega f\vcr\dx
+    \end{align*}
+    amongst all $\vcr\in \CR^1_0(\Tcal)$.
+  \end{block}
+\end{frame}
 
 \begin{frame}
-  \fullcite[Chapter 10, p. 297-319]{Bar15}
-\end{frame}
+  \begin{theorem}[Existence and uniqueness of a minimizer]
+    There exists a unique minimizer $\ucr\in\CR^1_0(\Tcal)$ for
+    $\Enc(\vcr)\coloneqq 
+    {\color<4->{green}{\frac{\alpha}{2}\Vert \vcr\Vert^2}}
+    +
+    {\color<2,5>{red}{\Vert \gradnc\vcr\Vert_{L^1(\Omega)}}}
+    {\color<4->{green}{-\int_\Omega f\vcr\dx}}$
+    amongst all
+     $\vcr\in\CR^1_0(\Tcal)$.
+  \end{theorem}
 
-\begin{frame}{Properties of $\BV(\Omega)$}
-\end{frame}
-
-\begin{frame}{Notions of convergence on $\BV(\Omega)$}
-  Let $(v_n)_{n\in\Nbb}\subset \BV(\Omega)$ and $v\in \BV(\Omega)$ such that
-  $v_n\rightarrow v$ in $L^1(\Omega)$ as $n\rightarrow\infty$.
   \pause
-  \begin{itemize}
-    \item[(i)]
-      $(v_n)_{n\in\Nbb}$ converges intermediately or strictly to $v$
-      if $|v_n|_{\BV(\Omega)}\rightarrow |v|_{\BV(\Omega)}$ as
-      $n\rightarrow\infty$.
-      \pause
-    \item[(ii)] $(v_n)_{n\in\Nbb}$ converges weakly to
-      $v$ if
-      $\langle Dv_n,\phi\rangle\rightarrow \langle Dv,\phi\rangle$ 
-      for all $\phi\in C_0(\Omega;\Rbb^n)$ as 
-      $n\rightarrow\infty$.
-  \end{itemize}
+  \pause
+  \medskip
+
+  Let 
+  $K \coloneqq \left\{\Lambda\in L^\infty\!\left(\Omega;\Rbb^2\right)
+  \,\middle|\,|\Lambda(\bullet)| \leq 1 \text{ a.e.\ in }\Omega\right\}$
+  and, for all $\left( \vcr,\Lambda_0 \right)\in\CR^1_0(\Tcal)\times
+  P_0\!\left(\Tcal;\Rbb^2\right)$,
+  $$L(\vcr,\Lambda_0) \coloneqq 
+  {\color<5->{red}{\int_\Omega\Lambda_0\cdot\gradnc\vcr\dx}} +
+  {\color<4->{green}{\frac{\alpha}{2}\Vert \vcr\Vert^2 -\int_\Omega f\vcr\dx}}
+  - I_K(\Lambda_0).$$
+
+  \pause
+  \pause
+  \pause
+
+  \begin{block}{Minimax problem}
+    Find $\left( \tilde{u}_\CR,\bar\Lambda_0 \right)\in\CR^1_0(\Tcal)\times
+    P_0\!\left(\Tcal;\Rbb^2\right)$ such that
+    \begin{align*}
+      L(\tilde{u}_\CR,\bar\Lambda_0) 
+      = 
+      \inf_{\vcr\in\CR^1_0(\Tcal)}\sup_{\Lambda_0\in P_0\left(\Tcal;\Rbb^2\right)}
+      L(\vcr,\Lambda_0).
+    \end{align*}
+  \end{block}
 \end{frame}
 
-\begin{frame}{Further Properties of $\BV(\Omega)$}
-  $C^\infty(\overline\Omega)$ and $C^\infty(\Omega)\cap\BV(\Omega)$ are dense
-  in $\BV(\Omega)$ with respect to intermediate convergence.
+\begin{frame}
+  $$L(\vcr,\Lambda_0) \coloneqq \int_\Omega\Lambda_0\cdot\gradnc\vcr\dx +
+  \frac{\alpha}{2}\Vert \vcr\Vert^2 -\int_\Omega f\vcr\dx
+  - I_K(\Lambda_0)$$
+
+  \begin{block}{Minimax problem}
+    Find $\left( \tilde{u}_\CR,\bar\Lambda_0 \right)\in\CR^1_0(\Tcal)\times
+    P_0\!\left(\Tcal;\Rbb^2\right)$ such that
+    \begin{align*}
+      L(\tilde{u}_\CR,\bar\Lambda_0) 
+      = 
+      \inf_{\vcr\in\CR^1_0(\Tcal)}\sup_{\Lambda_0\in P_0\left(\Tcal;\Rbb^2\right)}
+      L(\vcr,\Lambda_0).
+    \end{align*}
+  \end{block}
   
   \pause
-  \bigskip
+  \medskip
 
-  The embedding $\BV(\Omega)\to L^p(\Omega)$ is continuous for
-  $1\leq p\leq n/(n-1)$ and compact for $1\leq p< n/(n-1)$.
-  
+  This problem has a solution $\left( \tilde{u}_\CR,\bar\Lambda_0
+  \right)\in\CR^1_0(\Tcal)\times \left(P_0\!\left(\Tcal;\Rbb^2\right)\cap
+  K\right)$.
+
   \pause
-  \bigskip
+  \medskip
 
-  There exists a linear operator $T:\BV(\Omega)\to L^1(\partial\Omega)$
-  such that $T(v) = v|_{\partial\Omega}$ for all $v\in\BV(\Omega)\cap
-  C(\overline\Omega)$.
-
-  $T$ is continuous with respect to intermediate convergence in $\BV(\Omega)$
-  but not with respect to weak convergence in $\BV(\Omega)$. 
+  \fullcite{Roc70}
 \end{frame}
 
+\begin{frame}
+  \begin{theorem}[Equivalent characterizations]
+    For a function $\tilde{u}_\CR\in\CR^1_0(\Tcal)$ the following statements
+    are equivalent.
+    \begin{itemize}
+      \item[(i)] $\tilde{u}_\CR$ solves the discrete problem.
+      \item[(ii)] There exists
+        $\bar\Lambda_0\in P_0\!\left(\Tcal;\Rbb^2\right)$ with
+        $\left|\bar\Lambda_0(\bullet)\right|\leq 1$
+        a.e.\ in $\Omega$ s.t.
+        \begin{equation*}
+          \bar\Lambda_0(\bullet)\cdot\gradnc\tilde{u}_\CR(\bullet)
+          =
+          \left|\gradnc\tilde{u}_\CR(\bullet)\right| 
+          \quad\text{a.e.\ in } \Omega 
+        \end{equation*}
+        and
+        \begin{equation*}
+          \left(\bar\Lambda_0,\gradnc\vcr\right)
+          = \left(f-\alpha\tilde{u}_\CR,
+          \vcr\right)
+          \quad\text{for all } \vcr\in\CR^1_0(\Tcal).
+        \end{equation*}
+      \item[(iii)] For all $\vcr\in\CR^1_0(\Tcal)$,
+        \begin{equation*}
+          \left(f-\alpha\tilde{u}_\CR,\vcr-\tilde{u}_\CR\right)\leq
+          \Vert\gradnc\vcr\Vert_{L^1(\Omega)} -
+          \left\Vert\gradnc\tilde{u}_\CR\right\Vert_{L^1(\Omega)}.
+        \end{equation*}
+    \end{itemize}
+  \end{theorem}
+\end{frame}
