@@ -1,4 +1,3 @@
-\subsection{Primal-Dual Iteration}
 \begin{frame}[noframenumbering]{Table of Contents}
   \tableofcontents[currentsection, currentsubsection]
 \end{frame}
@@ -11,7 +10,7 @@
     %\left\{w\in\Rbb^2\,\middle|\,|w|\leq 1\right\}\right),
     \overline{B_{\Rbb^2}}\right)$, 
     %\overline{B_1(0)}\right),
-    \pause$\tau>0$, \only<12>{{\color{red}$\varepsilon_\textup{stop}>0$}}  \\
+    \pause$\tau>0$\only<12>{, {\color{red}$\varepsilon_\textup{stop}>0$}}  \\
     \pause Initialize $v_0\coloneqq 0$ in $\textup{CR}^1_0(\mathcal T)$.
     \pause\For{$j = 1,2,\dots$}
     \begin{align*}
@@ -39,7 +38,7 @@
       \varepsilon_\textup{stop}.}}
     \end{equation*}
     \EndFor
-    \pause\Ensure Folge $(u_j,\Lambda_j)_{j\in\mathbb N}$ in
+    \pause\Ensure Sequence $(u_j,\Lambda_j)_{j\in\mathbb N}$ in
     $\CR^1_0(\mathcal{T})\times
      P_0\!\left(\mathcal{T};\overline{B_{\Rbb^2}}\right)$   
     \end{algorithmic}
@@ -64,17 +63,20 @@
       \vcr\right)
       \quad\text{for all } \vcr\in\CR^1_0(\Tcal),
     \end{equation*}
-    and $\tau \in (0, 1]$.
+    and {\color<3>{red}{$\tau \in (0, 1]$}}.
     Then the iterates $(u_j)_{j\in\Nbb}$ of
     the primal-dual iteration converge to $\ucr$ in $L^2(\Omega)$.
   \end{theorem}
+
+  \pause
+  \medskip
+
+  \only<-3>{For all $J\in\Nbb$,} 
+  \begin{align*}
+    \sum_{j=1}^{\only<-3>{J}\only<4->{\infty}}\Vert \ucr-u_j\Vert^2 
+    \leq
+    \frac{1}{2\alpha{\color<3>{red}{\tau}}}
+    \left(\vvvert \ucr-u_0\vvvert^2_\nc 
+    + \Vert \bar\Lambda_0-\Lambda_0\Vert^2\right).
+  \end{align*}
 \end{frame}
-
-\begin{frame}
-  Beweis skizzieren und insbesondere auf meine Hypothesen bzgl Wahl von $\tau$
-  eingehen und für Prolongation argumentieren, da initiale Fehler da sind etc
-
-  wohl auch Konvergenztheorem aufführen, Bereich für $\tau$ kurz erläutern,
-  vielleicht beim groben erläutern der Beweisidee
-\end{frame}
-

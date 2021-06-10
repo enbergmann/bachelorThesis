@@ -1,3 +1,77 @@
+\subsection{Settings}
+\begin{frame}[noframenumbering]{Table of Contents}
+  \tableofcontents[currentsection, currentsubsection]
+\end{frame}
+
+\begin{frame}
+Let $u_P:[0,\infty)\to\Rbb$ with $u_P(r)=0$ for $r\geq 1$,
+and, for all $x\in\Omega$, $u(x)= u_P\big(|x|\big)$. 
+\pause
+Furthermore, assume the existence  of $\partial_r u_P$ a.e.\ in $[0,\infty)$,
+the existence of the derivative of
+\begin{align*}
+  \operatorname{sgn}\big(\partial_r u_P(r)\big)
+  \coloneqq
+  \begin{cases}
+    -1 &\text{für }\partial_r u_P(r)<0,\\
+    x\in[0,1] &\text{für }\partial_r u_P(r)=0,\\ 
+    1 &\text{für }\partial_r u_P(r)>0.
+  \end{cases}
+\end{align*}
+a.e.\ in $[0,\infty)$, and
+that $\operatorname{sgn}\big(\partial_r u_P(r)\big)/r\to 0$ as $r\to 0$.
+\pause
+For all $r\in[0,\infty)$, define 
+\begin{align*}
+  f_P(r)
+  \coloneqq 
+  \alpha u_P(r) - \partial_r\left(\operatorname{sgn}\big(\partial_r u_P(r)\big)\right) 
+  - \frac{\operatorname{sgn}\big(\partial_r u_P(r)\big)}{r}
+\end{align*}
+\pause
+Then $u$ solves the continuous problem
+on $\Omega\supseteq \left\{w\in\Rbb^2\,\middle|\, |w|\leq 1\right\}$ if
+the input signal is $f(x)\coloneqq f_P\big(|x|\big)$.
+\end{frame}
+
+\begin{frame}
+ f01 mit exakter Lösung beschreiben 
+ und vlt auch Plots zeigen
+\end{frame}
+
+\begin{frame}
+  und außerdem
+ die potentiellen Bilderinputs whiteSquare und cameraman kurz zeigen als Exps
+ ohne exakte Lösung
+\end{frame}
+
+\subsection{Choice of Parameters}
+\begin{frame}[noframenumbering]{Table of Contents}
+  \tableofcontents[currentsection, currentsubsection]
+\end{frame}
+
+\begin{frame}
+  choice of tau plots for f01 (mentioning that the same behaviour was seen for
+  the other experiments). Also show inequaltiy from convergence proof again
+  talking about the upper bound
+\end{frame}
+
+\begin{frame}
+  choice of epsStop plots for f01 (only quickly show the stop of reduction
+  of the l2 error at certain points
+  
+\end{frame}
+
+\subsection{Refinement Indicator}
+\begin{frame}[noframenumbering]{Table of Contents}
+  \tableofcontents[currentsection, currentsubsection]
+\end{frame}
+
+\subsection{Guaranteed lower Energy Bound}
+\begin{frame}[noframenumbering]{Table of Contents}
+  \tableofcontents[currentsection, currentsubsection]
+\end{frame}
+
 \begin{frame}
   drüber nachdenken, was hier gezeigt werden soll. Idealerweise viele 
   subsections mit Themenbereichen (f01, cam, termCrit, tau\ldots)
