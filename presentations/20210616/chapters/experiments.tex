@@ -86,36 +86,22 @@
   \end{figure}
 \end{frame}
 
-\subsection{Convergence of the Iteration}
-\begin{frame}[noframenumbering]{Table of Contents}
-  \tableofcontents[currentsection, currentsubsection]
-\end{frame}
-
-\begin{frame}{TODO}
-  show that the energy converges from above to the exact energy (not
-  necessarily monotonly, i.e. choose some example where it simply converges
-  and one example where there are oscillations, i.e. two pictures here
-
-  also mention that it converges to something slightly below the exact energy,
-  i.e. choose the pictures accordingly, maybe even plot the error between
-  the energies of the iterates and the exact energy
-
-  THAT MEANS choose one picture from $f$ where the exact energy can be seen 
-  and maybe one from the cameraman
-
-  mention that during the afem loop we will see, that this undershooting 
-  decrease (as one would expect, the discrete energy converges to the exact
-  energy)
-  
-  definitely mention degrees of freedom if only one level is shown!!!
-\end{frame}
-
-\begin{frame}
-  show the result of an iteration (plot of uApprox next to uExact) 
-  (along the axes as well)
-  and show cameraman grayscale plot
-
-  definitely mention degrees of freedom if only one level is shown!!!
+\begin{frame}{Initial Triangulations for the Input Signals}
+  \begin{figure}[!ht]
+    \centering
+    \begin{subfigure}{.45\linewidth}
+      \caption*{Input signal $f$}
+      \includegraphics[width=\linewidth]
+        {pictures/experiments/settings/f01/triangulation.png}
+      \caption*{$\Omega = (-1,1)^2$}
+    \end{subfigure}
+    \begin{subfigure}{.45\linewidth}
+      \caption*{Input signal cameraman}
+      \includegraphics[width=\linewidth]
+        {pictures/experiments/settings/images/triangulation.png}
+      \caption*{$\Omega = (0,1)^2$}
+    \end{subfigure}
+  \end{figure}
 \end{frame}
 
 \subsection{Choice of Parameters}
@@ -293,4 +279,47 @@
 \begin{frame}
   show error, eta (without contributions) together with the differences
   of the energies and EGLEB
+\end{frame}
+
+\subsection{Convergence of the Iteration} \begin{frame}[noframenumbering]{Table of Contents}
+  \tableofcontents[currentsection, currentsubsection]
+\end{frame}
+
+\begin{frame}{TODO}
+
+  think about where to position this topic wise
+
+  \begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.8\linewidth]
+      {pictures/experiments/convergenceIteration/convergenceIteration.pdf}
+  \end{figure}
+
+\end{frame}
+
+\begin{frame}
+  previous frame cont.
+
+  show that the energy converges from above to the exact energy (not
+  necessarily monotonly, i.e. choose some example where it simply converges
+  and one example where there are oscillations, i.e. two pictures here
+
+  also mention that it converges to something slightly below the exact energy,
+  i.e. choose the pictures accordingly, maybe even plot the error between
+  the energies of the iterates and the exact energy
+
+  THAT MEANS choose one picture from $f$ where the exact energy can be seen 
+  and maybe one from the cameraman
+
+  mention that during the afem loop we will see, that this undershooting 
+  decrease (as one would expect, the discrete energy converges to the exact
+  energy)
+\end{frame}
+
+\begin{frame}
+  show the result of an iteration (plot of uApprox next to uExact) 
+  (along the axes as well)
+  and show cameraman grayscale plot
+
+  definitely mention degrees of freedom if only one level is shown!!!
 \end{frame}

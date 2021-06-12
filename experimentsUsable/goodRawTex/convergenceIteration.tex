@@ -1,0 +1,175 @@
+\documentclass[tikz]{standalone}
+\usepackage{amsmath,amsfonts,amssymb,amsthm,mathtools}
+\usepackage{tikz}
+\usepackage{pgfplots, pgfplotstable}
+\usepackage{datatool}
+
+\pgfplotsset{compat=newest,
+	axis background/.style={fill=black!5!white},
+	grid style={densely dotted,semithick},
+  }
+
+%\pgfplotstableset{
+%  create on use/test/.style={
+%    create col/copy column from table={glebExactEnergyDifference1e-2.txt}{0}
+%    }
+%  }
+
+\begin{document}
+
+% TODO find here how csv files work
+    % \addplot [dashed, black, thick, mark = diamond] 
+    % table[col sep = comma, x = {nrDof}, y = {error4lvl}] 
+    % {lvlOutput.csv}; 
+
+\pgfplotstableset{col sep = comma, %space, (for txt files, than it works great)
+  % create on use/nrDof1e-2/.style={create col/copy column from 
+  % table={lvlOutputEps1e-2.txt}{nrDof}},
+  % create on use/nrDof1e-6/.style={create col/copy column from 
+  % table={lvlOutputEps1e-6.txt}{nrDof}}
+}
+
+
+\begin{tikzpicture}
+  \begin{semilogxaxis} % axis, loglogaxis, semilogxaxis, semilogyaxis
+    [legend pos = north east, 
+    scale = 2, 
+    xlabel = {number of iterations},
+    ylabel = {$E_\textup{NC}(u_j)$},
+    ymajorgrids=true,
+    %legend entries = {
+    %  nrDof = 20,
+    %  nrDof = 20,
+     % $E(u) - E_\textup{GLEB}$,
+     % $|E_\textup{NC}(u_{CR}) - E(u)|$,
+     % $\eta$,
+     % $\varepsilon_\textup{stop} = 10^{-2}$,
+     % $\varepsilon_\textup{stop} = 5\cdot 10^{-3}$,
+     % $\varepsilon_\textup{stop} = 10^{-3}$,
+     % $\varepsilon_\textup{stop} = 5\cdot 10^{-4}$,
+     % $\varepsilon_\textup{stop} = 10^{-4}$,
+     % $\varepsilon_\textup{stop} = 10^{-5}$
+    %  }
+    ]
+    %\addlegendimage{densely dashed, mark=square*}
+    %%\addlegendimage{densely dotted, mark=triangle*}
+    %%\addlegendimage{densely dashdotted, mark=diamond*}
+    %%\addlegendimage{solid, mark=*}
+    %\addlegendimage{no markers, cyan}
+    %\addlegendimage{no markers, green}
+    %\addlegendimage{no markers, brown}
+    %\addlegendimage{no markers, red}
+    %\addlegendimage{no markers, blue}
+    %\addlegendimage{no markers, orange}
+
+    % lvl 0
+
+    \addplot [solid, cyan, filter discard warning=false, unbounded
+    coords=discard, skip coords between index = {101}{1000000}]
+    table[x  expr=\coordindex, y index=0] 
+    {f01AdaptiveAndUniformWOPreallocating/uniform/lvl0/iteration/energyVec.txt}; 
+
+    \addplot+[forget plot, no markers, solid, cyan, each nth point = 100, filter
+    discard warning=false, unbounded coords=discard]
+    table[x  expr=\coordindex, y index=0] 
+    {f01AdaptiveAndUniformWOPreallocating/uniform/lvl0/iteration/energyVec.txt}; 
+
+    \DTLloaddb{db}
+    {f01AdaptiveAndUniformWOPreallocating/uniform/lvl0/currentDataReduced.csv}
+    %\DTLassign{db}{1}{\nrNodesZe=nrNodes, \nrDofZe=nrDof}
+    \DTLassign{db}{1}{\nrDofZe=nrDof}
+    \DTLgdeletedb{db}
+
+    \addlegendentry
+    {lvl 0 ($\textup{nrDof} = \nrDofZe$)}
+
+    % lvl 2
+
+    \addplot [solid, green, filter discard warning=false, unbounded
+    coords=discard, skip coords between index = {101}{1000000}]
+    table[x  expr=\coordindex, y index=0] 
+    {f01AdaptiveAndUniformWOPreallocating/uniform/lvl2/iteration/energyVec.txt}; 
+
+    \addplot+[forget plot, green, solid, no markers, each nth point = 100, filter
+    discard warning=false, unbounded coords=discard]
+    table[x  expr=\coordindex, y index=0] 
+    {f01AdaptiveAndUniformWOPreallocating/uniform/lvl2/iteration/energyVec.txt}; 
+
+    \DTLloaddb{db}
+    {f01AdaptiveAndUniformWOPreallocating/uniform/lvl2/currentDataReduced.csv}
+    \DTLassign{db}{1}{\nrDofTw=nrDof}
+    \DTLgdeletedb{db}
+
+    \addlegendentry
+    {lvl 2 ($\textup{nrDof} = \nrDofTw$)}
+
+    % lvl 4
+
+    \addplot [solid, red, filter discard warning=false, unbounded
+    coords=discard, skip coords between index = {101}{1000000}]
+    table[x  expr=\coordindex, y index=0] 
+    {f01AdaptiveAndUniformWOPreallocating/uniform/lvl4/iteration/energyVec.txt}; 
+
+    \addplot+[forget plot, red, solid, no markers, each nth point = 100, filter
+    discard warning=false, unbounded coords=discard]
+    table[x  expr=\coordindex, y index=0] 
+    {f01AdaptiveAndUniformWOPreallocating/uniform/lvl4/iteration/energyVec.txt}; 
+
+    \DTLloaddb{db}
+    {f01AdaptiveAndUniformWOPreallocating/uniform/lvl4/currentDataReduced.csv}
+    \DTLassign{db}{1}{\nrDofFo=nrDof}
+    \DTLgdeletedb{db}
+
+    \addlegendentry
+    {lvl 4 ($\textup{nrDof} = \nrDofFo$)}
+
+    % lvl 6
+
+    \addplot [solid, blue, filter discard warning=false, unbounded
+    coords=discard, skip coords between index = {101}{1000000}]
+    table[x  expr=\coordindex, y index=0] 
+    {f01AdaptiveAndUniformWOPreallocating/uniform/lvl6/iteration/energyVec.txt}; 
+
+    \addplot+[forget plot, blue, solid, no markers, each nth point = 100, filter
+    discard warning=false, unbounded coords=discard]
+    table[x  expr=\coordindex, y index=0] 
+    {f01AdaptiveAndUniformWOPreallocating/uniform/lvl6/iteration/energyVec.txt}; 
+
+    \DTLloaddb{db}
+    {f01AdaptiveAndUniformWOPreallocating/uniform/lvl6/currentDataReduced.csv}
+    \DTLassign{db}{1}{\nrDofSi=nrDof}
+    \DTLgdeletedb{db}
+
+    \addlegendentry
+    {lvl 6 ($\textup{nrDof} = \nrDofSi$)}
+
+    % lvl 8
+
+    \addplot [solid, brown, filter discard warning=false, unbounded
+    coords=discard, skip coords between index = {101}{1000000}]
+    table[x  expr=\coordindex, y index=0] 
+    {f01AdaptiveAndUniformWOPreallocating/uniform/lvl8/iteration/energyVec.txt}; 
+
+    \addplot+[forget plot, brown, solid, no markers, each nth point = 100, filter
+    discard warning=false, unbounded coords=discard]
+    table[x  expr=\coordindex, y index=0] 
+    {f01AdaptiveAndUniformWOPreallocating/uniform/lvl8/iteration/energyVec.txt}; 
+
+    \DTLloaddb{db}
+    {f01AdaptiveAndUniformWOPreallocating/uniform/lvl8/currentDataReduced.csv}
+    \DTLassign{db}{1}{\nrDofEi=nrDof}
+    \DTLgdeletedb{db}
+
+    \addlegendentry
+    {lvl 8 ($\textup{nrDof} = \nrDofEi$)}
+    % exact energy
+
+    \addplot [dashed, black, mark = none, samples = 2, domain = 1:4*10^4] 
+    {-2.058034062391};
+    \addlegendentry{$E(u) \approx -2.058034062391$}
+
+  \end{semilogxaxis}
+\end{tikzpicture}
+
+\end{document}
+
