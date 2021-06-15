@@ -192,134 +192,175 @@
 \end{frame}
 
 \begin{frame}
-  TODO translate and rewrite
-  \begin{theorem}
-    \label{thm:gleb}
-    Sei $\Omega$ konvex, $f\in H^1_0(\Omega)$ das Eingangssignal für
-    mit Lösung $u\in H^1_0(\Omega)$ und minimaler
-    Energie $E(u)$ sowie für  mit Lösung $\ucr\in
-    \CR^1_0(\Omega)$ und minimaler Energie $\Enc(\ucr)$.
-    Dann gilt
+  \begin{theorem}[Guaranteed lower energy bound]
+    Let $\Omega$ be convex. Let $f\in H^1_0(\Omega)$ be the input signal of the
+    continuous (discrete) problem with solution $u\in H^1_0(\Omega)$ ($\ucr\in
+    \CR^1_0(\Omega)$).
+    Then
     \begin{align*}
       \Enc(\ucr)+\frac{\alpha}{2}\Vert u-\ucr\Vert^2
       -\frac{\kappa_\CR}{\alpha}\Vert
-      h_\Tcal(f-\alpha\ucr)\Vert \Vert\nabla f\Vert\leq E(u).
+      h_\Tcal(f-\alpha\ucr)\Vert \Vert\nabla f\Vert\leq E(u)
     \end{align*}
-    Dabei ist die Konstante $\kappa_\CR\coloneqq\sqrt{1/48+1/j_{1,1}^2}$ mit der
-    kleinsten positiven Nullstelle $j_{1,1}$ der Bessel-Funktion erster Art.
-    Insbesondere gilt dann für 
-    \begin{align}
-      \label{eq:gleb}
+    with $\kappa_\CR\coloneqq\sqrt{1/48+1/j_{1,1}^2} \approx 0.298217419$.
+    \pause
+    In particular 
+    \begin{align*}
       \Egleb 
       \coloneqq 
       \Enc(\ucr) - \frac{\kappa_\CR}{\alpha}\Vert h_\Tcal(f-\alpha\ucr)\Vert
-      \Vert \nabla f\Vert,
-    \end{align}
-      dass $\Enc(\ucr)\geq \Egleb$ und $E(u)\geq \Egleb$.
+      \Vert \nabla f\Vert
+    \end{align*}
+      satisfies $\Enc(\ucr)\geq \Egleb$ and $E(u)\geq \Egleb$.
   \end{theorem}
 \end{frame}
 
 
 \begin{frame}
-  TODO translate and rewrite, leave out the $d$ and make it 2. Say we choose
-  $\gamma=1$ because we want to refine towards the discontinuities
-
-  \begin{definition}[Verfeinerungsindikator]
-    Für $d\in\mathbb{N}$ (in dieser Arbeit stets $d=2$) und $0<\gamma\leq 1$
-    definieren wir für alle $T\in\Tcal$ und $\ucr\in\CR^1_0(\Tcal)$ die
-    Funktionen
+  \begin{definition}[Refinement indicator]
+    Let $0<\gamma\leq 1$ (in this presentation $\gamma=1$).
+    For all $T\in\Tcal$ and $\ucr\in\CR^1_0(\Tcal)$, define
     \begin{align*}
       \eta_\text{V}(T)
       &\coloneqq
-      |T|^{2/d}\Vert f-\alpha \ucr\Vert^2_{L^2(T)}\quad\text{und }\\
+      |T|\Vert f-\alpha \ucr\Vert^2_{L^2(T)},\\
       \eta_\text{J}(T)
-      &\coloneqq
-      |T|^{\gamma/d}\sum_{F\in\Ecal(T)}\left\Vert [\ucr]_F\right\Vert_{L^1(F)}.
-    \end{align*} 
-    Damit definieren wir den Verfeinerungsindikator
-    $\eta\coloneqq\sum_{T\in\Tcal}\eta(T)$, wobei
-    \begin{align*} 
+      &\coloneqq |T|^{\gamma/2}\sum_{F\in\Ecal(T)}\left\Vert
+      [\ucr]_F\right\Vert_{L^1(F)},\quad\text{and }\\
       \eta (T)
-      \coloneqq
-      \eta_\text{V}(T) + \eta_\text{J}(T)\quad\text{für alle } T\in\Tcal.
+      &\coloneqq
+      \eta_\text{V}(T) + \eta_\text{J}(T).
     \end{align*} 
+    With that define the refinement indicator
+    $\eta\coloneqq\sum_{T\in\Tcal}\eta(T)$.
   \end{definition}
 \end{frame}
 
+\DTLloaddb{db}
+{pictures/experiments/refIndTriang/cam/lvl16/currentDataReduced.csv}
+%\DTLassign{db}{1}{\nrNodesZe=nrNodes, \nrDofZe=nrDof}
+\DTLassign{db}{1}{\nrDof=nrDof}
+\DTLgdeletedb{db}
+
 \begin{frame}
-  cameraman triangulation figures to show the effect of the refinement 
-  indicator
+  The mesh with \nrDof\ degrees of freedom for level 16 of the adaptive
+  algorithm with $\theta = 0.5$ and input signal cameraman and the solution of
+  the iteration on this mesh.
+
+  \begin{figure}[!ht]
+    \centering
+    \begin{subfigure}{.6\linewidth}
+      \includegraphics[trim = 100 30 20 20, clip,width=\linewidth]
+        {pictures/experiments/refIndTriang/cam/lvl16/triangulation.png}
+    \end{subfigure}
+    \hspace{-1.2cm}
+    \begin{subfigure}{.4\linewidth}
+      \includegraphics[trim = 80 30 80 20, clip, width=\linewidth]
+        {pictures/experiments/refIndTriang/cam/lvl16/solutionGrayscale.png}
+    \end{subfigure}
+  \end{figure}
+\end{frame}
+
+\DTLloaddb{db}
+{pictures/experiments/refIndTriang/f01/lvl11/currentDataReduced.csv}
+%\DTLassign{db}{1}{\nrNodesZe=nrNodes, \nrDofZe=nrDof}
+\DTLassign{db}{1}{\nrDof=nrDof}
+\DTLgdeletedb{db}
+
+\begin{frame}
+  The mesh with \nrDof\ degrees of freedom for level 11 of the adaptive
+  algorithm with $\theta = 0.5$ and input signal $f$ and the solution of the
+  iteration on this mesh along the axes.
+
+  \begin{figure}[!ht]
+    \centering
+    \begin{subfigure}{.6\linewidth}
+      \includegraphics[trim = 100 30 20 20, clip,width=\linewidth]
+        {pictures/experiments/refIndTriang/f01/lvl11/triangulation.png}
+    \end{subfigure}
+    \hspace{-1.2cm}
+    \begin{subfigure}{.4\linewidth}
+      \includegraphics[trim = 50 30 50 20, clip, width=\linewidth]
+        {pictures/experiments/refIndTriang/f01/lvl11/solutionAxis.png}
+    \end{subfigure}
+  \end{figure}
 \end{frame}
 
 \begin{frame}
-  convergence graphs error and refinement indicator and probably its volume
-  and jump contributions
+  \begin{figure}[!ht]
+    \centering
+    \begin{subfigure}{.49\linewidth}
+      \caption*{Input signal $f$}
+      \includegraphics[width=\linewidth]
+        {pictures/experiments/refIndGlebConvergence/f01/convergenceEtaError.pdf}
+    \end{subfigure}
+    \begin{subfigure}{.49\linewidth}
+      \caption*{Input signal cameraman}
+      \includegraphics[width=\linewidth]
+        {pictures/experiments/refIndGlebConvergence/cam/convergenceEta.pdf}
+    \end{subfigure}
+  \end{figure}
 
-  adaptive and uniform
-
-  maybe also plot refinement indicator and its contributions for cameraman
-
-  say expected rates from bartels and compare to them
+  \pause
+  \vspace{-0.5cm}
+  \begin{block}{\cite[p. 309, Thm. 10.7]{Bar15}}
+    For the conforming discretization of the ROF model problem with the 
+    Courant FEM it holds
+    \begin{align*}
+      \frac{\alpha}{2}\Vert u-u_\text{C}\Vert^2\lesssim h^{1/2}. 
+    \end{align*}
+  \end{block}
 \end{frame}
-
 
 \begin{frame}
-  plot differences between energies and gleb 
-
-  plot the differences between the discrete energies and the exact energy
-  energy in the graph with all gleb differences
-
-  note that Enc -Egleb and E - Egleb dont differ much obviously because
-  Enc - E tends to zero (as seen in the plots)
-
-  show strict convecity theorem here to show that it holds (even 'better' than
-  the theorem guarantees)
+  \begin{figure}[!ht]
+    \centering
+    \caption*{Input signal f}
+    \includegraphics[width=0.8\linewidth]
+        {pictures/experiments/refIndGlebConvergence/f01/convergenceEtaErrorGleb.pdf}
+  \end{figure}
 \end{frame}
 
 \begin{frame}
-  show error, eta (without contributions) together with the differences
-  of the energies and EGLEB
+  \begin{block}{ }
+    Let $u\in\BV(\Omega)\cap L^2(\Omega)$ ($\ucr\in\CR^1_0(\Tcal)$) solve the
+    continuous (discrete) problem with input signal $f$.
+    Then
+    \begin{align*}
+      \frac{\alpha}{2}\Vert u-\ucr\Vert^2
+      &\leq
+      E(\ucr)-E(u)\\
+     &=
+      \Enc(\ucr)+\sum_{F\in\Ecal}\Vert[\ucr]_F\Vert_{L^1(F)}-E(u).
+    \end{align*}
+  \end{block}
+
+  \pause
+  \begin{figure}[!ht]
+    \centering
+    \includegraphics[width=0.5\linewidth]
+        {pictures/experiments/refIndGlebConvergence/f01/convergenceEtaErrorSquGleb.pdf}
+        \caption*{Input signal f}
+  \end{figure}
 \end{frame}
 
-\subsection{Convergence of the Iteration} \begin{frame}[noframenumbering]{Table of Contents}
+\subsection{Convergence of the Iteration} 
+\begin{frame}[noframenumbering]{Table of Contents}
   \tableofcontents[currentsection, currentsubsection]
 \end{frame}
 
-\begin{frame}{TODO}
-
-  think about where to position this topic wise
-
+\begin{frame}{Input Signal $f$, $\theta = 0.5$}
+  \only<1>{
   \begin{figure}[!ht]
     \centering
     \includegraphics[width=0.8\linewidth]
       {pictures/experiments/convergenceIteration/convergenceIteration.pdf}
-  \end{figure}
-
-\end{frame}
-
-\begin{frame}
-  previous frame cont.
-
-  show that the energy converges from above to the exact energy (not
-  necessarily monotonly, i.e. choose some example where it simply converges
-  and one example where there are oscillations, i.e. two pictures here
-
-  also mention that it converges to something slightly below the exact energy,
-  i.e. choose the pictures accordingly, maybe even plot the error between
-  the energies of the iterates and the exact energy
-
-  THAT MEANS choose one picture from $f$ where the exact energy can be seen 
-  and maybe one from the cameraman
-
-  mention that during the afem loop we will see, that this undershooting 
-  decrease (as one would expect, the discrete energy converges to the exact
-  energy)
-\end{frame}
-
-\begin{frame}
-  show the result of an iteration (plot of uApprox next to uExact) 
-  (along the axes as well)
-  and show cameraman grayscale plot
-
-  definitely mention degrees of freedom if only one level is shown!!!
+      \caption*{$\tau = 1$}
+  \end{figure}}
+  \only<2>{
+  \begin{figure}[!ht]
+      \includegraphics[width=0.9\linewidth]
+        {pictures/experiments/convergenceIteration/f01TauTiny.png}
+       \caption*{$\tau = 10^{-3}$}
+  \end{figure}}
 \end{frame}
