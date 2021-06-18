@@ -24,3 +24,16 @@ Document that benchmark file name can only contain letters and numbers
 ---
 
 Put more stuff in current data reduced (like lvl?)
+
+
+
+AUSWERTUNGEN
+
+gamma klein wählen und damit Sprunganteil von eta vergrößern ist nicht
+zielführend, da Sprünge nicht minimiert werden im NC Problem und damit noch
+mehr zu den Unstetigkeiten hin zu verfeinern, d.h. dorthin wo die Sprünge groß
+sind (und wohl auch bleiben) lässt eta nicht mehr konvergieren
+
+kleine gamma ändern sonst nichts, außer das GLEB schlchter wird (weil nicht 
+mehr zu den Volumen Termen hin verfeinert wird sondern nur zu den Sprüngen,
+entsprechend wird GLEB schlechter, in dem die Volumenterme stehen)

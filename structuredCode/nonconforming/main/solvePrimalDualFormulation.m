@@ -309,6 +309,7 @@ function  [u, corrVec, energyVec, otherCorr] = ...
     % check termination
     if corr<epsStop
       % cut down dynamic arrays to their actual size
+      % NOTE this could be outside the while loop
       corrVec = corrVec(1:nrIterations);
       energyVec = energyVec(1:nrIterations + 1);
       otherCorr.eNcAbsDiffVec = otherCorr.eNcAbsDiffVec(1:nrIterations);
