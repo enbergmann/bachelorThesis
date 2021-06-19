@@ -65,7 +65,7 @@ function params = editable %#ok<*MSNU,FNDEF>
   saveScreenshots        = 0; 
                               
   % information about experiment for saving and documentation.
-  expName                = 'justOptimizingCOdeDeletable';
+  expName                = 'testJ1';
   %dirInfoName            = sprintf('epsStop=%e', initialEpsStop);
   dirInfoName            = sprintf('%s', ...
     datestr(now, 'yy_mm_dd_HH_MM_SS'));
