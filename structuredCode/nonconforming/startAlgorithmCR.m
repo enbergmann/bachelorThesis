@@ -166,6 +166,15 @@ function startAlgorithmCR(benchmark)
       computeNormDiffRhsSolCrSquared4e(params, currData, output);
 
     % compute guaranteed lower energy bound
+    % TODO here the guaranteed upper bound, whatever that means, can be
+    %      included after it has been implemented in computeGueb
+    %   for that enriching operator code has to be extracted from
+    %   prolongationJ1 to a own function computeJ1 and I also need
+    %   a function that computes a CR function from a Courant function 
+    %   (should be possible, we also can extract that from
+    %   prolongationJ1)
+    %   after that we can also simplify prolongationJ1 since we externalize
+    %   a lot of code
     if rhsGradientKnown
       glebCurr = computeGleb(params, currData, output);
       outputLvlEnergy.gleb(end+1, 1) = glebCurr;
