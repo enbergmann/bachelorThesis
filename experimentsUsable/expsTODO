@@ -1,6 +1,9 @@
-experiment eps 1e-2 (where L2 error stagnates) - to argue that energy difference of iterates and eps 1e-4 isn't far fetched
+experiment eps 1e-2 (where L2 error stagnates) - to argue that energy
+difference of iterates and eps 1e-4 isn't far fetched
 
-compare different epsStop (1e-2, 1e-3, 5e-3, 1e-4, 5e-4, 1e-5) and compare the L2 errors. maybe find out that 1e-3 is enough. try to find largest eps such that error reduction is as good as with smaller eps
+compare different epsStop (1e-2, 1e-3, 5e-3, 1e-4, 5e-4, 1e-5) and compare the
+L2 errors. maybe find out that 1e-3 is enough. try to find largest eps such
+that error reduction is as good as with smaller eps
 
 
 think abot some other experiments with exact solution and test some different
@@ -37,3 +40,7 @@ sind (und wohl auch bleiben) lässt eta nicht mehr konvergieren
 kleine gamma ändern sonst nichts, außer das GLEB schlchter wird (weil nicht 
 mehr zu den Volumen Termen hin verfeinert wird sondern nur zu den Sprüngen,
 entsprechend wird GLEB schlechter, in dem die Volumenterme stehen)
+(gleiches wird auch für GUEB passieren
+
+natürlich auch abhängig von alpha, da für sehr große alpha der volumenterm
+annähernd dem Fehler entspricht (da alpha u undgefähr f sein wird)

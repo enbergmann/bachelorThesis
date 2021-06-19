@@ -554,16 +554,76 @@ $\bar\Lambda_0$ auf einem Dreieck $T\in\Tcal$ eindeutig bestimmt ist.
   \textit{(ii)} aus \Cref{thm:discProbCharacterizationOfDiscreteSolutions}.
 \end{remark}
 
+\section{Verfeinerungsindikator und garantierte untere Energieschranke}
+\todo[inline]{vielleicht: Verfeinerungsindikator und garantierte 
+Energieschranken/ garantierte unter und obere Energieschranke}
+
+Professor Carstensen stellte für die numerischen Untersuchungen 
+einen Verfeinerungsindikator zur adaptiven Netzverfeinerung und eine 
+Aussage über eine garantierte untere Energieschranke zur Verfügung.
+
+\begin{theorem}
+  \label{thm:gleb}
+  \todo[inline]{,,Mit minimaler Energie \ldots`` rausnehmen? Das ist halt
+  wirklich überflüssig als Info}
+  Sei $\Omega$ konvex, $f\in H^1_0(\Omega)$ das Eingangssignal für
+  \Cref{prob:continuousProblem} mit Lösung $u\in H^1_0(\Omega)$ und minimaler
+  Energie $E(u)$ sowie für \Cref{prob:discreteProblem} mit Lösung $\ucr\in
+  \CR^1_0(\Omega)$ und minimaler Energie $\Enc(\ucr)$.
+  Dann gilt
+  \begin{align*}
+    \Enc(\ucr)+\frac{\alpha}{2}\Vert u-\ucr\Vert^2
+    -\frac{\kappa_\CR}{\alpha}\Vert
+    h_\Tcal(f-\alpha\ucr)\Vert \Vert\nabla f\Vert\leq E(u).
+  \end{align*}
+  Dabei ist die Konstante $\kappa_\CR\coloneqq\sqrt{1/48+1/j_{1,1}^2}$ mit der
+  kleinsten positiven Nullstelle $j_{1,1}$ der Bessel-Funktion erster Art.
+  Insbesondere gilt dann für 
+  \begin{align}
+    \label{eq:gleb}
+    \Egleb 
+    \coloneqq 
+    \Enc(\ucr) - \frac{\kappa_\CR}{\alpha}\Vert h_\Tcal(f-\alpha\ucr)\Vert
+    \Vert \nabla f\Vert,
+  \end{align}
+    dass $\Enc(\ucr)\geq \Egleb$ und $E(u)\geq \Egleb$.
+\end{theorem}
+
+\begin{definition}[Verfeinerungsindikator]
+  \label{def:refinementIndicator}
+  Für $d\in\mathbb{N}$ (in dieser Arbeit stets $d=2$) und $0<\gamma\leq 1$
+  definieren wir für alle $T\in\Tcal$ und $\ucr\in\CR^1_0(\Tcal)$ die
+  Funktionen
+  \begin{align*}
+    \eta_\text{V}(T)
+    &\coloneqq
+    |T|^{2/d}\Vert f-\alpha \ucr\Vert^2_{L^2(T)}\quad\text{und }\\
+    \eta_\text{J}(T)
+    &\coloneqq
+    |T|^{\gamma/d}\sum_{F\in\Ecal(T)}\left\Vert [\ucr]_F\right\Vert_{L^1(F)}.
+  \end{align*} 
+  Damit definieren wir den Verfeinerungsindikator
+  $\eta\coloneqq\sum_{T\in\Tcal}\eta(T)$, wobei
+  \begin{align} \label{eq:refinementIndicator} 
+    \eta (T)
+    \coloneqq
+    \eta_\text{V}(T) + \eta_\text{J}(T)\quad\text{für alle } T\in\Tcal.
+  \end{align} 
+\end{definition}
 
 \section{Kontrolle des Abstandes zwischen diskreter und kontinuierlicher
 Lösung}
+\todo[inline]{section womöglich rausnehmen und das alles zwischen EGLEB Thm
+und Verfeinerungsind Def schieben.}
 Wir möchten in diesen Abschnitt eine Abschätzungen herleiten, mit welcher
 der $L^2$-Abstand zwischen der Lösung des diskreten Problems
 \ref{prob:discreteProblem} und der Lösung des kontinuierlichen Problems
 \ref{prob:continuousProblem} kontrolliert werden kann.
 Dafür benötigen wir zunächst folgendes Theorem.
+\todo[inline]{Dann wohl auch den Text hier ändern und sagen, dass es als
+Vorbereitung für die GUEB gebraucht wird}
 
-\begin{theorem}
+\begin{theorem}[Eher ein Lemma draus machen?]
   \label{thm:convexity}
   Sei $u\in\BV(\Omega)\cap L^2(\Omega)$ Lösung von 
   \Cref{prob:continuousProblem}.
@@ -624,35 +684,9 @@ Dafür benötigen wir zunächst folgendes Theorem.
   Da $E=F+G$, folgt daraus die zu zeigende Aussage.
 \end{proof}
 
-Zusammen mit den Betrachtungen in \Cref{sec:discreteProblemFormulation} 
-erhalten wir damit die folgende Abschätzung.
-
-\begin{corollary}
-  Sei $u\in\BV(\Omega)\cap L^2(\Omega)$ Lösung von
-  \Cref{prob:continuousProblem} und $\ucr\in\CR^1_0(\Tcal)$ Lösung von
-  \Cref{prob:discreteProblem}.
-  Dann gilt
-  \begin{align*}
-    \frac{\alpha}{2}\Vert u-\ucr\Vert^2\leq
-    E(\ucr)-E(u)=\Enc(\ucr)+\sum_{F\in\Ecal}\Vert[\ucr]_F\Vert_{L^1(F)}-E(u).
-  \end{align*}
-  Insbesondere gilt auch 
-  \begin{align*}
-    \frac{\alpha}{2}\Vert u-\ucr\Vert^2
-    \leq
-    \left|\Enc(\ucr)-E(u)\right|+
-    \left|\sum_{F\in\Ecal}\Vert[\ucr]_F\Vert_{L^1(F)}\right|.
-  \end{align*}
-\end{corollary}
-
-\section{Verfeinerungsindikator und garantierte untere Energieschranke}
-
-Professor Carstensen stellte für die numerischen Untersuchungen 
-einen Verfeinerungsindikator zur adaptiven Netzverfeinerung und eine 
-Aussage über eine garantierte untere Energieschranke zur Verfügung.
-
-\begin{theorem}
-  \label{thm:gleb}
+\begin{theorem}[Garantierte obere Energieschranke]
+  \label{thm:gueb}
+  \todo[inline]{Write it, aber Tien noch fragen stellen}
   Sei $\Omega$ konvex, $f\in H^1_0(\Omega)$ das Eingangssignal für
   \Cref{prob:continuousProblem} mit Lösung $u\in H^1_0(\Omega)$ und minimaler
   Energie $E(u)$ sowie für \Cref{prob:discreteProblem} mit Lösung $\ucr\in
@@ -674,27 +708,26 @@ Aussage über eine garantierte untere Energieschranke zur Verfügung.
     \Vert \nabla f\Vert,
   \end{align}
     dass $\Enc(\ucr)\geq \Egleb$ und $E(u)\geq \Egleb$.
+
 \end{theorem}
 
-\begin{definition}[Verfeinerungsindikator]
-  \label{def:refinementIndicator}
-  Für $d\in\mathbb{N}$ (in dieser Arbeit stets $d=2$) und $0<\gamma\leq 1$
-  definieren wir für alle $T\in\Tcal$ und $\ucr\in\CR^1_0(\Tcal)$ die
-  Funktionen
-  \begin{align*}
-    \eta_\text{V}(T)
-    &\coloneqq
-    |T|^{2/d}\Vert f-\alpha \ucr\Vert^2_{L^2(T)}\quad\text{und }\\
-    \eta_\text{J}(T)
-    &\coloneqq
-    |T|^{\gamma/d}\sum_{F\in\Ecal(T)}\left\Vert [\ucr]_F\right\Vert_{L^1(F)}.
-  \end{align*} 
-  Damit definieren wir den Verfeinerungsindikator
-  $\eta\coloneqq\sum_{T\in\Tcal}\eta(T)$, wobei
-  \begin{align} \label{eq:refinementIndicator} 
-    \eta (T)
-    \coloneqq
-    \eta_\text{V}(T) + \eta_\text{J}(T)\quad\text{für alle } T\in\Tcal.
-  \end{align} 
-\end{definition}
+Zusammen mit den Betrachtungen in \Cref{sec:discreteProblemFormulation} 
+erhalten wir damit die folgende Abschätzung.
 
+\begin{corollary}[TODO löschen]
+  Sei $u\in\BV(\Omega)\cap L^2(\Omega)$ Lösung von
+  \Cref{prob:continuousProblem} und $\ucr\in\CR^1_0(\Tcal)$ Lösung von
+  \Cref{prob:discreteProblem}.
+  Dann gilt
+  \begin{align*}
+    \frac{\alpha}{2}\Vert u-\ucr\Vert^2\leq
+    E(\ucr)-E(u)=\Enc(\ucr)+\sum_{F\in\Ecal}\Vert[\ucr]_F\Vert_{L^1(F)}-E(u).
+  \end{align*}
+  Insbesondere gilt auch 
+  \begin{align*}
+    \frac{\alpha}{2}\Vert u-\ucr\Vert^2
+    \leq
+    \left|\Enc(\ucr)-E(u)\right|+
+    \left|\sum_{F\in\Ecal}\Vert[\ucr]_F\Vert_{L^1(F)}\right|.
+  \end{align*}
+\end{corollary}
