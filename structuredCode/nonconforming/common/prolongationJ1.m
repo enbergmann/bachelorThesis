@@ -16,15 +16,14 @@ function vNew = prolongationJ1(c4n, n4e, n4sB, c4nNew, n4eNew, v)
 %                 where the j-th row contains the coefficient of the CR
 %                 function w.r.t. the j-th side of the coarse triangulation
 %
-% output: vNew   - '(nrSides of the refined mesh x 1)-dimensional double array'
-%                  where the j-th row contains the coefficient of the CR
-%                  prolongation of v w.r.t. the j-th side of the new
-%                  triangulation
+% output: vNew  - '(nrSides of the refined mesh x 1)-dimensional double array'
+%                 where the j-th row contains the coefficient of the CR
+%                 prolongation of v w.r.t. the j-th side of the new
+%                 triangulation
 
 %% INIT
   s4n = computeS4n(n4e);
   n4sNew = computeN4s(n4eNew);
-  s4e = computeS4e(n4e); 
   s4eNew = computeS4e(n4eNew);
 
   nrNodes = size(c4n, 1); 
@@ -38,24 +37,8 @@ function vNew = prolongationJ1(c4n, n4e, n4sB, c4nNew, n4eNew, v)
 
 %% MAIN
   % compute enriching operator
-  nodeValuesCR4e = computeNodeValuesCR4e(s4e, v);
-  innerNodes = setdiff(1:nrNodes, unique(n4sB(:)));
-
-  nodeValuesJ1 = zeros(size(nodeValuesCR4e));
-  for j = innerNodes
-    indNode = find(n4e == j);
-    localVals4node = nodeValuesCR4e(indNode);
-    nodeValuesJ1(indNode) = sum(localVals4node)/length(localVals4node);
-  end
-  % TODO here probably just 
-  % vJ1 = computeJ1(n4e, n4sB, v);
-  % nodeValuesJ1 = vJ1(n4e);
-  % TODO test if this produces the same here at some point
-  % and then it actually probably just is
-  % vJ1 = computeJ1(n4e, n4sB, v);
-  % v = courant2CR(...)
-  % 
-  % thats not true, computeP1 extension is still inbetween
+  vJ1 = computeJ1(n4e, n4sB, v);
+  nodeValuesJ1 = vJ1(n4e);
   
   % compute prolongation using enriching operator
   val = transpose(nodeValuesJ1); 
@@ -76,18 +59,6 @@ function vNew = prolongationJ1(c4n, n4e, n4sB, c4nNew, n4eNew, v)
      % overrides already known values for every inner edge with the same value,
      % which is fine since the enriching operator is globally continuous
   end
-
-  % TODO here probably just 
-  % see above
-  % TODO test if this produces the same here at some point with many steps 
-  % inbetween
-  % test
-  % vJ1 = computeJ1(n4e, n4sB, v);
-  % v = courant2CR(...)
-  % against the complete old code above
-  % 
-  % thats not true, computeP1 extension is still inbetween
-
 end
 
 %% FURTHER FUNCTIONS

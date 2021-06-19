@@ -1,54 +1,32 @@
-%TODO
-%can probably use the function below, just that parentsside is
-%every side or sth
+function vCR = courant2CR(n4e, v)
+%% DOC 
+% Computes the coefficients as a CR function of the Courant function 
+% v with respect to a mesh defined by n4e
+%
+% courant2CR.m
+% input: n4e   - nodes for elements
+%        v     - '(nrNodes x 1)-dimensional double array'
+%                where the j-th row contains the coefficient of the Courant
+%                function w.r.t. the j-th node
+%
+% output: vNew - '(nrSides of the refined mesh x 1)-dimensional double array'
+%                where the j-th row contains the coefficient of the CR
+%                prolongation of v w.r.t. the j-th side of the new
+%                triangulation
 
-% instead of nodeValuesJ1 we just in general have for the Courant fct v
-% nodeValues = v(n4e)
-% and can then use the rest of the code as usual
-  val = transpose(nodeValuesJ1); 
-  val = val(:);
-    % every three entries are w.r.t. to one triangle   
-  valNew = computeP1Extension(n4e, n4eNew, nrElemsNew, val, ...
-  n4parentSides4n, e4n); 
-    % now possible since values in nodes are known
-    
-  vNew = zeros(nrSidesNew, 1);
-  for elem = 1:nrElemsNew
-    sides = s4eNew(elem, :);
-    temp = valNew(3*elem - [2 1 0]); % values in nodes of current element
-    vNew(sides) = (temp + temp([2 3 1]))/2; 
+%% INIT
+  s4e = computeS4e(n4e); 
+
+%% MAIN
+  % compute CR coefficients of v
+  vCR = zeros(max(max(s4e)), 1);
+  for elem = 1:size(n4e, 1)
+    temp = v(n4e(elem, :)); % values in nodes of current element
+    vCR(s4e(elem, :)) = (temp + temp([2 3 1]))/2; 
      % average the values in nodes of the current edge for the value in
      % midpoint 
      % no addition needed since CR continuous in the midpoints BUT this
      % overrides already known values for every inner edge with the same value,
-     % which is fine since the enriching operator is globally continuous
-  end
-function valNew = computeP1Extension(n4e, n4eNew, nrElemsNew, vOld, ...
-                                   n4parentSides4n, e4n)
-% set the local values in the new nodes as linear interpolation of the values
-% of the vertices of the new nodes parent edge on each triangle (standard nodal
-% interpolation of the discrete solution of the old mesh to the new mesh of
-% discontinuous P1 functions)
-  valNew = zeros(3*nrElemsNew, 1);
-  for elem = 1:nrElemsNew
-    nodes = n4eNew(elem, :);
-    currParentSides = n4parentSides4n(nodes, :); 
-      % the nodes of the three parent sides of the nodes of elem
-    currParentElem = unique(currParentSides(:)); 
-      % nodes of current parent element (without usual order)
-    oldElemNumber = e4n{currParentElem(1)}...
-      (currParentElem(2), currParentElem(3)); 
-      % number of the parent element using e4n
-    helper = zeros(3, 2);
-    for k = 1:3
-      I = currParentSides==n4e(oldElemNumber, k); 
-        % get Indices of k-th node of the parent element in currParentSides
-      helper(I) = vOld(3*(oldElemNumber - 1) + k); 
-        % formula yields the value in the local k-th node of the parent element
-        % which is written in helper at the entries specified by I
-    end
-    valNew(3*elem - [2 1 0]) = sum(helper, 2)/2; 
-      % writes the mean value of the values of the two nodes of the parent edge
-      % in the current Parent element in the right entry of valNew
+     % which is fine since the Courant function v is globally continuous
   end
 end
