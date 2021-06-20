@@ -731,3 +731,70 @@ erhalten wir damit die folgende Abschätzung.
     \left|\sum_{F\in\Ecal}\Vert[\ucr]_F\Vert_{L^1(F)}\right|.
   \end{align*}
 \end{corollary}
+
+\todo[inline]{Hier Fragen und Formeln}
+Von Theorem 4.9:
+  \begin{align*}
+    \Enc(\ucr)+\frac{\alpha}{2}\Vert u-\ucr\Vert^2
+    -\frac{\kappa_\CR}{\alpha}\Vert
+    h_\Tcal(f-\alpha\ucr)\Vert \Vert\nabla f\Vert\leq E(u).
+  \end{align*}
+  impliziert für
+  \begin{align*}
+    \Egleb 
+    \coloneqq 
+    \Enc(\ucr) - \frac{\kappa_\CR}{\alpha}\Vert h_\Tcal(f-\alpha\ucr)\Vert
+    \Vert \nabla f\Vert,
+  \end{align*}
+    dass $\Enc(\ucr)\geq \Egleb$ und $E(u)\geq \Egleb$. 
+
+      deshalb garantierte untere Energieschranke?
+
+      Falls ja, ist dann noch eine Abschätzung $E(u)\leq E_\textup{gueb}$ gewollt?
+      Diese bekommen wir nicht so wirklich aus Thm. 4.11
+      Es gilt natürlich z.B.
+      $E(u)\leq E(J_1\ucr)=\Enc(J_1\ucr)$. Bringt das irgendwas? Hat nur
+      leider keine h Potenz dabei.
+
+      Weitere von Thm 4.9 implizierte Aussagen, die nützlich aussehen:
+
+      \begin{align*}
+        \Vert u-\ucr\Vert\leq 
+        \sqrt{\frac{\alpha}{2}}\sqrt{E(u)-\Egleb}
+        \lesssim
+        \sqrt{E(u)-\Egleb}
+      \end{align*}
+
+      diese rechte Seite, ohne die Konstante, wurde geplottet (quadriert)
+      und war dann parallel. Also gilt in den Experimenten sogar mehr. 
+      Parallelität gilt aber damit nicht. (Bild zeigen, auch das angepasste
+      mit sqrt)
+
+      Diese Aussage ist keine A-priori Abschätzung, weil die rechte
+      Seite immer noch von $\ucr$ abhängt, oder?
+      Bringt der plot dieser RHS dann noch irgendwas
+      
+
+      Theorem 4.11 liefert
+  \begin{align*}
+    \frac{\alpha}{2}\Vert u-v\Vert^2 \leq E(v)-E(u)\quad
+    \text{für alle } v\in\BV(\Omega)\cap L^2(\Omega).
+  \end{align*}
+
+  Daraus folgt
+  \begin{align*}
+    \Vert u-\ucr\Vert &\leq
+    \sqrt{2/\alpha}\sqrt{\Enc(J_1{\ucr})-\Egleb} + \Vert J_1\ucr-\ucr\Vert\\
+    &\lesssim
+    \sqrt{\Enc(J_1{\ucr})-\Egleb} + \Vert J_1\ucr-\ucr\Vert
+  \end{align*}
+
+  Die unterscheidet sich dann aber nicht mehr von der anderen Aussage, die auch 
+  eine obere Schranke für $\Vert u-\ucr\Vert$ war.
+  Ich hatte mit einer unteren Schranke gerechnet, weil CC was von ,,zwischen
+  zwei Graphen`` liegen meinte.
+  ACHSO, die hier ist natürlich besser, weil die auch ohne Kentniss der exakten
+  Lösung berechnet werden kann (A-posteriori, korrekt). Den Gradienten von $f$
+  braucht man allerdings noch, also kann man das für Cameraman immer noch nicht
+  nutzen.
+
