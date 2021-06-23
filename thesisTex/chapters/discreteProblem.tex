@@ -623,6 +623,8 @@ Dafür benötigen wir zunächst folgendes Theorem.
 \todo[inline]{Dann wohl auch den Text hier ändern und sagen, dass es als
 Vorbereitung für die GUEB gebraucht wird}
 
+\todo[inline]{definitiv reinnehmen, aber vielleicht nur als Bemerkung und 
+für Beweis auf Bartels verweisen}
 \begin{theorem}[Eher ein Lemma draus machen?]
   \label{thm:convexity}
   Sei $u\in\BV(\Omega)\cap L^2(\Omega)$ Lösung von 
@@ -794,7 +796,15 @@ Von Theorem 4.9:
   Ich hatte mit einer unteren Schranke gerechnet, weil CC was von ,,zwischen
   zwei Graphen`` liegen meinte.
   ACHSO, die hier ist natürlich besser, weil die auch ohne Kentniss der exakten
-  Lösung berechnet werden kann (A-posteriori, korrekt). Den Gradienten von $f$
+  Lösung berechnet werden kann (A-posteriori, korrekt?). Den Gradienten von $f$
   braucht man allerdings noch, also kann man das für Cameraman immer noch nicht
   nutzen.
+
+  Außerdem impliziert Theorem 4.11
+  \begin{align*}
+    E(u)\leq E(J_1 \ucr)-\frac{\alpha}{2}\Vert u - J_1 \ucr\Vert^2 
+    = \Enc(J_1 \ucr)-\frac{\alpha}{2}\Vert u - J_1 \ucr\Vert^2 
+  \end{align*}
+  Bringt das was als GUEB oder zählt das nicht, da die rechte Seite immernoch von
+  $u$ abhängt.
 
