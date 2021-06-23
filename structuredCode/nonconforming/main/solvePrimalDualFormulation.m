@@ -1,6 +1,6 @@
-function  [u, corrVec, energyVec, otherCorr] = ...
+function  [u, nrIter, corrVec, energyVec, otherCorr] = ...
     solvePrimalDualFormulation(params, currData, u, varLambda) 
-%% DOC
+%% DOC TODO update
 % Executes the nonconfomring iteration on the triangulation given
 % by [c4n, n4e] with initial values u and varLambda.
 %
@@ -74,9 +74,9 @@ function  [u, corrVec, energyVec, otherCorr] = ...
 % output: u         - '(nrSides x 1)-dimensional double array' where the j-th
 %                     row contains the CR coefficient of the final iterate of
 %                     the iteration, i.e. the approximated solution
-%         corrVec   - '(1 x nrIterations) - dimensional double array' where the
+%         corrVec   - '(1 x nrIter) - dimensional double array' where the
 %                     j-th column contains the corr for the j-th iteration step
-%         energyVec - '(1 x nrIterations) - dimensional double array' where the
+%         energyVec - '(1 x nrIter) - dimensional double array' where the
 %                     j-th column contains the discrete energy of the j-th
 %                     iterate 
 
@@ -189,9 +189,9 @@ function  [u, corrVec, energyVec, otherCorr] = ...
   if showPlots, figure; end
 
 %% MAIN
-  nrIterations = 0;
+  nrIter = 0;
   while true
-    nrIterations = nrIterations + 1;
+    nrIter = nrIter + 1;
 
     % compute basic information for the next itertion step
     gradCRv = gradientCR(currData, v);
@@ -249,9 +249,16 @@ function  [u, corrVec, energyVec, otherCorr] = ...
     corr = sqrt(dtU'*stiMaCR*dtU); % Only gradients
       % TODO gradCRu already computed, so using the stiMa might be unnecessary
       % (cf. Tiens code)
+      % tmp = (DuCRnew4e = DuCR4e)/tau;
+      % corr = sqrt(sum(area4e.*sum(tmp.^2, 2)));
+    %testCorr = ; %TODO test time or sth, maybe profile, also
+                                 % test if results are the same
+                                 % ALSO needs gradCRuOld, hence it might be 
+                                 % inefficient sind its computed more often
+                                 % than necessary
       
     % check if new memory for dynamic arrays needs to be preallocated
-    if nrIterations > length(corrVec)
+    if nrIter > length(corrVec)
       corrVec = [corrVec, NaN([1, chunkSize])]; %#ok<AGROW>
       energyVec = [energyVec, NaN([1, chunkSize])]; %#ok<AGROW>
       otherCorr.eNcAbsDiffVec = ...
@@ -267,9 +274,9 @@ function  [u, corrVec, energyVec, otherCorr] = ...
 
     % for comparision of termination criteria
 
-    otherCorr.eNcAbsDiffVec(nrIterations) = abs(E-ENew); 
-    otherCorr.bar15TerminationVec(nrIterations) = sqrt(dtU'*C*dtU); 
-    otherCorr.bar15TerminationWithoutL2Vec(nrIterations) = ...
+    otherCorr.eNcAbsDiffVec(nrIter) = abs(E-ENew); 
+    otherCorr.bar15TerminationVec(nrIter) = sqrt(dtU'*C*dtU); 
+    otherCorr.bar15TerminationWithoutL2Vec(nrIter) = ...
       sqrt(hMin*dtU'*stiMaCR*dtU); 
     %otherCorr.bar12TerminationVec(end+1) = dtU'*maMaCR*dtU/energyVec(1); 
     %otherCorr.bar12TerminationSqrtVec(end+1) = ...
@@ -277,25 +284,25 @@ function  [u, corrVec, energyVec, otherCorr] = ...
     %  TODO should be divided by E(0), which is ||g|| in Bartels but 0 here
     %     hence use it without division for now (what does a factor even
     %     matter?)
-    otherCorr.bar12TerminationSqrtVec(nrIterations) = ...
+    otherCorr.bar12TerminationSqrtVec(nrIter) = ...
       sqrt(dtU'*maMaCR*dtU); %#ok<AGROW>
 
     % update data
     u = uNew;
     E = ENew;
-    energyVec(nrIterations + 1) = E; %#ok<AGROW>
-    corrVec(nrIterations) = corr; %#ok<AGROW>
+    energyVec(nrIter + 1) = E; %#ok<AGROW>
+    corrVec(nrIter) = corr; %#ok<AGROW>
 
     % show miscellaneous information
     if showProgress
       fprintf(repmat('\b', 1, lineLength));
       %lineLength = fprintf('%e      %f        %d', ...
-      %  corr, E, nrIterations);
+      %  corr, E, nrIter);
       lineLength = fprintf('%e      %f        %d', ...
-        corr, E, nrIterations);
+        corr, E, nrIter);
     end
 
-    if saveScreenshots > 0 && mod(nrIterations, saveScreenshots) == 0
+    if saveScreenshots > 0 && mod(nrIter, saveScreenshots) == 0
       % TODO this function is not written yet, do it next time it's needed
       saveScreenshot();
     end
@@ -310,15 +317,15 @@ function  [u, corrVec, energyVec, otherCorr] = ...
     if corr<epsStop
       % cut down dynamic arrays to their actual size
       % NOTE this could be outside the while loop
-      corrVec = corrVec(1:nrIterations);
-      energyVec = energyVec(1:nrIterations + 1);
-      otherCorr.eNcAbsDiffVec = otherCorr.eNcAbsDiffVec(1:nrIterations);
+      corrVec = corrVec(1:nrIter);
+      energyVec = energyVec(1:nrIter + 1);
+      otherCorr.eNcAbsDiffVec = otherCorr.eNcAbsDiffVec(1:nrIter);
       otherCorr.bar15TerminationVec = ...
-        otherCorr.bar15TerminationVec(1:nrIterations);
+        otherCorr.bar15TerminationVec(1:nrIter);
       otherCorr.bar15TerminationWithoutL2Vec = ...
-        otherCorr.bar15TerminationWithoutL2Vec(1:nrIterations);
+        otherCorr.bar15TerminationWithoutL2Vec(1:nrIter);
       otherCorr.bar12TerminationSqrtVec = ...
-        otherCorr.bar12TerminationSqrtVec(1:nrIterations);
+        otherCorr.bar12TerminationSqrtVec(1:nrIter);
       break; 
     end
   end

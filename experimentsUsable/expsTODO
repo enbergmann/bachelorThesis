@@ -44,3 +44,19 @@ entsprechend wird GLEB schlechter, in dem die Volumenterme stehen)
 
 natürlich auch abhängig von alpha, da für sehr große alpha der volumenterm
 annähernd dem Fehler entspricht (da alpha u undgefähr f sein wird)
+
+
+SCHREIBE solche Auswertungen direkt bei Parameterwahl (trenne dort Beobachtung
+und Auswertung nicht)
+Bzw vielleicht Experimente und Auswertungen nicht trennen
+
+
+
+BEVOR FINALE EXPERIMENTE: Räume mindst Benchmarks file auf (nur noch nötige
+Sachen darin), schaffe verschiede Abbruch flags ab etc
+DAMIT die hinterlegten Benchmarks Files vernünftig aussehen
+FUER finale experimente außerdem aussagekräftige namen für benchmark files
+
+verändere sicherlich auch beta4Estimate zu gamma4Esitmate etc
+
+FINALIZE program

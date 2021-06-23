@@ -65,7 +65,7 @@ function params = editable %#ok<*MSNU,FNDEF>
   saveScreenshots        = 0; 
                               
   % information about experiment for saving and documentation.
-  expName                = 'testJ1';
+  expName                = 'testGueb';
   %dirInfoName            = sprintf('epsStop=%e', initialEpsStop);
   dirInfoName            = sprintf('%s', ...
     datestr(now, 'yy_mm_dd_HH_MM_SS'));

@@ -1,8 +1,6 @@
-% TODO similar to struct 2 table write those information in a file so
-% one can see everything in one go, also elapsed time of program and so on
-% elapsed time in hours and days depending on scale
 function saveResultsCR(params, currData, ...
     outputLvlInfo, outputLvlError, outputLvlEnergy, outputLvlHidden, output)
+
 %% INIT
   % extract necessary parameters from params
   geometry = params.geometry;
@@ -54,9 +52,8 @@ function saveResultsCR(params, currData, ...
   % extract necessary information from outputLvlInfoEnergy
   if useExactEnergy, diffDiscExactE4lvl = outputLvlEnergy.diffDiscExactE; end
   if rhsGradientKnown 
-    gleb4lvl = outputLvlEnergy.gleb;
-    diffGlebDiscreteE4lvl = outputLvlEnergy.diffGlebDiscreteE;
-    if useExactEnergy, diffGlebExactE4lvl = outputLvlEnergy.diffGlebExactE; end
+    diffGuebGleb4lvl = outputLvlEnergy.diffGuebGleb; 
+    if useExactEnergy, diffExactEGleb4lvl = outputLvlEnergy.diffExactEGleb; end
   end
   
   % extract necessary information from output
@@ -68,7 +65,6 @@ function saveResultsCR(params, currData, ...
   bar15TerminationWithoutL2Vec = output.otherCorr.bar15TerminationWithoutL2Vec; 
   bar12TerminationSqrtVec = output.otherCorr.bar12TerminationSqrtVec; 
    
-
 %% MAIN
   % create directory
   warning('off', 'MATLAB:MKDIR:DirectoryExists');
@@ -200,7 +196,7 @@ function saveResultsCR(params, currData, ...
   saveas(grayscaleFig, fName);
 
   % save plots and results of the iteration for the level
-  % save corrections (is that the name? TODO)
+  % save corrections
   name = sprintf('%s/iteration/corrVec.txt', dirName);
   file = fopen(name, 'w');
   fprintf(file, '%.8e\n', corrVec);
@@ -217,7 +213,6 @@ function saveResultsCR(params, currData, ...
   fName = sprintf('%s/iteration/corr.png', dirName);
   saveas(corrFig, fName);
 
-  % TODO compare termination criteria
   name = sprintf('%s/iteration/eNcAbsDiffVec.txt', dirName);
   file = fopen(name, 'w');
   fprintf(file, '%.8e\n', eNcAbsDiffVec);
@@ -321,47 +316,40 @@ function saveResultsCR(params, currData, ...
   fieldsError = fieldnames(outputLvlError);
   fieldsEnergy = fieldnames(outputLvlEnergy);
   fieldsHidden = fieldnames(outputLvlHidden);
-  for ind = 1:length(fieldsHidden) 
-    tableStruct.(fieldsHidden{ind}) = outputLvlHidden.(fieldsHidden{ind});
-  end
-  for ind = 2:length(fieldsError) 
+  for ind = 1:length(fieldsError) 
     tableStruct.(fieldsError{ind}) = outputLvlError.(fieldsError{ind});
   end
   for ind = 2:length(fieldsEnergy) 
     tableStruct.(fieldsEnergy{ind}) = outputLvlEnergy.(fieldsEnergy{ind});
   end
+  for ind = 2:length(fieldsHidden) 
+    tableStruct.(fieldsHidden{ind}) = outputLvlHidden.(fieldsHidden{ind});
+  end
   writetable(struct2table(tableStruct), sprintf('%s/lvlOutput.csv', dirName));
 
   % convergence plots
   convergenceFig = figure('visible', figVisible);
-  % % TODO careful, what error is the estimator for (this error should always
-  % % be computed then (if possible), make error4lvl a alternative then)
   loglog(nrDof4lvl, eta4lvl, '-o');
   hold on
   loglog(nrDof4lvl, etaVol4lvl, '-o');
-  hold on
   loglog(nrDof4lvl, etaJumps4lvl, '-o');
   convergenceFigLegend = ...
     [sprintf("\\eta"), sprintf("\\eta_{Vol}"), sprintf("\\eta_{Jumps}")];
   if exactSolutionKnown
-    hold on
     loglog(nrDof4lvl, error4lvl, '-o');
     convergenceFigLegend(end+1) = sprintf("||u-u_{CR}||_{L^2}");
     if useExactEnergy
-      hold on
       loglog(nrDof4lvl, diffDiscExactE4lvl, '-o');
       convergenceFigLegend(end+1) = sprintf("|E(u)-E_{NC}(u_{CR})|");
     end
   end
   if rhsGradientKnown
-    hold on
-    loglog(nrDof4lvl, diffGlebDiscreteE4lvl, '-o');
-    convergenceFigLegend(end+1) = "E_{NC}(u_{CR}) - GLEB";
     if useExactEnergy
-      hold on
-      loglog(nrDof4lvl, diffGlebExactE4lvl, '-o');
+      loglog(nrDof4lvl, diffExactEGleb4lvl, '-o');
       convergenceFigLegend(end+1) = "E(u) - GLEB";
     end
+    loglog(nrDof4lvl, diffGuebGleb4lvl, '-o');
+    convergenceFigLegend(end+1) = "E_{NC}(J_1 u_{CR}) - GLEB";
   end
   legend(convergenceFigLegend, 'Location', 'SW');
   xlabel('nrDof');

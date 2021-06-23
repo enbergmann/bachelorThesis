@@ -46,6 +46,9 @@ function startAlgorithmCR(benchmark)
   outputLvlHidden.hMax = [];
   outputLvlHidden.hMin = [];
   outputLvlHidden.sumL1NormOfJumps = [];
+  if exactSolutionKnown, outputLvlHidden.normDiffExactSolJ1DiscSol = []; end
+  outputLvlHidden.normDiffDiscSolJ1DiscSol = [];
+  outputLvlHidden.sumL1NormOfJumps = [];
   
   lvl = 0;
 
@@ -64,12 +67,14 @@ function startAlgorithmCR(benchmark)
 
   outputLvlEnergy.lvl = lvl;
   outputLvlEnergy.energy = [];
-  if useExactEnergy, outputLvlEnergy.diffDiscExactE = []; end
+  outputLvlEnergy.gueb = []; 
   if rhsGradientKnown 
     outputLvlEnergy.gleb = []; 
-    if useExactEnergy, outputLvlEnergy.diffGlebExactE = []; end
-    outputLvlEnergy.diffGlebDiscreteE = [];
+    outputLvlEnergy.diffGuebGleb = []; 
+    if useExactEnergy, outputLvlEnergy.diffExactEGleb = []; end
+    outputLvlHidden.diffGlebDiscreteE = [];
   end
+  if useExactEnergy, outputLvlEnergy.diffDiscExactE = []; end
   
   % initialize currData (struct with parameters and data for the level)
   currData.c4n = c4n;
@@ -120,7 +125,8 @@ function startAlgorithmCR(benchmark)
     currData.gradsCR4e = computeGradsCR4e(currData);
     gradCRu0 = gradientCR(currData, u0);
 
-    [currData.stiMaCR, currData.maMaCR] = computeFeMatricesCR(currData);
+    [currData.stiMaCR, maMaCR] = computeFeMatricesCR(currData);
+    currData.maMaCR = maMaCR;
 
     % TODO could have an option for different initial lambda
     % which would also have to be in benchmark (initialVarLambda)
@@ -150,13 +156,13 @@ function startAlgorithmCR(benchmark)
 
     % SOLVE (and save output information about the iteration)
     tic;
-    [u, output.corrVec, energyVec, output.otherCorr] = ...
+    [u, outputLvlInfo.nrIterations(end+1, 1), ...
+      output.corrVec, energyVec, output.otherCorr] = ...
       solvePrimalDualFormulation(params, currData, u0, varLambda);
     outputLvlInfo.time(end+1, 1) = toc;
     outputLvlEnergy.energy(end+1, 1) = energyVec(end);
     output.energyVec = energyVec;
     output.u = u;
-    outputLvlInfo.nrIterations(end+1, 1) = length(energyVec);
     if useExactEnergy 
       outputLvlEnergy.diffDiscExactE(end+1, 1) = ...
         abs(exactEnergy - energyVec(end)); 
@@ -165,21 +171,24 @@ function startAlgorithmCR(benchmark)
     output.normDiffRhsSolCrSquared4e = ...
       computeNormDiffRhsSolCrSquared4e(params, currData, output);
 
-    % compute guaranteed lower energy bound
+    % compute guaranteed energy bounds
+    uJ1 = computeJ1(n4e, n4sDb, u);
+    uJ1 = courant2CR(n4e, uJ1);
+    uJ1GradCR = gradientCR(currData, uJ1);
+    guebCurr = computeDiscreteEnergyCR(params, currData, uJ1, uJ1GradCR);
+    outputLvlEnergy.gueb(end+1, 1) = guebCurr;
     if rhsGradientKnown
       glebCurr = computeGleb(params, currData, output);
       outputLvlEnergy.gleb(end+1, 1) = glebCurr;
-      outputLvlEnergy.diffGlebDiscreteE(end+1, 1) = energyVec(end) - glebCurr;
+      outputLvlEnergy.diffGuebGleb(end+1, 1) = guebCurr - glebCurr; 
+      outputLvlHidden.diffGlebDiscreteE(end+1, 1) = energyVec(end) - glebCurr;
       if useExactEnergy
-        outputLvlEnergy.diffGlebExactE(end+1, 1) = exactEnergy - glebCurr;
+        outputLvlEnergy.diffExactEGleb(end+1, 1) = exactEnergy - glebCurr;
       end
-      % TODO here the guaranteed upper bound, whatever that means, can be
-      %      included after it has been implemented in computeGueb
-      % definitely save more thinks that might prove usefull
-      %    including:  E_NC(J1 uCR)
-      %                gueb
-      %                ||J1 ucr - ucr||
     end
+    temp = u - uJ1;
+    outputLvlHidden.normDiffDiscSolJ1DiscSol(end+1, 1) = ...
+      sqrt(temp'*maMaCR*temp);
 
     % ESTIMATE
     
@@ -195,6 +204,8 @@ function startAlgorithmCR(benchmark)
     if exactSolutionKnown
       outputLvlError.error4lvl(end+1, 1) = ...
         sqrt(sum(error4eCRL2(c4n, n4e, uExact, u)));
+      outputLvlHidden.normDiffExactSolJ1DiscSol(end+1, 1) = ...
+        sqrt(sum(error4eCRL2(c4n, n4e, uExact, uJ1)));
     end
 
     outputLvlError.eta(end+1, 1) = sum(eta4e);
