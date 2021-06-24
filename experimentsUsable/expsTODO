@@ -64,3 +64,20 @@ FINALIZE program
 teste gueb zeug auch mir exakter Lösung und großem alpha um zu sehen, dass 
 die Verschiebung auch dort nichts ausmacht
 DEFINITIV machen
+
+
+Kreis mit Radius 1/2 als Unstetige Funktion rechnen und mit Funktion aus Report
+(für beta = 1e-4 und alpha = 1e4 oÄ) vergleichen die als Approximation des
+Kreises gesehen werden kann, für die exakte Energie und Lösung berechnet werden
+können (dies tun)
+definiere dann das allgemeine beispiel (mit beta und alpha) und wähle die
+Parameter entsprechend. Der Kreis selbst (unstetig) muss dann als Indikator-
+funktion mit Höhe alpha (vielleicht alpha auch 100000, mal sehen.
+Kann noch passieren, dass epsStop noch kleiner gewahlt werden muss dafür
+
+- Nenne sie f_DC und f_C (discontinuous and continuous)
+- noch Kameramann
+- vielleicht noch das H^2_0 Beispiel vernünftig (um sicherzugehen)
+
+sollte dann an beispielen reichen
+- oder noch f mit alpha 10000 (siehe report, 'stagnierender' Fehler)
