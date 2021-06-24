@@ -26,7 +26,7 @@ function params = editable %#ok<*MSNU,FNDEF>
   geometry               = 'BigSquare'; %#ok<NASGU>                     
     % set automatically to 'Square' if useImage == true
   initialRefinementLevel = 0;
-  parTheta               = 1;
+  parTheta               = 0.5;
   minNrDof               = 1e8;
   useProlongation        = true;
   beta4Estimate          = 1;
@@ -51,7 +51,7 @@ function params = editable %#ok<*MSNU,FNDEF>
   imageName              = 'f2bawgnSnr20cameraman.tif'; %#ok<NASGU> 
     % not effective if useImage == false
     % whiteSquare.tif, cameraman.tif
-  parAlpha               = 1e0; 
+  parAlpha               = 1e4; 
   parBeta                = 1;
   rhsGradientKnown       = true;
     % set automatically to false if useImage == true
@@ -65,8 +65,8 @@ function params = editable %#ok<*MSNU,FNDEF>
   saveScreenshots        = 0; 
                               
   % information about experiment for saving and documentation.
-  expName                = 'guebF01';
-  dirInfoName            = sprintf('uniform');
+  expName                = 'gueb1e4';
+  dirInfoName            = sprintf('adaptive');
   %dirInfoName            = sprintf('%s', ...
   %  datestr(now, 'yy_mm_dd_HH_MM_SS'));
   errorNorm              = ["L2", "energy"]; 
