@@ -18,11 +18,6 @@ function  [u, nrIter, corrVec, energyVec, otherCorr] = ...
 %                                         problem
 %                         useExactEnergy: 'logical' with value 0 if exactEnergy
 %                                         must be ignored and 1 else
-%                        saveScreenshots: 'uint64' containing the information
-%                                         that every saveScreenshots-th
-%                                         iteration a screenshot of the results
-%                                         of the iteration must be saved and 0
-%                                         if no screenshots must be saved
 %                              showPlots: 'logical' with value 1 if plots
 %                                         must be shown during the iteration
 %                                         and 0 else
@@ -83,11 +78,11 @@ function  [u, nrIter, corrVec, energyVec, otherCorr] = ...
 %% INIT
   % extract necessary parameters from params
   parTau = params.parTau;
+  maxIter = params.maxIter;
   parAlpha = params.parAlpha;
   showProgress = params.showProgress;
   exactEnergy = params.exactEnergy;
   useExactEnergy = params.useExactEnergy;
-  saveScreenshots = params.saveScreenshots;
   showPlots = params.showPlots;
   plotModeGrayscale = params.plotModeGrayscale;
 
@@ -132,13 +127,6 @@ function  [u, nrIter, corrVec, energyVec, otherCorr] = ...
   otherCorr.bar12TerminationSqrtVec = NaN([1, chunkSize]); 
     % p. 1173, Section 6.2
   
-  %% TODO
-  %% test parTau = sqrt(h)/10
-  %parTau = sqrt(hMin)/10;
-  %if parTau>1, parTau = 1; end;
-  %A = stiMaCR/parTau+parAlpha*maMaCR; 
-  %% TODO
-
   % prepare computation of b
   elemPlusForSides = e4s(:, 1);
     % the j-th component contains the number of T_{+} for the j-th edge of the
@@ -302,11 +290,6 @@ function  [u, nrIter, corrVec, energyVec, otherCorr] = ...
         corr, E, nrIter);
     end
 
-    if saveScreenshots > 0 && mod(nrIter, saveScreenshots) == 0
-      % TODO this function is not written yet, do it next time it's needed
-      saveScreenshot();
-    end
-
     if showPlots
       clf('reset');
       if plotModeGrayscale, plotGrayscale(c4n, n4e, mean(u(s4e), 2));
@@ -314,19 +297,16 @@ function  [u, nrIter, corrVec, energyVec, otherCorr] = ...
     end
 
     % check termination
-    if corr<epsStop
-      % cut down dynamic arrays to their actual size
-      % NOTE this could be outside the while loop
-      corrVec = corrVec(1:nrIter);
-      energyVec = energyVec(1:nrIter + 1);
-      otherCorr.eNcAbsDiffVec = otherCorr.eNcAbsDiffVec(1:nrIter);
-      otherCorr.bar15TerminationVec = ...
-        otherCorr.bar15TerminationVec(1:nrIter);
-      otherCorr.bar15TerminationWithoutL2Vec = ...
-        otherCorr.bar15TerminationWithoutL2Vec(1:nrIter);
-      otherCorr.bar12TerminationSqrtVec = ...
-        otherCorr.bar12TerminationSqrtVec(1:nrIter);
-      break; 
-    end
+    if corr < epsStop || nrIter >= maxIter, break; end
   end
+  % cut down dynamic arrays to their actual size
+  corrVec = corrVec(1:nrIter);
+  energyVec = energyVec(1:nrIter + 1);
+  otherCorr.eNcAbsDiffVec = otherCorr.eNcAbsDiffVec(1:nrIter);
+  otherCorr.bar15TerminationVec = ...
+    otherCorr.bar15TerminationVec(1:nrIter);
+  otherCorr.bar15TerminationWithoutL2Vec = ...
+    otherCorr.bar15TerminationWithoutL2Vec(1:nrIter);
+  otherCorr.bar12TerminationSqrtVec = ...
+    otherCorr.bar12TerminationSqrtVec(1:nrIter);
 end

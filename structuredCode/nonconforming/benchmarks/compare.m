@@ -25,7 +25,7 @@ function params = editable %#ok<*MSNU,FNDEF>
   % AFEM parameters
   geometry               = 'BigSquare'; %#ok<NASGU>                     
     % set automatically to 'Square' if useImage == true
-  initialRefinementLevel = 4;
+  initialRefinementLevel = 0;
   parTheta               = 0.5;
   minNrDof               = 5e3;
   useProlongation        = true;
@@ -57,7 +57,7 @@ function params = editable %#ok<*MSNU,FNDEF>
     % not effective if useExactEnergy == false
                               
   % information about experiment for saving and documentation.
-  expName                = 'OPTIMIZE';
+  expName                = 'aCOMPARE';
   %dirInfoName            = sprintf('epsStop=%e', initialEpsStop);
   dirInfoName            = sprintf('%s', ...
     datestr(now, 'yy_mm_dd_HH_MM_SS'));
