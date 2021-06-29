@@ -192,29 +192,6 @@ function  [u, nrIter, corrVec, energyVec, otherCorr] = ...
     varLambda(isnan(varLambda)) = 0;
     
     % compute right-hand side
-
-    % for k = 1, ..., nrSides
-    %   b(k) = ...
-    %     (temp, \nabla_{NC}\psi_k)_{L^2(\Omega)} ...
-    %     + intRHS4s(k)
-    % with
-    %   temp = \nabla_{NC}u_{j-1} - \Lambda_j    and
-    %   intRHS4s(k) = (f, \psi_k)_L^2(\Omega)
-    % furthermore, utilizing that temp and \nabla\psi_k are constant on any
-    % triangle and therefore also temp\cdot \nabla\psi_k,
-    %   (temp, \nabla_{NC}\psi_k)_{L^2(\Omega)} ...
-    %     = \int_\Omega temp\cdot\nabla_{NC}\psi_k dx 
-    %     = \sum{T\in\mathcal{T}} \int_T temp\cdot\nabla\psi_k dx
-    %     = \sum{T\in\mathcal{T}} temp\cdot\nabla\psi_k \int_T 1 dx
-    %     = \sum{T\in\mathcal{T}} temp\cdot\nabla\psi_k |T|
-    % and since psi_k = 0 on \mathcal{T}\setminus{T_{+}, T_{-}}
-    %   (temp, \nabla_{NC}\psi_k)_{L^2(\Omega)} ...
-    %     = temp\cdot\nabla\psi_k|_{T_{+}} |T_{+}| ...
-    %       + temp\cdot\nabla\psi_k|_{T_{-}} |T_{-}|
-    % for an inner edge E_k = T_{+}\cap T_{-} and
-    %   (temp, \nabla_{NC}\psi_k)_{L^2(\Omega)} ...
-    %     = temp\cdot\nabla\psi_k|_{T_{+}} |T_{+}|
-    
     temp4e = (gradCRu/parTau - varLambda);
     b = intRHS4s + ...
       area4e(elemPlusForSides).*sum(...
@@ -233,59 +210,40 @@ function  [u, nrIter, corrVec, energyVec, otherCorr] = ...
     ENew = computeDiscreteEnergyCR(params, currData, uNew, gradCRu);
 
     dtU = (u - uNew)/parTau; % = -v;
-      % TODO here case distinction for termination criteria needs to be done
     corr = sqrt(dtU'*stiMaCR*dtU); % Only gradients
-      % TODO gradCRu already computed, so using the stiMa might be unnecessary
-      % (cf. Tiens code)
-      % tmp = (DuCRnew4e = DuCR4e)/tau;
-      % corr = sqrt(sum(area4e.*sum(tmp.^2, 2)));
-    %testCorr = ; %TODO test time or sth, maybe profile, also
-                                 % test if results are the same
-                                 % ALSO needs gradCRuOld, hence it might be 
-                                 % inefficient sind its computed more often
-                                 % than necessary
       
     % check if new memory for dynamic arrays needs to be preallocated
     if nrIter > length(corrVec)
       corrVec = [corrVec, NaN([1, chunkSize])]; %#ok<AGROW>
       energyVec = [energyVec, NaN([1, chunkSize])]; %#ok<AGROW>
       otherCorr.eNcAbsDiffVec = ...
-        [otherCorr.eNcAbsDiffVec, NaN([1, chunkSize])]; %#ok<AGROW>
+        [otherCorr.eNcAbsDiffVec, NaN([1, chunkSize])]; 
       otherCorr.bar15TerminationVec = ...
-        [otherCorr.bar15TerminationVec, NaN([1, chunkSize])]; %#ok<AGROW>
+        [otherCorr.bar15TerminationVec, NaN([1, chunkSize])]; 
       otherCorr.bar15TerminationWithoutL2Vec = ...
         [otherCorr.bar15TerminationWithoutL2Vec, ...
-        NaN([1, chunkSize])]; %#ok<AGROW>
+        NaN([1, chunkSize])]; 
       otherCorr.bar12TerminationSqrtVec = ...
-        [otherCorr.bar12TerminationSqrtVec, NaN([1, chunkSize])]; %#ok<AGROW>
+        [otherCorr.bar12TerminationSqrtVec, NaN([1, chunkSize])]; 
     end
 
-    % for comparision of termination criteria
-
+    % compute other possible termination criteria for comparison
     otherCorr.eNcAbsDiffVec(nrIter) = abs(E-ENew); 
-    otherCorr.bar15TerminationVec(nrIter) = sqrt(dtU'*C*dtU); 
+    otherCorr.bar15TerminationVec(nrIter) = sqrt(dtU'*C*dtU);
     otherCorr.bar15TerminationWithoutL2Vec(nrIter) = ...
-      sqrt(hMin*dtU'*stiMaCR*dtU); 
-    %otherCorr.bar12TerminationVec(end+1) = dtU'*maMaCR*dtU/energyVec(1); 
-    %otherCorr.bar12TerminationSqrtVec(end+1) = ...
-    %  sqrt(dtU'*maMaCR*dtU)/energyVec(1); 
-    %  TODO should be divided by E(0), which is ||g|| in Bartels but 0 here
-    %     hence use it without division for now (what does a factor even
-    %     matter?)
+      sqrt(hMin*dtU'*stiMaCR*dtU);
     otherCorr.bar12TerminationSqrtVec(nrIter) = ...
-      sqrt(dtU'*maMaCR*dtU); %#ok<AGROW>
+      sqrt(dtU'*maMaCR*dtU); 
 
     % update data
     u = uNew;
     E = ENew;
-    energyVec(nrIter + 1) = E; %#ok<AGROW>
-    corrVec(nrIter) = corr; %#ok<AGROW>
+    energyVec(nrIter + 1) = E; 
+    corrVec(nrIter) = corr;
 
     % show miscellaneous information
     if showProgress
       fprintf(repmat('\b', 1, lineLength));
-      %lineLength = fprintf('%e      %f        %d', ...
-      %  corr, E, nrIter);
       lineLength = fprintf('%e      %f        %d', ...
         corr, E, nrIter);
     end
