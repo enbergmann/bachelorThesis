@@ -1,0 +1,25 @@
+MATLAB is copyOnWrite, so try not to change structs in functions to avoid the
+struct being copied 
+
+for all non-AFEM functions compute all necessary data (in particular
+that is dependent on geometry) before and pass it to the functions i.e.
+mentality is efficiency >> memory usage
+
+.' is the same as transpose
+' is the same as ctranspose, i.e transpose and complex conjugate
+
+reshape uses columns first, than rows, and lastly dimensions
+
+figures that might be included in LaTeX should not have titles or more 
+information than, e.g., plot and axis
+
+checkcode to optimize code (new name for mlint) and also mlintrpt
+
+>edit functionname< can be used to read functions (even MATLAB functions)
+
+profiling for performance optimization, this also uses checkcode
+
+computation of right-hand side for linear system in
+solvePrimalDualFormulation.m should be done with respect to inner edges but is
+done with respect to dof until there is a computation needed where dof and
+inner edges are not the same

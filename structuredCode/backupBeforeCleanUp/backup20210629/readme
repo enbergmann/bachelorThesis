@@ -1,0 +1,7 @@
+'conforming' contains all files for the conforming algorithm (cf. Bartels).
+'nonConforming' contains all files for the non conforming algorithm (cf. C. Carstensen).
+'utils' contains all files that can be used by both versions (e.g. refinement procedures).
+
+TODO write this properly or delete it
+TODO check memory usage, maybe the server kills it because it's inefficient in that regard (maybe
+	some clear command can easily fix that

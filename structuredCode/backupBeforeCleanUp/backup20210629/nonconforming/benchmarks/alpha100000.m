@@ -18,16 +18,16 @@ function params = editable %#ok<*MSNU,FNDEF>
   showProgress           = true; 
   degree4Integrate       = 10; 
   plotGivenFunctions     = false;
-  refinementLevel4Plots  = 5; % 11 is very close to the limit
+  refinementLevel4Plots  = 0; % 11 is very close to the limit
     % not effective if plotGivenFunctions == false
   debugIfError           = false;
 
   % AFEM parameters
   geometry               = 'BigSquare'; %#ok<NASGU>                     
     % set automatically to 'Square' if useImage == true
-  initialRefinementLevel = 4;
+  initialRefinementLevel = 0;
   parTheta               = 0.5;
-  minNrDof               = 5e3;
+  minNrDof               = 1e8;
   useProlongation        = true;
   beta4Estimate          = 1;
   n4Estimate             = 2;
@@ -36,15 +36,21 @@ function params = editable %#ok<*MSNU,FNDEF>
   % algorithm parameters
   u0Mode         = 'zeros'; 
   initialEpsStop = 1e-4; 
-  parTau         = 1.2; 
-  maxIter        = 1e3;
+  stopCrit       = ["Exact Error Difference", ...
+                    "weighted energy difference"]; 
+  parTau         = 1; % Bar15: tau = h^{1/2}/10, time step-size
+  % TODO look at proof, tau needs to be between 0 and 1
+  % Bar12 has the L2 norm in alg P1 and hence also the L2 norm in the
+  % termination criterion (but squared), epsilon is 10^-6
+  % tau is h/10 in the paper
+  tauMode        = 'constant'; % TODO 'Bar15'; 'Bar12'
 
   % experiment parameters
-  useImage               = false;
+  useImage               = true;
   imageName              = 'f2bawgnSnr20cameraman.tif'; %#ok<NASGU> 
     % not effective if useImage == false
     % whiteSquare.tif, cameraman.tif
-  parAlpha               = 1e0; 
+  parAlpha               = 100000; 
   parBeta                = 1;
   rhsGradientKnown       = true;
     % set automatically to false if useImage == true
@@ -58,10 +64,11 @@ function params = editable %#ok<*MSNU,FNDEF>
   saveScreenshots        = 0; 
                               
   % information about experiment for saving and documentation.
-  expName                = 'OPTIMIZE';
-  %dirInfoName            = sprintf('epsStop=%e', initialEpsStop);
-  dirInfoName            = sprintf('%s', ...
-    datestr(now, 'yy_mm_dd_HH_MM_SS'));
+  expName                = 'alpha4camDenoise';
+  dirInfoName            = sprintf('alpha=%d', parAlpha);
+  %dirInfoName            = sprintf('%s', ...
+  %  datestr(now, 'yy_mm_dd_HH_MM_SS'));
+  errorNorm              = ["L2", "energy"]; 
 
   % function handles (not effective if useImage == true)
   function y = rightHandSide(x)
@@ -130,8 +137,8 @@ function params = editable %#ok<*MSNU,FNDEF>
 %                           mesh on the level
 %   initialEpsStop - 'double' containing the initial epsStop for relevant for 
 %                    the iteration on the first level of AFEM
+%   stopCrit       - TODO
 %   parTau         - 'double' containing the parameter \tau from the algorithm
-%   maxIter        - 'uint64' TODO
 %
 % experiment parameters
 %   useImage           - 'logical' with value 1 if an image given by imageName
@@ -161,6 +168,7 @@ function params = editable %#ok<*MSNU,FNDEF>
 %   dirInfoName - 'char array with exactly one row' containing the name for the 
 %                 folder in '../../results/nonconforming/expName/' where the 
 %                 results of the experiment must be saved in
+%   errorNorm   - TODO
 
 %% BUILD STRUCT
 % advanced, not of interest for mere usage of the program
@@ -190,6 +198,7 @@ function params = editable %#ok<*MSNU,FNDEF>
   params.n4Estimate = n4Estimate;
   params.beta4Estimate = beta4Estimate;
   params.initialEpsStop = initialEpsStop;
+  params.stopCrit = stopCrit;              
   params.useProlongation = useProlongation;      
   params.rhsGradientKnown = rhsGradientKnown; 
   params.exactSolutionKnown = exactSolutionKnown; 
@@ -208,6 +217,7 @@ function params = editable %#ok<*MSNU,FNDEF>
 
   params.parAlpha = parAlpha;
   params.parBeta = parBeta;
+  params.errorNorm = errorNorm;             
   params.saveScreenshots = saveScreenshots;       
 
   params.degree4Integrate = degree4Integrate;

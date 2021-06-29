@@ -1,0 +1,35 @@
+function [out1, out2, ...] = fun(in1, in2, ...)
+%% DOC (always fold)
+% Does x and computes y. 
+%
+% fun.m
+% input:  in1  - 'class' containing...
+%         in2  - 'size class array' where the j-th row contains...
+%         .
+%         .
+%         .
+%
+% output: out1 - 'class or size and class of out1' containing...
+%         out2 - 'size class array' where the j-th row contains...
+%         .
+%         .
+%         .
+
+%% INIT (always fold)
+  % headline (for fold if section is big enough)
+  code
+    % description of code
+
+  .
+  .
+  .
+
+%% MAIN (always fold)
+  % headline (fold if section is big enough)
+  code
+    % description of code
+
+  .
+  .
+  .
+end
