@@ -36,11 +36,12 @@ function computeExactEnergyBV(geometry, fStr, fStrParams, uStr, uStrParams, ...
 %                           computation of the energy
 %        minNrInnerEdges  - 'uint64' minimal number of inner edges of the
 %                           finest, red refined, mesh on which the energy is
-%                           approximated
+%                           approximated (optional)
 %        minPrecision     - 'uint64' minimal number of significant digits the 
 %                           approximation of the energy should possess
+%                           (optional)
 %        degree4Integrate - 'uint64' up to which the integration in integrate
-%                           must be exact
+%                           must be exact (optional)
 
 %% INIT
   addpath(genpath(pwd), genpath('../utils/'));
@@ -53,7 +54,7 @@ function computeExactEnergyBV(geometry, fStr, fStrParams, uStr, uStrParams, ...
     end
   end
 
-  if isempty(fStr), f = @(x) feval(fStr, x, fStrParams); 
+  if isempty(fStrParams), f = @(x) feval(fStr, x); 
   else, f = @(x) feval(fStr, x, fStrParams); end
   if isempty(uStrParams), u = @(x) feval(uStr, x); 
   else, u = @(x) feval(uStr, x, uStrParams); end
@@ -61,21 +62,17 @@ function computeExactEnergyBV(geometry, fStr, fStrParams, uStr, uStrParams, ...
   else, gradU = @(x) feval(gradUStr, x, gradUStrParams); end
 
   if strcmp(geometry, 'Polygon')
-    [c4n, n4e, n4sDb, n4sNb] = ...
-      computeGeometryPolygon(0);
+    [c4n, n4e, n4sDb, n4sNb] = computeGeometryPolygon(0);
     polygonMesh = true;
   else
-    [c4n, n4e, n4sDb, n4sNb] = ...
-      loadGeometry(geometry, 0);
+    [c4n, n4e, n4sDb, n4sNb] = loadGeometry(geometry, 0);
     polygonMesh = false;
   end
 
   rhsStr = sprintf('alpha_%.30g_with_rhs_%s%s', ...
     parAlpha, fStr, sprintf('_%.30g', fStrParams));
   warning('off', 'MATLAB:MKDIR:DirectoryExists');
-  dirName = sprintf(...
-    'knownExactEnergies/%s/%s', ...
-    geometry, rhsStr);
+  dirName = sprintf('knownExactEnergies/%s/%s', geometry, rhsStr);
   mkdir(dirName);
   warning('on', 'MATLAB:MKDIR:DirectoryExists');
 
@@ -104,34 +101,36 @@ function computeExactEnergyBV(geometry, fStr, fStrParams, uStr, uStrParams, ...
     tempStruct.s4n = computeS4n(n4e, n4s);
     tempStruct.nrSides = max(max(s4e));
     dof = computeDofCR(tempStruct);
-    nrInnerEdges(end+1,1) = length(dof);%#ok<AGROW>
+    nrInnerEdges(end + 1, 1) = length(dof); %#ok<AGROW>
     output.nrInnerEdges = nrInnerEdges;
 
     % compute energy
-    energy(end+1,1) = sum(...
+    energy(end + 1, 1) = sum(...
         integrate(@(n4p, Gpts4p, Gpts4ref)(...
       parAlpha/2*u(Gpts4p).^2 + sqrt(sum(gradU(Gpts4p).^2, 2)) ...
       - f(Gpts4p).*u(Gpts4p)), ...
-      c4n, n4e, degree4Integrate+1, area4e));%#ok<AGROW>
+      c4n, n4e, degree4Integrate + 1, area4e)); %#ok<AGROW>
     output.energy = energy;
 
     % compute significant digits
-    if length(energy) > 1 && fix(energy(end-1)) == fix(energy(end))
-      % 20 is too precise, so it's sufficient
-      dec1 = extractAfter(num2str(energy(end-1), '%.20f'), '.');
-      dec2 = extractAfter(num2str(energy(end), '%.20f'), '.');
-      for j = 1:min(length(dec1), length(dec2))
-        if ~strcmp(dec1(j), dec2(j))
-          break
+    if length(energy) > 1 
+      if fix(energy(end - 1)) == fix(energy(end))
+        dec1 = extractAfter(num2str(energy(end - 1), '%.20f'), '.');
+        dec2 = extractAfter(num2str(energy(end), '%.20f'), '.');
+          % 20 is too precise, so it's sufficient
+        for j = 1:min(length(dec1), length(dec2))
+          if ~strcmp(dec1(j), dec2(j)), break; end
         end
+        significantDigits(end + 1, 1) = j - 1; %#ok<AGROW>
+          % in MATLAB j is known even after the loop ends
+      else
+        significantDigits(end + 1, 1) = 0; %#ok<AGROW>
       end
-      significantDigits(end+1,1) = j-1;%#ok<AGROW>
-        % in MATLAB j is known even after the loop ends
     end
     output.significantDigits = significantDigits;
 
     % display status of computation
-    fprintf([repmat('\n',1,50), ...
+    fprintf([repmat('\n', 1, 50), ...
       '    minNrInnerEdges = %e\n    minPrecision = %d\n\n'], ...
       minNrInnerEdges, minPrecision);
     disp(struct2table(output));
@@ -147,7 +146,7 @@ function computeExactEnergyBV(geometry, fStr, fStrParams, uStr, uStrParams, ...
     fclose(file);
 
     % check termination
-    if nrInnerEdges(end)>minNrInnerEdges && ...
-        significantDigits(end)>=minPrecision, break; end
+    if nrInnerEdges(end) > minNrInnerEdges && ...
+        significantDigits(end) >= minPrecision, break; end
   end
 end
