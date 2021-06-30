@@ -7,8 +7,7 @@ function normDiffRhsSolCrSquared4e = ...
 %
 % computeNormOfDifference4e.m
 % input: params   - 'struct' with fields:
-%                                    f: 'function_handle' of the right-hand
-%                                       side f
+%                                    f: 'function_handle' of the input signal f
 %                             parAlpha: 'double' containing the parameter alpha
 %                                       from the problem
 %                     degree4Integrate: 'uint64' up to which the integration in
@@ -38,9 +37,9 @@ function normDiffRhsSolCrSquared4e = ...
 % output: normDiffRhsSolCrSquared4e - '(nrElems x 1)-dimensional double array'
 %                                     where the j-th row contains the integral
 %                                     over the j-th triangle of the
-%                                     triangulation of the right-hand side f
-%                                     minus parAlpha times the CR solution u of
-%                                     the iteration
+%                                     triangulation of the input signal f minus
+%                                     parAlpha times the CR solution u of the
+%                                     iteration
 
 %% INIT
   % extract necessary parameters from params

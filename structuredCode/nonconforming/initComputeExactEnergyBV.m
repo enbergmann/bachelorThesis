@@ -1,5 +1,17 @@
-function initializeComputeExactEnergy(fct, parAlpha, parBeta)
+function initComputeExactEnergyBV(fct, parAlpha, parBeta)
+%% DOC
+% Initializes input for the function computeExactEnergyBV for more convenient 
+% usage of said function.
+%
+% initComputeExactEnergyBV.m
+% input: fct      - 'char array with exactly one row' containing the name of
+%                   the input signal f
+%        parAlpha - 'double' parameter alpha necessary for the computation of
+%                   the energy
+%        parBeta  - 'double' parameter beta needed for the call to some of the
+%                   input signals (optional)
 
+%% INIT
   if nargin < 3, parBeta = NaN; end
   geometry = 'BigSquare';
   minNrInnerEdges = 1e9;
@@ -41,6 +53,7 @@ function initializeComputeExactEnergy(fct, parAlpha, parBeta)
       error('unknown function');
   end
 
+%% MAIN
   computeExactEnergyBV(geometry, fStr, fStrParams, uStr, uStrParams, ...
     gradUStr, gradUStrParams, parAlpha, ...,
     minNrInnerEdges, minPrecision, degree4Integrate)

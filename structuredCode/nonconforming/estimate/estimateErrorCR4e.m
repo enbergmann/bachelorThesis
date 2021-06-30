@@ -35,10 +35,10 @@ function [eta4e, etaVol4e, etaJumps4e] = ...
 %                                                row contains the integral over
 %                                                the j-th triangle of the
 %                                                triangulation of the square of
-%                                                the difference of the
-%                                                right-hand side f and the
-%                                                product of parAlpha and the CR
-%                                                solution u of the iteration
+%                                                the difference of the input
+%                                                signal f and the product of
+%                                                parAlpha and the CR solution u
+%                                                of the iteration
 %
 % output: eta4e      - '(nrElems x 1)-dimensional double array' where the j-th
 %                      row contains the contribution from the refinement

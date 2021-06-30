@@ -13,7 +13,7 @@ function gleb = computeGleb(params, currData, output)
 % computeGleb.m
 % input: params   - 'struct' with fields:
 %                                gradF: 'function_handle' of the gradient of
-%                                       the right-hand side f
+%                                       the input signal f
 %                             parAlpha: 'double' containing the parameter alpha
 %                                       from the problem
 %                     degree4Integrate: 'uint64' up to which the integration in
@@ -38,10 +38,10 @@ function gleb = computeGleb(params, currData, output)
 %                                                row contains the integral over
 %                                                the j-th triangle of the
 %                                                triangulation of the square of
-%                                                the difference of the
-%                                                right-hand side f and the
-%                                                product of parAlpha and the CR
-%                                                solution u of the iteration
+%                                                the difference of the input
+%                                                signal f and the product of
+%                                                parAlpha and the CR solution u
+%                                                of the iteration
 %
 % output: gleb - 'double' containing the guaranteed lower energy bound
 

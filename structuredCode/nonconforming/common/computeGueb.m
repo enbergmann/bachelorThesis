@@ -13,7 +13,7 @@ function gueb = computeGueb(params, currData, output, outputLvlEnergy)
 % computeGueb.m
 % input: params   - 'struct' with fields:
 %                                gradF: 'function_handle' of the gradient of
-%                                       the right-hand side f
+%                                       the input signal f
 %                             parAlpha: 'double' containing the parameter alpha
 %                                       from the problem
 %                     degree4Integrate: 'uint64' up to which the integration in
@@ -39,7 +39,7 @@ function gueb = computeGueb(params, currData, output, outputLvlEnergy)
 %                                                the j-th triangle of the
 %                                                triangulation of the square of
 %                                                the difference of the
-%                                                right-hand side f and the
+%                                                input signal f and the
 %                                                product of parAlpha and the CR
 %                                                solution u of the iteration
 %

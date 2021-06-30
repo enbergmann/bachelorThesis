@@ -4,15 +4,15 @@ function computeExactEnergyBV(geometry, fStr, fStrParams, uStr, uStrParams, ...
 %% DOC
 % Computes and saves an approximation (at least up to precision minPrecision
 % and minNrInnerEdges inner edges) of the exact BV energy of a H^1_0 function
-% u, whose pointwise gradient is known, for a right-hand side f on a mesh given
-% by geometry.
+% u, whose pointwise gradient is known, for a input signal f on a mesh given by
+% geometry.
 %
 % computeExactEnergyBV.m
 % input: geometry         - 'char array with exactly one row' containing the 
 %                           name of the geometry the user wants to approximate
 %                           the exact energy on
 %        fStr             - 'string'/'char array with exactly one row' 
-%                           containing the name of the right-hand side f
+%                           containing the name of the input signal f
 %        fStrParams       - 'double array with exactly one row' containing the 
 %                           necessary parameters to produce a function handle
 %                           of f (0x0 is possible if f needs no further
