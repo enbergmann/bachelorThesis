@@ -1,4 +1,4 @@
-function y = f03(x, args)
+function y = f04(x, args)
   parAlpha = args(1, 1);
   
   r = sqrt(sum(x.^2, 2));

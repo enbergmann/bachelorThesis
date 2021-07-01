@@ -7,8 +7,8 @@ function [c4n,n4e,n4sDb,n4sNb] = computeGeometryPolygon(j)
 % computeGeometryPolygon.m
 % input: j - number of red-refinements to produce the mesh
 %
-% output: c4n - coordinates for nodes
-%         n4e - nodes for elements
+% output: c4n   - coordinates for nodes
+%         n4e   - nodes for elements
 %         n4sDb - nodes for Dirichlet boundary sides
 %         n4sNb - nodes for Neumann boundary sides
 
