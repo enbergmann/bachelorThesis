@@ -9,9 +9,9 @@ function [eta4e, etaVol4e, etaJumps4e] = ...
 %
 % estimateErrorCR4e.m
 % input: params   - 'struct' with fields:
-%                     beta4Estimate: 'double' containing the parameter \beta
-%                                    from the problem
-%                        n4Estimate: 'uint64' containing the dimension
+%                     parGamma: 'double' containing the parameter \gamma for
+%                               the refinement indicator
+%                            d: 'uint64' containing the dimension
 %                                   
 %        currData - 'struct' with fields:
 %                             area4e: areas for elements
@@ -54,8 +54,8 @@ function [eta4e, etaVol4e, etaJumps4e] = ...
 
 %% INIT
   % extract necessary parameters from params
-  beta4Estimate = params.beta4Estimate;
-  n4Estimate = params.n4Estimate;
+  parGamma = params.parGamma;
+  d = params.d;
 
   % extract necessary information from currData
   area4e = currData.area4e;
@@ -67,8 +67,8 @@ function [eta4e, etaVol4e, etaJumps4e] = ...
   normDiffRhsSolCrSquared4e = output.normDiffRhsSolCrSquared4e;
   
 %% MAIN
-  etaVol4e = area4e.^(2/n4Estimate).*normDiffRhsSolCrSquared4e;
-  etaJumps4e = area4e.^(beta4Estimate/n4Estimate).*sum(l1NormOfJump4s(s4e), 2);
+  etaVol4e = area4e.^(2/d).*normDiffRhsSolCrSquared4e;
+  etaJumps4e = area4e.^(parGamma/d).*sum(l1NormOfJump4s(s4e), 2);
 
   eta4e = etaVol4e + etaJumps4e;
 end

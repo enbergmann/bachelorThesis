@@ -6,7 +6,7 @@ function startAlgorithmCR(benchmark)
 % startAlgorithmCR.m
 % input: benchmark - 'string'/'char array with exactly one row' containing the 
 %                    name of the benchmark the user wants to use (optional
-%                    parameter, default value is 'editable').
+%                    parameter, default value is 'editable')
 
 %% INIT
   % initialize paths and load benchmark
@@ -42,7 +42,6 @@ function startAlgorithmCR(benchmark)
   u0Mode = params.u0Mode;
   
   % initialize outputLvl structs (structs for AFEM output)
-
   outputLvlHidden.hMax = [];
   outputLvlHidden.hMin = [];
   outputLvlHidden.sumL1NormOfJumps = [];
@@ -96,8 +95,6 @@ function startAlgorithmCR(benchmark)
     case 'interpolationRhs', u0 = interpolationCR(params, currData, f); 
   end
 
-  % TODO here sth must be done when there are different possibilities for
-  % epsStop
   currData.epsStop = params.initialEpsStop;
 
 %% MAIN
@@ -128,12 +125,10 @@ function startAlgorithmCR(benchmark)
     [currData.stiMaCR, maMaCR] = computeFeMatricesCR(currData);
     currData.maMaCR = maMaCR;
 
-    % TODO could have an option for different initial lambda
-    % which would also have to be in benchmark (initialVarLambda)
     varLambda = gradCRu0./repmat(sqrt(sum(gradCRu0.^2, 2)), 1, 2);
     varLambda(isinf(varLambda)) = 0; % this is prob. unnecessary, since only
-                                     %0/0=NaN happens by definition
-                                     %leave it just to be save? doesn't hurt
+                                     % 0/0 = NaN happens by definition
+                                     % remains here just to be save
     varLambda(isnan(varLambda)) = 0;
 
     dof = computeDofCR(currData);
@@ -147,12 +142,6 @@ function startAlgorithmCR(benchmark)
       currData.intRHS4s] = ...
       integralsWithF4e(params, currData);
       % needed here and in error estimate function
-
-    % TODO
-    % compute epsStop dependend on information given in benchmark
-    % e.g. scaled with meshsize
-    %
-    % RIGHT NOW its just the initial epsStop as termination crit.!!!!
 
     % SOLVE (and save output information about the iteration)
     tic;
@@ -200,7 +189,6 @@ function startAlgorithmCR(benchmark)
       estimateErrorCR4e(params, currData, output);
     
     % compute error
-    % TODO implement flag for different errors
     if exactSolutionKnown
       outputLvlError.error4lvl(end+1, 1) = ...
         sqrt(sum(error4eCRL2(c4n, n4e, uExact, u)));
@@ -279,8 +267,5 @@ function startAlgorithmCR(benchmark)
         case 'interpolationRhs', u0 = interpolationCR(params, currData, f); 
       end
     end
-
-    %NOTE epsStop should probably be updated right here and now if it is
-    %     to be updated
   end
 end

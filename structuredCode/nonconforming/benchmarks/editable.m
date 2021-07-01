@@ -29,8 +29,8 @@ function params = editable %#ok<*MSNU,FNDEF>
   parTheta               = 0.5;
   minNrDof               = 5e3;
   useProlongation        = true;
-  beta4Estimate          = 1;
-  n4Estimate             = 2;
+  parGamma               = 1;
+  d                      = 2;
     % this should remain 2
 
   % algorithm parameters
@@ -115,9 +115,9 @@ function params = editable %#ok<*MSNU,FNDEF>
 %                             solution of a level of AFEM to the refined mesh 
 %                             for the next level must be used as initial value
 %                             for the iteration on the next level
-%   beta4Estimate          - 'double' containing the parameter \beta from the
-%                            problem
-%   n4Estimate             - 'uint64' containing the dimension
+%   parGamma               - 'double' containing the parameter \gamma for
+%                            the refinement indicator
+%   d                      - 'uint64' containing the dimension
 %
 % algorithm parameters
 %   u0Mode         - 'char array with exactly one row' containing the choice
@@ -185,8 +185,8 @@ function params = editable %#ok<*MSNU,FNDEF>
   params.initialRefinementLevel = initialRefinementLevel;
 
   params.minNrDof = minNrDof;
-  params.n4Estimate = n4Estimate;
-  params.beta4Estimate = beta4Estimate;
+  params.d = d;
+  params.parGamma = parGamma;
   params.initialEpsStop = initialEpsStop;
   params.useProlongation = useProlongation;      
   params.rhsGradientKnown = rhsGradientKnown; 

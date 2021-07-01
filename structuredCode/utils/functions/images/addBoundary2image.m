@@ -9,7 +9,7 @@ function addBoundary2image(imageName, boundaryType)
 %                       image
 %        boundaryType - 'char array with exactly one row' containing the type
 %                       of boundary that must be added to the picture
-%                       (optional, standard is 'f2b')
+%                       (optional, default value is 'f2b')
 %          Options:
 %              'f2b': fade to black towards the edge during the outermost 25
 %                     pixels of the image
