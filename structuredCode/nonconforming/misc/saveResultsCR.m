@@ -105,69 +105,73 @@ function saveResultsCR(params, currData, ...
     writetable(struct2table(paramsReduced, 'AsArray', true), name);
 
     % plot rhs and grayscale image of rhs
-    if plotGivenFunctions
-      if polygonMesh
-        [c4nRhs, n4eRhs] = computeGeometryPolygon(refinementLevel4Plots);
-      else
-        [c4nRhs, n4eRhs] = loadGeometry(geometry, refinementLevel4Plots);
-      end
+    try
+      if plotGivenFunctions
+        if polygonMesh
+          [c4nRhs, n4eRhs] = computeGeometryPolygon(refinementLevel4Plots);
+        else
+          [c4nRhs, n4eRhs] = loadGeometry(geometry, refinementLevel4Plots);
+        end
 
-      fVal = f(c4nRhs);
+        fVal = f(c4nRhs);
 
-      rhsFig = figure('visible', figVisible); 
-      trisurf(n4eRhs, c4nRhs(:, 1), c4nRhs(:, 2), fVal, ...
-        'EdgeColor', 'None');
-      fName = sprintf('../../results/nonconforming/%s/%s/rhs.png', ...
-        expName, dirInfoName);
-      saveas(rhsFig, fName);
-
-      rhsAxisFig = figure('visible', figVisible); 
-      plotAxis(c4nRhs, fVal);
-      fName = sprintf('../../results/nonconforming/%s/%s/rhsAxis.png', ...
-        expName, dirInfoName);
-      saveas(rhsAxisFig, fName);
-
-      rhsGrayscaleFig = figure('visible', figVisible); 
-      trisurf(n4eRhs, c4nRhs(:, 1), c4nRhs(:, 2),  fVal, 'EdgeColor', 'None');
-      view(0, 90);
-      axis image;
-      colormap gray;
-      fName = sprintf('../../results/nonconforming/%s/%s/rhsGrayscale.png', ...
-        expName, dirInfoName);
-      saveas(rhsGrayscaleFig, fName);
-
-      if exactSolutionKnown
-        uExactVal = uExact(c4nRhs);
-
-        uExactFig = figure('visible', figVisible); 
-        trisurf(n4eRhs, c4nRhs(:, 1), c4nRhs(:, 2), uExactVal, ...
+        rhsFig = figure('visible', figVisible); 
+        trisurf(n4eRhs, c4nRhs(:, 1), c4nRhs(:, 2), fVal, ...
           'EdgeColor', 'None');
-          sprintf('../../results/nonconforming/%s/%s/exactSolution.png', ...
+        fName = sprintf('../../results/nonconforming/%s/%s/rhs.png', ...
           expName, dirInfoName);
-        fName = sprintf(...
-          '../../results/nonconforming/%s/%s/exactSolution.png', ...
+        saveas(rhsFig, fName);
+
+        rhsAxisFig = figure('visible', figVisible); 
+        plotAxis(c4nRhs, fVal);
+        fName = sprintf('../../results/nonconforming/%s/%s/rhsAxis.png', ...
           expName, dirInfoName);
-        saveas(uExactFig, fName);
+        saveas(rhsAxisFig, fName);
 
-
-        uExactAxisFig = figure('visible', figVisible); 
-        plotAxis(c4nRhs, uExactVal);
-        fName = sprintf(...
-          '../../results/nonconforming/%s/%s/exactSolutionAxis.png', ...
-          expName, dirInfoName);
-        saveas(uExactAxisFig, fName);
-
-        uExactGrayscaleFig = figure('visible', figVisible); 
-        trisurf(n4eRhs, c4nRhs(:, 1), c4nRhs(:, 2), uExactVal, ...
-          'EdgeColor', 'None');
+        rhsGrayscaleFig = figure('visible', figVisible); 
+        trisurf(n4eRhs, c4nRhs(:, 1), c4nRhs(:, 2),  fVal, 'EdgeColor', 'None');
         view(0, 90);
         axis image;
         colormap gray;
-        fName = sprintf(...
-          '../../results/nonconforming/%s/%s/exactSolutionGrayscale.png', ...
+        fName = sprintf('../../results/nonconforming/%s/%s/rhsGrayscale.png', ...
           expName, dirInfoName);
-        saveas(uExactGrayscaleFig, fName);
+        saveas(rhsGrayscaleFig, fName);
+
+        if exactSolutionKnown
+          uExactVal = uExact(c4nRhs);
+
+          uExactFig = figure('visible', figVisible); 
+          trisurf(n4eRhs, c4nRhs(:, 1), c4nRhs(:, 2), uExactVal, ...
+            'EdgeColor', 'None');
+            sprintf('../../results/nonconforming/%s/%s/exactSolution.png', ...
+            expName, dirInfoName);
+          fName = sprintf(...
+            '../../results/nonconforming/%s/%s/exactSolution.png', ...
+            expName, dirInfoName);
+          saveas(uExactFig, fName);
+
+
+          uExactAxisFig = figure('visible', figVisible); 
+          plotAxis(c4nRhs, uExactVal);
+          fName = sprintf(...
+            '../../results/nonconforming/%s/%s/exactSolutionAxis.png', ...
+            expName, dirInfoName);
+          saveas(uExactAxisFig, fName);
+
+          uExactGrayscaleFig = figure('visible', figVisible); 
+          trisurf(n4eRhs, c4nRhs(:, 1), c4nRhs(:, 2), uExactVal, ...
+            'EdgeColor', 'None');
+          view(0, 90);
+          axis image;
+          colormap gray;
+          fName = sprintf(...
+            '../../results/nonconforming/%s/%s/exactSolutionGrayscale.png', ...
+            expName, dirInfoName);
+          saveas(uExactGrayscaleFig, fName);
+        end
       end
+    catch ME
+      appendError(ME, expName, dirInfoName);
     end
   end
 
@@ -179,20 +183,24 @@ function saveResultsCR(params, currData, ...
   writetable(struct2table(currDataReduced, 'AsArray', true), name);
 
   % save plots of solution
-  approxFig = figure('visible', figVisible); 
-  plotCR(c4n, n4e, u);
-  fName = sprintf('%s/solution.png', dirName);
-  saveas(approxFig, fName);
-  
-  approxFigAxis = figure('visible', figVisible); 
-  plotAxisNC(c4n,n4e,u);
-  fName = sprintf('%s/solutionAxis.png', dirName);
-  saveas(approxFigAxis, fName);
+  try
+    approxFig = figure('visible', figVisible); 
+    plotCR(c4n, n4e, u);
+    fName = sprintf('%s/solution.png', dirName);
+    saveas(approxFig, fName);
+    
+    approxFigAxis = figure('visible', figVisible); 
+    plotAxisNC(c4n,n4e,u);
+    fName = sprintf('%s/solutionAxis.png', dirName);
+    saveas(approxFigAxis, fName);
 
-  grayscaleFig = figure('visible', figVisible); 
-  plotGrayscale(c4n, n4e, mean(u(s4e), 2));
-  fName = sprintf('%s/solutionGrayscale.png', dirName);
-  saveas(grayscaleFig, fName);
+    grayscaleFig = figure('visible', figVisible); 
+    plotGrayscale(c4n, n4e, mean(u(s4e), 2));
+    fName = sprintf('%s/solutionGrayscale.png', dirName);
+    saveas(grayscaleFig, fName);
+  catch ME
+    appendError(ME, expName, dirInfoName);
+  end
 
   % save plots and results of the iteration for the level
   % save corrections
@@ -201,16 +209,20 @@ function saveResultsCR(params, currData, ...
   fprintf(file, '%.8e\n', corrVec);
   fclose(file);
   
-  corrFig = figure('visible', figVisible);
-  loglog(corrVec);
-  ftitle = sprintf(...
-    'loglog plot - corr for nrDof = %d, \\alpha = %d, \\beta = %d', ...
-    nrDof, parAlpha, parBeta);
-  title(ftitle);
-  xlabel('number of iterations');
-  ylabel('corr');
-  fName = sprintf('%s/iteration/corr.png', dirName);
-  saveas(corrFig, fName);
+  try
+    corrFig = figure('visible', figVisible);
+    loglog(corrVec);
+    ftitle = sprintf(...
+      'loglog plot - corr for nrDof = %d, \\alpha = %d, \\beta = %d', ...
+      nrDof, parAlpha, parBeta);
+    title(ftitle);
+    xlabel('number of iterations');
+    ylabel('corr');
+    fName = sprintf('%s/iteration/corr.png', dirName);
+    saveas(corrFig, fName);
+  catch ME
+    appendError(ME, expName, dirInfoName);
+  end
 
   name = sprintf('%s/iteration/eNcAbsDiffVec.txt', dirName);
   file = fopen(name, 'w');
@@ -232,25 +244,29 @@ function saveResultsCR(params, currData, ...
   fprintf(file, '%.8e\n', bar12TerminationSqrtVec);
   fclose(file);
 
-  terminationFig = figure('visible', figVisible);
-  loglog(corrVec);
-  hold on
-  loglog(eNcAbsDiffVec);
-  loglog(bar15TerminationVec);
-  loglog(bar15TerminationWithoutL2Vec);
-  loglog(bar12TerminationSqrtVec);
-  hold off
-  ftitle = sprintf(...
-    'loglog plot - corr for nrDof = %d, \\alpha = %d, \\beta = %d', ...
-    nrDof, parAlpha, parBeta);
-  title(ftitle);
-  xlabel('number of iterations');
-  legend([sprintf("corr (energyNormDiffernce)"), ...
-    sprintf("eNcAbsDiff"), sprintf("bar15"), ...
-    sprintf("bar15TerminationWithoutL2"), sprintf("bar12sqrt")], ...
-    'Location', 'SW');
-  fName = sprintf('%s/iteration/termination.png', dirName);
-  saveas(terminationFig, fName);
+  try
+    terminationFig = figure('visible', figVisible);
+    loglog(corrVec);
+    hold on
+    loglog(eNcAbsDiffVec);
+    loglog(bar15TerminationVec);
+    loglog(bar15TerminationWithoutL2Vec);
+    loglog(bar12TerminationSqrtVec);
+    hold off
+    ftitle = sprintf(...
+      'loglog plot - corr for nrDof = %d, \\alpha = %d, \\beta = %d', ...
+      nrDof, parAlpha, parBeta);
+    title(ftitle);
+    xlabel('number of iterations');
+    legend([sprintf("corr (energyNormDiffernce)"), ...
+      sprintf("eNcAbsDiff"), sprintf("bar15"), ...
+      sprintf("bar15TerminationWithoutL2"), sprintf("bar12sqrt")], ...
+      'Location', 'SW');
+    fName = sprintf('%s/iteration/termination.png', dirName);
+    saveas(terminationFig, fName);
+  catch ME
+    appendError(ME, expName, dirInfoName);
+  end
   
   % save discrete energies
   name = sprintf('%s/iteration/energyVec.txt', dirName);
@@ -258,22 +274,26 @@ function saveResultsCR(params, currData, ...
   fprintf(file, '%.8g\n', energyVec);
   fclose(file);
   
-  enFig = figure('visible', figVisible); 
-  enFigLegend = sprintf("nrDof = %d (%0.2fs)", nrDof, time);
-  plot(energyVec);
-  if useExactEnergy
-    hold on;
-    plot(exactEnergy*ones(1, length(energyVec)));
-    enFigLegend(end+1) = sprintf("E_u = %.8g", exactEnergy);
+  try
+    enFig = figure('visible', figVisible); 
+    enFigLegend = sprintf("nrDof = %d (%0.2fs)", nrDof, time);
+    plot(energyVec);
+    if useExactEnergy
+      hold on;
+      plot(exactEnergy*ones(1, length(energyVec)));
+      enFigLegend(end+1) = sprintf("E_u = %.8g", exactEnergy);
+    end
+    legend(enFigLegend);
+    ftitle=sprintf('Energy for nrDof=%d, \\alpha =%d, \\beta =%d',...
+    nrDof, parAlpha, parBeta);
+    title(ftitle);
+    fName = sprintf('%s/iteration/energy.png', dirName);
+    xlabel('number of iterations');
+    ylabel('energy');
+    saveas(enFig, fName);
+  catch ME
+    appendError(ME, expName, dirInfoName);
   end
-  legend(enFigLegend);
-  ftitle=sprintf('Energy for nrDof=%d, \\alpha =%d, \\beta =%d',...
-  nrDof, parAlpha, parBeta);
-  title(ftitle);
-  fName = sprintf('%s/iteration/energy.png', dirName);
-  xlabel('number of iterations');
-  ylabel('energy');
-  saveas(enFig, fName);
 
   if useExactEnergy
     % save differences between discrete energies and exact energy
@@ -282,24 +302,32 @@ function saveResultsCR(params, currData, ...
     fprintf(file, '%.8g\n', abs(energyVec-exactEnergy));
     fclose(file);
 
-    enDiffExactFig = figure('visible',figVisible);
-    loglog(abs(energyVec-exactEnergy));
-    ftitle = sprintf(...
-      '|E_{NC}(u_{NC})-E_u| for nrDof = %d, \\alpha = %d, \\beta = %d', ...
-      nrDof, parAlpha, parBeta);
-    title(ftitle);
-    xlabel('number of iterations');
-    ylabel('|E_{NC}(u_{NC})-E_u|');
-    fName = sprintf('%s/iteration/enDiffExact.png', dirName);
-    saveas(enDiffExactFig, fName);
+    try
+      enDiffExactFig = figure('visible',figVisible);
+      loglog(abs(energyVec-exactEnergy));
+      ftitle = sprintf(...
+        '|E_{NC}(u_{NC})-E_u| for nrDof = %d, \\alpha = %d, \\beta = %d', ...
+        nrDof, parAlpha, parBeta);
+      title(ftitle);
+      xlabel('number of iterations');
+      ylabel('|E_{NC}(u_{NC})-E_u|');
+      fName = sprintf('%s/iteration/enDiffExact.png', dirName);
+      saveas(enDiffExactFig, fName);
+    catch ME
+      appendError(ME, expName, dirInfoName);
+    end
   end
 
   % save AFEM results and triangulation
   % plot triangulation
-  triangFig = figure('visible',figVisible);
-  plotTriangulation(c4n,n4e);
-  fName = sprintf('%s/triangulation.png', dirName);
-  saveas(triangFig, fName);
+  try
+    triangFig = figure('visible',figVisible);
+    plotTriangulation(c4n,n4e);
+    fName = sprintf('%s/triangulation.png', dirName);
+    saveas(triangFig, fName);
+  catch ME
+    appendError(ME, expName, dirInfoName);
+  end
 
   if nrDof<1e6 % to avoid clogging results with large files
     dlmwrite(sprintf('%s/mesh/c4n.txt', dirName), c4n, 'Delimiter', '\t');
@@ -327,41 +355,61 @@ function saveResultsCR(params, currData, ...
   writetable(struct2table(tableStruct), sprintf('%s/lvlOutput.csv', dirName));
 
   % convergence plots
-  convergenceFig = figure('visible', figVisible);
-  loglog(nrDof4lvl, eta4lvl, '-o');
-  hold on
-  loglog(nrDof4lvl, etaVol4lvl, '-o');
-  loglog(nrDof4lvl, etaJumps4lvl, '-o');
-  convergenceFigLegend = ...
-    [sprintf("\\eta"), sprintf("\\eta_{Vol}"), sprintf("\\eta_{Jumps}")];
-  if exactSolutionKnown
-    loglog(nrDof4lvl, error4lvl, '-o');
-    convergenceFigLegend(end+1) = sprintf("||u-u_{CR}||_{L^2}");
-    if useExactEnergy
-      loglog(nrDof4lvl, diffDiscExactE4lvl, '-o');
-      convergenceFigLegend(end+1) = sprintf("|E(u)-E_{NC}(u_{CR})|");
+  try
+    convergenceFig = figure('visible', figVisible);
+    loglog(nrDof4lvl, eta4lvl, '-o');
+    hold on
+    loglog(nrDof4lvl, etaVol4lvl, '-o');
+    loglog(nrDof4lvl, etaJumps4lvl, '-o');
+    convergenceFigLegend = ...
+      [sprintf("\\eta"), sprintf("\\eta_{Vol}"), sprintf("\\eta_{Jumps}")];
+    if exactSolutionKnown
+      loglog(nrDof4lvl, error4lvl, '-o');
+      convergenceFigLegend(end+1) = sprintf("||u-u_{CR}||_{L^2}");
+      if useExactEnergy
+        loglog(nrDof4lvl, diffDiscExactE4lvl, '-o');
+        convergenceFigLegend(end+1) = sprintf("|E(u)-E_{NC}(u_{CR})|");
+      end
     end
-  end
-  if rhsGradientKnown
-    if useExactEnergy
-      loglog(nrDof4lvl, diffExactEGleb4lvl, '-o');
-      convergenceFigLegend(end+1) = "E(u) - GLEB";
+    if rhsGradientKnown
+      if useExactEnergy
+        loglog(nrDof4lvl, diffExactEGleb4lvl, '-o');
+        convergenceFigLegend(end+1) = "E(u) - GLEB";
+      end
+      loglog(nrDof4lvl, diffGuebGleb4lvl, '-o');
+      convergenceFigLegend(end+1) = "E_{NC}(J_1 u_{CR}) - GLEB";
     end
-    loglog(nrDof4lvl, diffGuebGleb4lvl, '-o');
-    convergenceFigLegend(end+1) = "E_{NC}(J_1 u_{CR}) - GLEB";
+    legend(convergenceFigLegend, 'Location', 'SW');
+    xlabel('nrDof');
+    fName = sprintf('%s/convergence.png', dirName);
+    saveas(convergenceFig, fName);
+  catch ME
+    appendError(ME, expName, dirInfoName);
   end
-  legend(convergenceFigLegend, 'Location', 'SW');
-  xlabel('nrDof');
-  fName = sprintf('%s/convergence.png', dirName);
-  saveas(convergenceFig, fName);
 
   % time and nrIteration development
-  miscFig = figure('visible', figVisible);
-  loglog(nrDof4lvl, time4lvl, '-o');
-  hold on
-  loglog(nrDof4lvl, nrIterations4lvl, '-o');
-  legend([sprintf("time"), sprintf("number of iterations")], 'Location', 'SE');
-  xlabel('nrDof');
-  fName = sprintf('%s/miscInfo.png', dirName);
-  saveas(miscFig, fName);
+  try
+    miscFig = figure('visible', figVisible);
+    loglog(nrDof4lvl, time4lvl, '-o');
+    hold on
+    loglog(nrDof4lvl, nrIterations4lvl, '-o');
+    legend([sprintf("time"), sprintf("number of iterations")], 'Location', 'SE');
+    xlabel('nrDof');
+    fName = sprintf('%s/miscInfo.png', dirName);
+    saveas(miscFig, fName);
+  catch ME
+    appendError(ME, expName, dirInfoName);
+  end
+end
+
+function appendError(ME, expName, dirInfoName)
+  warning(ME.message);
+  name =  sprintf(...
+    '../../results/nonconforming/%s/%s/caughtPlotErrors.txt', ...
+    expName, dirInfoName);
+  file = fopen(name, 'a+');
+  %fprintf(file, '%s\n', ME.message);
+  fprintf(file, '%s\n', ME.getReport('extended', 'hyperlinks', 'off'));
+  fprintf(file, '====================================================\n');
+  fclose(file);
 end

@@ -1,3 +1,5 @@
+DO NOT HAND THIS IN
+
 MATLAB is copyOnWrite, so try not to change structs in functions to avoid the
 struct being copied 
 
