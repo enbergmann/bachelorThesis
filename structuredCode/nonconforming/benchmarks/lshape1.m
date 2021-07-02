@@ -1,4 +1,6 @@
 function params = editable %#ok<*MSNU,FNDEF>
+  % TODO reentrant corner refinement doesn't work (with CR^1_0)
+  % TODO any other ideas?
 %% DOC
 % Editable prototype for benchmark files.
 % Execute program/startAlgorithmNC(benchmark).m (benchmark name of 
@@ -65,6 +67,8 @@ function params = editable %#ok<*MSNU,FNDEF>
   % function handles (not effective if useImage == true)
   function y = rightHandSide(x)
     y =  parAlpha*ones(size(x, 1), 1);
+    %y =  zeros(size(x, 1), 1);
+    %y =  ones(size(x, 1), 1);
   end
 
   function y = gradientRightHandSide(x)
