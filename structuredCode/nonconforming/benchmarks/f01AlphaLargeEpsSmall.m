@@ -17,7 +17,7 @@ function params = editable %#ok<*MSNU,FNDEF>
     % not effective if showPlots == false
   showProgress           = true; 
   degree4Integrate       = 10; 
-  plotGivenFunctions     = true;
+  plotGivenFunctions     = false;
   refinementLevel4Plots  = 5; % 11 is very close to the limit
     % not effective if plotGivenFunctions == false
   debugIfError           = false;
@@ -35,7 +35,7 @@ function params = editable %#ok<*MSNU,FNDEF>
 
   % algorithm parameters
   u0Mode         = 'zeros'; 
-  initialEpsStop = 1e-5; 
+  initialEpsStop = 1e-8; 
   parTau         = 1; 
   maxIter        = 1e10;
 
