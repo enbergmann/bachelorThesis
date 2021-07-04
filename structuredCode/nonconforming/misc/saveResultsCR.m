@@ -50,10 +50,12 @@ function saveResultsCR(params, currData, ...
   if exactSolutionKnown, error4lvl = outputLvlError.error4lvl; end
 
   % extract necessary information from outputLvlInfoEnergy
-  if useExactEnergy, diffDiscExactE4lvl = outputLvlEnergy.diffDiscExactE; end
+  if useExactEnergy 
+    absDiffDiscExacE4lvl = outputLvlEnergy.absDiffDiscExacE; 
+  end
   if rhsGradientKnown 
     diffGuebGleb4lvl = outputLvlEnergy.diffGuebGleb; 
-    if useExactEnergy, diffExactEGleb4lvl = outputLvlEnergy.diffExactEGleb; end
+    if useExactEnergy, diffExacEGleb4lvl = outputLvlEnergy.diffExacEGleb; end
   end
   
   % extract necessary information from output
@@ -367,13 +369,13 @@ function saveResultsCR(params, currData, ...
       loglog(nrDof4lvl, error4lvl, '-o');
       convergenceFigLegend(end+1) = sprintf("||u-u_{CR}||_{L^2}");
       if useExactEnergy
-        loglog(nrDof4lvl, diffDiscExactE4lvl, '-o');
+        loglog(nrDof4lvl, absDiffDiscExacE4lvl, '-o');
         convergenceFigLegend(end+1) = sprintf("|E(u)-E_{NC}(u_{CR})|");
       end
     end
     if rhsGradientKnown
       if useExactEnergy
-        loglog(nrDof4lvl, diffExactEGleb4lvl, '-o');
+        loglog(nrDof4lvl, diffExacEGleb4lvl, '-o');
         convergenceFigLegend(end+1) = "E(u) - GLEB";
       end
       loglog(nrDof4lvl, diffGuebGleb4lvl, '-o');

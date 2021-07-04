@@ -70,10 +70,10 @@ function startAlgorithmCR(benchmark)
   if rhsGradientKnown 
     outputLvlEnergy.gleb = []; 
     outputLvlEnergy.diffGuebGleb = []; 
-    if useExactEnergy, outputLvlEnergy.diffExactEGleb = []; end
-    outputLvlHidden.diffGlebDiscreteE = [];
+    if useExactEnergy, outputLvlEnergy.diffExacEGleb = []; end
+    outputLvlHidden.diffDiscEGleb = [];
   end
-  if useExactEnergy, outputLvlEnergy.diffDiscExactE = []; end
+  if useExactEnergy, outputLvlEnergy.absDiffDiscExacE = []; end
   
   % initialize currData (struct with parameters and data for the level)
   currData.c4n = c4n;
@@ -153,7 +153,7 @@ function startAlgorithmCR(benchmark)
     output.energyVec = energyVec;
     output.u = u;
     if useExactEnergy 
-      outputLvlEnergy.diffDiscExactE(end+1, 1) = ...
+      outputLvlEnergy.absDiffDiscExacE(end+1, 1) = ...
         abs(exactEnergy - energyVec(end)); 
     end
 
@@ -170,9 +170,9 @@ function startAlgorithmCR(benchmark)
       glebCurr = computeGleb(params, currData, output);
       outputLvlEnergy.gleb(end+1, 1) = glebCurr;
       outputLvlEnergy.diffGuebGleb(end+1, 1) = guebCurr - glebCurr; 
-      outputLvlHidden.diffGlebDiscreteE(end+1, 1) = energyVec(end) - glebCurr;
+      outputLvlHidden.diffDiscEGleb(end+1, 1) = energyVec(end) - glebCurr;
       if useExactEnergy
-        outputLvlEnergy.diffExactEGleb(end+1, 1) = exactEnergy - glebCurr;
+        outputLvlEnergy.diffExacEGleb(end+1, 1) = exactEnergy - glebCurr;
       end
     end
     temp = u - uJ1;
