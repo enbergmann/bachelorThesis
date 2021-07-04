@@ -16,7 +16,7 @@ function params = editable %#ok<*MSNU,FNDEF>
   plotModeGrayscale      = false; 
     % not effective if showPlots == false
   showProgress           = true; 
-  degree4Integrate       = 10; 
+  degree4Integrate       = 50; 
   plotGivenFunctions     = false;
   refinementLevel4Plots  = 5; % 11 is very close to the limit
     % not effective if plotGivenFunctions == false
@@ -35,7 +35,7 @@ function params = editable %#ok<*MSNU,FNDEF>
 
   % algorithm parameters
   u0Mode         = 'zeros'; 
-  initialEpsStop = 1e-6; 
+  initialEpsStop = 1e-4; 
   parTau         = 1; 
   maxIter        = 1e10;
 
@@ -58,7 +58,7 @@ function params = editable %#ok<*MSNU,FNDEF>
                               
   % information about experiment for saving and documentation.
   expName                = 'f01AlphaLarge';
-  dirInfoName            = sprintf('epsStop=%e', initialEpsStop);
+  dirInfoName            = sprintf('epsStop=%e_Integrate50', initialEpsStop);
   %dirInfoName            = sprintf('%s', ...
   %  datestr(now, 'yy_mm_dd_HH_MM_SS'));
 
