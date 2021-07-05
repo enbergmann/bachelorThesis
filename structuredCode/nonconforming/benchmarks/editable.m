@@ -17,15 +17,15 @@ function params = editable %#ok<*MSNU,FNDEF>
     % not effective if showPlots == false
   showProgress           = true; 
   degree4Integrate       = 10; 
-  plotGivenFunctions     = false;
-  refinementLevel4Plots  = 5; % 11 is very close to the limit
+  plotGivenFunctions     = true;
+  refinementLevel4Plots  = 3; % 11 is very close to the limit
     % not effective if plotGivenFunctions == false
   debugIfError           = false;
 
   % AFEM parameters
   geometry               = 'BigSquare'; %#ok<NASGU>                     
     % set automatically to 'Square' if useImage == true
-  initialRefinementLevel = 4;
+  initialRefinementLevel = 0;
   parTheta               = 0.5;
   minNrDof               = 5e3;
   useProlongation        = true;

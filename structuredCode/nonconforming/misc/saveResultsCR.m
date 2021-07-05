@@ -1,5 +1,11 @@
 function saveResultsCR(params, currData, ...
     outputLvlInfo, outputLvlError, outputLvlEnergy, outputLvlHidden, output)
+%% DOC
+% Saves results and plots (levelwise) during runtime of startAlgorithmCR.
+% 
+% saveResultsCR.m
+% input: structs produced in startAlgorithmCR according to the settings in the
+%        benchmark-file of the current experiment
 
 %% INIT
   % extract necessary parameters from params
@@ -205,7 +211,6 @@ function saveResultsCR(params, currData, ...
   end
 
   % save plots and results of the iteration for the level
-  % save corrections
   name = sprintf('%s/iteration/corrVec.txt', dirName);
   file = fopen(name, 'w');
   fprintf(file, '%.8e\n', corrVec);
@@ -215,9 +220,9 @@ function saveResultsCR(params, currData, ...
     corrFig = figure('visible', figVisible);
     loglog(corrVec);
     ftitle = sprintf(...
-      'loglog plot - corr for nrDof = %d, \\alpha = %d, \\beta = %d', ...
-      nrDof, parAlpha, parBeta);
-    title(ftitle);
+      'corr for nrDof = %d, $\\alpha = %d$', ...
+      nrDof, parAlpha);
+    title(ftitle, 'interpreter', 'latex');
     xlabel('number of iterations');
     ylabel('corr');
     fName = sprintf('%s/iteration/corr.png', dirName);
@@ -256,14 +261,17 @@ function saveResultsCR(params, currData, ...
     loglog(bar12TerminationSqrtVec);
     hold off
     ftitle = sprintf(...
-      'loglog plot - corr for nrDof = %d, \\alpha = %d, \\beta = %d', ...
-      nrDof, parAlpha, parBeta);
-    title(ftitle);
+      'loglog plot - corr for nrDof = %d, $\\alpha = %d$', ...
+      nrDof, parAlpha);
+    title(ftitle, 'interpreter', 'latex');
     xlabel('number of iterations');
-    legend([sprintf("corr (energyNormDiffernce)"), ...
-      sprintf("eNcAbsDiff"), sprintf("bar15"), ...
-      sprintf("bar15TerminationWithoutL2"), sprintf("bar12sqrt")], ...
-      'Location', 'SW');
+    legend([string(...
+      sprintf('$\\Vert(\\nabla_{NC}(u_j - u_{j - 1}))/\\tau\\Vert$')), ...
+      string(sprintf('$|E_{NC}(u) - E_{NC}(u_{CR})|$')), ...
+      string(sprintf('bar15')), ...
+      string(sprintf('bar15TerminationWithoutL2')), ...
+      string(sprintf('bar12sqrt'))], ...
+      'Location', 'SW', 'interpreter', 'latex');
     fName = sprintf('%s/iteration/termination.png', dirName);
     saveas(terminationFig, fName);
   catch ME
@@ -278,17 +286,17 @@ function saveResultsCR(params, currData, ...
   
   try
     enFig = figure('visible', figVisible); 
-    enFigLegend = sprintf("nrDof = %d (%0.2fs)", nrDof, time);
+    enFigLegend = string(sprintf('nrDof = %d (%0.2fs)', nrDof, time));
     plot(energyVec);
     if useExactEnergy
       hold on;
       plot(exactEnergy*ones(1, length(energyVec)));
-      enFigLegend(end+1) = sprintf("E_u = %.8g", exactEnergy);
+      enFigLegend(end + 1) = string(sprintf('$E_u = %.8g$', exactEnergy));
     end
-    legend(enFigLegend);
-    ftitle=sprintf('Energy for nrDof=%d, \\alpha =%d, \\beta =%d',...
-    nrDof, parAlpha, parBeta);
-    title(ftitle);
+    legend(enFigLegend, 'interpreter', 'latex');
+    ftitle = sprintf('Energy for nrDof=%d, $\\alpha =%d$',...
+    nrDof, parAlpha);
+    title(ftitle, 'interpreter', 'latex');
     fName = sprintf('%s/iteration/energy.png', dirName);
     xlabel('number of iterations');
     ylabel('energy');
@@ -308,11 +316,11 @@ function saveResultsCR(params, currData, ...
       enDiffExactFig = figure('visible',figVisible);
       loglog(abs(energyVec-exactEnergy));
       ftitle = sprintf(...
-        '|E_{NC}(u_{NC})-E_u| for nrDof = %d, \\alpha = %d, \\beta = %d', ...
-        nrDof, parAlpha, parBeta);
-      title(ftitle);
+        '$|E_{NC}(u_{NC})-E_u|$ (nrDof = %d, $\\alpha = %d$)', ...
+        nrDof, parAlpha);
+      title(ftitle, 'interpreter', 'latex');
       xlabel('number of iterations');
-      ylabel('|E_{NC}(u_{NC})-E_u|');
+      ylabel('$|E_{NC}(u_{NC})-E_u|$', 'interpreter', 'latex');
       fName = sprintf('%s/iteration/enDiffExact.png', dirName);
       saveas(enDiffExactFig, fName);
     catch ME
@@ -363,25 +371,29 @@ function saveResultsCR(params, currData, ...
     hold on
     loglog(nrDof4lvl, etaVol4lvl, '-o');
     loglog(nrDof4lvl, etaJumps4lvl, '-o');
-    convergenceFigLegend = ...
-      [sprintf("\\eta"), sprintf("\\eta_{Vol}"), sprintf("\\eta_{Jumps}")];
+    convergenceFigLegend = [string(sprintf('$\\eta$')), ...
+      string(sprintf('$\\eta_{V}$')), string(sprintf('$\\eta_{J}$'))];
     if exactSolutionKnown
       loglog(nrDof4lvl, error4lvl, '-o');
-      convergenceFigLegend(end+1) = sprintf("||u-u_{CR}||_{L^2}");
+      convergenceFigLegend(end + 1) = ...
+        string(sprintf('$\\Vert u - u_{CR}\\Vert_{L^2(\\Omega)}$'));
       if useExactEnergy
         loglog(nrDof4lvl, absDiffDiscExacE4lvl, '-o');
-        convergenceFigLegend(end+1) = sprintf("|E(u)-E_{NC}(u_{CR})|");
+        convergenceFigLegend(end + 1) = ...
+          string(sprintf('$|E(u)-E_{NC}(u_{CR})|$'));
       end
     end
     if rhsGradientKnown
       if useExactEnergy
         loglog(nrDof4lvl, diffExacEGleb4lvl, '-o');
-        convergenceFigLegend(end+1) = "E(u) - GLEB";
+        convergenceFigLegend(end + 1) = string('$E(u) - E_{GLEB}$');
       end
       loglog(nrDof4lvl, diffGuebGleb4lvl, '-o');
-      convergenceFigLegend(end+1) = "E_{NC}(J_1 u_{CR}) - GLEB";
+      convergenceFigLegend(end + 1) = ...
+        string(...
+        '$E_{NC}(J_1 u_{CR}) - E_{GLEB}$');
     end
-    legend(convergenceFigLegend, 'Location', 'SW');
+    legend(convergenceFigLegend, 'Location', 'SW', 'interpreter', 'latex');
     xlabel('nrDof');
     fName = sprintf('%s/convergence.png', dirName);
     saveas(convergenceFig, fName);
@@ -395,7 +407,9 @@ function saveResultsCR(params, currData, ...
     loglog(nrDof4lvl, time4lvl, '-o');
     hold on
     loglog(nrDof4lvl, nrIterations4lvl, '-o');
-    legend([sprintf("time"), sprintf("number of iterations")], 'Location', 'SE');
+    legend(...
+      [string(sprintf('time')), string(sprintf('number of iterations'))], ...
+      'Location', 'SE');
     xlabel('nrDof');
     fName = sprintf('%s/miscInfo.png', dirName);
     saveas(miscFig, fName);
@@ -410,7 +424,6 @@ function appendError(ME, expName, dirInfoName)
     '../../results/nonconforming/%s/%s/caughtPlotErrors.txt', ...
     expName, dirInfoName);
   file = fopen(name, 'a+');
-  %fprintf(file, '%s\n', ME.message);
   fprintf(file, '%s\n', ME.getReport('extended', 'hyperlinks', 'off'));
   fprintf(file, '====================================================\n');
   fclose(file);
