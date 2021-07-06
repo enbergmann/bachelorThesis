@@ -10,12 +10,12 @@ function vJ1 = computeJ1(n4e, n4sB, v)
 %        n4e  - nodes for elements of the coarse mesh
 %        n4sB - nodes for boundary sides of the coarse mesh
 %        v    - '(nrSides x 1)-dimensional double array' where the j-th row
-%                 contains the coefficient of the CR function w.r.t. the j-th
-%                 side of the triangulation
+%               contains the coefficient of the CR function w.r.t. the j-th
+%               side of the triangulation
 %
 % output: vJ1 - '(nrNodes x 1)-dimensional double array' where the j-th row
-%                contains the coefficient of J1v w.r.t. the j-th node of the
-%                triangulation
+%               contains the coefficient of J1v w.r.t. the j-th node of the
+%               triangulation
 
 %% INIT
   s4e = computeS4e(n4e); 
