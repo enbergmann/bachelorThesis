@@ -388,12 +388,10 @@ function saveResultsCR(params, currData, ...
     if rhsGradientKnown
       if useExactEnergy
         loglog(nrDof4lvl, diffExacEGleb4lvl, '-o');
-        convergenceFigLegend(end + 1) = string('$E(u) - E_{GLEB}$');
+        convergenceFigLegend(end + 1) = "$E(u) - E_{GLEB}$";
       end
       loglog(nrDof4lvl, diffGuebGleb4lvl, '-o');
-      convergenceFigLegend(end + 1) = ...
-        string(...
-        '$E_{NC}(J_1 u_{CR}) - E_{GLEB}$');
+      convergenceFigLegend(end + 1) = "$E_{NC}(J_1 u_{CR}) - E_{GLEB}$";
     end
     legend(convergenceFigLegend, 'Location', 'SW', 'interpreter', 'latex');
     xlabel('nrDof');

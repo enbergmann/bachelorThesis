@@ -2,16 +2,18 @@ function [eta4e, etaVol4e, etaJumps4e] = ...
     estimateErrorCR4e(params, currData, output)
 %% DOC
 % Computes the refinement indicator \eta(T) = \etaVol(T) + \etaJumps(T) with
-%   eta_{Vol}(T) = |T|^{2/n}||f-\alpha u_{CR}||^2_{L^2(T)} and
+%   eta_{Vol}(T) = |T|^{2/d}||f - \alpha u_{CR}||^2_{L^2(T)} and
 %   eta_{Jumps}(T) = ...
-%     |T|^{\beta/n}\sum_{F\in\mathal{F}(T)}||[u_{CR}]_F||_{L^1(F)}
-% for all T\in\mathcal{T} w.r.t. the triangulation given by [c4n, n4e].
+%     |T|^{\gamma/d}\sum_{F\in\mathal{F}(T)}||[u_{CR}]_F||_{L^1(F)}
+% for the solution u_{CR} of the primal dual iteration and for all
+% T\in\mathcal{T} w.r.t. the triangulation given by [c4n, n4e].
 %
 % estimateErrorCR4e.m
 % input: params   - 'struct' with fields:
 %                     parGamma: 'double' containing the parameter \gamma for
 %                               the refinement indicator
-%                            d: 'uint64' containing the dimension
+%                            d: 'uint64' containing the dimension (only tested
+%                                for d = 2)
 %                                   
 %        currData - 'struct' with fields:
 %                             area4e: areas for elements
@@ -24,12 +26,6 @@ function [eta4e, etaVol4e, etaJumps4e] = ...
 %                                     restriction of u to this side)
 %
 %        output   - 'struct' with fields: 
-%                                             u: '(nrSides x 1)-dimensional
-%                                                double array' where the j-th
-%                                                row contains the coefficient
-%                                                of the solution u of the
-%                                                iteration w.r.t. the j-th
-%                                                edge of the triangulation 
 %                     normDiffRhsSolCrSquared4e: '(nrElems x 1)-dimensional
 %                                                double array' where the j-th
 %                                                row contains the integral over
@@ -63,7 +59,6 @@ function [eta4e, etaVol4e, etaJumps4e] = ...
   l1NormOfJump4s = currData.l1NormOfJump4s;
 
   % extract necessary information from output
-  u = output.u;
   normDiffRhsSolCrSquared4e = output.normDiffRhsSolCrSquared4e;
   
 %% MAIN

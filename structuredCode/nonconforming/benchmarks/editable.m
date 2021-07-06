@@ -37,7 +37,7 @@ function params = editable %#ok<*MSNU,FNDEF>
   u0Mode         = 'zeros'; 
   initialEpsStop = 1e-4; 
   parTau         = 1; 
-  maxIter        = 1e10;
+  maxIter        = 1e4;
 
   % experiment parameters
   useImage               = false;
