@@ -32,25 +32,26 @@ function absNodeJumps4s = ...
     node1 = n4s(side, 1);
     node2 = n4s(side, 2);
       % the two nodes of side = conv({node1, node2})
-    indPlus1 = n4e(tPlus, :) == node1;
-    indPlus2 = n4e(tPlus, :) == node2;
+    indPlus1 = n4e(tPlus, :)==node1;
+    indPlus2 = n4e(tPlus, :)==node2;
       % find the local node numbers of node1 and node2 on tPlus
     valPlus1 = nodeValues4e(tPlus, indPlus1);
     valPlus2 = nodeValues4e(tPlus, indPlus2);
       % the values of v in node1 and node2 on tPlus
-    if tMinus == 0
+    if tMinus==0
       valMinus1 = 0;
       valMinus2 = 0;
         % the values of v in node1 and node2 on tMinus if side is an outer edge
     else
-      indMinus1 = n4e(tMinus, :) == node1;
-      indMinus2 = n4e(tMinus, :) == node2;
+      indMinus1 = n4e(tMinus, :)==node1;
+      indMinus2 = n4e(tMinus, :)==node2;
         % find the local node numbers of node1 and node2 on tMinus if side
         % is an inner edge
       valMinus1 = nodeValues4e(tMinus, indMinus1);
       valMinus2 = nodeValues4e(tMinus, indMinus2);
         % the values of v in node1 and node2 on tMinus if side is an inner edge
     end
-    absNodeJumps4s(side, :) = abs([valPlus1-valMinus1, valPlus2 - valMinus2]);
+    absNodeJumps4s(side, :) = ...
+      abs([valPlus1 - valMinus1, valPlus2 - valMinus2]);
   end
 end

@@ -5,8 +5,8 @@ function nodeValues4e = computeNodeValuesCR4e(s4e, u)
 % computeNodeValuesCR4e.m
 % input: s4e - sides for elements
 %        u   - '(nrSides x 1)-dimensional double array' where the j-th row
-%              contains the coefficient of the CR function u wrt. the j-th side
-%              of the triangulation
+%              contains the coefficient of the CR function u w.r.t. the j-th
+%              side of the triangulation
 %
 % output: nodeValues4e - '(nrElems x 3)-dimensional double array' where the
 %                        k-th entry of the j-th row contains the value of u in

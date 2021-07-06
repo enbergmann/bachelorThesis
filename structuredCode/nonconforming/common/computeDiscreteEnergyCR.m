@@ -37,5 +37,4 @@ function energy = computeDiscreteEnergyCR(params, currData, v, vGradCR)
   energy = parAlpha/2*v'*maMaCR*v ...  % \alpha/2 ||v||^2_{L^2(Omega)}
     + area4e'*sqrt(sum(vGradCR.^2, 2)) ... % ||\nabla_{CR} v||_{L^1(\Omega)}
     - v'*intRHS4s; % \int_\Omega fv dx
-             
 end

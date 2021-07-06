@@ -1,7 +1,7 @@
 function l1NormOfJump4s = computeL1NormOfJump4s(currData, output)
 %% DOC
-% Computes for a CR function u the L^1 norm of the jump ||[u]_F||_{L^1(F)} for
-% all F\in\Fcal w.r.t. a triangulation given by [c4n, n4e].
+% Computes ||[u]_F||_{L^1(F)} for a CR function u for all F\in\Fcal w.r.t. a
+% triangulation given by [c4n, n4e].
 %
 % computeL1NormOfJump4s.m
 % input: currData - 'struct' with fields:
@@ -34,7 +34,6 @@ function l1NormOfJump4s = computeL1NormOfJump4s(currData, output)
 
   % extract necessary information from output
   u = output.u;
-
 
   % get the absolute jumps in the two nodes for of each side in the
   % triangulation

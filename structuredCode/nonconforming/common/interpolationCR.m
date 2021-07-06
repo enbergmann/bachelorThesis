@@ -1,6 +1,6 @@
 function vCR = interpolationCR(params, currData, v)
 %% DOC
-% Computes the Crouzeix-Raviart interpolation vNC (vanishing in the midpoints
+% Computes the Crouzeix-Raviart interpolation vCR (vanishing in the midpoints
 % of boundary edges) with respect to the triangulation given by [c4n, n4e, n4s]
 % of the function v.
 %
@@ -14,9 +14,9 @@ function vCR = interpolationCR(params, currData, v)
 %                     length4s: lengths for sides
 %        v        - 'function_handle' of the function to be interpolated
 %
-% output: vCR      - '(nrSides x 1)-dimensional double array' where the j-th
-%                    row contains the coefficient of the CR interpolation of v
-%                    w.r.t. the j-th side of the triangulation
+% output: vCR - '(nrSides x 1)-dimensional double array' where the j-th row
+%               contains the coefficient of the CR interpolation of v w.r.t.
+%               the j-th side of the triangulation
 
 %% INIT
   % extract necessary parameters from params

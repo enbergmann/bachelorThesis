@@ -16,10 +16,10 @@ function vNew = prolongationJ1(c4n, n4e, n4sB, c4nNew, n4eNew, v)
 %                 where the j-th row contains the coefficient of the CR
 %                 function w.r.t. the j-th side of the coarse triangulation
 %
-% output: vNew  - '(nrSides of the refined mesh x 1)-dimensional double array'
-%                 where the j-th row contains the coefficient of the CR
-%                 prolongation of v w.r.t. the j-th side of the new
-%                 triangulation
+% output: vNew - '(nrSides of the refined mesh x 1)-dimensional double array'
+%                where the j-th row contains the coefficient of the CR
+%                prolongation of v w.r.t. the j-th side of the new
+%                triangulation
 
 %% INIT
   s4n = computeS4n(n4e);

@@ -6,15 +6,15 @@ function vJ1 = computeJ1(n4e, n4sB, v)
 % function with respect to the mesh defined by [c4n, n4e].
 %
 % computeJ1.m
-% input: c4n  - coordinates for nodes of the coarse mesh
-%        n4e  - nodes for elements of the coarse mesh
-%        n4sB - nodes for boundary sides of the coarse mesh
+% input: c4n  - coordinates for nodes
+%        n4e  - nodes for elements
+%        n4sB - nodes for boundary sides
 %        v    - '(nrSides x 1)-dimensional double array' where the j-th row
 %               contains the coefficient of the CR function w.r.t. the j-th
 %               side of the triangulation
 %
 % output: vJ1 - '(nrNodes x 1)-dimensional double array' where the j-th row
-%               contains the coefficient of J1v w.r.t. the j-th node of the
+%               contains the coefficient of J1 v w.r.t. the j-th node of the
 %               triangulation
 
 %% INIT
@@ -28,7 +28,7 @@ function vJ1 = computeJ1(n4e, n4sB, v)
   % compute enriching operator
   nodeValuesJ1 = zeros(size(nodeValuesCR4e));
   for j = innerNodes
-    indNode = find(n4e == j);
+    indNode = find(n4e==j);
     localVals4node = nodeValuesCR4e(indNode);
     nodeValuesJ1(indNode) = sum(localVals4node)/length(localVals4node);
   end

@@ -1,7 +1,7 @@
 function vCR = courant2CR(n4e, v)
 %% DOC 
 % Computes the coefficients as a CR function of the Courant function 
-% v with respect to a mesh defined by n4e
+% v with respect to a mesh defined by n4e.
 %
 % courant2CR.m
 % input: n4e   - nodes for elements
@@ -9,10 +9,9 @@ function vCR = courant2CR(n4e, v)
 %                where the j-th row contains the coefficient of the Courant
 %                function w.r.t. the j-th node
 %
-% output: vNew - '(nrSides of the refined mesh x 1)-dimensional double array'
-%                where the j-th row contains the coefficient of the CR
-%                prolongation of v w.r.t. the j-th side of the new
-%                triangulation
+% output: vCR - '(nrSides x 1)-dimensional double array' where the j-th row
+%               contains the coefficient of v as a CR function w.r.t. the j-th
+%               side of the triangulation
 
 %% INIT
   s4e = computeS4e(n4e); 

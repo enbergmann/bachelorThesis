@@ -34,10 +34,10 @@ function params = editable %#ok<*MSNU,FNDEF>
     % this should remain 2
 
   % algorithm parameters
-  u0Mode         = 'zeros'; 
+  u0Mode         = 'zeros'; %'interpolationRhs'; 
   initialEpsStop = 1e-4; 
   parTau         = 1; 
-  maxIter        = 1e4;
+  maxIter        = 5e3;
 
   % experiment parameters
   useImage               = false;

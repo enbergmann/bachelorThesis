@@ -11,7 +11,7 @@ function gradsCR4e = computeGradsCR4e(currData)
 %
 % output: gradsCR4e - '(3 x 2 x nrElems)-dimensional double array' where the 
 %                     j-th row of the k-th matrix contains the gradient of the
-%                     CR-basis function w.r.t. to j-th edge of the k-th element
+%                     CR-basis function w.r.t. the j-th edge of the k-th element
   
 %% INIT
   % extract necessary data
