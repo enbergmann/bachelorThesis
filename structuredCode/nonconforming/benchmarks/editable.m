@@ -1,3 +1,8 @@
+%TODO right-hand side to input signal, rightHandSide to inputSignal 
+%     (especially in DOC section here)
+%     dont care if variables are wrongly named rhs, but at least be correct in
+%     Documentations and stuff that can be seen in thesis (rhsGradientKnown 
+%     should prob be changed as well)
 function params = editable %#ok<*MSNU,FNDEF>
 %% DOC
 % Editable prototype for benchmark files.
@@ -50,7 +55,7 @@ function params = editable %#ok<*MSNU,FNDEF>
     % set automatically to false if useImage == true
   exactSolutionKnown     = true; %#ok<NASGU>
     % set automatically to false if useImage == true
-  useExactEnergy         = true; %#ok<NASGU>
+  useExactEnergy         = false; %#ok<NASGU>
     % set automatically to false if exactSolutionKnown == false
   exactEnergy            = -2.058034062391; %#ok<NASGU> % 6 significant digits
     % set automatically to NaN if exactSolutionKnown == false
@@ -68,7 +73,7 @@ function params = editable %#ok<*MSNU,FNDEF>
   end
 
   function y = gradientRightHandSide(x)
-    % not effective if useExactEnergy == false
+    % not effective if rhsGradientKnown == false
     y =  f01Gradient(x, [parAlpha, parBeta]);
   end
 

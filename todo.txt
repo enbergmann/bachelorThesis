@@ -1,207 +1,42 @@
-CURRENT TODOS
-energy during iteration doesn't strictly converge from above to some value
-for small tau (e.g. 1/100)
-
-s. fragen.txt, Effekt von großen/kleinen alpha bzw. tau
-entsprechend ein paar Experiment mit gleicher Lösung machen und gleichem 
-Input (was alpha irgendwie disqualifiziert, oder?) und raten oder so
-in corr einzeichnen
-
-E(0) isn't the first energy but obviously the energy evaluated in 0, which
-for Bartels is the L2 norm of the input signal but for out formulation 0
-  (hence either use norm of input or leave it out)
-
-geometry is automatically Square if useImage muss noch ergänzt werden
-
-Section Name: Convergence of energies (see Bar12, do some experiment chapter
-like that)
-
-find alpha that denoises
-
-externalize fade to black on pictures so the original picture already has
-0 boundary
-
-
-FOR REPORT
-  rename gleb to exactEnergy-GLEB
-
 tiens initPrimalDual has degrees degreeF+1 and for intFSq4e it has degreeF*2
 which leads to a pretty different eta from me (around 2 difference on small
 levels) is this choice for degree significant and really important for correct
 results or is that not the case
+ --> IE teste NOCHMAL f01 alpha=1 mit hohem degree4integrate und gehe sicher,
+    dass das nichts änders (falls doch, nochmal nachfragen oder ignorieren)
 
-denoising example mode plus plots(ask tien what is useful and what isn't)
-
-if polygon mesh should ever be used again it should be created by using 
-  markUniform und refine up to inital level such that the refinement is always
-  the same and not red-refinement for this one case
-
-maybe find out what alpha is and better document it
- do this for all variables from the experiment (at some point think what they 
-   are and change them whereever they are documented)
-   (tau, epsStop, alpha, beta, Lambda...)
-
-computeExactEnergyBV
-   -%% POSTPONED
-    % TODO maybe delete all but the best file with the name
-    %  sprintf('%s/minPrecision_%d_nrDof_%d.txt', ...
-    %    dirName, significantDigits(end), nrDof(end));
-    %
-    %    but this is really unimportant and probably not worth the effort
-
-VARIABLES/FILES TO BE RENAMEND
-(start in editable one parameter at a time and go from big files to subfiles
-one variable at a time and consistent)
-
-integralsWithF4e is also a nogo
-(i.e. never F or U because of Camel Case Sheniegans)
-
-don't use E like that, this is against any convention
-things like RHS and DOF are names here, hence in camel case they are used as
-  xyzRhs and xyzDof
-Cr, Bv, Nc, ... also as above (decide sth)
-intRHS4s to sth that has f times psi_j in it or sth like that 
-eg gradF, gradCRu and so on
-
-%% BENCHMARK TODOS JUST COPIED
-% TODO computeGleb flag, not effective for image probably due to missing 
-%      gradients. For H^1_0 examples there always will be gradients probably
-%      on the other hand.
-
-eps stop% TODO sth about updating it depending on mesh size
-stopCrit
-
-geometry
-% TODO for now only on square possible, but 
-% might be possible on rectangles in general (useful 
-% though?)
-
-exactEnergy variant of loading exact energy, maybe?
- % just compute it extrenalyy and only set the flag to true, if the energy is
- % given (read really exact valye from file)
- % TODO continue here, when the function is great
- %TODO probably compute it here
- %TODO compute exact energy here and use it e.g. in showProgress instead of
- % drop useExactEnergy and just use exactEnergy = 3 type params
- % use insan(exactEnergy) to find out whether exact energy is know or not, 
- % i.e. exactEnergy = NaN, if it is not known
- %
- % function that coputes exact energy should simply refine the mesh mesh
- % uniformly until it has a million dofs or something and then compute the 
- % energy and use it for here (might take some time, but only once, hence 
- % who cares)
- % this functions must prob. be written without struct s.t. it can be called
- % from here
- %
- % OR
- % compute exact energy in results where it is needed, but where
- % meshes are already computed to a certain degree (con: might still need
- % exact energy during programm (maybe in a termination criterion, even
- % though this might be stupid since there likely won't be results guaranteen 
- % sth))
- %-2.0580.....
- %
- %TODO
- %best solution: first time on mesh and given solution compute it very well
- %and save it (compute until some timer runs out, with message, saying that
- %it's computed at the moment)
- %
- %use struct [field = geometry, structInner] with structInner [field
- % = exactSolutionName,
- %intArray] with 1x2 intArray [nrDof, Error]
- %
- %use significant decimals at termination criterion
-
-% TODO probably add ability to denoise rhs and images (might need case
-% distinction by considering useImage flag)
-% TODO noise type (see MATLAB imnoise)
-
-blurWidth % 1 for nothing  TODO think about it, it might change stuff
-
-parAlpha % TODO why does the analytic example is broken for 1e4
-
-errorNorm
-%TODO list options (likewise for some other params (think)) strArr maybe
-%altErrorNorm and always compute L2 error because it's useful for the
-%estimator (or always L2 and H1 error, if useful, but they probably only
-%differ bei some constant hence one of those is sufficient (check this))
-%TODO might call this altError and give only ine option (i.e. there's
-%always L2 error and maybe altError) UNTIL THEN error4lvl is a fine name
-%and is always L2 
-%TODO maybe allow only a fixed amounts of different errors, like only two,
-%so one can choose L2 and H1 for example so sth like error4lvl,
-%errorAlt4lvl
-%TODO probably always have the error for which the estimator is an upper
-%bound
-
-function rightHandSide
- % TODO pasted-graphic-2.tiff does have a calculation formula to calculate f
- % from some given function u(r) --> other examples possible (easier even?)
- % y =  middleSquare(x);
-
-image2function
- %TODO rewrite and change name
- 
-gradientRHS and therefore gleb can also be used if useExactEnergy == false
- if useExactEnergy %TODO this is also possible without exact energy
-                   % just needs to rewrite some stuff in saveResults etc.
-
-some noise stuff
-    noise = 0; %#ok<NASGU,UNRCH> 
-    % if addNoise, noise = .4; end;
-    params.f = @(x) rightHandSide(x); %+ noise*(rand-.5);
-    %params.f = @(x) rightHandSide(x) + noise*(rand(size(x,1))-.5);
-    %   but this is a different noise on every level
-    %  TODO what if add noise, this obv doesnt work since it only adds one 
-    %  random number
-
-
-
-
-
-GENERAL THESIS TEX STUFF
-
-CSU, Young etc einmal aufschreiben --> Appendix?
-
-readd general part of experiments section into documentation
-
-compute gradient of exact solution, transform back from absolute value
-presentation for that, add energy exact error
-
-let the programs run for a fixed period of time and compare the obtained results
-(since CR seems to yield better results but take a much longer time)
-
-start experiment with much 1e-2 or sth not to big, such that there will be more
-data points for the convergence graph
-
-
-
-Fragen an CC:
-Titel der Arbeit
-Weiter Experimente
-
-
-Zur Bachelorarbeit:
-
-2 Seiten Einführung, Lebesgue Räume, 
-theoretische grundlagen
---> basically an bartels halten und dann aufpassen, ab wann CR/CC Stoff greift
-
-
-Lagrangsche Funktional aufstellen =, herleiten, argumentieren damit
-für die Energie geht nur Subgradient (weil Gradient schon vorkommt)
-
-zentraler Satz: Existenz der Lösung (mittels Variationsrechnug)
-wohlgestelltheit
-approximation mit diskreten Räumen
-Ergebnisse
-(mit Bartels vergleichen, aber von Bartels nur mit welchen Räümen approximiert
-werden)
-
-
-
+##################
 
 blankes Afem Paket, um Fehlerquelle da auszuschließen
   franz lsfem paket repo, nochmal AFEM
+  JA, vielleicht nochmal alle Funktionen frisch aus afem-base 
+  und gucken, ob startAlgorithm('compare') gleiche Resultate liefert weiterhin
 
-abbruchbed einfach klein genug (1e-5?)
+##################
+Ordnerstrutktur für Abgabe
+  ./bachelorthesisBergmann/
+     results/
+     bachelorThesisMain.pdf 
+     structuredCode/ 
+       nonconforming/
+       utils/
+       README (falls sinnvoll)
+
+   --> rename the files and folders accordingly
+##################
+
+
+EXPERIMENTE
+  - Section Name: Convergence of energies (see Bar12, do some experiment
+    chapter like that)
+  - energy during iteration doesn't strictly converge from above to some value
+    for small tau (e.g. 1/100)
+  - s. fragen.txt, Effekt von großen/kleinen alpha bzw. tau entsprechend ein
+    paar Experiment mit gleicher Lösung machen und gleichem Input (was alpha
+    irgendwie disqualifiziert, oder?) (vlt gucken ob Raten oder so in corr
+    einzeichnen bar sind)
+
+AUSBLICK (vielleicht in die Arbeit schreiben)
+  
+  Randdaten verallgemeinern
+  Bartels Code anpassen und vergleicen
