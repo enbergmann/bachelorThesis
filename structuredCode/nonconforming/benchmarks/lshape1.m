@@ -31,7 +31,7 @@ function params = editable %#ok<*MSNU,FNDEF>
   parTheta               = 0.5;
   minNrDof               = 1e8;
   useProlongation        = true;
-  parGamma               = 1;
+  parGamma               = 0;
   d                      = 2;
     % this should remain 2
 
@@ -46,7 +46,7 @@ function params = editable %#ok<*MSNU,FNDEF>
   imageName              = 'f2bawgnSnr20cameraman.tif'; %#ok<NASGU> 
     % not effective if useImage == false
     % whiteSquare.tif, cameraman.tif
-  parAlpha               = 1e0; 
+  parAlpha               = 1e4; 
   parBeta                = 1;
   rhsGradientKnown       = false;
     % set automatically to false if useImage == true
@@ -59,19 +59,19 @@ function params = editable %#ok<*MSNU,FNDEF>
     % not effective if useExactEnergy == false
                               
   % information about experiment for saving and documentation.
-  expName                = 'lshapeExpIScaled';
-  dirInfoName            = sprintf('alpha=%e_largeDespiteAlpha', parAlpha);
+  expName                = 'lshapeExp';
+  dirInfoName            = sprintf('alpha=%e_gamma0FScaled', parAlpha);
   %dirInfoName            = sprintf('%s', ...
   %  datestr(now, 'yy_mm_dd_HH_MM_SS'));
 
   % function handles (not effective if useImage == true)
   function y = rightHandSide(x)
-    %y =  parAlpha*ones(size(x, 1), 1);
+    y =  parAlpha*ones(size(x, 1), 1);
     %y =  zeros(size(x, 1), 1);
     %y =  ones(size(x, 1), 1);
     %y = parAlpha*(1 - x(:, 1).^2).*(1 - x(:, 2).^2);
     %y = parAlpha*2^6/9*(1 - x(:, 1).^2).*(1 - x(:, 2).^2).*x(:, 1).*x(:, 2);
-    y =  1e4*ones(size(x, 1), 1);
+    %y =  1e4*ones(size(x, 1), 1);
   end
 
   function y = gradientRightHandSide(x)

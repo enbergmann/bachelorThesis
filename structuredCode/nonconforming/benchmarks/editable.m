@@ -29,7 +29,7 @@ function params = editable %#ok<*MSNU,FNDEF>
   parTheta               = 0.5;
   minNrDof               = 5e3;
   useProlongation        = true;
-  parGamma               = 1;
+  parGamma               = 0;
   d                      = 2;
     % this should remain 2
 

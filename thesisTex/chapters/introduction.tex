@@ -7,8 +7,7 @@ $g:\Omega\to \Rbb$ stelle ein gegebenes Signal auf $\Omega$ dar.
 Das Signal $g$ könnte im Sobolev-Raum $W^{1,1}(\Omega)$ vermutet werden, da
 Elemente dieses Raums im Allgemeinen nicht stetig sein müssen. 
 Allerdings lassen Sobolev-Funktionen die oftmals benötigten Sprünge über
-Teilmengen niedrigerer Dimension von $\Omega$ nicht zu
-\cite[297]{Bar15}.
+Teilmengen niedrigerer Dimension von $\Omega$ nicht zu.
 Dieses Problem kann gelöst werden, indem der Raum der Funktionen von
 beschränkter Variation $\BV(\Omega)$ betrachtet wird. 
 Dieser ist eine echte Obermenge von $W^{1,1}(\Omega)$ und hat sich als geeignet
@@ -37,15 +36,14 @@ Seminorm
 \end{align*}
 von $v$ auf $\BV(\Omega)$ \cite[1162]{Bar12}. Diese entspricht der
 totalen Variation der distributionellen Ableitung $Dv$ von $v$ und
-ihre Minimierung verhindert Oszillationen in der Lösung, lässt aber
-Unstetigkeiten zu \cite[72]{Get12}.
+ihre Minimierung vermindert Oszillationen in der Lösung, lässt aber
+Unstetigkeiten zu \cite[75]{Get12}.
 Außerdem stimmt diese, falls $v\in W^{1,1}(\Omega)$, mit der Seminorm auf
 $W^{1,1}(\Omega)$ überein. 
-Der zweite Term $\Vert v-g\Vert_{L^2(\Omega)}^2$ misst den Abstand von $v$ und
-$g$ in $L^2(\Omega)$. 
+Der zweite Term ist die Normdifferenz von $v$ und $g$ in $L^2(\Omega)$. 
 Die Minimierung dieses Terms bewirkt, dass die Lösung dem Eingangssignal
 ähnelt.
-Mit diesen Termen und mit einen positiven Parameter
+Mit diesen Termen und mit einem positiven Parameter
 $\alpha\in\Rbb_+$, der das Verhältnis zwischen Rauschverminderung und
 Ähnlichkeit der Lösung zum Eingangssignal gewichtet, sucht das ROF-Modell
 eine Funktion $u\in\BV(\Omega)\cap L^2(\Omega)$, die das Funktional
@@ -72,21 +70,21 @@ Approximation $|\bullet|_\varepsilon$ ersetzt wird, und die Nutzung von höheren
 Ableitungen in der Definition von $|\bullet|_{\BV(\Omega)}$.
 Vor- und Nachteile dieser Ansätze und entsprechende Referenzen werden in
 \cite[1165]{Bar12} zusammengefasst. 
-Außerdem wird ebenda auf Arbeiten verwiesen, in denen verschieden iterative
+Außerdem wird ebenda auf Arbeiten verwiesen, in denen verschiedene iterative
 Lösungsmethoden für das ROF-Modellproblem diskutiert werden.
-Professor Bartels untersucht in \cite[Kapitel 10.2]{Bar15} eine
-$W^{1,1}$-konforme Diskretisierung des ROF-Modells mit der
-Courant-Finite-Elemente-Methode. 
+Professor Bartels untersucht in \cite[Section 10.2]{Bar15} eine
+$W^{1,1}$-konforme Diskretisierung des ROF-Modells mit
+Courant-Finite-Elemente-Funktionen. 
 Zur numerischen Lösung dieser diskreten Formulierung nutzt er eine
-primale-duale Iteration, welche durch Betachtung der primalen und der dualen
+primale-duale Iteration, welche durch Betrachtung der primalen und der dualen
 Formulierung des Minimierungsproblems motiviert ist.
 Eine Regularisierung oder die Nutzung höherer Ableitungen für die
 $\BV$-Seminorm werden dabei nicht benötigt.
 
-In dieser Arbeit möchte wir die Anwendung dieser primalen-dualen Iteration auf
-eine nichtkonforme Formulierung des ROF-Modells und einer Diskretisierung
-mit der Crouzeix\--Raviart\--Finite\--Elemente\--Methode untersuchen.
-Dabei nutzen wir einen von Professor Carstensen zur Verfügung gestellten
+In dieser Arbeit möchten wir die Anwendung dieser primalen-dualen Iteration auf
+eine nichtkonforme, mit Crouzeix\--Raviart\--Finite\--Elemente\--Funktionen
+diskretisierten Formulierung des ROF-Modells untersuchen.
+Dabei nutzen wir einen, von Professor Carstensen zur Verfügung gestellten,
 Verfeinerungsindikator, um die Iteration im Solve-Schritt der AFEM-Routine
 aus \Cref{fig:afemLoop} nutzen zu können. 
 Außerdem erlaubt uns die nichtkonforme Formulierung die Betrachtung einer
@@ -106,16 +104,15 @@ unter allen $v\in\BV(\Omega)\cap L^2(\Omega)$.
 Dabei ist der Term  $\Vert v\Vert_{L^1(\partial\Omega)}$ durch den Spursatz für
 \BV-Funktionen \cite[S. 400, Theorem 10.2.1]{ABM14} wohldefiniert und seine
 Minimierung modelliert homogene Randdaten.
-Für $f = \alpha g$ und alle $v\in \BV(\Omega)\cap L^2(\Omega)$ gilt dann $I(v)
-= E(v) - \Vert v\Vert_{L^1(\partial \Omega)}+ \frac{\alpha}{2}\Vert
-g\Vert_{L^2(\Omega)}^2$. 
-Der Zusammenhang mit dem ROF-Modell ist, aufgrund der Konstanz des Terms
-$\frac{\alpha}{2}\Vert g\Vert_{L^2(\Omega)}^2$, folglich, dass die Funktionale
-$E$ und $I$ die gleichen Minimierer in $\left\{v\in\BV(\Omega)\cap
+Für $f = \alpha g$ gilt dann 
+$$I(v) = E(v) - \Vert v\Vert_{L^1(\partial \Omega)}+ \frac{\alpha}{2}\Vert
+g\Vert_{L^2(\Omega)}^2\quad\text{für alle }v\in \BV(\Omega)\cap L^2(\Omega).$$
+Aufgrund der Konstanz von $\Vert g\Vert_{L^2(\Omega)}$ folgt damit, dass die
+Funktionale $E$ und $I$ die gleichen Minimierer in $\left\{v\in\BV(\Omega)\cap
 L^2(\Omega)\mid \Vert v\Vert_{L^1(\partial\Omega)}=0\right\}$ besitzen.
 
 Die Struktur dieser Arbeit ist wie folgt.
-Nachdem in \Cref{chap:theoreticalBasics} zunächst die Notationen eingeführt und
+Nachdem in \Cref{chap:theoreticalBasics} zunächst die Notation eingeführt und
 die theoretischen Grundlagen aus der Optimierung und zu den Funktionen
 beschränkter Variation zusammengetragen wurden, wird in
 \Cref{chap:continuousProblem} bewiesen, dass für unsere Formulierung des
@@ -123,9 +120,9 @@ ROF-Modells ein eindeutiger Minimierer existiert.
 Anschließend folgt in \Cref{chap:discreteProblem} die nichtkonforme
 Formulierung und Diskretisierung des Minimierungsproblems. 
 Mithilfe der Sattelpunktsformulierung des diskreten Problems werden äquivalente
-Charakterisierungen, Existenz und Eindeutigkeit für den diskreten Minimierer
-bewiesen. Außerdem werden die zu untersuchenden Konvergenzraten, der
-Verfeinerungsindikator und die garantierte untere Energieschranke aufgeführt.
+Charakterisierungen für den eindeutigen diskreten Minimierer bewiesen. 
+Außerdem werden der Verfeinerungsindikator und garantierte Schranken für $E$
+aufgeführt.
 In \Cref{chap:algorithm} wird die primale-duale Iteration formuliert und
 bewiesen, dass diese gegen den diskreten Minimierer konvergiert. 
 Es folgen in \Cref{chap:implementation} Hinweise zur Benutzung des Programms
@@ -179,11 +176,11 @@ und Details zur Implementierung des Algorithmus und schließlich in
       {pictures/introBeta/snr10/10000.png}
     \label{fig:snr10alpha10000}
   \end{subfigure}
-  \caption{Originalbild\protect\footnotemark (a) und
-    Originalbild mit additiven weißen gaußschen Rauschen (b) mit einem
-    Signal-Rausch-Verhältnis (eng.\ signal-to-noise ratio, SNR) von 10, jeweils
-    mit nachträglich hinzugefügten graduellen Übergang zu schwarzen Rand, um 
-    Nullranddaten zu garantierten. 
+  \caption{Originalbild\protect\footnotemark (a) und Originalbild mit additiven
+    weißen gaußschen Rauschen (b) mit einem Signal-Rausch-Verhältnis (eng.\
+    signal-to-noise ratio, SNR) von 10, jeweils mit einem nachträglich
+    hinzugefügten graduellen Übergang zu schwarzem Rand, der bei
+    Graufarbenbildern als Eingangssignal Nullranddaten entspricht. 
     Außerdem fünf Ergebnisse (c)-(g) des in \Cref{chap:implementation}
     beschriebenen adaptiven Algorithmus mit verschiedenen Werten von $\alpha$.}
   \label{fig:exampleDenoising}
