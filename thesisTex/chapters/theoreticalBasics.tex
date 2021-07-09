@@ -1,5 +1,5 @@
-In dieser Arbeit werden Grundbegriffe in topologischen Räumen und Kentnisse zu
-Banach- und Hilberträumen sowie zu Lebesgue- und Sobolev-Räumen vorausgesetzt.
+In dieser Arbeit werden Grundbegriffe in topologischen Räumen und Kenntnisse zu
+Ba\-nach- und Hilberträumen sowie zu Lebesgue- und Sobolev-Räumen vorausgesetzt.
 Dazu gehören insbesondere wichtige Ungleichungen (beispielsweise
 Cauchy-Schwarz, Hölder, Young), grundlegende Einbettungssätze, Dualraumtheorie,
 Aussagen zur schwachen Konvergenz sowie der Rieszsche Darstellungssatz und
@@ -27,7 +27,7 @@ Crouzeix-Raviart-Finite-Elemente-Raum einen separaten
 \label{sec:notation}
 
 Wir wählen für die natürlichen Zahlen die Konvention
-$\Nbb=\{1,2,3,\ldots\}$ und $\Nbb_0=\Nbb\cup\{0\}$. 
+$\Nbb=\{1,2,3,\ldots\}$ und $\Nbb_0\coloneqq\Nbb\cup\{0\}$. 
 Die Menge der positiven reellen Zahlen notieren wir mit $\Rbb_+$.
 Um auszudrücken, dass eine Menge $A$ Teilmenge einer Menge $B$ ist, schreiben
 wir $A\subseteq B$. Falls wir hervorheben wollen, dass $A$ sogar eine echte
@@ -37,6 +37,9 @@ mit $\partial A$, das Innere von $A$ mit $\interior(A)$ und den Abschluss
 von $A$ mit $\overline A$.
 Wir nennen weiterhin eine Teilmenge $B\subseteq A$ Umgebung eines Punktes $x\in
 A$, wenn es eine offene Teilmenge von $B$ gibt, die $x$ enthält.
+Ist eine Funktion $F:X\to Y$ zwischen nichtleeren Mengen $X$ und $Y$ konstant,
+das heißt nimmt sie nur genau einen Wert $y\in Y$ an, schreiben wir $F\equiv
+y$.
 
 Für den Rest dieses Abschnitts seien $d,m\in\Nbb$, $k\in\Nbb_0$,
 $p\in[1,\infty]$ und $U$ eine nichtleere, offene Teilmenge von $\Rbb^d$.
@@ -51,13 +54,14 @@ $\Rbb$.
 Mit $\Omega\subset\Rbb^2$ bezeichnen wir stets ein polygonal berandetes
 Lipschitz-Gebiet. 
 Eine reguläre Triangulierung $\Tcal$ von $\Omega$ im Sinne von Ciarlet (cf.\
-\cites[34]{Car09b}[345]{CGR12}[8]{CGKNRR10}) ist eine endliche Menge von
+\cites[34]{Car09b}[345]{CGR12}[S. 8 f.]{CGKNRR10}) ist eine endliche Menge von
 abgeschlossenen Dreiecken $T$ mit positiven Flächeninhalt $|T|$, sodass
 \begin{align*}
   \bigcup_{T\in\Tcal} T=\overline{\Omega}
 \end{align*}
 und zwei Dreiecke $T_1,T_2\in\Tcal$ mit $T_1\neq T_2$ und $T_1\cap
-T_2\neq\emptyset$ eine gemeinsame Ecke oder eine gemeinsame Kante haben.
+T_2\neq\emptyset$ genau eine gemeinsame Ecke oder genau eine gemeinsame Kante
+haben.
 Die Menge der Knoten der Triangulierung sei $\Ncal$, wobei die Menge der
 inneren Knoten mit $\Ncal(\Omega)$, die Menge der Randknoten mit
 $\Ncal(\partial\Omega)$ und die Menge der Knoten eines Dreiecks $T\in\Tcal$ mit
@@ -73,24 +77,24 @@ $\nu_T$ und der Normaleneinheitsvektor auf einer Kante $E\in\Ecal$ sei
 $\nu_E$. 
 Für eine Innenkante $E\in\Ecal(\Omega)$ bezeichnen wir dann die beiden
 Dreiecke in $\Tcal(E)$  so mit $T_+$ und $T_-$, dass
-$\nu_{T_+}$ und $\nu_E$ gleichorientiert sind, also $\nu_{T_+}\cdot\nu_E=1$.
+$\nu_{T_+}$ und $\nu_E$ gleich orientiert sind, also $\nu_{T_+}\cdot\nu_E=1$.
 Damit können wir den Sprung entlang einer Innenkante $E\in\Ecal(\Omega)$
 definieren als $[\bullet]_E\coloneqq \bullet|_{T_+} -\bullet|_{T_-}$.
 Für eine Randkante $E\in\Ecal(\partial\Omega)$ definieren wir
 $[\bullet]_E\coloneqq \bullet|_E$.
-Die Menge der stückweisen konstanten Funktionen auf der Triangulierung $\Tcal$
+Die Menge der stückweise konstanten Funktionen auf der Triangulierung $\Tcal$
 mit Werten in $\Rbb^m$ notieren wir dann mit $ P_0\!\left(\Tcal,\Rbb^m\right)$
-und die Menge der stückweisen affinen Funktionen auf $\Tcal$ mit Werten in
+und die Menge der stückweise affinen Funktionen auf $\Tcal$ mit Werten in
 $\Rbb^m$ mit $ P_1\!\left(\Tcal,\Rbb^m\right)$. 
 Weiterhin ist der Courant-Finite-Elemente-Raum (cf. \cite[12]{CGKNRR10})
 definiert als
 \begin{align*}
   S^1(\Tcal)\coloneqq P_1(\Tcal)\cap C\!\left(\overline{\Omega}\right).
 \end{align*}
-Für ein Dreieck $T\in\Tcal$ sei die längste Seitenlänge $h_T$. 
-Damit können wir die stückweise konstante Funktion $h_\Tcal\in P_0(\Tcal)$
-für alle $T\in\Tcal$ durch $h_\Tcal|_T\coloneqq h_T$ definieren und die längste
-Seitenlänge der Triangulierung $h\coloneqq\max_{T\in\Tcal}h_T$.
+Für ein Dreieck $T\in\Tcal$ sei die Länge der längsten Seite $h_T$. 
+Damit können wir die stückweise konstante Funktion $h_\Tcal\in P_0(\Tcal)$ für
+alle $T\in\Tcal$ durch $h_\Tcal|_T\coloneqq h_T$ und die Länge der längsten
+Seite der Triangulierung durch $h\coloneqq\max_{T\in\Tcal}h_T$ definieren.
 
 Mit $|\bullet|$ bezeichnen wir, je nach Argument, die euklidischen Norm eines
 Vektors $v\in\Rbb^m$, das Lebesgue-Maß einer Menge $M\subset\Rbb^2$, die Länge
@@ -146,9 +150,9 @@ $\Tcal$.
 \label{sec:crouzeixRaviartFunctions}
 
 In \Cref{sec:discreteProblemFormulation} wollen wir für eine nichtkonforme
-Diskretisierung des Minimierungsproblems \ref{prob:continuousProblem} die
-Crouzeix-Raviart-Finite-Elemente-Methode nutzen. 
-Die dafür benötigten Definitionen und Aussagen tragen wir in diesen Abschnitt
+Diskretisierung des Minimierungsproblems \ref{prob:continuousProblem} den
+Crouzeix-Raviart-Finite-Elemente-Raum nutzen. 
+Die dafür benötigten Definitionen und Aussagen tragen wir in diesem Abschnitt
 aus \cites{Car09b}{CGR12}{CGKNRR10} zusammen. 
 
 Die Räume der Crouzeix-Raviart-Finite-Elemente-Funktionen sind definiert durch
@@ -162,7 +166,7 @@ Die Räume der Crouzeix-Raviart-Finite-Elemente-Funktionen sind definiert durch
   \left\{\vcr\in\CR^1(\Tcal)\,\middle|\, \forall E\in\Ecal(\partial\Omega)\quad
   \vcr(\Mid(E))=0\right\}.
 \end{align*}
-Wir wollen $\CR^1_0(\Tcal)$ mit einen diskreten Skalarprodukt ausstatten. 
+Wir wollen $\CR^1_0(\Tcal)$ mit einem diskreten Skalarprodukt ausstatten. 
 Dafür führen wir den stückweisen Gradienten $\gradnc:H^1(\Tcal)\to
 L^2\!\left(\Omega;\Rbb^2\right)$ ein. 
 Dieser ist für alle $v\in H^1(\Tcal)$ und alle $T\in\Tcal$ definiert durch
@@ -189,8 +193,8 @@ $\CR^1(\Tcal)$ und die Menge
 $\{\psi_E\,\mid\,E\in\Ecal(\Omega)\}$ bildet eine Basis von
 $\CR^1_0(\Tcal)$. 
 Für \Cref{chap:implementation} werden wir außerdem die folgenden Aussagen
-benötigen, mit denen wir diesen Abschnitt abschließen.
-Sei $T\in\Tcal$ mit $T=\conv\left(\{P_1,P_2,P_3\}\right)$. 
+benötigen.
+Sei $T\in\Tcal$ mit $T=\conv\{P_1,P_2,P_3\}$. 
 Dann sind die baryzentrischen Koordinaten $\lambda_1,\lambda_2,\lambda_3\in
 P_1(T)$ für $j,k\in\{1,2,3\}$ charakterisiert durch
 \begin{align*}
@@ -216,26 +220,26 @@ Dadurch ist für alle $k_1,k_2,k_3\in\Nbb$ die Integrationsformel
   =
   2|T|\frac{k_1!k_2!k_3!}{(2+k_1+k_2+k_3)!}
 \end{equation}
-auch für die Berechnung von Integralen über die lokalen
-Crouzeix-Raviart-Basisfunktionen auf $T$ hilfreich. Ein Beweis von 
-\Cref{eq:formulaIntegrationBarycentricCoordinates} ist in 
+auch für die Berechnung von Integralen über Produkte der lokalen
+Crouzeix-Raviart-Basisfunktionen auf $T$ nutzbar. Ein Beweis der Formel
+\eqref{eq:formulaIntegrationBarycentricCoordinates} ist in 
 \cite{EM73} zu finden.
 
 
 \section{Variationsrechnung auf Banachräumen}
 \label{sec:variationalCalculus}
 
-In dieser Arbeit setzen wir Kentnisse über die Variationsrechung voraus. 
-Da wir aber einige Aussagen auch für Funktionale benötigen, die auf
-unedlichdimensionalen reellen Banachräumen definiert sind, führen
-wir in diesen Abschnitt die grundlegenden Notationen dafür ein und formulieren
+In dieser Arbeit setzen wir Kenntnisse über die Variationsrechnung voraus. 
+Da wir aber auch Funktionale betrachten, die auf
+unendlichdimensionalen, reellen Banachräumen definiert sind, führen
+wir in diesem Abschnitt die grundlegenden Notationen dafür ein und formulieren
 schließlich die notwendige Optimalitätsbedingung erster Ordnung.
 
 Dabei folgen wir \cite[S. 189-194]{Zei85}. 
-Dort werden einige der Aussagen auf einen reellen lokal konvexen
+Dort werden einige der Aussagen auf einem reellen, lokal konvexen
 Raum formuliert. Da nach \cite[S. 781, (43)]{Zei86} alle Banachräume 
 lokal konvex sind und wir die Aussagen in dieser Arbeit
-nur auf Banachräumen benötigen, formulieren wir sie hier auf einen reellen 
+nur auf Banachräumen benötigen, formulieren wir sie hier auf einem reellen 
 Banachraum $X$. 
 Außerdem betrachten wir eine Teilmenge $V\subseteq X$, einen
 inneren Punkt $u$ von $V$ und ein Funktional $F:V\to\Rbb$. 
@@ -284,17 +288,17 @@ Fr\'echet-Differential von $F$ definieren.
     \end{align*}
 \end{remark}
 
-Nachdem die relevante Notation eingeführt ist, können wir zum Abschluss
+Nachdem nun die relevante Notation eingeführt ist, können wir zum Abschluss
 die notwendige Bedingung erster Ordnung für einen lokalen Minimierer von $F$
 formulieren.
 
 \begin{theorem}[Notwendige Optimalitätsbedingung erster Ordnung]
   \label{thm:necessaryConditionFreeLocalExtrema}
-  Sei $u\in \interior(V)$ lokaler Minimierer von $F$, das heißt
-  es existiere eine Umgebung 
-  $U$ von $u$, sodass $F(v)\geq F(u)$ für alle $v\in U$. Dann gilt für alle
-  $h\in X$, dass $\delta F(u;h) = 0$, falls diese Variation für alle $h\in X$
-  existiert, beziehungsweise $F'(u) = 0$, falls $F'(u)$ als 
+  Sei $u\in \interior(V)$ lokaler Minimierer von $F$, das heißt es existiere
+  eine Umgebung $U\subseteq V$ von $u$, sodass $F(v)\geq F(u)$ für alle $v\in
+  U$. 
+  Dann gilt für alle $h\in X$, dass $\delta F(u;h) = 0$, falls diese Variation
+  für alle $h\in X$ existiert, beziehungsweise $F'(u) = 0$, falls $F'(u)$ als
   G\^ateaux- oder Fr\'echet-Differential existiert.
 \end{theorem}
 
@@ -329,7 +333,7 @@ Zuvor starten wir mit einer grundlegenden Definition.
 
 Für den Rest dieses Abschnitts folgen wir \cite[S. 385-397]{Zei85}. 
 Analog zur Begründung zum Beginn von \Cref{sec:variationalCalculus}, schränken
-wir auch hier die Definitionen und Aussagen, die in \cite{Zei85} auf reellen
+wir auch hier die Definitionen und Aussagen, die in \cite{Zei85} auf reellen,
 lokal konvexen Räumen formuliert sind, auf den reellen Banachraum $X$ ein.
 Zunächst definieren wir das Subdifferential von $F$ an einer Stelle $u\in X$.
 
@@ -366,7 +370,7 @@ von $F$.
 Das folgende Theorem folgt aus \cite[S. 389, Theorem 47.B]{Zei85} unter 
 Beachtung der Tatsache, dass die Addition von Funktionalen 
 $F_1,F_2,\ldots,F_n:X\to (-\infty,\infty]$ und die Addition von
-Menge in $X^\ast$ kommutieren.
+Mengen in $X^\ast$ kommutieren.
 
 \begin{theorem}
   \label{thm:subdifferentialSumRule}
@@ -400,13 +404,13 @@ Diese folgt aus \cite[S. 396 f., Definition 47.15, Theorem 47.F (1)]{Zei85}.
 \section{Funktionen beschränkter Variation}
 \label{sec:bvFunctions}
 
-In diesen Abschnitt führen wir den Raum der Funktionen beschränkter Variation
+In diesem Abschnitt führen wir den Raum der Funktionen beschränkter Variation
 ein.
-Wir vermeiden dabei, soweit möglich, für den weiteren Verlauf dieser Arbeit
+Wir vermeiden dabei für den weiteren Verlauf dieser Arbeit
 nicht benötigte Notation und Theorie, indem wir die Definitionen und Aussagen 
 entsprechend aus- und umformulieren.
-Für detailliertere Ausführungen und die
-maßtheoretischen Hintergründe siehe zum Beispiel \cite{ABM14, EG92, Bra98}. 
+Für detaillierte Ausführungen und die maßtheoretischen Hintergründe siehe zum
+Beispiel \cite{ABM14, EG92, Bra98}. 
 Soweit nicht anders angegeben, folgen die Definitionen und Aussagen
 dieses Abschnitts aus \cite[S. 393-395]{ABM14}.
 Sei im Weiteren $U$ eine offene Teilmenge des $\Rbb^d$.
@@ -457,29 +461,6 @@ Deshalb führen wir einen schwächeren Konvergenzbegriff ein.
   Wir schreiben dann $u_n\rightharpoonup u$ für $n\to\infty$.
 \end{definition}
 
-%In der Anwendung ist Konvergenz in $\BV(U)$ bezüglich der Norm
-%$\Vert\bullet\Vert_{\BV(U)}$ zu restriktiv (cf.\ \cite[300]{Bar15}). 
-%Deshalb führen wir zwei schwächere Konvergenzbegriffe ein.
-%
-%\begin{definition}
-%  Sei $(u_n)_{n\in\Nbb}\subset \BV(U)$ und sei $u\in \BV(U)$ mit
-%  $u_n\rightarrow u$ in $L^1(U)$ für $n\rightarrow\infty$.
-%  \begin{itemize}
-%    \item[(i)]
-%      Die Folge $(u_n)_{n\in\Nbb}$ konvergiert strikt gegen $u$,
-%      wenn $|u_n|_{\BV(U)}\rightarrow |u|_{\BV(U)}$ für
-%      $n\rightarrow\infty$. 
-%      \todo[inline]{Nochmal gucken, das wird glaube ich nirgends gebraucht.
-%      Falls das stimmt, rausnehmen. Wird für Dichte von $C^\infty$ usw in $BV$
-%      gebraucht bzgl dieser Konvergenz. Gucken, ob das relevant wird. Falls
-%      es rausgenomme wird, Text vor und nach dieser Def noch anpassen}
-%    \item[(ii)] Die Folge $(u_n)_{n\in\Nbb}$ konvergiert
-%      schwach gegen $u$, wenn für alle $\phi\in C_0(U;\Rbb^d)$ gilt, dass
-%      $\int_U u_n\Div(\phi)\dx\rightarrow \int_U u\Div(\phi)\dx$ für
-%      $n\to\infty$. Wir schreiben dann $u_n\rightharpoonup u$ für $n\to\infty$.
-%  \end{itemize}
-%\end{definition}
-
 Damit können wir das folgende Theorem formulieren, welches unmittelbar die
 schwache Unterhalbstetigkeit der Seminorm $|\bullet|_{\BV(U)}$ auf $\BV(U)$
 impliziert.
@@ -494,10 +475,10 @@ impliziert.
   Außerdem gilt dann $u_n\rightharpoonup u$ in $\BV(U)$.
 \end{theorem}
 
-Für den Rest dieser Abschnitts sei $U$ ein beschränktes Lip\-schitz-Gebiet.
+Für den Rest dieses Abschnitts sei $U$ ein beschränktes Lip\-schitz-Gebiet.
 Unter dieser Voraussetzung können wir zeigen, dass jede in $\BV(U)$
 beschränkte Folge eine in $\BV(U)$ schwach konvergente Teilfolge besitzt
-mit schwachen Grenzwert in $\BV(U)$. Für den Beweis dieser Aussage 
+mit schwachem Grenzwert in $\BV(U)$. Für den Beweis dieser Aussage 
 benötigen wir zunächst das folgende Theorem. 
 
 \begin{theorem}[\protect{\cite[S. 176, Theorem 4]{EG92}}]
@@ -520,7 +501,7 @@ Damit können wir nun das folgende Theorem beweisen.
   Nach \Cref{thm:l1ConvergentSubsequence} besitzt $(u_n)_{n\in\Nbb}$ eine
   Teilfolge $(u_{n_k})_{k\in\Nbb}$, die in $L^1(U)$ gegen ein
   $u\in\BV(U)$ konvergiert.
-  Diese Teilfolge ist nach Voraussetzung ebenfalls beschränkt in $\BV(U)$,
+  Diese Teilfolge ist nach Voraussetzung beschränkt in $\BV(U)$,
   woraus nach Definition der Norm $\Vert\bullet\Vert_{\BV(U)}$ insbesondere
   folgt, dass $\sup_{k\in\Nbb}|u_{n_k}|_{\BV(U)}< \infty$. 
   Somit ist \Cref{thm:wlsc} anwendbar und impliziert die schwache Konvergenz von
