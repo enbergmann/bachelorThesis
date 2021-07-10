@@ -1,4 +1,4 @@
-In diesen Kapitel wollen wir für einen Parameter $\alpha\in\Rbb_+$ und eine
+In diesem Kapitel wollen wir für einen Parameter $\alpha\in\Rbb_+$ und eine
 Funktion $f\in L^2(\Omega)$ folgendes Minimierungsproblem untersuchen.
 
 \begin{problem}\label{prob:continuousProblem}
@@ -16,19 +16,19 @@ $T:\BV(\Omega)\to L^1(\partial\Omega)$ existiert mit $T(v) =
 v|_{\partial\Omega}$ für alle $v\in\BV(\Omega)\cap C(\overline\Omega)$.
 Wie in \Cref{chap:introduction} beschrieben, hat \Cref{prob:continuousProblem}
 für homogene Randdaten die gleichen Minimierer wie das ROF-Modellproblem mit
-Eingangssignal $g\in L^2(\Omega)$, wenn $f=\alpha g$.
+Eingangssignal $g\in L^2(\Omega)$, falls $f=\alpha g$.
 
 \begin{remark}
+  \label{rem:embedding}
   Für $d\in\{2,3\}$ und ein beschränktes Lipschitz-Gebiet $U\subset\Rbb^d$ ist
   nach \cite[S. 302, Remark 10.5 (i)]{Bar15} die Einbettung
   $\BV(U)\hookrightarrow L^p(U)$ stetig, wenn $1\leq p\leq d/(d-1)$. 
-  % Nach \cite[S. 399, Theorem 10.1.3]{ABM14} gilt diese Aussage auch für
-  % $d\in\Nbb$, wenn $U\subset\Rbb^d$ offen, beschränkt und 1-regulär ist.
-  Damit ist $\BV(\Omega)$ Teilmenge von $L^2(\Omega)$ und die Lösung von
+  Damit ist $\BV(\Omega)$ für das polygonal berandete Lipschitz-Gebiet
+  $\Omega\subset \Rbb^2$ Teilmenge von $L^2(\Omega)$ und die Lösung von
   \Cref{prob:continuousProblem} kann in $\BV(\Omega)$ gesucht werden. 
   Wir vernachlässigen diese Vereinfachung und erreichen dadurch, dass alle
-  Aussagen dieses Kapitels auch gelten würden, wenn
-  $\Omega\subset\Rbb^d$ mit $d\in\Nbb$ ein beschränktes Lipschitz-Gebiet wäre.
+  Aussagen im nachfolgenden Abschnitt auch gelten, falls $\Omega\subset\Rbb^d$
+  mit $d\in\Nbb$ ein beschränktes Lipschitz-Gebiet ist.
 \end{remark}
 
 In den folgenden Abschnitten zeigen wir, dass
@@ -39,6 +39,8 @@ werden kann und welche Eigenschaften $u$ dafür erfüllen muss.
 
 
 \section{Existenz eines eindeutigen Minimierers}
+Nach \Cref{rem:embedding} kann in diesem Abschnitt $\Omega\subset\Rbb^d$ für
+$d\in\Nbb$ ein beliebiges beschränktes Lipschitz-Gebiet sein.
 Zunächst zeigen wir, dass \Cref{prob:continuousProblem} eine Lösung besitzt.
 Dafür benötigen wir die folgende Formulierung der Youngschen Ungleichung.
 
@@ -50,7 +52,7 @@ Dafür benötigen wir die folgende Formulierung der Youngschen Ungleichung.
   \end{align*}
 \end{lemma}
 
-Außerdem wird im Beweis folgende Aussage benötigt, die direkt aus \cite[S. 183,
+Außerdem wird die folgende Aussage benötigt, die direkt aus \cite[S. 183,
 Theorem 1]{EG92} folgt, da
 $0\in\BV\!\left(\Rbb^d\setminus\overline\Omega\right)$ mit
 $|0|_{\BV\!\left(\Rbb^d\setminus\overline\Omega\right)}=0$ und
@@ -59,7 +61,7 @@ $0|_{\partial\Omega}=0$.
 \begin{lemma}
   \label{lem:bvExtension}
   Sei $v\in\BV(\Omega)$.
-  Definere die Fortsetzung $\tilde{v}$ von $v$ für alle $x\in\Rbb^d$ durch
+  Definiere die Fortsetzung $\tilde{v}$ von $v$ für alle $x\in\Rbb^d$ durch
   \begin{align*}
     \tilde{v}(x)\coloneqq
     \begin{cases}
@@ -80,7 +82,7 @@ $0|_{\partial\Omega}=0$.
 
 \begin{proof}
   Die Beweisidee ist die Anwendung der direkten Methode der Variationsrechnung
-  (cf.\ z.B.\ \cite{Dac89}) unter Nutzung der in \Cref{sec:bvFunctions}
+  (cf.\ \cite{Dac89}) unter Nutzung der in \Cref{sec:bvFunctions}
   aufgeführten Eigenschaften der schwachen Konvergenz in $\BV(\Omega)$.
 
   Für alle $v\in L^2(\Omega)$ gilt mit der Hölderschen
@@ -94,7 +96,7 @@ $0|_{\partial\Omega}=0$.
     \frac{1}{\alpha}\Vert f\Vert^2 + \frac{\alpha}{4}\Vert v\Vert^2.
   \end{equation}
   Die Höldersche Ungleichung impliziert außerdem für alle $v\in
-  L^2(\Omega)\subset L^1(\Omega)$, dass
+  L^2(\Omega)\subseteq L^1(\Omega)$, dass
   \begin{equation}\label{eq:hoelderL2BiggerL1}
     \Vert v\Vert_{L^1(\Omega)} 
     = \Vert 1\cdot v\Vert_{L^1(\Omega)}
@@ -133,8 +135,8 @@ $0|_{\partial\Omega}=0$.
   Deshalb muss die Folge $(u_n)_{n\in\Nbb}$ beschränkt in $\BV(\Omega)$ sein.
   Nun garantiert \cref{thm:compactness} die Existenz einer in $\BV(\Omega)$
   schwach konvergenten Teilfolge $(u_{n_k})_{k\in\Nbb}$ von $(u_n)_{n\in\Nbb}$
-  mit schwachen Grenzwert $u\in\BV(\Omega)$. 
-  Ohne Beschränkung der Allgemeinheit ist
+  mit schwachem Grenzwert $u\in\BV(\Omega)$. 
+  Ohne Beschränkung der Allgemeinheit sei
   $(u_{n_k})_{k\in\Nbb}=(u_n)_{n\in\Nbb}$.
   Aus der schwachen Konvergenz von $(u_n)_{n\in\Nbb}$ in $\BV(\Omega)$ gegen
   $u$ folgt nach Definition, dass $(u_n)_{n\in\Nbb}$ stark, und damit
@@ -252,16 +254,17 @@ $0|_{\partial\Omega}=0$.
   das heißt $\min_{v\in\BV(\Omega)\cap L^2(\Omega)} E(v) = E(u)$.
 \end{proof}
 
-Nachdem wir gezeigt haben, dass für \Cref{prob:continuousProblem} eine
-Lösung existiert, beweisen wir als nächstes ein Theorem, das direkt impliziert,
-dass diese Lösung eindeutig ist. 
-\begin{theorem}[Stabilität und Eindeutigkeit]
+Nachdem wir nun gezeigt haben, dass eine Lösung von
+\Cref{prob:continuousProblem} existiert, können wir aus dem folgenden
+Theorem unmittelbar die Eindeutigkeit dieser Lösung folgern. 
+
+\begin{theorem}[Stabilität]
   \label{thm:contProbStabAndUniqu}
-  Seien $u_1,u_2\in \BV(\Omega)\cap L^2(\Omega)$ die Minimierer des Problems
-  \ref{prob:continuousProblem} mit $f_1,f_2\in L^2(\Omega)$ anstelle von $f$,
+  Seien $u_1,u_2\in \BV(\Omega)\cap L^2(\Omega)$ die Lösungen von
+  \Cref{prob:continuousProblem} mit $f_1,f_2\in L^2(\Omega)$ anstelle von $f$,
   das heißt für $\ell\in\{1,2\}$ minimiere $u_\ell$ das Funktional
   \begin{align*}
-    E_\ell
+    E_\ell(v)
     \coloneqq 
     \frac{\alpha}{2}\Vert v\Vert^2 + |v|_{\BV(\Omega)} 
     + \Vert v\Vert_{L^1(\partial\Omega)} - \int_\Omega f_\ell v\dx
@@ -278,35 +281,36 @@ dass diese Lösung eindeutig ist.
   Wir folgen der Argumentation im Beweis von \cite[S. 304, Theorem 10.6]{Bar15}.
 
   Zunächst definieren wir die Funktionale $F: L^2(\Omega)\to
-  \Rbb\cup\{\infty\}$ und $G_\ell:L^2(\Omega)\to \Rbb$, $\ell\in\{1,2\}$, für
-  alle $u\in L^2(\Omega)$ durch
+  [0,\infty]$ und $G_\ell:L^2(\Omega)\to \Rbb$, $\ell\in\{1,2\}$, für
+  alle $v\in L^2(\Omega)$ durch
   \begin{align*}
-    F(u) 
+    F(v) 
     &\coloneqq 
     \begin{cases}
-      |u|_{\BV(\Omega)} + \Vert u \Vert_{L^1(\partial\Omega)}, 
-      &\text{ falls } u\in\BV(\Omega)\cap L^2(\Omega),\\
-      \infty,&\text{ falls } u\in L^2(\Omega)\setminus\BV(\Omega)
+      |v|_{\BV(\Omega)} + \Vert v \Vert_{L^1(\partial\Omega)}, 
+      &\text{ falls } v\in\BV(\Omega)\cap L^2(\Omega),\\
+      \infty,&\text{ falls } v\in L^2(\Omega)\setminus\BV(\Omega)
     \end{cases}
     \quad\text{und }\\
-    G_\ell(u)
+    G_\ell(v)
     &\coloneqq 
-    \frac{\alpha}{2}\Vert u\Vert^2 - \int_\Omega f_\ell u\dx.
+    \frac{\alpha}{2}\Vert v\Vert^2 - \int_\Omega f_\ell v\dx.
   \end{align*}
   Damit gilt für $\ell\in\{1,2\}$ und alle
-  $u\in\BV(\Omega)\cap L^2(\Omega)$, dass $E_\ell(u) =  F(u)+G_\ell(u)$.
+  $v\in\BV(\Omega)\cap L^2(\Omega)$, dass $E_\ell(v) =  F(v)+G_\ell(v)$.
   Für $\ell\in\{1,2\}$ ist $G_\ell$ Fr\'echet-differenzierbar und die
-  Fr\'echet-Ableitung $G_\ell'(u): L^2(\Omega)\to\Rbb$ von $G_\ell$ an der
-  Stelle $u\in L^2(\Omega)$ ist für alle $v\in L^2(\Omega)$
+  Fr\'echet-Ableitung $G_\ell'(v): L^2(\Omega)\to\Rbb$ von $G_\ell$ an der
+  Stelle $v\in L^2(\Omega)$ ist für alle $w\in L^2(\Omega)$
   gegeben durch
   \begin{align*}
-    dG_\ell(u;v) = \alpha (u,v) - \int_\Omega f_\ell v\dx 
-    = (\alpha u-f_\ell ,v).
+    dG_\ell(v;w) = \alpha (v,w) - \int_\Omega f_\ell w\dx 
+    = (\alpha v-f_\ell ,w).
   \end{align*}
   Das Funktional $F$ ist konvex, unterhalbstetig und es gilt $F\nequiv\infty$.
   Deshalb ist nach \cref{thm:subdifferentialMonotonicity} das Subdifferential
-  $\partial F$ von $F$ monoton, das heißt für alle $\mu_\ell\in \partial
-  F(u_\ell)$, $\ell\in\{1,2\}$, gilt
+  $\partial F(\bullet)$ von $F$ monoton. 
+  Damit gilt für alle $\mu_\ell\in
+  \partial F(u_\ell)$, $\ell\in\{1,2\}$, dass
   \begin{align}\label{eq:stabilityAndUniqueness:monotonicityOfSubdifferential}
     (\mu_1-\mu_2,u_1-u_2)\geq 0.
   \end{align}
@@ -343,21 +347,83 @@ dass diese Lösung eindeutig ist.
   Beweis zum Abschluss.
 \end{proof}
 
-\todo[inline]{Hier kann direkt 'starke Konvexität' hin, aus der folgt 
-ebenfalls Eindeutigkeit folgt. Entsprechend den Satz vor dem vorherigen
-Theorem anpassen, sowas wie ,,Eindeutigkeit folgt jeweils aus den folgenden
-beiden Theoremen/kann aus einem der folgenden Theoreme gefolgt werden``}
+Zum Ende dieses Abschnitts beweisen wir, dass der Abstand einer Funktion
+zu einem Minimierer des Funktionals $E$ durch die Differenz der Werte des
+Funktionals kontrolliert wird.
+Auch aus diesem Theorem folgt die Eindeutigkeit der nach
+\Cref{thm:contProblemExistence} existierenden Lösung von
+\Cref{prob:continuousProblem}.
 
-\section{Konstruktion eines Experiments mit bekannter Lösung}
-%\section{Konstruktion eines Eingangssignals für eine gegebene Lösung}
+\begin{theorem}
+  \label{thm:convexity}
+  Sei $u\in\BV(\Omega)\cap L^2(\Omega)$ Lösung von 
+  \Cref{prob:continuousProblem}.
+  Dann gilt 
+  \begin{align*}
+    \frac{\alpha}{2}\Vert u-v\Vert^2 \leq E(v)-E(u)\quad
+    \text{für alle } v\in\BV(\Omega)\cap L^2(\Omega).
+  \end{align*}
+\end{theorem}
+
+\begin{proof}
+  Wir folgen der Argumentation im Beweis von \cite[S. 309, Lemma 10.2]{Bar15}.
+
+  Wir betrachten die konvexen Funktionale
+  $F:L^2(\Omega)\to [0,\infty]$ und $G:L^2(\Omega)\to \Rbb$, wobei 
+  $F$ wie im Beweis von \Cref{thm:contProbStabAndUniqu} definiert ist und $G$
+  für alle $v\in L^2(\Omega)$ gegeben ist durch 
+  \begin{align*}
+    G(v)\coloneqq \frac{\alpha}{2}\Vert v\Vert^2 - \int_\Omega f v\dx.
+  \end{align*}
+  Es gilt $E(v) = F(v)+G(v)$ für alle $v\in \BV(\Omega)\cap L^2(\Omega)$.
+  Die Fr\'echet-Ableitung $G'(u): L^2(\Omega)\to\Rbb$ von $G$ an der Stelle
+  $u\in \BV(\Omega)\cap L^2(\Omega)$ ist für alle $v\in L^2(\Omega)$ gegeben
+  durch
+  \begin{align*}
+    dG(u;v) = \alpha (u,v) - \int_\Omega f v\dx 
+    = (\alpha u-f ,v).
+  \end{align*}
+  Das impliziert mit wenigen Rechenschritten
+  \begin{align}\label{eq:strongConvexityG}
+    dG(u;v-u) +\frac{\alpha}{2}\Vert u-v\Vert^2+G(u) 
+    =
+    G(v)
+    \quad\text{für alle } v\in L^2(\Omega).
+  \end{align}
+  Da $u$ der Minimierer von $E$ ist, erhalten wir mit den Theoremen
+  %\ref{thm:extremalprinciple}, \ref{thm:subdifferentialSumRule} und
+  %\ref{thm:subdiffGateaux} die Aussage
+  \ref{thm:extremalprinciple} -- \ref{thm:subdifferentialSumRule} die Aussage
+  \begin{align*}
+    0\in\partial E(u) = \partial F(u)+\{G'(u)\},
+  \end{align*}
+  woraus folgt 
+  $ -G'(u)\in\partial F(u).$
+  Das ist nach \Cref{def:subdifferential} äquivalent zu
+  \begin{align*}
+    -dG(u;v-u)\leq F(v)-F(u)\quad\text{für alle }v\in\BV(\Omega)\cap
+    L^2(\Omega).
+  \end{align*}
+  Für alle $v\in \BV(\Omega)\cap L^2(\Omega)$ folgt daraus, zusammen mit
+  \Cref{eq:strongConvexityG}, dass
+  \begin{align*}
+    \frac{\alpha}{2}\Vert u-v\Vert^2+G(u)-G(v)+F(u)
+    = -dG(u;v-u)+F(u)\leq F(v).
+  \end{align*}
+  Da $E=F+G$ auf $\BV(\Omega)\cap L^2(\Omega)$, impliziert das die zu zeigende
+  Aussage.
+\end{proof}
+
+
+\section{Konstruktion eines Eingangssignals zu einer gegebenen Lösung}
 \label{sec:constructionInputSignal}
 
 Für die numerische Untersuchung der primalen-dualen Iteration aus
-\Cref{chap:algorithm} ist es sinnvoll
-Eingangssignale $f$ für \Cref{prob:continuousProblem} gegeben zu haben, für die
-der entsprechende gesuchte Minimierer bekannt ist. 
-Als Grundlage für die Konstruktion solcher Signale nutzen wir die folgende 
-Aussage von Professor Carstensen.
+\Cref{chap:algorithm} ist es sinnvoll, Eingangssignale $f$ für
+\Cref{prob:continuousProblem} gegeben zu haben, für die der entsprechende
+gesuchte Minimierer bekannt ist. 
+Die folgende Konstruktion solcher Signale basiert auf einer Aussage von
+Professor Carstensen.
 
 Sei $u:\Omega\to\Rbb$ gegeben als Funktion in Polarkoordinaten. 
 Dabei beschränken wir uns auf vom Polarwinkel unabhängige Funktionen, das heißt
@@ -365,20 +431,21 @@ für alle $x\in\Omega$ gelte
 $u(x)\coloneqq u_P\big(|x|\big)$ für $u_P:[0,\infty)\to\Rbb$. 
 Weiterhin fordern wir $u_P(r)=0$ für $r\geq 1$ und die Existenz
 der partiellen Ableitung $\partial_r u_P$ fast überall in $[0,\infty)$.
-Außerdem existiere fast überall in $[0,\infty)$ die partielle Ableitung
-des für $r\in[0,\infty)$ definierten Ausdrucks
+Außerdem existiere fast überall in $[0,\infty)$ die partielle Ableitung des für
+$r\in[0,\infty)$ mithilfe einer Funktion $q:\Rbb\to[0,1]$ definierten Ausdrucks
 \begin{align*}
   \sgn\big(\partial_r u_P(r)\big)
   \coloneqq
   \begin{cases}
     -1 &\text{für }\partial_r u_P(r)<0,\\
-    x\in[0,1] &\text{für }\partial_r u_P(r)=0,\\ 
+    q(r) &\text{für }\partial_r u_P(r)=0,\\ 
     1 &\text{für }\partial_r u_P(r)>0.
   \end{cases}
 \end{align*}
 Des Weiteren fordern wir $\sgn\big(\partial_r u_P(r)\big)/r\to 0$ für $r\to 0$, 
 damit $f_P$ in der folgenden Definition stetig in $0$ fortgesetzt werden kann.
-Sei $f_P:[0,\infty)\to\Rbb$ gegeben durch
+Sei $f_P:[0,\infty)\to\Rbb$ mit $\alpha$ aus \Cref{prob:continuousProblem}
+gegeben durch
 \begin{align}
   \label{eq:constructionInputSignal}
   f_P(r)
@@ -391,8 +458,8 @@ Dann ist $u$ Lösung von \Cref{prob:continuousProblem}, wenn das Eingangssignal
 auf $\Omega\supseteq \left\{w\in\Rbb^2\,\middle|\, |w|\leq 1\right\}$ für fast
 alle $x\in\Omega$ gegeben ist durch $f(x)\coloneqq f_P\big(|x|\big)$.
 
-In unseren Experimenten wird uns die garantierte untere Energieschranke aus
-\Cref{thm:gleb} interessieren. 
+Für die Experimente in \Cref{chap:experiments} wollen wir die
+garantierte untere Energieschranke aus \Cref{thm:gleb} berechnen können. 
 Da dieses Theorem für das Eingangssignal voraussetzt, dass $f\in
 H^1_0(\Omega)$, müssen wir noch die folgenden Bedingungen an $u_P$ formulieren.
 Hinreichend für $f\in H^1_0(\Omega)$ ist nach \Cref{eq:constructionInputSignal},
@@ -420,10 +487,10 @@ Um also $E(u)$ berechnen zu können, wird der schwache Gradient $\nabla u$ von
 $u$ benötigt und um die garantierte untere Energieschranke $\Egleb$ aus
 \Cref{eq:gleb} zu berechnen, wird der schwache Gradient $\nabla f$ von $f$
 benötigt.
-Deshalb betrachten wir an dieser Stelle noch kurz die benötigten
-Zusammenhänge zwischen den partiellen Ableitungen in kartesischen Koordianten
-und in Polarkoordinaten für eine hinreichend glatte Funktion $g_P$.
-Sei
+Deshalb betrachten wir an dieser Stelle noch kurz die benötigten Zusammenhänge
+zwischen den partiellen Ableitungen in kartesischen Koordinaten und in
+Polarkoordinaten für eine hinreichend glatte Funktion $g_P:\Rbb^2\to\Rbb$.
+Für $x_1,x_2\in\Rbb$ sei
 \begin{align*}
   \atan(x_2,x_1)\coloneqq
   \begin{cases}

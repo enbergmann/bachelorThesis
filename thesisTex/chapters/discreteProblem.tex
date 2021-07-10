@@ -627,66 +627,6 @@ Vorbereitung für die GUEB gebraucht wird}
 Abschätzung gegen h zitieren, um zu argumentieren, dass das Ding konvergiert}
 \todo[inline]{definitiv reinnehmen, aber vielleicht nur als Bemerkung und 
 für Beweis auf Bartels verweisen}
-\begin{theorem}[Eher ein Lemma draus machen?]
-  \label{thm:convexity}
-  Sei $u\in\BV(\Omega)\cap L^2(\Omega)$ Lösung von 
-  \Cref{prob:continuousProblem}.
-  Dann gilt 
-  \begin{align*}
-    \frac{\alpha}{2}\Vert u-v\Vert^2 \leq E(v)-E(u)\quad
-    \text{für alle } v\in\BV(\Omega)\cap L^2(\Omega).
-  \end{align*}
-\end{theorem}
-
-\begin{proof}
-  Wir folgen der Argumentation im Beweis von \cite[S. 309, Lemma 10.2]{Bar15}.
-  Da viele der Schritte ähnlich zum Beweis von \Cref{thm:contProbStabAndUniqu}
-  sind, präsentieren wir die entsprechenden Argumente verkürzt.
-
-  Wir definieren die konvexen Funktionale
-  $F:L^2(\Omega)\to \Rbb\cup\{\infty\}$ und $G:L^2(\Omega)\to \Rbb$, wobei 
-  $F$ wie im Beweis von \Cref{thm:contProbStabAndUniqu} definiert ist und $G$
-  für alle $v\in L^2(\Omega)$ gegeben ist durch 
-  \begin{align*}
-    G(v)\coloneqq \frac{\alpha}{2}\Vert v\Vert^2 - \int_\Omega f v\dx.
-  \end{align*}
-  Es gilt $E = F+G$.
-  Die Fr\'echet-Ableitung $G'(u): L^2(\Omega)\to\Rbb$ von $G$ an der Stelle
-  $u\in \BV(\Omega)\cap L^2(\Omega)$ ist für alle $v\in L^2(\Omega)$ gegeben
-  durch
-  \begin{align*}
-    dG(u;v) = \alpha (u,v) - \int_\Omega f v\dx 
-    = (\alpha u-f ,v).
-  \end{align*}
-  Das impliziert mit wenigen Rechenschritten
-  \begin{align}\label{eq:strongConvexityG}
-    dG(u;v-u) +\frac{\alpha}{2}\Vert u-v\Vert^2+G(u) 
-    =
-    G(v)
-    \quad\text{für alle } v\in L^2(\Omega).
-  \end{align}
-  Da $u$ der Minimierer von $E$ ist, erhalten wir mit den Theoremen
-  %\ref{thm:extremalprinciple}, \ref{thm:subdifferentialSumRule} und
-  %\ref{thm:subdiffGateaux} die Aussage
-  \ref{thm:extremalprinciple} -- \ref{thm:subdifferentialSumRule} die Aussage
-  \begin{align*}
-    0\in\partial E(u) = \partial F(u)+\{G'(u)\},
-  \end{align*}
-  woraus folgt 
-  $ -G'(u)\in\partial F(u).$
-  Das ist nach \Cref{def:subdifferential} äquivalent zu
-  \begin{align*}
-    -dG(u;v-u)\leq F(v)-F(u)\quad\text{für alle }v\in\BV(\Omega)\cap
-    L^2(\Omega).
-  \end{align*}
-  Daraus folgt zusammen mit \Cref{eq:strongConvexityG} für alle $v\in
-  \BV(\Omega)\cap L^2(\Omega)$, dass
-  \begin{align*}
-    \frac{\alpha}{2}\Vert u-v\Vert^2+G(u)-G(v)+F(u)
-    = -dG(u;v-u)+F(u)\leq F(v).
-  \end{align*}
-  Da $E=F+G$, folgt daraus die zu zeigende Aussage.
-\end{proof}
 
 \begin{theorem}[Garantierte obere Energieschranke]
   \label{thm:gueb}
