@@ -25,7 +25,7 @@ function params = editable %#ok<*MSNU,FNDEF>
   showProgress           = true; 
   degree4Integrate       = 10; 
   plotGivenFunctions     = true;
-  refinementLevel4Plots  = 3; % 11 is very close to the limit
+  refinementLevel4Plots  = 5; % 11 is very close to the limit
     % not effective if plotGivenFunctions == false
   debugIfError           = false;
 
@@ -34,7 +34,7 @@ function params = editable %#ok<*MSNU,FNDEF>
     % set automatically to 'Square' if useImage == true
   initialRefinementLevel = 0;
   parTheta               = 0.5;
-  minNrDof               = 5e3;
+  minNrDof               = 1e8;
   useProlongation        = true;
   parGamma               = 0;
   d                      = 2;
@@ -44,7 +44,7 @@ function params = editable %#ok<*MSNU,FNDEF>
   u0Mode         = 'zeros'; %'interpolationRhs'; 
   initialEpsStop = 1e-4; 
   parTau         = 1; 
-  maxIter        = 5e3;
+  maxIter        = 1e12;
 
   % experiment parameters
   useImage               = false;
@@ -57,17 +57,17 @@ function params = editable %#ok<*MSNU,FNDEF>
     % set automatically to false if useImage == true
   exactSolutionKnown     = true; %#ok<NASGU>
     % set automatically to false if useImage == true
-  useExactEnergy         = false; %#ok<NASGU>
+  useExactEnergy         = true; %#ok<NASGU>
     % set automatically to false if exactSolutionKnown == false
   exactEnergy            = -2.058034062391; %#ok<NASGU> % 6 significant digits
     % set automatically to NaN if exactSolutionKnown == false
     % not effective if useExactEnergy == false
                               
   % information about experiment for saving and documentation.
-  expName                = 'OPTIMIZE';
-  %dirInfoName            = sprintf('epsStop=%e', initialEpsStop);
-  dirInfoName            = sprintf('%s', ...
-    datestr(now, 'yy_mm_dd_HH_MM_SS'));
+  expName                = 'gamma0';
+  dirInfoName            = sprintf('adaptive');
+  %dirInfoName            = sprintf('%s', ...
+  %  datestr(now, 'yy_mm_dd_HH_MM_SS'));
 
   % function handles (not effective if useImage == true)
   function y = rightHandSide(x)

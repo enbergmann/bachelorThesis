@@ -25,6 +25,7 @@ Ordnerstrutktur für Abgabe
    --> rename the files and folders accordingly
 ##################
 
+check gamma = 0
 
 EXPERIMENTE
   - Section Name: Convergence of energies (see Bar12, do some experiment
@@ -35,6 +36,16 @@ EXPERIMENTE
     paar Experiment mit gleicher Lösung machen und gleichem Input (was alpha
     irgendwie disqualifiziert, oder?) (vlt gucken ob Raten oder so in corr
     einzeichnen bar sind)
+  - f01 mit großem alpha konvergiert am Anfang preasymptotisch schnell aber
+    scheint bei großen Freiheitsgraden dann auch die Rate 1/2 (für Gleb Kram)
+    bzw. 1/4 oder so für Fehler anzunehmen (also gleiche Raten wie alpha=1).
+    liegt daran, dass für große alpha die Werte anfangs explodieren und damit
+    die Konvergenz rapide ist (auch die Iterationen sind viel kürzer, hier
+    lohnt sich sicherlich auch der Vergleich der misc plots und nochmal verweis
+    auf die Abschätzung aus Konvergenzbeweis (großes alpha, womöglich weniger
+    Iteration))
+  - circle stuff, etas sind vergleichbar (was gut, weil so erwarte)
+
 
 AUSBLICK (vielleicht in die Arbeit schreiben)
   

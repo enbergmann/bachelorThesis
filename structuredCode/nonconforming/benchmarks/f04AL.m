@@ -3,8 +3,6 @@
 %     dont care if variables are wrongly named rhs, but at least be correct in
 %     Documentations and stuff that can be seen in thesis (rhsGradientKnown 
 %     should prob be changed as well)
-% TODO maybe initialEpsStop to epsStop
-
 function params = editable %#ok<*MSNU,FNDEF>
 %% DOC
 % Editable prototype for benchmark files.
@@ -25,7 +23,7 @@ function params = editable %#ok<*MSNU,FNDEF>
   showProgress           = true; 
   degree4Integrate       = 10; 
   plotGivenFunctions     = true;
-  refinementLevel4Plots  = 3; % 11 is very close to the limit
+  refinementLevel4Plots  = 5; % 11 is very close to the limit
     % not effective if plotGivenFunctions == false
   debugIfError           = false;
 
@@ -34,9 +32,9 @@ function params = editable %#ok<*MSNU,FNDEF>
     % set automatically to 'Square' if useImage == true
   initialRefinementLevel = 0;
   parTheta               = 0.5;
-  minNrDof               = 5e3;
+  minNrDof               = 1e8;
   useProlongation        = true;
-  parGamma               = 0;
+  parGamma               = 1;
   d                      = 2;
     % this should remain 2
 
@@ -44,44 +42,44 @@ function params = editable %#ok<*MSNU,FNDEF>
   u0Mode         = 'zeros'; %'interpolationRhs'; 
   initialEpsStop = 1e-4; 
   parTau         = 1; 
-  maxIter        = 5e3;
+  maxIter        = 1e12;
 
   % experiment parameters
   useImage               = false;
   imageName              = 'f2bawgnSnr20cameraman.tif'; %#ok<NASGU> 
     % not effective if useImage == false
     % whiteSquare.tif, cameraman.tif
-  parAlpha               = 1e0; 
+  parAlpha               = 1e4; 
   parBeta                = 1;
   rhsGradientKnown       = true;
     % set automatically to false if useImage == true
   exactSolutionKnown     = true; %#ok<NASGU>
     % set automatically to false if useImage == true
-  useExactEnergy         = false; %#ok<NASGU>
+  useExactEnergy         = true; %#ok<NASGU>
     % set automatically to false if exactSolutionKnown == false
-  exactEnergy            = -2.058034062391; %#ok<NASGU> % 6 significant digits
+  exactEnergy            = -3341.0588538182; %#ok<NASGU> % 8 significant digits
     % set automatically to NaN if exactSolutionKnown == false
     % not effective if useExactEnergy == false
                               
   % information about experiment for saving and documentation.
-  expName                = 'OPTIMIZE';
-  %dirInfoName            = sprintf('epsStop=%e', initialEpsStop);
-  dirInfoName            = sprintf('%s', ...
-    datestr(now, 'yy_mm_dd_HH_MM_SS'));
+  expName                = 'inputAndSolutionH20';
+  dirInfoName            = sprintf('alpha%e_adaptive', parAlpha);
+  %dirInfoName            = sprintf('%s', ...
+  %  datestr(now, 'yy_mm_dd_HH_MM_SS'));
 
   % function handles (not effective if useImage == true)
   function y = rightHandSide(x)
-    y =  f01(x, [parAlpha, parBeta]);
+    y =  f04(x, parAlpha);
   end
 
   function y = gradientRightHandSide(x)
     % not effective if rhsGradientKnown == false
-    y =  f01Gradient(x, [parAlpha, parBeta]);
+    y =  f04Gradient(x, parAlpha);
   end
 
   function y = exactSolution(x)
     % not effective if exactSolutionKnown == false
-    y = f01ExactSolution(x, parBeta);
+    y = f04ExactSolution(x);
   end
    
 %% DOCUMENTATION OF PARAMETERS
