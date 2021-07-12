@@ -45,6 +45,9 @@ EXPERIMENTE
     auf die Abschätzung aus Konvergenzbeweis (großes alpha, womöglich weniger
     Iteration))
   - circle stuff, etas sind vergleichbar (was gut, weil so erwarte)
+  - h20 Beispeil genau so wie H10, also das vielleicht nur erwähnen ,,eine 
+    noch stärke Regularitätsannahme im Beispeil f04, bei dem Lsg und f H20 sind,
+    verbesserte die Raten nicht weiter
 
 
 AUSBLICK (vielleicht in die Arbeit schreiben)
