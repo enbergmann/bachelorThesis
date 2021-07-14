@@ -25,7 +25,11 @@ Ordnerstrutktur für Abgabe
    --> rename the files and folders accordingly
 ##################
 
-check gamma = 0
+  gucke in der Arbeit ob S^1(\Tcal) jemals nochmal genutzt wird. Falls nicht,
+  die Definition der Couran-Finite-Elemente-Funktionen verschieben aus Notation
+  in die Einleitung an die Stelle, an der ich über Bartels Ansatz schreibe
+
+##################
 
 EXPERIMENTE
   - Section Name: Convergence of energies (see Bar12, do some experiment
@@ -48,6 +52,7 @@ EXPERIMENTE
   - h20 Beispeil genau so wie H10, also das vielleicht nur erwähnen ,,eine 
     noch stärke Regularitätsannahme im Beispeil f04, bei dem Lsg und f H20 sind,
     verbesserte die Raten nicht weiter
+  - gamma = 0 im Vergleich der gammas mit erwähnen
 
 
 AUSBLICK (vielleicht in die Arbeit schreiben)
