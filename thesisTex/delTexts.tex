@@ -590,3 +590,142 @@ From discreteProblem.tex
     L(\vcr,\Lambda_0).
   \end{align*}
   Zusammen mit \Cref{eq:lagrangianEqualsInfSup} impliziert das
+%%
+\section{Kontrolle des Abstandes zwischen diskreter und kontinuierlicher
+Lösung}
+\todo[inline]{section womöglich rausnehmen und das alles zwischen EGLEB Thm
+und Verfeinerungsind Def schieben.}
+Wir möchten in diesen Abschnitt eine Abschätzungen herleiten, mit welcher
+der $L^2$-Abstand zwischen der Lösung des diskreten Problems
+\ref{prob:discreteProblem} und der Lösung des kontinuierlichen Problems
+\ref{prob:continuousProblem} kontrolliert werden kann.
+Dafür benötigen wir zunächst folgendes Theorem.
+\todo[inline]{Dann wohl auch den Text hier ändern und sagen, dass es als
+Vorbereitung für die GUEB gebraucht wird}
+
+\todo[inline]{Enriching operaotr hier und auch aus der CC Quelle eine
+Abschätzung gegen h zitieren, um zu argumentieren, dass das Ding konvergiert}
+\todo[inline]{definitiv reinnehmen, aber vielleicht nur als Bemerkung und 
+für Beweis auf Bartels verweisen}
+
+\begin{theorem}[Garantierte obere Energieschranke]
+  \label{thm:gueb}
+  \todo[inline]{Write it, aber Tien noch fragen stellen}
+  Sei $\Omega$ konvex, $f\in H^1_0(\Omega)$ das Eingangssignal für
+  \Cref{prob:continuousProblem} mit Lösung $u\in H^1_0(\Omega)$ und minimaler
+  Energie $E(u)$ sowie für \Cref{prob:discreteProblem} mit Lösung $\ucr\in
+  \CR^1_0(\Omega)$ und minimaler Energie $\Enc(\ucr)$.
+  Dann gilt
+  \begin{align*}
+    \Enc(\ucr)+\frac{\alpha}{2}\Vert u-\ucr\Vert^2
+    -\frac{\kappa_\CR}{\alpha}\Vert
+    h_\Tcal(f-\alpha\ucr)\Vert \Vert\nabla f\Vert\leq E(u).
+  \end{align*}
+  Dabei ist die Konstante $\kappa_\CR\coloneqq\sqrt{1/48+1/j_{1,1}^2}$ mit der
+  kleinsten positiven Nullstelle $j_{1,1}$ der Bessel-Funktion erster Art.
+  Insbesondere gilt dann für 
+  \begin{align}
+    \Egleb 
+    \coloneqq 
+    \Enc(\ucr) - \frac{\kappa_\CR}{\alpha}\Vert h_\Tcal(f-\alpha\ucr)\Vert
+    \Vert \nabla f\Vert,
+  \end{align}
+    dass $\Enc(\ucr)\geq \Egleb$ und $E(u)\geq \Egleb$.
+
+\end{theorem}
+
+Zusammen mit den Betrachtungen in \Cref{sec:discreteProblemFormulation} 
+erhalten wir damit die folgende Abschätzung.
+
+\begin{corollary}[TODO löschen]
+  Sei $u\in\BV(\Omega)\cap L^2(\Omega)$ Lösung von
+  \Cref{prob:continuousProblem} und $\ucr\in\CR^1_0(\Tcal)$ Lösung von
+  \Cref{prob:discreteProblem}.
+  Dann gilt
+  \begin{align*}
+    \frac{\alpha}{2}\Vert u-\ucr\Vert^2\leq
+    E(\ucr)-E(u)=\Enc(\ucr)+\sum_{F\in\Ecal}\Vert[\ucr]_F\Vert_{L^1(F)}-E(u).
+  \end{align*}
+  Insbesondere gilt auch 
+  \begin{align*}
+    \frac{\alpha}{2}\Vert u-\ucr\Vert^2
+    \leq
+    \left|\Enc(\ucr)-E(u)\right|+
+    \left|\sum_{F\in\Ecal}\Vert[\ucr]_F\Vert_{L^1(F)}\right|.
+  \end{align*}
+\end{corollary}
+
+\todo[inline]{Hier Fragen und Formeln}
+Von Theorem 4.9:
+  \begin{align*}
+    \Enc(\ucr)+\frac{\alpha}{2}\Vert u-\ucr\Vert^2
+    -\frac{\kappa_\CR}{\alpha}\Vert
+    h_\Tcal(f-\alpha\ucr)\Vert \Vert\nabla f\Vert\leq E(u).
+  \end{align*}
+  impliziert für
+  \begin{align*}
+    \Egleb 
+    \coloneqq 
+    \Enc(\ucr) - \frac{\kappa_\CR}{\alpha}\Vert h_\Tcal(f-\alpha\ucr)\Vert
+    \Vert \nabla f\Vert,
+  \end{align*}
+    dass $\Enc(\ucr)\geq \Egleb$ und $E(u)\geq \Egleb$. 
+
+      deshalb garantierte untere Energieschranke?
+
+      Falls ja, ist dann noch eine Abschätzung $E(u)\leq E_\textup{gueb}$ gewollt?
+      Diese bekommen wir nicht so wirklich aus Thm. 4.11
+      Es gilt natürlich z.B.
+      $E(u)\leq E(J_1\ucr)=\Enc(J_1\ucr)$. Bringt das irgendwas? Hat nur
+      leider keine h Potenz dabei.
+
+      Weitere von Thm 4.9 implizierte Aussagen, die nützlich aussehen:
+
+      \begin{align*}
+        \Vert u-\ucr\Vert\leq 
+        \sqrt{\frac{\alpha}{2}}\sqrt{E(u)-\Egleb}
+        \lesssim
+        \sqrt{E(u)-\Egleb}
+      \end{align*}
+
+      diese rechte Seite, ohne die Konstante, wurde geplottet (quadriert)
+      und war dann parallel. Also gilt in den Experimenten sogar mehr. 
+      Parallelität gilt aber damit nicht. (Bild zeigen, auch das angepasste
+      mit sqrt)
+
+      Diese Aussage ist keine A-priori Abschätzung, weil die rechte
+      Seite immer noch von $\ucr$ abhängt, oder?
+      Bringt der plot dieser RHS dann noch irgendwas
+      
+
+      Theorem 4.11 liefert
+  \begin{align*}
+    \frac{\alpha}{2}\Vert u-v\Vert^2 \leq E(v)-E(u)\quad
+    \text{für alle } v\in\BV(\Omega)\cap L^2(\Omega).
+  \end{align*}
+
+  Daraus folgt
+  \begin{align*}
+    \Vert u-\ucr\Vert &\leq
+    \sqrt{2/\alpha}\sqrt{\Enc(J_1{\ucr})-\Egleb} + \Vert J_1\ucr-\ucr\Vert\\
+    &\lesssim
+    \sqrt{\Enc(J_1{\ucr})-\Egleb} + \Vert J_1\ucr-\ucr\Vert
+  \end{align*}
+
+  Die unterscheidet sich dann aber nicht mehr von der anderen Aussage, die auch 
+  eine obere Schranke für $\Vert u-\ucr\Vert$ war.
+  Ich hatte mit einer unteren Schranke gerechnet, weil CC was von ,,zwischen
+  zwei Graphen`` liegen meinte.
+  ACHSO, die hier ist natürlich besser, weil die auch ohne Kenntniss der exakten
+  Lösung berechnet werden kann (A-posteriori, korrekt?). Den Gradienten von $f$
+  braucht man allerdings noch, also kann man das für Cameraman immer noch nicht
+  nutzen.
+
+  Außerdem impliziert Theorem 4.11
+  \begin{align*}
+    E(u)\leq E(J_1 \ucr)-\frac{\alpha}{2}\Vert u - J_1 \ucr\Vert^2 
+    = \Enc(J_1 \ucr)-\frac{\alpha}{2}\Vert u - J_1 \ucr\Vert^2 
+  \end{align*}
+  Bringt das was als GUEB oder zählt das nicht, da die rechte Seite immernoch von
+  $u$ abhängt.
+

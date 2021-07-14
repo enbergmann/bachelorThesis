@@ -13,7 +13,7 @@ Dies wird für $|\Tcal|=2$ zum Beispiel von \cites[S. 404, Example
 10.2.1]{ABM14}[S. 301, Proposition 10.1]{Bar15} impliziert und kann
 analog für beliebige reguläre Triangulierungen von $\Omega$ bewiesen
 werden.
-Damit gilt dann für alle $\vcr\in\CR^1(\Tcal)$ insbesondere
+Damit gilt für alle $\vcr\in\CR^1(\Tcal)$ insbesondere
 \begin{align*}
   |\vcr|_{\BV(\Omega)} +\Vert\vcr\Vert_{L^1(\partial\Omega)} 
   = \Vert \gradnc \vcr\Vert_{L^1(\Omega)} +
@@ -27,8 +27,7 @@ $\Vert \gradnc \bullet\Vert_{L^1(\Omega)}$, das heißt wir vernachlässigen
 bei der nichtkonformen Formulierung die Terme
 $\sum_{F\in\Ecal}\Vert[\bullet]_F\Vert_{L^1(F)}$.
 Somit erhalten wir das folgende Minimierungsproblem für den Parameter
-$\alpha\in\Rbb_+$ und die rechte Seite $f\in
-L^2(\Omega)$.
+$\alpha\in\Rbb_+$ und das Eingangssignal $f\in L^2(\Omega)$.
 
 \begin{problem}\label{prob:discreteProblem}
   Finde $\ucr\in \CR^1_0(\Tcal)$,
@@ -42,8 +41,8 @@ L^2(\Omega)$.
 
 \section{Charakterisierung und Existenz eines eindeutigen Minimierers}
 
-In diesen Abschnitt führen wir die Argumente in \cite[S. 313]{Bar15}, angepasst
-für unsere Formulierung in \Cref{prob:discreteProblem}, detailiert aus. 
+In diesem Abschnitt führen wir die Argumente in \cite[S. 313]{Bar15}, angepasst
+für unsere Formulierung in \Cref{prob:discreteProblem}, detailliert aus. 
 Zunächst zeigen wir, dass \Cref{prob:discreteProblem} eine eindeutige Lösung
 besitzt. Dafür benötigen wir folgendes Lemma.
 \begin{lemma}
@@ -85,7 +84,8 @@ besitzt. Dafür benötigen wir folgendes Lemma.
   \end{equation*}
   Damit folgt zusammen mit der umgekehrten Dreiecksungleichung
   \begin{align*}
-    \left|\Vert\gradnc\vcr\Vert-\Vert \gradnc v_n\Vert\right|
+    \left|\Vert\gradnc\vcr\Vert_{L^1(\Omega)}-
+    \Vert \gradnc v_n\Vert_{L^1(\Omega)}\right|
     &\leq 
     \Vert\gradnc(\vcr- v_n)\Vert_{L^1(\Omega)}\\
     &=
@@ -141,7 +141,7 @@ besitzt. Dafür benötigen wir folgendes Lemma.
   Dieser Minimierer $\ucr$ ist eindeutig, da $\Enc$ strikt konvex ist.
 \end{proof}
 
-Als nächstes wollen wir äquivalente Charakterisierungen der eindeutigen Lösung
+Als Nächstes wollen wir äquivalente Charakterisierungen der eindeutigen Lösung
 von \Cref{prob:discreteProblem} beweisen, die von Professor Carstensen
 formuliert wurden.
 Dazu leiten wir zunächst ein zu \Cref{prob:discreteProblem} äquivalentes
@@ -237,13 +237,14 @@ P_0\!\left(\Tcal;\Rbb^2\right)$ hat, dann löst die Funktion $\tilde{u}_\CR$
 \end{lemma}
 
 \begin{proof}
-  Die Sattelfunktion $L$ aus \Cref{eq:discreteProblemLagrangeFunctional} ist in
-  ihrer ersten Komponente eine konvexe, unterhalbstetige, auf $\CR^1_0(\Tcal)$
-  reellwertige Funktion und
-  in ihrer zweiten Komponente eine konkave, oberhalbstetige, auf
-  $P_0\!\left(\Tcal;\Rbb^2\right)\cap K$ reellwertige Funktion.
-  Somit ist $L$ in beiden Komponenten abgeschlossen 
-  nach \cite[S. 52, 308]{Roc70}.  
+  Die Sattelfunktion $L$ aus \Cref{eq:discreteProblemLagrangeFunctional} ist,
+  wenn ihre zweite Komponente in $P_0\!\left(\Tcal;\Rbb^2\right)\cap K$ fixiert
+  ist, in ihrer ersten Komponente eine konvexe, unterhalbstetige, auf
+  $\CR^1_0(\Tcal)$ reellwertige Funktion und in ihrer zweiten Komponente eine
+  konkave, oberhalbstetige, auf $P_0\!\left(\Tcal;\Rbb^2\right)\cap K$
+  reellwertige Funktion.
+  Somit ist $L$ in beiden Komponenten abgeschlossen nach \cite[S. 52,
+  308]{Roc70}.  
   Insgesamt ist $L$ damit eine konvex-konkave, propere und abgeschlossene
   Funktion nach \cite[S. 349, 362 f.]{Roc70}, deren effektiver
   Definitionsbereich nach \cite[362]{Roc70} die Menge $\CR^1_0(\Tcal)\times
@@ -326,8 +327,8 @@ Theorem beweisen.
   \Cref{eq:discreteProblemLagrangeFunctional} ist.
   Das bedeutet nach \cite[380]{Roc70} insbesondere, dass $\tilde{u}_\CR$
   Minimierer von $L(\bullet, \bar\Lambda_0)$ in $\CR^1_0(\Tcal)$ und
-  $\bar\Lambda_0$ Maximierer von $L\!\left(\tilde{u}_\CR,\bullet\right)$ über $
-  P_0\!\left(\Tcal;\Rbb^2\right)$ ist.  
+  $\bar\Lambda_0$ Maximierer von $L\!\left(\tilde{u}_\CR,\bullet\right)$ in 
+  $P_0\!\left(\Tcal;\Rbb^2\right)$ ist.  
   Mit dieser Erkenntnis können wir nun die entsprechenden
   Optimalitätsbedingungen diskutieren.
   Zunächst gilt, da
@@ -476,7 +477,7 @@ Theorem beweisen.
     \left\Vert\gradnc\vcr\right\Vert_{L^1(\Omega)}
     -\left\Vert\gradnc\tilde{u}_\CR\right\Vert_{L^1(\Omega)}.
   \end{align*}
-  Nach \Cref{thm:discreteProblemExistenceUniqueness} exisitert eine eindeutige
+  Nach \Cref{thm:discreteProblemExistenceUniqueness} existiert eine eindeutige
   Lösung $\ucr\in\CR^1_0(\Tcal)$ von \Cref{prob:discreteProblem}.
   Wir haben bereits gezeigt, dass somit für alle
   $\vcr\in\CR^1_0(\Tcal)$ gilt
@@ -514,7 +515,7 @@ Theorem beweisen.
 
 Zum Schluss dieses Abschnitts wollen wir noch zwei Bemerkungen von Professor
 Carstensen erwähnen und kurz deren Gültigkeit begründen.
-Die erste ist in eine äquivalente Charakterisierung der dualen Variable
+Die erste Bemerkung ist eine äquivalente Charakterisierung der dualen Variable
 $\bar\Lambda_0\in P_0\!\left(\Tcal;\Rbb^2\right)$ aus
 \Cref{thm:discProbCharacterizationOfDiscreteSolutions} zur diskreten Lösung
 $\ucr\in\CR^1_0(\Tcal)$ von \Cref{prob:discreteProblem}.
@@ -554,22 +555,19 @@ $\bar\Lambda_0$ auf einem Dreieck $T\in\Tcal$ eindeutig bestimmt ist.
   \textit{(ii)} aus \Cref{thm:discProbCharacterizationOfDiscreteSolutions}.
 \end{remark}
 
-\section{Verfeinerungsindikator und garantierte untere Energieschranke}
-\todo[inline]{vielleicht: Verfeinerungsindikator und garantierte 
-Energieschranken/ garantierte unter und obere Energieschranke}
 
-Professor Carstensen stellte für die numerischen Untersuchungen 
-einen Verfeinerungsindikator zur adaptiven Netzverfeinerung und eine 
-Aussage über eine garantierte untere Energieschranke zur Verfügung.
+\section{Verfeinerungsindikator und garantierte Energieschranken}
 
-\begin{theorem}
+Professor Carstensen stellte für die numerischen Untersuchungen eine Aussage
+über eine garantierte untere Energieschranke und einen Verfeinerungsindikator
+zur adaptiven Netzverfeinerung zur Verfügung, die wir in diesem Abschnitt
+aufführen wollen.
+
+\begin{theorem}[Garantierte untere Energieschranke]
   \label{thm:gleb}
-  \todo[inline]{,,Mit minimaler Energie \ldots`` rausnehmen? Das ist halt
-  wirklich überflüssig als Info}
   Sei $\Omega$ konvex, $f\in H^1_0(\Omega)$ das Eingangssignal für
-  \Cref{prob:continuousProblem} mit Lösung $u\in H^1_0(\Omega)$ und minimaler
-  Energie $E(u)$ sowie für \Cref{prob:discreteProblem} mit Lösung $\ucr\in
-  \CR^1_0(\Omega)$ und minimaler Energie $\Enc(\ucr)$.
+  \Cref{prob:continuousProblem} mit Lösung $u\in H^1_0(\Omega)$ sowie für
+  \Cref{prob:discreteProblem} mit Lösung $\ucr\in \CR^1_0(\Omega)$.
   Dann gilt
   \begin{align*}
     \Enc(\ucr)+\frac{\alpha}{2}\Vert u-\ucr\Vert^2
@@ -611,141 +609,25 @@ Aussage über eine garantierte untere Energieschranke zur Verfügung.
   \end{align} 
 \end{definition}
 
-\section{Kontrolle des Abstandes zwischen diskreter und kontinuierlicher
-Lösung}
-\todo[inline]{section womöglich rausnehmen und das alles zwischen EGLEB Thm
-und Verfeinerungsind Def schieben.}
-Wir möchten in diesen Abschnitt eine Abschätzungen herleiten, mit welcher
-der $L^2$-Abstand zwischen der Lösung des diskreten Problems
-\ref{prob:discreteProblem} und der Lösung des kontinuierlichen Problems
-\ref{prob:continuousProblem} kontrolliert werden kann.
-Dafür benötigen wir zunächst folgendes Theorem.
-\todo[inline]{Dann wohl auch den Text hier ändern und sagen, dass es als
-Vorbereitung für die GUEB gebraucht wird}
-
-\todo[inline]{Enriching operaotr hier und auch aus der CC Quelle eine
-Abschätzung gegen h zitieren, um zu argumentieren, dass das Ding konvergiert}
-\todo[inline]{definitiv reinnehmen, aber vielleicht nur als Bemerkung und 
-für Beweis auf Bartels verweisen}
-
-\begin{theorem}[Garantierte obere Energieschranke]
-  \label{thm:gueb}
-  \todo[inline]{Write it, aber Tien noch fragen stellen}
-  Sei $\Omega$ konvex, $f\in H^1_0(\Omega)$ das Eingangssignal für
-  \Cref{prob:continuousProblem} mit Lösung $u\in H^1_0(\Omega)$ und minimaler
-  Energie $E(u)$ sowie für \Cref{prob:discreteProblem} mit Lösung $\ucr\in
-  \CR^1_0(\Omega)$ und minimaler Energie $\Enc(\ucr)$.
-  Dann gilt
-  \begin{align*}
-    \Enc(\ucr)+\frac{\alpha}{2}\Vert u-\ucr\Vert^2
-    -\frac{\kappa_\CR}{\alpha}\Vert
-    h_\Tcal(f-\alpha\ucr)\Vert \Vert\nabla f\Vert\leq E(u).
-  \end{align*}
-  Dabei ist die Konstante $\kappa_\CR\coloneqq\sqrt{1/48+1/j_{1,1}^2}$ mit der
-  kleinsten positiven Nullstelle $j_{1,1}$ der Bessel-Funktion erster Art.
-  Insbesondere gilt dann für 
-  \begin{align}
-    \Egleb 
-    \coloneqq 
-    \Enc(\ucr) - \frac{\kappa_\CR}{\alpha}\Vert h_\Tcal(f-\alpha\ucr)\Vert
-    \Vert \nabla f\Vert,
-  \end{align}
-    dass $\Enc(\ucr)\geq \Egleb$ und $E(u)\geq \Egleb$.
-
-\end{theorem}
-
-Zusammen mit den Betrachtungen in \Cref{sec:discreteProblemFormulation} 
-erhalten wir damit die folgende Abschätzung.
-
-\begin{corollary}[TODO löschen]
-  Sei $u\in\BV(\Omega)\cap L^2(\Omega)$ Lösung von
-  \Cref{prob:continuousProblem} und $\ucr\in\CR^1_0(\Tcal)$ Lösung von
-  \Cref{prob:discreteProblem}.
-  Dann gilt
-  \begin{align*}
-    \frac{\alpha}{2}\Vert u-\ucr\Vert^2\leq
-    E(\ucr)-E(u)=\Enc(\ucr)+\sum_{F\in\Ecal}\Vert[\ucr]_F\Vert_{L^1(F)}-E(u).
-  \end{align*}
-  Insbesondere gilt auch 
-  \begin{align*}
-    \frac{\alpha}{2}\Vert u-\ucr\Vert^2
-    \leq
-    \left|\Enc(\ucr)-E(u)\right|+
-    \left|\sum_{F\in\Ecal}\Vert[\ucr]_F\Vert_{L^1(F)}\right|.
-  \end{align*}
-\end{corollary}
-
-\todo[inline]{Hier Fragen und Formeln}
-Von Theorem 4.9:
-  \begin{align*}
-    \Enc(\ucr)+\frac{\alpha}{2}\Vert u-\ucr\Vert^2
-    -\frac{\kappa_\CR}{\alpha}\Vert
-    h_\Tcal(f-\alpha\ucr)\Vert \Vert\nabla f\Vert\leq E(u).
-  \end{align*}
-  impliziert für
-  \begin{align*}
-    \Egleb 
-    \coloneqq 
-    \Enc(\ucr) - \frac{\kappa_\CR}{\alpha}\Vert h_\Tcal(f-\alpha\ucr)\Vert
-    \Vert \nabla f\Vert,
-  \end{align*}
-    dass $\Enc(\ucr)\geq \Egleb$ und $E(u)\geq \Egleb$. 
-
-      deshalb garantierte untere Energieschranke?
-
-      Falls ja, ist dann noch eine Abschätzung $E(u)\leq E_\textup{gueb}$ gewollt?
-      Diese bekommen wir nicht so wirklich aus Thm. 4.11
-      Es gilt natürlich z.B.
-      $E(u)\leq E(J_1\ucr)=\Enc(J_1\ucr)$. Bringt das irgendwas? Hat nur
-      leider keine h Potenz dabei.
-
-      Weitere von Thm 4.9 implizierte Aussagen, die nützlich aussehen:
-
-      \begin{align*}
-        \Vert u-\ucr\Vert\leq 
-        \sqrt{\frac{\alpha}{2}}\sqrt{E(u)-\Egleb}
-        \lesssim
-        \sqrt{E(u)-\Egleb}
-      \end{align*}
-
-      diese rechte Seite, ohne die Konstante, wurde geplottet (quadriert)
-      und war dann parallel. Also gilt in den Experimenten sogar mehr. 
-      Parallelität gilt aber damit nicht. (Bild zeigen, auch das angepasste
-      mit sqrt)
-
-      Diese Aussage ist keine A-priori Abschätzung, weil die rechte
-      Seite immer noch von $\ucr$ abhängt, oder?
-      Bringt der plot dieser RHS dann noch irgendwas
-      
-
-      Theorem 4.11 liefert
-  \begin{align*}
-    \frac{\alpha}{2}\Vert u-v\Vert^2 \leq E(v)-E(u)\quad
-    \text{für alle } v\in\BV(\Omega)\cap L^2(\Omega).
-  \end{align*}
-
-  Daraus folgt
-  \begin{align*}
-    \Vert u-\ucr\Vert &\leq
-    \sqrt{2/\alpha}\sqrt{\Enc(J_1{\ucr})-\Egleb} + \Vert J_1\ucr-\ucr\Vert\\
-    &\lesssim
-    \sqrt{\Enc(J_1{\ucr})-\Egleb} + \Vert J_1\ucr-\ucr\Vert
-  \end{align*}
-
-  Die unterscheidet sich dann aber nicht mehr von der anderen Aussage, die auch 
-  eine obere Schranke für $\Vert u-\ucr\Vert$ war.
-  Ich hatte mit einer unteren Schranke gerechnet, weil CC was von ,,zwischen
-  zwei Graphen`` liegen meinte.
-  ACHSO, die hier ist natürlich besser, weil die auch ohne Kenntniss der exakten
-  Lösung berechnet werden kann (A-posteriori, korrekt?). Den Gradienten von $f$
-  braucht man allerdings noch, also kann man das für Cameraman immer noch nicht
-  nutzen.
-
-  Außerdem impliziert Theorem 4.11
-  \begin{align*}
-    E(u)\leq E(J_1 \ucr)-\frac{\alpha}{2}\Vert u - J_1 \ucr\Vert^2 
-    = \Enc(J_1 \ucr)-\frac{\alpha}{2}\Vert u - J_1 \ucr\Vert^2 
-  \end{align*}
-  Bringt das was als GUEB oder zählt das nicht, da die rechte Seite immernoch von
-  $u$ abhängt.
-
+Darüber hinaus können wir eine garantierte obere Energieschranke 
+formulieren.
+Dabei nutzen wir den Operator $J_1:\CR^1_0(\Tcal)\to P_1(\Tcal)\cap
+C_0(\Omega)$ aus \cite[Section 4]{CH18}, wobei $J_1\vcr$ für eine Funktion
+$\vcr\in\CR^1_0(\Tcal)$ in allen Innenknoten $z\in\Ncal(\Omega)$ definiert ist
+durch
+\begin{align}
+  \label{eq:enrichmentOperator}
+  J_1\vcr(z)\coloneqq |\Tcal(z)|^{-1}\sum_{T\in\Tcal(z)}\vcr|_T(z).
+\end{align}
+%Dieser erfüllt nach \cite[Section 4]{CH18} für eine vom Innenwinkel (?)
+%abhängige Konstante $c>0$, dass
+%\begin{align*}
+%  \Vert h_\Tcal^{-1}(1-J_1)\vcr\Vert\leq c\Vert\gradnc \vcr\Vert.
+%\end{align*}
+Da für die Lösung $u$ von \Cref{prob:continuousProblem} und die Lösung
+$\ucr$ von \Cref{prob:discreteProblem} gilt 
+\begin{align}
+  \label{eq:gueb}
+  E(u)\leq E(J_1\ucr)=\Enc(J_1\ucr),
+\end{align}
+wählen wir $\Enc(J_1\ucr)$ als garantierte obere Energieschranke.
