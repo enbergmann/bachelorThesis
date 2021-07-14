@@ -13,6 +13,12 @@ function  [u, nrIter, corrVec, energyVec, otherCorr] = ...
 %                           showProgress: 'logical' with value 1 if progress
 %                                         must be printed during the iteration
 %                                         and 0 else
+%                                epsStop: 'double' containing the minimal value
+%                                         corr must reach for the iteration to
+%                                         terminate
+%                                maxIter: 'uint64' containing the number of
+%                                         iteration steps the iteration must
+%                                         not exceed
 %                            exactEnergy: 'double' containing the exact energy
 %                                         of the minimizer of the continuous
 %                                         problem
@@ -41,8 +47,6 @@ function  [u, nrIter, corrVec, energyVec, otherCorr] = ...
 %                            c4n: coordinates for nodes
 %                            n4e: nodes for elements  
 %                        nrSides: number of sides
-%                        epsStop: 'double' containing the minimal value corr
-%                                 must reach for the iteration to terminate
 %                      gradsCR4e: '(3 x 2 x nrElems)-dimensional double array'
 %                                 where the j-th row of the k-th matrix
 %                                 contains the gradient of the local CR-basis
@@ -78,9 +82,10 @@ function  [u, nrIter, corrVec, energyVec, otherCorr] = ...
 %% INIT
   % extract necessary parameters from params
   parTau = params.parTau;
-  maxIter = params.maxIter;
   parAlpha = params.parAlpha;
   showProgress = params.showProgress;
+  epsStop = params.epsStop;
+  maxIter = params.maxIter;
   exactEnergy = params.exactEnergy;
   useExactEnergy = params.useExactEnergy;
   showPlots = params.showPlots;
@@ -93,7 +98,6 @@ function  [u, nrIter, corrVec, energyVec, otherCorr] = ...
   c4n = currData.c4n;
   n4e = currData.n4e;
   nrSides = currData.nrSides;
-  epsStop = currData.epsStop;
   gradsCR4e = currData.gradsCR4e;  
   s4e = currData.s4e;
   area4e = currData.area4e;
@@ -168,6 +172,7 @@ function  [u, nrIter, corrVec, energyVec, otherCorr] = ...
     fprintf('Current iteration on a mesh with \n\n');
     fprintf('nrDof: %d\n', nrDof);
     fprintf('epsStop: %e\n', epsStop);
+    fprintf('maxIter: %e\n', maxIter);
     if useExactEnergy, fprintf('Exact energy: %f\n', exactEnergy); end
     fprintf('\n========================================\n\n');
     fprintf('    corr           energy         step\n');

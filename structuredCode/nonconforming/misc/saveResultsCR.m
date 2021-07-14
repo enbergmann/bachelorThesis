@@ -19,7 +19,7 @@ function saveResultsCR(params, currData, ...
   figVisible = params.figVisible;
   parAlpha = params.parAlpha;
   parBeta = params.parBeta;
-  rhsGradientKnown = params.rhsGradientKnown;
+  inSiGradientKnown = params.inSiGradientKnown;
   useExactEnergy = params.useExactEnergy;
   exactEnergy = params.exactEnergy;
   plotGivenFunctions = params.plotGivenFunctions;
@@ -29,13 +29,14 @@ function saveResultsCR(params, currData, ...
   minNrDof = params.minNrDof;
   d = params.d;
   parGamma = params.parGamma;
+  epsStop = params.epsStop;
+  parTau = params.parTau;
+  maxIter = params.maxIter;
 
   % extract necessary information from currData
   nrElems = currData.nrElems; 
   nrSides = currData.nrSides; 
   nrDof = currData.nrDof; 
-  hMax = currData.hMax;
-  epsStop = currData.epsStop;
   c4n = currData.c4n;
   n4e = currData.n4e;
   s4e = currData.s4e;
@@ -59,7 +60,7 @@ function saveResultsCR(params, currData, ...
   if useExactEnergy 
     absDiffDiscExacE4lvl = outputLvlEnergy.absDiffDiscExacE; 
   end
-  if rhsGradientKnown 
+  if inSiGradientKnown 
     diffGuebGleb4lvl = outputLvlEnergy.diffGuebGleb; 
     if useExactEnergy, diffExacEGleb4lvl = outputLvlEnergy.diffExacEGleb; end
   end
@@ -98,16 +99,16 @@ function saveResultsCR(params, currData, ...
     % save experiment parameters
     expParams = struct(...
       'parAlpha', parAlpha, 'parBeta', parBeta, ...
-      'minNrDof', minNrDof, 'parTheta', parTheta, ...
-      'd', d, 'parGamma', parGamma);
+      'minNrDof', minNrDof, 'parTheta', parTheta, 'epsStop', epsStop, ...
+      'd', d, 'parGamma', parGamma, 'parTau', parTau, 'maxIter', maxIter);
     name = sprintf('../../results/nonconforming/%s/%s/expParams.csv', ...
       expName, dirInfoName);
     writetable(struct2table(expParams, 'AsArray', true), name);
 
     % save remaining parameters
     paramsReduced = rmfield(params, ...
-      {'c4n', 'n4e', 'n4sDb', 'n4sNb', 'parTheta', 'minNrDof', ...
-      'd', 'parGamma', 'parAlpha', 'parBeta'});
+      {'c4n', 'n4e', 'n4sDb', 'n4sNb', 'parTheta', 'minNrDof', 'd', ...
+      'parGamma', 'parAlpha', 'parBeta', 'epsStop', 'parTau', 'maxIter'});
     name = sprintf('../../results/nonconforming/%s/%s/paramsReduced.csv', ...
       expName, dirInfoName);
     writetable(struct2table(paramsReduced, 'AsArray', true), name);
@@ -188,7 +189,7 @@ function saveResultsCR(params, currData, ...
   % save parameters for current level
   currDataReduced = struct(...
     'nrElems', nrElems, 'nrNodes', size(c4n, 1), 'nrSides', nrSides, ...
-    'nrDof', nrDof, 'hMax', hMax, 'epsStop', epsStop);
+    'nrDof', nrDof);
   name = sprintf('%s/currentDataReduced.csv', dirName);
   writetable(struct2table(currDataReduced, 'AsArray', true), name);
 
@@ -361,7 +362,7 @@ function saveResultsCR(params, currData, ...
   for ind = 2:length(fieldsEnergy) 
     tableStruct.(fieldsEnergy{ind}) = outputLvlEnergy.(fieldsEnergy{ind});
   end
-  for ind = 2:length(fieldsHidden) 
+  for ind = 1:length(fieldsHidden) 
     tableStruct.(fieldsHidden{ind}) = outputLvlHidden.(fieldsHidden{ind});
   end
   writetable(struct2table(tableStruct), sprintf('%s/lvlOutput.csv', dirName));
@@ -385,7 +386,7 @@ function saveResultsCR(params, currData, ...
           string(sprintf('$|E(u)-E_{NC}(u_{CR})|$'));
       end
     end
-    if rhsGradientKnown
+    if inSiGradientKnown
       if useExactEnergy
         loglog(nrDof4lvl, diffExacEGleb4lvl, '-o');
         convergenceFigLegend(end + 1) = "$E(u) - E_{GLEB}$";

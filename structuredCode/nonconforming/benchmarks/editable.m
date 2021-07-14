@@ -1,10 +1,5 @@
-%TODO right-hand side to input signal, rightHandSide to inputSignal 
-%     (especially in DOC section here)
-%     dont care if variables are wrongly named rhs, but at least be correct in
-%     Documentations and stuff that can be seen in thesis (rhsGradientKnown 
-%     should prob be changed as well)
-% TODO maybe initialEpsStop to epsStop
-
+%TODO purge any RHS, rhs, f, F that can be seen in the documentation in the
+%thesis
 function params = editable %#ok<*MSNU,FNDEF>
 %% DOC
 % Editable prototype for benchmark files.
@@ -20,8 +15,7 @@ function params = editable %#ok<*MSNU,FNDEF>
 %% PARAMETERS
   % misc. parameters (will affect performance)
   showPlots              = false; 
-  plotModeGrayscale      = false; 
-    % not effective if showPlots == false
+  plotModeGrayscale      = false; % not effective if showPlots == false
   showProgress           = true; 
   degree4Integrate       = 10; 
   plotGivenFunctions     = true;
@@ -34,30 +28,28 @@ function params = editable %#ok<*MSNU,FNDEF>
     % set automatically to 'Square' if useImage == true
   initialRefinementLevel = 0;
   parTheta               = 0.5;
-  minNrDof               = 5e3;
+  minNrDof               = 2e3;
   useProlongation        = true;
-  parGamma               = 0;
-  d                      = 2;
-    % this should remain 2
+  parGamma               = 1;
+  d                      = 2; % this should remain 2
 
   % algorithm parameters
-  u0Mode         = 'zeros'; %'interpolationRhs'; 
-  initialEpsStop = 1e-4; 
-  parTau         = 1; 
-  maxIter        = 5e3;
+  u0Mode  = 'zeros'; %'interpolationInSi'; 'zeros';
+  epsStop = 1e-4; 
+  parTau  = 1; 
+  maxIter = 5e3;
 
   % experiment parameters
   useImage               = false;
   imageName              = 'f2bawgnSnr20cameraman.tif'; %#ok<NASGU> 
     % not effective if useImage == false
-    % whiteSquare.tif, cameraman.tif
   parAlpha               = 1e0; 
   parBeta                = 1;
-  rhsGradientKnown       = true;
+  inSiGradientKnown       = true;
     % set automatically to false if useImage == true
   exactSolutionKnown     = true; %#ok<NASGU>
     % set automatically to false if useImage == true
-  useExactEnergy         = false; %#ok<NASGU>
+  useExactEnergy         = true; %#ok<NASGU>
     % set automatically to false if exactSolutionKnown == false
   exactEnergy            = -2.058034062391; %#ok<NASGU> % 6 significant digits
     % set automatically to NaN if exactSolutionKnown == false
@@ -65,17 +57,17 @@ function params = editable %#ok<*MSNU,FNDEF>
                               
   % information about experiment for saving and documentation.
   expName                = 'OPTIMIZE';
-  %dirInfoName            = sprintf('epsStop=%e', initialEpsStop);
+  %dirInfoName            = sprintf('epsStop=%e', epsStop);
   dirInfoName            = sprintf('%s', ...
     datestr(now, 'yy_mm_dd_HH_MM_SS'));
 
   % function handles (not effective if useImage == true)
-  function y = rightHandSide(x)
+  function y = inputSignal(x)
     y =  f01(x, [parAlpha, parBeta]);
   end
 
-  function y = gradientRightHandSide(x)
-    % not effective if rhsGradientKnown == false
+  function y = gradientInputSignal(x)
+    % not effective if inSiGradientKnown == false
     y =  f01Gradient(x, [parAlpha, parBeta]);
   end
 
@@ -97,11 +89,11 @@ function params = editable %#ok<*MSNU,FNDEF>
 %   degree4Integrate      - 'uint64' containing the algebraic degree of
 %                            exactness for integrate from the AFEM package that
 %                            must be used for calculations
-%   plotGivenFunctions    - 'logical' with value 1 if a plot of the right-hand
-%                           side f and, if given, of the exact solution must
+%   plotGivenFunctions    - 'logical' with value 1 if a plot of the input
+%                           signal f and, if given, of the exact solution must
 %                           be saved and, if showPlots == true, shown
 %   refinementLevel4Plots - 'uint64' containing the refinement level of the 
-%                           mesh the right-hand side f and, if given, exact
+%                           mesh the input signal f and, if given, exact
 %                           solution must be drawn on
 %   debugIfError          - 'logical' with value 1 if MATLAB must enter debug
 %                            mode if an error occurs during runtime and 0 else
@@ -127,33 +119,34 @@ function params = editable %#ok<*MSNU,FNDEF>
 %   d                      - 'uint64' containing the dimension
 %
 % algorithm parameters
-%   u0Mode         - 'char array with exactly one row' containing the choice
-%                    for the inital iterate for iteration on level 0 and, if
-%                    useProlongation == false, for the iterations on all levels
+%   u0Mode  - 'char array with exactly one row' containing the choice for the
+%             inital iterate for the iteration on level 0 and, if
+%             useProlongation==false, for the iterations on all levels
 %     Options:
-%                  'zeros': CR function with all coefficients equal to 0
-%       'interpolationRhs': CR interpolation of the right-hand side f to the
-%                           mesh on the level
-%   initialEpsStop - 'double' containing the initial epsStop for relevant for 
-%                    the iteration on the first level of AFEM
-%   parTau         - 'double' containing the parameter \tau from the algorithm
-%   maxIter        - 'uint64' TODO
+%                   'zeros': CR function with all coefficients equal to 0
+%       'interpolationInSi': CR interpolation of the input signal f to the mesh
+%                            on the level
+%   epsStop - 'double' containing epsStop for the termination criterion of the
+%             iteration
+%   parTau  - 'double' containing the parameter \tau for the iteration
+%   maxIter - 'uint64' containing the number of iteration steps the iteration
+%             must not exceed
 %
 % experiment parameters
 %   useImage           - 'logical' with value 1 if an image given by imageName
 %                        in the folder '../utils/functions/images/' must be
-%                        used as right-hand side f for the experiment
+%                        used as input signal f for the experiment
 %   imageName          - 'char array with exactly one row' containing the name
 %                        of the image 
 %   parAlpha           - 'double' containing the parameter \alpha from the
 %                        problem
 %   parbeta            - 'double' containing the parameter \beta from the
 %                        problem
-%   rhsGradientKnown   - 'logical' with value 1 if the gradient of the 
-%                        given right-hand side is given and 0 else
+%   inSiGradientKnown  - 'logical' with value 1 if the gradient of the given
+%                        input signal is given and 0 else
 %   exactSolutionKnown - 'logical' with value 1 if the exact solution to the
-%                        continuous problem for the given right-hand side is
-%                        given and 0 else
+%                        continuous problem for the given input signal is given
+%                        and 0 else
 %   useExactEnergy     - 'logical' with value 1 if the exact energy given by
 %                        exactEnergy must be used during runtime
 %   exactEnergy        - 'double' containing the exact energy of the continuous
@@ -171,7 +164,7 @@ function params = editable %#ok<*MSNU,FNDEF>
 % advanced, not of interest for mere usage of the program
   if useImage
     geometry = 'Square'; %#ok<UNRCH>
-    rhsGradientKnown = false; 
+    inSiGradientKnown = false; 
     exactSolutionKnown = false; 
     imageName =  sprintf('../utils/functions/images/%s', imageName);
   end
@@ -194,9 +187,9 @@ function params = editable %#ok<*MSNU,FNDEF>
   params.minNrDof = minNrDof;
   params.d = d;
   params.parGamma = parGamma;
-  params.initialEpsStop = initialEpsStop;
+  params.epsStop = epsStop;
   params.useProlongation = useProlongation;      
-  params.rhsGradientKnown = rhsGradientKnown; 
+  params.inSiGradientKnown = inSiGradientKnown; 
   params.exactSolutionKnown = exactSolutionKnown; 
 
   if exactSolutionKnown 
@@ -232,9 +225,9 @@ function params = editable %#ok<*MSNU,FNDEF>
   if useImage
     params.f = image2function(imageName, parAlpha); %#ok<UNRCH>
   else
-    params.f = @(x) rightHandSide(x); 
-    if rhsGradientKnown 
-      params.gradF = @(x) gradientRightHandSide(x);
+    params.f = @(x) inputSignal(x); 
+    if inSiGradientKnown 
+      params.gradF = @(x) gradientInputSignal(x);
     end
   end
 end

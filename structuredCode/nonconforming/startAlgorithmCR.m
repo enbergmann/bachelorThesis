@@ -36,14 +36,14 @@ function startAlgorithmCR(benchmark)
   minNrDof = params.minNrDof;
   parTheta = params.parTheta;
   useProlongation = params.useProlongation;
-  rhsGradientKnown = params.rhsGradientKnown;
+  inSiGradientKnown = params.inSiGradientKnown;
   useExactEnergy = params.useExactEnergy;
   exactEnergy = params.exactEnergy;
   u0Mode = params.u0Mode;
   
   % initialize outputLvl structs (structs for AFEM output)
-  outputLvlHidden.hMax = [];
   outputLvlHidden.hMin = [];
+  outputLvlHidden.hMax = [];
   outputLvlHidden.sumL1NormOfJumps = [];
   if exactSolutionKnown, outputLvlHidden.normDiffExactSolJ1DiscSol = []; end
   outputLvlHidden.normDiffDiscSolJ1DiscSol = [];
@@ -67,7 +67,7 @@ function startAlgorithmCR(benchmark)
   outputLvlEnergy.lvl = lvl;
   outputLvlEnergy.energy = [];
   outputLvlEnergy.gueb = []; 
-  if rhsGradientKnown 
+  if inSiGradientKnown 
     outputLvlEnergy.gleb = []; 
     outputLvlEnergy.diffGuebGleb = []; 
     if useExactEnergy, outputLvlEnergy.diffExacEGleb = []; end
@@ -92,20 +92,18 @@ function startAlgorithmCR(benchmark)
 
   switch u0Mode
     case 'zeros', u0 = zeros(nrSides, 1);
-    case 'interpolationRhs', u0 = interpolationCR(params, currData, f); 
+    case 'interpolationInSi', u0 = interpolationCR(params, currData, f); 
   end
-
-  currData.epsStop = params.initialEpsStop;
 
 %% MAIN
   while(true)
     % initialize remaining current data
-    hMax = max(length4s);
     hMin = min(length4s);
-    currData.hMax = hMax;
+    hMax = max(length4s);
     currData.hMin = hMin;
-    outputLvlHidden.hMax(end+1, 1) = hMax;
+    currData.hMax = hMax;
     outputLvlHidden.hMin(end+1, 1) = hMin;
+    outputLvlHidden.hMax(end+1, 1) = hMax;
 
     currData.area4e = computeArea4e(c4n, n4e);
 
@@ -166,7 +164,7 @@ function startAlgorithmCR(benchmark)
     uJ1GradCR = gradientCR(currData, uJ1);
     guebCurr = computeDiscreteEnergyCR(params, currData, uJ1, uJ1GradCR);
     outputLvlEnergy.gueb(end+1, 1) = guebCurr;
-    if rhsGradientKnown
+    if inSiGradientKnown
       glebCurr = computeGleb(params, currData, output);
       outputLvlEnergy.gleb(end+1, 1) = glebCurr;
       outputLvlEnergy.diffGuebGleb(end+1, 1) = guebCurr - glebCurr; 
@@ -264,7 +262,7 @@ function startAlgorithmCR(benchmark)
       % useProlongation
       switch u0Mode
         case 'zeros', u0 = zeros(nrSides, 1);
-        case 'interpolationRhs', u0 = interpolationCR(params, currData, f); 
+        case 'interpolationInSi', u0 = interpolationCR(params, currData, f); 
       end
     end
   end
