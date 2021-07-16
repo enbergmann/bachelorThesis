@@ -136,9 +136,9 @@ function startAlgorithmCR(benchmark)
     currData.nrDof = nrDof(end);
     outputLvlInfo.nrDof = nrDof;
 
-    [currData.int1RHS4e, currData.int2RHS4e, currData.int3RHS4e, ...
-      currData.intRHS4s] = ...
-      integralsWithF4e(params, currData);
+    [currData.int1InSi4e, currData.int2InSi4e, currData.int3InSi4e, ...
+      currData.intInSi4s] = ...
+      integralsWithInSi(params, currData);
       % needed here and in error estimate function
 
     % SOLVE (and save output information about the iteration)
@@ -155,8 +155,8 @@ function startAlgorithmCR(benchmark)
         abs(exactEnergy - energyVec(end)); 
     end
 
-    output.normDiffRhsSolCrSquared4e = ...
-      computeNormDiffRhsSolCrSquared4e(params, currData, output);
+    output.normDiffInSiSolCrSquared4e = ...
+      computeNormDiffInSiSolCrSquared4e(params, currData, output);
 
     % compute guaranteed energy bounds
     uJ1 = computeJ1(n4e, n4sDb, u);

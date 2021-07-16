@@ -27,21 +27,23 @@ function gleb = computeGleb(params, currData, output)
 %                     length4s: lengths for sides
 %
 %        output   - 'struct' with fields: 
-%                                     energyVec: '(nrIterations of current
-%                                                level x 1)-dimensional double
-%                                                array' where the j-th row
-%                                                contains the discrete energy
-%                                                of the j-th iterate of the
-%                                                iteration on the current level
-%                     normDiffRhsSolCrSquared4e: '(nrElems x 1)-dimensional
-%                                                double array' where the j-th
-%                                                row contains the integral over
-%                                                the j-th triangle of the
-%                                                triangulation of the square of
-%                                                the difference of the input
-%                                                signal f and the product of
-%                                                parAlpha and the CR solution u
-%                                                of the iteration
+%                                      energyVec: '(nrIterations of current
+%                                                 level x 1)-dimensional double
+%                                                 array' where the j-th row
+%                                                 contains the discrete energy
+%                                                 of the j-th iterate of the
+%                                                 iteration on the current
+%                                                 level
+%                     normDiffInSiSolCrSquared4e: '(nrElems x 1)-dimensional
+%                                                 double array' where the j-th
+%                                                 row contains the integral
+%                                                 over the j-th triangle of the
+%                                                 triangulation of the square
+%                                                 of the difference of the
+%                                                 input signal f and the
+%                                                 product of parAlpha and the
+%                                                 CR solution u of the
+%                                                 iteration
 %
 % output: gleb - 'double' containing the guaranteed lower energy bound
 
@@ -60,7 +62,7 @@ function gleb = computeGleb(params, currData, output)
   
   % extract necessary information from output
   discreteEnergy = output.energyVec(end);
-  normDiffRhsSolCrSquared4e = output.normDiffRhsSolCrSquared4e;
+  normDiffInSiSolCrSquared4e = output.normDiffInSiSolCrSquared4e;
   
   % define remaining parameters
   kappaCR = 0.298217419;
@@ -73,7 +75,7 @@ function gleb = computeGleb(params, currData, output)
 
   termScaledDifference = sum(...
     max([length4s(s4e(:, 1)), length4s(s4e(:, 2)), length4s(s4e(:, 3))], ...
-    [], 2).^2.*normDiffRhsSolCrSquared4e);
+    [], 2).^2.*normDiffInSiSolCrSquared4e);
     % ||h_\mathcal{T}(f - \alpha u_{CR})||^2_{L^2(\Omega)}
 
   % compute gleb

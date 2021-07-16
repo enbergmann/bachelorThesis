@@ -1,5 +1,3 @@
-%TODO purge any RHS, rhs, f, F that can be seen in the documentation in the
-%thesis
 function params = editable %#ok<*MSNU,FNDEF>
 %% DOC
 % Editable prototype for benchmark files.

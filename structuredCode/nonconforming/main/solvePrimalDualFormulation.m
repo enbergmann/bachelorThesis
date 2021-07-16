@@ -54,7 +54,7 @@ function  [u, nrIter, corrVec, energyVec, otherCorr] = ...
 %                                 element
 %                            s4e: sides for elements
 %                         area4e: areas for elements
-%                       intRHS4s: '(nrSides x 1)-dimensional double array'
+%                      intInSi4s: '(nrSides x 1)-dimensional double array'
 %                                 where the j-th entry is the integral of f
 %                                 times the CR-basis function w.r.t. the j-th
 %                                 edge
@@ -101,7 +101,7 @@ function  [u, nrIter, corrVec, energyVec, otherCorr] = ...
   gradsCR4e = currData.gradsCR4e;  
   s4e = currData.s4e;
   area4e = currData.area4e;
-  intRHS4s = currData.intRHS4s;
+  intInSi4s = currData.intInSi4s;
   dof = currData.dof;
   nrDof = currData.nrDof;
   e4s = currData.e4s;
@@ -198,7 +198,7 @@ function  [u, nrIter, corrVec, energyVec, otherCorr] = ...
     
     % compute right-hand side
     temp4e = (gradCRu/parTau - varLambda);
-    b = intRHS4s + ...
+    b = intInSi4s + ...
       area4e(elemPlusForSides).*sum(...
       temp4e(elemPlusForSides, :).*gradCrOnElemPlusForSides, 2);
     b(dof) = b(dof) + ...

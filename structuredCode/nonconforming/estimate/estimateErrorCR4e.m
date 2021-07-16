@@ -26,15 +26,16 @@ function [eta4e, etaVol4e, etaJumps4e] = ...
 %                                     restriction of u to this side)
 %
 %        output   - 'struct' with fields: 
-%                     normDiffRhsSolCrSquared4e: '(nrElems x 1)-dimensional
-%                                                double array' where the j-th
-%                                                row contains the integral over
-%                                                the j-th triangle of the
-%                                                triangulation of the square of
-%                                                the difference of the input
-%                                                signal f and the product of
-%                                                parAlpha and the CR solution u
-%                                                of the iteration
+%                     normDiffInSiSolCrSquared4e: '(nrElems x 1)-dimensional
+%                                                 double array' where the j-th
+%                                                 row contains the integral
+%                                                 over the j-th triangle of the
+%                                                 triangulation of the square
+%                                                 of the difference of the
+%                                                 input signal f and the
+%                                                 product of parAlpha and the
+%                                                 CR solution u of the
+%                                                 iteration
 %
 % output: eta4e      - '(nrElems x 1)-dimensional double array' where the j-th
 %                      row contains the contribution from the refinement
@@ -59,10 +60,10 @@ function [eta4e, etaVol4e, etaJumps4e] = ...
   l1NormOfJump4s = currData.l1NormOfJump4s;
 
   % extract necessary information from output
-  normDiffRhsSolCrSquared4e = output.normDiffRhsSolCrSquared4e;
+  normDiffInSiSolCrSquared4e = output.normDiffInSiSolCrSquared4e;
   
 %% MAIN
-  etaVol4e = area4e.^(2/d).*normDiffRhsSolCrSquared4e;
+  etaVol4e = area4e.^(2/d).*normDiffInSiSolCrSquared4e;
   etaJumps4e = area4e.^(parGamma/d).*sum(l1NormOfJump4s(s4e), 2);
 
   eta4e = etaVol4e + etaJumps4e;

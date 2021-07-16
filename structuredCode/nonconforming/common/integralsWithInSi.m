@@ -1,12 +1,12 @@
-function [int1RHS4e, int2RHS4e, int3RHS4e, intRHS4s] = ...
-    integralsWithF4e(params, currData)
+function [int1InSi4e, int2InSi4e, int3InSi4e, intInSi4s] = ...
+    integralsWithInSi(params, currData)
 %% DOC
 % Computes the element-wise integrals of a function f times the three local
 % Crouzeix-Raviart basis functions on an triangle and the integrals of f times
 % the global Crouzeix-Raviart basis functions, all with respect to the
 % triangulation given by [c4n, n4e].
 % 
-% integralsWithF4e.m
+% integralsWithInSi.m
 % input: params   - 'struct' with fields:
 %                                    f: 'function_handle' of the input signal f
 %                     degree4Integrate: 'uint64' up to which the integration in
@@ -19,15 +19,16 @@ function [int1RHS4e, int2RHS4e, int3RHS4e, intRHS4s] = ...
 %                     nrSides: number of sides
 %                     nrElems: number of elements
 %
-% output: int1RHS4e - '(nrElems x 1)-dimensional double array' where the j-th
-%                     entry is the integral over the j-th element of f times
-%                     the first local CR-basis function, i.e. the CR-basis
-%                     function w.r.t. the first local edge of the j-th triangle
-%         int2RHS4e - as int1RHS4e for the second local CR-basis function
-%         int3RHS4e - as int1RHS4e for the third local CR-basis function
-%         intRHS4s  - '(nrSides x 1)-dimensional double array' where 
-%                     the j-th entry is the integral of f times the CR-basis
-%                     function w.r.t. the j-th edge
+% output: int1InSi4e - '(nrElems x 1)-dimensional double array' where the j-th
+%                      entry is the integral over the j-th element of f times
+%                      the first local CR-basis function, i.e. the CR-basis
+%                      function w.r.t. the first local edge of the j-th
+%                      triangle
+%         int2InSi4e - as int1InSi4e for the second local CR-basis function
+%         int3InSi4e - as int1InSi4e for the third local CR-basis function
+%         intInSi4s  - '(nrSides x 1)-dimensional double array' where 
+%                      the j-th entry is the integral of f times the CR-basis
+%                      function w.r.t. the j-th edge
 
 %% INIT
   % extract necessary parameters from params
@@ -86,20 +87,20 @@ function [int1RHS4e, int2RHS4e, int3RHS4e, intRHS4s] = ...
 
 %% MAIN
   % compute integrals \int_T f*\psiLocal_j dx
-  int1RHS4e = integrate(@(n4p, Gpts4p, Gpts4ref)(...
+  int1InSi4e = integrate(@(n4p, Gpts4p, Gpts4ref)(...
     f(Gpts4p).*(1 - 2*funcLambda3(Gpts4p))), ...
     c4n, n4e, degree4Integrate, area4e);
-  int2RHS4e = integrate(@(n4p, Gpts4p, Gpts4ref)(...
+  int2InSi4e = integrate(@(n4p, Gpts4p, Gpts4ref)(...
     f(Gpts4p).*(1 - 2*funcLambda1(Gpts4p))), ...
     c4n, n4e, degree4Integrate, area4e);
-  int3RHS4e = integrate(@(n4p, Gpts4p, Gpts4ref)(...
+  int3InSi4e = integrate(@(n4p, Gpts4p, Gpts4ref)(...
     f(Gpts4p).*(1 - 2*funcLambda2(Gpts4p))), ...
     c4n, n4e, degree4Integrate, area4e);
 
   % compute integrals \int_\Omega f*\psi_j dx
-  intRHS4s = zeros(nrSides, 1); 
+  intInSi4s = zeros(nrSides, 1); 
   for elem = 1 : nrElems
-    intRHS4s(s4e(elem, :)) = intRHS4s(s4e(elem,:)) + ...
-      [int1RHS4e(elem), int2RHS4e(elem), int3RHS4e(elem)]';
+    intInSi4s(s4e(elem, :)) = intInSi4s(s4e(elem,:)) + ...
+      [int1InSi4e(elem), int2InSi4e(elem), int3InSi4e(elem)]';
   end
 end

@@ -3,8 +3,8 @@ function computeExactEnergyBV(geometry, fStr, fStrParams, uStr, uStrParams, ...
     minNrInnerEdges, minPrecision, degree4Integrate)
 %% DOC
 % Computes and saves an approximation (at least up to precision minPrecision
-% and minNrInnerEdges inner edges) of the exact BV energy of a H^1_0 function
-% u, whose pointwise gradient is known, for a input signal f on a mesh given by
+% and minNrInnerEdges inner edges) of the exact energy of a H^1_0 function u,
+% whose pointwise gradient is known, for a input signal f on a mesh given by
 % geometry.
 %
 % computeExactEnergyBV.m
@@ -69,10 +69,10 @@ function computeExactEnergyBV(geometry, fStr, fStrParams, uStr, uStrParams, ...
     polygonMesh = false;
   end
 
-  rhsStr = sprintf('alpha_%.30g_with_rhs_%s%s', ...
+  inSiStr = sprintf('alpha_%.30g_with_inSi_%s%s', ...
     parAlpha, fStr, sprintf('_%.30g', fStrParams));
   warning('off', 'MATLAB:MKDIR:DirectoryExists');
-  dirName = sprintf('knownExactEnergies/%s/%s', geometry, rhsStr);
+  dirName = sprintf('knownExactEnergies/%s/%s', geometry, inSiStr);
   mkdir(dirName);
   warning('on', 'MATLAB:MKDIR:DirectoryExists');
 

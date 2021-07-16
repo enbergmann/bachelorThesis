@@ -113,46 +113,46 @@ function saveResultsCR(params, currData, ...
       expName, dirInfoName);
     writetable(struct2table(paramsReduced, 'AsArray', true), name);
 
-    % plot rhs and grayscale image of rhs
+    % plot input signal and grayscale image of input signal
     try
       if plotGivenFunctions
         if polygonMesh
-          [c4nRhs, n4eRhs] = computeGeometryPolygon(refinementLevel4Plots);
+          [c4nInSi, n4eInSi] = computeGeometryPolygon(refinementLevel4Plots);
         else
-          [c4nRhs, n4eRhs] = loadGeometry(geometry, refinementLevel4Plots);
+          [c4nInSi, n4eInSi] = loadGeometry(geometry, refinementLevel4Plots);
         end
 
-        fVal = f(c4nRhs);
+        fVal = f(c4nInSi);
 
-        rhsFig = figure('visible', figVisible); 
-        trisurf(n4eRhs, c4nRhs(:, 1), c4nRhs(:, 2), fVal, ...
+        inSiFig = figure('visible', figVisible); 
+        trisurf(n4eInSi, c4nInSi(:, 1), c4nInSi(:, 2), fVal, ...
           'EdgeColor', 'None');
-        fName = sprintf('../../results/nonconforming/%s/%s/rhs.png', ...
+        fName = sprintf('../../results/nonconforming/%s/%s/inSi.png', ...
           expName, dirInfoName);
-        saveas(rhsFig, fName);
+        saveas(inSiFig, fName);
 
-        rhsAxisFig = figure('visible', figVisible); 
-        plotAxis(c4nRhs, fVal);
-        fName = sprintf('../../results/nonconforming/%s/%s/rhsAxis.png', ...
+        inSiAxisFig = figure('visible', figVisible); 
+        plotAxis(c4nInSi, fVal);
+        fName = sprintf('../../results/nonconforming/%s/%s/inSiAxis.png', ...
           expName, dirInfoName);
-        saveas(rhsAxisFig, fName);
+        saveas(inSiAxisFig, fName);
 
-        rhsGrayscaleFig = figure('visible', figVisible); 
-        trisurf(n4eRhs, c4nRhs(:, 1), c4nRhs(:, 2),  fVal, ...
+        inSiGrayscaleFig = figure('visible', figVisible); 
+        trisurf(n4eInSi, c4nInSi(:, 1), c4nInSi(:, 2),  fVal, ...
           'EdgeColor', 'None');
         view(0, 90);
         axis image;
         colormap gray;
         fName = ...
-          sprintf('../../results/nonconforming/%s/%s/rhsGrayscale.png', ...
+          sprintf('../../results/nonconforming/%s/%s/inSiGrayscale.png', ...
           expName, dirInfoName);
-        saveas(rhsGrayscaleFig, fName);
+        saveas(inSiGrayscaleFig, fName);
 
         if exactSolutionKnown
-          uExactVal = uExact(c4nRhs);
+          uExactVal = uExact(c4nInSi);
 
           uExactFig = figure('visible', figVisible); 
-          trisurf(n4eRhs, c4nRhs(:, 1), c4nRhs(:, 2), uExactVal, ...
+          trisurf(n4eInSi, c4nInSi(:, 1), c4nInSi(:, 2), uExactVal, ...
             'EdgeColor', 'None');
             sprintf('../../results/nonconforming/%s/%s/exactSolution.png', ...
             expName, dirInfoName);
@@ -163,14 +163,14 @@ function saveResultsCR(params, currData, ...
 
 
           uExactAxisFig = figure('visible', figVisible); 
-          plotAxis(c4nRhs, uExactVal);
+          plotAxis(c4nInSi, uExactVal);
           fName = sprintf(...
             '../../results/nonconforming/%s/%s/exactSolutionAxis.png', ...
             expName, dirInfoName);
           saveas(uExactAxisFig, fName);
 
           uExactGrayscaleFig = figure('visible', figVisible); 
-          trisurf(n4eRhs, c4nRhs(:, 1), c4nRhs(:, 2), uExactVal, ...
+          trisurf(n4eInSi, c4nInSi(:, 1), c4nInSi(:, 2), uExactVal, ...
             'EdgeColor', 'None');
           view(0, 90);
           axis image;
