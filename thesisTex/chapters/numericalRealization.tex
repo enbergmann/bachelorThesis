@@ -3,17 +3,17 @@
 Ziel der für diese Arbeit implementierten Methoden ist die Realisierung von
 \Cref{alg:primalDualIteration} im Solve-Schritt des AFEM-Algorithmus aus
 \Cref{fig:afemLoop}. 
-Wir gehen davon aus, dass dieser und die im
-AFEM-Softwarepaket realisierten Methoden sowie deren Datenstrukturen bekannt
-sind und verweisen für weitere Details auf \cite{CGKNRR10}. 
-Im Refine-Schritt nutzten wir anstelle eines Fehlerschätzers den
-Verfeinerungsindikator aus \Cref{def:refinementIndicator}.
-\begin{figure}[h]
+\begin{figure}
   \centering
   \input{pictures/chapImplementation/afemloop.tex}
   \caption{AFEM-Schleife}
   \label{fig:afemLoop}
 \end{figure}
+Wir gehen davon aus, dass dieser und die im
+AFEM-Softwarepaket realisierten Methoden sowie deren Datenstrukturen bekannt
+sind und verweisen für weitere Details auf \cite{CGKNRR10}. 
+Im Refine-Schritt nutzten wir anstelle eines Fehlerschätzers den
+Verfeinerungsindikator aus \Cref{def:refinementIndicator}.
 Die zur korrekten Funktionsweise dieses Programms nötigen Methoden und
 Dateien des AFEM-Softwarepakets sind enthalten in den Ordnern
 \begin{center}
@@ -343,12 +343,12 @@ Mit $\gradnc u_0$ wird anschließend $\Lambda_0$ aus
     0,&\text{falls }\nabla u_0|_T= 0.
   \end{cases}
 \end{align*}
-Außerdem werden die Steifigkeits- und Massematrix aus
+Außerdem werden die Steifigkeits- und Massenmatrix aus
 \Cref{rem:primalDualMatrixEquations} aufgestellt in
 \begin{center}
   \texttt{./nonconforming/common/computeFeMatricesCR.m}.
 \end{center}
-Dabei benutzten wir für jedes $T\in\Tcal$, dass die lokale Massematrix auf
+Dabei benutzten wir für jedes $T\in\Tcal$, dass die lokale Massenmatrix auf
 $T$ mithilfe der Gleichungen
 \eqref{eq:connectionCrBarycentric} und
 \eqref{eq:formulaIntegrationBarycentricCoordinates}
@@ -360,7 +360,7 @@ berechnet werden kann durch
   \frac{|T|}{3}I_3.
 \end{align}
 Die Aufstellung der lokalen Steifigkeitsmatrizen sowie die Berechnung der
-globalen Stei\-fig\-keits- und Massematrix aus ihren lokalen Versionen geschieht
+globalen Stei\-fig\-keits- und Massenmatrix aus ihren lokalen Versionen geschieht
 analog zu \cite[Abschnitt 1.4.2]{CGKNRR10}).
 Danach werden in
 \begin{center}
@@ -424,7 +424,7 @@ Methode des AFEM-Soft\-ware\-pakets und für die Berechnung des zweiten Terms
 merken wir an, dass die Integrale $\int_T f\psi_{E_k}\!|_T\dx$,
 $k\in\{1,2,3\}$, bereits ermittelt wurden.
 Der letzte Term vereinfacht sich durch Nutzung der expliziten Darstellung
-\eqref{eq:localMassmatrix} der lokalen Massematrix $M_T$ zu
+\eqref{eq:localMassmatrix} der lokalen Massenmatrix $M_T$ zu
 \begin{align*}
   \alpha^2 \sum_{k=1}^3 \sum_{\ell=1}^3 
     v_k \left(\psi_{E_k}\!|_T,\psi_{E_\ell}|_T\right)_{L^2(T)}v_\ell
@@ -435,7 +435,7 @@ Der letzte Term vereinfacht sich durch Nutzung der expliziten Darstellung
   \alpha^2\frac{|T|}{3}\sum_{k=1}^3 v_k^2
 \end{align*}
 und es wird damit direkt ersichtlich, wie dieser implementiert werden kann.
-Unter erneuter Zuhilfename der \texttt{integrate} Methode wird anschließend
+Unter erneuter Zuhilfenahme der \texttt{integrate} Methode wird anschließend
 in
 \begin{center}
   \texttt{./nonconforming/common/computeGleb.m}
@@ -505,10 +505,10 @@ Dabei benutzen wir die Bezeichnungen aus \Cref{alg:primalDualIteration}, der
 in dieser Methode realisiert wird.
 Wie in \Cref{sec:programFlow} beschrieben, sind vor Aufruf der Methode bereits
 alle benötigten Informationen über die aktuelle Triangulierung $\Tcal$
-sowie die Steifig\-keits- und Massematix aus \Cref{rem:primalDualMatrixEquations}
+sowie die Steifig\-keits- und Massenmatix aus \Cref{rem:primalDualMatrixEquations}
 und die Integrale $\int_\Omega f\psi_F\dx$ für alle
 Crouzeix-Raviart-Basisfunktionen $\psi_F$, $F\in\Ecal$ bekannt.
-Mit der Steifigkeits- und Massematrix ist direkt ersichtlich,
+Mit der Steifigkeits- und Massenmatrix ist direkt ersichtlich,
 wie die Koeffizientenmatrix des Gleichungssystems
 \eqref{eq:linSysPrimalDualAlgMatrixEq} implementiert werden kann.
 Für die Implementierung der rechten Seite dieses Systems nutzten wir die
@@ -542,7 +542,7 @@ Diese Berechnung ist realisiert in
 \begin{center}
   \texttt{./nonconforming/common/computeDiscreteEnergyCR.m}.
 \end{center}
-Dabei werden die Massematrix $M$ und die Integrale 
+Dabei werden die Massenmatrix $M$ und die Integrale 
 $\int_\Omega f\psi_{F}\dx$, $F\in\Ecal$, wie folgt genutzt.
 Sei $\vcr\in\CR^1_0(\Tcal)$ und $v\in\Rbb^{|\Ecal|}$
 enthalte die Koordinaten von $\vcr$ bezüglich der Basis
