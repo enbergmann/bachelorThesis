@@ -4,6 +4,8 @@ levels) is this choice for degree significant and really important for correct
 results or is that not the case
  --> IE teste NOCHMAL f01 alpha=1 mit hohem degree4integrate und gehe sicher,
     dass das nichts änders (falls doch, nochmal nachfragen oder ignorieren)
+    f01 adaptive alpha 1
+    cameraman
 
 ##################
 
@@ -52,7 +54,10 @@ EXPERIMENTE
   - h20 Beispeil genau so wie H10, also das vielleicht nur erwähnen ,,eine 
     noch stärke Regularitätsannahme im Beispeil f04, bei dem Lsg und f H20 sind,
     verbesserte die Raten nicht weiter
-  - gamma = 0 im Vergleich der gammas mit erwähnen
+  - gamma = 0 im Vergleich der gammas mit erwähnen (da es sich von gamma 1e-4
+    nicht unterscheider visuell (nochmal prüfen ob das stimmt) nur eines der
+    beiden gammas plotten und genau diese Info in einem Satz erwähnen und vlt
+    auch in der Legende beides für einen Graphen angeben gamma = 0, 1e-4)
 
 
 AUSBLICK (vielleicht in die Arbeit schreiben)
