@@ -1,17 +1,7 @@
-tiens initPrimalDual has degrees degreeF+1 and for intFSq4e it has degreeF*2
-which leads to a pretty different eta from me (around 2 difference on small
-levels) is this choice for degree significant and really important for correct
-results or is that not the case
- --> IE teste NOCHMAL f01 alpha=1 mit hohem degree4integrate und gehe sicher,
-    dass das nichts änders (falls doch, nochmal nachfragen oder ignorieren)
-    f01 adaptive alpha 1
-    cameraman
 
-##################
+degree4Integrate FÜR UNSERE AUFRUFE VON INTEGRATE schreiben (denn errorCRL2
+nutzt degree 12 immer, also wäre die aktuelle Formulierung falsch)
 
-  degree4Integrate FÜR UNSERE AUFRUFE VON INTEGRATE schreiben (denn errorCRL2
-  nutzt degree 12 immer, also wäre die aktuelle Formulierung falsch)
-  
 ##################
 
 je nach Antwort von csv mglw alle Plots, außer Konvergenzplotz, graustufe
@@ -62,7 +52,6 @@ EXPERIMENTE
     nicht unterscheider visuell (nochmal prüfen ob das stimmt) nur eines der
     beiden gammas plotten und genau diese Info in einem Satz erwähnen und vlt
     auch in der Legende beides für einen Graphen angeben gamma = 0, 1e-4)
-
 
 AUSBLICK (vielleicht in die Arbeit schreiben)
   
