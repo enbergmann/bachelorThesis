@@ -49,7 +49,7 @@ function [c4nNew,n4eNew,n4sDbNew,n4sNbNew] = refineUniformRed(c4n,n4e,n4sDb,n4sN
                   ];  
     end
 
-   %% refinement of  Neumann boundary
+    %% refinement of  Neumann boundary
     n4sNbNew = zeros(2*size(n4sNb,1),2);
     for curSide = 1 : size(n4sNb,1)
         curNodes = n4sNb(curSide,:);

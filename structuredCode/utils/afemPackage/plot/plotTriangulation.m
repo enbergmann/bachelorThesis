@@ -1,10 +1,7 @@
-function triang = plotTriangulation ( c4n, n4e )
+function plotTriangulation ( c4n, n4e )
 %% Draw a triangular grid into a new figure.
 %   plotTriangulation(c4n, n4e) draws the grid defined by c4n and n4e into
 %                               a figure.
-
-    % % Set titles of plot and window.
-    % title({'Mesh plot'; [num2str(size(c4n,1)), ' nodes']});
 
     % This can be done with triplot but patch is _much_ faster.
     % Get the coordinates for each node of each triangle.
@@ -20,10 +17,10 @@ function triang = plotTriangulation ( c4n, n4e )
     % Set the colour each triangle is filled with.
     C = 'white';
 
-    % Draw everything, make sides blue (looks more like triplot).
-    triang = patch(X,Y,C,'EdgeColor','blue');
+    % Draw everything.
+    patch(X,Y,C,'EdgeColor','black');
     axis equal tight;
-    % drawnow;
+    drawnow;
 
 end
 

@@ -1,4 +1,4 @@
-function val = integrate(integrand, c4n, n4p, degree, OPTsize4parts)
+function val = integrate(c4n, n4p, integrand, degree, OPTsize4parts)
 % Integrates function handle integrand over given domain 1D or 2D.
 % 'integrand' must have the form integrand(n4p,Gpts4p,Gpts4ref) and the
 % return value must have the dimension [ nrParts n m ]
@@ -80,10 +80,6 @@ function val = ref2arbitrary(c4n,n4p,curGpt)
         c1 = c4n(n4p(:,1),:);
         c2 = c4n(n4p(:,2),:);
         c3 = c4n(n4p(:,3),:);
-%         c1 = c4n(n4p(:,3),:);
-%         c2 = c4n(n4p(:,1),:);
-%         c3 = c4n(n4p(:,2),:);
-
 
         val = c1 + curGpt(1)*(c2-c1) + ...
                    curGpt(2)*(c3-c1);

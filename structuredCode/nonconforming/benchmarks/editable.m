@@ -32,7 +32,7 @@ function params = editable %#ok<*MSNU,FNDEF>
   d                      = 2; % this should remain 2
 
   % algorithm parameters
-  u0Mode  = 'zeros'; %'interpolationInSi'; 'zeros';
+  u0Mode  = 'interpolationInSi'; %'interpolationInSi'; 'zeros';
   epsStop = 1e-4; 
   parTau  = 1; 
   maxIter = 5e3;

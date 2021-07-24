@@ -9,12 +9,15 @@ results or is that not the case
 
 ##################
 
-blankes Afem Paket, um Fehlerquelle da auszuschließen
-  franz lsfem paket repo, nochmal AFEM
-  JA, vielleicht nochmal alle Funktionen frisch aus afem-base 
-  und gucken, ob startAlgorithm('compare') gleiche Resultate liefert weiterhin
+  degree4Integrate FÜR UNSERE AUFRUFE VON INTEGRATE schreiben (denn errorCRL2
+  nutzt degree 12 immer, also wäre die aktuelle Formulierung falsch)
+  
+##################
+
+je nach Antwort von csv mglw alle Plots, außer Konvergenzplotz, graustufe
 
 ##################
+
 Ordnerstrutktur für Abgabe
   ./bachelorthesisBergmann/
      results/
@@ -25,6 +28,7 @@ Ordnerstrutktur für Abgabe
        README (falls sinnvoll)
 
    --> rename the files and folders accordingly
+
 ##################
 
   gucke in der Arbeit ob S^1(\Tcal) jemals nochmal genutzt wird. Falls nicht,
