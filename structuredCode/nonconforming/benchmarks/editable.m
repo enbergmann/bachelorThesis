@@ -43,7 +43,7 @@ function params = editable %#ok<*MSNU,FNDEF>
     % not effective if useImage == false
   parAlpha               = 1e0; 
   parBeta                = 1;
-  inSiGradientKnown       = true;
+  inSiGradientKnown      = true;
     % set automatically to false if useImage == true
   exactSolutionKnown     = true; %#ok<NASGU>
     % set automatically to false if useImage == true
