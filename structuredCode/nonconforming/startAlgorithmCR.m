@@ -14,9 +14,7 @@ function startAlgorithmCR(benchmark)
     % change to the directory 'nonconforming' where startAlgorithmCR.m should
     % have been called from for correctness of relative filepaths during
     % runtime
-  addpath(genpath(pwd), ...
-    genpath('../utils/'), ...
-    genpath('../conforming/plot/'));
+  addpath(genpath(pwd), genpath('../utils/'));
 
   if nargin<1, benchmark = 'editable'; end
 

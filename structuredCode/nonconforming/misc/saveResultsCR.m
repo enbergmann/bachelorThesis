@@ -130,12 +130,14 @@ function saveResultsCR(params, currData, ...
         fName = sprintf('../../results/nonconforming/%s/%s/inSi.png', ...
           expName, dirInfoName);
         saveas(inSiFig, fName);
+        clear('inSiFig');
 
         inSiAxisFig = figure('visible', figVisible); 
         plotAxis(c4nInSi, fVal);
         fName = sprintf('../../results/nonconforming/%s/%s/inSiAxis.png', ...
           expName, dirInfoName);
         saveas(inSiAxisFig, fName);
+        clear('inSiAxisFig');
 
         inSiGrayscaleFig = figure('visible', figVisible); 
         trisurf(n4eInSi, c4nInSi(:, 1), c4nInSi(:, 2),  fVal, ...
@@ -147,6 +149,7 @@ function saveResultsCR(params, currData, ...
           sprintf('../../results/nonconforming/%s/%s/inSiGrayscale.png', ...
           expName, dirInfoName);
         saveas(inSiGrayscaleFig, fName);
+        clear('inSiGrayscaleFig', 'fVal');
 
         if exactSolutionKnown
           uExactVal = uExact(c4nInSi);
@@ -160,6 +163,7 @@ function saveResultsCR(params, currData, ...
             '../../results/nonconforming/%s/%s/exactSolution.png', ...
             expName, dirInfoName);
           saveas(uExactFig, fName);
+          clear('uExactFig');
 
 
           uExactAxisFig = figure('visible', figVisible); 
@@ -168,6 +172,7 @@ function saveResultsCR(params, currData, ...
             '../../results/nonconforming/%s/%s/exactSolutionAxis.png', ...
             expName, dirInfoName);
           saveas(uExactAxisFig, fName);
+          clear('uExactAxisFig');
 
           uExactGrayscaleFig = figure('visible', figVisible); 
           trisurf(n4eInSi, c4nInSi(:, 1), c4nInSi(:, 2), uExactVal, ...
@@ -179,6 +184,7 @@ function saveResultsCR(params, currData, ...
             '../../results/nonconforming/%s/%s/exactSolutionGrayscale.png', ...
             expName, dirInfoName);
           saveas(uExactGrayscaleFig, fName);
+          clear('uExactGrayscaleFig', 'c4nInSi', 'n4eInSi', 'uExactVal');
         end
       end
     catch ME
@@ -199,16 +205,19 @@ function saveResultsCR(params, currData, ...
     plotCR(c4n, n4e, u);
     fName = sprintf('%s/solution.png', dirName);
     saveas(approxFig, fName);
+    clear('approxFig');
     
     approxFigAxis = figure('visible', figVisible); 
-    plotAxisNC(c4n,n4e,u);
+    plotAxisCR(c4n,n4e,u);
     fName = sprintf('%s/solutionAxis.png', dirName);
     saveas(approxFigAxis, fName);
+    clear('approxFigAxis');
 
     grayscaleFig = figure('visible', figVisible); 
     plotGrayscale(c4n, n4e, mean(u(s4e), 2));
     fName = sprintf('%s/solutionGrayscale.png', dirName);
     saveas(grayscaleFig, fName);
+    clear('grayscaleFig');
   catch ME
     appendError(ME, expName, dirInfoName);
   end
@@ -230,6 +239,7 @@ function saveResultsCR(params, currData, ...
     ylabel('corr');
     fName = sprintf('%s/iteration/corr.png', dirName);
     saveas(corrFig, fName);
+    clear('corrFig');
   catch ME
     appendError(ME, expName, dirInfoName);
   end
@@ -277,6 +287,7 @@ function saveResultsCR(params, currData, ...
       'Location', 'SW', 'interpreter', 'latex');
     fName = sprintf('%s/iteration/termination.png', dirName);
     saveas(terminationFig, fName);
+    clear('terminationFig');
   catch ME
     appendError(ME, expName, dirInfoName);
   end
@@ -304,6 +315,7 @@ function saveResultsCR(params, currData, ...
     xlabel('number of iterations');
     ylabel('energy');
     saveas(enFig, fName);
+    clear('enFig');
   catch ME
     appendError(ME, expName, dirInfoName);
   end
@@ -326,6 +338,7 @@ function saveResultsCR(params, currData, ...
       ylabel('$|E_{NC}(u_{NC})-E_u|$', 'interpreter', 'latex');
       fName = sprintf('%s/iteration/enDiffExact.png', dirName);
       saveas(enDiffExactFig, fName);
+      clear('enDiffExactFig');
     catch ME
       appendError(ME, expName, dirInfoName);
     end
@@ -338,6 +351,7 @@ function saveResultsCR(params, currData, ...
     plotTriangulation(c4n,n4e);
     fName = sprintf('%s/triangulation.png', dirName);
     saveas(triangFig, fName);
+    clear('triangFig');
   catch ME
     appendError(ME, expName, dirInfoName);
   end
@@ -398,6 +412,7 @@ function saveResultsCR(params, currData, ...
     xlabel('nrDof');
     fName = sprintf('%s/convergence.png', dirName);
     saveas(convergenceFig, fName);
+    clear('convergenceFig');
   catch ME
     appendError(ME, expName, dirInfoName);
   end
@@ -414,6 +429,7 @@ function saveResultsCR(params, currData, ...
     xlabel('nrDof');
     fName = sprintf('%s/miscInfo.png', dirName);
     saveas(miscFig, fName);
+    clear('miscFig');
   catch ME
     appendError(ME, expName, dirInfoName);
   end

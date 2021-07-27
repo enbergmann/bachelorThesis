@@ -17,7 +17,7 @@ function params = editable %#ok<*MSNU,FNDEF>
   showProgress           = true; 
   degree4Integrate       = 10; 
   plotGivenFunctions     = true;
-  refinementLevel4Plots  = 3; % 11 is very close to the limit
+  refinementLevel4Plots  = 5; % 11 is very close to the limit
     % not effective if plotGivenFunctions == false
   debugIfError           = false;
 
@@ -32,7 +32,7 @@ function params = editable %#ok<*MSNU,FNDEF>
   d                      = 2; % this should remain 2
 
   % algorithm parameters
-  u0Mode  = 'interpolationInSi'; %'interpolationInSi'; 'zeros';
+  u0Mode  = 'zeros'; %'interpolationInSi'; 'zeros';
   epsStop = 1e-4; 
   parTau  = 1; 
   maxIter = 5e3;
