@@ -24,7 +24,7 @@ function params = editable %#ok<*MSNU,FNDEF>
   % AFEM parameters
   geometry               = 'BigSquare'; %#ok<NASGU>                     
     % set automatically to 'Square' if useImage == true
-  initialRefinementLevel = 0;
+  initialRefinementLevel = 3;
   parTheta               = 0.5;
   minNrDof               = 2e3;
   useProlongation        = true;
