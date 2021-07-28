@@ -1,5 +1,4 @@
 \section{Hinweise zur Benutzung des Programms}
-%\subsection{Aufbau des Programms}
 Ziel der für diese Arbeit implementierten Methoden ist die Realisierung von
 \Cref{alg:primalDualIteration} im Solve-Schritt des AFEM-Algorithmus aus
 \Cref{fig:afemLoop}. 
@@ -9,18 +8,21 @@ Ziel der für diese Arbeit implementierten Methoden ist die Realisierung von
   \caption{AFEM-Schleife}
   \label{fig:afemLoop}
 \end{figure}
-Wir gehen davon aus, dass dieser und die im
-AFEM-Softwarepaket realisierten Methoden sowie deren Datenstrukturen bekannt
-sind und verweisen für weitere Details auf \cite{CGKNRR10}. 
-Im Refine-Schritt nutzten wir anstelle eines Fehlerschätzers den
+Wir gehen davon aus, dass dieser und die im AFEM-Softwarepaket \cite{Car09}
+realisierten Methoden sowie deren Datenstrukturen bekannt sind und verweisen
+für weitere Details auf \cite{CGKNRR10}. 
+Im Refine-Schritt nutzen wir anstelle eines Fehlerschätzers den
 Verfeinerungsindikator aus \Cref{def:refinementIndicator}.
+Alle in diesem Kapitel aufgeführten Pfadnamen sind relative Pfade in Relation
+zum Ordner \texttt{code} im Anhang.
 Die zur korrekten Funktionsweise dieses Programms nötigen Methoden und
 Dateien des AFEM-Softwarepakets sind enthalten in den Ordnern
 \begin{center}
     \texttt{./utils/afemPackage/} sowie \texttt{./utils/geometries/}.
 \end{center}
-Lediglich die Methode \texttt{plotTriangulation} ist dort verändert und erzeugt
-nun den Plot einer Triangulierung als Schwarz-Weiß-Bild ohne Titel.
+Dort ist eine veränderte Version der Methode \texttt{plotTriangulation}
+gespeichtert, die nun den Plot einer Triangulierung als Schwarz-Weiß-Bild ohne
+Titel erzeugt.
 Alle Ein- und Ausgabeparameter der im Rahmen dieser Arbeit implementierten
 Methoden sind in den entsprechenden Dateien detailliert dokumentiert. 
 Ausgenommen davon sind die Standard-Datenstrukturen aus dem AFEM-Softwarepaket,
@@ -33,12 +35,16 @@ AFEM\--Al\-go\-rith\-mus realisiert, ist
 \begin{center}
   \texttt{./nonconforming/startAlgorithmCR.m}.
 \end{center}
-Als optionaler Eingabeparameter ist dabei ein String \texttt{benchmark}
-möglich. 
+Beim Ausführen dieser Methode sollte das aktuelle Verzeichnis 
+\texttt{./nonconforming/} sein.
+Als optionaler Eingabeparameter ist dabei ein nichtleeres \texttt{char array}
+mit genau einer Zeile möglich, das nur Buchstaben des lateinischen Alphabets
+und Zahlen enthalten darf und mit einem Buchstaben beginnen muss. 
 Wird die Methode ohne Übergabe eines solchen Parameters ausgeführt, nutzt
 sie als Standardwert \texttt{benchmark = 'editable'}.
-Nach Ausführen von \texttt{startAlgorithmCR(benchmark)} werden die nötigen
-Parameter und Einstellungen für das jeweilige Experiment aus der Datei
+Nach Aufruf von \texttt{startAlgorithmCR} mit Eingabeparameter
+\texttt{'benchmark'}, werden die nötigen Parameter und Einstellungen für das
+jeweilige Experiment aus der Datei
 \begin{center}
   \texttt{./nonconforming/benchmarks/benchmark.m}
 \end{center}
@@ -53,7 +59,7 @@ Als Muster für eine Bechmark-Datei dient
 \end{center}
 Eine Übersicht über die in einer Benchmark-Datei wählbaren Parameter ist
 zu finden in den Tabellen \ref{tab:paramsMisc} -- \ref{tab:paramsDoc}
-sowie über die definierbaren Funktion in \Cref{tab:paramsFunctions}.
+sowie über die definierbaren Funktionen in \Cref{tab:paramsFunctions}.
 Details zu den Datentypen sind in \texttt{editable.m} aufgeführt.
 Dass die zahlreichen Parameter, die während des Pro\-gramm\-ab\-laufs
 über- oder ausgegeben werden müssen, als Felder von

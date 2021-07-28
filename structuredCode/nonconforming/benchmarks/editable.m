@@ -54,10 +54,8 @@ function params = editable %#ok<*MSNU,FNDEF>
     % not effective if useExactEnergy == false
                               
   % information about experiment for saving and documentation.
-  expName                = 'OPTIMIZE';
-  %dirInfoName            = sprintf('epsStop=%e', epsStop);
-  dirInfoName            = sprintf('%s', ...
-    datestr(now, 'yy_mm_dd_HH_MM_SS'));
+  expName                = 'example';
+  dirInfoName            = sprintf('%s', datestr(now, 'yy_mm_dd_HH_MM_SS'));
 
   % function handles (not effective if useImage == true)
   function y = inputSignal(x)
@@ -101,17 +99,17 @@ function params = editable %#ok<*MSNU,FNDEF>
 %                            containing the name of the geometry the
 %                            computation must be one
 %   initialRefinementLevel - 'uint64' containing the initial refinement level
-%                            the geometry must be loaded with by loadGeometry
-%                            for level 0 of AFEM
+%                            of the geometry loaded by loadGeometry for level 0
+%                            of AFEM
 %   parTheta               - 'double' containing the bulk parameter for marking
 %                            (1 for uniform)
 %   minNrDof               - 'uint64' containing the minimal number of degrees
 %                            of freedom the last level of AFEM must have before
 %                            terminating
-%   useProlongation        - 'logical' with value 1 if the prolongation of the
-%                             solution of a level of AFEM to the refined mesh 
-%                             for the next level must be used as initial value
-%                             for the iteration on the next level
+%   useProlongation        - 'logical' with value 1 if a prolongation of the
+%                            solution of a level of AFEM to the refined mesh
+%                            for the next level must be used as initial value
+%                            for the iteration on the next level
 %   parGamma               - 'double' containing the parameter \gamma for
 %                            the refinement indicator
 %   d                      - 'uint64' containing the dimension
@@ -124,8 +122,8 @@ function params = editable %#ok<*MSNU,FNDEF>
 %                   'zeros': CR function with all coefficients equal to 0
 %       'interpolationInSi': CR interpolation of the input signal f to the mesh
 %                            on the level
-%   epsStop - 'double' containing epsStop for the termination criterion of the
-%             iteration
+%   epsStop - 'double' containing \epsilon_{stop} for the termination criterion
+%             of the iteration
 %   parTau  - 'double' containing the parameter \tau for the iteration
 %   maxIter - 'uint64' containing the number of iteration steps the iteration
 %             must not exceed

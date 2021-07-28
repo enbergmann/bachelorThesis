@@ -1,12 +1,14 @@
 
-nochmal aufschreiben wo CR10 angenommen wird und eventuell darauf verweisen 
-im Ausblick (bis dahin notieren welche Funktionen und in welchem Maß)
+##################
 
 gucke in der Arbeit ob S^1(\Tcal) jemals nochmal genutzt wird. Falls nicht,
 die Definition der Couran-Finite-Elemente-Funktionen verschieben aus Notation
 in die Einleitung an die Stelle, an der ich über Bartels Ansatz schreibe
 
 insbesondere auch die Quelle dann einfach da erwähnen
+
+wird wohl in der Auswertung erwähnt für die Rate von Bartels, also kann 
+voraussichtlich bleiben
 
 ##################
 
@@ -19,6 +21,9 @@ Tabellen mit Parametern updaten
 
 degree4Integrate FÜR UNSERE AUFRUFE VON INTEGRATE schreiben (denn errorCRL2
 nutzt degree 12 immer, also wäre die aktuelle Formulierung falsch)
+irgendwo sollte eh noch geschrieben werden ,,zur berechnung des Fehler wird
+die Methode aus AFEM genutzt, die immer Grad 12 hat unabh von degree4Integrate
+aus Tabelle ...)
 
 Zwar können die Funktionen hier sehr unregülar sein
 Für keines der Experimente wurde, auch mit deutlich höheren Wahlen von
@@ -38,6 +43,22 @@ Bindestrich). Fragen, was ich da machen soll.
 
 schreibe in der Auswertung Lösung entlag der x (blau) und y (rot) Achse oder so
 für solutionAxis, inSiAxis
+
+##################
+
+benchmark namen einschränken (testen, ob mit Zahlen starten darf, wahrschienlich
+nämlich nicht)
+
+,,ein Graufarbenbild gegeben werden, so muss es [in passenden Dateiformat/
+in einem vol loadImage(?) (oder wie auch immer die richtige Matlab methode
+heißt, nachgucken) unterstützten Format gespeichert sein in]
+
+gucken ob irgendwo hinpasst, dass die Ordner genua in dem Ordner liegen mussen
+
+addBoundary2image kann auch um schwarzen Rand erweitern je nach Option 
+erwähnen
+
+erwähnen, welche Matlab Funktion von addNoise2image genutzt wird
 
 ##################
 
@@ -85,4 +106,8 @@ EXPERIMENTE
 AUSBLICK (vielleicht in die Arbeit schreiben)
   
   Randdaten verallgemeinern
+    nochmal aufschreiben wo CR10 angenommen wird und eventuell darauf verweisen 
+    im Ausblick (bis dahin notieren welche Funktionen und in welchem Maß)
+    (in solvePrimalDualFormulation zum Erstellen der rechten Seite)
+    
   Bartels Code anpassen und vergleicen
