@@ -21,7 +21,7 @@ Dateien des AFEM-Softwarepakets sind enthalten in den Ordnern
     \texttt{./utils/afemPackage/} sowie \texttt{./utils/geometries/}.
 \end{center}
 Dort ist eine veränderte Version der Methode \texttt{plotTriangulation}
-gespeichtert, die nun den Plot einer Triangulierung als Schwarz-Weiß-Bild ohne
+gespeichert, die nun den Plot einer Triangulierung als Schwarz-Weiß-Bild ohne
 Titel erzeugt.
 Alle Ein- und Ausgabeparameter der im Rahmen dieser Arbeit implementierten
 Methoden sind in den entsprechenden Dateien detailliert dokumentiert. 
@@ -38,25 +38,23 @@ AFEM\--Al\-go\-rith\-mus realisiert, ist
 Beim Ausführen dieser Methode sollte das aktuelle Verzeichnis 
 \texttt{./nonconforming/} sein.
 Als optionaler Eingabeparameter ist dabei ein nichtleeres \texttt{char array}
-mit genau einer Zeile möglich, das nur Buchstaben des lateinischen Alphabets
-und Zahlen enthalten darf und mit einem Buchstaben beginnen muss. 
-Wird die Methode ohne Übergabe eines solchen Parameters ausgeführt, nutzt
-sie als Standardwert \texttt{benchmark = 'editable'}.
-Nach Aufruf von \texttt{startAlgorithmCR} mit Eingabeparameter
-\texttt{'benchmark'}, werden die nötigen Parameter und Einstellungen für das
-jeweilige Experiment aus der Datei
+mit genau einer Zeile möglich, das den Namen einer Matlab-Funktion enthält. 
+Diese muss die Parameter und Einstellungen für ein Experiment als Felder eines
+Structure Arrays zurückgegeben und in 
 \begin{center}
-  \texttt{./nonconforming/benchmarks/benchmark.m}
+  \texttt{./nonconforming/benchmarks/}
 \end{center}
-geladen und als Felder eines Structure Arrays übergeben. 
-Für jedes in dieser Arbeit dokumentierte Experiment verweisen wir in
-\Cref{chap:experiments} an entsprechender Stelle auf das dafür benutzte
-Benchmark, welches in \texttt{./nonconforming/benchmarks/} zu finden ist und
-somit die Reproduzierbarkeit des Experiments garantiert. 
-Als Muster für eine Bechmark-Datei dient
+gespeichert sein.
+Als Muster für eine solche Bechmark-Datei dient
 \begin{center}
   \texttt{./nonconforming/benchmarks/editable.m}.
 \end{center}
+Wird das Hauptprogramm ohne Übergabe eines Parameters ausgeführt, nutzt
+es den Standardwert \texttt{benchmark = 'editable'}.
+Für jedes in dieser Arbeit dokumentierte Experiment verweisen wir in
+\Cref{chap:experiments} an entsprechender Stelle auf das dafür benutzte
+Benchmark, welches in \texttt{./nonconforming/benchmarks/} hinterlegt ist und
+somit die Reproduzierbarkeit des Experiments garantiert. 
 Eine Übersicht über die in einer Benchmark-Datei wählbaren Parameter ist
 zu finden in den Tabellen \ref{tab:paramsMisc} -- \ref{tab:paramsDoc}
 sowie über die definierbaren Funktionen in \Cref{tab:paramsFunctions}.
@@ -65,13 +63,13 @@ Dass die zahlreichen Parameter, die während des Pro\-gramm\-ab\-laufs
 über- oder ausgegeben werden müssen, als Felder von
 Struc\-ture Ar\-rays gespeichert werden, dient der Modifizierbarkeit des
 Programms. 
-So haben Korrekturen und Ergänzungen am Programm häufig nur zur Folge, dass
-einige \texttt{structs} um Felder ergänzt werden müssen während Methodenköpfe
+So haben Änderungen am Programm häufig nur zur Folge, dass einige
+\texttt{structs} um Felder ergänzt werden müssen, während Methodenköpfe
 unverändert bleiben können.
 Das Eingangssignal $f$ und eventuell weitere Funktionen, wie etwa die exakte
-Lösung $u$ von \Cref{prob:continuousProblem} und ihre schwache Ableitung
-$\nabla u$, müssen in der Benchmark-Datei angegeben werden, um sie dem
-Programm zu übergeben. 
+Lösung $u$ von \Cref{prob:continuousProblem} oder die schwache Ableitung
+$\nabla f$ eines schwach differenzierbaren Eingangssignals, müssen in der
+Benchmark-Datei definiert werden, um sie dem Programm zu übergeben. 
 Die für die Experimente in \Cref{chap:experiments} genutzten Funktionen sind zu
 finden in 
 \begin{center}
@@ -87,8 +85,8 @@ Die so berechneten Energien werden gespeichert im Ordner
   \texttt{./nonconforming/knownExactEnergies/}
 \end{center}
 und können anschließend manuell in ein Benchmark aufgenommen werden.
-Soll als Eingangssignal kein \texttt{function\_handle} sondern ein
-Graufarbenbild gegeben werden, so muss es gespeichert sein in 
+Soll als Eingangssignal ein Graufarbenbild gegeben sein, so muss es in einem
+mit der Matlab-Funktion \texttt{imread} kompatiblen Format gespeichert sein in 
 \begin{center}
   \texttt{./utils/functions/images/}.
 \end{center}
@@ -97,18 +95,19 @@ entspricht, kann die Methode
 \begin{center}
   \texttt{./utils/functions/images/addBoundary2image.m}
 \end{center}
-genutzt werden. Diese fügt einen graduellen Übergang zu schwarzen Rand auf den 
-äußeren 25 Pixeln des Bildes hinzu.
-Um additives weißes gaußsches Rauschen zu einen Bild hinzuzufügen, kann die
+genutzt werden. Diese fügt wahlweise einen graduellen Übergang zu schwarzem
+Rand auf den äußeren 25 Pixeln des Bildes hinzu oder ergänzt das Bild um einen
+10 Pixel breiten schwarzen Rand.
+Um additives weißes gaußsches Rauschen zu einem Bild hinzuzufügen, kann die
 Methode
 \begin{center}
   \texttt{./utils/functions/images/addNoise2image.m}
 \end{center}
-genutzt werden. 
+genutzt werden, welche dafür die Matlab-Funktion \texttt{awgn} verwendet. 
 
 \begin{table}
   \centering
-  \begin{tabular}{c|p{9cm}}
+  \begin{tabular}{c|p{9.9cm}}
     \hline
     Parametername  & Beschreibung\\  
     \hline
@@ -117,10 +116,10 @@ genutzt werden.
     sollen, sonst \texttt{false}\\
     \texttt{plotModeGrayscale} 
     & \texttt{true}, wenn während des Programmablaufs Plots von Funktionen
-    als Graufarbenbilder angezeigt werden sollen, sonst \texttt{false} 
-    (Wahl irrelevant, wenn \texttt{showPlots == false})\\
+    als Graufarbenbilder angezeigt werden sollen, sonst \texttt{false}
+    (Wahl irrelevant, wenn \texttt{showPlots==false})\\
     \texttt{showProgress}
-    & \texttt{true}, wenn während der primalen-dualen Iteration Information
+    & \texttt{true}, wenn während der primalen-dualen Iteration Informationen
     über den aktuellen Iterationsschritt angezeigt werden sollen, sonst
     \texttt{false} \\
     \texttt{degree4Integrate}
@@ -134,7 +133,7 @@ genutzt werden.
     & Anzahl der Rotverfeinerungen der geladenen Geometrie um Plots des
     Eingangssignal $f$ und, falls angegeben, der Lösung $u$ von
     \Cref{prob:continuousProblem} zu erstellen (Wahl irrelevant, falls
-    \texttt{plotGivenFunctions == false})\\
+    \texttt{plotGivenFunctions==false})\\
     \texttt{debugIfError}
     & \texttt{true}, wenn Matlab beim Auftreten eines Fehlers den Debug-Modus
     starten soll, sonst \texttt{false}\\
@@ -146,21 +145,21 @@ genutzt werden.
 
 \begin{table}
   \centering
-  \begin{tabular}{c|p{9cm}}
+  \begin{tabular}{c|p{9.7cm}}
     \hline
     Parametername  & Beschreibung\\  
     \hline
     \texttt{geometry} &
-    Name der Geometrie auf deren Triangulierung der AFEM-Algorithmus
-    angewendet werden soll 
-    \newline(cf. \texttt{loadGeometry} in \cite[Abschnitt 1.9.1]{CGKNRR10})\\
+    Name der Geometrie auf deren Triangulierung der AFEM-Algorithmus angewendet
+    werden soll (wird \texttt{'Square'} gesetzt, falls \texttt{useImage}
+    aus \Cref{tab:paramsExperiment} den Wert \texttt{true} hat)\\
     \texttt{initialRefinementLevel} &
-    Anzahl der Rotverfeinerungen die auf die Triangulierung der Geometrie
+    Anzahl der Rotverfeinerungen, die auf die Triangulierung der Geometrie
     \texttt{geometry} angewendet werden sollen vor Start des AFEM\--Algorithmus 
-    \newline(cf. \texttt{loadGeometry} in \cite[Abschnitt 1.9.1]{CGKNRR10})\\
+    (cf. \texttt{loadGeometry} in \cite[Abschnitt 1.9.1]{CGKNRR10})\\
     \texttt{parTheta}& Bulk-Parameter $\theta$ für den Mark-Schritt des
-    AFEM-Algorithmus ($\theta\in(0,1)$ für adaptive und $\theta=1$ für uniforme
-    Netzverfeinerung)\\
+    AFEM-Al\-go\-rith\-mus ($\theta\in(0,1)$ für adaptive und $\theta=1$ für
+    uniforme Netzverfeinerung)\\
     \texttt{minNrDof}& 
     Anzahl der Freiheitsgrade der Triangulierung eines Levels, die mindestens
     erreicht werden soll, bevor der AFEM-Algorithmus abbricht\\
@@ -168,10 +167,10 @@ genutzt werden.
     & \texttt{true}, wenn eine Prolongation der Lösung der pri\-ma\-len-dualen
     Iteration als Startwert für die Iteration des nächsten Levels genutzt
     werden soll, sonst \texttt{false}\\
-    \texttt{beta4Estimate}& 
+    \texttt{parGamma}& 
     Parameter $\gamma$ aus \Cref{def:refinementIndicator}\\
-    \texttt{n4Estimate}& 
-    Parameter $d$ aus \Cref{def:refinementIndicator} (muss für diese 
+    \texttt{d}& 
+    Dimension $d$ aus \Cref{def:refinementIndicator} (muss für diese 
     Implementierung stets 2 sein)\\
     \hline
   \end{tabular}
@@ -181,20 +180,24 @@ genutzt werden.
 
 \begin{table}
   \centering
-  \begin{tabular}{c|p{9cm}}
+  \begin{tabular}{c|p{11.5cm}}
     \hline
     Parametername  & Beschreibung\\  
     \hline
     \texttt{u0Mode} 
     & Startwert $u_0$ für \Cref{alg:primalDualIteration} auf dem ersten Level
-    und, falls \texttt{useProlongation == false}, für die Iteration auf allen
-    Leveln der AFEM-Routine (\texttt{'zeroes'} für $u_0=0$ und
-    \texttt{'interpolationRhs'}, falls für $u_0$ die nichtkonforme Interpolation
-    des Eingangssignals $f$ genutzt werden soll)\\
-    \texttt{initialEpsStop} & Parameter $\epsstop$ für das Abbruchkriterium
-    aus \Cref{chap:experiments}\\
+    und, falls \texttt{useProlongation==false}, für die Iteration auf allen
+    Leveln der AFEM-Routine (\texttt{'zeros'} für $u_0=0$ und
+    \texttt{'interpolationInSi'}, falls für $u_0$ die
+    Crouzeix-Raviart-Interpolation des Eingangssignals $f$ genutzt werden
+    soll)\\
+    \texttt{epsStop} & Parameter $\epsstop$ für das Abbruchkriterium
+    \eqref{eq:terminationCriterion} von \Cref{alg:primalDualIteration}\\
     %\texttt{stopCrit} & \\
     \texttt{parTau}& Parameter $\tau$ aus \Cref{alg:primalDualIteration}\\
+    \texttt{maxIter}& 
+    Anzahl der Iterationsschritte der primalen-dualen Iteration, die auf jedem
+    Level maximal durchgeführt werden sollen\\
     \hline
   \end{tabular}
   \caption{Parameter für die Einstellungen der Iteration}
@@ -203,42 +206,43 @@ genutzt werden.
 
 \begin{table}
   \centering
-  \begin{tabular}{c|p{9cm}}
+  \begin{tabular}{c|p{10.5cm}}
     \hline
     Parametername  & Beschreibung\\  
     \hline
     \texttt{useImage}
-    & \texttt{true}, wenn für das Eingangssignal $f$ ein Graufarbenbild statt
-    eines \texttt{function\_handle} genutzt werden soll,
-    sonst \texttt{false}\\
+    & \texttt{true}, wenn für das Eingangssignal $f$ ein Graufarbenbild
+    anstelle eines \texttt{function\_handle} genutzt werden soll, sonst
+    \texttt{false}\\
     \texttt{imageName} 
     & Name (mit Dateiendung) des Graufarbenbildes im Ordner
     \texttt{./utils/functions/images/}, das als Eingangssignal $f$
     genutzt werden soll (Wahl irrelevant, falls
-    \texttt{useImage == false})\\
+    \texttt{useImage==false})\\
     \texttt{parAlpha}
     & Parameter $\alpha$ aus \Cref{prob:continuousProblem} und
     \Cref{prob:discreteProblem}\\
     \texttt{parBeta} 
     & Parameter $\beta$ einiger Experimente aus \Cref{chap:experiments}\\
-    \texttt{rhsGradientKnown}
+    \texttt{inSiGradientKnown}
     & \texttt{true}, wenn ein \texttt{function\_handle} des schwachen
     Gradienten $\nabla f$ eines Eingangssignals $f\in H^1_0(\Omega)$ gegeben
-    ist und zur Berechnung von $\Egleb$ aus \Cref{thm:gleb} genutzt werden
-    soll, sonst \texttt{false}\\
+    ist und zur Berechnung der garantierten unteren Energieschranke aus
+    \Cref{thm:gleb} genutzt werden soll, sonst \texttt{false} (wird
+    \texttt{false} gesetzt, falls \texttt{useImage==true})\\
     \texttt{exactSolutionKnown}
     & \texttt{true}, wenn die Lösung $u$ von \Cref{prob:continuousProblem}
     bekannt ist und zur Berechnung von exakten Fehlern zu Iteraten von
-    \Cref{alg:primalDualIteration} genutzt werden soll, sonst \texttt{false}\\
+    \Cref{alg:primalDualIteration} genutzt werden soll, sonst \texttt{false}
+    (wird \texttt{false} gesetzt, falls \texttt{useImage==true})\\
     \texttt{useExactEnergy}
-    & \texttt{true}, wenn die Energie $E(u)$ der Lösung $u$ von
+    & \texttt{true}, wenn $E(u)$ für die Lösung $u$ von
     \Cref{prob:continuousProblem} bekannt ist und in Auswertungen der
     Ergebnisse genutzt werden soll, sonst \texttt{false} (wird \texttt{false}
-    gesetzt, falls \texttt{exactSolutionKnown == false})\\ 
+    gesetzt, falls \texttt{exactSolutionKnown==false})\\ 
     \texttt{exactEnergy} 
     & Wert $E(u)$ für die Lösung $u$ von \Cref{prob:continuousProblem} (Wahl
-    irrelevant, falls \texttt{useExactEnergy == false})\\
-    %\texttt{saveScreenshots} & \\
+    irrelevant, falls \texttt{useExactEnergy==false})\\
     \hline
   \end{tabular}
   \caption{Parameter des Experiments}
@@ -247,18 +251,18 @@ genutzt werden.
 
 \begin{table}
   \centering
-  \begin{tabular}{c|p{9cm}}
+  \begin{tabular}{c|p{11.5cm}}
     \hline
     Parametername  & Beschreibung\\  
     \hline
     \texttt{expName} 
-    & Name des Ordners der im Ordner\newline 
-    \texttt{../results/nonconforming/}\newline 
-    erstellt werden soll zum Speichern der Ergebnisse des Programms\\
+    & Name des Ordners, der in 
+    \texttt{./../results/nonconforming/}
+    zum Speichern der Ergebnisse des Programms erstellt werden soll\\
     \texttt{dirInfoName} 
-    & Name des Ordners der im Ordner\newline 
-    \texttt{../results/nonconforming/expName/}\newline
-    erstellt werden soll zum Speichern der Ergebnisse eines Levels\\
+    & Name des Ordners, der in
+    \texttt{./../results/nonconforming/expName/}
+    zum Speichern der Ergebnisse eines Levels erstellt werden soll \\
     %\texttt{errorNorm}& \\
     \hline
   \end{tabular}
@@ -268,23 +272,23 @@ genutzt werden.
 
 \begin{table}
   \centering
-  \begin{tabular}{c|p{9cm}}
+  \begin{tabular}{c|p{10.3cm}}
     \hline
     Parametername  & Beschreibung\\  
     \hline
-    \texttt{rightHandSide} 
+    \texttt{inputSignal} 
     & \texttt{function\_handle} des Eingangssignals $f$ (Wahl irrelevant, falls
-    \texttt{useImage == true})\\
-    \texttt{gradientRightHandSide} 
+    \texttt{useImage} aus \Cref{tab:paramsExperiment} den Wert \texttt{true}
+    hat)\\
+    \texttt{gradientInputSignal} 
     & \texttt{function\_handle} des schwachen Gradienten $\nabla f$ des
-    Eingangssignals $f$ (Wahl irrelevant, falls\newline
-    \texttt{rhsGradientKnown == false} oder\newline \texttt{useImage ==
-    true})\\ 
+    Eingangssignals $f$ (Wahl irrelevant, falls \texttt{inSiGradientKnown} aus
+    \Cref{tab:paramsExperiment} den Wert \texttt{false} hat)\\ 
     \texttt{exactSolution}
     & \texttt{function\_handle} der Lösung $u$ von
-    \Cref{prob:continuousProblem} (Wahl irrelevant, falls\newline
-    \texttt{exactSolutionKnown == false} oder\newline \texttt{useImage ==
-    true})\\
+    \Cref{prob:continuousProblem} (Wahl irrelevant, falls
+    \texttt{exactSolutionKnown} aus \Cref{tab:paramsExperiment} den Wert
+    \texttt{false} hat)\\
     \hline
   \end{tabular}
   \caption{Definierbare \texttt{function\_handles}}

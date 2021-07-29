@@ -1,6 +1,3 @@
-
-##################
-
 gucke in der Arbeit ob S^1(\Tcal) jemals nochmal genutzt wird. Falls nicht,
 die Definition der Couran-Finite-Elemente-Funktionen verschieben aus Notation
 in die Einleitung an die Stelle, an der ich über Bartels Ansatz schreibe
@@ -14,8 +11,6 @@ voraussichtlich bleiben
 
 implementierung von J1 noch kommentieren oder courant2CR? Gucken, ob da nötig 
 ist. Gucke aber insbesondere, ob das bisher geschriebene noch gültig ist.
-
-Tabellen mit Parametern updaten
 
 ##################
 
@@ -35,45 +30,12 @@ dass Integrate nur außerhalb ausgeführt wird)
 
 ##################
 
-bei Frage nach USB Stick oder CD oder wie auch immer das gehen soll fragen nach
-dem Typo im Titel der Arbeit (den das Prüfungsbüro gemacht hat, fehlender
-Bindestrich). Fragen, was ich da machen soll.
-
-##################
-
 schreibe in der Auswertung Lösung entlag der x (blau) und y (rot) Achse oder so
 für solutionAxis, inSiAxis
 
 ##################
 
-benchmark namen einschränken (testen, ob mit Zahlen starten darf, wahrschienlich
-nämlich nicht)
-
-,,ein Graufarbenbild gegeben werden, so muss es [in passenden Dateiformat/
-in einem vol loadImage(?) (oder wie auch immer die richtige Matlab methode
-heißt, nachgucken) unterstützten Format gespeichert sein in]
-
-gucken ob irgendwo hinpasst, dass die Ordner genua in dem Ordner liegen mussen
-
-addBoundary2image kann auch um schwarzen Rand erweitern je nach Option 
-erwähnen
-
-erwähnen, welche Matlab Funktion von addNoise2image genutzt wird
-
-##################
-
 2h einplanen für drucken, laptop mitbringen für eventuelle Änderungen
-
-##################
-
-Ordnerstrutktur für Abgabe
-  ./bachelorthesisBergmann/
-     results/
-     bachelorThesisMain.pdf 
-     code/ 
-       nonconforming/
-       utils/
-       README (falls sinnvoll)
 
 ##################
 
@@ -111,3 +73,14 @@ AUSBLICK (vielleicht in die Arbeit schreiben)
     (in solvePrimalDualFormulation zum Erstellen der rechten Seite)
     
   Bartels Code anpassen und vergleicen
+
+##################
+
+Ordnerstrutktur für Abgabe
+  ./bachelorthesisBergmann/
+     results/
+     bachelorThesisMain.pdf 
+     code/ 
+       nonconforming/
+       utils/
+       README (falls sinnvoll)
