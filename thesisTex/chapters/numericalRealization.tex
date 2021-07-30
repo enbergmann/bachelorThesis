@@ -11,7 +11,7 @@ Ziel der für diese Arbeit implementierten Methoden ist die Realisierung von
 Wir gehen davon aus, dass dieser und die im AFEM-Softwarepaket \cite{Car09}
 realisierten Methoden sowie deren Datenstrukturen bekannt sind und verweisen
 für weitere Details auf \cite{CGKNRR10}. 
-Im Refine-Schritt nutzen wir anstelle eines Fehlerschätzers den
+Im Estimate-Schritt nutzen wir anstelle eines Fehlerschätzers den
 Verfeinerungsindikator aus \Cref{def:refinementIndicator}.
 Alle in diesem Kapitel aufgeführten Pfadnamen sind relative Pfade in Relation
 zum Ordner \texttt{code} im Anhang.
@@ -309,7 +309,7 @@ Parameter passend gewählt werden.
 Diese Wahlen sind
 \begin{itemize}
   \item \texttt{useImage = false},
-  \item \texttt{rhsGradientKnown = true},
+  \item \texttt{inSiGradientKnown = true},
   \item \texttt{exactSolutionKnown = true},
   \item \texttt{useExactEnergy = true}.
 \end{itemize}
@@ -324,7 +324,7 @@ Insbesondere wird der Startwert $u_0$ für die primale-duale Iteration
 auf dem ersten Level des AFEM-Algorithmus initialisiert. 
 Dieser hängt von der Wahl des Parameters \texttt{u0Mode} aus
 \Cref{tab:paramsIteration} ab.
-Falls dabei die nichtkonforme Interpolation des Eingangssignals $f$ 
+Falls dabei die Crouzeix-Raviart-Interpolation des Eingangssignals $f$ 
 bezüglich $\Tcal$ genutzt werden soll, wird diese in
 \begin{center}
   \texttt{./nonconforming/common/interpolationCR.m}
@@ -333,8 +333,9 @@ ermittelt.
 Nach dem Berechnen einiger weiterer Informationen beginnt die AFEM-Schleife.
 
 Zu Beginn der Schleife werden die für das aktuelle Level benötigten Daten
-ermittelt, zum Beispiel die Flächeninhalte der Dreiecke und die Freiheitsgrade
-der aktuellen Triangulierung $\Tcal$. 
+ermittelt, zum Beispiel die Flächeninhalte der Dreiecke und die Freiheitsgrade,
+das heißt in dieser Implementierung die inneren Kanten, der aktuellen
+Triangulierung $\Tcal$. 
 Insbesondere werden die auf dem Level mehrmals benötigten Gradienten der
 lokalen Crouzeix-Raviart-Basisfunktionen auf allen Dreiecken berechnet (cf.
 \cite[Abschnitt 1.4.2]{CGKNRR10}) in
@@ -371,7 +372,7 @@ berechnet werden kann durch
   =
   \frac{|T|}{3}I_3.
 \end{align}
-Die Aufstellung der lokalen Steifigkeitsmatrizen sowie die Berechnung der
+Das Aufstellen der lokalen Steifigkeitsmatrizen sowie die Berechnung der
 globalen Stei\-fig\-keits- und Massenmatrix aus ihren lokalen Versionen geschieht
 analog zu \cite[Abschnitt 1.4.2]{CGKNRR10}).
 Danach werden in
@@ -385,7 +386,7 @@ $k\in\{1,2,3\}$, berechnet.
 Dies geschieht mithilfe der \texttt{integrate} Methode \cite[Abschnitt
 1.8.2]{CGKNRR10} des AFEM-Softwarepakets.
 Die Berechnung der dafür benötigten lokalen Crouzeix-Raviart-Basisfunktionen
-$\psi_{E_k}\!|_T$, $k\in\{1,2,3\}$ diskutieren wir in
+$\psi_{E_k}\!|_T$, $k\in\{1,2,3\}$, diskutieren wir in
 \Cref{sec:localCRBasisRealization}.
 Anschließend kann für alle $F\in\Ecal$ auch das Integral 
 \begin{align*}
@@ -396,8 +397,9 @@ Anschließend kann für alle $F\in\Ecal$ auch das Integral
   \sum_{T\in\Tcal(F)}\int_T f\psi_F\!|_T\dx
 \end{align*}
 bestimmt werden.
-Damit sind alle notwendigen Daten ermittelt, um die primale-duale Iteration 
-zur Lösung auf dem Level zu starten. Genutzt wird dafür die Methode
+Damit sind alle notwendigen Daten ermittelt, um die primale-duale Iteration für
+den Solve-Schritt des aktuellen Levels zu starten. 
+Genutzt wird dafür die Methode
 \begin{center}
   \texttt{./nonconforming/main/solvePrimalDualFormulation.m}.
 \end{center}
@@ -409,7 +411,21 @@ $|E(u)-\Enc(u_J)|$ und, mithilfe der Methode \texttt{error4eCRL2}
 Fehler $\Vert u - u_J\Vert$.
 Außerdem werden Informationen über die Iteration und ihre Ergebnisse
 gespeichert und gegebenenfalls ausgegeben. 
-Weiterhin wird zur Berechnung der garantierten unteren Energieschranke $\Egleb$
+%%%%TODO formulieren. Außerdem: muss noch eine dieser Funktionen detaillierter 
+  % beschrieben werden?
+Die garantierte obere Energieschranke $\Enc(J_1 u_J)$ wird dabei berechnet 
+\begin{center}
+    \texttt{./nonconforming/common/computeJ1.m},
+\end{center}
+auf deren Ergebnis
+\begin{center}
+    \texttt{./nonconforming/common/courant2CR.m} 
+\end{center}
+\begin{center}
+    \texttt{./nonconforming/common/computeDiscreteEnergyCR.m} 
+\end{center}
+%%%%TODO
+Weiterhin wird zur Berechnung der garantierten unteren Energieschranke 
 aus \Cref{thm:gleb} und des Verfeinerungsindikators aus
 \Cref{def:refinementIndicator} für alle $T\in\Tcal$ der Term $\Vert f-\alpha
 u_J\Vert_{L^2(T)}^2$ benötigt.
@@ -452,7 +468,7 @@ in
 \begin{center}
   \texttt{./nonconforming/common/computeGleb.m}
 \end{center}
-die garantierte untere Energieschranke $\Egleb$ berechnet. 
+die garantierte untere Energieschranke berechnet. 
 Zur Berechnung des Verfeinerungsindikators benötigen wir noch
 für alle $F\in\Ecal$ den Term $\Vert[u_J]_F\Vert_{L^1(F)}$. Diese ermitteln wir
 in der Methode 
@@ -494,16 +510,10 @@ festgelegt durch den Parameter \texttt{useProlongation} aus
   \texttt{./nonconforming/common/prolongationJ1.m}
 \end{center}
 realisiert. 
-Dabei wird der Operator $J_1:\CR^1_0(\Tcal)\to P_1(\Tcal)\cap C_0(\Omega)$ 
-aus \cite[1065]{CGS15} genutzt, wobei $J_1\vcr$ für eine Funktion $\vcr\in\CR^1_0(\Tcal)$ 
-in allen Innenknoten $z\in\Ncal(\Omega)$ definiert ist durch
-\begin{align*}
-  J_1\vcr(z)\coloneqq |\Tcal(z)|^{-1}\sum_{T\in\Tcal(z)}\vcr|_T(z).
-\end{align*}
-Als Prolongation wird $\hat u_J\coloneqq J_1 u_J\in P_1(\Tcal)\cap
-C_0(\Omega)\subseteq P_1\big(\hat\Tcal\big)\cap C_0(\Omega)
-\subseteq \CR^1_0\big(\hat\Tcal\big)$
-gewählt.
+Als Prolongation von $u_J$ wird ebenda mit dem Operator $J_1$ aus
+\eqref{eq:enrichmentOperator} die Funktion $\hat u_J\coloneqq J_1 u_J\in
+P_1(\Tcal)\cap C_0(\Omega)\subseteq P_1\big(\hat\Tcal\big)\cap C_0(\Omega)
+\subseteq \CR^1_0\big(\hat\Tcal\big)$ gewählt.
 Die Berechnung der dabei benötigten lokalen Knotenwerte von $u_J$ geschieht
 wie in \Cref{sec:localNodalValuesCR} beschrieben.
 
@@ -519,8 +529,9 @@ Wie in \Cref{sec:programFlow} beschrieben, sind vor Aufruf der Methode bereits
 alle benötigten Informationen über die aktuelle Triangulierung $\Tcal$
 sowie die Steifig\-keits- und Massenmatix aus \Cref{rem:primalDualMatrixEquations}
 und die Integrale $\int_\Omega f\psi_F\dx$ für alle
-Crouzeix-Raviart-Basisfunktionen $\psi_F$, $F\in\Ecal$ bekannt.
-Mit der Steifigkeits- und Massenmatrix ist direkt ersichtlich,
+Crouzeix-Raviart-Basisfunktionen $\psi_F$, $F\in\Ecal$, bekannt.
+Mit der Steifigkeits- und Massenmatrix ist direkt ersichtlich, 
+%TODO, zu oft ,,direkt ersichtlich``
 wie die Koeffizientenmatrix des Gleichungssystems
 \eqref{eq:linSysPrimalDualAlgMatrixEq} implementiert werden kann.
 Für die Implementierung der rechten Seite dieses Systems nutzten wir die
@@ -544,8 +555,13 @@ implementieren.
 Es ist direkt ersichtlich wie der verbleibende Teil von
 \Cref{alg:primalDualIteration} implementiert werden kann.
 Sonstige Informationen über die Iteration, wie etwa das Abbruchkriterium,
-diskutieren wir in \Cref{chap:experiments}.
+diskutieren wir in \Cref{chap:experiments}. 
+%TODO stimmt nicht mehr, Abbruchkriterium schon gewählt, Satz anders oder vlt
+% ganz raus
 
+% TODO computeDiscreteEnergyCR im vorherigen Abschnitt auf hier verweisen
+% oder sowas ,,details zur Berechnung der diskreten Energie sind am Ende
+% des folgenden Abschnitts zu finden
 Es bleibt anzumerken, dass in \texttt{solvePrimalDualFormulation}, neben 
 \Cref{alg:primalDualIteration}, der Ausgabe des Fortschritts sowie
 der Übergabe von Ergebnissen der Iteration, auch die

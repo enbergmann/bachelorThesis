@@ -1,8 +1,7 @@
 function vCR = interpolationCR(params, currData, v)
 %% DOC
-% Computes the Crouzeix-Raviart interpolation vCR (vanishing in the midpoints
-% of boundary edges) with respect to the triangulation given by [c4n, n4e, n4s]
-% of the function v.
+% Computes the Crouzeix-Raviart interpolation vCR with respect to the
+% triangulation given by [c4n, n4e, n4s] of the function v.
 %
 % interpolationCR.m
 % input: params   - 'struct' with fields:

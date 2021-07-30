@@ -1,3 +1,8 @@
+Kapitel 6 nochmal eins zu eins gegen Programm checken und bei allen Funktionen
+gucken, ob wirklich alles klar ist
+
+##################
+
 gucke in der Arbeit ob S^1(\Tcal) jemals nochmal genutzt wird. Falls nicht,
 die Definition der Couran-Finite-Elemente-Funktionen verschieben aus Notation
 in die Einleitung an die Stelle, an der ich über Bartels Ansatz schreibe
@@ -9,18 +14,13 @@ voraussichtlich bleiben
 
 ##################
 
-implementierung von J1 noch kommentieren oder courant2CR? Gucken, ob da nötig 
-ist. Gucke aber insbesondere, ob das bisher geschriebene noch gültig ist.
-
-##################
-
 degree4Integrate FÜR UNSERE AUFRUFE VON INTEGRATE schreiben (denn errorCRL2
 nutzt degree 12 immer, also wäre die aktuelle Formulierung falsch)
 irgendwo sollte eh noch geschrieben werden ,,zur berechnung des Fehler wird
 die Methode aus AFEM genutzt, die immer Grad 12 hat unabh von degree4Integrate
 aus Tabelle ...)
 
-Zwar können die Funktionen hier sehr unregülar sein
+Zwar können die Funktionen hier sehr unregulär sein
 Für keines der Experimente wurde, auch mit deutlich höheren Wahlen von
 degree4Integrate, andere Raten beobachtet.
 
