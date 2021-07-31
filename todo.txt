@@ -35,10 +35,6 @@ für solutionAxis, inSiAxis
 
 ##################
 
-u = zeros zu u = ones und dann nochmal lshape mit inSi 1 probieren
-
-##################
-
 update docstring of solvePrimalDualFormulation
 
 ##################
