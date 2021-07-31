@@ -29,8 +29,8 @@ function  [u, nrIter, corrVec, energyVec, otherCorr] = ...
 %                                         and 0 else
 %                      plotModeGrayscale: 'logical' with value 1 if shown plots
 %                                         must be plotted as grayscale plots
-%                                         with view from above onto the x-y
-%                                         plane
+%                                         with view from above onto the
+%                                         xy-plane
 %        currData  - 'struct' with fields:
 %                        stiMaCR: '(nrSides x nrSides)-dimensional sparse
 %                                 double array' where the k-th entry in the
@@ -148,7 +148,7 @@ function  [u, nrIter, corrVec, energyVec, otherCorr] = ...
 
   gradCrOnElemPlusForSides = zeros(nrSides, 2);
   for side = 1:nrSides
-    localNr = sidesPlus(side, :) == side;
+    localNr = sidesPlus(side, :)==side;
       % local number of side on T_{+}
     gradCrOnElemPlusForSides(side, :) = ...
       gradsCR4e(localNr, :, elemPlusForSides(side));
@@ -158,7 +158,7 @@ function  [u, nrIter, corrVec, energyVec, otherCorr] = ...
 
   gradCrOnElemMinusForInnerSides = zeros(nrDof, 2); 
   for nrInnerSide = 1:nrDof 
-    localNr = sidesMinus(nrInnerSide, :) == dof(nrInnerSide);
+    localNr = sidesMinus(nrInnerSide, :)==dof(nrInnerSide);
       % local number of the nrInnerSide-th side on T_{-}
     gradCrOnElemMinusForInnerSides(nrInnerSide, :) = ...
       gradsCR4e(localNr, :, elemMinusForInnerSides(nrInnerSide));

@@ -35,6 +35,14 @@ für solutionAxis, inSiAxis
 
 ##################
 
+u = zeros zu u = ones und dann nochmal lshape mit inSi 1 probieren
+
+##################
+
+update docstring of solvePrimalDualFormulation
+
+##################
+
 2h einplanen für drucken, laptop mitbringen für eventuelle Änderungen
 
 ##################
@@ -77,10 +85,19 @@ AUSBLICK (vielleicht in die Arbeit schreiben)
 ##################
 
 Ordnerstrutktur für Abgabe
-  ./bachelorthesisBergmann/
-     results/
-     bachelorThesisMain.pdf 
-     code/ 
-       nonconforming/
-       utils/
-       README (falls sinnvoll)
+
+./bachelorthesisBergmann/
+    results/
+    bachelorThesisMain.pdf 
+    code/ 
+      nonconforming/
+        startAlgorithmCR.m
+        common/
+        main/
+        misc/
+        ...
+      utils/
+        afemPackage/
+        functions/
+        ...
+      README (falls sinnvoll)

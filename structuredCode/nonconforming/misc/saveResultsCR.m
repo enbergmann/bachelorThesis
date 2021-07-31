@@ -87,7 +87,7 @@ function saveResultsCR(params, currData, ...
   warning('on', 'MATLAB:MKDIR:DirectoryExists');
     
   % save information about the experiment
-  if currLvl == 0
+  if currLvl==0
     % this means the benchmark-file should not be changed until level 0 is
     % saved
     source = sprintf('benchmarks/%s.m', benchmark);

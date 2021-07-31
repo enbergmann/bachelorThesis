@@ -1,10 +1,9 @@
 function params = editable %#ok<*MSNU,FNDEF>
 %% DOC
 % Editable prototype for benchmark files.
-% Execute startAlgorithmCR(benchmark) (benchmark name of 
-% benchmark file) from folder ./nonconforming/ to run algorithm.
-% Use ./nonconforming/computeExactEnergyBV.m to approximate the exact
-% energy of a given problem with known exact solution.
+% Execute program/startAlgorithmNC(benchmark).m (benchmark name of 
+% benchmark file) to run algorithm.
+% Execute program/computeExactEnergyBV(...) to approximate the exact energy.
 %
 % editable.m
 % output: params - 'struct' with fields created dependent on the choice of the
@@ -14,20 +13,20 @@ function params = editable %#ok<*MSNU,FNDEF>
 %% PARAMETERS
   % misc. parameters (will affect performance)
   showPlots              = false; 
-  plotModeGrayscale      = false; % not effective if showPlots==false
+  plotModeGrayscale      = false; % not effective if showPlots == false
   showProgress           = true; 
   degree4Integrate       = 10; 
   plotGivenFunctions     = true;
   refinementLevel4Plots  = 5; % 11 is very close to the limit
-    % not effective if plotGivenFunctions==false
+    % not effective if plotGivenFunctions == false
   debugIfError           = false;
 
   % AFEM parameters
   geometry               = 'BigSquare'; %#ok<NASGU>                     
-    % set automatically to 'Square' if useImage==true
-  initialRefinementLevel = 3;
+    % set automatically to 'Square' if useImage == true
+  initialRefinementLevel = 0;
   parTheta               = 0.5;
-  minNrDof               = 2e3;
+  minNrDof               = 5e3;
   useProlongation        = true;
   parGamma               = 1;
   d                      = 2; % this should remain 2
@@ -36,40 +35,41 @@ function params = editable %#ok<*MSNU,FNDEF>
   u0Mode  = 'zeros'; %'interpolationInSi'; 'zeros';
   epsStop = 1e-4; 
   parTau  = 1; 
-  maxIter = 5e3;
+  maxIter = 1e10;
 
   % experiment parameters
   useImage               = false;
   imageName              = 'f2bawgnSnr20cameraman.tif'; %#ok<NASGU> 
-    % not effective if useImage==false
+    % not effective if useImage == false
   parAlpha               = 1e0; 
   parBeta                = 1;
-  inSiGradientKnown      = true;
-    % set automatically to false if useImage==true
+  inSiGradientKnown       = true;
+    % set automatically to false if useImage == true
   exactSolutionKnown     = true; %#ok<NASGU>
-    % set automatically to false if useImage==true
+    % set automatically to false if useImage == true
   useExactEnergy         = true; %#ok<NASGU>
-    % set automatically to false if exactSolutionKnown==false
+    % set automatically to false if exactSolutionKnown == false
   exactEnergy            = -2.058034062391; %#ok<NASGU> % 6 significant digits
-    % set automatically to NaN if exactSolutionKnown==false
-    % not effective if useExactEnergy==false
+    % set automatically to NaN if exactSolutionKnown == false
+    % not effective if useExactEnergy == false
                               
-  % information about experiment for saving and documentation
-  expName                = 'example';
-  dirInfoName            = sprintf('%s', datestr(now, 'yy_mm_dd_HH_MM_SS'));
+  % information about experiment for saving and documentation.
+  expName                = 'aCOMPARE';
+  dirInfoName            = sprintf('%s', ...
+    datestr(now, 'yy_mm_dd_HH_MM_SS'));
 
-  % function handles (not effective if useImage==true)
+  % function handles (not effective if useImage == true)
   function y = inputSignal(x)
     y =  f01(x, [parAlpha, parBeta]);
   end
 
   function y = gradientInputSignal(x)
-    % not effective if inSiGradientKnown==false
+    % not effective if inSiGradientKnown == false
     y =  f01Gradient(x, [parAlpha, parBeta]);
   end
 
   function y = exactSolution(x)
-    % not effective if exactSolutionKnown==false
+    % not effective if exactSolutionKnown == false
     y = f01ExactSolution(x, parBeta);
   end
    
@@ -78,53 +78,53 @@ function params = editable %#ok<*MSNU,FNDEF>
 %   showPlots             - 'logical' with value 1 if plots must be shown
 %                           during the iteration and 0 else
 %   plotModeGrayscale     - 'logical' with value 1 if plots during the
-%                           iteration must be grayscale plots with view from
-%                           above onto the xy-plane and 0 else 
+%                            iteration must be grayscale plots with view from
+%                            above onto the x-y plane and 0 else 
 %   showProgress          - 'logical' with value 1 if information about the
 %                           iteration must be printed during the iteration and
 %                           0 else
 %   degree4Integrate      - 'uint64' containing the algebraic degree of
-%                           exactness for integrate from the AFEM package that
-%                           must be used for calculations
+%                            exactness for integrate from the AFEM package that
+%                            must be used for calculations
 %   plotGivenFunctions    - 'logical' with value 1 if a plot of the input
 %                           signal f and, if given, of the exact solution must
-%                           be saved and, if showPlots==true, shown
+%                           be saved and, if showPlots == true, shown
 %   refinementLevel4Plots - 'uint64' containing the refinement level of the 
 %                           mesh the input signal f and, if given, exact
 %                           solution must be drawn on
 %   debugIfError          - 'logical' with value 1 if MATLAB must enter debug
-%                           mode if an error occurs during runtime and 0 else
+%                            mode if an error occurs during runtime and 0 else
 % 
 % AFEM parameters
 %   geometry               - 'string'/'char array with exactly one row' 
 %                            containing the name of the geometry the
 %                            computation must be one
 %   initialRefinementLevel - 'uint64' containing the initial refinement level
-%                            of the geometry loaded by loadGeometry for level 0
-%                            of AFEM
+%                            the geometry must be loaded with by loadGeometry
+%                            for level 0 of AFEM
 %   parTheta               - 'double' containing the bulk parameter for marking
 %                            (1 for uniform)
 %   minNrDof               - 'uint64' containing the minimal number of degrees
 %                            of freedom the last level of AFEM must have before
 %                            terminating
-%   useProlongation        - 'logical' with value 1 if a prolongation of the
-%                            solution of a level of AFEM to the refined mesh
-%                            for the next level must be used as initial value
-%                            for the iteration on the next level
+%   useProlongation        - 'logical' with value 1 if the prolongation of the
+%                             solution of a level of AFEM to the refined mesh 
+%                             for the next level must be used as initial value
+%                             for the iteration on the next level
 %   parGamma               - 'double' containing the parameter \gamma for
 %                            the refinement indicator
 %   d                      - 'uint64' containing the dimension
 %
 % algorithm parameters
 %   u0Mode  - 'char array with exactly one row' containing the choice for the
-%             inital iterate for the iteration on level 0 and, if
+%             inital iterate for iteration on level 0 and, if
 %             useProlongation==false, for the iterations on all levels
 %     Options:
 %                   'zeros': CR function with all coefficients equal to 0
 %       'interpolationInSi': CR interpolation of the input signal f to the mesh
 %                            on the level
-%   epsStop - 'double' containing \epsilon_{stop} for the termination criterion
-%             of the iteration
+%   epsStop - 'double' containing epsStop for the termination criterion of the
+%             iteration
 %   parTau  - 'double' containing the parameter \tau for the iteration
 %   maxIter - 'uint64' containing the number of iteration steps the iteration
 %             must not exceed
@@ -138,7 +138,7 @@ function params = editable %#ok<*MSNU,FNDEF>
 %   parAlpha           - 'double' containing the parameter \alpha from the
 %                        problem
 %   parbeta            - 'double' containing the parameter \beta from the
-%                        problem (if existent)
+%                        problem
 %   inSiGradientKnown  - 'logical' with value 1 if the gradient of the given
 %                        input signal is given and 0 else
 %   exactSolutionKnown - 'logical' with value 1 if the exact solution to the
@@ -152,11 +152,10 @@ function params = editable %#ok<*MSNU,FNDEF>
 % information about experiment for saving and documentation.
 %   expName     - 'char array with exactly one row' containing the name for the
 %                 folder in '../../results/nonconforming/' where the results of
-%                 runs of the experiment must be saved in
+%                 the experiment must be saved in
 %   dirInfoName - 'char array with exactly one row' containing the name for the 
-%                 folder in '../../results/nonconforming/expName/' where the
-%                 results of a particular run of the experiment must be saved
-%                 in
+%                 folder in '../../results/nonconforming/expName/' where the 
+%                 results of the experiment must be saved in
 
 %% BUILD STRUCT
 % advanced, not of interest for mere usage of the program

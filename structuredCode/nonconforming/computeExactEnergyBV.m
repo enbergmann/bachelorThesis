@@ -113,7 +113,7 @@ function computeExactEnergyBV(geometry, fStr, fStrParams, uStr, uStrParams, ...
 
     % compute significant digits
     if length(energy) > 1 
-      if fix(energy(end - 1)) == fix(energy(end))
+      if fix(energy(end - 1))==fix(energy(end))
         dec1 = extractAfter(num2str(energy(end - 1), '%.20f'), '.');
         dec2 = extractAfter(num2str(energy(end), '%.20f'), '.');
           % 20 is too precise, so it's sufficient

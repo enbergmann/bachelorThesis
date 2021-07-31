@@ -24,9 +24,11 @@ Dort ist eine veränderte Version der Methode \texttt{plotTriangulation}
 gespeichert, die nun den Plot einer Triangulierung als Schwarz-Weiß-Bild ohne
 Titel erzeugt.
 Alle Ein- und Ausgabeparameter der im Rahmen dieser Arbeit implementierten
-Methoden sind in den entsprechenden Dateien detailliert dokumentiert. 
-Ausgenommen davon sind die Standard-Datenstrukturen aus dem AFEM-Softwarepaket,
-die dort lediglich namentlich genannt werden.
+Methoden sind in den entsprechenden Dateien im Anhang detailliert dokumentiert. 
+Ausgenommen davon sind die bekannten Datenstrukturen aus dem
+AFEM-Softwarepaket, welche die Triangulierung beschreiben. 
+Diese werden lediglich aufgelistet.
+Entwickelt und getestet wurde das Programm in Matlab Version R2017b.
 Die mathematischen Grundlagen für die Realisierung einiger Methoden diskutieren
 wir in \Cref{sec:mathematicalBasicsForMethods}.
 
@@ -75,8 +77,8 @@ finden in
 \begin{center}
   \texttt{./utils/functions/}.
 \end{center}
-Ist eine Lösung $u$ von $\Cref{prob:continuousProblem}$ bekannt, so kann die
-exakte Energie $E(u)$ approximiert werden mit der Methode
+Ist eine Lösung $u\in H^1_0(\Omega)$ von \Cref{prob:continuousProblem}
+bekannt, so kann die exakte Energie $E(u)$ approximiert werden mit der Methode
 \begin{center}
   \texttt{./nonconforming/computeExactEnergyBV.m}.
 \end{center}
@@ -115,9 +117,10 @@ genutzt werden, welche dafür die Matlab-Funktion \texttt{awgn} verwendet.
     & \texttt{true}, wenn während des Programmablaufs Plots angezeigt werden
     sollen, sonst \texttt{false}\\
     \texttt{plotModeGrayscale} 
-    & \texttt{true}, wenn während des Programmablaufs Plots von Funktionen
-    als Graufarbenbilder angezeigt werden sollen, sonst \texttt{false}
-    (Wahl irrelevant, wenn \texttt{showPlots==false})\\
+    & \texttt{true}, wenn während des Programmablaufs Plots von Funktionen als
+    Graufarbenbilder mit Blick aus positiver z-Rich\-tung auf die xy-Ebene
+    angezeigt werden sollen, sonst \texttt{false} (Wahl irrelevant, wenn
+    \texttt{showPlots==false})\\
     \texttt{showProgress}
     & \texttt{true}, wenn während der primalen-dualen Iteration Informationen
     über den aktuellen Iterationsschritt angezeigt werden sollen, sonst
@@ -193,14 +196,13 @@ genutzt werden, welche dafür die Matlab-Funktion \texttt{awgn} verwendet.
     soll)\\
     \texttt{epsStop} & Parameter $\epsstop$ für das Abbruchkriterium
     \eqref{eq:terminationCriterion} von \Cref{alg:primalDualIteration}\\
-    %\texttt{stopCrit} & \\
     \texttt{parTau}& Parameter $\tau$ aus \Cref{alg:primalDualIteration}\\
     \texttt{maxIter}& 
     Anzahl der Iterationsschritte der primalen-dualen Iteration, die auf jedem
     Level maximal durchgeführt werden sollen\\
     \hline
   \end{tabular}
-  \caption{Parameter für die Einstellungen der Iteration}
+  \caption{Parameter für die primale-duale Iteration}
   \label{tab:paramsIteration}
 \end{table} 
 
@@ -256,14 +258,13 @@ genutzt werden, welche dafür die Matlab-Funktion \texttt{awgn} verwendet.
     Parametername  & Beschreibung\\  
     \hline
     \texttt{expName} 
-    & Name des Ordners, der in 
-    \texttt{./../results/nonconforming/}
-    zum Speichern der Ergebnisse des Programms erstellt werden soll\\
+    & Name des Ordners, der in \texttt{./../results/nonconforming/} zum
+    Speichern der Ergebnisse von Durchläufen des Programms für ein Experiment
+    erstellt werden soll\\
     \texttt{dirInfoName} 
-    & Name des Ordners, der in
-    \texttt{./../results/nonconforming/expName/}
-    zum Speichern der Ergebnisse eines Levels erstellt werden soll \\
-    %\texttt{errorNorm}& \\
+    & Name des Ordners, der in \texttt{./../results/nonconforming/expName/} zum
+    Speichern der Ergebnisse eines Durchlaufs des Programms erstellt werden
+    soll \\
     \hline
   \end{tabular}
   \caption{Parameter zum Speichern der Ergebnisse}
