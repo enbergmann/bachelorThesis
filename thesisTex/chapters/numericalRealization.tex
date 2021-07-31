@@ -611,9 +611,9 @@ In der Methode
 \begin{center}
   \texttt{./nonconforming/common/integralsWithInSi.m}
 \end{center}
-werden auf allen Dreiecken der Triangulierung die lokalen
+werden auf allen Dreiecken einer Triangulierung $\Tcal$ die lokalen
 Crouzeix-Raviart-Basis\-funk\-tio\-nen benötigt. 
-Sei $T\in\Tcal$ mit $T=\conv\left(\{P_1,P_2,P_3\}\right)$.
+Sei $T\in\Tcal$ mit $T=\conv\left\{P_1,P_2,P_3\right\}$.
 Da nach \Cref{eq:connectionCrBarycentric} die lokalen
 Crouzeix-Raviart-Basisfunktionen $\psi_{F}|_T$, $F\in\Ecal(T)$, darstellbar
 sind durch die baryzentrischen Koordinaten $\lambda_1,\lambda_2,\lambda_3\in
@@ -622,7 +622,7 @@ Berechnung zu diskutieren.
 Dafür betrachten wir das Referenzdreieck, das definiert ist durch
 \begin{align*}
   \Tref \coloneqq
-  \conv\left(\left\{
+  \conv\left\{
   \begin{pmatrix}
    1\\0 
   \end{pmatrix},
@@ -632,9 +632,9 @@ Dafür betrachten wir das Referenzdreieck, das definiert ist durch
   \begin{pmatrix}
    0\\0 
   \end{pmatrix}
-  \right\}\right),
+  \right\},
 \end{align*}
-und, mit der Matrix $B\coloneqq (P_1-P_3,P_2-P_3)$, die affine Transformation
+und mit der Matrix $B\coloneqq (P_1-P_3,P_2-P_3)$ die affine Transformation
 $p:\Tref \to T$, $x \mapsto Bx+P_3$. 
 Mithilfe der Umkehrabbildung von $p$, die gegeben ist durch $p^{-1}:T\to\Tref$,
 $x\mapsto B^{-1}(x-P_3)$, können die baryzentrischen Koordinaten für alle $x\in

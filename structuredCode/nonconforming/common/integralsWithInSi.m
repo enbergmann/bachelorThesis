@@ -70,7 +70,7 @@ function [int1InSi4e, int2InSi4e, int3InSi4e, intInSi4s] = ...
     %   Binv(y) = matBinv(y) - matBinv(P3) = matBinv(y - P3)
     % from a triangle T = conv({P1, P2, P3}) to the 
     % reference triangle Tref = conv({[1; 0], [0; 1], [0; 0]})
-    % this means Binv(P1) = [1; 0], Binv(P1) = [0; 1], Binv(P3) = [0; 0],
+    % this means Binv(P1) = [1; 0], Binv(P2) = [0; 1], Binv(P3) = [0; 0],
   
   funcLambda1 = @(y)(sum([matBinv4e(:, 1) matBinv4e(:, 3)].*(y - a3), 2));
     % first component of Binv(y), i.e. funcLambda1(P1) = 1 and 
