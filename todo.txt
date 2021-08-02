@@ -1,10 +1,7 @@
 Kapitel 6 nochmal eins zu eins gegen Programm checken und bei allen Funktionen
 gucken, ob wirklich alles klar ist
 
-fertig 6.1, 6.4.1
-
-in jedem Kapitel math Methode beschriebung die Sachen nochmal definieren (also
-sagen ,,einer Triangulierung  \Tcal)
+fertig 6.1, 6.4.1, 6.4.2
 
 ##################
 

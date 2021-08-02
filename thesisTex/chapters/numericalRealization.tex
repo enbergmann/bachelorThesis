@@ -655,20 +655,20 @@ T$ berechnet werden durch
 \label{sec:localNodalValuesCR}
 
 Sei $\vcr\in\CR^1(\Tcal)$.
-Für die in dieser Arbeit implementierte Prolongation von $\vcr$ auf eine
-Verfeinerung der Triangulierung $\Tcal$ und für die Berechnung der $L^1$-Norm
-der Kantensprünge von $\vcr$ benötigen wir für jedes Dreieck $T\in\Tcal$ die
-Werte von $\vcr$ in den Knoten von $T$. 
+Um $J_1\vcr$ für den Operator $J_1$ aus \Cref{eq:enrichmentOperator} zu
+bestimmen und für die Berechnung der $L^1$-Norm der Kantensprünge von $\vcr$
+benötigen wir für jedes Dreieck $T\in\Tcal$ die Werte von $\vcr$ in den Knoten
+von $T$. 
 Dazu sei $T = \conv\{P_1, P_2, P_3\}$ mit den Kanten
 $E_1 = \conv\{P_1,P_2\}$, $E_2 = \conv\{P_2,P_3\}$ und $E_3 =
 \conv\{P_3,P_1\}$. 
 Die Funktion $v\coloneqq\vcr|_T$ habe in den Mittelpunkten der Kanten die Werte
 $v_j\coloneqq v\left(\Mid(E_j)\right)$ für alle $j\in\{1,2,3\}$. 
-Gesucht sind damit die Werte $v(P_1)$, $v(P_2)$ und $v(P_3)$.
+Gesucht sind die Werte $v(P_1)$, $v(P_2)$ und $v(P_3)$.
 
 Da $\vcr\in\CR^1(\Tcal)$, ist $v$ affin. Damit gilt für eine Kante
-$E=\conv\{P,Q\}\in\{E_1,E_2,E_3\}$, dass $v(\Mid(E))$ gegeben ist durch den
-Mittelwert von $v(P)$ und $v(Q)$.
+$E=\conv\{P,Q\}\in\{E_1,E_2,E_3\}$, dass $v(\Mid(E))$ gegeben ist durch das
+arithmetische Mittel von $v(P)$ und $v(Q)$.
 Somit erhalten wir die drei Gleichungen
 \begin{align*}
   v_1 &= \frac{v(P_1)+v(P_2)}{2},  
@@ -680,10 +680,11 @@ $v(P_1)$, $v(P_2)$ und $v(P_3)$ lösen und erhalten die gesuchten Werte
 \begin{align*}
  v(P_1)&=v_1+v_3-v_2, &v(P_2)&= v_1+v_2-v_3,&v(P_3)&=v_2+v_3-v_1.
 \end{align*}
-Wir realisieren dies mit der Methode
+Wir realisieren diese Berechnung in der Methode
 \begin{center}
   \texttt{./nonconforming/common/computeNodeValuesCR4e.m}.
 \end{center} 
+
 
 \subsection{Berechnung von Sprungtermen}
 \label{sec:jumptTermsImplementation}

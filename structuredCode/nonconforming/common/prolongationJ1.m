@@ -50,9 +50,8 @@ function vNew = prolongationJ1(c4n, n4e, n4sB, c4nNew, n4eNew, v)
     
   vNew = zeros(nrSidesNew, 1);
   for elem = 1:nrElemsNew
-    sides = s4eNew(elem, :);
     temp = valNew(3*elem - [2 1 0]); % values in nodes of current element
-    vNew(sides) = (temp + temp([2 3 1]))/2; 
+    vNew(s4eNew(elem, :)) = (temp + temp([2 3 1]))/2; 
      % average the values in nodes of the current edge for the value in
      % midpoint 
      % no addition needed since CR continuous in the midpoints BUT this
