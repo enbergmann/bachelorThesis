@@ -696,7 +696,7 @@ $\vcr\in\CR^1_0(\Tcal)$
 %und zur Auswertung der kontinuierlichen Energie $E(\vcr)$ einer 
 %Crouzeix-Raviart Funktion $\vcr$, deren diskrete Energie $\Enc(\vcr)$
 %bereits bekannt ist, 
-für alle Kanten $F\in\Ecal$ die Terme $\Vert [\vcr]_F\Vert_{L^1(F)}$ 
+für jede Kante $F\in\Ecal$ den Term $\Vert [\vcr]_F\Vert_{L^1(F)}$ 
 bestimmt.
 
 Da $\vcr\in\CR^1_0(\Tcal)$, ist $[\vcr]_F$ affin und es gilt
@@ -716,14 +716,14 @@ $p(t)\coloneqq [\vcr]_F\big(\xi(t)\big)$. Dann gilt
   &= \frac{|F|}{2}\left(\int_0^1 |p(t)|\dt + \int_1^2 |p(t)|\dt\right).
 \end{align*}
 Da $\vcr\in\CR^1_0(\Tcal)$, ist $|p(\bullet)|$ auf $[0,1]$ und $[1,2]$ jeweils
-ein Polynom von Grad $1$ mit $|p(1)|=\left|[\vcr]_F\big(\Mid(F)\big)\right|=0$. 
+ein Polynom vom Grad $1$ mit $|p(1)|=\left|[\vcr]_F\big(\Mid(F)\big)\right|=0$. 
 Somit können wir $|p|$ explizit ausdrücken durch
 \begin{align*}
   |p(t)|&=(1-t)|p(0)| \quad\text{für alle }t\in[0,1] \quad\text{und }\\
   |p(t)|&=(t-1)|p(2)| \quad\text{für alle }t\in[1,2].
 \end{align*}
 Damit erhalten wir, aufgrund der Exaktheit der Mittelpunktsregel für Polynome
-von Grad 1, dass
+vom Grad 1, dass
 \begin{align*}
   \int_0^1 |p(t)|\dt 
   &= 
@@ -744,12 +744,8 @@ Insgesamt gilt also
   =
   \frac{|F|}{4}\big(|p(0)|+|p(2)|\big)\\
   &= 
-  \frac{|F|}{4}\big(|[\vcr]_F(P_1)|+|[\vcr]_F(P_2)|\big),
+  \frac{|F|}{4}\big(|[\vcr]_F(P_1)|+|[\vcr]_F(P_2)|\big).
 \end{align*}
-beziehungsweise 
-  $\Vert [\vcr]_F\Vert_{L^1(F)} =
-  \frac{|F|}{4}\big(|\vcr(P_1)|+|\vcr(P_2)|\big)$ für eine Randkanten
-  $F\in\Ecal(\partial\Omega)$.
 Realisiert wird dies in der Methode
 \begin{center}
   \texttt{./nonconforming/common/computeL1NormOfJump4s.m}.
