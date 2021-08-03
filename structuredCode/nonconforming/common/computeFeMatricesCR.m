@@ -37,10 +37,12 @@ function [stiMaCR, maMaCR] = computeFeMatricesCR(currData)
 %% MAIN
   % compute local stiffness and mass matrices
   for elem = 1:nrElems
-    stiMaCRlocal(:, :, elem) = ...
-      area4e(elem)*(gradsCR4e(:, :, elem)*gradsCR4e(:, :, elem)'); 
+    area4elem = area4e(elem);
+    gradsCR4elem = gradsCR4e(:, :, elem);
+
+    stiMaCRlocal(:, :, elem) = area4elem*gradsCR4elem*gradsCR4elem'; 
       % local stiffness matrix
-    maMaCRlocal(:, :, elem) = area4e(elem)*eye(3)/3; 
+    maMaCRlocal(:, :, elem) = area4elem*eye(3)/3; 
       % local mass matrix
   end
   

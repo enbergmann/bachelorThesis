@@ -3,6 +3,8 @@ gucken, ob wirklich alles klar ist
 
 fertig 6.1, 6.4
 
+content fertig, find typos: 6.3
+
 ##################
 
 gucke in der Arbeit ob S^1(\Tcal) jemals nochmal genutzt wird. Falls nicht,
@@ -34,10 +36,6 @@ dass Integrate nur außerhalb ausgeführt wird)
 
 schreibe in der Auswertung Lösung entlag der x (blau) und y (rot) Achse oder so
 für solutionAxis, inSiAxis
-
-##################
-
-update docstring of solvePrimalDualFormulation
 
 ##################
 

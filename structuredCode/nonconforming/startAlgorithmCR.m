@@ -5,8 +5,9 @@ function startAlgorithmCR(benchmark)
 %
 % startAlgorithmCR.m
 % input: benchmark - 'string'/'char array with exactly one row' containing the 
-%                    name of the benchmark the user wants to use (optional
-%                    parameter, default value is 'editable')
+%                    name of the benchmark (a Matlab-function in the folder
+%                    ./benchmarks/) the user wants to use (optional parameter,
+%                    default value is 'editable')
 
 %% INIT
   % initialize paths and load benchmark
@@ -122,9 +123,9 @@ function startAlgorithmCR(benchmark)
     currData.maMaCR = maMaCR;
 
     varLambda = gradCRu0./repmat(sqrt(sum(gradCRu0.^2, 2)), 1, 2);
-    varLambda(isinf(varLambda)) = 0; % this is prob. unnecessary, since only
-                                     % 0/0 = NaN happens by definition
-                                     % remains here just to be save
+    varLambda(isinf(varLambda)) = 0; 
+      % NOTE this should be unnecessary, since only 0/0 = NaN happens by
+      %      definition, but it remains here just to be save
     varLambda(isnan(varLambda)) = 0;
 
     dof = computeDofCR(currData);
@@ -176,7 +177,6 @@ function startAlgorithmCR(benchmark)
       sqrt(temp'*maMaCR*temp);
 
     % ESTIMATE
-    
     l1NormOfJump4s = computeL1NormOfJump4s(currData, output);
     currData.l1NormOfJump4s = l1NormOfJump4s;
     outputLvlHidden.sumL1NormOfJumps(end+1, 1) = sum(l1NormOfJump4s);

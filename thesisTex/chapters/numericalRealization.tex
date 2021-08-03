@@ -306,7 +306,7 @@ In der Benchmark-Datei für den Programmaufruf müssen dafür, neben dem
 Eingangssignal $f\in H^1_0(\Omega)$, die Lösung $u\in H^1_0(\Omega)$, die
 exakte Energie $E(u)$ und der schwache Gradient von $f$ gegeben sein. 
 Damit diese Informationen tatsächlich genutzt werden, müssen zusätzlich einige
-Parameter passend gewählt werden. 
+Parameter aus \Cref{tab:paramsExperiment} passend gewählt werden. 
 Diese Wahlen sind
 \begin{itemize}
   \item \texttt{useImage = false},
@@ -338,7 +338,8 @@ ermittelt, zum Beispiel die Flächeninhalte der Dreiecke und die Freiheitsgrade,
 das heißt in dieser Implementierung die inneren Kanten, der aktuellen
 Triangulierung $\Tcal$. 
 Insbesondere werden die auf dem Level mehrmals benötigten Gradienten der
-lokalen Crouzeix-Raviart-Basisfunktionen auf allen Dreiecken berechnet (cf.
+lokalen Crouzeix-Raviart-Basisfunktionen aus
+\Cref{sec:crouzeixRaviartFunctions} auf allen Dreiecken berechnet (cf.
 \cite[Abschnitt 1.4.2]{CGKNRR10}) in
 \begin{center}
   \texttt{./nonconforming/common/computeGradsCR4e.m}.
@@ -405,7 +406,7 @@ Genutzt wird dafür die Methode
   \texttt{./nonconforming/main/solvePrimalDualFormulation.m}.
 \end{center}
 Details dazu diskutieren wir in \Cref{sec:implementationPrimalDualIteration}.
-Mit den letzten Iterat $u_J\in\CR^1_0(\Tcal)$ als Approximation der Lösung von
+Mit dem letzten Iterat $u_J\in\CR^1_0(\Tcal)$ als Approximation der Lösung von
 \Cref{prob:discreteProblem} auf dem Level berechnen wir anschließend
 $|E(u)-\Enc(u_J)|$ und, mithilfe der Methode \texttt{error4eCRL2}
 \cite[Abschnitt 1.8.3]{CGKNRR10} des AFEM-Soft\-ware\-pakets, den
@@ -425,6 +426,9 @@ auf deren Ergebnis
 \begin{center}
     \texttt{./nonconforming/common/computeDiscreteEnergyCR.m} 
 \end{center}
+% TODO computeDiscreteEnergyCR im vorherigen Abschnitt auf hier verweisen
+% oder sowas ,,details zur Berechnung der diskreten Energie sind am Ende
+% des folgenden Abschnitts zu finden
 %%%%TODO
 Weiterhin wird zur Berechnung der garantierten unteren Energieschranke 
 aus \Cref{thm:gleb} und des Verfeinerungsindikators aus
@@ -506,7 +510,7 @@ $\hat\Tcal$, zum Beispiel die Anzahl und Längen der Seiten der Triangulierung.
 Soll als Startwert für das nächste Level eine Prolongation $\hat
 u_J\in\CR^1_0\big(\hat\Tcal\big)$ von $u_J$ auf $\hat\Tcal$ genutzt werden,
 festgelegt durch den Parameter \texttt{useProlongation} aus
-\Cref{tab:paramsAFEM}, wird dies durch die Methode
+\Cref{tab:paramsAFEM}, wird dessen Berechnung in der Methode
 \begin{center}
   \texttt{./nonconforming/common/prolongationJ1.m}
 \end{center}
@@ -520,25 +524,24 @@ wie in \Cref{sec:localNodalValuesCR} beschrieben.
 
 \section{Realisierung der primalen-dualen Iteration}
 \label{sec:implementationPrimalDualIteration}
-In diesen Abschnitt beschreiben wir die Methode
+In diesem Abschnitt beschreiben wir die Methode
 \begin{center}
   \texttt{./nonconforming/main/solvePrimalDualFormulation.m}.
 \end{center}
 Dabei benutzen wir die Bezeichnungen aus \Cref{alg:primalDualIteration}, der
 in dieser Methode realisiert wird.
 Wie in \Cref{sec:programFlow} beschrieben, sind vor Aufruf der Methode bereits
-alle benötigten Informationen über die aktuelle Triangulierung $\Tcal$
-sowie die Steifig\-keits- und Massenmatix aus \Cref{rem:primalDualMatrixEquations}
+alle benötigten Informationen über die aktuelle Triangulierung $\Tcal$ sowie
+die Steifig\-keits- und Massenmatrix aus \Cref{rem:primalDualMatrixEquations}
 und die Integrale $\int_\Omega f\psi_F\dx$ für alle
 Crouzeix-Raviart-Basisfunktionen $\psi_F$, $F\in\Ecal$, bekannt.
-Mit der Steifigkeits- und Massenmatrix ist direkt ersichtlich, 
-%TODO, zu oft ,,direkt ersichtlich``
-wie die Koeffizientenmatrix des Gleichungssystems
-\eqref{eq:linSysPrimalDualAlgMatrixEq} implementiert werden kann.
-Für die Implementierung der rechten Seite dieses Systems nutzten wir die
-folgende Beobachtung.
-Für alle $k\in\{1,2,\cdots,|\Ecal|\}$ gilt, da $\gradnc u_{j-1}$,
-$\Lambda_j$ und $\gradnc \psi_{E_k}$ stückweise konstant sind, dass
+Mit der Steifigkeits- und Massenmatrix kann die Koeffizientenmatrix des
+Gleichungssystems \eqref{eq:linSysPrimalDualAlgMatrixEq} ohne Weiteres
+berechnet werden.
+Für die Implementierung der rechten Seite $\overline b$ dieses Systems nutzten
+wir die folgende Beobachtung.
+Für alle $k\in\{1,2,\cdots,|\Ecal|\}$ und alle $j\in\Nbb$ gilt, da $\gradnc
+u_{j-1}$, $\Lambda_j$ und $\gradnc \psi_{E_k}$ stückweise konstant sind, dass
 \begin{align*}
   \left(\frac{1}{\tau}\gradnc u_{j-1}-\Lambda_j,\gradnc\psi_{E_k}\right)
   &=
@@ -554,15 +557,9 @@ Da die Terme $\left(f,\psi_{E_k}\right)=\int_\Omega f\psi_{E_k}\dx$ bereits
 berechnet wurden, können wir somit die rechte Seite $\overline b$
 implementieren.
 Es ist direkt ersichtlich wie der verbleibende Teil von
-\Cref{alg:primalDualIteration} implementiert werden kann.
-Sonstige Informationen über die Iteration, wie etwa das Abbruchkriterium,
-diskutieren wir in \Cref{chap:experiments}. 
-%TODO stimmt nicht mehr, Abbruchkriterium schon gewählt, Satz anders oder vlt
-% ganz raus
+\Cref{alg:primalDualIteration} mit Abbruchkriterium
+\eqref{eq:terminationCriterion} realisiert werden kann.
 
-% TODO computeDiscreteEnergyCR im vorherigen Abschnitt auf hier verweisen
-% oder sowas ,,details zur Berechnung der diskreten Energie sind am Ende
-% des folgenden Abschnitts zu finden
 Es bleibt anzumerken, dass in \texttt{solvePrimalDualFormulation}, neben 
 \Cref{alg:primalDualIteration}, der Ausgabe des Fortschritts sowie
 der Übergabe von Ergebnissen der Iteration, auch die
@@ -603,7 +600,6 @@ Dann gilt
 \section{Mathematische Grundlagen ausgewählter Methoden}
 \label{sec:mathematicalBasicsForMethods}
 
-
 \subsection{Berechnung lokaler Crouzeix-Raviart-Basisfunktionen}
 \label{sec:localCRBasisRealization}
 
@@ -612,7 +608,8 @@ In der Methode
   \texttt{./nonconforming/common/integralsWithInSi.m}
 \end{center}
 werden auf allen Dreiecken einer Triangulierung $\Tcal$ die lokalen
-Crouzeix-Raviart-Basis\-funk\-tio\-nen benötigt. 
+Crouzeix-Raviart-Basis\-funk\-tio\-nen aus \Cref{sec:crouzeixRaviartFunctions}
+benötigt. 
 Sei $T\in\Tcal$ mit $T=\conv\left\{P_1,P_2,P_3\right\}$.
 Da nach \Cref{eq:connectionCrBarycentric} die lokalen
 Crouzeix-Raviart-Basisfunktionen $\psi_{F}|_T$, $F\in\Ecal(T)$, darstellbar

@@ -1,8 +1,8 @@
 function  [u, nrIter, corrVec, energyVec, otherCorr] = ...
     solvePrimalDualFormulation(params, currData, u, varLambda) 
-%% DOC TODO update
-% Executes the nonconfomring iteration on the triangulation given
-% by [c4n, n4e] with initial values u and varLambda.
+%% DOC 
+% Executes the nonconforming iteration on the triangulation given by [c4n, n4e]
+% with initial values u and varLambda.
 %
 % solvePrimalDualFormulation.m
 % input: params    - 'struct' with fields:
@@ -13,9 +13,9 @@ function  [u, nrIter, corrVec, energyVec, otherCorr] = ...
 %                           showProgress: 'logical' with value 1 if progress
 %                                         must be printed during the iteration
 %                                         and 0 else
-%                                epsStop: 'double' containing the minimal value
-%                                         corr must reach for the iteration to
-%                                         terminate
+%                                epsStop: 'double' containing \epsilon_{stop}
+%                                         for the termination criterion of the
+%                                         iteration
 %                                maxIter: 'uint64' containing the number of
 %                                         iteration steps the iteration must
 %                                         not exceed
@@ -73,11 +73,25 @@ function  [u, nrIter, corrVec, energyVec, otherCorr] = ...
 % output: u         - '(nrSides x 1)-dimensional double array' where the j-th
 %                     row contains the CR coefficient of the final iterate of
 %                     the iteration, i.e. the approximated solution
+%         nrIter    - 'uint64' containing the number of iteration steps until
+%                     the iteration terminated
 %         corrVec   - '(1 x nrIter) - dimensional double array' where the
-%                     j-th column contains the corr for the j-th iteration step
-%         energyVec - '(1 x nrIter) - dimensional double array' where the
-%                     j-th column contains the discrete energy of the j-th
-%                     iterate 
+%                     j-th column contains |||(u_j - u_{j-1})/\tau|||_{NC} 
+%         energyVec - '(1 x (nrIter + 1)) - dimensional double array' where the
+%                     j-th column contains the discrete energy of the (j +
+%                     1)-th iterate 
+%         otherCorr - 'struct' with fields:
+%                                      eNcAbsDiffVec: as corrVec with
+%                                                     |E(u_j) - E(u_{j-1})|
+%                                bar15TerminationVec: as corrVec with
+%                                                     ||(u_j - u_{j-1})/...
+%                                                     \tau||_{h,s} (cf. Bar15,
+%                                                     p. 316)
+%                       bar15TerminationWithoutL2Vec: as bar15TerminationVec
+%                                                     without L2-contribution
+%                            bar12TerminationSqrtVec: as corrVec with 
+%                                                     ||(u_j - u_{j-1})/\tau||
+%                                                     (cf. Bar12, p. 1173)
 
 %% INIT
   % extract necessary parameters from params
