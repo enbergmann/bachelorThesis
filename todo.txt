@@ -1,9 +1,6 @@
-Kapitel 6 nochmal eins zu eins gegen Programm checken und bei allen Funktionen
-gucken, ob wirklich alles klar ist
-
 fertig 6.1, 6.4
 
-content fertig, find typos: 6.3
+proofread: 6.2, 6.3
 
 ##################
 

@@ -407,33 +407,35 @@ Genutzt wird dafür die Methode
 \end{center}
 Details dazu diskutieren wir in \Cref{sec:implementationPrimalDualIteration}.
 Mit dem letzten Iterat $u_J\in\CR^1_0(\Tcal)$ als Approximation der Lösung von
-\Cref{prob:discreteProblem} auf dem Level berechnen wir anschließend
+\Cref{prob:discreteProblem} auf dem Level berechnen wir unter anderem
 $|E(u)-\Enc(u_J)|$ und, mithilfe der Methode \texttt{error4eCRL2}
-\cite[Abschnitt 1.8.3]{CGKNRR10} des AFEM-Soft\-ware\-pakets, den
-Fehler $\Vert u - u_J\Vert$.
+\cite[Abschnitt 1.8.3]{CGKNRR10} des AFEM-Soft\-ware\-pakets, den Fehler $\Vert
+u - u_J\Vert$.
 Außerdem werden Informationen über die Iteration und ihre Ergebnisse
 gespeichert und gegebenenfalls ausgegeben. 
 %%%%TODO formulieren. Außerdem: muss noch eine dieser Funktionen detaillierter 
   % beschrieben werden?
-Die garantierte obere Energieschranke $\Enc(J_1 u_J)$ wird dabei berechnet 
+Zur Berechnung der garantierten oberen Energieschranke $\Enc(J_1 u_J)$ nach
+\eqref{eq:gueb} nutzen wir anschließend die Methoden
 \begin{center}
     \texttt{./nonconforming/common/computeJ1.m},
 \end{center}
-auf deren Ergebnis
+die $J_1 u_J\in P_1(\Tcal)\cap C_0(\Omega)\subset \CR^1_0(\Tcal)$ mit dem
+Operator $J_1$ aus \eqref{eq:enrichmentOperator} bestimmt,
 \begin{center}
-    \texttt{./nonconforming/common/courant2CR.m} 
+    \texttt{./nonconforming/common/courant2CR.m},
 \end{center}
+welche die Koeffizienten von $J_1 u_J$ bezüglich der
+Crouzeix-Raviart-Basisfunktionen aus \Cref{sec:crouzeixRaviartFunctions} 
+ermittelt, und schließlich
 \begin{center}
-    \texttt{./nonconforming/common/computeDiscreteEnergyCR.m} 
+    \texttt{./nonconforming/common/computeDiscreteEnergyCR.m},
 \end{center}
-% TODO computeDiscreteEnergyCR im vorherigen Abschnitt auf hier verweisen
-% oder sowas ,,details zur Berechnung der diskreten Energie sind am Ende
-% des folgenden Abschnitts zu finden
-%%%%TODO
-Weiterhin wird zur Berechnung der garantierten unteren Energieschranke 
-aus \Cref{thm:gleb} und des Verfeinerungsindikators aus
-\Cref{def:refinementIndicator} für alle $T\in\Tcal$ der Term $\Vert f-\alpha
-u_J\Vert_{L^2(T)}^2$ benötigt.
+welche $\Enc(J_1 u_J)$, wie zum Abschluss des nächsten Abschnitts
+\ref{sec:implementationPrimalDualIteration} beschrieben, berechnet.
+Zum Bestimmen der garantierten unteren Energieschranke aus \Cref{thm:gleb} und
+des Verfeinerungsindikators aus \Cref{def:refinementIndicator} benötigen wir
+dann für alle $T\in\Tcal$ den Term $\Vert f-\alpha u_J\Vert_{L^2(T)}^2$.
 Zur Berechnung dieser Terme nutzen wir die Methode
 \begin{center}
   \texttt{./nonconforming/common/computeNormDiffInSiSolCrSquared4e.m}
@@ -452,10 +454,11 @@ Dann gilt
   - 2\alpha\sum_{k=1}^3 v_k\int_T f\psi_{E_k}\!|_T\dx
   + \alpha^2 \sum_{k=1}^3 \sum_{\ell=1}^3 
   v_k \left(\psi_{E_k}\!|_T,\psi_{E_\ell}|_T\right)_{L^2(T)}v_\ell.
-\end{align*} Zur Berechung des ersten Terms nutzen wir die \texttt{integrate}
-Methode des AFEM-Soft\-ware\-pakets und für die Berechnung des zweiten Terms
-merken wir an, dass die Integrale $\int_T f\psi_{E_k}\!|_T\dx$,
-$k\in\{1,2,3\}$, bereits ermittelt wurden.
+\end{align*} 
+Um den ersten Term zu berechnen, nutzen wir die \texttt{integrate} Methode des
+AFEM-Soft\-ware\-pakets und für die Berechnung des zweiten Terms merken wir an,
+dass die Integrale $\int_T f\psi_{E_k}\!|_T\dx$, $k\in\{1,2,3\}$, bereits
+ermittelt wurden.
 Der letzte Term vereinfacht sich durch Nutzung der expliziten Darstellung
 \eqref{eq:localMassmatrix} der lokalen Massenmatrix $M_T$ zu
 \begin{align*}
@@ -463,11 +466,10 @@ Der letzte Term vereinfacht sich durch Nutzung der expliziten Darstellung
     v_k \left(\psi_{E_k}\!|_T,\psi_{E_\ell}|_T\right)_{L^2(T)}v_\ell
   =
   \alpha^2 \sum_{k=1}^3 \sum_{\ell=1}^3 
-    v_k M_T v_\ell
+  v_k M_{T,k\ell} v_\ell
   =
-  \alpha^2\frac{|T|}{3}\sum_{k=1}^3 v_k^2
+  \alpha^2\frac{|T|}{3}\sum_{k=1}^3 v_k^2.
 \end{align*}
-und es wird damit direkt ersichtlich, wie dieser implementiert werden kann.
 Unter erneuter Zuhilfenahme der \texttt{integrate} Methode wird anschließend
 in
 \begin{center}
@@ -488,14 +490,17 @@ und seine Anteile $\eta_\textup{V}$ und $\eta_J$ berechnet in der Methode
 \end{center}
 Es folgt die Ausgabe einiger relevanter Informationen über das Level und das
 Abspeichern dieser und weiterer Ergebnisse in den durch die Paramter in
-\Cref{tab:paramsDoc} gewählten Ordnern.
+\Cref{tab:paramsDoc} gewählten Ordner mittels der Methode
+\begin{center}
+  \texttt{./nonconforming/misc/saveResultsCR.m}.
+\end{center}
 Endet nun der AFEM-Algorithmus nach Überprüfung des Abbruchkriteriums nicht,
 das heißt ist die Anzahl der Freiheitsgrade der Triangulierung des aktuellen
 Levels geringer als die Zahl \texttt{minNrDof} aus \Cref{tab:paramsAFEM}, so
 werden mithilfe des Verfeinerungsindikators $\eta$ die Dreiecke markiert, die
 verfeinert werden sollen. 
-Dafür nutzen wir die folgenden, in \cite[Abschnitt 1.6]{CGKNRR10}
-beschriebenen, Methoden des AFEM-Softwarepakets.
+Dafür nutzen wir die folgenden Methoden des AFEM-Softwarepakets, die in
+\cite[Abschnitt 1.6]{CGKNRR10} beschriebenen sind.
 Gilt für den Bulk-Parameter $\theta$, gewählt durch \texttt{parTheta} aus
 \Cref{tab:paramsAFEM}, dass $\theta=1$, so nutzen
 wir die Methode \texttt{markUniform}. Gilt $\theta\in(0,1)$, so nutzen wir
@@ -505,7 +510,7 @@ Zum Verfeinern der Triangulierung wird anschließend die Methode
 
 Zum Abschluss werden bereits Informationen für das nächste Level vorbereitet. 
 Dazu gehören die Datenstrukturen, welche die verfeinerte Triangulierung
-$\hat\Tcal$ beschreiben sowie einige weitere Eigenschaften von
+$\hat\Tcal$ beschreiben, sowie einige weitere Eigenschaften von
 $\hat\Tcal$, zum Beispiel die Anzahl und Längen der Seiten der Triangulierung.
 Soll als Startwert für das nächste Level eine Prolongation $\hat
 u_J\in\CR^1_0\big(\hat\Tcal\big)$ von $u_J$ auf $\hat\Tcal$ genutzt werden,
