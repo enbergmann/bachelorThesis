@@ -1,9 +1,3 @@
-fertig 6.1, 6.4
-
-proofread: 6.2, 6.3
-
-##################
-
 gucke in der Arbeit ob S^1(\Tcal) jemals nochmal genutzt wird. Falls nicht,
 die Definition der Couran-Finite-Elemente-Funktionen verschieben aus Notation
 in die Einleitung an die Stelle, an der ich über Bartels Ansatz schreibe

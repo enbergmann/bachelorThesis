@@ -303,8 +303,9 @@ genutzt werden, welche dafür die Matlab-Funktion \texttt{awgn} verwendet.
 In diesem Abschnitt betrachten wir eine beispielhafte Ausführung des Programms,
 bei der alle relevanten Methoden genutzt werden.
 In der Benchmark-Datei für den Programmaufruf müssen dafür, neben dem
-Eingangssignal $f\in H^1_0(\Omega)$, die Lösung $u\in H^1_0(\Omega)$, die
-exakte Energie $E(u)$ und der schwache Gradient von $f$ gegeben sein. 
+Eingangssignal $f\in H^1_0(\Omega)$, die Lösung $u\in H^1_0(\Omega)$ von
+\Cref{prob:continuousProblem} mit Eingangssignal $f$, die exakte Energie $E(u)$
+und der schwache Gradient von $f$ gegeben sein. 
 Damit diese Informationen tatsächlich genutzt werden, müssen zusätzlich einige
 Parameter aus \Cref{tab:paramsExperiment} passend gewählt werden. 
 Diese Wahlen sind
@@ -489,7 +490,7 @@ und seine Anteile $\eta_\textup{V}$ und $\eta_J$ berechnet in der Methode
   \texttt{./nonconforming/estimate/estimateErrorCR4e.m}.
 \end{center}
 Es folgt die Ausgabe einiger relevanter Informationen über das Level und das
-Abspeichern dieser und weiterer Ergebnisse in den durch die Paramter in
+Abspeichern dieser und weiterer Ergebnisse in den durch die Parameter in
 \Cref{tab:paramsDoc} gewählten Ordner mittels der Methode
 \begin{center}
   \texttt{./nonconforming/misc/saveResultsCR.m}.
@@ -539,7 +540,8 @@ Wie in \Cref{sec:programFlow} beschrieben, sind vor Aufruf der Methode bereits
 alle benötigten Informationen über die aktuelle Triangulierung $\Tcal$ sowie
 die Steifig\-keits- und Massenmatrix aus \Cref{rem:primalDualMatrixEquations}
 und die Integrale $\int_\Omega f\psi_F\dx$ für alle
-Crouzeix-Raviart-Basisfunktionen $\psi_F$, $F\in\Ecal$, bekannt.
+Crouzeix-Raviart-Basisfunktionen $\psi_F$, $F\in\Ecal$, aus
+\Cref{sec:crouzeixRaviartFunctions} bekannt.
 Mit der Steifigkeits- und Massenmatrix kann die Koeffizientenmatrix des
 Gleichungssystems \eqref{eq:linSysPrimalDualAlgMatrixEq} ohne Weiteres
 berechnet werden.
@@ -568,8 +570,9 @@ Es ist direkt ersichtlich wie der verbleibende Teil von
 Es bleibt anzumerken, dass in \texttt{solvePrimalDualFormulation}, neben 
 \Cref{alg:primalDualIteration}, der Ausgabe des Fortschritts sowie
 der Übergabe von Ergebnissen der Iteration, auch die
-nichtkonformen Energien $\Enc(u_j)$ der Iterate berechnet werden. 
-Diese Berechnung ist realisiert in
+Berechnung der nichtkonformen Energien $\Enc(u_j)$ der Iterate realisiert 
+wird. 
+Diese wird ausgeführt in
 \begin{center}
   \texttt{./nonconforming/common/computeDiscreteEnergyCR.m}.
 \end{center}
