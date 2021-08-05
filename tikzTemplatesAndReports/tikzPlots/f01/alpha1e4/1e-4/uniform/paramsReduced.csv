@@ -1,2 +1,0 @@
-geometry,polygonMesh,initialRefinementLevel,initialEpsStop,useProlongation,rhsGradientKnown,exactSolutionKnown,uExact,useExactEnergy,exactEnergy,parTau,saveScreenshots,degree4Integrate,showPlots,figVisible,plotModeGrayscale,showProgress,plotGivenFunctions,refinementLevel4Plots,debugIfError,expName,dirInfoName,u0Mode,f,gradF,benchmark
-BigSquare,0,0,0.0001,1,1,1,,0,-2.05803406239,0.5,0,10,0,off,0,1,0,9,0,f01Alpha1e4,uniform,zeros,,,f01Alpha1e4Uniform
