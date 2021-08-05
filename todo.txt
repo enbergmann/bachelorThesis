@@ -60,6 +60,8 @@ EXPERIMENTE
     beiden gammas plotten und genau diese Info in einem Satz erwähnen und vlt
     auch in der Legende beides für einen Graphen angeben gamma = 0, 1e-4)
 
+
+
 AUSBLICK (vielleicht in die Arbeit schreiben)
   
   Randdaten verallgemeinern
