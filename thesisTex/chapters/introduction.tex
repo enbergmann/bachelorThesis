@@ -55,10 +55,10 @@ eine Funktion $u\in\BV(\Omega)\cap L^2(\Omega)$, die das Funktional
 unter allen $v\in\BV(\Omega)\cap L^2(\Omega)$ minimiert.
 Wird hierbei $\alpha$ zu klein gewählt, führt das zu einer zu stark
 geglätteten, verwaschen aussehenden Lösung, zu sehen zum Beispiel in den
-Abbildungen \ref{fig:snr10alpha100} und \ref{fig:snr10alpha1000}. 
+Abbildungen \ref{fig:snr15alpha100} und \ref{fig:snr15alpha1000}. 
 Wird andererseits $\alpha$ zu groß gewählt, ist die Verminderung des Rauschens
 im Vergleich zum Eingangssignal $g$ nur gering, zu sehen zum Beispiel in den
-Abbildungen \ref{fig:snr10alpha5000} und \ref{fig:snr10alpha10000}.
+Abbildungen \ref{fig:snr15alpha10000} und \ref{fig:snr15alpha50000}.
 Für weitere Details und Referenzen zur Rauschunterdrückung und zur Wahl von
 $\alpha$ siehe \cite{Get12}.
 
@@ -133,55 +133,67 @@ und Details zur Implementierung des Algorithmus und schließlich in
 \newpage
 \begin{figure}[!ht]
   \centering
-  \begin{subfigure}[b]{.4\linewidth}
+  \begin{subfigure}[b]{.48\linewidth}
     \caption{Originalbild}
-    \includegraphics[width=\linewidth]{pictures/introBeta/cameraman.png}
-    \label{fig:camerman}
+    \includegraphics[width=\linewidth]
+      {pictures/chapIntroduction/denoiseSNR15/cameraman.png}
+    \label{fig:cameraman}
   \end{subfigure}
   \quad
-  \begin{subfigure}[b]{.4\linewidth}
+  \begin{subfigure}[b]{.48\linewidth}
     \caption{Originalbild mit AWGN}
-    \includegraphics[width=\linewidth]{pictures/introBeta/snr10.png}
-    \label{fig:camermanSNR10}
+    \includegraphics[width=\linewidth]
+      {pictures/chapIntroduction/denoiseSNR15/cameramanSNR15.png}
+    \label{fig:cameramanSNR15}
   \end{subfigure}
 
-  \begin{subfigure}{.3\linewidth}
+  \vspace{-3mm}
+
+  \begin{subfigure}{.32\linewidth}
     \caption{$\alpha=100$}
-    \includegraphics[trim = 60 20 60 20, clip, width=\linewidth]
-      {pictures/introBeta/snr10/00100.png}
-    \label{fig:snr10alpha100}
+    \includegraphics[trim = 100 30 80 20, clip, width=\linewidth]
+      {pictures/chapIntroduction/denoiseSNR15/alpha100/solutionGrayscale.png}
+    \label{fig:snr15alpha100}
   \end{subfigure}
-  \begin{subfigure}{.3\linewidth}
+  \begin{subfigure}{.32\linewidth}
     \caption{$\alpha=1000$}
-    \includegraphics[trim = 60 20 60 20, clip, width=\linewidth]
-      {pictures/introBeta/snr10/01000.png}
-    \label{fig:snr10alpha1000}
+    \includegraphics[trim = 100 30 80 20, clip, width=\linewidth]
+      {pictures/chapIntroduction/denoiseSNR15/alpha1000/solutionGrayscale.png}
+    \label{fig:snr15alpha1000}
   \end{subfigure}
-  \begin{subfigure}{.3\linewidth}
+  \begin{subfigure}{.32\linewidth}
     \caption{$\alpha=2500$}
-    \includegraphics[trim = 60 20 60 20, clip, width=\linewidth]
-      {pictures/introBeta/snr10/02500.png}
-    \label{fig:snr10alpha2500}
+    \includegraphics[trim = 100 30 80 20, clip, width=\linewidth]
+      {pictures/chapIntroduction/denoiseSNR15/alpha2500/solutionGrayscale.png}
+    \label{fig:snr15alpha2500}
   \end{subfigure}
 
-  \begin{subfigure}{.3\linewidth}
+  \vspace{-3mm}
+  
+  \begin{subfigure}{.32\linewidth}
     \caption{$\alpha=5000$}
-    \includegraphics[trim = 60 0 60 20, clip, width=\linewidth]
-      {pictures/introBeta/snr10/05000.png}
-    \label{fig:snr10alpha5000}
+    \includegraphics[trim = 100 30 80 20, clip, width=\linewidth]
+      {pictures/chapIntroduction/denoiseSNR15/alpha5000/solutionGrayscale.png}
+    \label{fig:snr15alpha5000}
   \end{subfigure}
-  \begin{subfigure}{.3\linewidth}
+  \begin{subfigure}{.32\linewidth}
     \caption{$\alpha=10000$}
-    \includegraphics[trim = 60 0 60 20, clip, width=\linewidth]
-      {pictures/introBeta/snr10/10000.png}
-    \label{fig:snr10alpha10000}
+    \includegraphics[trim = 100 30 80 20, clip, width=\linewidth]
+      {pictures/chapIntroduction/denoiseSNR15/alpha10000/solutionGrayscale.png}
+    \label{fig:snr15alpha10000}
+  \end{subfigure}
+  \begin{subfigure}{.32\linewidth}
+    \caption{$\alpha=50000$}
+    \includegraphics[trim = 100 30 80 20, clip, width=\linewidth]
+      {pictures/chapIntroduction/denoiseSNR15/alpha50000/solutionGrayscale.png}
+    \label{fig:snr15alpha50000}
   \end{subfigure}
   \caption{Originalbild\protect\footnotemark (a) und Originalbild mit additiven
     weißen gaußschen Rauschen (b) mit einem Signal-Rausch-Verhältnis (eng.\
-    signal-to-noise ratio, SNR) von 10, jeweils mit einem nachträglich
+    signal-to-noise ratio, SNR) von 15, jeweils mit einem nachträglich
     hinzugefügten graduellen Übergang zu schwarzem Rand, der bei
     Graufarbenbildern als Eingangssignal Nullranddaten entspricht. 
-    Außerdem fünf Ergebnisse (c)-(g) des in \Cref{chap:implementation}
+    Außerdem sechs Ergebnisse (c)-(h) des in \Cref{chap:implementation}
     beschriebenen adaptiven Algorithmus mit verschiedenen Werten von $\alpha$.}
   \label{fig:exampleDenoising}
 \end{figure}
