@@ -4,7 +4,6 @@ code/version1/program/evaluation/*.txt
 code/s1Version/program/evaluation/*.txt
 *.out
 *.toc
-*.png
 *.aux
 *.log
 *.fls
@@ -21,6 +20,9 @@ code/s1Version/program/evaluation/*.txt
 results/*
 ccTo/*
 l2Error_1e-*
+tikzTemplatesAndReports/*
+rawFinalExps/*
+code/*
 code/version1/program/t.mat
 code/version1/program/test.mat
 importantProfiles/
