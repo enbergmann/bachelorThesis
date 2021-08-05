@@ -18,7 +18,7 @@ function params = editable %#ok<*MSNU,FNDEF>
   showProgress           = true; 
   degree4Integrate       = 10; 
   plotGivenFunctions     = true;
-  refinementLevel4Plots  = 5; % 11 is very close to the limit
+  refinementLevel4Plots  = 11; % 11 is very close to the limit
     % not effective if plotGivenFunctions==false
   debugIfError           = false;
 
@@ -55,8 +55,8 @@ function params = editable %#ok<*MSNU,FNDEF>
     % not effective if useExactEnergy==false
                               
   % information about experiment for saving and documentation
-  expName                = 'parTau_f01';
-  dirInfoName            = sprintf('%.1f', parTau);
+  expName                = 'standard';
+  dirInfoName            = sprintf('f01');
 
   % function handles (not effective if useImage==true)
   function y = inputSignal(x)
