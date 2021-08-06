@@ -54,7 +54,8 @@ EXPERIMENTE
   - circle stuff, etas sind vergleichbar (was gut, weil so erwarte)
   - h20 Beispeil genau so wie H10, also das vielleicht nur erwähnen ,,eine 
     noch stärke Regularitätsannahme im Beispeil f04, bei dem Lsg und f H20 sind,
-    verbesserte die Raten nicht weiter
+    verbesserte die Raten nicht weiter (verschiebt nur die Graphen nach unter,
+    d.h. früher kleiner Fehler)
   - gamma = 0 im Vergleich der gammas mit erwähnen (da es sich von gamma 1e-4
     nicht unterscheider visuell (nochmal prüfen ob das stimmt) nur eines der
     beiden gammas plotten und genau diese Info in einem Satz erwähnen und vlt
