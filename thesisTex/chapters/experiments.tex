@@ -1,3 +1,137 @@
+allgemeine Sachen (degree4Integrate, parTheta) hier aufführen (mit ,wenn nicht
+anders angegeben)
+
+überlegen, welche Parmeter für jedes Experiment nochmal gesagt werden sollen
+definitiv: 
+
+Triangulierung: hier am Anfang einmal sagen, dass es für Funktionen
+als Input immer BigSquare war und für echte Bilder als Input Square
+
+f01 und cameraman schon hier vorstellen als Beispiel mit exakter Lösung,
+die anderen Funktionen aber erst dann, wenn es soweit ist
+
+Nach \Cref{eq:constructionInputSignal} \ldots
+Für einen Parameter $\beta\geq 1/2$, wir wählen stets $\beta =1$, erhalten wir
+für die Funktion
+\begin{align*}
+  u_1(r)&\coloneqq
+  \begin{cases}
+    1, 
+    & \text{falls } r\in \left[0,\frac{1}{6}\right],\\
+    1+(6r-1)^\beta, 
+    & \text{falls } r\in \left(\frac{1}{6}, \frac{1}{3}\right],\\
+    2, 
+    & \text{falls } r\in \left(\frac{1}{3}, \frac{1}{2}\right],\\
+    2\left(\frac{5}{2}-3r\right)^\beta, 
+    & \text{falls } r\in \left(\frac{1}{2}, \frac{5}{6}\right],\\
+    0, 
+    & \text{falls } r\in \left(\frac{5}{6}, \infty\right),\\
+  \end{cases}
+  \quad\text{mit der Wahl}\\
+  \sgn\big(\partial_r u_1(r)\big) 
+  &\coloneqq
+  \begin{cases}
+    12r-36r^2, 
+    & \text{falls } r\in \left[0,\frac{1}{6}\right],\\
+    1, 
+    & \text{falls } r\in \left(\frac{1}{6}, \frac{1}{3}\right],\\
+    \cos(\pi(6r-2)), 
+    & \text{falls } r\in \left(\frac{1}{3}, \frac{1}{2}\right],\\
+    -1, 
+    & \text{falls } r\in \left(\frac{1}{2}, \frac{5}{6}\right],\\
+    -\frac{1+\cos(\pi(6r-5))}{2}, 
+    & \text{falls } r\in \left(\frac{5}{6}, \infty\right),\\
+  \end{cases}
+  \quad\text{das Eingangssignal}\\
+  f_1(r)
+  &=
+  \begin{cases}
+    \alpha-12(2-9r), 
+    & \text{falls } r\in \left[0,\frac{1}{6}\right],\\
+    \alpha\left(1+(6r-1)^\beta\right)-\frac{1}{r}, 
+    & \text{falls } r\in \left(\frac{1}{6}, \frac{1}{3}\right],\\
+    2\alpha+6\pi\sin(\pi(6r-2))-\frac{1}{r}\cos(\pi(6r-2)), 
+    & \text{falls } r\in \left(\frac{1}{3}, \frac{1}{2}\right],\\
+    2\alpha\left(\frac{5}{2}-3r\right)^\beta+\frac{1}{r},
+    & \text{falls } r\in \left(\frac{1}{2}, \frac{5}{6}\right],\\
+    -3\pi\sin(\pi(6r-5))+\frac{1+\cos(\pi(6r-5))}{2r}, 
+    & \text{falls } r\in \left(\frac{5}{6}, \infty\right).
+  \end{cases}
+\end{align*}
+Die entsprechenden Ableitungen lauten
+\begin{align*}
+  \partial_r f_1(r)
+  &=
+  \begin{cases}
+    108,
+    & \text{falls } r\in\left[0,\frac{1}{6}\right],\\
+    6\alpha\beta(6r-1)^{\beta-1} +\frac{1}{r^2}, 
+    & \text{falls } r\in\left(\frac{1}{6},\frac{1}{3}\right],\\
+    \left(36\pi^2+\frac{1}{r^2}\right)\cos(\pi(6r-2))
+    + \frac{6\pi}{r}\sin(\pi(6r-2)), 
+    & \text{falls } r\in\left(\frac{1}{3},\frac{1}{2}\right],\\
+    -\left(6\alpha\beta\left( \frac{5}{2}-3r \right)^{\beta-1}+
+    \frac{1}{r^2}\right),
+    & \text{falls } r\in\left(\frac{1}{2},\frac{5}{6}\right],\\
+    -\left( \left( 18\pi^2+\frac{1}{2r^2} \right)\cos(\pi(6r-5))
+    +\frac{1}{2r^2} + \frac{3\pi}{r}\sin(\pi(6r-5))\right), 
+    &\text{falls } r\in\left(\frac{5}{6},\infty\right),
+  \end{cases}\\
+  \partial_r u_1(r) 
+  &= 
+  \begin{cases}
+    0,
+    & \text{falls } r\in\left[0,\frac{1}{6}\right],\\
+    6\beta(6r-1)^{\beta-1}, 
+    & \text{falls } r\in\left(\frac{1}{6},\frac{1}{3}\right],\\
+    0, 
+    & \text{falls } r\in\left(\frac{1}{3},\frac{1}{2}\right],\\
+    -6\beta\left( \frac{5}{2}-3r \right)^{\beta-1},
+    & \text{falls } r\in\left(\frac{1}{2},\frac{5}{6}\right],\\
+    0,
+    &\text{falls } r\in\left(\frac{5}{6},\infty\right).
+  \end{cases}
+\end{align*}
+
+dann die Bilder von u und inSi als Plots und entlang der Achsen.
+
+Ableitung von u wird zu Berechung von E(u) gebraucht nochmal sagen, sonst 
+irrelevant für Experimt
+
+vielleicht ,der Gradient von u ist\ldots, damit approximieren wir die
+exakte Energie \ldots)
+
+\section{Wahl der Einstellungen für die primale-duale Iteration}
+alles zu tau mit hypothesse
+
+beispiel ohne konvergenz aufzeigen und dafür auch die Triangulierung zeigen
+
+zu abbruchkriterium
+
+
+\section{Experimente mit bekannter exakter Lösung}
+
+f01 vor allem
+
+dann abschweif zu höhere Regularität
+
+hier eventuell auch experimte für AFEM Params?
+
+dann insgesamt raten abarbeiten und interpretieren
+
+\section{Graufarbenbilder als Eingangssignale}
+cameraman
+
+abschweif zu denoise example aus intro hier erklären
+
+zum abschluss zu approximation von white circle mit stetigeer funktion (plots
+dementsprechend
+
+
+
+%%%%% hiervor finalized
+%%%%% ab hier Skizze
+
 Die im vorherigen Kapitel beschriebenen Methoden werden wir an einigen 
 Benchmark-Problemen untersuchen (umschreiben, von PB übernommen).
 Dazu gehört ein Beispiel mit bekannter Lösung, das wir nach cite(section)
@@ -8,6 +142,10 @@ Approximation dieser.
 
 
 
+
+\todo[inline]{Neue Gliederung: vgl Storn oder noch besser Sophie, statt
+Auswertung ,Zusammenfassung und Ausblick'. Oder einfach wie Franz, ohne
+Zsmfssg, ,Numerische Experimente und SChlussfolgerung' oder so}
 
 
 Alle Allgemeinen Infos unter die Hauptüberschrift, keine eigene Section,
@@ -103,64 +241,7 @@ zu prüfen, entsprechend müssen wir noch fordern
 Da in den Kapiteln GLEB und bla u in H10 relevant wird, fordern wir
 weiterhin \ldots
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Professor Carstensen stellte folgende KOnsturkution \ldots
-Um eine rechte Seite zu finden, zu der die exakte Lösung bekannt
-ist, wähle eine Funktion des Radius $u\in H^1_0([0,1])$ mit Träger im 
-zweidimensionalen Einheitskreis. Insbesondere muss damit gelten $u(1)=0$ und
-$u$ stetig.
-Die rechte Seite als Funktion des Radius $f\in L^2([0,1])$ ist dann gegeben
-durch 
-\begin{align*}
-  f \coloneqq 
-  \alpha u - \partial_r(\sgn(\partial_r u)) - \frac{\sgn(\partial_r u)}{r},
-\end{align*}
-wobei für $F\in\Rbb^2\setminus\{0\}$ gilt 
-$\sgn(F)\coloneqq \left\{\frac{F}{|F|}\right\}$ 
-und $\sgn(0)\in B_1(0)$.
-Damit außerdem gilt $f\in H^1_0([0,1])$, was z.B.\ für GLEB relevant ist, 
-muss also noch Stetigkeit von $\sgn(\partial_r u)$ und 
-$\partial_r(\sgn(\partial_r u))$ verlangt werden und 
-$\partial_r(\sgn(\partial_r u(1))=\sgn(\partial_r u(1))=0$.
-Damit $f$ in $0$ definierbar ist, muss auch gelten 
-$\sgn(\partial_r u) \in o(r)$ für $r\to 0$.
 
-Damit erhält man für die Funktion
-\begin{align*}
-  u_1(r)\coloneqq
-  \begin{cases}
-    1, & \text{wenn } 0\leq r\leq\frac{1}{6},\\
-    1+(6r-1)^\beta, & \text{wenn } \frac{1}{6}\leq r\leq\frac{1}{3},\\
-    2, &\text{wenn } \frac{1}{3}\leq r\leq\frac{1}{2},\\
-    2(\frac{5}{2}-3r)^\beta, &\text{wenn } \frac{1}{2}\leq r\leq\frac{5}{6},\\
-    0, &\text{wenn } \frac{5}{6}\leq r,
-  \end{cases}
-\end{align*}
-wobei $\beta\geq 1/2$, mit der Wahl
-\begin{align*}
-  \sgn(\partial_r u_1(r)) =
-  \begin{cases}
-    12r-36r^2, & \text{wenn } 0\leq r\leq\frac{1}{6},\\
-    1, & \text{wenn } \frac{1}{6}\leq r\leq\frac{1}{3},\\
-    \cos(\pi(6r-2)), &\text{wenn } \frac{1}{3}\leq r\leq\frac{1}{2},\\
-    -1, &\text{wenn } \frac{1}{2}\leq r\leq\frac{5}{6},\\
-    -\frac{1+\cos(\pi(6r-5))}{2}, &\text{wenn } \frac{5}{6}\leq r\leq 1,
-  \end{cases}
-\end{align*}
-die rechte Seite
-\begin{align*}
-  f_1(r)\coloneqq 
-  \begin{cases}
-    \alpha-12(2-9r), & \text{wenn } 0\leq r\leq\frac{1}{6},\\
-    \alpha(1+(6r-1)^\beta)-\frac{1}{r}, & \text{wenn } \frac{1}{6}\leq r\leq
-    \frac{1}{3},\\
-    2\alpha+6\pi\sin(\pi(6r-2))-\frac{1}{r}\cos(\pi(6r-2)), &
-    \text{wenn } \frac{1}{3}\leq r\leq\frac{1}{2},\\
-    2\alpha(\frac{5}{2}-3r)^\beta+\frac{1}{r},&
-    \text{wenn } \frac{1}{2}\leq r\leq\frac{5}{6},\\
-    -3\pi\sin(\pi(6r-5))+\frac{1+\cos(\pi(6r-5))}{2r}, &
-    \text{wenn } \frac{5}{6}\leq r\leq 1.
-  \end{cases}
-\end{align*}
 
 Für die Funktion
 \begin{align*}
@@ -258,82 +339,8 @@ erhalten wir die rechte Seite
 \end{align*}
 für die gilt $f_4\in H^2_0$.
 
-Damit können Experimente durchgeführt werden bei denen 
-\texttt{exactSolutionKnown = true} gesetzt werden kann und entsprechend auch 
-der $L^2$-Fehler berechnet wird.
 
-Soll nun auch die Differenz der exakten Energie mit der garantierten unteren 
-Energie Schranke (GLEB) berechnet werden, dann werden die stückweisen
-Gradienten der exakten Lösung und der rechten Seite benötigt.
-
-Dabei gelten folgende Ableitungsregeln für die Ableitungen einer Funktion 
-$g$, wenn man ihr Argument $x=(x_1,x_2)\in\Rbb^2$ in Polarkoordinaten mit Länge
-$r=\sqrt{x_1^2+x_2^2}$ und Winkel
-$\varphi = \atan(x_2,x_1)$, wobei 
 \begin{align*}
-  \atan(x_2,x_1)\coloneqq
-  \begin{cases}
-    \arctan\left( \frac{x_2}{x_1} \right),& \text{wenn }x_1>0,\\
-    \arctan\left( \frac{x_2}{x_1} \right) +\pi,& \text{wenn }x_1<0,x_2\geq 0,\\
-    \arctan\left( \frac{x_2}{x_1} \right) -\pi,& \text{wenn }x_1<0,x_2<0,\\
-    \frac{\pi}{2},& \text{wenn }x_1=0,x_2>0,\\
-    -\frac{\pi}{2},& \text{wenn }x_1=0,x_2<0,\\
-    \text{undefiniert},& \text{wenn }x_1=x_2=0,\\
-  \end{cases}
-\end{align*}
-auffasst,
-\begin{align*}
-  \partial_{x_1} &= 
-  \cos(\varphi)\partial_r - \frac{1}{r}\sin(\varphi)\partial_\varphi,\\
-  \partial_{x_2} &= 
-  \sin(\varphi)\partial_r - \frac{1}{r}\cos(\varphi)\partial_\varphi.
-\end{align*}
-Ist $g$ vom Winkel $\varphi$ unabhängig, so ergibt sich
-\begin{align*}
-  \nabla_{(x_1,x_2)}g = (\cos(\varphi),\sin(\varphi))\partial_r g.
-\end{align*}
-Unter Beachtung der trigonometrischen Zusammenhänge
-\begin{align*}
-  \sin(\arctan(y)) = \frac{y}{\sqrt{1+y^2}},\\
-  \cos(\arctan(y)) = \frac{1}{\sqrt{1+y^2}}
-\end{align*}
-ergibt sich 
-\begin{align*}
-  (\cos(\varphi),\sin(\varphi)) = (x_1,x_2)\frac{1}{r}
-\end{align*}
-und damit 
-\begin{align*}
-  \nabla_{(x_1,x_2)}g = (x_1,x_2)\frac{\partial_r g}{r},
-\end{align*} 
-es muss also nur $\partial_r g$ bestimmt werden.
-
-Die entsprechenden Ableitungen lauten
-\begin{align*}
-  \partial_r f_1(r)&=
-  \begin{cases}
-    108,&
-    \text{für } r\in\left[0,\frac{1}{6}\right],\\
-    6\alpha\beta(6r-1)^{\beta-1} +\frac{1}{r^2}, &
-    \text{für } r\in\left[\frac{1}{6},\frac{1}{3}\right],\\
-    (36\pi^2+\frac{1}{r^2})\cos(\pi(6r-2))+
-    \frac{6\pi}{r}\sin(\pi(6r-2)), &
-    \text{für } r\in\left[\frac{1}{3},\frac{1}{2}\right],\\
-    -\left(6\alpha\beta\left( \frac{5}{2}-3r \right)^{\beta-1}+
-    \frac{1}{r^2}\right),&
-    \text{für } r\in\left[\frac{1}{2},\frac{5}{6}\right],\\
-    -\left( \left( 18\pi^2+\frac{1}{2r^2} \right)\cos(\pi(6r-5))
-    +\frac{1}{2r^2} + \frac{3\pi}{r}\sin(\pi(6r-5))\right), 
-    &\text{für } r\in\left[\frac{5}{6},1\right],
-  \end{cases}\\
-  \partial_r u_1(r) &= 
-  \begin{cases}
-    0,&\text{wenn }0\leq r\leq\frac{1}{6},\\
-    6\beta(6r-1)^{\beta-1}, &\text{wenn } \frac{1}{6}\leq r\leq\frac{1}{3},\\
-    0, &\text{wenn } \frac{1}{3}\leq r\leq\frac{1}{2},\\
-    -6\beta\left( \frac{5}{2}-3r \right)^{\beta-1},&
-    \text{wenn } \frac{1}{2}\leq r\leq\frac{5}{6},\\
-    0,&\text{wenn } \frac{5}{6}\leq r,
-  \end{cases}\\
   \partial_r f_2(r) &= 
   \begin{cases}
     -\frac{12}{(1-\beta)^2},&\text{wenn }0\leq r\leq\frac{1-\beta}{2},\\
@@ -373,9 +380,3 @@ Die entsprechenden Ableitungen lauten
     0, & \text{wenn } \frac{2}{3}\leq r\leq 1,
   \end{cases}\\
 \end{align*}
-
-Mit diesen Informationen kann mit \texttt{computeExactEnergyBV.m} die exakte 
-Energie berechnet werden und somit durch eintragen der exakten Energie
-in die Variable \texttt{exact\-Energy} im Benchmark und setzen der Flag
-\texttt{useExactEnergy=true} das Experiment durch anschließendes Ausführen
-von \texttt{startAlgorithmCR.m} gestartet werden.
