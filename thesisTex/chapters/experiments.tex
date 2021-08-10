@@ -1,18 +1,16 @@
-allgemeine Sachen (degree4Integrate, parTheta) hier aufführen (mit ,wenn nicht
-anders angegeben)
-
-überlegen, welche Parmeter für jedes Experiment nochmal gesagt werden sollen
-definitiv: 
-
-Triangulierung: hier am Anfang einmal sagen, dass es für Funktionen
-als Input immer BigSquare war und für echte Bilder als Input Square
-
-f01 und cameraman schon hier vorstellen als Beispiel mit exakter Lösung,
-die anderen Funktionen aber erst dann, wenn es soweit ist
-
-Nach \Cref{eq:constructionInputSignal} \ldots
-Für einen Parameter $\beta\geq 1/2$, wir wählen stets $\beta =1$, erhalten wir
-für die Funktion
+In diesem abschließenden Kapitel möchten wir nun die in
+\Cref{chap:implementation} beschriebene Realisierung von
+\Cref{alg:primalDualIteration} mit Abbruchkriterium
+\eqref{eq:terminationCriterion} im Solve-Schritt der AFEM-Schleife aus
+\Cref{fig:afemLoop} an einigen Benchmark-Problemen untersuchen.
+Dabei konstruieren wir Probleme, bei denen die exakte Lösung bekannt ist,
+nach \Cref{sec:constructionInputSignal}. 
+Als besonderes Augenemerk betrachten wir dabei zwei Eingangssignale.
+Andere Funktionen werden wir bei Bedarf betrachten, um bestimmte Eigenschaften
+zu untersuchen im Vergleich zu diesen beiden Benchmark-Problemen.
+Für ein Experiment mit exakter Lösung betrachten wir zunächst auf $[0,\infty)$
+für einen Parameter $\beta\geq 1/2$, wobei wir stets $\beta =1$ wählen, 
+die Funktionen
 \begin{align*}
   u_1(r)&\coloneqq
   \begin{cases}
@@ -26,8 +24,7 @@ für die Funktion
     & \text{falls } r\in \left(\frac{1}{2}, \frac{5}{6}\right],\\
     0, 
     & \text{falls } r\in \left(\frac{5}{6}, \infty\right),\\
-  \end{cases}
-  \quad\text{mit der Wahl}\\
+  \end{cases}\\
   \sgn\big(\partial_r u_1(r)\big) 
   &\coloneqq
   \begin{cases}
@@ -40,9 +37,13 @@ für die Funktion
     -1, 
     & \text{falls } r\in \left(\frac{1}{2}, \frac{5}{6}\right],\\
     -\frac{1+\cos(\pi(6r-5))}{2}, 
-    & \text{falls } r\in \left(\frac{5}{6}, \infty\right),\\
+    & \text{falls } r\in \left(\frac{5}{6}, \infty\right).
   \end{cases}
-  \quad\text{das Eingangssignal}\\
+\end{align*}
+Nach \Cref{eq:constructionInputSignal} ist $u$ mit dieser Wahl von
+$\sgn\big(\partial_r u_1\big)$ die Lösung von \Cref{prob:continuousProblem} mit
+Eingangssignal
+\begin{align*}
   f_1(r)
   &=
   \begin{cases}
@@ -58,7 +59,49 @@ für die Funktion
     & \text{falls } r\in \left(\frac{5}{6}, \infty\right).
   \end{cases}
 \end{align*}
-Die entsprechenden Ableitungen lauten
+
+\begin{figure}[!ht]
+  \centering
+  \begin{subfigure}[b]{.48\linewidth}
+    \caption{$f_1$}
+    \includegraphics[trim = 40 30 30 30, clip, width=\linewidth]
+      {pictures/chapExperiments/secGeneralInfo/f01Plots/inSi.png}
+    \label{fig:f01InSi}
+  \end{subfigure}
+  \quad
+  \begin{subfigure}[b]{.48\linewidth}
+    \caption{$u_1$}
+    \includegraphics[trim = 40 30 30 30, clip, width=\linewidth]
+      {pictures/chapExperiments/secGeneralInfo/f01Plots/exactSolution.png}
+    \label{fig:f01ExactSol}
+  \end{subfigure}
+
+  \begin{subfigure}[b]{.48\linewidth}
+    \caption{$f_1$ entlang der x- und y-Achse}
+    \includegraphics[trim = 50 30 50 20, clip, width=\linewidth]
+      {pictures/chapExperiments/secGeneralInfo/f01Plots/inSiAxis.png}
+    \label{fig:f01InSiAxis}
+  \end{subfigure}
+  \quad
+  \begin{subfigure}[b]{.48\linewidth}
+    \caption{$u_1$ entlang der x- und y-Achse}
+    \includegraphics[trim = 50 30 50 20, clip, width=\linewidth]
+      {pictures/chapExperiments/secGeneralInfo/f01Plots/exactSolutionAxis.png}
+    \label{fig:f01ExactSolAxis}
+  \end{subfigure} 
+  \caption{Eingangssignal $f_1$ und exakte Lösung $u_1$ sowie deren
+  Darstellungen entlang der x-Achse (blau) und der y-Achse (rot) für
+  $\alpha=1$.}
+  \label{fig:f01Plots}
+\end{figure}
+
+Ableitung von u wird zu Berechung von E(u) gebraucht nochmal sagen, sonst 
+irrelevant für Experimt
+
+vielleicht ,der Gradient von u ist\ldots, damit approximieren wir die
+exakte Energie \ldots)
+
+Nach \Cref{sec:constructionInputSignal} lauten die entsprechenden Ableitungen
 \begin{align*}
   \partial_r f_1(r)
   &=
@@ -93,25 +136,76 @@ Die entsprechenden Ableitungen lauten
   \end{cases}
 \end{align*}
 
-dann die Bilder von u und inSi als Plots und entlang der Achsen.
 
-Ableitung von u wird zu Berechung von E(u) gebraucht nochmal sagen, sonst 
-irrelevant für Experimt
 
-vielleicht ,der Gradient von u ist\ldots, damit approximieren wir die
-exakte Energie \ldots)
+Ein Problem mit unstetigem Eingangssignal legen wir besonderes
+Augenmerk auf das Graufarbenbild \texttt{cameraman} aus \cref{fig:cameraman}
+als Eingangssignal. 
 
-\section{Wahl der Einstellungen für die primale-duale Iteration}
+[nach cameraman Erwähnung] Auch für dieses Beispiel, das stark unregulär ist,
+haben selbst deutlich höhere Integrationsgrade als 10 zu keinen veränderten
+Raten geführt. 
+Auch geringere nicht, da aber alle Methoden, die \texttt{integrate} aufrufen
+werden vor oder nach der primalen-dualen Iteration aufgerufen, 
+beeinflusst dies die Laufzeit nicht negativ und wird so gewählt um möglichst
+exakte Integration zu gewährleisten.
+
+Als initiale Geometrie nutzen wir dafür entsprechend immer
+\texttt{BigSquare} des AFEM-Pakets (vlt. verweis auf Package falls vorhanden)
+ohne initiale Rotverfeinerung [Abbildung mit der Triangilierung linken], da
+diese den Einheitskreis enthält.
+Fur dieses nutzen wir als initiale
+Triangulierung für das erste Level des AFEM Algs die Triangulierung
+\texttt{Square} [mach so wie eben] [s. Abb \ldots].
+
+\begin{figure}[!ht]
+  \centering
+  \begin{subfigure}[b]{.48\linewidth}
+    \caption{\texttt{BigSquare}}
+    \includegraphics[trim = 90 30 90 20, clip, width=\linewidth]
+      {pictures/chapExperiments/secGeneralInfo/bigSquareTriang.png}
+    \label{fig:triangBigSquare}
+  \end{subfigure}
+  \quad
+  \begin{subfigure}[b]{.48\linewidth}
+    \caption{\texttt{Square}}
+    \includegraphics[trim = 90 30 90 20, clip, width=\linewidth]
+      {pictures/chapExperiments/secGeneralInfo/squareTriang.png}
+    \label{fig:triangSquare}
+  \end{subfigure}
+  \caption{In den Experimenten genutzte initiale Triangulierung.}
+  \label{fig:initialTriangulations}
+\end{figure}
+
+Führen wir eines der Experimente mit adaptiver Netzverfeinerung durch, so
+wählen wir den Bulk-Parameter für den Mark-Schritt des AFEM-Algorithmus, soweit
+nicht anders angegeben, $\theta=0.5$.
+Auf die Wahl der Parameter $\tau$ und $\epsstop$ für die primale-duale
+Iteration werden wir im folgenden Abschnitt [ref] eingehen.
+Zur Wahl des Parameters $\gamma$ auf dem Verfeinerungsindikator betrachten
+wir in Abschnitt (Experimente mit exakter Lösung) ein.
+
+  überlegen, welche Parmeter für jedes Experiment nochmal gesagt werden sollen
+  definitiv: 
+
+\section{Wahl der Parameter für die primale-duale Iteration}
 alles zu tau mit hypothesse
 
 beispiel ohne konvergenz aufzeigen und dafür auch die Triangulierung zeigen
 
 zu abbruchkriterium
 
+zu gamma (0, 0.5, 1) noch irgendwo ein Experiment mit Info, dass 0 und 1e-4 oder
+so was identisch sind
+
 
 \section{Experimente mit bekannter exakter Lösung}
 
 f01 vor allem
+
+hier vielleicht auch einmal einwerfen, wie die Iteration konvergiert
+(vlt auch in der vorigen Section, im Vergleich zu den schlechten Wahlen,
+die dort auch getroffen werden.
 
 dann abschweif zu höhere Regularität
 
@@ -127,21 +221,16 @@ abschweif zu denoise example aus intro hier erklären
 zum abschluss zu approximation von white circle mit stetigeer funktion (plots
 dementsprechend
 
-
+\section{Fazit und Ausblick}
 
 %%%%% hiervor finalized
 %%%%% ab hier Skizze
 
-Die im vorherigen Kapitel beschriebenen Methoden werden wir an einigen 
-Benchmark-Problemen untersuchen (umschreiben, von PB übernommen).
 Dazu gehört ein Beispiel mit bekannter Lösung, das wir nach cite(section)
 konstruieren, ein komplexes Beispiel ohne Lösung mit einer unstetigen Funktion,
 hier ein Bild als Eingangssignal und eine einfache, diskontinuierliche Funktion
 als Eingangssignal und eine, ebenfalls nach section konstruierte stetige 
 Approximation dieser.
-
-
-
 
 \todo[inline]{Neue Gliederung: vgl Storn oder noch besser Sophie, statt
 Auswertung ,Zusammenfassung und Ausblick'. Oder einfach wie Franz, ohne
@@ -170,21 +259,8 @@ allen Leveln, darauf vielleicht noch kurz in der Auswertung eingehen ,man
 sieht, dass die Sprünge tatsächlch im nonkonformen Problem nicht minimiert
 werden oder so'}
 
-\bigskip
-Als erste Experimente für CCs Benchmark alle möglichen Parameter untersuchen 
-(z.B. die Parameter im refinement indicator, GLEB, Abbruchkriterien etc)
-und danach begründen, warum für alle Experimente diese gewählt werden mit
-den Beobachtungen
 
-\todo[inline]{ascent and descent flow, gradient flow heißt doch, dass
-Gradientenverfahren angewendet wurde, richtig?
-Stopping criteria sind in Punkt 6.2 von Bar12}
-\bigskip
 
-\todo[inline]{Immer nur Beobachtungen aufschreiben, die Raten sagen, 
-Sachverhalte einbringen. Auswertungen dann eben, wie schon der Name sagt,
-in Auswertungen}
-\todo[inline]{Ab hier Content}
 
 Zuerst allgemeines, alle Infromationen, die ggf bei allen Experimten in den 
 folgenden Abschnitten immer gleich sind und möglicherweise kurze Kommentare,
@@ -196,34 +272,12 @@ Alle Experimentparameter die stets gleich gesetzt sind Eingangs einmal erwähnen
 insbesondere degree4Integrate, was immer als 10 gesetzt wird, mit ähnlichem 
 Kommentar wie PB auf S 30
 
-\section{Betrachte Probleme}
-Einzelne Experimente in eigenen Subsections
-\bigskip
-
-Hier auch alle möglichen rechten Seiten beschreiben.
-Alle möglichen rechten Seiten hier auflisten, insbesondre die rechten 
-Seite mit exakten Lösungen mit verweise auf Kapitel 3.
-Die Funktionen entsprechend bezeichnen
 
 \bigskip
-
-Vielleicht auch hier dann
-
-\section{Betrachtungen der Iteration}
-
-Hier alles was man so über die Iteration sagen kann. Alles am Beispiel, dass
-
-\section{Bilder als Input und Rauschverminderung}
 
 Bei Beschreibung wie die Bilder der Einleitung zur Rauschunterdrückung
 entstanden sind auch erwähnen, dass $f=\alpha g$ eine Rolle spiele usw.
 
-\section{Alternative Kapitelstruktur: Anwendung am Beispiel der Benchmarks}
-\subsection{Experimente mit exakter Lösung: Benchmarks 'f01Bench' und 'f02'
-Bench}
-
-\subsection{Bilder als Input und Rauschverminderung: 'cameramanBench' und
-\ldots}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \todo[inline]{Beschreibe hier nur das allgemeine Vorgehen und die 

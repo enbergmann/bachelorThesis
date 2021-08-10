@@ -9,6 +9,14 @@ voraussichtlich bleiben
 
 ##################
 
+bei tau, argumentiere, das 1e6 Iterationen ausreichen (vgl mit tau = 1, sage, 
+wie viele tau = 1 gebraucht hat) Sage, dass man theoretisch ausrechnen kann,
+wenn initialer Fehler etc bekannt ist, wie viele Iteration benötigt werden (da 
+die Fehler ja konstant bleiben und 1e6 mal aufaddiert wurden muss das 
+Thm schief gehen irgendwann)
+
+##################
+
 degree4Integrate FÜR UNSERE AUFRUFE VON INTEGRATE schreiben (denn errorCRL2
 nutzt degree 12 immer, also wäre die aktuelle Formulierung falsch)
 irgendwo sollte eh noch geschrieben werden ,,zur berechnung des Fehler wird
@@ -22,11 +30,6 @@ degree4Integrate, andere Raten beobachtet.
 integrate wird nie während der Iteration aufgerufen, ein relativ hoher 
 Integrationsgrad beeinflusst die Laufzeit vernachlässigbar (das betonen,
 dass Integrate nur außerhalb ausgeführt wird)
-
-##################
-
-schreibe in der Auswertung Lösung entlag der x (blau) und y (rot) Achse oder so
-für solutionAxis, inSiAxis
 
 ##################
 
@@ -60,6 +63,9 @@ EXPERIMENTE
     nicht unterscheider visuell (nochmal prüfen ob das stimmt) nur eines der
     beiden gammas plotten und genau diese Info in einem Satz erwähnen und vlt
     auch in der Legende beides für einen Graphen angeben gamma = 0, 1e-4)
+  - wähle bei epsStop 1e-2, 1e-3 und 1e-4 und sage, dass bei 1e-4 der Effekt 
+    in den Freiheitsgraden die wir rechnen noch nicht auftritt und es deshalb
+    so gewählt wird
 
 
 
