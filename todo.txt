@@ -9,24 +9,6 @@ voraussichtlich bleiben
 
 ##################
 
-imread, im2double in image2function haben Bild mit pixelweisen Werten in [0, 1]
-das wird in image2function noch mit alpha skaliert, img = alpha*img,
-
-im Programmablauf Chapter nach der Liste mit den Wahlen und vor ,,Noch in der
-Benchmark-Datei..." soll in etwa stehen ,,Falls useImage==true, dann wird das
-enstprechende Graufarbenbild mit der Methode image2function als Funktion nutzbar
-gemacht. Dabei werden die MatlabFunktionen  imread und im2double genutzt, mit 
-denen das Bild mit pixelweisen werten in [0, 1] vorliegt. Hinsichtich der
-Anwendung des ROF-Modell Problems und dem in Kapitel 1 beschriebenen
-Zusammenhang von Prob. 3.1 mit ROF, wird das Bild/werden diese Werte dann noch
-mit alpha skaliert"
-
-sichergehen, dass das sich klar vom Text danach abhebt, also klar wird, ab wann 
-useImage wieder false ist. Deshalb vielleich an der Stelle die beschrieben ist
-das ganze als Bemerkung um es abzuheben
-
-##################
-
 bei tau, argumentiere, das 1e6 Iterationen ausreichen (vgl mit tau = 1, sage, 
 wie viele tau = 1 gebraucht hat) Sage, dass man theoretisch ausrechnen kann,
 wenn initialer Fehler etc bekannt ist, wie viele Iteration benötigt werden (da 

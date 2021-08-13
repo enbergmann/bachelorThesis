@@ -5,7 +5,8 @@ function f = image2function(imageName, parAlpha)
 %
 % image2function.m
 % input: imageName - 'char array with exactly one row' containing the path
-%                    (including filename and file extension) of the given image
+%                    (including filename and file extension) of the given
+%                    square image
 %        parAlpha  - 'double' containing the parmeter \alpha from the problem
 %
 % output: f - 'function_handle' of the input signal

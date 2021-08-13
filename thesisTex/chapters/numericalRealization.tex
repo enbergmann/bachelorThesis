@@ -213,14 +213,13 @@ genutzt werden, welche dafür die Matlab-Funktion \texttt{awgn} verwendet.
     Parametername  & Beschreibung\\  
     \hline
     \texttt{useImage}
-    & \texttt{true}, wenn für das Eingangssignal $f$ ein Graufarbenbild
-    anstelle eines \texttt{function\_handle} genutzt werden soll, sonst
-    \texttt{false}\\
+    & \texttt{true}, wenn als Eingangssignal $f$ ein quadratisches
+    Graufarbenbild anstelle eines \texttt{function\_handle} genutzt werden
+    soll, sonst \texttt{false}\\
     \texttt{imageName} 
-    & Name (mit Dateiendung) des Graufarbenbildes im Ordner
-    \texttt{./utils/functions/images/}, das als Eingangssignal $f$
-    genutzt werden soll (Wahl irrelevant, falls
-    \texttt{useImage==false})\\
+    & Name (mit Dateiendung) eines quadratischen Graufarbenbildes im Ordner
+    \texttt{./utils/functions/images/}, welches als Eingangssignal $f$ genutzt
+    werden soll (Wahl irrelevant, falls \texttt{useImage==false})\\
     \texttt{parAlpha}
     & Parameter $\alpha$ aus \Cref{prob:continuousProblem} und
     \Cref{prob:discreteProblem}\\
@@ -309,12 +308,31 @@ und der schwache Gradient von $f$ gegeben sein.
 Damit diese Informationen tatsächlich genutzt werden, müssen zusätzlich einige
 Parameter aus \Cref{tab:paramsExperiment} passend gewählt werden. 
 Diese Wahlen sind
+
 \begin{itemize}
   \item \texttt{useImage = false},
   \item \texttt{inSiGradientKnown = true},
   \item \texttt{exactSolutionKnown = true},
   \item \texttt{useExactEnergy = true}.
 \end{itemize}
+
+\begin{remark}
+  Wird \texttt{useImage = true} gewählt, dann erzeugt die Methode 
+  \begin{center}
+    \texttt{./utils/functions/image2function.m}
+  \end{center}
+  unter Nutzung der Matlab-Funktionen \texttt{imread} und \texttt{im2double}
+  ein \texttt{function\_handle}, welches das durch \texttt{imageName} aus
+  \Cref{tab:paramsExperiment} gegebene quadratische Graufarbenbild beschreibt.  
+  Dabei wird genutzt, dass dieses Bild durch eine Funktion $g:[0,1]^2\to [0,1]$
+  repräsentiert werden kann.  
+  Um die Ergebnisse des Programms unter Be\-rück\-sich\-ti\-gung der in
+  \Cref{chap:introduction} beschriebenen Anwendung des ROF-Modellproblems
+  interpretieren zu können, wird dann mit dem Parameter $\alpha$ aus
+  \Cref{prob:continuousProblem} ein \texttt{function\_handle} der Funktion
+  $f=\alpha g$ zurückgegeben und als Eingangssignal gewählt.
+\end{remark}
+
 Noch in der Benchmark-Datei werden mit den gewählten Einstellungen die
 benötigten geometrischen Datenstrukturen für die Triangulierung $\Tcal$
 initialisiert. 
