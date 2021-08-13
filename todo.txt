@@ -1,86 +1,11 @@
-gucke in der Arbeit ob S^1(\Tcal) jemals nochmal genutzt wird. Falls nicht,
-die Definition der Couran-Finite-Elemente-Funktionen verschieben aus Notation
-in die Einleitung an die Stelle, an der ich über Bartels Ansatz schreibe
+DRUCKEN
 
-insbesondere auch die Quelle dann einfach da erwähnen
-
-wird wohl in der Auswertung erwähnt für die Rate von Bartels, also kann 
-voraussichtlich bleiben
+ - 2h einplanen  
+ - laptop mitbringen für eventuelle Änderungen
 
 ##################
 
-bei tau, argumentiere, das 1e6 Iterationen ausreichen (vgl mit tau = 1, sage, 
-wie viele tau = 1 gebraucht hat) Sage, dass man theoretisch ausrechnen kann,
-wenn initialer Fehler etc bekannt ist, wie viele Iteration benötigt werden (da 
-die Fehler ja konstant bleiben und 1e6 mal aufaddiert wurden muss das 
-Thm schief gehen irgendwann)
-
-##################
-
-degree4Integrate FÜR UNSERE AUFRUFE VON INTEGRATE schreiben (denn errorCRL2
-nutzt degree 12 immer, also wäre die aktuelle Formulierung falsch)
-irgendwo sollte eh noch geschrieben werden ,,zur berechnung des Fehler wird
-die Methode aus AFEM genutzt, die immer Grad 12 hat unabh von degree4Integrate
-aus Tabelle ...)
-
-Zwar können die Funktionen hier sehr unregulär sein
-Für keines der Experimente wurde, auch mit deutlich höheren Wahlen von
-degree4Integrate, andere Raten beobachtet.
-
-integrate wird nie während der Iteration aufgerufen, ein relativ hoher 
-Integrationsgrad beeinflusst die Laufzeit vernachlässigbar (das betonen,
-dass Integrate nur außerhalb ausgeführt wird)
-
-##################
-
-2h einplanen für drucken, laptop mitbringen für eventuelle Änderungen
-
-##################
-
-EXPERIMENTE
-  - Section Name: Convergence of energies (see Bar12, do some experiment
-    chapter like that)
-  - energy during iteration doesn't strictly converge from above to some value
-    for small tau (e.g. 1/100)
-  - s. fragen.txt, Effekt von großen/kleinen alpha bzw. tau entsprechend ein
-    paar Experiment mit gleicher Lösung machen und gleichem Input (was alpha
-    irgendwie disqualifiziert, oder?) (vlt gucken ob Raten oder so in corr
-    einzeichnen bar sind)
-  - f01 mit großem alpha konvergiert am Anfang preasymptotisch schnell aber
-    scheint bei großen Freiheitsgraden dann auch die Rate 1/2 (für Gleb Kram)
-    bzw. 1/4 oder so für Fehler anzunehmen (also gleiche Raten wie alpha=1).
-    liegt daran, dass für große alpha die Werte anfangs explodieren und damit
-    die Konvergenz rapide ist (auch die Iterationen sind viel kürzer, hier
-    lohnt sich sicherlich auch der Vergleich der misc plots und nochmal verweis
-    auf die Abschätzung aus Konvergenzbeweis (großes alpha, womöglich weniger
-    Iteration))
-  - circle stuff, etas sind vergleichbar (was gut, weil so erwarte)
-  - h20 Beispeil genau so wie H10, also das vielleicht nur erwähnen ,,eine 
-    noch stärke Regularitätsannahme im Beispeil f04, bei dem Lsg und f H20 sind,
-    verbesserte die Raten nicht weiter (verschiebt nur die Graphen nach unter,
-    d.h. früher kleiner Fehler)
-  - gamma = 0 im Vergleich der gammas mit erwähnen (da es sich von gamma 1e-4
-    nicht unterscheider visuell (nochmal prüfen ob das stimmt) nur eines der
-    beiden gammas plotten und genau diese Info in einem Satz erwähnen und vlt
-    auch in der Legende beides für einen Graphen angeben gamma = 0, 1e-4)
-  - wähle bei epsStop 1e-2, 1e-3 und 1e-4 und sage, dass bei 1e-4 der Effekt 
-    in den Freiheitsgraden die wir rechnen noch nicht auftritt und es deshalb
-    so gewählt wird
-
-
-
-AUSBLICK (vielleicht in die Arbeit schreiben)
-  
-  Randdaten verallgemeinern
-    nochmal aufschreiben wo CR10 angenommen wird und eventuell darauf verweisen 
-    im Ausblick (bis dahin notieren welche Funktionen und in welchem Maß)
-    (in solvePrimalDualFormulation zum Erstellen der rechten Seite)
-    
-  Bartels Code anpassen und vergleicen
-
-##################
-
-Ordnerstrutktur für Abgabe
+ORDNERSTRUKTUR FÜR ABGABE
 
 ./bachelorthesisBergmann/
     results/

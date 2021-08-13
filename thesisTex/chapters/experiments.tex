@@ -150,6 +150,24 @@ werden vor oder nach der primalen-dualen Iteration aufgerufen,
 beeinflusst dies die Laufzeit nicht negativ und wird so gewählt um möglichst
 exakte Integration zu gewährleisten.
 
+==================
+
+degree4Integrate FÜR UNSERE AUFRUFE VON INTEGRATE schreiben (denn errorCRL2
+nutzt degree 12 immer, also wäre die aktuelle Formulierung falsch)
+irgendwo sollte eh noch geschrieben werden ,,zur berechnung des Fehler wird
+die Methode aus AFEM genutzt, die immer Grad 12 hat unabh von degree4Integrate
+aus Tabelle ...)
+
+Zwar können die Funktionen hier sehr unregulär sein
+Für keines der Experimente wurde, auch mit deutlich höheren Wahlen von
+degree4Integrate, andere Raten beobachtet.
+
+integrate wird nie während der Iteration aufgerufen, ein relativ hoher 
+Integrationsgrad beeinflusst die Laufzeit vernachlässigbar (das betonen,
+dass Integrate nur außerhalb ausgeführt wird)
+
+==================
+
 Als initiale Geometrie nutzen wir dafür entsprechend immer
 \texttt{BigSquare} des AFEM-Pakets (vlt. verweis auf Package falls vorhanden)
 ohne initiale Rotverfeinerung [Abbildung mit der Triangilierung linken], da
@@ -188,40 +206,161 @@ wir in Abschnitt (Experimente mit exakter Lösung) ein.
   überlegen, welche Parmeter für jedes Experiment nochmal gesagt werden sollen
   definitiv: 
 
+
 \section{Wahl der Parameter für die primale-duale Iteration}
 alles zu tau mit hypothesse
 
+bei tau, argumentiere, das 1e6 Iterationen ausreichen (vgl mit tau = 1, sage, 
+wie viele tau = 1 gebraucht hat) Sage, dass man theoretisch ausrechnen kann,
+wenn initialer Fehler etc bekannt ist, wie viele Iteration benötigt werden (da 
+die Fehler ja konstant bleiben und 1e6 mal aufaddiert wurden muss das 
+Thm schief gehen irgendwann)
+
+==================
+
+  - s. gleich, Effekt von großen/kleinen alpha bzw. tau entsprechend ein
+    paar Experiment mit gleicher Lösung machen und gleichem Input (was alpha
+    irgendwie disqualifiziert, oder?) (vlt gucken ob Raten oder so in corr
+    einzeichnenbar sind)
+
+kleine tau und alpha nicht groß lässt die energie nur osszilierend von oben
+konvergieren (s. Ordner) (auch tau = h/10 oder so ähnlich (bartels))
+wird alpha zu kleinen tau groß gewählt, behebt dass den Effekt.
+Die obere Schranke der Summe im Beweis ist c/(tau*alpha), d.h. die Schranke
+ist für z.B. alpha=1 und tau=1/100 schon relativ groß, wahrscheinlich größer
+als 100
+kann das das verhalten erklären?
+falls ja, wäre dann tau = 1 nicht die ideale Wahl?
+das wäre dann eine Section in Experimenten wert, die das vermutet und dann per
+Experimenten überprüft, ob tau=1 besser ist als tau=1/100 etc
+Gleiches für die Wahl von alpha (nur das alpha noch mehr Anwendung dahinter hat),
+aber große alpha sollten für die Iteration besser sein als kleine 
+
+==================
+
 beispiel ohne konvergenz aufzeigen und dafür auch die Triangulierung zeigen
+
+==================
 
 zu abbruchkriterium
 
+  - wähle bei epsStop 1e-2, 1e-3 und 1e-4 und sage, dass bei 1e-4 der Effekt 
+    in den Freiheitsgraden die wir rechnen noch nicht auftritt und es deshalb
+    so gewählt wird
+
+2) Größe von epsStop: dokumentieren, dass z.B. bei $10^{-2}$ der Fehler irgendwann
+nicht mehr fällt und damit die Wahl $10^{-4}$ (ca.) begründen.
+Ein Plot, in denen der $L^2$ Fehler (und/oder Fehler der Energien) verglichen wird
+(untersuchen, ob es da qualitative Unterschiede gibt zwischen -3, -4, -5, ...)
+
+3) $|||.||| ~ h^{-1} ||.||$ korrekt? Enc stetig bzgl Konvergenz in L2 (Zsmh. 
+   zwischen eNc und bar12sqrt)
+   (discrete Poincare (bar15, Lem 3.7), inverse Ungleichung (bar15, Lem. 3.5)),
+   Bsp. Lvl13 in $f01eps10^{-4}$ hat hMin ~ $10^{-3}$, Graphen sehen korrekt
+   verschoben aus
+
+
+1) terminatin Criteria Vergleich (f01Term und camTerm)
+    - eNcAbsDiff wegen Oszillation ungeeignet (da das mal 'zu früh') die 
+      Toleranz erreichen kann obwohl es noch nicht soweit ist
+    - die anderen sind alle gleich gut, oder? ist die Höhe der Graphen relevant?
+      (natürlich müsste man epsStop analog kleiner wählen, wenn man z.B. den
+      parallel und niedrigeren bar15TerminationWithoutL2 wählt)
+
+==================
+
 zu gamma (0, 0.5, 1) noch irgendwo ein Experiment mit Info, dass 0 und 1e-4 oder
 so was identisch sind
+
+  - gamma = 0 im Vergleich der gammas mit erwähnen (da es sich von gamma 1e-4
+    nicht unterscheider visuell (nochmal prüfen ob das stimmt) nur eines der
+    beiden gammas plotten und genau diese Info in einem Satz erwähnen und vlt
+    auch in der Legende beides für einen Graphen angeben gamma = 0, 1e-4)
 
 
 \section{Experimente mit bekannter exakter Lösung}
 
 f01 vor allem
 
+==================
+
+gucke in der Arbeit ob $S^1(\Tcal)$ jemals nochmal genutzt wird. Falls nicht,
+die Definition der Couran-Finite-Elemente-Funktionen verschieben aus Notation
+in die Einleitung an die Stelle, an der ich über Bartels Ansatz schreibe
+
+insbesondere auch die Quelle dann einfach da erwähnen
+
+wird wohl in der Auswertung erwähnt für die Rate von Bartels, also kann 
+voraussichtlich bleiben
+
+==================
+
+  - f01 mit großem alpha konvergiert am Anfang preasymptotisch schnell aber
+    scheint bei großen Freiheitsgraden dann auch die Rate 1/2 (für Gleb Kram)
+    bzw. 1/4 oder so für Fehler anzunehmen (also gleiche Raten wie alpha=1).
+    liegt daran, dass für große alpha die Werte anfangs explodieren und damit
+    die Konvergenz rapide ist (auch die Iterationen sind viel kürzer, hier
+    lohnt sich sicherlich auch der Vergleich der misc plots und nochmal verweis
+    auf die Abschätzung aus Konvergenzbeweis (großes alpha, womöglich weniger
+    Iteration))
+
+==================
+
+  - Section Name: Convergence of energies (see Bar12, do some experiment
+    chapter like that)
+
+  - energy during iteration doesn't strictly converge from above to some value
+    for small tau (e.g. 1/100)
+
+==================
+
 hier vielleicht auch einmal einwerfen, wie die Iteration konvergiert
 (vlt auch in der vorigen Section, im Vergleich zu den schlechten Wahlen,
 die dort auch getroffen werden.
 
+==================
+
 dann abschweif zu höhere Regularität
+
+  - h20 Beispeil genau so wie H10, also das vielleicht nur erwähnen ,,eine 
+    noch stärke Regularitätsannahme im Beispeil f04, bei dem Lsg und f H20 sind,
+    verbesserte die Raten nicht weiter (verschiebt nur die Graphen nach unter,
+    d.h. früher kleiner Fehler)
+
+==================
 
 hier eventuell auch experimte für AFEM Params?
 
+==================
+
 dann insgesamt raten abarbeiten und interpretieren
+
 
 \section{Graufarbenbilder als Eingangssignale}
 cameraman
 
+==================
+
 abschweif zu denoise example aus intro hier erklären
+
+==================
 
 zum abschluss zu approximation von white circle mit stetigeer funktion (plots
 dementsprechend
 
+  - circle stuff, etas sind vergleichbar (was gut, weil so erwarte)
+
+
 \section{Fazit und Ausblick}
+
+AUSBLICK (vielleicht in die Arbeit schreiben)
+  
+  Randdaten verallgemeinern
+    nochmal aufschreiben wo CR10 angenommen wird und eventuell darauf verweisen 
+    im Ausblick (bis dahin notieren welche Funktionen und in welchem Maß)
+    (in solvePrimalDualFormulation zum Erstellen der rechten Seite)
+    
+  Bartels Code anpassen und vergleicen
 
 %%%%% hiervor finalized
 %%%%% ab hier Skizze
@@ -434,3 +573,48 @@ für die gilt $f_4\in H^2_0$.
     0, & \text{wenn } \frac{2}{3}\leq r\leq 1,
   \end{cases}\\
 \end{align*}
+
+====================
+aus altem Auswertungen.tex (neues: s. Storn, Puttkams)
+
+In diesen Abschnitt werten wir die in \Cref{chap:experiments} erhaltenen
+Ergebnisse aus.
+
+\todo[inline]{folgendes weniger ausführlich einbringen, wohl
+auch eher im Auswertungskapitel ,,in Bartels wird in
+citeEntsprechendesLemma die garantierte Rate für \ldots bewiesen. In unseren
+Experimenten \ldots}
+
+Zunächst betrachten wir \cite[S. 309, Theorem 10.7]{Bar15}. Diese
+Abschätzung kontrolliert den
+$L^2$-Fehler zwischen den Minimierern $u_\C\in S^1(\Tcal)$ und
+$u\in\BV(\Omega)\cap L^2(\Omega)$ des Funktionals $I$ aus \Cref{eq:rofModel} in
+den entsprechenden Räumen. Obwohl wir eine andere Formulierung des ROF-Modells 
+betrachten und sich insbesondere das Funktional $\Enc$ aus unserer diskreten,
+nichtkonformen Formulierung von $I$ unterscheidet, ähneln sich die 
+Probleme möglicherweise genug, um die folgende Rate für unsere Formulierungen
+experimentell feststellen zu können.
+
+\begin{theorem}
+  \label{thm:errorEstimateCourant}
+  Sei $\Omega\subset\Rbb^2$ sternförmig und $g\in L^\infty(\Omega)$.  Seien
+  weiterhin $u\in\BV(\Omega)\cap L^2(\Omega)$ und $u_\C\in S^1(\Tcal)$ die
+  Minimierer des Funktionals $I$ aus \Cref{eq:rofModel} in den entsprechenden
+  Räumen.
+
+  Dann existiert eine Konstante $c\in\Rbb_+$, sodass
+  \begin{align*}
+    \frac{\alpha}{2}\Vert u-u_\C\Vert^2\leq
+    ch^{1/2}.
+  \end{align*}
+\end{theorem}
+
+====================
+
+Punkte auf die bei den Auswertungen eingegangen werden sollte
+
+Raten
+
+Verfeinerungsindikator
+
+Fazit und Ausblick
