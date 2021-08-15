@@ -25,9 +25,9 @@ function params = editable %#ok<*MSNU,FNDEF>
   % AFEM parameters
   geometry               = 'BigSquare'; %#ok<NASGU>                     
     % set automatically to 'Square' if useImage==true
-  initialRefinementLevel = 3;
+  initialRefinementLevel = 0;
   parTheta               = 0.5;
-  minNrDof               = 2e3;
+  minNrDof               = 1e8;
   useProlongation        = true;
   parGamma               = 1;
   d                      = 2; % this should remain 2
@@ -36,7 +36,7 @@ function params = editable %#ok<*MSNU,FNDEF>
   u0Mode  = 'zeros'; %'interpolationInSi'; 'zeros';
   epsStop = 1e-4; 
   parTau  = 1; 
-  maxIter = 5e3;
+  maxIter = 1e12;
 
   % experiment parameters
   useImage               = false;
@@ -55,8 +55,8 @@ function params = editable %#ok<*MSNU,FNDEF>
     % not effective if useExactEnergy==false
                               
   % information about experiment for saving and documentation
-  expName                = 'example';
-  dirInfoName            = sprintf('%s', datestr(now, 'yy_mm_dd_HH_MM_SS'));
+  expName                = 'epsStop_f01';
+  dirInfoName            = sprintf('%.0e', epsStop);
 
   % function handles (not effective if useImage==true)
   function y = inputSignal(x)
