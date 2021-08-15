@@ -166,6 +166,17 @@ integrate wird nie während der Iteration aufgerufen, ein relativ hoher
 Integrationsgrad beeinflusst die Laufzeit vernachlässigbar (das betonen,
 dass Integrate nur außerhalb ausgeführt wird)
 
+vgl PB S.30
+
+==================
+
+Dazu gehört ein Beispiel mit bekannter Lösung, das wir nach cite(section)
+konstruieren, ein komplexes Beispiel ohne Lösung mit einer unstetigen Funktion,
+hier ein Bild als Eingangssignal und eine einfache, diskontinuierliche Funktion
+als Eingangssignal und eine, ebenfalls nach section konstruierte stetige 
+Approximation dieser.
+
+
 ==================
 
 Als initiale Geometrie nutzen wir dafür entsprechend immer
@@ -246,7 +257,13 @@ zu abbruchkriterium
 
   - wähle bei epsStop 1e-2, 1e-3 und 1e-4 und sage, dass bei 1e-4 der Effekt 
     in den Freiheitsgraden die wir rechnen noch nicht auftritt und es deshalb
-    so gewählt wird
+    so gewählt wird (vielleicht auch 1e-5 mit Kommentar, dass im Bereich bis 
+    etwa 1e6 dof, das heißt, der Bereich der uns interessiert, noch kein 
+    Unterschied in den Raten auftritt, das heißt, 1e-5 im Wesentlichen nur 
+    mehr Rechenzeit bedete)
+    
+    auch klar machen, dass natürlich auch 1e-4 irgendwann stagnieren wird mit 
+    feiner werdenden Netz, d.h., insbesondere kleinerer Netzweite
 
 2) Größe von epsStop: dokumentieren, dass z.B. bei $10^{-2}$ der Fehler irgendwann
 nicht mehr fällt und damit die Wahl $10^{-4}$ (ca.) begründen.
@@ -322,156 +339,42 @@ die dort auch getroffen werden.
 
 dann abschweif zu höhere Regularität
 
+  wir sehen deutlich bessere Raten als in Bartels flg. Thm. :
+
+  Zunächst betrachten wir \cite[S. 309, Theorem 10.7]{Bar15}. Diese
+  Abschätzung kontrolliert den
+  $L^2$-Fehler zwischen den Minimierern $u_\C\in S^1(\Tcal)$ und
+  $u\in\BV(\Omega)\cap L^2(\Omega)$ des Funktionals $I$ aus \Cref{eq:rofModel} in
+  den entsprechenden Räumen. Obwohl wir eine andere Formulierung des ROF-Modells 
+  betrachten und sich insbesondere das Funktional $\Enc$ aus unserer diskreten,
+  nichtkonformen Formulierung von $I$ unterscheidet, ähneln sich die 
+  Probleme möglicherweise genug, um die folgende Rate für unsere Formulierungen
+  experimentell feststellen zu können.
+  
+  \begin{theorem}
+    \label{thm:errorEstimateCourant}
+    Sei $\Omega\subset\Rbb^2$ sternförmig und $g\in L^\infty(\Omega)$.  Seien
+    weiterhin $u\in\BV(\Omega)\cap L^2(\Omega)$ und $u_\C\in S^1(\Tcal)$ die
+    Minimierer des Funktionals $I$ aus \Cref{eq:rofModel} in den entsprechenden
+    Räumen.
+  
+    Dann existiert eine Konstante $c\in\Rbb_+$, sodass
+    \begin{align*}
+      \frac{\alpha}{2}\Vert u-u_\C\Vert^2\leq
+      ch^{1/2}.
+    \end{align*}
+  \end{theorem}
+
+  da wir hohe Regularität haben mit H10, d.h. höher als im Thm angenommen, ist
+  dies zu erwarten. Ein kurzes Experiment soll untersuchen, ob noch höhere 
+  Reg.annahmen die Raten weiter verbessern
   - h20 Beispeil genau so wie H10, also das vielleicht nur erwähnen ,,eine 
     noch stärke Regularitätsannahme im Beispeil f04, bei dem Lsg und f H20 sind,
     verbesserte die Raten nicht weiter (verschiebt nur die Graphen nach unter,
     d.h. früher kleiner Fehler)
 
-==================
-
-hier eventuell auch experimte für AFEM Params?
-
-==================
-
-dann insgesamt raten abarbeiten und interpretieren
-
-
-\section{Graufarbenbilder als Eingangssignale}
-cameraman
-
-==================
-
-abschweif zu denoise example aus intro hier erklären
-
-==================
-
-zum abschluss zu approximation von white circle mit stetigeer funktion (plots
-dementsprechend
-
-  - circle stuff, etas sind vergleichbar (was gut, weil so erwarte)
-
-
-\section{Fazit und Ausblick}
-
-AUSBLICK (vielleicht in die Arbeit schreiben)
-  
-  Randdaten verallgemeinern
-    nochmal aufschreiben wo CR10 angenommen wird und eventuell darauf verweisen 
-    im Ausblick (bis dahin notieren welche Funktionen und in welchem Maß)
-    (in solvePrimalDualFormulation zum Erstellen der rechten Seite)
-    
-  Bartels Code anpassen und vergleicen
-
-%%%%% hiervor finalized
-%%%%% ab hier Skizze
-
-Dazu gehört ein Beispiel mit bekannter Lösung, das wir nach cite(section)
-konstruieren, ein komplexes Beispiel ohne Lösung mit einer unstetigen Funktion,
-hier ein Bild als Eingangssignal und eine einfache, diskontinuierliche Funktion
-als Eingangssignal und eine, ebenfalls nach section konstruierte stetige 
-Approximation dieser.
-
-\todo[inline]{Neue Gliederung: vgl Storn oder noch besser Sophie, statt
-Auswertung ,Zusammenfassung und Ausblick'. Oder einfach wie Franz, ohne
-Zsmfssg, ,Numerische Experimente und SChlussfolgerung' oder so}
-
-
-Alle Allgemeinen Infos unter die Hauptüberschrift, keine eigene Section,
-da auch integrate gleich 10 erwähnen
-
-
-
-Mache alle mögliche Sachen, prüfe Dinge die gelten sollen. Für ein
-Beispiel (z.B. CCs) fange mit basics an, also mal an einem Iterationsplot
-aufzeigen, dass die Energie tatsächlich von oben gegen was konvergiert und 
-gehe dann weiter zu anderen Themen wie den Raten, GLEB etc.
-
-\todo[inline]{Probiere auch thm:convexity irgendwie informell zu erwähnen ,,wir
-sehen, dass sogar ohne die Sprünge das stimmt\ldots`` oder so}
-
-\todo[inline]{in chap 6 cf.s auf integrate etc nicht ständig sonder einmal 
-gesammelt am Anfang oder drauf achten, dass das nur beim ersten Erwähnen zitiert 
-wird}
-
-\todo[inline]{Programm gibt Sprungtermsumme aus, z.B. stagnierend bei 11 auf
-allen Leveln, darauf vielleicht noch kurz in der Auswertung eingehen ,man
-sieht, dass die Sprünge tatsächlch im nonkonformen Problem nicht minimiert
-werden oder so'}
-
-
-
-
-Zuerst allgemeines, alle Infromationen, die ggf bei allen Experimten in den 
-folgenden Abschnitten immer gleich sind und möglicherweise kurze Kommentare,
-warum diese entspreched gewählt sind.
-
-\bigskip
-
-Alle Experimentparameter die stets gleich gesetzt sind Eingangs einmal erwähnen,
-insbesondere degree4Integrate, was immer als 10 gesetzt wird, mit ähnlichem 
-Kommentar wie PB auf S 30
-
-
-\bigskip
-
-Bei Beschreibung wie die Bilder der Einleitung zur Rauschunterdrückung
-entstanden sind auch erwähnen, dass $f=\alpha g$ eine Rolle spiele usw.
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\todo[inline]{Beschreibe hier nur das allgemeine Vorgehen und die 
-mathematischen Hintergründe und schreibe die genutzten Beispiele an
-entsprechender Stelle in Numerische Beispiele oder so. Die ungenutzten Beispiele 
-die trotzdem im Ordner liegen können in einem extra Abschnitt aufgezählt werden}
-Schema ist dann: Nach section Konstruktion einer exakten Lösung erhalten wir
-für die Wahl u mit sgn bla die rechte Seite f.
-Die Details bei bestimmten Konstruktionen, etwa ,,um H2 zu erhalten fordern wir
-noch`` ergänzen beim Vorstellen des entsprechenden Experimentes, hier nur das 
-allgemeinste, das, was CC wirklich geschrieben hat.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Wir wollen damit Experimente konstruieren um Aussagen in \ldots oder \ldots
-zu prüfen, entsprechend müssen wir noch fordern
-Da in den Kapiteln GLEB und bla u in H10 relevant wird, fordern wir
-weiterhin \ldots
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-Für die Funktion
-\begin{align*}
-  u_2(r)\coloneqq 
-  \begin{cases}
-    1, & \text{wenn } 0\leq r\leq\frac{1-\beta}{2},\\
-    -\frac{1}{\beta}r + \frac{1+\beta}{2\beta}, & 
-    \text{wenn } \frac{1-\beta}{2}\leq r\leq \frac{1+\beta}{2},\\
-    0, & \text{wenn } \frac{1+\beta}{2}\leq r,
-  \end{cases}
-\end{align*}
-erhält man mit der Wahl
-\begin{align*}
-  \sgn&(\partial_r u_2(r)) \\
-  &\coloneqq 
-  \begin{cases}
-    \frac{4}{1-\beta}r\left(\frac{1}{1-\beta}r -1\right), &
-    \text{wenn } 0\leq r\leq\frac{1-\beta}{2},\\
-    -1, & \text{wenn } \frac{1-\beta}{2}\leq r\leq \frac{1+\beta}{2},\\
-    \frac{4}{(\beta-1)^3}
-    \left( 4r^3-3(\beta+3)r^2 +6(\beta+1)r-3\beta-1\right), & 
-    \text{wenn } \frac{1+\beta}{2}\leq r\leq 1,
-  \end{cases}
-\end{align*}
-die rechte Seite
-\begin{align*}
-  f_2(r)\coloneqq 
-  \begin{cases}
-    \alpha - \frac{4}{1-\beta}\left(\frac{3}{1-\beta}r - 2\right), &
-    \text{wenn } 0\leq r\leq\frac{1-\beta}{2},\\
-    -\frac{\alpha}{\beta}\left( r-\frac{1+\beta}{2} \right) +\frac{1}{r}, & 
-    \text{wenn } \frac{1-\beta}{2}\leq r\leq \frac{1+\beta}{2},\\
-    \frac{-4}{(\beta-1)^3}
-    \left( 16r^2 -9(\beta+3)r + 12(\beta+1) - \frac{3\beta+1}{r}\right), & 
-    \text{wenn } \frac{1+\beta}{2}\leq r\leq 1.
-  \end{cases}
-\end{align*}
+  nur halb H20 Beispiel auch erwähnen, einfach sagen, dass dieses auch im 
+  functions Ordner liegt
 
 Es folgen zwei Beispiele mit exakter Lösung $u_3=u_4 \in H^2_0((0,1)^2)$, 
 gegeben durch 
@@ -573,8 +476,69 @@ für die gilt $f_4\in H^2_0$.
     0, & \text{wenn } \frac{2}{3}\leq r\leq 1,
   \end{cases}\\
 \end{align*}
+==================
 
-====================
+hier eventuell auch experimte für AFEM Params?
+
+==================
+
+dann insgesamt raten abarbeiten und interpretieren
+
+
+\section{Graufarbenbilder als Eingangssignale}
+cameraman
+
+==================
+
+abschweif zu denoise example aus intro hier erklären
+
+==================
+
+zum abschluss zu approximation von white circle mit stetigeer funktion (plots
+dementsprechend
+
+  - circle stuff, etas sind vergleichbar (was gut, weil so erwarte)
+
+Für die Funktion
+\begin{align*}
+  u_2(r)\coloneqq 
+  \begin{cases}
+    1, & \text{wenn } 0\leq r\leq\frac{1-\beta}{2},\\
+    -\frac{1}{\beta}r + \frac{1+\beta}{2\beta}, & 
+    \text{wenn } \frac{1-\beta}{2}\leq r\leq \frac{1+\beta}{2},\\
+    0, & \text{wenn } \frac{1+\beta}{2}\leq r,
+  \end{cases}
+\end{align*}
+erhält man mit der Wahl
+\begin{align*}
+  \sgn&(\partial_r u_2(r)) \\
+  &\coloneqq 
+  \begin{cases}
+    \frac{4}{1-\beta}r\left(\frac{1}{1-\beta}r -1\right), &
+    \text{wenn } 0\leq r\leq\frac{1-\beta}{2},\\
+    -1, & \text{wenn } \frac{1-\beta}{2}\leq r\leq \frac{1+\beta}{2},\\
+    \frac{4}{(\beta-1)^3}
+    \left( 4r^3-3(\beta+3)r^2 +6(\beta+1)r-3\beta-1\right), & 
+    \text{wenn } \frac{1+\beta}{2}\leq r\leq 1,
+  \end{cases}
+\end{align*}
+die rechte Seite
+\begin{align*}
+  f_2(r)\coloneqq 
+  \begin{cases}
+    \alpha - \frac{4}{1-\beta}\left(\frac{3}{1-\beta}r - 2\right), &
+    \text{wenn } 0\leq r\leq\frac{1-\beta}{2},\\
+    -\frac{\alpha}{\beta}\left( r-\frac{1+\beta}{2} \right) +\frac{1}{r}, & 
+    \text{wenn } \frac{1-\beta}{2}\leq r\leq \frac{1+\beta}{2},\\
+    \frac{-4}{(\beta-1)^3}
+    \left( 16r^2 -9(\beta+3)r + 12(\beta+1) - \frac{3\beta+1}{r}\right), & 
+    \text{wenn } \frac{1+\beta}{2}\leq r\leq 1.
+  \end{cases}
+\end{align*}
+
+
+\section{Fazit und Ausblick}
+
 aus altem Auswertungen.tex (neues: s. Storn, Puttkams)
 
 In diesen Abschnitt werten wir die in \Cref{chap:experiments} erhaltenen
@@ -585,29 +549,6 @@ auch eher im Auswertungskapitel ,,in Bartels wird in
 citeEntsprechendesLemma die garantierte Rate für \ldots bewiesen. In unseren
 Experimenten \ldots}
 
-Zunächst betrachten wir \cite[S. 309, Theorem 10.7]{Bar15}. Diese
-Abschätzung kontrolliert den
-$L^2$-Fehler zwischen den Minimierern $u_\C\in S^1(\Tcal)$ und
-$u\in\BV(\Omega)\cap L^2(\Omega)$ des Funktionals $I$ aus \Cref{eq:rofModel} in
-den entsprechenden Räumen. Obwohl wir eine andere Formulierung des ROF-Modells 
-betrachten und sich insbesondere das Funktional $\Enc$ aus unserer diskreten,
-nichtkonformen Formulierung von $I$ unterscheidet, ähneln sich die 
-Probleme möglicherweise genug, um die folgende Rate für unsere Formulierungen
-experimentell feststellen zu können.
-
-\begin{theorem}
-  \label{thm:errorEstimateCourant}
-  Sei $\Omega\subset\Rbb^2$ sternförmig und $g\in L^\infty(\Omega)$.  Seien
-  weiterhin $u\in\BV(\Omega)\cap L^2(\Omega)$ und $u_\C\in S^1(\Tcal)$ die
-  Minimierer des Funktionals $I$ aus \Cref{eq:rofModel} in den entsprechenden
-  Räumen.
-
-  Dann existiert eine Konstante $c\in\Rbb_+$, sodass
-  \begin{align*}
-    \frac{\alpha}{2}\Vert u-u_\C\Vert^2\leq
-    ch^{1/2}.
-  \end{align*}
-\end{theorem}
 
 ====================
 
@@ -616,5 +557,21 @@ Punkte auf die bei den Auswertungen eingegangen werden sollte
 Raten
 
 Verfeinerungsindikator
+AUSBLICK (vielleicht in die Arbeit schreiben)
+  
+  Randdaten verallgemeinern
+    nochmal aufschreiben wo CR10 angenommen wird und eventuell darauf verweisen 
+    im Ausblick (bis dahin notieren welche Funktionen und in welchem Maß)
+    (in solvePrimalDualFormulation zum Erstellen der rechten Seite)
+    
+  Bartels Code anpassen und vergleicen
 
-Fazit und Ausblick
+\todo[inline]{Programm gibt Sprungtermsumme aus, z.B. stagnierend bei 11 auf
+allen Leveln, darauf vielleicht noch kurz in der Auswertung eingehen ,man
+sieht, dass die Sprünge tatsächlch im nonkonformen Problem nicht minimiert
+werden oder so'}
+
+
+\todo[inline]{Probiere auch thm:convexity irgendwie informell zu erwähnen ,,wir
+sehen, dass sogar ohne die Sprünge das stimmt\ldots`` oder so}
+
