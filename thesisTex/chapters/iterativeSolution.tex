@@ -132,6 +132,7 @@ Dabei bedienen wir uns unter anderem der äquivalenten Charakterisierungen aus
 \Cref{thm:discProbCharacterizationOfDiscreteSolutions}.
 
 \begin{theorem}
+  \label{thm:convergenceIteration}
   Sei $\ucr\in \CR^1_0(\Tcal)$ Lösung von \Cref{prob:discreteProblem} und
   $\bar\Lambda_0\in P_0\!\left(\Tcal;\Rbb^2\right)$ erfülle
   $\left|\bar\Lambda_0(\bullet)\right|\leq 1$ fast überall in $\Omega$ sowie
@@ -360,7 +361,7 @@ Dabei bedienen wir uns unter anderem der äquivalenten Charakterisierungen aus
   \end{align*}
   Zusammen mit Ungleichung \eqref{eq:convProofG} folgt daraus
   \begin{align}
-    \label{eq:updateBound}
+    \label{eq:upperBoundIterationError}
     2\alpha\sum_{j=1}^J\Vert e_j\Vert^2 
     \leq
     \tau^{-1}\left(\vvvert e_0\vvvert^2_\nc + \Vert E_0\Vert^2\right).

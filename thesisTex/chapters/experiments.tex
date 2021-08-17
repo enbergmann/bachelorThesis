@@ -10,7 +10,7 @@ Andere Funktionen werden wir bei Bedarf betrachten, um bestimmte Eigenschaften
 zu untersuchen im Vergleich zu diesen beiden Benchmark-Problemen.
 Für ein Experiment mit exakter Lösung betrachten wir zunächst auf $[0,\infty)$
 für einen Parameter $\beta\geq 1/2$, wobei wir stets $\beta =1$ wählen, 
-die Funktionen
+die Funktion
 \begin{align*}
   u_1(r)&\coloneqq
   \begin{cases}
@@ -24,7 +24,10 @@ die Funktionen
     & \text{falls } r\in \left(\frac{1}{2}, \frac{5}{6}\right],\\
     0, 
     & \text{falls } r\in \left(\frac{5}{6}, \infty\right),\\
-  \end{cases}\\
+  \end{cases}
+\end{align*}
+und wählen
+\begin{align*}
   \sgn\big(\partial_r u_1(r)\big) 
   &\coloneqq
   \begin{cases}
@@ -59,7 +62,49 @@ Eingangssignal
     & \text{falls } r\in \left(\frac{5}{6}, \infty\right).
   \end{cases}
 \end{align*}
+Ebenfalls nach \Cref{sec:constructionInputSignal} können die schwachen
+Gradienten von $u_1$ und $f_1$ bestimmt werden mithilfe der partiellen 
+Ableitungen
 
+\begin{align*}
+  \partial_r f_1(r)
+  &=
+  \begin{cases}
+    108,
+    & \text{falls } r\in\left[0,\frac{1}{6}\right],\\
+    6\alpha\beta(6r-1)^{\beta-1} +\frac{1}{r^2}, 
+    & \text{falls } r\in\left(\frac{1}{6},\frac{1}{3}\right],\\
+    \left(36\pi^2+\frac{1}{r^2}\right)\cos(\pi(6r-2))
+    + \frac{6\pi}{r}\sin(\pi(6r-2)), 
+    & \text{falls } r\in\left(\frac{1}{3},\frac{1}{2}\right],\\
+    -\left(6\alpha\beta\left( \frac{5}{2}-3r \right)^{\beta-1}+
+    \frac{1}{r^2}\right),
+    & \text{falls } r\in\left(\frac{1}{2},\frac{5}{6}\right],\\
+    -\left( \left( 18\pi^2+\frac{1}{2r^2} \right)\cos(\pi(6r-5))
+    +\frac{1}{2r^2} + \frac{3\pi}{r}\sin(\pi(6r-5))\right), 
+    &\text{falls } r\in\left(\frac{5}{6},\infty\right),
+  \end{cases}
+\end{align*}
+und 
+\begin{align*}
+  \partial_r u_1(r) 
+  &= 
+  \begin{cases}
+    0,
+    & \text{falls } r\in\left[0,\frac{1}{6}\right],\\
+    6\beta(6r-1)^{\beta-1}, 
+    & \text{falls } r\in\left(\frac{1}{6},\frac{1}{3}\right],\\
+    0, 
+    & \text{falls } r\in\left(\frac{1}{3},\frac{1}{2}\right],\\
+    -6\beta\left( \frac{5}{2}-3r \right)^{\beta-1},
+    & \text{falls } r\in\left(\frac{1}{2},\frac{5}{6}\right],\\
+    0,
+    &\text{falls } r\in\left(\frac{5}{6},\infty\right).
+  \end{cases}
+\end{align*}
+Durch Kenntnis des schwachen Gradienten von $u_1$ erhalten wir für die
+exakte Energie die Approximation $E(u_1)\approx -2.05803442842497$, mit der
+wir die Ergebnisse der Experimente vergleichen können.
 \begin{figure}[!ht]
   \centering
   \begin{subfigure}[b]{.48\linewidth}
@@ -94,98 +139,32 @@ Eingangssignal
   $\alpha=1$.}
   \label{fig:f01Plots}
 \end{figure}
+Als initiale Geometrie, das heißt die Geometrie für das erste Level des
+AFEM-Algorithmus, nutzen wir in den Experimenten mit exakter Lösung,
+soweit nicht anders angegeben, stets \texttt{BigSquare} des AFEM-Pakets ohne
+initiale Rotverfeinerung, zu sehen in \Cref{fig:triangBigSquare}, da diese den
+Einheitskreis, das heißt den Träger des Eingangssignals und der exakten Lösung
+nach \Cref{sec:constructionInputSignal}, enthält.
 
-Ableitung von u wird zu Berechung von E(u) gebraucht nochmal sagen, sonst 
-irrelevant für Experimt
-
-vielleicht ,der Gradient von u ist\ldots, damit approximieren wir die
-exakte Energie \ldots)
-
-Nach \Cref{sec:constructionInputSignal} lauten die entsprechenden Ableitungen
-\begin{align*}
-  \partial_r f_1(r)
-  &=
-  \begin{cases}
-    108,
-    & \text{falls } r\in\left[0,\frac{1}{6}\right],\\
-    6\alpha\beta(6r-1)^{\beta-1} +\frac{1}{r^2}, 
-    & \text{falls } r\in\left(\frac{1}{6},\frac{1}{3}\right],\\
-    \left(36\pi^2+\frac{1}{r^2}\right)\cos(\pi(6r-2))
-    + \frac{6\pi}{r}\sin(\pi(6r-2)), 
-    & \text{falls } r\in\left(\frac{1}{3},\frac{1}{2}\right],\\
-    -\left(6\alpha\beta\left( \frac{5}{2}-3r \right)^{\beta-1}+
-    \frac{1}{r^2}\right),
-    & \text{falls } r\in\left(\frac{1}{2},\frac{5}{6}\right],\\
-    -\left( \left( 18\pi^2+\frac{1}{2r^2} \right)\cos(\pi(6r-5))
-    +\frac{1}{2r^2} + \frac{3\pi}{r}\sin(\pi(6r-5))\right), 
-    &\text{falls } r\in\left(\frac{5}{6},\infty\right),
-  \end{cases}\\
-  \partial_r u_1(r) 
-  &= 
-  \begin{cases}
-    0,
-    & \text{falls } r\in\left[0,\frac{1}{6}\right],\\
-    6\beta(6r-1)^{\beta-1}, 
-    & \text{falls } r\in\left(\frac{1}{6},\frac{1}{3}\right],\\
-    0, 
-    & \text{falls } r\in\left(\frac{1}{3},\frac{1}{2}\right],\\
-    -6\beta\left( \frac{5}{2}-3r \right)^{\beta-1},
-    & \text{falls } r\in\left(\frac{1}{2},\frac{5}{6}\right],\\
-    0,
-    &\text{falls } r\in\left(\frac{5}{6},\infty\right).
-  \end{cases}
-\end{align*}
-
-
-
-Ein Problem mit unstetigem Eingangssignal legen wir besonderes
+Für ein Problem mit unstetigem Eingangssignal legen wir besonderes
 Augenmerk auf das Graufarbenbild \texttt{cameraman} aus \cref{fig:cameraman}
 als Eingangssignal. 
-
-[nach cameraman Erwähnung] Auch für dieses Beispiel, das stark unregulär ist,
-haben selbst deutlich höhere Integrationsgrade als 10 zu keinen veränderten
-Raten geführt. 
-Auch geringere nicht, da aber alle Methoden, die \texttt{integrate} aufrufen
-werden vor oder nach der primalen-dualen Iteration aufgerufen, 
-beeinflusst dies die Laufzeit nicht negativ und wird so gewählt um möglichst
-exakte Integration zu gewährleisten.
-
-==================
-
-degree4Integrate FÜR UNSERE AUFRUFE VON INTEGRATE schreiben (denn errorCRL2
-nutzt degree 12 immer, also wäre die aktuelle Formulierung falsch)
-irgendwo sollte eh noch geschrieben werden ,,zur berechnung des Fehler wird
-die Methode aus AFEM genutzt, die immer Grad 12 hat unabh von degree4Integrate
-aus Tabelle ...)
-
-Zwar können die Funktionen hier sehr unregulär sein
-Für keines der Experimente wurde, auch mit deutlich höheren Wahlen von
-degree4Integrate, andere Raten beobachtet.
-
-integrate wird nie während der Iteration aufgerufen, ein relativ hoher 
-Integrationsgrad beeinflusst die Laufzeit vernachlässigbar (das betonen,
-dass Integrate nur außerhalb ausgeführt wird)
-
-vgl PB S.30
-
-==================
-
-Dazu gehört ein Beispiel mit bekannter Lösung, das wir nach cite(section)
-konstruieren, ein komplexes Beispiel ohne Lösung mit einer unstetigen Funktion,
-hier ein Bild als Eingangssignal und eine einfache, diskontinuierliche Funktion
-als Eingangssignal und eine, ebenfalls nach section konstruierte stetige 
-Approximation dieser.
-
-
-==================
-
-Als initiale Geometrie nutzen wir dafür entsprechend immer
-\texttt{BigSquare} des AFEM-Pakets (vlt. verweis auf Package falls vorhanden)
-ohne initiale Rotverfeinerung [Abbildung mit der Triangilierung linken], da
-diese den Einheitskreis enthält.
-Fur dieses nutzen wir als initiale
-Triangulierung für das erste Level des AFEM Algs die Triangulierung
-\texttt{Square} [mach so wie eben] [s. \Cref{fig:initialTriangulations}].
+Auch für dieses komplexere Beispiel, bei der selbst eine stückweise
+Beschreibung durch Polynome augenscheinlich nur schwer möglich ist, sowie in
+allen weiteren Experimenten haben selbst deutlich höhere Integrationsgrade als
+$10$ zu keinen veränderten Raten geführt. 
+Diese Wahl des Integrationsgrads erscheint daher als ausreichend.
+Da außerdem in dieser Implementierung darauf geachtet wurde, die
+\texttt{integrate} Methode des AFEM-Softwarepakets \cite{Car09} nicht während
+der primalen-dualen Iteration aufzurufen, hat eine möglicherweise zu hohe Wahl
+des Integrationsgrads keinen relevanten Effekt auf die Programmlaufzeit und
+kann somit ohne Sorge als 10 gewählt werden.
+Diese Wahl des Integrationsgrads gilt nur für die Methode \texttt{errorCRL2}
+des AFEM-Softwarepakets zur Berechnung des Fehlers nicht, da diese unverändert
+übernommen wurde und den Grad 12 nutzt.
+Fur Experiment mit Graufarbenbild als Eingangssignal nutzen wir als initiale
+Triangulierung \texttt{Square} des AFEM-Softwarepakets ohne initiale
+Rotverfeinerung, zu sehen in \Cref{fig:triangSquare}.
 
 \begin{figure}[!ht]
   \centering
@@ -205,27 +184,107 @@ Triangulierung für das erste Level des AFEM Algs die Triangulierung
   \caption{In den Experimenten genutzte initiale Triangulierung.}
   \label{fig:initialTriangulations}
 \end{figure}
-
-Führen wir eines der Experimente mit adaptiver Netzverfeinerung durch, so
-wählen wir den Bulk-Parameter für den Mark-Schritt des AFEM-Algorithmus, soweit
-nicht anders angegeben, $\theta=0.5$.
+Führen wir ein Experiment mit adaptiver Netzverfeinerung durch, so wählen wir
+den Bulk-Parameter für den Mark-Schritt des AFEM-Algorithmus, soweit nicht
+anders angegeben, $\theta=0.5$.
 Auf die Wahl der Parameter $\tau$ und $\epsstop$ für die primale-duale
-Iteration werden wir im folgenden Abschnitt [ref] eingehen.
+Iteration werden wir im folgenden \Cref{sec:choiceOfParameters} eingehen.
 Zur Wahl des Parameters $\gamma$ auf dem Verfeinerungsindikator betrachten
-wir in Abschnitt (Experimente mit exakter Lösung) ein.
+wir in \Cref{sec:experimentsWithExactSolution} ein Beispiel.
 
-  überlegen, welche Parmeter für jedes Experiment nochmal gesagt werden sollen
-  definitiv: 
+%TODO
+Als Startwert wählen wir stets (TODO, nachgucken, glaube, es ist immer $u_0=0$)
+mit der Wahl $\Lambda_0$ aus Gleichung (ref ins vorherige Kapitel, wo
+$\Lambda_0$ gewählt wurde.
+
+%TODO den nachfolgenden Kommentar mglw an den Anfang dieses Kapitel, nach dem
+% initialen  ,,in diesem Kapitel betrachten wir \ldots`` Satz. Vernünftig
+% formulieren noch
+Für den Rest dieses Kapitel benutzne wir die Bezeichunng $u_j$ für die
+Iterate/benutzen wir die Bezeichnungen aus \Cref{alg:primalDualIteration}.
+%TODO damn, die exakten Lösungen u_1 \ldots u_4 müssen dann anders heißen
 
 
 \section{Wahl der Parameter für die primale-duale Iteration}
-alles zu tau mit hypothesse
+\label{sec:choiceOfParameters}
 
+Zunächst interessiert und die Wahl des Parameters $\tau$ in 
+\Cref{alg:primalDualIteration}. 
+Diesen müssen wir nach \Cref{thm:convergenceIteration} in $(0,1]$ wählen um
+Konvergenz der primalen-dualen Iteration zu garantieren.
+
+%\begin{figure}[!ht]
+%  \centering
+%  \begin{subfigure}[b]{.48\linewidth}
+%    \caption{$f_1$}
+%    \includegraphics[trim = 40 30 30 30, clip, width=\linewidth]
+%      {pictures/chapExperiments/secParameters/parTau/...}
+%    \label{fig:f01InSi}
+%  \end{subfigure}
+%  \quad
+%  \begin{subfigure}[b]{.48\linewidth}
+%    \caption{$u_1$}
+%    \includegraphics[trim = 40 30 30 30, clip, width=\linewidth]
+%      {pictures/chapExperiments/secParameters/parTau/...}
+%    \label{fig:f01ExactSol}
+%  \end{subfigure}
+%
+%  \begin{subfigure}[b]{.48\linewidth}
+%    \caption{$f_1$ entlang der x- und y-Achse}
+%    \includegraphics[trim = 50 30 50 20, clip, width=\linewidth]
+%      {pictures/chapExperiments/secParameters/parTau/...}
+%    \label{fig:f01InSiAxis}
+%  \end{subfigure}
+%  \quad
+%  \begin{subfigure}[b]{.48\linewidth}
+%    \caption{$u_1$ entlang der x- und y-Achse}
+%    \includegraphics[trim = 50 30 50 20, clip, width=\linewidth]
+%      {pictures/chapExperiments/secParameters/parTau/...}
+%    \label{fig:f01ExactSolAxis}
+%  \end{subfigure} 
+%  \caption{Eingangssignal $f_1$ und exakte Lösung $u_1$ sowie deren
+%  Darstellungen entlang der x-Achse (blau) und der y-Achse (rot) für
+%  $\alpha=1$.}
+%  \label{fig:f01Plots}
+%\end{figure}
+
+
+Wie in den Abbildungen \ldots zu sehen, scheint sich die Anzahl der Iteration,
+und damit auch die Laufzeit, antiproportional zur Größe von $\tau$ zu
+verhalten.
+Da die L2 Fehler in Abbildung \ldots gleich verlaufen, scheint somit die
+größtmögliche Wahl von $\tau$ die \Cref{thm:convergenceIteration} zulässt, das
+heißt $\tau=1$, die ideale Wahl zu sein.
+
+Ein mögliche Erklärung liefert der Beweis von \Cref{thm:convergenceIteration}.
+Die darin bewiesene \Cref{eq:upperBoundIterationError} impliziert für die
+Iterate $(u_j)_{j\in\Nbb}$, dass
+\begin{align*}
+  \sum_{j=1}^\infty\Vert u_j-\ucr\Vert^2 
+  \leq
+  \frac{1}{2\alpha\tau}\left(\vvvert u_0-\ucr\vvvert^2_\nc + \Vert \Lambda_j
+  -\bar\Lambda\Vert^2\right). %TODO check die bezeichungen für lambda etc.
+\end{align*}
+Die rechte Seite wird mit größer werdendem $\tau$ kleiner, womit womöglich
+die Folge $(\left\Vert u_j-\ucr\right\Vert)_{j\in\Nbb}$ schneller gegen $0$
+konvergiert und damit auch das Abbruchkriterium \eqref{eq:terminationCriterion}
+schneller erfüllt ist. 
+
+%TODO
 bei tau, argumentiere, das 1e6 Iterationen ausreichen (vgl mit tau = 1, sage, 
 wie viele tau = 1 gebraucht hat) Sage, dass man theoretisch ausrechnen kann,
 wenn initialer Fehler etc bekannt ist, wie viele Iteration benötigt werden (da 
 die Fehler ja konstant bleiben und 1e6 mal aufaddiert wurden muss das 
 Thm schief gehen irgendwann)
+%TODO
+
+includegraphics parTau iterations and time
+
+includegraphics Qualität der Fehler, sehen, dass die für alle tau gleich bleibt,
+das Raten gleich bleiben
+
+includegraphics tau größer 1 mit keiner Konvergenz 
+%TODO
 
 ==================
 
@@ -296,6 +355,7 @@ so was identisch sind
 
 
 \section{Experimente mit bekannter exakter Lösung}
+\label{sec:experimentsWithExactSolution}
 
 f01 vor allem
 
@@ -498,6 +558,8 @@ zum abschluss zu approximation von white circle mit stetigeer funktion (plots
 dementsprechend
 
   - circle stuff, etas sind vergleichbar (was gut, weil so erwarte)
+
+diskontinuierliche function und eine stetige approximation dieser
 
 Für die Funktion
 \begin{align*}
