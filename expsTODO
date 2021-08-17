@@ -19,17 +19,6 @@ don't present l2 squared in tau comparison (unnecessary if l2 is presented)
 reaffirm tauSize results for uniform refinement, just to make sure
 ---> reaffirmed, same behaviour observed
 
----
-
-Document that benchmark file name can only contain letters and numbers
-
-
----
-
-Put more stuff in current data reduced (like lvl?)
-
-
-
 AUSWERTUNGEN
 
 gamma klein wählen und damit Sprunganteil von eta vergrößern ist nicht
@@ -51,15 +40,6 @@ und Auswertung nicht)
 Bzw vielleicht Experimente und Auswertungen nicht trennen
 
 
-
-BEVOR FINALE EXPERIMENTE: Räume mindst Benchmarks file auf (nur noch nötige
-Sachen darin), schaffe verschiede Abbruch flags ab etc
-DAMIT die hinterlegten Benchmarks Files vernünftig aussehen
-FUER finale experimente außerdem aussagekräftige namen für benchmark files
-
-verändere sicherlich auch beta4Estimate zu gamma4Esitmate etc
-
-FINALIZE program
 
 teste gueb zeug auch mir exakter Lösung und großem alpha um zu sehen, dass 
 die Verschiebung auch dort nichts ausmacht
