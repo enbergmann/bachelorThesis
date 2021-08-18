@@ -1,20 +1,26 @@
-\todo[inline]{sth like f1 zu f, f4 zu fHR, f circle dc zu fDC, f circle cont
-approx zu fC}
 In diesem abschließenden Kapitel möchten wir nun die in
 \Cref{chap:implementation} beschriebene Realisierung von
 \Cref{alg:primalDualIteration} mit Abbruchkriterium
 \eqref{eq:terminationCriterion} im Solve-Schritt der AFEM-Schleife aus
 \Cref{fig:afemLoop} an einigen Benchmark-Problemen untersuchen.
+Dabei benutzen wir die Bezeichnungen aus \Cref{alg:primalDualIteration}.
+Zunächst möchten wir alle Parameterwahlen aufführen, die in allen 
+Experimenten gleich gesetzt werden, sofern nicht anders angegeben.
+Als Startwert für die Iteration auf dem ersten Level wählen wir
+$u_0\equiv 0$ und auf den darauffolgenden Leveln eine Prolongation wie zum
+Ende von \Cref{sec:programFlow} beschrieben.
+Für jeden Aufruf der primalen-dualen Iteration wählen wir $\Lambda_0$ wie in
+\Cref{eq:choiceInitialDualVariableImplementation} angegeben.
 Dabei konstruieren wir Probleme, bei denen die exakte Lösung bekannt ist,
 nach \Cref{sec:constructionInputSignal}. 
+Bei diesen ist ein Argument $r$ stets aus $[0,\infty)$.
 Als besonderes Augenemerk betrachten wir dabei zwei Eingangssignale.
 Andere Funktionen werden wir bei Bedarf betrachten, um bestimmte Eigenschaften
 zu untersuchen im Vergleich zu diesen beiden Benchmark-Problemen.
-Für ein Experiment mit exakter Lösung betrachten wir zunächst auf $[0,\infty)$
-für einen Parameter $\beta\geq 1/2$, wobei wir stets $\beta =1$ wählen, 
-die Funktion
+Für ein Experiment mit exakter Lösung betrachten wir für einen Parameter
+$\beta\geq 1/2$, wobei wir $\beta =1$ wählen, die Funktion
 \begin{align*}
-  u_1(r)&\coloneqq
+  u(r)&\coloneqq
   \begin{cases}
     1, 
     & \text{falls } r\in \left[0,\frac{1}{6}\right],\\
@@ -30,7 +36,7 @@ die Funktion
 \end{align*}
 und wählen
 \begin{align*}
-  \sgn\big(\partial_r u_1(r)\big) 
+  \sgn\big(\partial_r u(r)\big) 
   &\coloneqq
   \begin{cases}
     12r-36r^2, 
@@ -46,10 +52,10 @@ und wählen
   \end{cases}
 \end{align*}
 Nach \Cref{eq:constructionInputSignal} ist $u$ mit dieser Wahl von
-$\sgn\big(\partial_r u_1\big)$ die Lösung von \Cref{prob:continuousProblem} mit
+$\sgn\big(\partial_r u\big)$ die Lösung von \Cref{prob:continuousProblem} mit
 Eingangssignal
 \begin{align*}
-  f_1(r)
+  f(r)
   &=
   \begin{cases}
     \alpha-12(2-9r), 
@@ -65,11 +71,11 @@ Eingangssignal
   \end{cases}
 \end{align*}
 Ebenfalls nach \Cref{sec:constructionInputSignal} können die schwachen
-Gradienten von $u_1$ und $f_1$ bestimmt werden mithilfe der partiellen 
+Gradienten von $u$ und $f$ bestimmt werden mithilfe der partiellen 
 Ableitungen
 
 \begin{align*}
-  \partial_r f_1(r)
+  \partial_r f(r)
   &=
   \begin{cases}
     108,
@@ -89,7 +95,7 @@ Ableitungen
 \end{align*}
 und 
 \begin{align*}
-  \partial_r u_1(r) 
+  \partial_r u(r) 
   &= 
   \begin{cases}
     0,
@@ -104,49 +110,49 @@ und
     &\text{falls } r\in\left(\frac{5}{6},\infty\right).
   \end{cases}
 \end{align*}
-Durch Kenntnis des schwachen Gradienten von $u_1$ erhalten wir für die
-exakte Energie die Approximation $E(u_1)\approx -2.05803442842497$, mit der
+Durch Kenntnis des schwachen Gradienten von $u$ erhalten wir für die
+exakte Energie die Approximation $E(u)\approx -2.05803442842497$, mit der
 wir die Ergebnisse der Experimente vergleichen können.
 \begin{figure}[!ht]
   \centering
   \begin{subfigure}[b]{.48\linewidth}
-    \caption{$f_1$}
+    \caption{$f$}
     \includegraphics[trim = 40 30 30 30, clip, width=\linewidth]
       {pictures/chapExperiments/secGeneralInfo/f01Plots/inSi.png}
     \label{fig:f01InSi}
   \end{subfigure}
   \quad
   \begin{subfigure}[b]{.48\linewidth}
-    \caption{$u_1$}
+    \caption{$u$}
     \includegraphics[trim = 40 30 30 30, clip, width=\linewidth]
       {pictures/chapExperiments/secGeneralInfo/f01Plots/exactSolution.png}
     \label{fig:f01ExactSol}
   \end{subfigure}
 
   \begin{subfigure}[b]{.48\linewidth}
-    \caption{$f_1$ entlang der x- und y-Achse}
+    \caption{$f$ entlang der x- und y-Achse}
     \includegraphics[trim = 50 30 50 20, clip, width=\linewidth]
       {pictures/chapExperiments/secGeneralInfo/f01Plots/inSiAxis.png}
     \label{fig:f01InSiAxis}
   \end{subfigure}
   \quad
   \begin{subfigure}[b]{.48\linewidth}
-    \caption{$u_1$ entlang der x- und y-Achse}
+    \caption{$u$ entlang der x- und y-Achse}
     \includegraphics[trim = 50 30 50 20, clip, width=\linewidth]
       {pictures/chapExperiments/secGeneralInfo/f01Plots/exactSolutionAxis.png}
     \label{fig:f01ExactSolAxis}
   \end{subfigure} 
-  \caption{Eingangssignal $f_1$ und exakte Lösung $u_1$ sowie deren
+  \caption{Eingangssignal $f$ und exakte Lösung $u$ sowie deren
   Darstellungen entlang der x-Achse (blau) und der y-Achse (rot) für
   $\alpha=1$.}
   \label{fig:f01Plots}
 \end{figure}
 Als initiale Geometrie, das heißt die Geometrie für das erste Level des
-AFEM-Algorithmus, nutzen wir in den Experimenten mit exakter Lösung,
-soweit nicht anders angegeben, stets \texttt{BigSquare} des AFEM-Pakets ohne
-initiale Rotverfeinerung, zu sehen in \Cref{fig:triangBigSquare}, da diese den
-Einheitskreis, das heißt den Träger des Eingangssignals und der exakten Lösung
-nach \Cref{sec:constructionInputSignal}, enthält.
+AFEM-Algorithmus, nutzen wir in den Experimenten mit exakter Lösung
+\texttt{BigSquare} des AFEM-Pakets ohne initiale Rotverfeinerung, zu sehen in
+\Cref{fig:triangBigSquare}, da diese den Einheitskreis, das heißt den Träger
+des Eingangssignals und der exakten Lösung nach
+\Cref{sec:constructionInputSignal}, enthält.
 
 Für ein Problem mit unstetigem Eingangssignal legen wir besonderes
 Augenmerk auf das Graufarbenbild \texttt{cameraman} aus \cref{fig:cameraman}
@@ -187,24 +193,11 @@ Rotverfeinerung, zu sehen in \Cref{fig:triangSquare}.
   \label{fig:initialTriangulations}
 \end{figure}
 Führen wir ein Experiment mit adaptiver Netzverfeinerung durch, so wählen wir
-den Bulk-Parameter für den Mark-Schritt des AFEM-Algorithmus, soweit nicht
-anders angegeben, $\theta=0.5$.
+den Bulk-Parameter für den Mark-Schritt des AFEM-Algorithmus $\theta=0.5$.
 Auf die Wahl der Parameter $\tau$ und $\epsstop$ für die primale-duale
 Iteration werden wir im folgenden \Cref{sec:choiceOfParameters} eingehen.
 Zur Wahl des Parameters $\gamma$ auf dem Verfeinerungsindikator betrachten
 wir in \Cref{sec:experimentsWithExactSolution} ein Beispiel.
-
-%TODO
-Als Startwert wählen wir stets (TODO, nachgucken, glaube, es ist immer $u_0=0$)
-mit der Wahl $\Lambda_0$ aus Gleichung (ref ins vorherige Kapitel, wo
-$\Lambda_0$ gewählt wurde.
-
-%TODO den nachfolgenden Kommentar mglw an den Anfang dieses Kapitel, nach dem
-% initialen  ,,in diesem Kapitel betrachten wir \ldots`` Satz. Vernünftig
-% formulieren noch
-Für den Rest dieses Kapitel benutzne wir die Bezeichunng $u_j$ für die
-Iterate/benutzen wir die Bezeichnungen aus \Cref{alg:primalDualIteration}.
-%TODO damn, die exakten Lösungen u_1 \ldots u_4 müssen dann anders heißen
 
 
 \section{Wahl der Parameter für die primale-duale Iteration}
@@ -438,10 +431,10 @@ dann abschweif zu höhere Regularität
   nur halb H20 Beispiel auch erwähnen, einfach sagen, dass dieses auch im 
   functions Ordner liegt
 
-Es folgen zwei Beispiele mit exakter Lösung $u_3=u_4 \in H^2_0((0,1)^2)$, 
-gegeben durch 
+  Es folgen zwei Beispiele mit exakter Lösung $u_3=u_\textrm{HR} \in
+  H^2_0((0,1)^2)$, gegeben durch 
 \begin{align*}
-  u_3(r)=u_4(r)\coloneqq 
+  u_3(r)=u_\textrm{HR}(r)\coloneqq 
   \begin{cases}
     1, & \text{wenn } 0\leq r\leq\frac{1}{3},\\
     54r^3 - 81r^2 + 36r - 4, & 
@@ -474,7 +467,7 @@ erhalten wir die rechte Seite
 für die gilt $f_3\in H^1_0$
 und mit der Wahl
 \begin{align*}
-  \sgn&(\partial_r u_4(r)) \\
+  \sgn&(\partial_r u_\textrm{HR}(r)) \\
   &\coloneqq 
   \begin{cases}
     -1458r^5 + 1215r^4 - 270r^3, & \text{wenn } 0\leq r\leq\frac{1}{3},\\
@@ -485,7 +478,7 @@ und mit der Wahl
 \end{align*}
 erhalten wir die rechte Seite
 \begin{align*}
-  f_4(r)\coloneqq 
+  f_\textrm{HR}(r)\coloneqq 
   \begin{cases}
     \alpha + 8748r^4 - 6075r^3 + 1080r^2, &
     \text{wenn } 0\leq r\leq\frac{1}{3},\\
@@ -495,25 +488,10 @@ erhalten wir die rechte Seite
     \text{wenn } \frac{2}{3}\leq r\leq 1,
   \end{cases}
 \end{align*}
-für die gilt $f_4\in H^2_0$.
+für die gilt $f_\textrm{HR}\in H^2_0$.
 
 
 \begin{align*}
-  \partial_r f_2(r) &= 
-  \begin{cases}
-    -\frac{12}{(1-\beta)^2},&\text{wenn }0\leq r\leq\frac{1-\beta}{2},\\
-    -\frac{\alpha}{\beta}-\frac{1}{r^2},&
-    \text{wenn } \frac{1-\beta}{2}\leq r\leq \frac{1+\beta}{2},\\
-    -\frac{4}{(1-\beta)^3}\left( 32r-9(\beta+3)+\frac{3\beta+1}{r^2} \right),&
-    \text{wenn } \frac{1+\beta}{2}\leq r\leq 1,\\
-  \end{cases}\\
-  \partial_r u_2(r) &= 
-  \begin{cases}
-    0,&\text{wenn }0\leq r\leq\frac{1-\beta}{2},\\
-    -\frac{1}{\beta},&
-    \text{wenn } \frac{1-\beta}{2}\leq r\leq \frac{1+\beta}{2},\\
-    0,&\text{wenn } \frac{1+\beta}{2}\leq r,
-  \end{cases}\\
   \partial_r f_3(r) &=
   \begin{cases}
     - 432r + 81, & \text{wenn } 0\leq r\leq\frac{1}{3},\\
@@ -521,22 +499,26 @@ für die gilt $f_4\in H^2_0$.
     \text{wenn } \frac{1}{3}\leq r\leq \frac{2}{3},\\
     432r - 405 + \frac{27}{r^2}, & 
     \text{wenn } \frac{2}{3}\leq r\leq 1,
-  \end{cases}\\
-  \partial_r f_4(r) &=
+  \end{cases}
+\end{align*}
+\begin{align*}
+  \partial_r f_\textrm{HR}(r) &=
   \begin{cases}
     34992r^3 - 18225r^2 + 2160r, & \text{wenn } 0\leq r\leq\frac{1}{3},\\
     \alpha\left(162r^2 - 162r + 36\right) - \frac{1}{r^2}, & 
     \text{wenn } \frac{1}{3}\leq r\leq \frac{2}{3},\\
     3645r^2 - 6048r + 2592 - 864 - \frac{81}{r^2}, & 
     \text{wenn } \frac{2}{3}\leq r\leq 1,
-  \end{cases}\\
-  \partial_r u_{3,4}(r) &=
+  \end{cases}
+\end{align*}
+\begin{align*}
+  \partial_r u_{3,\textrm{HR}}(r) &=
   \begin{cases}
     0, & \text{wenn } 0\leq r\leq\frac{1}{3},\\
     162r^2 - 162r + 36, & 
     \text{wenn } \frac{1}{3}\leq r\leq \frac{2}{3},\\
     0, & \text{wenn } \frac{2}{3}\leq r\leq 1,
-  \end{cases}\\
+  \end{cases}
 \end{align*}
 ==================
 
@@ -565,7 +547,7 @@ diskontinuierliche function und eine stetige approximation dieser
 
 Für die Funktion
 \begin{align*}
-  u_2(r)\coloneqq 
+  u_\textrm{C}(r)\coloneqq 
   \begin{cases}
     1, & \text{wenn } 0\leq r\leq\frac{1-\beta}{2},\\
     -\frac{1}{\beta}r + \frac{1+\beta}{2\beta}, & 
@@ -575,7 +557,7 @@ Für die Funktion
 \end{align*}
 erhält man mit der Wahl
 \begin{align*}
-  \sgn&(\partial_r u_2(r)) \\
+  \sgn&(\partial_r u_\textrm{C}(r)) \\
   &\coloneqq 
   \begin{cases}
     \frac{4}{1-\beta}r\left(\frac{1}{1-\beta}r -1\right), &
@@ -588,7 +570,7 @@ erhält man mit der Wahl
 \end{align*}
 die rechte Seite
 \begin{align*}
-  f_2(r)\coloneqq 
+  f_\textrm{C}(r)\coloneqq 
   \begin{cases}
     \alpha - \frac{4}{1-\beta}\left(\frac{3}{1-\beta}r - 2\right), &
     \text{wenn } 0\leq r\leq\frac{1-\beta}{2},\\
@@ -600,6 +582,34 @@ die rechte Seite
   \end{cases}
 \end{align*}
 
+\begin{align*}
+  \partial_r f_\textrm{C}(r) &= 
+  \begin{cases}
+    -\frac{12}{(1-\beta)^2},&\text{wenn }0\leq r\leq\frac{1-\beta}{2},\\
+    -\frac{\alpha}{\beta}-\frac{1}{r^2},&
+    \text{wenn } \frac{1-\beta}{2}\leq r\leq \frac{1+\beta}{2},\\
+    -\frac{4}{(1-\beta)^3}\left( 32r-9(\beta+3)+\frac{3\beta+1}{r^2} \right),&
+    \text{wenn } \frac{1+\beta}{2}\leq r\leq 1,\\
+  \end{cases}
+\end{align*}
+\begin{align*}
+  \partial_r u_\textrm{C}(r) &= 
+  \begin{cases}
+    0,&\text{wenn }0\leq r\leq\frac{1-\beta}{2},\\
+    -\frac{1}{\beta},&
+    \text{wenn } \frac{1-\beta}{2}\leq r\leq \frac{1+\beta}{2},\\
+    0,&\text{wenn } \frac{1+\beta}{2}\leq r,
+  \end{cases}
+\end{align*}
+
+$u_\textrm{C}$ ist eine stetige Approximation von
+\begin{align*}
+  u_\textrm{DC}(r)\coloneqq 
+  \begin{cases}
+    1, & \text{wenn } 0\leq r\leq\frac{1}{2},\\
+    0, & \text{wenn } \frac{1}{2}\leq r,
+  \end{cases}
+\end{align*}
 
 \section{Fazit und Ausblick}
 

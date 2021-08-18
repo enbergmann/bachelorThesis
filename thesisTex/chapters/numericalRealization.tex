@@ -370,13 +370,14 @@ Mit diesen wird der stückweise Gradient des Startwerts $u_0$ aus
 \end{center}
 Mit $\gradnc u_0$ wird anschließend $\Lambda_0$ aus
 \Cref{alg:primalDualIteration} auf allen $T\in\Tcal$ initialisiert als 
-\begin{align*}
+\begin{align}
+  \label{eq:choiceInitialDualVariableImplementation}
   \Lambda_0|_T\coloneqq
   \begin{cases}
     \frac{\nabla u_0|_T}{|\nabla u_0|_T|},&\text{falls }\nabla u_0|_T\neq 0,\\
     0,&\text{falls }\nabla u_0|_T= 0.
   \end{cases}
-\end{align*}
+\end{align}
 Außerdem werden die Steifigkeits- und Massenmatrix aus
 \Cref{rem:primalDualMatrixEquations} aufgestellt in
 \begin{center}

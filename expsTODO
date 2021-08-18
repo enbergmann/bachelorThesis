@@ -55,7 +55,6 @@ Parameter entsprechend. Der Kreis selbst (unstetig) muss dann als Indikator-
 funktion mit Höhe alpha (vielleicht alpha auch 100000, mal sehen.
 Kann noch passieren, dass epsStop noch kleiner gewahlt werden muss dafür
 
-- Nenne sie f_DC und f_C (discontinuous and continuous)
 - noch Kameramann
 - vielleicht noch das H^2_0 Beispiel vernünftig (um sicherzugehen)
 
