@@ -17,8 +17,8 @@ function params = editable %#ok<*MSNU,FNDEF>
   plotModeGrayscale      = false; % not effective if showPlots==false
   showProgress           = true; 
   degree4Integrate       = 10; 
-  plotGivenFunctions     = false;
-  refinementLevel4Plots  = 8; % 11 is very close to the limit
+  plotGivenFunctions     = true;
+  refinementLevel4Plots  = 5; % 11 is very close to the limit
     % not effective if plotGivenFunctions==false
   debugIfError           = false;
 
@@ -26,7 +26,7 @@ function params = editable %#ok<*MSNU,FNDEF>
   geometry               = 'BigSquare'; %#ok<NASGU>                     
     % set automatically to 'Square' if useImage==true
   initialRefinementLevel = 0;
-  parTheta               = 0.5;
+  parTheta               = 1;
   minNrDof               = 1e8;
   useProlongation        = true;
   parGamma               = 1;
@@ -39,24 +39,24 @@ function params = editable %#ok<*MSNU,FNDEF>
   maxIter = 1e12;
 
   % experiment parameters
-  useImage               = true;
-  imageName              = 'f2bawgnSnr15cameraman.tif'; %#ok<NASGU> 
+  useImage               = false;
+  imageName              = 'f2bawgnSnr20cameraman.tif'; %#ok<NASGU> 
     % not effective if useImage==false
-  parAlpha               = 1e3; 
+  parAlpha               = 1e0; 
   parBeta                = 1;
-  inSiGradientKnown      = false;
+  inSiGradientKnown      = true;
     % set automatically to false if useImage==true
-  exactSolutionKnown     = false; %#ok<NASGU>
+  exactSolutionKnown     = true; %#ok<NASGU>
     % set automatically to false if useImage==true
-  useExactEnergy         = false; %#ok<NASGU>
+  useExactEnergy         = true; %#ok<NASGU>
     % set automatically to false if exactSolutionKnown==false
-  exactEnergy            = -2.058034062391; %#ok<NASGU> % 6 significant digits
+  exactEnergy            = -2.058034428424; %#ok<NASGU> % 5 significant digits
     % set automatically to NaN if exactSolutionKnown==false
     % not effective if useExactEnergy==false
                               
   % information about experiment for saving and documentation
-  expName                = 'denoiseSNR15';
-  dirInfoName            = sprintf('parAlpha=%.1e', parAlpha);
+  expName                = 'standard';
+  dirInfoName            = sprintf('f01');
 
   % function handles (not effective if useImage==true)
   function y = inputSignal(x)

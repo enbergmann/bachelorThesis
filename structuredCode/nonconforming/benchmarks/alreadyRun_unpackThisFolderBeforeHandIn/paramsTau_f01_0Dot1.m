@@ -130,11 +130,12 @@ function params = editable %#ok<*MSNU,FNDEF>
 %             must not exceed
 %
 % experiment parameters
-%   useImage           - 'logical' with value 1 if an image given by imageName
-%                        in the folder '../utils/functions/images/' must be
-%                        used as input signal f for the experiment
+%   useImage           - 'logical' with value 1 if a square image given by
+%                        imageName in the folder '../utils/functions/images/'
+%                        must be used as input signal f for the experiment
 %   imageName          - 'char array with exactly one row' containing the name
-%                        of the image 
+%                        of the square image that must be used as input signal
+%                        for the experiment
 %   parAlpha           - 'double' containing the parameter \alpha from the
 %                        problem
 %   parbeta            - 'double' containing the parameter \beta from the
