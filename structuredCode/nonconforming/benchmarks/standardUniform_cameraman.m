@@ -18,7 +18,7 @@ function params = editable %#ok<*MSNU,FNDEF>
   showProgress           = true; 
   degree4Integrate       = 10; 
   plotGivenFunctions     = true;
-  refinementLevel4Plots  = 10; % 11 is very close to the limit
+  refinementLevel4Plots  = 5; % 11 is very close to the limit
     % not effective if plotGivenFunctions==false
   debugIfError           = false;
 
@@ -26,7 +26,7 @@ function params = editable %#ok<*MSNU,FNDEF>
   geometry               = 'BigSquare'; %#ok<NASGU>                     
     % set automatically to 'Square' if useImage==true
   initialRefinementLevel = 0;
-  parTheta               = 0.5;
+  parTheta               = 1;
   minNrDof               = 1e8;
   useProlongation        = true;
   parGamma               = 1;
@@ -55,7 +55,7 @@ function params = editable %#ok<*MSNU,FNDEF>
     % not effective if useExactEnergy==false
                               
   % information about experiment for saving and documentation
-  expName                = 'standard';
+  expName                = 'standardUniform';
   dirInfoName            = sprintf('cameraman');
 
   % function handles (not effective if useImage==true)

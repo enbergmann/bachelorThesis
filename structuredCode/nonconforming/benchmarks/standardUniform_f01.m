@@ -55,7 +55,7 @@ function params = editable %#ok<*MSNU,FNDEF>
     % not effective if useExactEnergy==false
                               
   % information about experiment for saving and documentation
-  expName                = 'standard';
+  expName                = 'standardUniform';
   dirInfoName            = sprintf('f01');
 
   % function handles (not effective if useImage==true)
