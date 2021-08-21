@@ -1,0 +1,125 @@
+\documentclass[tikz]{standalone}
+\usepackage{amsmath, amsfonts, amssymb, amsthm, mathtools}
+\usepackage{pgfplots, pgfplotstable}
+\usepackage{datatool}
+
+\pgfplotsset{compat=newest,
+	axis background/.style={fill=black!5!white},
+	grid style={densely dotted,semithick}
+  }
+
+\begin{document}
+\pgfplotstableset{col sep = comma}
+
+\begin{tikzpicture}
+  \DTLloaddb{db}{adaptive/expParams.csv}; 
+  \DTLassign{db}{1}{\parAlpha=parAlpha}
+  \DTLgdeletedb{db}
+  \DTLloaddb{db}{adaptive/paramsReduced.csv}; 
+  \DTLassign{db}{1}{\uExact=exactEnergy}
+  \DTLgdeletedb{db}
+  \begin{loglogaxis}[
+    legend pos = south west, 
+    scale = 2, 
+    xlabel = {Anzahl der Freiheitsgrade},
+    ymajorgrids=true,
+    xmax = 1.5e6,
+    ymin = 4e-5,
+    ymax = 2e3,
+    legend entries = {
+      $\theta = 0.5$,
+      $\theta = 1$,
+      $\eta_\mathcal{T}$,
+      $\eta_{\textup{V},\mathcal{T}}$,
+      $\eta_{\textup{J},\mathcal{T}}$,
+      $E_{\textup{GUEB},\mathcal{T}}- E_{\textup{GLEB},\mathcal{T}}$,
+      $E(u)-E_{\textup{GLEB}, \mathcal{T}}$,
+      $\frac{\alpha}{2}\Vert u - u_{\textup{CR},\mathcal{T}}\Vert^2$,
+      $|E(u)-E_\textup{NC}(u_{\textup{CR},\mathcal{T}})|$
+      }
+    ]
+    \addlegendimage{solid, thick, mark=*, mark options = {scale = .8}}
+    \addlegendimage{dashed, thick, mark=diamond*, mark options = solid}
+    \addlegendimage{no markers, ultra thick, blue}
+    \addlegendimage{no markers, ultra thick, cyan}
+    \addlegendimage{no markers, ultra thick, magenta}
+    \addlegendimage{no markers, ultra thick, gray}
+    \addlegendimage{no markers, ultra thick, red}
+    \addlegendimage{no markers, ultra thick, green}
+    \addlegendimage{no markers, ultra thick, orange}
+
+    % adaptive 0.5
+    \addplot [solid, thick, green, mark = *, mark options = {scale = .8}] 
+    table[x = {nrDof}, y expr = \parAlpha/2*\thisrow{error4lvl}^2] 
+    {adaptive/lvl14/lvlOutput.csv}; 
+
+    \addplot [solid, thick, blue, mark = *, mark options = {scale = .8}] 
+    table[x = {nrDof}, y = {eta}] 
+    {adaptive/lvl14/lvlOutput.csv}; 
+
+    \addplot [solid, thick, cyan, mark = *, mark options = {scale = .8}] 
+    table[x = {nrDof}, y = {etaVol}] 
+    {adaptive/lvl14/lvlOutput.csv}; 
+
+    \addplot [solid, thick, magenta, mark = *, mark options = {scale = .8}] 
+    table[x = {nrDof}, y = {etaJumps}] 
+    {adaptive/lvl14/lvlOutput.csv}; 
+
+    \addplot [solid, thick, red, mark = *, mark options = {scale = .8}] 
+    table[x = {nrDof}, y = {diffExacEGleb}] 
+    {adaptive/lvl14/lvlOutput.csv}; 
+
+    \addplot [solid, thick, gray, mark = *, mark options = {scale = .8}] 
+    table[x = {nrDof}, y = {diffGuebGleb}] 
+    {adaptive/lvl14/lvlOutput.csv}; 
+
+    \addplot [solid, thick, orange, mark = *, mark options = {scale = .8}] 
+    table[x = {nrDof}, y = {absDiffDiscExacE}] 
+    {adaptive/lvl14/lvlOutput.csv}; 
+
+    % uniform 
+    % TODO overwrite everything when actual experiment is done
+    \addplot [dashed, thick, green, mark = diamond*, mark options = solid] 
+    table[x = {nrDof}, y expr = \parAlpha/2*\thisrow{error4lvl}^2] 
+    {uniform/lvl8/lvlOutput.csv}; 
+
+    \addplot [dashed, thick, blue, mark = diamond*, mark options = solid] 
+    table[x = {nrDof}, y = {eta}] 
+    {uniform/lvl8/lvlOutput.csv}; 
+
+    \addplot [dashed, thick, cyan, mark = diamond*, mark options = solid] 
+    table[x = {nrDof}, y = {etaVol}] 
+    {uniform/lvl8/lvlOutput.csv}; 
+
+    \addplot [dashed, thick, magenta, mark = diamond*, mark options = solid] 
+    table[x = {nrDof}, y = {etaJumps}] 
+    {uniform/lvl8/lvlOutput.csv}; 
+
+    \addplot [dashed, thick, red, mark = diamond*, mark options = solid] 
+    table[x = {nrDof}, y = {diffGlebExactE}] 
+    {uniform/lvl8/lvlOutput.csv}; 
+
+    \addplot [dashed, thick, orange, mark = diamond*, mark options = solid] 
+    table[x = {nrDof}, y = {diffDiscExactE}] 
+    {uniform/lvl8/lvlOutput.csv}; 
+
+    % eta TODO rework
+    add slope triangle
+    \draw (axis cs:1e6,1e0)
+                 -- (axis cs:1e6,1e-1) node [midway, right] {\scriptsize$1$}
+                 -- (axis cs:1e4,1e0)
+                 -- cycle node [midway, above] {\scriptsize$2$}
+                 ;
+
+    % gleb TODO rework
+    add slope triangle
+    \draw (axis cs:1e6, 1e0)
+                 -- (axis cs:1e4,1e1) 
+                 -- (axis cs:1e4,1e0) node [midway, left] {\scriptsize$1$} 	 
+                 -- cycle
+                 ;
+
+    % TODO triangle for error
+  \end{loglogaxis}
+\end{tikzpicture}
+\end{document}
