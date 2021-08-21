@@ -426,53 +426,53 @@ Genutzt wird dafür die Methode
   \texttt{./nonconforming/main/solvePrimalDualFormulation.m}.
 \end{center}
 Details dazu diskutieren wir in \Cref{sec:implementationPrimalDualIteration}.
-Mit dem letzten Iterat $u_J\in\CR^1_0(\Tcal)$ als Approximation der Lösung von
+Mit dem letzten Iterat $\ucrt\in\CR^1_0(\Tcal)$ als Approximation der Lösung von
 \Cref{prob:discreteProblem} auf dem Level berechnen wir unter anderem
-$|E(u)-\Enc(u_J)|$ und, mithilfe der Methode \texttt{error4eCRL2}
+$|E(u)-\Enc(\ucrt)|$ und, mithilfe der Methode \texttt{error4eCRL2}
 \cite[Abschnitt 1.8.3]{CGKNRR10} des AFEM-Soft\-ware\-pakets, den Fehler $\Vert
-u - u_J\Vert$.
+u - \ucrt\Vert$.
 Außerdem werden Informationen über die Iteration und ihre Ergebnisse
 gespeichert und gegebenenfalls ausgegeben. 
 %%%%TODO formulieren. Außerdem: muss noch eine dieser Funktionen detaillierter 
   % beschrieben werden?
-Zur Berechnung der garantierten oberen Energieschranke $\Enc(J_1 u_J)$ nach
-\eqref{eq:gueb} nutzen wir anschließend die Methoden
+Zur Berechnung der garantierten oberen Energieschranke $\Egueb=\Enc(J_{1,
+\Tcal} \ucrt)$ aus \eqref{eq:gueb} nutzen wir anschließend die Methoden
 \begin{center}
     \texttt{./nonconforming/common/computeJ1.m},
 \end{center}
-die $J_1 u_J\in P_1(\Tcal)\cap C_0(\Omega)\subset \CR^1_0(\Tcal)$ mit dem
-Operator $J_1$ aus \eqref{eq:enrichmentOperator} bestimmt,
+die $J_{1, \Tcal} \ucrt\in P_1(\Tcal)\cap C_0(\Omega)\subset \CR^1_0(\Tcal)$ mit
+dem Operator $J_{1, \Tcal}$ aus \eqref{eq:enrichmentOperator} bestimmt,
 \begin{center}
     \texttt{./nonconforming/common/courant2CR.m},
 \end{center}
-welche die Koeffizienten von $J_1 u_J$ bezüglich der
-Crouzeix-Raviart-Basisfunktionen aus \Cref{sec:crouzeixRaviartFunctions} 
+welche die Koeffizienten von $J_{1, \Tcal} \ucrt$ bezüglich der
+Crouzeix-Raviart-Basisfunktionen aus \Cref{sec:crouzeixRaviartFunctions}
 ermittelt, und schließlich
 \begin{center}
     \texttt{./nonconforming/common/computeDiscreteEnergyCR.m},
 \end{center}
-welche $\Enc(J_1 u_J)$, wie zum Abschluss des nächsten Abschnitts
+welche $\Enc(J_{1, \Tcal} \ucrt)$, wie zum Abschluss des nächsten Abschnitts
 \ref{sec:implementationPrimalDualIteration} beschrieben, berechnet.
 Zum Bestimmen der garantierten unteren Energieschranke aus \Cref{thm:gleb} und
 des Verfeinerungsindikators aus \Cref{def:refinementIndicator} benötigen wir
-dann für alle $T\in\Tcal$ den Term $\Vert f-\alpha u_J\Vert_{L^2(T)}^2$.
+dann für alle $T\in\Tcal$ den Term $\Vert f-\alpha \ucrt\Vert_{L^2(T)}^2$.
 Zur Berechnung dieser Terme nutzen wir die Methode
 \begin{center}
   \texttt{./nonconforming/common/computeNormDiffInSiSolCrSquared4e.m}
 \end{center}
 wie folgt. 
-Sei $T\in\Tcal$ mit $\Ecal(T)=\{E_1,E_2,E_3\}$ und $u_J|_T$ habe mit
-$v_1,v_2,v_3\in\Rbb$ die Darstellung $u_J|_T=\sum_{k=1}^3 v_k\psi_{E_k}\!|_T$.
+Sei $T\in\Tcal$ mit $\Ecal(T)=\{E_1,E_2,E_3\}$ und $\ucrt|_T$ habe mit
+$v_1,v_2,v_3\in\Rbb$ die Darstellung $\ucrt|_T=\sum_{k=1}^3 v_k\psi_{E_k}\!|_T$.
 Dann gilt
 \begin{align*}
-  \Vert f-\alpha u_J\Vert_{L^2(T)}^2 
+  \Vert f-\alpha \ucrt\Vert_{L^2(T)}^2 
   &=
-  \Vert f\Vert_{L^2(T)}^2 - 2\alpha\left(f,u_J\right)_{L^2(T)} + \alpha^2 \Vert
-  u_J\Vert_{L^2(T)}^2\\
+  \Vert f\Vert_{L^2(T)}^2 - 2\alpha\left(f,\ucrt\right)_{L^2(T)} + \alpha^2 \Vert
+  \ucrt\Vert_{L^2(T)}^2\\
   &=
   \Vert f\Vert_{L^2(T)}^2 
-  - 2\alpha\sum_{k=1}^3 v_k\int_T f\psi_{E_k}\!|_T\dx
-  + \alpha^2 \sum_{k=1}^3 \sum_{\ell=1}^3 
+  - 2\alpha\sum_{k=1}^3 v_k\int_T f\psi_{E_k}\!|_T\dx\\
+  &\quad\quad + \alpha^2 \sum_{k=1}^3 \sum_{\ell=1}^3 
   v_k \left(\psi_{E_k}\!|_T,\psi_{E_\ell}|_T\right)_{L^2(T)}v_\ell.
 \end{align*} 
 Um den ersten Term zu berechnen, nutzen wir die \texttt{integrate} Methode des
@@ -497,14 +497,14 @@ in
 \end{center}
 die garantierte untere Energieschranke berechnet. 
 Zur Berechnung des Verfeinerungsindikators benötigen wir noch
-für alle $F\in\Ecal$ den Term $\Vert[u_J]_F\Vert_{L^1(F)}$. Diese ermitteln wir
+für alle $F\in\Ecal$ den Term $\Vert[\ucrt]_F\Vert_{L^1(F)}$. Diese ermitteln wir
 in der Methode 
 \begin{center}
   \texttt{./nonconforming/common/computeL1NormOfJump4s.m}.
 \end{center} 
 Details dazu diskutieren wir in \Cref{sec:jumptTermsImplementation}.
-Danach werden der Verfeinerungsindikator
-und seine Anteile $\eta_\textup{V}$ und $\eta_J$ berechnet in der Methode
+Danach werden der Verfeinerungsindikator und seine Anteile $\eta_{\textup{V},
+\Tcal}$ und $\eta_{J, \Tcal}$ berechnet in der Methode
 \begin{center}
   \texttt{./nonconforming/estimate/estimateErrorCR4e.m}.
 \end{center}
@@ -517,8 +517,8 @@ Abspeichern dieser und weiterer Ergebnisse in den durch die Parameter in
 Endet nun der AFEM-Algorithmus nach Überprüfung des Abbruchkriteriums nicht,
 das heißt, ist die Anzahl der Freiheitsgrade der Triangulierung des aktuellen
 Levels geringer als die Zahl \texttt{minNrDof} aus \Cref{tab:paramsAFEM}, so
-werden mithilfe des Verfeinerungsindikators $\eta$ die Dreiecke markiert, die
-verfeinert werden sollen. 
+werden mithilfe des Verfeinerungsindikators $\eta_\Tcal$ die Dreiecke markiert,
+die verfeinert werden sollen. 
 Dafür nutzen wir die folgenden Methoden des AFEM-Softwarepakets, die in
 \cite[Abschnitt 1.6]{CGKNRR10} beschriebenen sind.
 Gilt für den Bulk-Parameter $\theta$, gewählt durch \texttt{parTheta} aus
@@ -532,19 +532,19 @@ Zum Abschluss werden bereits Informationen für das nächste Level vorbereitet.
 Dazu gehören die Datenstrukturen, welche die verfeinerte Triangulierung
 $\hat\Tcal$ beschreiben, sowie einige weitere Eigenschaften von
 $\hat\Tcal$, zum Beispiel die Anzahl und Längen der Seiten der Triangulierung.
-Soll als Startwert für das nächste Level eine Prolongation $\hat
-u_J\in\CR^1_0\big(\hat\Tcal\big)$ von $u_J$ auf $\hat\Tcal$ genutzt werden,
-festgelegt durch den Parameter \texttt{useProlongation} aus
+Soll als Startwert für das nächste Level eine Prolongation $\hat u_{\CR,
+\Tcal}\in\CR^1_0\big(\hat\Tcal\big)$ von $\ucrt$ auf $\hat\Tcal$ genutzt
+werden, festgelegt durch den Parameter \texttt{useProlongation} aus
 \Cref{tab:paramsAFEM}, wird dessen Berechnung in der Methode
 \begin{center}
   \texttt{./nonconforming/common/prolongationJ1.m}
 \end{center}
 realisiert. 
-Als Prolongation von $u_J$ wird ebenda mit dem Operator $J_1$ aus
-\eqref{eq:enrichmentOperator} die Funktion $\hat u_J\coloneqq J_1 u_J\in
-P_1(\Tcal)\cap C_0(\Omega)\subseteq P_1\big(\hat\Tcal\big)\cap C_0(\Omega)
-\subseteq \CR^1_0\big(\hat\Tcal\big)$ gewählt.
-Die Berechnung der dabei benötigten lokalen Knotenwerte von $u_J$ geschieht
+Als Prolongation von $\ucrt$ wird ebenda mit dem Operator $J_{1, \Tcal}$ aus
+\eqref{eq:enrichmentOperator} die Funktion $\hat u_{\CR, \Tcal}\coloneqq J_{1,
+\Tcal} \ucrt\in P_1(\Tcal)\cap C_0(\Omega)\subseteq P_1\big(\hat\Tcal\big)\cap
+C_0(\Omega) \subseteq \CR^1_0\big(\hat\Tcal\big)$ gewählt.
+Die Berechnung der dabei benötigten lokalen Knotenwerte von $\ucrt$ geschieht
 wie in \Cref{sec:localNodalValuesCR} beschrieben.
 
 \section{Realisierung der primalen-dualen Iteration}
@@ -679,10 +679,10 @@ T$ berechnet werden durch
 \label{sec:localNodalValuesCR}
 
 Sei $\vcr\in\CR^1(\Tcal)$.
-Um $J_1\vcr$ für den Operator $J_1$ aus \Cref{eq:enrichmentOperator} zu
-bestimmen und für die Berechnung der $L^1$-Norm der Kantensprünge von $\vcr$
-benötigen wir für jedes Dreieck $T\in\Tcal$ die Werte von $\vcr$ in den Knoten
-von $T$. 
+Um $J_{1, \Tcal} \vcr$ für den Operator $J_{1, \Tcal}$ aus
+\Cref{eq:enrichmentOperator} zu bestimmen und für die Berechnung der $L^1$-Norm
+der Kantensprünge von $\vcr$ benötigen wir für jedes Dreieck $T\in\Tcal$ die
+Werte von $\vcr$ in den Knoten von $T$. 
 Dazu sei $T = \conv\{P_1, P_2, P_3\}$ mit den Kanten
 $E_1 = \conv\{P_1,P_2\}$, $E_2 = \conv\{P_2,P_3\}$ und $E_3 =
 \conv\{P_3,P_1\}$. 
