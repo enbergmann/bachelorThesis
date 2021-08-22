@@ -1,70 +1,85 @@
 \documentclass[tikz]{standalone}
-\usepackage{amsmath,amsfonts,amssymb,amsthm,mathtools}
-\usepackage{tikz}
+\usepackage{amsmath, amsfonts, amssymb, amsthm, mathtools}
 \usepackage{pgfplots, pgfplotstable}
+\usepackage{datatool}
 
 \pgfplotsset{compat=newest,
 	axis background/.style={fill=black!5!white},
 	grid style={densely dotted,semithick}
   }
 
-%\pgfplotstableset{
-%  create on use/test/.style={
-%    create col/copy column from table={glebExactEnergyDifference1e-2.txt}{0}
-%    }
-%  }
-
 \begin{document}
-
-% TODO find here how csv files work
-    % \addplot [dashed, black, thick, mark = diamond] 
-    % table[col sep = comma, x = {nrDof}, y = {error4lvl}] 
-    % {lvlOutput.csv}; 
-
-
-    % decide on color sheme and line style for recurring things
-    % e.g. eta always red, uniform solid, adaptive dashed or sth like that
-
-\pgfplotstableset{col sep = comma, %space, (for txt files, than it works great)
-  % create on use/nrDof1e-2/.style={create col/copy column from 
-  % table={lvlOutputEps1e-2.txt}{nrDof}},
-  % create on use/nrDof1e-6/.style={create col/copy column from 
-  % table={lvlOutputEps1e-6.txt}{nrDof}}
-}
-
+\pgfplotstableset{col sep = comma}
 
 \begin{tikzpicture}
-  \begin{loglogaxis}[legend pos = outer north east, 
-    scale = 2, xlabel = {nrDof},
+  \begin{loglogaxis}[
+    legend pos = north east, 
+    scale = 1.5, 
+    xlabel = {Anzahl der Freiheitsgrade},
     ymajorgrids=true,
-    legend entries = {$\Vert u - u_{\textup{CR},\mathcal{T}}\Vert$,
-                      $\tau = \frac{1}{1000}$,
-                      $\tau = \frac{1}{10}$,
-                      $\tau = \frac{1}{2}$,
-                      $\tau = 1$}]
-    \addlegendimage{densely dashed, mark=square*}
-    \addlegendimage{no markers, cyan}
-    \addlegendimage{no markers, green}
-    \addlegendimage{no markers, brown}
-    \addlegendimage{no markers, red}
+    legend entries = {
+      $\eta_\mathcal{T}$,
+      $\Vert u - u_{\textup{CR},\mathcal{T}}\Vert$,
+      $|E(u)-E_\textup{NC}(u_{\textup{CR},\mathcal{T}})|$,
+      $\tau = 0.1$,
+      $\tau = 0.5$,
+      $\tau = 1$
+      }
+    ]
+    \addlegendimage{dashed, thick, mark=diamond*, mark options = solid}
+    \addlegendimage{solid, thick, mark=*, mark options = {scale = .8}}
+    \addlegendimage{dotted, thick, mark=square*, mark options = solid}
+    \addlegendimage{no markers, line width = 2.5mm, blue}
+    \addlegendimage{no markers, line width = 1.5mm, red}
+    \addlegendimage{no markers, line width = 0.5mm, green}
 
-    % f01
-    \addplot [line width = 1.5mm, densely dashed, cyan, mark = square*] 
-    table[x  expr=\thisrow{nrDof}, y expr=\thisrow{error4lvl}] 
-    {f01/tauTiny/lvl7/lvlOutput.csv}; 
+    % tau 0.1
+    \addplot [dashed, line width = 2.5mm, mark=diamond*, mark options = solid, 
+      blue] 
+    table[x = {nrDof}, y = {eta}] 
+    {0dot1/lvl12/lvlOutput.csv}; 
 
-    \addplot [line width = 1.5mm, densely dashed, green, mark = square*] 
-    table[x  expr=\thisrow{nrDof}, y expr=\thisrow{error4lvl}] 
-    {f01/tauSmall/lvl12/lvlOutput.csv}; 
+    \addplot [solid, line width = 2.5mm, mark=*, mark options = {scale = .8}, 
+      blue] 
+    table[x = {nrDof}, y = {error4lvl}] 
+    {0dot1/lvl12/lvlOutput.csv}; 
 
-    \addplot [line width = 1mm, densely dashed, brown, mark = square*] 
-    table[x  expr=\thisrow{nrDof}, y expr=\thisrow{error4lvl}] 
-    {f01/tauMid/lvl14/lvlOutput.csv}; 
+    \addplot [dotted, line width = 2.5mm, mark=square*, mark options = solid, 
+      blue] 
+    table[x = {nrDof}, y = {absDiffDiscExacE}] 
+    {0dot1/lvl12/lvlOutput.csv}; 
 
-    \addplot [densely dashed, red, mark = square*] 
-    table[x  expr=\thisrow{nrDof}, y expr=\thisrow{error4lvl}] 
-    {f01/tauMax/lvl14/lvlOutput.csv}; 
+    % tau 0.5
+    \addplot [dashed, line width = 1.5mm, mark=diamond*, mark options = solid, 
+      red] 
+    table[x = {nrDof}, y = {eta}] 
+    {0dot5/lvl14/lvlOutput.csv}; 
+
+    \addplot [solid, line width = 1.5mm, mark=*, mark options = {scale = .8}, 
+      red] 
+    table[x = {nrDof}, y = {error4lvl}] 
+    {0dot5/lvl14/lvlOutput.csv}; 
+
+    \addplot [dotted, line width = 1.5mm, mark=square*, mark options = solid, 
+      red] 
+    table[x = {nrDof}, y = {absDiffDiscExacE}] 
+    {0dot5/lvl14/lvlOutput.csv}; 
+
+    % tau 1
+    \addplot [dashed, line width = 0.5mm, mark=diamond*, mark options = solid, 
+      green] 
+    table[x = {nrDof}, y = {eta}] 
+    {1/lvl14/lvlOutput.csv}; 
+
+    \addplot [solid, line width = 0.5mm, mark=*, mark options = {scale = .8}, 
+      green] 
+    table[x = {nrDof}, y = {error4lvl}] 
+    {1/lvl14/lvlOutput.csv}; 
+
+    \addplot [dotted, line width = 0.5mm, mark=square*, mark options = solid, 
+      green]
+    table[x = {nrDof}, y = {absDiffDiscExacE}] 
+    {1/lvl14/lvlOutput.csv}; 
   \end{loglogaxis}
 \end{tikzpicture}
 \end{document}
-

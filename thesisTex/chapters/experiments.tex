@@ -153,10 +153,14 @@ AFEM-Algorithmus, nutzen wir in den Experimenten mit exakter Lösung
 \Cref{fig:triangBigSquare}, da diese den Einheitskreis, das heißt den Träger
 des Eingangssignals und der exakten Lösung nach
 \Cref{sec:constructionInputSignal}, enthält.
+Wenn nicht anders angegeben, dann betrachten wir dieses Beispiel stets mit
+$\alpha=1$.
 
 Für ein Problem mit unstetigem Eingangssignal legen wir besonderes
 Augenmerk auf das Graufarbenbild \texttt{cameraman} aus \cref{fig:cameraman}
 als Eingangssignal. 
+Wenn nicht anders angegeben, dann betrachten wir dieses Beispiel stets mit
+$\alpha=10^4$.
 Auch für dieses komplexere Beispiel, bei der selbst eine stückweise
 Beschreibung durch Polynome augenscheinlich nur schwer möglich ist, sowie in
 allen weiteren Experimenten haben selbst deutlich höhere Integrationsgrade als
@@ -207,44 +211,39 @@ Zunächst interessiert und die Wahl des Parameters $\tau$ in
 \Cref{alg:primalDualIteration}. 
 Diesen müssen wir nach \Cref{thm:convergenceIteration} in $(0,1]$ wählen um
 Konvergenz der primalen-dualen Iteration zu garantieren.
+Der Parameter $\epsstop$ wird mit $10^{-4}$ gewählt. Diese Wahl wird 
+anschließend ebenfalls nochmal näher betrachtet. Außerdem wird $\theta=0.5$
+gewählt.
 
-%\begin{figure}[!ht]
-%  \centering
-%  \begin{subfigure}[b]{.48\linewidth}
-%    \caption{$f_1$}
-%    \includegraphics[trim = 40 30 30 30, clip, width=\linewidth]
-%      {pictures/chapExperiments/secParameters/parTau/...}
-%    \label{fig:f01InSi}
-%  \end{subfigure}
-%  \quad
-%  \begin{subfigure}[b]{.48\linewidth}
-%    \caption{$u_1$}
-%    \includegraphics[trim = 40 30 30 30, clip, width=\linewidth]
-%      {pictures/chapExperiments/secParameters/parTau/...}
-%    \label{fig:f01ExactSol}
-%  \end{subfigure}
-%
-%  \begin{subfigure}[b]{.48\linewidth}
-%    \caption{$f_1$ entlang der x- und y-Achse}
-%    \includegraphics[trim = 50 30 50 20, clip, width=\linewidth]
-%      {pictures/chapExperiments/secParameters/parTau/...}
-%    \label{fig:f01InSiAxis}
-%  \end{subfigure}
-%  \quad
-%  \begin{subfigure}[b]{.48\linewidth}
-%    \caption{$u_1$ entlang der x- und y-Achse}
-%    \includegraphics[trim = 50 30 50 20, clip, width=\linewidth]
-%      {pictures/chapExperiments/secParameters/parTau/...}
-%    \label{fig:f01ExactSolAxis}
-%  \end{subfigure} 
-%  \caption{Eingangssignal $f_1$ und exakte Lösung $u_1$ sowie deren
-%  Darstellungen entlang der x-Achse (blau) und der y-Achse (rot) für
-%  $\alpha=1$.}
-%  \label{fig:f01Plots}
-%\end{figure}
+\begin{figure}[!ht]
+  \centering
+  \begin{subfigure}[b]{.48\linewidth}
+    \caption{Eingangssignal $f$}
+    \includegraphics[width=\linewidth]
+      {pictures/chapExperiments/secParameters/parTau/f01/miscF.pdf}
+    \label{fig:parTauMiscF}
+  \end{subfigure}
+  \quad
+  \begin{subfigure}[b]{.48\linewidth}
+    \caption{Eingangssignal \texttt{cameraman}}
+    \includegraphics[width=\linewidth]
+      {pictures/chapExperiments/secParameters/parTau/cam/miscCam.pdf}
+    \label{fig:parTauMiscCam}
+  \end{subfigure}
+  \caption{Anzahl der Iterationen und benötigte Zeit für verschiedene Werte
+  von $\tau$ mit den Eingangssignalen $f$ und \texttt{cameraman}.}
+  \label{fig:parTauMisc}
+\end{figure}
 
+\begin{figure}[!ht]
+  \includegraphics[width=\linewidth]
+    {pictures/chapExperiments/secParameters/parTau/f01/convergenceF.pdf}
+  \caption{Verfeinerungsindikator, $L^2-Fehler$ und Energiedifferenz für 
+  das Eingangangssignal $f$.}
+  \label{fig:parTauConvergence}
+\end{figure}
 
-Wie in den Abbildungen \ldots zu sehen, scheint sich die Anzahl der Iteration,
+Wie in \Cref{fig:parTauMisc} zu sehen, scheint sich die Anzahl der Iteration,
 und damit auch die Laufzeit, antiproportional zur Größe von $\tau$ zu
 verhalten.
 Da die L2 Fehler in Abbildung \ldots gleich verlaufen, scheint somit die
@@ -272,8 +271,11 @@ wenn initialer Fehler etc bekannt ist, wie viele Iteration benötigt werden (da
 die Fehler ja konstant bleiben und 1e6 mal aufaddiert wurden muss das 
 Thm schief gehen irgendwann)
 %TODO
-
-includegraphics parTau iterations and time
+Die Zeit in Sekunden ist, obwohl klar, geplottet, um einen Eindruck zu
+vermitteln, wie lang die Laufzeit der Iteration ist selbst bei augenscheinlich
+idealer Wahl von tau (bis zu
+1e5 Sekunden, d.h. fast 3h, für ein Level bei f01)
+%TODO
 
 includegraphics Qualität der Fehler, sehen, dass die für alle tau gleich bleibt,
 das Raten gleich bleiben
