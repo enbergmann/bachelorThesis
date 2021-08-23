@@ -1,0 +1,73 @@
+\documentclass[tikz]{standalone}
+\usepackage{amsmath, amsfonts, amssymb, amsthm, mathtools}
+\usepackage{pgfplots, pgfplotstable}
+\usepackage{datatool}
+
+\pgfplotsset{compat=newest,
+	axis background/.style={fill=black!5!white},
+	grid style={densely dotted,semithick}
+  }
+
+\begin{document}
+\pgfplotstableset{col sep = comma}
+
+\begin{tikzpicture}
+  \begin{loglogaxis}[
+    legend pos = north east, 
+    scale = 1.5, 
+    xlabel = {Anzahl der Freiheitsgrade},
+    ymajorgrids=true,
+    legend entries = {
+      $\eta_\mathcal{T}$,
+      $\Vert u - u_{\textup{CR},\mathcal{T}}\Vert$,
+      $\varepsilon_\textup{stop} = 10^{-2}$,
+      $\varepsilon_\textup{stop} = 10^{-3}$,
+      $\varepsilon_\textup{stop} = 10^{-4}$,
+      $\varepsilon_\textup{stop} = 10^{-5}$
+      }
+    ]
+    \addlegendimage{dashed, thick, mark=diamond*, mark options = solid}
+    \addlegendimage{solid, thick, mark=*, mark options = {scale = .8}}
+    \addlegendimage{no markers, ultra thick, blue}
+    \addlegendimage{no markers, ultra thick, red}
+    \addlegendimage{no markers, ultra thick, green}
+    \addlegendimage{no markers, ultra thick, gray}
+
+    % epsStop 1e-2
+    \addplot [dashed, thick, mark=diamond*, mark options = solid, blue] 
+    table[x = {nrDof}, y = {eta}] 
+    {1eM2/lvl16/lvlOutput.csv}; 
+
+    \addplot [solid, thick, mark=*, mark options = {scale = .8}, blue] 
+    table[x = {nrDof}, y = {error4lvl}] 
+    {1eM2/lvl16/lvlOutput.csv}; 
+
+    % epsStop 1e-3
+    \addplot [dashed, thick, mark=diamond*, mark options = solid, red] 
+    table[x = {nrDof}, y = {eta}] 
+    {1eM3/lvl15/lvlOutput.csv}; 
+
+    \addplot [solid, thick, mark=*, mark options = {scale = .8}, red] 
+    table[x = {nrDof}, y = {error4lvl}] 
+    {1eM3/lvl15/lvlOutput.csv}; 
+
+    % epsStop 1e-4
+    \addplot [dashed, thick, mark=diamond*, mark options = solid, green] 
+    table[x = {nrDof}, y = {eta}] 
+    {1eM4/lvl15/lvlOutput.csv}; 
+
+    \addplot [solid, thick, mark=*, mark options = {scale = .8}, green] 
+    table[x = {nrDof}, y = {error4lvl}] 
+    {1eM4/lvl15/lvlOutput.csv}; 
+
+    % epsStop 1e-5
+    \addplot [dashed, thick, mark=diamond*, mark options = solid, gray] 
+    table[x = {nrDof}, y = {eta}] 
+    {1eM5/lvl12/lvlOutput.csv}; 
+
+    \addplot [solid, thick, mark=*, mark options = {scale = .8}, gray] 
+    table[x = {nrDof}, y = {error4lvl}] 
+    {1eM5/lvl12/lvlOutput.csv}; 
+  \end{loglogaxis}
+\end{tikzpicture}
+\end{document}

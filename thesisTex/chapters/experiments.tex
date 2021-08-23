@@ -202,6 +202,15 @@ Auf die Wahl der Parameter $\tau$ und $\epsstop$ für die primale-duale
 Iteration werden wir im folgenden \Cref{sec:choiceOfParameters} eingehen.
 Zur Wahl des Parameters $\gamma$ auf dem Verfeinerungsindikator betrachten
 wir in \Cref{sec:experimentsWithExactSolution} ein Beispiel.
+Die maximale Iterationszahl ist, mit Ausnahme von einem Experimente in
+\Cref{sec:choiceOfParameters}, smit $10^{12}$ so gewählt, dass diese nie 
+der Grund für das Beenden einer primalen-dualen Iteration ist, also stets das
+Abbruchkriterium aus \eqref{eq:terminationCriterion} für den Abbruch
+verantwortlich ist.
+Die minimale Anzahl der Freiheitsgrade ist so gewählt, dass AFEM-Routine
+manuell oder durch Server beendet wird, bevor Sie durch erreichen 
+der Freiheitsgrade beendet wird. Dies geschah in allen Experimenten bei 
+etwa $10^6$ Freiheitsgraden.
 
 
 \section{Wahl der Parameter für die primale-duale Iteration}
@@ -213,7 +222,8 @@ Diesen müssen wir nach \Cref{thm:convergenceIteration} in $(0,1]$ wählen um
 Konvergenz der primalen-dualen Iteration zu garantieren.
 Der Parameter $\epsstop$ wird mit $10^{-4}$ gewählt. Diese Wahl wird 
 anschließend ebenfalls nochmal näher betrachtet. Außerdem wird $\theta=0.5$
-gewählt.
+gewählt. Außerdem werden (ggf hier noch weitere nicht-standart params nennen 
+und deren Wahl).
 
 \begin{figure}[!ht]
   \centering
@@ -238,109 +248,75 @@ gewählt.
 \begin{figure}[!ht]
   \includegraphics[width=\linewidth]
     {pictures/chapExperiments/secParameters/parTau/f01/convergenceF.pdf}
-  \caption{Verfeinerungsindikator, $L^2-Fehler$ und Energiedifferenz für 
-  das Eingangangssignal $f$.}
+  \caption{Verfeinerungsindikator, exakter $L^2$-Fehler und Energiedifferenz 
+  für verschieden Werte von $\tau$ mit Eingangangssignal $f$.}
   \label{fig:parTauConvergence}
 \end{figure}
 
-Wie in \Cref{fig:parTauMisc} zu sehen, scheint sich die Anzahl der Iteration,
-und damit auch die Laufzeit, antiproportional zur Größe von $\tau$ zu
-verhalten.
-Da die L2 Fehler in Abbildung \ldots gleich verlaufen, scheint somit die
-größtmögliche Wahl von $\tau$ die \Cref{thm:convergenceIteration} zulässt, das
-heißt $\tau=1$, die ideale Wahl zu sein.
-
+Wie in \Cref{fig:parTauMisc} zu sehen, verhält sich die Anzahl der Iteration,
+und damit, wie zu erwarten war, auch die Laufzeit, antiproportional zur Größe
+der hier gewählten Werte von $\tau$.
+Da sich die betrachteten Graphen in \Cref{fig:parTauConvergence} für die
+verschiedenen Wahlen von $\tau$ nicht sichtbar unterscheiden, schlussfolgern
+wir, dass die ideale Wahl für $\tau$, die \Cref{thm:convergenceIteration}
+zulässt, das heißt $\tau=1$, zu sein scheint, da die primale-duale Iteration
+bei gleichen Ergebnissen für dieses $\tau$ die geringste Laufzeit hat.
 Ein mögliche Erklärung liefert der Beweis von \Cref{thm:convergenceIteration}.
 Die darin bewiesene \Cref{eq:upperBoundIterationError} impliziert für die
 Iterate $(u_j)_{j\in\Nbb}$, dass
 \begin{align*}
-  \sum_{j=1}^\infty\Vert u_j-\ucr\Vert^2 
+  \sum_{j=1}^\infty\Vert \ucr - u_j \Vert^2 
   \leq
-  \frac{1}{2\alpha\tau}\left(\vvvert u_0-\ucr\vvvert^2_\nc + \Vert \Lambda_j
-  -\bar\Lambda\Vert^2\right). %TODO check die bezeichungen für lambda etc.
+  \frac{1}{2\alpha\tau}
+  \left(\vvvert \ucr - u_0\vvvert^2_\nc 
+  + \left\Vert \bar\Lambda_0 - \Lambda_0\right\Vert^2\right). 
 \end{align*}
-Die rechte Seite wird mit größer werdendem $\tau$ kleiner, womit womöglich
-die Folge $(\left\Vert u_j-\ucr\right\Vert)_{j\in\Nbb}$ schneller gegen $0$
+Die rechte Seite ist antiproportional zu $\tau>0$, womit womöglich
+die Folge $(\left\Vert \ucr - u_j\right\Vert)_{j\in\Nbb}$ schneller gegen $0$
 konvergiert und damit auch das Abbruchkriterium \eqref{eq:terminationCriterion}
-schneller erfüllt ist. 
+nach einer geringeren Anzahl von Iterationen erfüllt ist. 
+Der Beweis von \Cref{thm:convergenceIteration} liefert uns keine
+Informationen darüber, ob möglicherweise auch eine Wahl $\tau>1$ immer noch die
+Konvergenz der primalen-dualen Iteration garantiert.
+Wie aber in Abb \ldots zu sehen, wurde schon für $\tau=1.2$ ein Beispiel 
+gefunden, bei dem nicht davon ausgegangen werden kann, dass die primale-duale
+Iteration konvergiert.
+Diese Iteration wurde auf der Triangulierung Abb (mglw auf Square verweisen,
+da es genau die sein könnte. 
+Dabei wurde die Iteration nach $10^6$ Iterationen abgebrochen, da kein anderes
+Verhalten mehr zu erwarten war, zumal selbst für die nach
+\Cref{fig:parTauMiscF} suboptimale Wahl $0.1$ für $\tau$ weniger also $10^3$
+Iterationen auf der gleichen Triangulierung benötigt wurden und für die Wahl
+$\tau=1$ sogar weniger als $10$ Iterationen.
+% includegraphics tau keine Konvergenz
 
-%TODO
-bei tau, argumentiere, das 1e6 Iterationen ausreichen (vgl mit tau = 1, sage, 
-wie viele tau = 1 gebraucht hat) Sage, dass man theoretisch ausrechnen kann,
-wenn initialer Fehler etc bekannt ist, wie viele Iteration benötigt werden (da 
-die Fehler ja konstant bleiben und 1e6 mal aufaddiert wurden muss das 
-Thm schief gehen irgendwann)
-%TODO
-Die Zeit in Sekunden ist, obwohl klar, geplottet, um einen Eindruck zu
-vermitteln, wie lang die Laufzeit der Iteration ist selbst bei augenscheinlich
-idealer Wahl von tau (bis zu
-1e5 Sekunden, d.h. fast 3h, für ein Level bei f01)
-%TODO
+Nun betrachen wir die Wahl des Parameteres $\epsstop$ für das Abbruchkriterium.
+Wieder wählen wir $\theta = 0.5$ und \ldots.
 
-includegraphics Qualität der Fehler, sehen, dass die für alle tau gleich bleibt,
-das Raten gleich bleiben
-
-includegraphics tau größer 1 mit keiner Konvergenz 
-%TODO
-
-==================
-
-  - s. gleich, Effekt von großen/kleinen alpha bzw. tau entsprechend ein
-    paar Experiment mit gleicher Lösung machen und gleichem Input (was alpha
-    irgendwie disqualifiziert, oder?) (vlt gucken ob Raten oder so in corr
-    einzeichnenbar sind)
-
-kleine tau und alpha nicht groß lässt die energie nur osszilierend von oben
-konvergieren (s. Ordner) (auch tau = h/10 oder so ähnlich (bartels))
-wird alpha zu kleinen tau groß gewählt, behebt dass den Effekt.
-Die obere Schranke der Summe im Beweis ist c/(tau*alpha), d.h., die Schranke
-ist für z.B. alpha=1 und tau=1/100 schon relativ groß, wahrscheinlich größer
-als 100
-kann das das verhalten erklären?
-falls ja, wäre dann tau = 1 nicht die ideale Wahl?
-das wäre dann eine Section in Experimenten wert, die das vermutet und dann per
-Experimenten überprüft, ob tau=1 besser ist als tau=1/100 etc
-Gleiches für die Wahl von alpha (nur das alpha noch mehr Anwendung dahinter hat),
-aber große alpha sollten für die Iteration besser sein als kleine 
-
-==================
-
-beispiel ohne konvergenz aufzeigen und dafür auch die Triangulierung zeigen
+\begin{figure}[!ht]
+  \includegraphics[width=\linewidth]
+    {pictures/chapExperiments/secParameters/parEpsStop/f01/convergenceF.pdf}
+  \caption{Verfeinerungsindikator und exakter $L^2$-Fehler für verschieden
+  Werte von $\epsstop$ mit Eingangangssignal $f$.}
+  \label{fig:parEpsStopConvergence}
+\end{figure}
+Wie in \Cref{fig:parEpsStopConvergence} zu sehen, stagniert der 
+exakte $L^2-Fehler$ für $\epsstop=10^{-2}$ und, es lässt sich erahnen, dass
+dieser Effekt auch für $\epsstop=10^{-3}$ einsetzt. 
+Da der Effekt bis $10^6$ Freiheitsgrade für $\epsstop\in\{10^{-4},10^{-5}\}$
+noch nicht einsetzt, scheint dies an einem zu frühen Abbruch der Iteration 
+durch eine zu große Toleranz $\epsstop$ zu liegen. 
+Bei hohen Freiheitsgraden und einer entsprechend kleinen Netzweite muss
+also $\epsstop$ ausreichend klein gewählt werden.
+Da wir in den Experimenten  $10^6$ Freiheitsgrade nicht überschreiten und
+sich bis dahin die Ergebnisse für die Wahlen $10^{-4}$ und $10^{-5}$ kaum
+unterscheiden bei längerer Laufzeit für $10^{-5}$, wählen wir als Standard
+$\epsstop=10^{-4}$.
+Weiterhin bleibt festzuhalten, dass der Verfeinerungsindikator trotzdem noch
+passend Dreiecke auswählt und weiter fällt, auch bei stagnierendem Fehler.
 
 ==================
 
-zu abbruchkriterium
-
-  - wähle bei epsStop 1e-2, 1e-3 und 1e-4 und sage, dass bei 1e-4 der Effekt 
-    in den Freiheitsgraden die wir rechnen noch nicht auftritt und es deshalb
-    so gewählt wird (vielleicht auch 1e-5 mit Kommentar, dass im Bereich bis 
-    etwa 1e6 dof, das heißt, der Bereich der uns interessiert, noch kein 
-    Unterschied in den Raten auftritt, das heißt, 1e-5 im Wesentlichen nur 
-    mehr Rechenzeit bedete)
-    
-    auch klar machen, dass natürlich auch 1e-4 irgendwann stagnieren wird mit 
-    feiner werdenden Netz, d.h., insbesondere kleinerer Netzweite
-
-2) Größe von epsStop: dokumentieren, dass z.B. bei $10^{-2}$ der Fehler irgendwann
-nicht mehr fällt und damit die Wahl $10^{-4}$ (ca.) begründen.
-Ein Plot, in denen der $L^2$ Fehler (und/oder Fehler der Energien) verglichen wird
-(untersuchen, ob es da qualitative Unterschiede gibt zwischen -3, -4, -5, ...)
-
-3) $|||.||| ~ h^{-1} ||.||$ korrekt? Enc stetig bzgl Konvergenz in L2 (Zsmh. 
-   zwischen eNc und bar12sqrt)
-   (discrete Poincare (bar15, Lem 3.7), inverse Ungleichung (bar15, Lem. 3.5)),
-   Bsp. Lvl13 in $f01eps10^{-4}$ hat hMin ~ $10^{-3}$, Graphen sehen korrekt
-   verschoben aus
-
-
-1) terminatin Criteria Vergleich (f01Term und camTerm)
-    - eNcAbsDiff wegen Oszillation ungeeignet (da das mal 'zu früh') die 
-      Toleranz erreichen kann obwohl es noch nicht soweit ist
-    - die anderen sind alle gleich gut, oder? ist die Höhe der Graphen relevant?
-      (natürlich müsste man epsStop analog kleiner wählen, wenn man z.B. den
-      parallel und niedrigeren bar15TerminationWithoutL2 wählt)
-
-==================
 
 zu gamma (0, 0.5, 1) noch irgendwo ein Experiment mit Info, dass 0 und 1e-4 oder
 so was identisch sind
@@ -349,6 +325,30 @@ so was identisch sind
     nicht unterscheider visuell (nochmal prüfen ob das stimmt) nur eines der
     beiden gammas plotten und genau diese Info in einem Satz erwähnen und vlt
     auch in der Legende beides für einen Graphen angeben gamma = 0, 1e-4)
+
+In der Abbildung ist tatsächlich $\gamma= 10^{-4}$ nicht abgebildet, da
+die entsprechend Graphen sich nicht sichtbar vom Graphen für $\gamma=0$
+unterschieden haben.
+
+==================
+
+Die in diesem Abschnitt genutzten Benchmarks waren
+\begin{itemize}
+  \item \texttt{paramsTau\_f01\_0Dot1} 
+    für die Abbildungen \ref{fig:parTauMiscF} und \ref{fig:parTauConvergence},
+  \item \texttt{paramsTau\_f01\_0Dot5}
+    für die Abbildungen \ref{fig:parTauMiscF} und \ref{fig:parTauConvergence},
+  \item \texttt{standard\_f01}
+    für die Abbildungen \ref{fig:parTauMiscF} und \ref{fig:parTauConvergence},
+  \item \texttt{paramsTau\_cameraman\_0Dot1} 
+    für \Cref{fig:parTauMiscCam},
+  \item \texttt{paramsTau\_cameraman\_0Dot5}
+    für \Cref{fig:parTauMiscCam},
+  \item \texttt{standard\_cameraman}
+    für \Cref{fig:parTauMiscCam}.
+  \item oder das vielleicht als Tabelle? 
+    möglicher Tabellenkopf:  Abbildung | genutzte Benchmarks
+\end{itemize}
 
 
 \section{Experimente mit bekannter exakter Lösung}
@@ -393,6 +393,30 @@ sehen ist zwischen mittel Graph und oberen Graph
 
 ==================
 
+    vlt gucken ob Raten oder so in corr
+    einzeichnenbar sind
+
+kleine tau und alpha nicht groß lässt die energie nur osszilierend von oben
+konvergieren (s. Ordner) (auch tau = h/10 oder so ähnlich (bartels))
+wird alpha zu kleinen tau groß gewählt, behebt dass den Effekt.
+
+
+3) $|||.||| ~ h^{-1} ||.||$ korrekt? Enc stetig bzgl Konvergenz in L2 (Zsmh. 
+   zwischen eNc und bar12sqrt)
+   (discrete Poincare (bar15, Lem 3.7), inverse Ungleichung (bar15, Lem. 3.5)),
+   Bsp. Lvl13 in $f01eps10^{-4}$ hat hMin ~ $10^{-3}$, Graphen sehen korrekt
+   verschoben aus
+
+
+1) terminatin Criteria Vergleich (f01Term und camTerm)
+    - eNcAbsDiff wegen Oszillation ungeeignet (da das mal 'zu früh') die 
+      Toleranz erreichen kann obwohl es noch nicht soweit ist
+    - die anderen sind alle gleich gut, oder? ist die Höhe der Graphen relevant?
+      (natürlich müsste man epsStop analog kleiner wählen, wenn man z.B. den
+      parallel und niedrigeren bar15TerminationWithoutL2 wählt)
+
+==================
+
 hier vielleicht auch einmal einwerfen, wie die Iteration konvergiert
 (vlt auch in der vorigen Section, im Vergleich zu den schlechten Wahlen,
 die dort auch getroffen werden.
@@ -400,6 +424,11 @@ die dort auch getroffen werden.
 ==================
 
 dann abschweif zu höhere Regularität
+
+  hier kann vlt auch nochmal auf die Abschätzung mit der $\tau$ begründet wurde
+  eingegangen werden (zwar führt alpha zu einem anderen Experiment, aber 
+  trotzdem kann festgestellt werden, dass hier weniger Iterationen als für
+  $\alpha=1$ benötigt wurden), d.h. Verweis auf vorherige section
 
   wir sehen deutlich bessere Raten als in Bartels flg. Thm. :
 
