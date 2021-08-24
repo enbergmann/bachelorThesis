@@ -1,0 +1,68 @@
+\documentclass[tikz]{standalone}
+\usepackage{amsmath, amsfonts, amssymb, amsthm, mathtools, mathabx}
+\usepackage{pgfplots, pgfplotstable}
+\usepackage{datatool}
+
+\pgfplotsset{compat=newest,
+	axis background/.style={fill=black!5!white},
+	grid style={densely dotted,semithick}
+  }
+
+\begin{document}
+\pgfplotstableset{col sep = comma}
+
+\begin{tikzpicture}
+  \begin{semilogxaxis}[
+    legend pos = south east, 
+    scale = 1.5, 
+    xlabel = {$j$},
+    ymajorgrids=true,
+    legend entries = {
+      $\left\vvvert (u_j - u_{j-1})/\tau\right\vvvert_\textup{NC}$,
+      $\left\Vert (u_j - u_{j-1})/\tau\right\Vert$,
+      $\left|E_\textup{NC}(u_j) - E_\textup{NC}(u_{j-1})\right|$
+      }
+    ]
+    \addlegendimage{no markers, ultra thick, blue}
+    \addlegendimage{no markers, ultra thick, red}
+    \addlegendimage{no markers, ultra thick, green}
+
+    % energy of update (corr)
+    \addplot [solid, blue, ultra thick, filter discard warning = false, 
+      skip coords between index = {1001}{1000000}]
+    table[x expr = \coordindex+1, y index = 0] 
+    {maxIter1e5/lvl0/iteration/corrVec.txt}; 
+     
+    \addplot+[forget plot, no markers, solid, blue, ultra thick, 
+      filter discard warning=false, skip coords between index = {0}{1000}, 
+      each nth point = 100]
+    table[x expr = \coordindex+1, y index = 0] 
+    {maxIter1e5/lvl0/iteration/corrVec.txt}; 
+
+    % L2 norm of update (sqrt bar12)
+    \addplot [solid, red, ultra thick, filter discard warning = false, 
+      skip coords between index = {1001}{1000000}]
+    table[x expr = \coordindex+1, y index = 0] 
+    {maxIter1e5/lvl0/iteration/bar12TerminationSqrtVec.txt}; 
+     
+    \addplot+[forget plot, no markers, solid, red, ultra thick, 
+      filter discard warning=false, skip coords between index = {0}{1000}, 
+      each nth point = 100]
+    table[x expr = \coordindex+1, y index = 0] 
+    {maxIter1e5/lvl0/iteration/bar12TerminationSqrtVec.txt}; 
+
+    % absolute differnce of energies
+    \addplot [solid, green, ultra thick, filter discard warning = false, 
+      skip coords between index = {1001}{1000000}]
+    table[x expr = \coordindex+1, y index = 0] 
+    {maxIter1e5/lvl0/iteration/eNcAbsDiffVec.txt}; 
+     
+    \addplot+[forget plot, no markers, solid, green, ultra thick, 
+      filter discard warning=false, skip coords between index = {0}{1000}, 
+      each nth point = 100]
+    table[x expr = \coordindex+1, y index = 0] 
+    {maxIter1e5/lvl0/iteration/eNcAbsDiffVec.txt}; 
+  \end{semilogxaxis}
+\end{tikzpicture}
+\end{document}
+

@@ -197,7 +197,8 @@ Rotverfeinerung, zu sehen in \Cref{fig:triangSquare}.
   \label{fig:initialTriangulations}
 \end{figure}
 Führen wir ein Experiment mit adaptiver Netzverfeinerung durch, so wählen wir
-den Bulk-Parameter für den Mark-Schritt des AFEM-Algorithmus $\theta=0.5$.
+den Bulk-Parameter für den Mark-Schritt des AFEM-Algorithmus $\theta=0.5$ und
+$\gamma=1$.
 Auf die Wahl der Parameter $\tau$ und $\epsstop$ für die primale-duale
 Iteration werden wir im folgenden \Cref{sec:choiceOfParameters} eingehen.
 Zur Wahl des Parameters $\gamma$ auf dem Verfeinerungsindikator betrachten
@@ -212,9 +213,35 @@ manuell oder durch Server beendet wird, bevor Sie durch erreichen
 der Freiheitsgrade beendet wird. Dies geschah in allen Experimenten bei 
 etwa $10^6$ Freiheitsgraden.
 
+\begin{table}
+  \centering
+  \begin{tabular}{c|c}
+    \hline
+    \texttt{benchmark} & Abbildungen\\  
+    \hline 
+    \texttt{paramsTau\_f01\_0Dot1} &
+    \ref{fig:parTauMiscF}, \ref{fig:parTauConvergence}\\
+    \texttt{paramsTau\_f01\_0Dot5} &
+    \ref{fig:parTauMiscF}, \ref{fig:parTauConvergence}\\
+    \texttt{standard\_f01} &
+    \ref{fig:parTauMiscF}, \ref{fig:parTauConvergence}\\
+    \texttt{paramsTau\_cameraman\_0Dot1} &
+    \ref{fig:parTauMiscCam}\\
+    \texttt{paramsTau\_cameraman\_0Dot5} &
+    \ref{fig:parTauMiscCam} \\
+    \texttt{standard\_cameraman} &
+    \ref{fig:parTauMiscCam}\\
+    \hline
+  \end{tabular}
+  \caption{Eingabe \texttt{benchmark} für \texttt{startAlgorithmCR} und die
+  Abbildungen, die auf den Ergebnissen des jeweiligen Experiments basieren. 
+  (Abschnittsweise diese Tabelle oder eine für alle Experimente? Reihenfolge
+  der Benchmarks in Nutzungsreihenfolge oder alphabetisch?)}
+  \label{tab:usedBenchmarks}
+\end{table} 
 
-\section{Wahl der Parameter für die primale-duale Iteration und die
-AFEM-Routine}
+
+\section{Wahl der Parameter für die primale-duale Iteration}
 \label{sec:choiceOfParameters}
 
 Zunächst interessiert und die Wahl des Parameters $\tau$ in 
@@ -279,17 +306,29 @@ nach einer geringeren Anzahl von Iterationen erfüllt ist.
 Der Beweis von \Cref{thm:convergenceIteration} liefert uns keine
 Informationen darüber, ob möglicherweise auch eine Wahl $\tau>1$ immer noch die
 Konvergenz der primalen-dualen Iteration garantiert.
-Wie aber in Abb \ldots zu sehen, wurde schon für $\tau=1.2$ ein Beispiel 
-gefunden, bei dem nicht davon ausgegangen werden kann, dass die primale-duale
-Iteration konvergiert.
-Diese Iteration wurde auf der Triangulierung Abb (mglw auf Square verweisen,
-da es genau die sein könnte. 
-Dabei wurde die Iteration nach $10^6$ Iterationen abgebrochen, da kein anderes
+Wie aber in \Cref{fig:parTauNoConvergence} zu sehen, haben wir schon für
+$\tau=1.2$ ein Beispiel gefunden, bei dem nicht davon ausgegangen werden kann,
+dass die primale-duale Iteration konvergiert.
+Diese Iteration wurde auf der Triangulierung aus \Cref{fig:triangBigSquare} 
+durchgeführt. 
+Dabei wurde die Iteration nach $10^5$ Iterationen abgebrochen, da kein anderes
 Verhalten mehr zu erwarten war, zumal selbst für die nach
 \Cref{fig:parTauMiscF} suboptimale Wahl $0.1$ für $\tau$ weniger also $10^3$
 Iterationen auf der gleichen Triangulierung benötigt wurden und für die Wahl
 $\tau=1$ sogar weniger als $10$ Iterationen.
-% includegraphics tau keine Konvergenz
+
+\begin{figure}[!ht]
+  \includegraphics[width=\linewidth]
+    {pictures/chapExperiments/secParameters/parTau/f01NoConv/1Dot2/convIter.pdf}
+  \caption{Drei Messungen des Updates der Iteration für $\tau=1.2$ mit
+  Eingangangssignal $f$.}
+  \label{fig:parTauNoConvergence}
+\end{figure}
+Auch die Betragsdifferenz zwischen den Energien zweier Iterate stagniert.
+Es ist stark davon auszugehen, dass dieses Problem mit keinem von den
+Iteraten abhänigen Abbruchkriterium terminiert.
+Insbesondere bleibt festzuhalten, dass die von \Cref{thm:convergenceIteration}
+für $\tau\in(0,1]$ garantierte Konvergenz für $\tau=1.2$ nicht eintritt.
 
 Nun betrachen wir die Wahl des Parameteres $\epsstop$ für das Abbruchkriterium.
 Wieder wählen wir $\theta = 0.5$ und \ldots.
@@ -316,50 +355,6 @@ $\epsstop=10^{-4}$.
 Weiterhin bleibt festzuhalten, dass der Verfeinerungsindikator trotzdem noch
 passend Dreiecke auswählt und weiter fällt, auch bei stagnierendem Fehler.
 
-==================
-
-
-zu gamma (0, 0.5, 1) noch irgendwo ein Experiment mit Info, dass 0 und 1e-4 oder
-so was identisch sind
-
-  - gamma = 0 im Vergleich der gammas mit erwähnen (da es sich von gamma 1e-4
-    nicht unterscheider visuell (nochmal prüfen ob das stimmt) nur eines der
-    beiden gammas plotten und genau diese Info in einem Satz erwähnen und vlt
-    auch in der Legende beides für einen Graphen angeben gamma = 0, 1e-4)
-
-
-das vielleicht auch doch erst im nächsten Abschnitt nachdem schon gesehen wurde,
-dass Raten für adaptiv und uniform gleich sind (da das der Fall ist, ist mit 
-'noch stärkerer' adaptivität keine Verbesserung mehr zu erwarten (suche das 
-Blatt, wo diese Worte von Tien drauf stehen))
-
-TODO entsprechend den Titel von dieser Section anpassen, also je nachdem, ob
-hier AFEM Params betrachtet werden oder nicht
-
-In der Abbildung ist tatsächlich $\gamma= 10^{-4}$ nicht abgebildet, da
-die entsprechend Graphen sich nicht sichtbar vom Graphen für $\gamma=0$
-unterschieden haben.
-
-==================
-
-Die in diesem Abschnitt genutzten Benchmarks waren
-\begin{itemize}
-  \item \texttt{paramsTau\_f01\_0Dot1} 
-    für die Abbildungen \ref{fig:parTauMiscF} und \ref{fig:parTauConvergence},
-  \item \texttt{paramsTau\_f01\_0Dot5}
-    für die Abbildungen \ref{fig:parTauMiscF} und \ref{fig:parTauConvergence},
-  \item \texttt{standard\_f01}
-    für die Abbildungen \ref{fig:parTauMiscF} und \ref{fig:parTauConvergence},
-  \item \texttt{paramsTau\_cameraman\_0Dot1} 
-    für \Cref{fig:parTauMiscCam},
-  \item \texttt{paramsTau\_cameraman\_0Dot5}
-    für \Cref{fig:parTauMiscCam},
-  \item \texttt{standard\_cameraman}
-    für \Cref{fig:parTauMiscCam}.
-  \item oder das vielleicht als Tabelle? 
-    möglicher Tabellenkopf:  Abbildung | genutzte Benchmarks
-\end{itemize}
-
 
 \section{Experimente mit bekannter exakter Lösung}
 \label{sec:experimentsWithExactSolution}
@@ -384,6 +379,16 @@ sehen ist zwischen mittel Graph und oberen Graph
 
 ==================
 
+\todo[inline]{Programm gibt Sprungtermsumme aus, z.B. stagnierend bei 11 auf
+allen Leveln, darauf vielleicht noch kurz in der Auswertung eingehen ,man
+sieht, dass die Sprünge tatsächlch im nonkonformen Problem nicht minimiert
+werden oder so'}
+
+\todo[inline]{Probiere auch thm:convexity irgendwie informell zu erwähnen ,,wir
+sehen, dass sogar ohne die Sprünge das stimmt\ldots`` oder so}
+
+==================
+
   - f01 mit großem alpha konvergiert am Anfang preasymptotisch schnell aber
     scheint bei großen Freiheitsgraden dann auch die Rate 1/2 (für Gleb Kram)
     bzw. 1/4 oder so für Fehler anzunehmen (also gleiche Raten wie alpha=1).
@@ -401,6 +406,13 @@ sehen ist zwischen mittel Graph und oberen Graph
   - energy during iteration doesn't strictly converge from above to some value
     for small tau (e.g. 1/100)
 
+==================
+
+Wir sehen auch annähernd den erwarten Unterschied $h_T$ zwischen den Differenzen
+in der $L^2$-Norm und der Norm $\vvvert\bullet\vvvert_\NC$, wobei hier
+$h_T=\sqrt{2}$, $h_\text{min}=1$.
+Das eintreten dieser erwarteten Unterschiede (Erläuterung der 
+Skalierugsunterschiede im Beweis von Lemma \ldots)
 ==================
 
     vlt gucken ob Raten oder so in corr
@@ -430,6 +442,38 @@ wird alpha zu kleinen tau groß gewählt, behebt dass den Effekt.
 hier vielleicht auch einmal einwerfen, wie die Iteration konvergiert
 (vlt auch in der vorigen Section, im Vergleich zu den schlechten Wahlen,
 die dort auch getroffen werden.
+
+==================
+
+dann insgesamt raten abarbeiten und interpretieren
+
+==================
+
+zu gamma (0, 0.5, 1) noch irgendwo ein Experiment mit Info, dass 0 und 1e-4 oder
+so was identisch sind
+
+  - gamma = 0 im Vergleich der gammas mit erwähnen (da es sich von gamma 1e-4
+    nicht unterscheider visuell (nochmal prüfen ob das stimmt) nur eines der
+    beiden gammas plotten und genau diese Info in einem Satz erwähnen und vlt
+    auch in der Legende beides für einen Graphen angeben gamma = 0, 1e-4)
+
+
+das vielleicht auch doch erst im nächsten Abschnitt nachdem schon gesehen wurde,
+dass Raten für adaptiv und uniform gleich sind (da das der Fall ist, ist mit 
+'noch stärkerer' adaptivität keine Verbesserung mehr zu erwarten (suche das 
+Blatt, wo diese Worte von Tien drauf stehen))
+
+TODO entsprechend den Titel von dieser Section anpassen, also je nachdem, ob
+hier AFEM Params betrachtet werden oder nicht
+
+In der Abbildung ist tatsächlich $\gamma= 10^{-2}$ nicht abgebildet, da
+die entsprechend Graphen sich nicht sichtbar vom Graphen für $\gamma=0$
+unterschieden haben.
+
+==================
+
+hier eventuell auch experimte für AFEM Params? die werden am anfang mit
+,stets, wenn nicht anders angegeben' deklariert und hier wird experementiert
 
 ==================
 
@@ -566,13 +610,6 @@ für die gilt $f_\textrm{HR}\in H^2_0$.
     0, & \text{wenn } \frac{2}{3}\leq r\leq 1,
   \end{cases}
 \end{align*}
-==================
-
-hier eventuell auch experimte für AFEM Params?
-
-==================
-
-dann insgesamt raten abarbeiten und interpretieren
 
 
 \section{Graufarbenbilder als Eingangssignale}
@@ -657,6 +694,7 @@ $u_\textrm{C}$ ist eine stetige Approximation von
   \end{cases}
 \end{align*}
 
+
 \section{Fazit und Ausblick}
 
 aus altem Auswertungen.tex (neues: s. Storn, Puttkams)
@@ -685,13 +723,4 @@ AUSBLICK (vielleicht in die Arbeit schreiben)
     (in solvePrimalDualFormulation zum Erstellen der rechten Seite)
     
   Bartels Code anpassen und vergleicen
-
-\todo[inline]{Programm gibt Sprungtermsumme aus, z.B. stagnierend bei 11 auf
-allen Leveln, darauf vielleicht noch kurz in der Auswertung eingehen ,man
-sieht, dass die Sprünge tatsächlch im nonkonformen Problem nicht minimiert
-werden oder so'}
-
-
-\todo[inline]{Probiere auch thm:convexity irgendwie informell zu erwähnen ,,wir
-sehen, dass sogar ohne die Sprünge das stimmt\ldots`` oder so}
 
