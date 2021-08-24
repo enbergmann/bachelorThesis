@@ -1,0 +1,51 @@
+\documentclass[tikz]{standalone}
+\usepackage{amsmath, amsfonts, amssymb, amsthm, mathtools, mathabx}
+\usepackage{pgfplots, pgfplotstable}
+\usepackage{datatool}
+
+\pgfplotsset{compat=newest,
+	axis background/.style={fill=black!5!white},
+	grid style={densely dotted,semithick}
+  }
+
+\begin{document}
+\pgfplotstableset{col sep = comma}
+
+\DTLloaddb{db}{maxIter1e5/lvl0/paramsReduced.csv}
+\DTLassign{db}{1}{\exactEnergy=exactEnergy} 
+\DTLgdeletedb{db}
+
+\begin{tikzpicture}
+  \begin{semilogxaxis}[
+    legend style = {at={(0.9, 0.3)}, anchor=east}, 
+    scale = 1, 
+    xlabel = {$j$},
+    ymajorgrids=true,
+    legend entries = {
+      $E_\textup{NC}(u_{j-1})$,
+      $E(u)$
+      }
+    ]
+    \addlegendimage{no markers, ultra thick, blue}
+    \addlegendimage{no markers, ultra thick, red}
+
+    % energy of iterates
+    \addplot [solid, blue, thin, filter discard warning = false, 
+      skip coords between index = {1001}{1000000}]
+    table[x expr = \coordindex+1, y index = 0] 
+    {maxIter1e5/lvl0/iteration/energyVec.txt}; 
+     
+    %\addplot+[forget plot, no markers, solid, blue, ultra thick, 
+    %  filter discard warning=false, skip coords between index = {0}{1000}, 
+    %  each nth point = 50]
+    %table[x expr = \coordindex+1, y index = 0] 
+    %{maxIter1e5/lvl0/iteration/energyVec.txt}; 
+
+    % exact energy
+    \addplot [solid, red, ultra thick, samples = 2, domain = 1:1000] 
+    {\exactEnergy};
+
+  \end{semilogxaxis}
+\end{tikzpicture}
+\end{document}
+

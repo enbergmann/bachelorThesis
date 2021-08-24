@@ -1,9 +1,13 @@
+\newcommand{\precDTL}{5} % TODO choose something larger than k for smallest 1e-k
+                         %      ever seen in plots
 In diesem abschließenden Kapitel möchten wir nun die in
 \Cref{chap:implementation} beschriebene Realisierung von
 \Cref{alg:primalDualIteration} mit Abbruchkriterium
 \eqref{eq:terminationCriterion} im Solve-Schritt der AFEM-Schleife aus
 \Cref{fig:afemLoop} an einigen Benchmark-Problemen untersuchen.
-Dabei benutzen wir die Bezeichnungen aus \Cref{alg:primalDualIteration}.
+Dabei benutzen wir die Bezeichnungen aus \Cref{alg:primalDualIteration} und
+schreiben $\ucrt$ für $\ucr$ sowie $\bar\Lambda_{0,\Tcal}$ für $\bar\Lambda_0$
+aus \Cref{thm:convergenceIteration} bezüglich einer Triangulierung $\Tcal$ .
 Zunächst möchten wir alle Parameterwahlen aufführen, die in allen 
 Experimenten gleich gesetzt werden, sofern nicht anders angegeben.
 Als Startwert für die Iteration auf dem ersten Level wählen wir
@@ -73,7 +77,6 @@ Eingangssignal
 Ebenfalls nach \Cref{sec:constructionInputSignal} können die schwachen
 Gradienten von $u$ und $f$ bestimmt werden mithilfe der partiellen 
 Ableitungen
-
 \begin{align*}
   \partial_r f(r)
   &=
@@ -109,10 +112,17 @@ und
     0,
     &\text{falls } r\in\left(\frac{5}{6},\infty\right).
   \end{cases}
-\end{align*}
-Durch Kenntnis des schwachen Gradienten von $u$ erhalten wir für die
-exakte Energie die Approximation $E(u)\approx -2.05803442842497$, mit der
-wir die Ergebnisse der Experimente vergleichen können.
+\end{align*} 
+Durch Kenntnis des schwachen Gradienten von $u$ erhalten wir
+für die exakte Energie die Approximation
+$
+\DTLloaddb{db}{data/paramsReducedStandardF01.csv}
+\DTLassign{db}{1}{\exactEnergy=exactEnergy} 
+\DTLgdeletedb{db}
+E(u)\approx\DTLround{\exactEnergy}{\exactEnergy}{\precDTL}\exactEnergy
+$, 
+mit
+der wir die Ergebnisse der Experimente vergleichen können.
 \begin{figure}[!ht]
   \centering
   \begin{subfigure}[b]{.48\linewidth}
@@ -148,7 +158,7 @@ wir die Ergebnisse der Experimente vergleichen können.
   \label{fig:f01Plots}
 \end{figure}
 Als initiale Geometrie, das heißt die Geometrie für das erste Level des
-AFEM-Algorithmus, nutzen wir in den Experimenten mit exakter Lösung
+AFEM-Al\-go\-rith\-mus, nutzen wir in den Experimenten mit exakter Lösung
 \texttt{BigSquare} des AFEM-Pakets ohne initiale Rotverfeinerung, zu sehen in
 \Cref{fig:triangBigSquare}, da diese den Einheitskreis, das heißt den Träger
 des Eingangssignals und der exakten Lösung nach
@@ -252,7 +262,6 @@ Der Parameter $\epsstop$ wird mit $10^{-4}$ gewählt. Diese Wahl wird
 anschließend ebenfalls nochmal näher betrachtet. Außerdem wird $\theta=0.5$
 gewählt. Außerdem werden (ggf hier noch weitere nicht-standart params nennen 
 und deren Wahl).
-
 \begin{figure}[!ht]
   \centering
   \begin{subfigure}[b]{.48\linewidth}
@@ -272,7 +281,6 @@ und deren Wahl).
   von $\tau$ mit den Eingangssignalen $f$ und \texttt{cameraman}.}
   \label{fig:parTauMisc}
 \end{figure}
-
 \begin{figure}[!ht]
   \includegraphics[width=\linewidth]
     {pictures/chapExperiments/secParameters/parTau/f01/convergenceF.pdf}
@@ -280,10 +288,10 @@ und deren Wahl).
   für verschieden Werte von $\tau$ mit Eingangangssignal $f$.}
   \label{fig:parTauConvergence}
 \end{figure}
-
 Wie in \Cref{fig:parTauMisc} zu sehen, verhält sich die Anzahl der Iteration,
 und damit, wie zu erwarten war, auch die Laufzeit, antiproportional zur Größe
-der hier gewählten Werte von $\tau$.
+der hier gewählten Werte von $\tau$, d.h. größeres $\tau$ führt zu einer
+geringeren Laufzeit und weniger Iterationen.
 Da sich die betrachteten Graphen in \Cref{fig:parTauConvergence} für die
 verschiedenen Wahlen von $\tau$ nicht sichtbar unterscheiden, schlussfolgern
 wir, dass die ideale Wahl für $\tau$, die \Cref{thm:convergenceIteration}
@@ -291,13 +299,13 @@ zulässt, das heißt $\tau=1$, zu sein scheint, da die primale-duale Iteration
 bei gleichen Ergebnissen für dieses $\tau$ die geringste Laufzeit hat.
 Ein mögliche Erklärung liefert der Beweis von \Cref{thm:convergenceIteration}.
 Die darin bewiesene \Cref{eq:upperBoundIterationError} impliziert für die
-Iterate $(u_j)_{j\in\Nbb}$, dass
+Iterate $(u_j)_{j\in\Nbb}$ auf einem Level, dass
 \begin{align*}
-  \sum_{j=1}^\infty\Vert \ucr - u_j \Vert^2 
+  \sum_{j=1}^\infty\Vert \ucrt - u_j \Vert^2 
   \leq
   \frac{1}{2\alpha\tau}
-  \left(\vvvert \ucr - u_0\vvvert^2_\nc 
-  + \left\Vert \bar\Lambda_0 - \Lambda_0\right\Vert^2\right). 
+  \left(\vvvert \ucrt - u_0\vvvert^2_\nc 
+  + \left\Vert \bar\Lambda_{0,\Tcal} - \Lambda_0\right\Vert^2\right). 
 \end{align*}
 Die rechte Seite ist antiproportional zu $\tau>0$, womit womöglich
 die Folge $(\left\Vert \ucr - u_j\right\Vert)_{j\in\Nbb}$ schneller gegen $0$
@@ -311,28 +319,44 @@ $\tau=1.2$ ein Beispiel gefunden, bei dem nicht davon ausgegangen werden kann,
 dass die primale-duale Iteration konvergiert.
 Diese Iteration wurde auf der Triangulierung aus \Cref{fig:triangBigSquare} 
 durchgeführt. 
-Dabei wurde die Iteration nach $10^5$ Iterationen abgebrochen, da kein anderes
+Dabei wurde die Iteration nach $10^5$ Iterationen, wie in
+\Cref{fig:parTauNoConvergenceUpdates} zu sehen, abgebrochen, da kein anderes
 Verhalten mehr zu erwarten war, zumal selbst für die nach
 \Cref{fig:parTauMiscF} suboptimale Wahl $0.1$ für $\tau$ weniger also $10^3$
 Iterationen auf der gleichen Triangulierung benötigt wurden und für die Wahl
 $\tau=1$ sogar weniger als $10$ Iterationen.
-
 \begin{figure}[!ht]
-  \includegraphics[width=\linewidth]
-    {pictures/chapExperiments/secParameters/parTau/f01NoConv/1Dot2/convIter.pdf}
-  \caption{Drei Messungen des Updates der Iteration für $\tau=1.2$ mit
+  \centering
+  \begin{subfigure}[b]{.48\linewidth}
+  \caption{Mussugen der Updates}
+    \includegraphics[width=\linewidth]
+      {pictures/chapExperiments/secParameters/parTau/f01NoConv/1Dot2/convIter.pdf}
+    \label{fig:parTauNoConvergenceUpdates}
+  \end{subfigure}
+  \quad
+  \begin{subfigure}[b]{.47\linewidth}
+  \caption{Verlauf der Energie}
+    \includegraphics[width=\linewidth]
+      {pictures/chapExperiments/secParameters/parTau/f01NoConv/1Dot2/convEnergy.pdf}
+    \label{fig:parTauNoConvergenceEnergy}
+  \end{subfigure}
+  \caption{Drei Messungen des Updates der Iteration (a) und Verlauf der
+  Energie während der erstens $1000$ Iterationen (b) für $\tau=1.2$ mit
   Eingangangssignal $f$.}
   \label{fig:parTauNoConvergence}
 \end{figure}
 Auch die Betragsdifferenz zwischen den Energien zweier Iterate stagniert.
 Es ist stark davon auszugehen, dass dieses Problem mit keinem von den
 Iteraten abhänigen Abbruchkriterium terminiert.
+Mit \Cref{fig:parTauNoConvergenceEnergy} steht außerdem fest, dass der
+Abstand zwischen den Iteraten nicht stagniert, während die Iterate divergieren
+oder konvergieren, sondern dass die Iterate sich mit alternierender Energie
+entwickeln zu scheinen.
 Insbesondere bleibt festzuhalten, dass die von \Cref{thm:convergenceIteration}
 für $\tau\in(0,1]$ garantierte Konvergenz für $\tau=1.2$ nicht eintritt.
 
 Nun betrachen wir die Wahl des Parameteres $\epsstop$ für das Abbruchkriterium.
 Wieder wählen wir $\theta = 0.5$ und \ldots.
-
 \begin{figure}[!ht]
   \includegraphics[width=\linewidth]
     {pictures/chapExperiments/secParameters/parEpsStop/f01/convergenceF.pdf}
@@ -341,17 +365,17 @@ Wieder wählen wir $\theta = 0.5$ und \ldots.
   \label{fig:parEpsStopConvergence}
 \end{figure}
 Wie in \Cref{fig:parEpsStopConvergence} zu sehen, stagniert der 
-exakte $L^2-Fehler$ für $\epsstop=10^{-2}$ und, es lässt sich erahnen, dass
+exakte $L^2$-Fehler für $\epsstop=10^{-2}$ und, es lässt sich erahnen, dass
 dieser Effekt auch für $\epsstop=10^{-3}$ einsetzt. 
 Da der Effekt bis $10^6$ Freiheitsgrade für $\epsstop\in\{10^{-4},10^{-5}\}$
 noch nicht einsetzt, scheint dies an einem zu frühen Abbruch der Iteration 
 durch eine zu große Toleranz $\epsstop$ zu liegen. 
 Bei hohen Freiheitsgraden und einer entsprechend kleinen Netzweite muss
 also $\epsstop$ ausreichend klein gewählt werden.
-Da wir in den Experimenten  $10^6$ Freiheitsgrade nicht überschreiten und
-sich bis dahin die Ergebnisse für die Wahlen $10^{-4}$ und $10^{-5}$ kaum
-unterscheiden bei längerer Laufzeit für $10^{-5}$, wählen wir als Standard
-$\epsstop=10^{-4}$.
+Da wir in den Experimenten  $10^6$ Freiheitsgrade nicht überschreiten und sich
+bis dahin die Ergebnisse für die Wahlen $10^{-4}$ und $10^{-5}$ kaum
+unterscheiden, die Wahl $10^{-5}$ aber eine länger Laufzeit verursacht, wählen
+wir als Standard $\epsstop=10^{-4}$.
 Weiterhin bleibt festzuhalten, dass der Verfeinerungsindikator trotzdem noch
 passend Dreiecke auswählt und weiter fällt, auch bei stagnierendem Fehler.
 
@@ -707,6 +731,11 @@ auch eher im Auswertungskapitel ,,in Bartels wird in
 citeEntsprechendesLemma die garantierte Rate für \ldots bewiesen. In unseren
 Experimenten \ldots}
 
+====================
+
+\Cref{fig:parTauNoConvergence} legt nahe, über nicht konstante Wahlen für
+$\tau nachzudenken$, die möglicherweise das alternierende Verhalten in
+\Cref{fig:parTauNoConvergenceEnergy} verhindern könnte
 
 ====================
 
