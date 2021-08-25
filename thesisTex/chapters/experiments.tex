@@ -12,7 +12,9 @@ Zunächst möchten wir alle Parameterwahlen aufführen, die in allen
 Experimenten gleich gesetzt werden, sofern nicht anders angegeben.
 Als Startwert für die Iteration auf dem ersten Level wählen wir
 $u_0\equiv 0$ und auf den darauffolgenden Leveln eine Prolongation wie zum
-Ende von \Cref{sec:programFlow} beschrieben.
+Ende von \Cref{sec:programFlow} beschrieben, womit die Wahl des Startwerts
+der ersten Levels keinen nennenswerten Einfluss auf die Dauer des Experiments
+oder die Güte der Ergebnisse hat. 
 Für jeden Aufruf der primalen-dualen Iteration wählen wir $\Lambda_0$ wie in
 \Cref{eq:choiceInitialDualVariableImplementation} angegeben.
 Dabei konstruieren wir Probleme, bei denen die exakte Lösung bekannt ist,
