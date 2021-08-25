@@ -15,20 +15,17 @@
   \DTLloaddb{db}{adaptive/expParams.csv}; 
   \DTLassign{db}{1}{\parAlpha=parAlpha}
   \DTLgdeletedb{db}
-  \DTLloaddb{db}{adaptive/paramsReduced.csv}; 
-  \DTLassign{db}{1}{\uExact=exactEnergy}
-  \DTLgdeletedb{db}
+
   \begin{loglogaxis}[
     legend pos = south west, 
     scale = 2, 
     xlabel = {Anzahl der Freiheitsgrade},
     ymajorgrids=true,
-    xmax = 1.5e6,
-    ymin = 4e-5,
-    ymax = 2e3,
+    ymin = 3e-5,
+    ymax = 3e3,
     legend entries = {
-      $\theta = 0.5$,
-      $\theta = 1$,
+      adaptiv ($\theta = 0.5$),
+      uniform,
       $\eta_\mathcal{T}$,
       $\eta_{\textup{V},\mathcal{T}}$,
       $\eta_{\textup{J},\mathcal{T}}$,
@@ -78,7 +75,6 @@
     {adaptive/lvl14/lvlOutput.csv}; 
 
     % uniform 
-    % TODO overwrite everything when actual experiment is done
     \addplot [dashed, thick, green, mark = diamond*, mark options = solid] 
     table[x = {nrDof}, y expr = \parAlpha/2*\thisrow{error4lvl}^2] 
     {uniform/lvl8/lvlOutput.csv}; 
@@ -96,30 +92,41 @@
     {uniform/lvl8/lvlOutput.csv}; 
 
     \addplot [dashed, thick, red, mark = diamond*, mark options = solid] 
-    table[x = {nrDof}, y = {diffGlebExactE}] 
+    table[x = {nrDof}, y = {diffExacEGleb}] 
+    {uniform/lvl8/lvlOutput.csv}; 
+
+    \addplot [dashed, thick, gray, mark = diamond*, mark options = solid] 
+    table[x = {nrDof}, y = {diffGuebGleb}] 
     {uniform/lvl8/lvlOutput.csv}; 
 
     \addplot [dashed, thick, orange, mark = diamond*, mark options = solid] 
-    table[x = {nrDof}, y = {diffDiscExactE}] 
+    table[x = {nrDof}, y = {absDiffDiscExacE}] 
     {uniform/lvl8/lvlOutput.csv}; 
 
-    % eta TODO rework
+    % eta
     add slope triangle
-    \draw (axis cs:1e6,1e0)
-                 -- (axis cs:1e6,1e-1) node [midway, right] {\scriptsize$1$}
-                 -- (axis cs:1e4,1e0)
+    \draw (axis cs:7e5, 2e0)
+                 -- (axis cs:7e5, 2e-1) node [midway, right] {\scriptsize$1$}
+                 -- (axis cs:7e3, 2e0)
                  -- cycle node [midway, above] {\scriptsize$2$}
                  ;
 
-    % gleb TODO rework
+    % gleb
     add slope triangle
-    \draw (axis cs:1e6, 1e0)
-                 -- (axis cs:1e4,1e1) 
-                 -- (axis cs:1e4,1e0) node [midway, left] {\scriptsize$1$} 	 
+    \draw (axis cs:7e5, 2e0)
+                 -- (axis cs:7e3, 2e1) 
+                 -- (axis cs:7e3, 2e0) node [midway, left] {\scriptsize$1$} 	 
                  -- cycle
                  ;
 
-    % TODO triangle for error
+    % error
+    add slope triangle
+    \draw (axis cs:2e5, 1e-4)
+                 -- (axis cs:2e3, 1e-4) node [midway, below] {\scriptsize$1$}
+                 -- (axis cs:2e3, 1e-2) node [midway, left] {\scriptsize$1$} 	 
+                 -- cycle
+                 ;
+
   \end{loglogaxis}
 \end{tikzpicture}
 \end{document}

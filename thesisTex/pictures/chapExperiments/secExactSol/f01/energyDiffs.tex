@@ -1,0 +1,65 @@
+\documentclass[tikz]{standalone}
+\usepackage{amsmath, amsfonts, amssymb, amsthm, mathtools, mathabx}
+\usepackage{pgfplots, pgfplotstable}
+\usepackage{datatool}
+
+\pgfplotsset{compat=newest,
+	axis background/.style={fill=black!5!white},
+	grid style={densely dotted,semithick}
+  }
+
+\begin{document}
+\pgfplotstableset{col sep = comma}
+
+\begin{tikzpicture}
+  \DTLloaddb{db}{adaptive/paramsReduced.csv}; 
+  \DTLassign{db}{1}{\uExact=exactEnergy}
+  \DTLgdeletedb{db}
+
+  \begin{loglogaxis}[
+    legend pos = south west, 
+    scale = 1.5, 
+    xlabel = {Anzahl der Freiheitsgrade},
+    ymajorgrids=true,
+    legend entries = {
+      adaptiv ($\theta = 0.5$),
+      uniform,
+      $E_{\textup{GUEB},\mathcal{T}}- E_{\textup{GLEB},\mathcal{T}}$,
+      $E(u)-E_{\textup{GLEB}, \mathcal{T}}$,
+      $E_{\textup{GUEB},\mathcal{T}}- E(u)$
+      }
+    ]
+    \addlegendimage{solid, thick, mark=*, mark options = {scale = .8}}
+    \addlegendimage{dashed, thick, mark=diamond*, mark options = solid}
+    \addlegendimage{no markers, ultra thick, gray}
+    \addlegendimage{no markers, ultra thick, red}
+    \addlegendimage{no markers, ultra thick, orange}
+
+    % adaptive 0.5
+    \addplot [solid, thick, red, mark = *, mark options = {scale = .8}] 
+    table[x = {nrDof}, y = {diffExacEGleb}] 
+    {adaptive/lvl14/lvlOutput.csv}; 
+
+    \addplot [solid, thick, gray, mark = *, mark options = {scale = .8}] 
+    table[x = {nrDof}, y = {diffGuebGleb}] 
+    {adaptive/lvl14/lvlOutput.csv}; 
+
+    \addplot [solid, thick, orange, mark = *, mark options = {scale = .8}] 
+    table[x = {nrDof}, y expr = \thisrow{gueb}-\uExact] 
+    {adaptive/lvl14/lvlOutput.csv}; 
+
+    % uniform 
+    \addplot [dashed, thick, red, mark = diamond*, mark options = solid] 
+    table[x = {nrDof}, y = {diffExacEGleb}] 
+    {uniform/lvl8/lvlOutput.csv}; 
+
+    \addplot [dashed, thick, gray, mark = diamond*, mark options = solid] 
+    table[x = {nrDof}, y = {diffGuebGleb}] 
+    {uniform/lvl8/lvlOutput.csv}; 
+
+    \addplot [dashed, thick, orange, mark = diamond*, mark options = solid] 
+    table[x = {nrDof}, y expr = \thisrow{gueb}-\uExact] 
+    {uniform/lvl8/lvlOutput.csv}; 
+  \end{loglogaxis}
+\end{tikzpicture}
+\end{document}

@@ -58,7 +58,8 @@ und wählen
 Nach \Cref{eq:constructionInputSignal} ist $u$ mit dieser Wahl von
 $\sgn\big(\partial_r u\big)$ die Lösung von \Cref{prob:continuousProblem} mit
 Eingangssignal
-\begin{align*}
+\begin{align}
+  \label{eq:inputSignalF01}
   f(r)
   &=
   \begin{cases}
@@ -73,7 +74,7 @@ Eingangssignal
     -3\pi\sin(\pi(6r-5))+\frac{1+\cos(\pi(6r-5))}{2r}, 
     & \text{falls } r\in \left(\frac{5}{6}, \infty\right).
   \end{cases}
-\end{align*}
+\end{align}
 Ebenfalls nach \Cref{sec:constructionInputSignal} können die schwachen
 Gradienten von $u$ und $f$ bestimmt werden mithilfe der partiellen 
 Ableitungen
@@ -383,61 +384,36 @@ passend Dreiecke auswählt und weiter fällt, auch bei stagnierendem Fehler.
 \section{Experimente mit bekannter exakter Lösung}
 \label{sec:experimentsWithExactSolution}
 
-f01 vor allem
+In diesem Abschnitt möchten wir nun anhand des Experiments mit Eingangssignal
+$f$ aus \Cref{eq:inputSignalF01} die Ergebnisse des Programms.
+Außerdem werden wir die Ergebnisse mit zwei weiteren Eingangssignalen,
+für die exakte Lösungen bekannt sind, vergleichen, um so weitere Aussagen
+über die Ergebnisse treffen zu können.
+Die Wahl aller Parameter, die hier nicht noch einmal aufgeführt werden, ist
+im einleitenden Teil und dem vorherigen \Cref{sec:choiceOfParameters} 
+begründet worden.
+Zunächst möchten wir anhand der Experimente mit Eingangssignal $f$ einige
+Eigenschaften der primalen-dualen Iteration betrachten.
 
 ==================
-
-gucke in der Arbeit ob $S^1(\Tcal)$ jemals nochmal genutzt wird. Falls nicht,
-die Definition der Couran-Finite-Elemente-Funktionen verschieben aus Notation
-in die Einleitung an die Stelle, an der ich über Bartels Ansatz schreibe
-
-insbesondere auch die Quelle dann einfach da erwähnen
-
-wird wohl in der Auswertung erwähnt für die Rate von Bartels, also kann 
-voraussichtlich bleiben
-
-bei erster Analyse der drei Graphen, die übereinander liegen müssen, einmal
-noch Vergleiche von E(u), E(ucr,T) mit Egueb plotten um aufzuzeigen, dass
-der enrichment operator approximiert und deshalb kein großer Unterschied zu 
-sehen ist zwischen mittel Graph und oberen Graph
-
-==================
-
-\todo[inline]{Programm gibt Sprungtermsumme aus, z.B. stagnierend bei 11 auf
-allen Leveln, darauf vielleicht noch kurz in der Auswertung eingehen ,man
-sieht, dass die Sprünge tatsächlch im nonkonformen Problem nicht minimiert
-werden oder so'}
-
-\todo[inline]{Probiere auch thm:convexity irgendwie informell zu erwähnen ,,wir
-sehen, dass sogar ohne die Sprünge das stimmt\ldots`` oder so}
-
-==================
-
-  - f01 mit großem alpha konvergiert am Anfang preasymptotisch schnell aber
-    scheint bei großen Freiheitsgraden dann auch die Rate 1/2 (für Gleb Kram)
-    bzw. 1/4 oder so für Fehler anzunehmen (also gleiche Raten wie alpha=1).
-    liegt daran, dass für große alpha die Werte anfangs explodieren und damit
-    die Konvergenz rapide ist (auch die Iterationen sind viel kürzer, hier
-    lohnt sich sicherlich auch der Vergleich der misc plots und nochmal verweis
-    auf die Abschätzung aus Konvergenzbeweis (großes alpha, womöglich weniger
-    Iteration))
-
-==================
-
-  - Section Name: Convergence of energies (see Bar12, do some experiment
-    chapter like that)
-
-  - energy during iteration doesn't strictly converge from above to some value
-    for small tau (e.g. 1/100)
-
-==================
-
-Wir sehen auch annähernd den erwarten Unterschied $h_T$ zwischen den Differenzen
-in der $L^2$-Norm und der Norm $\vvvert\bullet\vvvert_\NC$, wobei hier
-$h_T=\sqrt{2}$, $h_\text{min}=1$.
-Das eintreten dieser erwarteten Unterschiede (Erläuterung der 
-Skalierugsunterschiede im Beweis von Lemma \ldots)
-==================
+\begin{figure}[!ht]
+  \centering
+  \begin{subfigure}[b]{.48\linewidth}
+    \caption{Energieverlauf der Iterationen per Level}
+    \includegraphics[trim = 40 30 30 30, clip, width=\linewidth]
+      {pictures/chapExperiments/secExactSol/f01/adaptive/lvl14/solution.png}
+    \label{fig:iterationEnergyLevel}
+  \end{subfigure}
+  \quad
+  \begin{subfigure}[b]{.48\linewidth}
+    \caption{Oszillierendes Beispiel}
+    \includegraphics[trim = 50 30 50 20, clip, width=\linewidth]
+      {pictures/chapExperiments/secExactSol/f01/adaptive/lvl14/solutionAxis.png}
+    \label{fig:iterationEnergyOscillations}
+  \end{subfigure}
+  \caption{todo}
+  \label{fig:iterationEnergy}
+\end{figure}
 
     vlt gucken ob Raten oder so in corr
     einzeichnenbar sind
@@ -461,17 +437,117 @@ wird alpha zu kleinen tau groß gewählt, behebt dass den Effekt.
       (natürlich müsste man epsStop analog kleiner wählen, wenn man z.B. den
       parallel und niedrigeren bar15TerminationWithoutL2 wählt)
 
+
 ==================
 
-hier vielleicht auch einmal einwerfen, wie die Iteration konvergiert
-(vlt auch in der vorigen Section, im Vergleich zu den schlechten Wahlen,
-die dort auch getroffen werden.
+Nun betrachten wir Konvergenzraten und überprüfen die Gültigkeit einiger in den
+theoretischen Kapiteln dieser Arbeit getätigten Aussagen.
+\begin{figure}[!ht]
+  \includegraphics[width=\linewidth]
+    {pictures/chapExperiments/secExactSol/f01/conv.pdf}
+  \caption{Ergebnisse der adaptiven und uniformen AFEM-Schleifen für das 
+  Eingangssignal $f$.}
+  \label{fig:f01Convergence}
+\end{figure}
+\begin{figure}[!ht]
+  \centering
+  \begin{subfigure}[b]{.48\linewidth}
+    \includegraphics[trim = 40 30 30 30, clip, width=\linewidth]
+      {pictures/chapExperiments/secExactSol/f01/adaptive/lvl14/solution.png}
+    \label{fig:f01SolAdaptivePlot}
+  \end{subfigure}
+  \quad
+  \begin{subfigure}[b]{.48\linewidth}
+    \includegraphics[trim = 50 30 50 20, clip, width=\linewidth]
+      {pictures/chapExperiments/secExactSol/f01/adaptive/lvl14/solutionAxis.png}
+    \label{fig:f01SolAdaptiveAxis}
+  \end{subfigure}
+  \caption{Lösung des adaptiven Algorithmus mit Eingangssignale $f$ sowie deren
+  Darstellungen entlang der x-Achse (blau) und der y-Achse (rot).}
+  \label{fig:f01SolAdaptive}
+\end{figure}
+\begin{figure}[!ht]
+  \centering
+  \begin{subfigure}[b]{.48\linewidth}
+  \caption{Unterschiede oberer beiden Graphen}
+    \includegraphics[width=\linewidth]
+      {pictures/chapExperiments/secExactSol/f01/energyDiffs.pdf}
+    \label{fig:f01DiffGuebExactE}
+  \end{subfigure}
+  \quad
+  \begin{subfigure}[b]{.48\linewidth}
+  \caption{Sprungterm Entwicklung}
+    \includegraphics[width=\linewidth]
+      {pictures/chapExperiments/secExactSol/f01/jumpTerms.pdf}
+    \label{fig:f01JumpTerms}
+  \end{subfigure}
+  \caption{Zusätzliche Infos für Eingangangssignal $f$.}
+  \label{fig:f01SupplementaryInfo}
+\end{figure}
+Wie in \Cref{fig:f01Convergence} zu sehen, unterscheiden sich die Raten für
+uniforme und adaptive Netzverfeinerungen nicht.
+
+Es gilt 
+\begin{align*}
+  \frac{\alpha}{2}\Vert u -\ucrt\Vert^2
+  \leq
+  E(u)-\Egleb
+  \leq
+  \Egueb-\Egleb,
+\end{align*}
+wie wir nach \Cref{thm:gleb} und Ungleichung \ref{eq:gueb} erwartet haben.
+Dabei merken wir an, dass dieser Sachverhalt für $E(u)-\Egleb\leq\Egueb-\Egleb$
+nur schwer zu erkennen ist, aber gilt, wie dank \Cref{fig:f01DiffGuebExactE} zu
+sehen ist, da $\Egueb-\Egleb-(E(u)-\Egleb) = \Egueb-E(u)$.
+In \Cref{fig:f01JumpTerms} sehen wir weiterhin, dass die Sprungterme in
+unserere nichtkonformen Formulierung tatsächlich nicht minimiert werden. 
+Zwar sind die jeweiligen Sprünge zwischen zwei Dreiecken bei einer hohen Anzahl
+von Freiheitsgraden klei, wie \Cref{fig:f01SolAdaptive} erahnen lässt, jedoch
+wird durch die hohe Anzahl von Kanten ein große Menge von kleinen Sprüngen
+addiert, die zu einer relativ großen Summe führen.
+Da durch \Cref{fig:f01Convergence} zu sehen ist, dass $|E(u)-\Enc(\ucrt)|$
+konvergiert, wird klar, dass $E(\ucrt)$ nicht gegen $E(u)$ konvergiert, wie zu
+erwarten war nach \Cref{sec:discreteProblemFormulation}.
+Aus \Cref{thm:convexity} und \Cref{sec:discreteProblemFormulation} folgt
+\begin{align*}
+  \frac{\alpha}{2}\Vert u-\ucrt\Vert^2\leq
+  E(\ucrt)-E(u)=\Enc(\ucrt)+\sum_{F\in\Ecal}\Vert[\ucrt]_F\Vert_{L^1(F)}-E(u).
+\end{align*}
+Insbesondere gilt auch 
+\begin{align*}
+  \frac{\alpha}{2}\Vert u-\ucrt\Vert^2
+  \leq
+  \left|\Enc(\ucrt)-E(u)\right|+
+  \sum_{F\in\Ecal}\Vert[\ucrt]_F\Vert_{L^1(F)}.
+\end{align*}
+Dieser Aussage widerspricht \Cref{fig:f01Convergence} nicht, obwohl die Sprünge,
+die auf der rechten Seite dieser Ungleichung stehen, im Plot nicht einbezogen
+sind.
+
 
 ==================
 
 dann insgesamt raten abarbeiten und interpretieren
 
 ==================
+
+  - f01 mit großem alpha konvergiert am Anfang preasymptotisch schnell aber
+    scheint bei großen Freiheitsgraden dann auch die Rate 1/2 (für Gleb Kram)
+    bzw. 1/4 oder so für Fehler anzunehmen (also gleiche Raten wie alpha=1).
+    liegt daran, dass für große alpha die Werte anfangs explodieren und damit
+    die Konvergenz rapide ist (auch die Iterationen sind viel kürzer, hier
+    lohnt sich sicherlich auch der Vergleich der misc plots und nochmal verweis
+    auf die Abschätzung aus Konvergenzbeweis (großes alpha, womöglich weniger
+    Iteration))
+
+
+Wir sehen auch annähernd den erwarten Unterschied $h_T$ zwischen den Differenzen
+in der $L^2$-Norm und der Norm $\vvvert\bullet\vvvert_\NC$, wobei hier
+$h_T=\sqrt{2}$, $h_\text{min}=1$.
+Das eintreten dieser erwarteten Unterschiede (Erläuterung der 
+Skalierugsunterschiede im Beweis von Lemma \ldots)
+==================
+
 
 zu gamma (0, 0.5, 1) noch irgendwo ein Experiment mit Info, dass 0 und 1e-4 oder
 so was identisch sind
@@ -509,6 +585,9 @@ dann abschweif zu höhere Regularität
   $\alpha=1$ benötigt wurden), d.h. Verweis auf vorherige section
 
   wir sehen deutlich bessere Raten als in Bartels flg. Thm. :
+
+  folgendes wird definitiv erwähnt werden, zumindest das Resultat, und dabei
+  wird nochmal $S^1(\Tcal)$ notiert werden
 
   Zunächst betrachten wir \cite[S. 309, Theorem 10.7]{Bar15}. Diese
   Abschätzung kontrolliert den
@@ -558,29 +637,6 @@ dann abschweif zu höhere Regularität
 \end{align*}
 Mit der Wahl
 \begin{align*}
-  \sgn&(\partial_r u_3(r)) \\
-  &\coloneqq 
-  \begin{cases}
-    54r^3-27r^2, & \text{wenn } 0\leq r\leq\frac{1}{3},\\
-    -1, & \text{wenn } \frac{1}{3}\leq r\leq \frac{2}{3},\\
-    -54r^3 + 135r^2 - 108r + 27, & \text{wenn } \frac{2}{3}\leq r\leq 1,
-  \end{cases}
-\end{align*}
-erhalten wir die rechte Seite
-\begin{align*}
-  f_3(r)\coloneqq 
-  \begin{cases}
-    \alpha - 216r^2 + 81r, &
-    \text{wenn } 0\leq r\leq\frac{1}{3},\\
-    \alpha\left(54r^3 - 81r^2 + 36r - 4\right)) + \frac{1}{r}, & 
-    \text{wenn } \frac{1}{3}\leq r\leq \frac{2}{3},\\
-    216r^2 - 405r + 216 - \frac{27}{r}, & 
-    \text{wenn } \frac{2}{3}\leq r\leq 1,
-  \end{cases}
-\end{align*}
-für die gilt $f_3\in H^1_0$
-und mit der Wahl
-\begin{align*}
   \sgn&(\partial_r u_\textrm{HR}(r)) \\
   &\coloneqq 
   \begin{cases}
@@ -606,16 +662,6 @@ für die gilt $f_\textrm{HR}\in H^2_0$.
 
 
 \begin{align*}
-  \partial_r f_3(r) &=
-  \begin{cases}
-    - 432r + 81, & \text{wenn } 0\leq r\leq\frac{1}{3},\\
-    \alpha\left(162r^2 - 162r + 36\right) - \frac{1}{r^2}, & 
-    \text{wenn } \frac{1}{3}\leq r\leq \frac{2}{3},\\
-    432r - 405 + \frac{27}{r^2}, & 
-    \text{wenn } \frac{2}{3}\leq r\leq 1,
-  \end{cases}
-\end{align*}
-\begin{align*}
   \partial_r f_\textrm{HR}(r) &=
   \begin{cases}
     34992r^3 - 18225r^2 + 2160r, & \text{wenn } 0\leq r\leq\frac{1}{3},\\
@@ -637,6 +683,17 @@ für die gilt $f_\textrm{HR}\in H^2_0$.
 
 
 \section{Graufarbenbilder als Eingangssignale}
+\label{sec:grayscalePicturesAsInputSignal}
+
+In diesem Abschnitt wollen wir nun auch Beispiele untersuchen, bei denen
+der schwache Gradient des Eingangssignals sowie die exakte Lösung nicht bekannt
+sind und prüfen, welche Aussagen wir für diese treffen können.
+Unser Hauptaugenmerk liegt auf dem Eingangssignal \texttt{cameraman} aus
+\Cref{fig:cameraman}. 
+Insbesondere können wir an diesen Beispielen gut veranschaulichen, wie
+der Verfeinerungsindikator wirkt.
+
+==================
 cameraman
 
 ==================
