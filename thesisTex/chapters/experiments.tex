@@ -126,7 +126,7 @@ E(u)\approx\DTLround{\exactEnergy}{\exactEnergy}{\precDTL}\exactEnergy
 $, 
 mit
 der wir die Ergebnisse der Experimente vergleichen können.
-\begin{figure}[!ht]
+\begin{figure}[p]
   \centering
   \begin{subfigure}[b]{.48\linewidth}
     \caption{$f$}
@@ -191,7 +191,7 @@ Fur Experiment mit Graufarbenbild als Eingangssignal nutzen wir als initiale
 Triangulierung \texttt{Square} des AFEM-Softwarepakets ohne initiale
 Rotverfeinerung, zu sehen in \Cref{fig:triangSquare}.
 
-\begin{figure}[!ht]
+\begin{figure}[p]
   \centering
   \begin{subfigure}[b]{.48\linewidth}
     \caption{\texttt{BigSquare}}
@@ -206,7 +206,7 @@ Rotverfeinerung, zu sehen in \Cref{fig:triangSquare}.
       {pictures/chapExperiments/secGeneralInfo/squareTriang.png}
     \label{fig:triangSquare}
   \end{subfigure}
-  \caption{In den Experimenten genutzte initiale Triangulierung.}
+  \caption{In den Experimenten genutzte initiale Triangulierungen.}
   \label{fig:initialTriangulations}
 \end{figure}
 Führen wir ein Experiment mit adaptiver Netzverfeinerung durch, so wählen wir
@@ -265,7 +265,7 @@ Der Parameter $\epsstop$ wird mit $10^{-4}$ gewählt. Diese Wahl wird
 anschließend ebenfalls nochmal näher betrachtet. Außerdem wird $\theta=0.5$
 gewählt. Außerdem werden (ggf hier noch weitere nicht-standart params nennen 
 und deren Wahl).
-\begin{figure}[!ht]
+\begin{figure}[p]
   \centering
   \begin{subfigure}[b]{.48\linewidth}
     \caption{Eingangssignal $f$}
@@ -284,7 +284,7 @@ und deren Wahl).
   von $\tau$ mit den Eingangssignalen $f$ und \texttt{cameraman}.}
   \label{fig:parTauMisc}
 \end{figure}
-\begin{figure}[!ht]
+\begin{figure}[p]
   \includegraphics[width=\linewidth]
     {pictures/chapExperiments/secParameters/parTau/f01/convergenceF.pdf}
   \caption{Verfeinerungsindikator, exakter $L^2$-Fehler und Energiedifferenz 
@@ -328,7 +328,7 @@ Verhalten mehr zu erwarten war, zumal selbst für die nach
 \Cref{fig:parTauMiscF} suboptimale Wahl $0.1$ für $\tau$ weniger also $10^3$
 Iterationen auf der gleichen Triangulierung benötigt wurden und für die Wahl
 $\tau=1$ sogar weniger als $10$ Iterationen.
-\begin{figure}[!ht]
+\begin{figure}[p]
   \centering
   \begin{subfigure}[b]{.48\linewidth}
   \caption{Mussugen der Updates}
@@ -360,7 +360,7 @@ für $\tau\in(0,1]$ garantierte Konvergenz für $\tau=1.2$ nicht eintritt.
 
 Nun betrachen wir die Wahl des Parameteres $\epsstop$ für das Abbruchkriterium.
 Wieder wählen wir $\theta = 0.5$ und \ldots.
-\begin{figure}[!ht]
+\begin{figure}[p]
   \includegraphics[width=\linewidth]
     {pictures/chapExperiments/secParameters/parEpsStop/f01/convergenceF.pdf}
   \caption{Verfeinerungsindikator und exakter $L^2$-Fehler für verschieden
@@ -397,28 +397,47 @@ begründet worden.
 Zunächst möchten wir anhand der Experimente mit Eingangssignal $f$ einige
 Eigenschaften der primalen-dualen Iteration betrachten.
 
-==================
-\begin{figure}[!ht]
+\begin{figure}[p]
   \centering
-  \begin{subfigure}[b]{.48\linewidth}
+  \begin{subfigure}[b]{.5\linewidth}
     \caption{Energieverlauf der Iterationen per Level}
-    \includegraphics[trim = 40 30 30 30, clip, width=\linewidth]
-      {pictures/chapExperiments/secExactSol/f01/adaptive/lvl14/solution.png}
+    \includegraphics[width=\linewidth]
+      {pictures/chapExperiments/secExactSol/iteration/lvlWise/convEnergy.pdf}
     \label{fig:iterationEnergyLevel}
   \end{subfigure}
   \quad
-  \begin{subfigure}[b]{.48\linewidth}
+  \begin{subfigure}[b]{.46\linewidth}
     \caption{Oszillierendes Beispiel}
-    \includegraphics[trim = 50 30 50 20, clip, width=\linewidth]
-      {pictures/chapExperiments/secExactSol/f01/adaptive/lvl14/solutionAxis.png}
+    \includegraphics[width=\linewidth]
+      {pictures/chapExperiments/secExactSol/iteration/osc/convEnergy.pdf}
     \label{fig:iterationEnergyOscillations}
   \end{subfigure}
-  \caption{todo}
+  \caption{Energieentwicklung während der primalen-dualen Iteration für
+  Eingangssignal $f$ auf verschiedenen Leveln mit $\tau=1$ (a) und für ein
+  Level mit $\tau=10^{-1}$ (b).}
   \label{fig:iterationEnergy}
 \end{figure}
 
-    vlt gucken ob Raten oder so in corr
-    einzeichnenbar sind
+\begin{figure}[p]
+  \centering
+  \begin{subfigure}[b]{.5\linewidth}
+    \caption{Energieverlauf der Iterationen per Level}
+    \includegraphics[width=\linewidth]
+      {pictures/chapExperiments/secExactSol/iteration/lvlWise/termLvl.pdf}
+    \label{fig:iterationLevel}
+  \end{subfigure}
+  \quad
+  \begin{subfigure}[b]{.46\linewidth}
+    \caption{Oszillierendes Beispiel}
+    \includegraphics[width=\linewidth]
+      {pictures/chapExperiments/secExactSol/iteration/lvlWise/termComp.pdf}
+    \label{fig:iterationTerminationVariants}
+  \end{subfigure}
+  \caption{Energieentwicklung während der primalen-dualen Iteration für
+  Eingangssignal $f$ auf verschiedenen Leveln mit $\tau=1$ (a) und für ein
+  Level mit $\tau=10^{-1}$ (b).}
+  \label{fig:iterationTermination}
+\end{figure}
 
 kleine tau und alpha nicht groß lässt die energie nur osszilierend von oben
 konvergieren (s. Ordner) (auch tau = h/10 oder so ähnlich (bartels))
@@ -444,14 +463,14 @@ wird alpha zu kleinen tau groß gewählt, behebt dass den Effekt.
 
 Nun betrachten wir Konvergenzraten und überprüfen die Gültigkeit einiger in den
 theoretischen Kapiteln dieser Arbeit getätigten Aussagen.
-\begin{figure}[!ht]
+\begin{figure}[p]
   \includegraphics[width=\linewidth]
     {pictures/chapExperiments/secExactSol/f01/conv.pdf}
   \caption{Ergebnisse der adaptiven und uniformen AFEM-Schleifen für das 
   Eingangssignal $f$.}
   \label{fig:f01Convergence}
 \end{figure}
-\begin{figure}[!ht]
+\begin{figure}[p]
   \centering
   \begin{subfigure}[b]{.48\linewidth}
     \includegraphics[trim = 40 30 30 30, clip, width=\linewidth]
@@ -468,7 +487,7 @@ theoretischen Kapiteln dieser Arbeit getätigten Aussagen.
   Darstellungen entlang der x-Achse (blau) und der y-Achse (rot).}
   \label{fig:f01SolAdaptive}
 \end{figure}
-\begin{figure}[!ht]
+\begin{figure}[p]
   \centering
   \begin{subfigure}[b]{.48\linewidth}
   \caption{Unterschiede oberer beiden Graphen}
@@ -510,6 +529,10 @@ addiert, die zu einer relativ großen Summe führen.
 Da durch \Cref{fig:f01Convergence} zu sehen ist, dass $|E(u)-\Enc(\ucrt)|$
 konvergiert, wird klar, dass $E(\ucrt)$ nicht gegen $E(u)$ konvergiert, wie zu
 erwarten war nach \Cref{sec:discreteProblemFormulation}.
+Zudem lässt sich die Konvergenz von $\Enc(\ucrt)$ gegen $E(u)$ durch betrachten
+von \Cref{fig:iterationEnergyLevel} erahnen, in der der Abstand des 
+augenscheinlichen Grenzwerts der Iteration mit höhrerem Level näher an $E(u)$
+liegt.
 Aus \Cref{thm:convexity} und \Cref{sec:discreteProblemFormulation} folgt
 \begin{align*}
   \frac{\alpha}{2}\Vert u-\ucrt\Vert^2\leq

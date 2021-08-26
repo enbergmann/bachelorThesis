@@ -1,0 +1,96 @@
+\documentclass[tikz]{standalone}
+\usepackage{amsmath, amsfonts, amssymb, amsthm, mathtools, mathabx}
+\usepackage{pgfplots, pgfplotstable}
+\usepackage{datatool}
+
+\pgfplotsset{compat=newest,
+	axis background/.style={fill=black!5!white},
+	grid style={densely dotted,semithick}
+  }
+  
+\begin{document}
+\pgfplotstableset{col sep = comma}
+
+\DTLloaddb{db}{f01Adaptive/lvl1/currentDataReduced.csv}
+\DTLassign{db}{1}{\nrDofA=nrDof} 
+\DTLgdeletedb{db}
+\DTLloaddb{db}{f01Adaptive/lvl3/currentDataReduced.csv}
+\DTLassign{db}{1}{\nrDofB=nrDof} 
+\DTLgdeletedb{db}
+\DTLloaddb{db}{f01Adaptive/lvl6/currentDataReduced.csv}
+\DTLassign{db}{1}{\nrDofC=nrDof} 
+\DTLgdeletedb{db}
+\DTLloaddb{db}{f01Adaptive/lvl14/currentDataReduced.csv}
+\DTLassign{db}{1}{\nrDofD=nrDof} 
+\DTLgdeletedb{db}
+
+\begin{tikzpicture}
+  \begin{loglogaxis}[
+    legend pos = north east, 
+    scale = 1.5, 
+    xlabel = {$j$},
+    ylabel = {$\left\vvvert (u_j - u_{j-1})/\tau\right\vvvert_\textup{NC}$},
+    ymajorgrids=true,
+    legend entries = {
+      Level 1 (nrDof = \nrDofA),
+      Level 3 (nrDof = \nrDofB),
+      Level 6 (nrDof = \nrDofC),
+      Level 14 (nrDof = \nrDofD),
+      $\varepsilon_\textup{stop}$
+      }
+    ]
+    \addlegendimage{no markers, ultra thick, gray}
+    \addlegendimage{no markers, ultra thick, blue}
+    \addlegendimage{no markers, ultra thick, green}
+    \addlegendimage{no markers, ultra thick, red}
+    \addlegendimage{dashed, no markers, ultra thick, black}
+
+    % lvl 1
+    \addplot [solid, gray, thick, filter discard warning = false, 
+      skip coords between index = {1001}{1000000}]
+    table[x expr = \coordindex+1, y index = 0] 
+    {f01Adaptive/lvl1/iteration/corrVec.txt}; 
+
+    % lvl 3
+    \addplot [solid, blue, thick, filter discard warning = false, 
+      skip coords between index = {1001}{1000000}]
+    table[x expr = \coordindex+1, y index = 0] 
+    {f01Adaptive/lvl3/iteration/corrVec.txt}; 
+     
+    \addplot+[forget plot, no markers, solid, blue, thick, 
+      filter discard warning=false, skip coords between index = {0}{1000}, 
+      each nth point = 50]
+    table[x expr = \coordindex+1, y index = 0] 
+    {f01Adaptive/lvl3/iteration/corrVec.txt}; 
+
+    % lvl 6
+    \addplot [solid, green, thick, filter discard warning = false, 
+      skip coords between index = {1001}{1000000}]
+    table[x expr = \coordindex+1, y index = 0] 
+    {f01Adaptive/lvl6/iteration/corrVec.txt}; 
+     
+    \addplot+[forget plot, no markers, solid, green, thick, 
+      filter discard warning=false, skip coords between index = {0}{1000}, 
+      each nth point = 50]
+    table[x expr = \coordindex+1, y index = 0] 
+    {f01Adaptive/lvl6/iteration/corrVec.txt}; 
+
+    % lvl 14
+    \addplot [solid, red, thick, filter discard warning = false, 
+      skip coords between index = {1001}{1000000}]
+    table[x expr = \coordindex+1, y index = 0] 
+    {f01Adaptive/lvl14/iteration/corrVec.txt}; 
+     
+    \addplot+[forget plot, no markers, solid, red, thick, 
+      filter discard warning=false, skip coords between index = {0}{1000}, 
+      each nth point = 50]
+    table[x expr = \coordindex+1, y index = 0] 
+    {f01Adaptive/lvl14/iteration/corrVec.txt}; 
+
+    % exact energy
+    \addplot [dashed, black, thick, samples = 2, domain = 1:50000] 
+    {1e-4};
+
+  \end{loglogaxis}
+\end{tikzpicture}
+\end{document}
