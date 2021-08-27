@@ -421,21 +421,19 @@ Eigenschaften der primalen-dualen Iteration betrachten.
 \begin{figure}[p]
   \centering
   \begin{subfigure}[b]{.5\linewidth}
-    \caption{Energieverlauf der Iterationen per Level}
+    \caption{Updatenorm per Level}
     \includegraphics[width=\linewidth]
       {pictures/chapExperiments/secExactSol/iteration/lvlWise/termLvl.pdf}
     \label{fig:iterationLevel}
   \end{subfigure}
   \quad
   \begin{subfigure}[b]{.46\linewidth}
-    \caption{Oszillierendes Beispiel}
+    \caption{verschiedene mögliche Abbruchkriterien}
     \includegraphics[width=\linewidth]
       {pictures/chapExperiments/secExactSol/iteration/lvlWise/termComp.pdf}
     \label{fig:iterationTerminationVariants}
   \end{subfigure}
-  \caption{Energieentwicklung während der primalen-dualen Iteration für
-  Eingangssignal $f$ auf verschiedenen Leveln mit $\tau=1$ (a) und für ein
-  Level mit $\tau=10^{-1}$ (b).}
+  \caption{Abbruchkriterien.}
   \label{fig:iterationTermination}
 \end{figure}
 
@@ -509,13 +507,14 @@ Wie in \Cref{fig:f01Convergence} zu sehen, unterscheiden sich die Raten für
 uniforme und adaptive Netzverfeinerungen nicht.
 
 Es gilt 
-\begin{align*}
+\begin{align}
+  \label{eq:expectedInequalities}
   \frac{\alpha}{2}\Vert u -\ucrt\Vert^2
   \leq
   E(u)-\Egleb
   \leq
   \Egueb-\Egleb,
-\end{align*}
+\end{align}
 wie wir nach \Cref{thm:gleb} und Ungleichung \ref{eq:gueb} erwartet haben.
 Dabei merken wir an, dass dieser Sachverhalt für $E(u)-\Egleb\leq\Egueb-\Egleb$
 nur schwer zu erkennen ist, aber gilt, wie dank \Cref{fig:f01DiffGuebExactE} zu
@@ -573,27 +572,45 @@ Das eintreten dieser erwarteten Unterschiede (Erläuterung der
 Skalierugsunterschiede im Beweis von Lemma \ldots)
 ==================
 
+\begin{figure}[p]
+  \includegraphics[width=\linewidth]
+    {pictures/chapExperiments/secExactSol/parGamma/conv.pdf}
+  \caption{$\gamma$ Plots.}
+  \label{fig:parGammaConvergence}
+\end{figure}
 
 zu gamma (0, 0.5, 1) noch irgendwo ein Experiment mit Info, dass 0 und 1e-4 oder
 so was identisch sind
 
-  - gamma = 0 im Vergleich der gammas mit erwähnen (da es sich von gamma 1e-4
-    nicht unterscheider visuell (nochmal prüfen ob das stimmt) nur eines der
-    beiden gammas plotten und genau diese Info in einem Satz erwähnen und vlt
-    auch in der Legende beides für einen Graphen angeben gamma = 0, 1e-4)
+  - gamma = 0 im Vergleich der gammas mit erwähnen (da es sich von gamma 1e-2
+    nicht unterscheider visuell nur eines der
+
+    die Plots für gamma = 1 entsprechen natürlich exact den Graphen aus
+    \Cref{fig:f01Convergence}
 
 
 das vielleicht auch doch erst im nächsten Abschnitt nachdem schon gesehen wurde,
 dass Raten für adaptiv und uniform gleich sind (da das der Fall ist, ist mit 
 'noch stärkerer' adaptivität keine Verbesserung mehr zu erwarten (suche das 
-Blatt, wo diese Worte von Tien drauf stehen))
+Blatt, wo diese Worte von Tien drauf stehen)) 
 
-TODO entsprechend den Titel von dieser Section anpassen, also je nachdem, ob
-hier AFEM Params betrachtet werden oder nicht
+stärkere adaptivität heißt, dass wir mit kleinerem $\gamma$ krasser 
+zu den Sprüngen hin verfeinern, was kontraproduktiv ist, wohl auch, da wir
+Sprünge ja garnicht mehr minimieren in unserem Funktional
 
 In der Abbildung ist tatsächlich $\gamma= 10^{-2}$ nicht abgebildet, da
 die entsprechend Graphen sich nicht sichtbar vom Graphen für $\gamma=0$
 unterschieden haben.
+
+\Cref{eq:expectedInequalities} ist aber auch hier weiterhin gültig, was gut 
+ist
+
+mal gucken,die Sprungterme oder irgendwas stehen auch im Gleb oder sowas, 
+damit also wohl mal versuchen zu erklären, warum manche Graphen beinflusst
+werden und andere nicht
+
+insgesamt nochmal den Verfeinerungsindikator analysieren und sagen,
+was da für die kleineren Werte passiert
 
 ==================
 
@@ -601,6 +618,105 @@ hier eventuell auch experimte für AFEM Params? die werden am anfang mit
 ,stets, wenn nicht anders angegeben' deklariert und hier wird experementiert
 
 ==================
+
+  Es folgt ein Beispiel mit exakter Lösung $u_\textrm{HR} \in
+  H^2_0((0,1)^2)$, gegeben durch 
+\begin{align*}
+  u_\textrm{HR}(r)\coloneqq 
+  \begin{cases}
+    1, & \text{wenn } 0\leq r\leq\frac{1}{3},\\
+    54r^3 - 81r^2 + 36r - 4, & 
+    \text{wenn } \frac{1}{3}\leq r\leq \frac{2}{3},\\
+    0, & \text{wenn } \frac{2}{3}\leq r.
+  \end{cases}
+\end{align*}
+Mit der Wahl
+\begin{align*}
+  \sgn&(\partial_r u_\textrm{HR}(r)) \\
+  &\coloneqq 
+  \begin{cases}
+    -1458r^5 + 1215r^4 - 270r^3, & \text{wenn } 0\leq r\leq\frac{1}{3},\\
+    -1, & \text{wenn } \frac{1}{3}\leq r\leq \frac{2}{3},\\
+    -243r^4 + 756r^3 - 864r^2 + 432r - 81, 
+    & \text{wenn } \frac{2}{3}\leq r\leq 1,
+  \end{cases}
+\end{align*}
+erhalten wir die rechte Seite
+\begin{align*}
+  f_\textrm{HR}(r)\coloneqq 
+  \begin{cases}
+    \alpha + 8748r^4 - 6075r^3 + 1080r^2, &
+    \text{wenn } 0\leq r\leq\frac{1}{3},\\
+    \alpha\left(54r^3 - 81r^2 + 36r - 4\right) + \frac{1}{r}, & 
+    \text{wenn } \frac{1}{3}\leq r\leq \frac{2}{3},\\
+    1215r^3 - 3024r^2 + 2592r - 864 + \frac{81}{r}, & 
+    \text{wenn } \frac{2}{3}\leq r\leq 1,
+  \end{cases}
+\end{align*}
+für die gilt $f_\textrm{HR}\in H^2_0$.
+
+
+\begin{align*}
+  \partial_r f_\textrm{HR}(r) &=
+  \begin{cases}
+    34992r^3 - 18225r^2 + 2160r, & \text{wenn } 0\leq r\leq\frac{1}{3},\\
+    \alpha\left(162r^2 - 162r + 36\right) - \frac{1}{r^2}, & 
+    \text{wenn } \frac{1}{3}\leq r\leq \frac{2}{3},\\
+    3645r^2 - 6048r + 2592 - 864 - \frac{81}{r^2}, & 
+    \text{wenn } \frac{2}{3}\leq r\leq 1,
+  \end{cases}
+\end{align*}
+\begin{align*}
+  \partial_r u_\textrm{HR}(r) &=
+  \begin{cases}
+    0, & \text{wenn } 0\leq r\leq\frac{1}{3},\\
+    162r^2 - 162r + 36, & 
+    \text{wenn } \frac{1}{3}\leq r\leq \frac{2}{3},\\
+    0, & \text{wenn } \frac{2}{3}\leq r\leq 1,
+  \end{cases}
+\end{align*}
+
+\begin{figure}[p]
+  \centering
+  \begin{subfigure}[b]{.48\linewidth}
+    \caption{$f_\textrm{HR}$}
+    \includegraphics[trim = 40 30 30 30, clip, width=\linewidth]
+      {pictures/chapExperiments/secExactSol/f04/inSi.png}
+    \label{fig:f04InSi}
+  \end{subfigure}
+  \quad
+  \begin{subfigure}[b]{.48\linewidth}
+    \caption{$u_\textrm{HR}$}
+    \includegraphics[trim = 40 30 30 30, clip, width=\linewidth]
+      {pictures/chapExperiments/secExactSol/f04/exactSolution.png}
+    \label{fig:f04ExactSol}
+  \end{subfigure}
+
+  \begin{subfigure}[b]{.48\linewidth}
+    \caption{$f_\textrm{HR}$ entlang der x- und y-Achse}
+    \includegraphics[trim = 50 30 50 20, clip, width=\linewidth]
+      {pictures/chapExperiments/secExactSol/f04/inSiAxis.png}
+    \label{fig:f04InSiAxis}
+  \end{subfigure}
+  \quad
+  \begin{subfigure}[b]{.48\linewidth}
+    \caption{$u_\textrm{HR}$ entlang der x- und y-Achse}
+    \includegraphics[trim = 50 30 50 20, clip, width=\linewidth]
+      {pictures/chapExperiments/secExactSol/f04/exactSolutionAxis.png}
+    \label{fig:f04ExactSolAxis}
+  \end{subfigure} 
+  \caption{Eingangssignal $f_\textrm{HR}$ und exakte Lösung $u_\textrm{HR}$
+  sowie deren Darstellungen entlang der x-Achse (blau) und der y-Achse (rot)
+  für $\alpha=1$.}
+  \label{fig:f04Plots}
+\end{figure}
+\begin{figure}[p]
+  \includegraphics[width=\linewidth]
+    {pictures/chapExperiments/secExactSol/f04/conv.pdf}
+  \caption{Ergebnisse der adaptiven und uniformen AFEM-Schleifen für das 
+  Eingangssignal $f_\textrm{HR}$.}
+  \label{fig:f04Convergence}
+\end{figure}
 
 dann abschweif zu höhere Regularität
 
@@ -649,62 +765,15 @@ dann abschweif zu höhere Regularität
   nur halb H20 Beispiel auch erwähnen, einfach sagen, dass dieses auch im 
   functions Ordner liegt
 
-  Es folgen zwei Beispiele mit exakter Lösung $u_3=u_\textrm{HR} \in
-  H^2_0((0,1)^2)$, gegeben durch 
-\begin{align*}
-  u_3(r)=u_\textrm{HR}(r)\coloneqq 
-  \begin{cases}
-    1, & \text{wenn } 0\leq r\leq\frac{1}{3},\\
-    54r^3 - 81r^2 + 36r - 4, & 
-    \text{wenn } \frac{1}{3}\leq r\leq \frac{2}{3},\\
-    0, & \text{wenn } \frac{2}{3}\leq r.
-  \end{cases}
-\end{align*}
-Mit der Wahl
-\begin{align*}
-  \sgn&(\partial_r u_\textrm{HR}(r)) \\
-  &\coloneqq 
-  \begin{cases}
-    -1458r^5 + 1215r^4 - 270r^3, & \text{wenn } 0\leq r\leq\frac{1}{3},\\
-    -1, & \text{wenn } \frac{1}{3}\leq r\leq \frac{2}{3},\\
-    -243r^4 + 756r^3 - 864r^2 + 432r - 81, 
-    & \text{wenn } \frac{2}{3}\leq r\leq 1,
-  \end{cases}
-\end{align*}
-erhalten wir die rechte Seite
-\begin{align*}
-  f_\textrm{HR}(r)\coloneqq 
-  \begin{cases}
-    \alpha + 8748r^4 - 6075r^3 + 1080r^2, &
-    \text{wenn } 0\leq r\leq\frac{1}{3},\\
-    \alpha\left(54r^3 - 81r^2 + 36r - 4\right) + \frac{1}{r}, & 
-    \text{wenn } \frac{1}{3}\leq r\leq \frac{2}{3},\\
-    1215r^3 - 3024r^2 + 2592r - 864 + \frac{81}{r}, & 
-    \text{wenn } \frac{2}{3}\leq r\leq 1,
-  \end{cases}
-\end{align*}
-für die gilt $f_\textrm{HR}\in H^2_0$.
+  
+==================
 
-
-\begin{align*}
-  \partial_r f_\textrm{HR}(r) &=
-  \begin{cases}
-    34992r^3 - 18225r^2 + 2160r, & \text{wenn } 0\leq r\leq\frac{1}{3},\\
-    \alpha\left(162r^2 - 162r + 36\right) - \frac{1}{r^2}, & 
-    \text{wenn } \frac{1}{3}\leq r\leq \frac{2}{3},\\
-    3645r^2 - 6048r + 2592 - 864 - \frac{81}{r^2}, & 
-    \text{wenn } \frac{2}{3}\leq r\leq 1,
-  \end{cases}
-\end{align*}
-\begin{align*}
-  \partial_r u_{3,\textrm{HR}}(r) &=
-  \begin{cases}
-    0, & \text{wenn } 0\leq r\leq\frac{1}{3},\\
-    162r^2 - 162r + 36, & 
-    \text{wenn } \frac{1}{3}\leq r\leq \frac{2}{3},\\
-    0, & \text{wenn } \frac{2}{3}\leq r\leq 1,
-  \end{cases}
-\end{align*}
+vlt noch einen plot in der anzahl der iteration verglichen werden für f01,
+f01LargeAlpha und f04 (natürlich alle mit $\tau=1$, weil möglicherweise (das
+dann mal gucken) f01LargeAlpha die wenigsten Iteration braucht (obwohl ähnlich
+zu f01 (insb. gleiche Lösung) und obwohl f04 regulärer). das kann dann wieder
+mit der erwarteten Ungleichung aus dem Konvergenzbeweis begründet werden (also
+sagen, dass man hier ein weiteres Indiz für diese Hypothese ht.
 
 
 \section{Graufarbenbilder als Eingangssignale}
