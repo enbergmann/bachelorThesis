@@ -62,7 +62,7 @@ $\sgn\big(\partial_r u\big)$ die Lösung von \Cref{prob:continuousProblem} mit
 Eingangssignal
 \begin{align}
   \label{eq:inputSignalF01}
-  f(r)
+  f_\alpha(r)
   &=
   \begin{cases}
     \alpha-12(2-9r), 
@@ -78,10 +78,10 @@ Eingangssignal
   \end{cases}
 \end{align}
 Ebenfalls nach \Cref{sec:constructionInputSignal} können die schwachen
-Gradienten von $u$ und $f$ bestimmt werden mithilfe der partiellen 
+Gradienten von $u$ und $f_\alpha$ bestimmt werden mithilfe der partiellen 
 Ableitungen
 \begin{align*}
-  \partial_r f(r)
+  \partial_r f_\alpha(r)
   &=
   \begin{cases}
     108,
@@ -123,33 +123,54 @@ $
 \DTLassign{db}{1}{\exactEnergy=exactEnergy} 
 \DTLgdeletedb{db}
 E(u)\approx\DTLround{\exactEnergy}{\exactEnergy}{\precDTL}\exactEnergy
-$, 
-mit
-der wir die Ergebnisse der Experimente vergleichen können.
+$ für das Experiment mit $\alpha=1$ und
+$
+\DTLloaddb{db}{data/paramsReducedStandardF01Alpha1e4.csv}
+\DTLassign{db}{1}{\exactEnergy=exactEnergy} 
+\DTLgdeletedb{db}
+E(u)\approx\DTLround{\exactEnergy}{\exactEnergy}{\precDTL}\exactEnergy
+$ für das Experiment mit $\alpha=10^4$,
+mit denen wir die jeweiligen Ergebnisse der Experimente vergleichen können.
 \begin{figure}[p]
   \centering
   \begin{subfigure}[b]{.48\linewidth}
     \centering
-    \caption{$f$}
+    \caption{$f_1$}
     \includegraphics[trim = 40 30 30 30, clip, width=\linewidth]
-      {pictures/chapExperiments/secGeneralInfo/f01Plots/inSi.png}
+      {pictures/chapExperiments/secGeneralInfo/f01Plots/inSi1.png}
     \label{fig:f01InSi}
   \end{subfigure}
   \quad
+  \begin{subfigure}[b]{.48\linewidth}
+    \centering
+    \caption{$f_1$ entlang der x- und y-Achse}
+    \includegraphics[trim = 50 30 50 20, clip, width=\linewidth]
+      {pictures/chapExperiments/secGeneralInfo/f01Plots/inSi1Axis.png}
+    \label{fig:f01InSiAxis}
+  \end{subfigure}
+
+  \begin{subfigure}[b]{.48\linewidth}
+    \centering
+    \caption{$f_{10^4}$}
+    \includegraphics[trim = 40 30 30 30, clip, width=\linewidth]
+      {pictures/chapExperiments/secGeneralInfo/f01Plots/inSi1e4.png}
+    \label{fig:f01AlphaLargeInSi}
+  \end{subfigure}
+  \quad
+  \begin{subfigure}[b]{.48\linewidth}
+    \centering
+    \caption{$f_{10^4}$ entlang der x- und y-Achse}
+    \includegraphics[trim = 50 30 50 20, clip, width=\linewidth]
+      {pictures/chapExperiments/secGeneralInfo/f01Plots/inSi1e4Axis.png}
+    \label{fig:f01AlphaLargeInSiAxis}
+  \end{subfigure}
+
   \begin{subfigure}[b]{.48\linewidth}
     \centering
     \caption{$u$}
     \includegraphics[trim = 40 30 30 30, clip, width=\linewidth]
       {pictures/chapExperiments/secGeneralInfo/f01Plots/exactSolution.png}
     \label{fig:f01ExactSol}
-  \end{subfigure}
-
-  \begin{subfigure}[b]{.48\linewidth}
-    \centering
-    \caption{$f$ entlang der x- und y-Achse}
-    \includegraphics[trim = 50 30 50 20, clip, width=\linewidth]
-      {pictures/chapExperiments/secGeneralInfo/f01Plots/inSiAxis.png}
-    \label{fig:f01InSiAxis}
   \end{subfigure}
   \quad
   \begin{subfigure}[b]{.48\linewidth}
@@ -159,9 +180,9 @@ der wir die Ergebnisse der Experimente vergleichen können.
       {pictures/chapExperiments/secGeneralInfo/f01Plots/exactSolutionAxis.png}
     \label{fig:f01ExactSolAxis}
   \end{subfigure} 
-  \caption{Eingangssignal $f$ und exakte Lösung $u$ sowie deren
+  \caption{Eingangssignal $f_\alpha$ und exakte Lösung $u$ sowie deren
   Darstellungen entlang der x-Achse (blau) und der y-Achse (rot) für
-  $\alpha=1$.}
+  $\alpha\in\{1,10^4\}$.}
   \label{fig:f01Plots}
 \end{figure}
 Als initiale Geometrie, das heißt die Geometrie für das erste Level des
@@ -171,7 +192,14 @@ AFEM-Al\-go\-rith\-mus, nutzen wir in den Experimenten mit exakter Lösung
 des Eingangssignals und der exakten Lösung nach
 \Cref{sec:constructionInputSignal}, enthält.
 Wenn nicht anders angegeben, dann betrachten wir dieses Beispiel stets mit
-$\alpha=1$.
+$\alpha=1$, also mit Eingangssignal $f_1$. 
+Diese Wahl für $\alpha$ tätigen wir auch für die anderen Probleme mit 
+exakter Lösung, falls nichts anderes angegeben ist.
+
+Wir können anhand von \Cref{fig:f01Plots} auch feststellen, dass für das
+$\alpha$ die Interpretation des ROF-Modells aus \Cref{chap:introduction}
+zutrifft, denn rein optisch gilt für $\alpha=10^4$ annähernd $f_\alpha=\alpha
+u$.
 
 Für ein Problem mit unstetigem Eingangssignal legen wir besonderes
 Augenmerk auf das Graufarbenbild \texttt{cameraman} aus \cref{fig:cameraman}
@@ -575,6 +603,15 @@ dann insgesamt raten abarbeiten und interpretieren
 
 ==================
 
+\begin{figure}[p]
+  \centering
+  \includegraphics[width=\linewidth]
+    {pictures/chapExperiments/secExactSol/f01LargeAlpha/conv.pdf}
+  \caption{Ergebnisse der adaptiven und uniformen AFEM-Schleifen für das 
+  Eingangssignal $f$ mit $\alpha=10^4$.}
+  \label{fig:f01LargeAlphaConvergence}
+\end{figure}
+
   - f01 mit großem alpha konvergiert am Anfang preasymptotisch schnell aber
     scheint bei großen Freiheitsgraden dann auch die Rate 1/2 (für Gleb Kram)
     bzw. 1/4 oder so für Fehler anzunehmen (also gleiche Raten wie alpha=1).
@@ -589,6 +626,10 @@ dann insgesamt raten abarbeiten und interpretieren
     ist nach der Theorie, dass die Lösung $u_\textup{L}$ und
     $f_\textup{L}=\alpha g$ nahe beiandere liegen, was sie tatsächlich 
     optisch auch tun
+
+Es scheint bei alpha groß so, dass die einzige Rate, die sich am Ende 
+unterscheidet, die Energiedifferenz ist (die konvergiert fur großes
+alpha nämlich mit 1 und nicht mit 1/2 wie bei alpha =1)
 
 Wir bemerken, dass das Eingangssignal so aussieht, wie $\alpha u$ mit $u$ aus
 Abbildung (f01ExactSol). Dies war nach der Theorie auch \Cref{chap:introduction}
