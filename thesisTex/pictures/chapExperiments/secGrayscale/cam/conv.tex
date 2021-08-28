@@ -1,0 +1,88 @@
+\documentclass[tikz]{standalone}
+\usepackage{amsmath, amsfonts, amssymb, amsthm, mathtools, mathabx}
+\usepackage{pgfplots, pgfplotstable}
+\usepackage{datatool}
+
+\pgfplotsset{compat=newest,
+	axis background/.style={fill=black!5!white},
+	grid style={densely dotted,semithick}
+  }
+
+\begin{document}
+\pgfplotstableset{col sep = comma}
+
+\begin{tikzpicture}
+  \begin{loglogaxis}[
+    legend pos = north east, 
+    scale = 2, 
+    xlabel = {Anzahl der Freiheitsgrade},
+    ymajorgrids=true,
+    legend entries = {
+      adaptiv ($\theta = 0.5$),
+      uniform,
+      $\eta_\mathcal{T}$,
+      $\eta_{\textup{V},\mathcal{T}}$,
+      $\eta_{\textup{J},\mathcal{T}}$,
+      }
+    ]
+    \addlegendimage{solid, thick, mark=*, mark options = {scale = .8}}
+    \addlegendimage{dashed, thick, mark=diamond*, mark options = solid}
+    \addlegendimage{no markers, ultra thick, blue}
+    \addlegendimage{no markers, ultra thick, cyan}
+    \addlegendimage{no markers, ultra thick, magenta}
+    \addlegendimage{no markers, ultra thick, orange}
+
+    % adaptive 0.5
+    \addplot [solid, thick, blue, mark = *, mark options = {scale = .8}] 
+    table[x = {nrDof}, y = {eta}] 
+    {adaptive/lvl21/lvlOutput.csv}; 
+
+    \addplot [solid, thick, cyan, mark = *, mark options = {scale = .8}] 
+    table[x = {nrDof}, y = {etaVol}] 
+    {adaptive/lvl21/lvlOutput.csv}; 
+
+    \addplot [solid, thick, magenta, mark = *, mark options = {scale = .8}] 
+    table[x = {nrDof}, y = {etaJumps}] 
+    {adaptive/lvl21/lvlOutput.csv}; 
+
+    % uniform 
+    \addplot [dashed, thick, blue, mark = diamond*, mark options = solid] 
+    table[x = {nrDof}, y = {eta}] 
+    {uniform/lvl9/lvlOutput.csv}; 
+
+    \addplot [dashed, thick, cyan, mark = diamond*, mark options = solid] 
+    table[x = {nrDof}, y = {etaVol}] 
+    {uniform/lvl9/lvlOutput.csv}; 
+
+    \addplot [dashed, thick, magenta, mark = diamond*, mark options = solid] 
+    table[x = {nrDof}, y = {etaJumps}] 
+    {uniform/lvl9/lvlOutput.csv}; 
+
+    % eta
+    add slope triangle
+    \draw (axis cs:7e5, 2e0)
+                 -- (axis cs:7e5, 2e-1) node [midway, right] {\scriptsize$1$}
+                 -- (axis cs:7e3, 2e0)
+                 -- cycle node [midway, above] {\scriptsize$2$}
+                 ;
+
+    % gleb
+    add slope triangle
+    \draw (axis cs:7e5, 2e0)
+                 -- (axis cs:7e3, 2e1) 
+                 -- (axis cs:7e3, 2e0) node [midway, left] {\scriptsize$1$} 	 
+                 -- cycle
+                 ;
+
+
+    % error
+    add slope triangle
+    \draw (axis cs:2e5, 1e-4)
+                 -- (axis cs:2e3, 1e-4) node [midway, below] {\scriptsize$1$}
+                 -- (axis cs:2e3, 1e-2) node [midway, left] {\scriptsize$1$} 	 
+                 -- cycle
+                 ;
+
+  \end{loglogaxis}
+\end{tikzpicture}
+\end{document}
