@@ -873,12 +873,23 @@ dann abschweif zu höhere Regularität
   
 ==================
 
-vlt noch einen plot in der anzahl der iteration verglichen werden für f01,
-f01LargeAlpha und f04 (natürlich alle mit $\tau=1$, weil möglicherweise (das
-dann mal gucken) f01LargeAlpha die wenigsten Iteration braucht (obwohl ähnlich
-zu f01 (insb. gleiche Lösung) und obwohl f04 regulärer). das kann dann wieder
+\begin{figure}[p]
+  \centering
+  \includegraphics[width=\linewidth]
+    {pictures/chapExperiments/secExactSol/nrIterComp/miscF.pdf}
+  \caption{Vergleich der Iterationen fur verschiedene Eingangssignale.}
+  \label{fig:inSiNrIterComparison}
+\end{figure}
+
+plot in der anzahl der iteration verglichen werden für f01,
+f01LargeAlpha und f04 (natürlich alle mit $\tau=1$, weil  f01LargeAlpha die
+wenigsten Iteration braucht (obwohl ähnlich
+zu f01 (insb. gleiche Lösung) und obwohl f04 regulärer). 
+das kann dann wieder
 mit der erwarteten Ungleichung aus dem Konvergenzbeweis begründet werden (also
-sagen, dass man hier ein weiteres Indiz für diese Hypothese ht.
+sagen, dass man hier ein weiteres Indiz für diese Hypothese hat.
+Noch drüber nachdenken: warum machen sachen mit alpah groß mehr Level im AFEM
+Alg?
 
 
 \section{Graufarbenbilder als Eingangssignale}
