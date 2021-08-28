@@ -129,6 +129,7 @@ der wir die Ergebnisse der Experimente vergleichen können.
 \begin{figure}[p]
   \centering
   \begin{subfigure}[b]{.48\linewidth}
+    \centering
     \caption{$f$}
     \includegraphics[trim = 40 30 30 30, clip, width=\linewidth]
       {pictures/chapExperiments/secGeneralInfo/f01Plots/inSi.png}
@@ -136,6 +137,7 @@ der wir die Ergebnisse der Experimente vergleichen können.
   \end{subfigure}
   \quad
   \begin{subfigure}[b]{.48\linewidth}
+    \centering
     \caption{$u$}
     \includegraphics[trim = 40 30 30 30, clip, width=\linewidth]
       {pictures/chapExperiments/secGeneralInfo/f01Plots/exactSolution.png}
@@ -143,6 +145,7 @@ der wir die Ergebnisse der Experimente vergleichen können.
   \end{subfigure}
 
   \begin{subfigure}[b]{.48\linewidth}
+    \centering
     \caption{$f$ entlang der x- und y-Achse}
     \includegraphics[trim = 50 30 50 20, clip, width=\linewidth]
       {pictures/chapExperiments/secGeneralInfo/f01Plots/inSiAxis.png}
@@ -150,6 +153,7 @@ der wir die Ergebnisse der Experimente vergleichen können.
   \end{subfigure}
   \quad
   \begin{subfigure}[b]{.48\linewidth}
+    \centering
     \caption{$u$ entlang der x- und y-Achse}
     \includegraphics[trim = 50 30 50 20, clip, width=\linewidth]
       {pictures/chapExperiments/secGeneralInfo/f01Plots/exactSolutionAxis.png}
@@ -194,6 +198,7 @@ Rotverfeinerung, zu sehen in \Cref{fig:triangSquare}.
 \begin{figure}[p]
   \centering
   \begin{subfigure}[b]{.48\linewidth}
+    \centering
     \caption{\texttt{BigSquare}}
     \includegraphics[trim = 90 30 90 20, clip, width=\linewidth]
       {pictures/chapExperiments/secGeneralInfo/bigSquareTriang.png}
@@ -201,6 +206,7 @@ Rotverfeinerung, zu sehen in \Cref{fig:triangSquare}.
   \end{subfigure}
   \quad
   \begin{subfigure}[b]{.48\linewidth}
+    \centering
     \caption{\texttt{Square}}
     \includegraphics[trim = 90 30 90 20, clip, width=\linewidth]
       {pictures/chapExperiments/secGeneralInfo/squareTriang.png}
@@ -275,6 +281,7 @@ und deren Wahl).
   \end{subfigure}
   \quad
   \begin{subfigure}[b]{.48\linewidth}
+    \centering
     \caption{Eingangssignal \texttt{cameraman}}
     \includegraphics[width=\linewidth]
       {pictures/chapExperiments/secParameters/parTau/cam/miscCam.pdf}
@@ -285,6 +292,7 @@ und deren Wahl).
   \label{fig:parTauMisc}
 \end{figure}
 \begin{figure}[p]
+  \centering
   \includegraphics[width=\linewidth]
     {pictures/chapExperiments/secParameters/parTau/f01/convergenceF.pdf}
   \caption{Verfeinerungsindikator, exakter $L^2$-Fehler und Energiedifferenz 
@@ -331,14 +339,16 @@ $\tau=1$ sogar weniger als $10$ Iterationen.
 \begin{figure}[p]
   \centering
   \begin{subfigure}[b]{.48\linewidth}
-  \caption{Mussugen der Updates}
+    \centering
+    \caption{Mussugen der Updates}
     \includegraphics[width=\linewidth]
       {pictures/chapExperiments/secParameters/parTau/f01NoConv/1Dot2/convIter.pdf}
     \label{fig:parTauNoConvergenceUpdates}
   \end{subfigure}
   \quad
   \begin{subfigure}[b]{.47\linewidth}
-  \caption{Verlauf der Energie}
+    \centering
+    \caption{Verlauf der Energie}
     \includegraphics[width=\linewidth]
       {pictures/chapExperiments/secParameters/parTau/f01NoConv/1Dot2/convEnergy.pdf}
     \label{fig:parTauNoConvergenceEnergy}
@@ -361,6 +371,7 @@ für $\tau\in(0,1]$ garantierte Konvergenz für $\tau=1.2$ nicht eintritt.
 Nun betrachen wir die Wahl des Parameteres $\epsstop$ für das Abbruchkriterium.
 Wieder wählen wir $\theta = 0.5$ und \ldots.
 \begin{figure}[p]
+  \centering
   \includegraphics[width=\linewidth]
     {pictures/chapExperiments/secParameters/parEpsStop/f01/convergenceF.pdf}
   \caption{Verfeinerungsindikator und exakter $L^2$-Fehler für verschieden
@@ -400,6 +411,7 @@ Eigenschaften der primalen-dualen Iteration betrachten.
 \begin{figure}[p]
   \centering
   \begin{subfigure}[b]{.5\linewidth}
+    \centering
     \caption{Energieverlauf der Iterationen per Level}
     \includegraphics[width=\linewidth]
       {pictures/chapExperiments/secExactSol/iteration/lvlWise/convEnergy.pdf}
@@ -407,6 +419,7 @@ Eigenschaften der primalen-dualen Iteration betrachten.
   \end{subfigure}
   \quad
   \begin{subfigure}[b]{.46\linewidth}
+    \centering
     \caption{Oszillierendes Beispiel}
     \includegraphics[width=\linewidth]
       {pictures/chapExperiments/secExactSol/iteration/osc/convEnergy.pdf}
@@ -414,13 +427,14 @@ Eigenschaften der primalen-dualen Iteration betrachten.
   \end{subfigure}
   \caption{Energieentwicklung während der primalen-dualen Iteration für
   Eingangssignal $f$ auf verschiedenen Leveln mit $\tau=1$ (a) und für ein
-  Level mit $\tau=10^{-1}$ (b).}
+  Level mit $\tau=10^{-1}$ (b) wobei das initale Level 0 ist.}
   \label{fig:iterationEnergy}
 \end{figure}
 
 \begin{figure}[p]
   \centering
   \begin{subfigure}[b]{.5\linewidth}
+    \centering
     \caption{Updatenorm per Level}
     \includegraphics[width=\linewidth]
       {pictures/chapExperiments/secExactSol/iteration/lvlWise/termLvl.pdf}
@@ -428,12 +442,13 @@ Eigenschaften der primalen-dualen Iteration betrachten.
   \end{subfigure}
   \quad
   \begin{subfigure}[b]{.46\linewidth}
+    \centering
     \caption{verschiedene mögliche Abbruchkriterien}
     \includegraphics[width=\linewidth]
       {pictures/chapExperiments/secExactSol/iteration/lvlWise/termComp.pdf}
     \label{fig:iterationTerminationVariants}
   \end{subfigure}
-  \caption{Abbruchkriterien.}
+  \caption{Abbruchkriterien wobei das initiale Level 0 ist.}
   \label{fig:iterationTermination}
 \end{figure}
 
@@ -462,6 +477,7 @@ wird alpha zu kleinen tau groß gewählt, behebt dass den Effekt.
 Nun betrachten wir Konvergenzraten und überprüfen die Gültigkeit einiger in den
 theoretischen Kapiteln dieser Arbeit getätigten Aussagen.
 \begin{figure}[p]
+  \centering
   \includegraphics[width=\linewidth]
     {pictures/chapExperiments/secExactSol/f01/conv.pdf}
   \caption{Ergebnisse der adaptiven und uniformen AFEM-Schleifen für das 
@@ -471,12 +487,14 @@ theoretischen Kapiteln dieser Arbeit getätigten Aussagen.
 \begin{figure}[p]
   \centering
   \begin{subfigure}[b]{.48\linewidth}
+    \centering
     \includegraphics[trim = 40 30 30 30, clip, width=\linewidth]
       {pictures/chapExperiments/secExactSol/f01/adaptive/lvl14/solution.png}
     \label{fig:f01SolAdaptivePlot}
   \end{subfigure}
   \quad
   \begin{subfigure}[b]{.48\linewidth}
+    \centering
     \includegraphics[trim = 50 30 50 20, clip, width=\linewidth]
       {pictures/chapExperiments/secExactSol/f01/adaptive/lvl14/solutionAxis.png}
     \label{fig:f01SolAdaptiveAxis}
@@ -488,14 +506,16 @@ theoretischen Kapiteln dieser Arbeit getätigten Aussagen.
 \begin{figure}[p]
   \centering
   \begin{subfigure}[b]{.48\linewidth}
-  \caption{Unterschiede oberer beiden Graphen}
+    \centering
+    \caption{Unterschiede oberer beiden Graphen}
     \includegraphics[width=\linewidth]
       {pictures/chapExperiments/secExactSol/f01/energyDiffs.pdf}
     \label{fig:f01DiffGuebExactE}
   \end{subfigure}
   \quad
   \begin{subfigure}[b]{.48\linewidth}
-  \caption{Sprungterm Entwicklung}
+    \centering
+    \caption{Sprungterm Entwicklung}
     \includegraphics[width=\linewidth]
       {pictures/chapExperiments/secExactSol/f01/jumpTerms.pdf}
     \label{fig:f01JumpTerms}
@@ -583,12 +603,39 @@ Minimierer Beweis))
 ==================
 
 \begin{figure}[p]
+  \centering
   \includegraphics[width=\linewidth]
     {pictures/chapExperiments/secExactSol/parGamma/conv.pdf}
   \caption{$\gamma$ Plots.}
   \label{fig:parGammaConvergence}
 \end{figure}
 
+\begin{figure}[p]
+  \centering
+  \begin{subfigure}{.32\linewidth}
+    \centering
+    \caption{$\gamma=0$}
+    \includegraphics[trim = 100 30 80 20, clip, width=\linewidth]
+      {pictures/chapExperiments/secExactSol/parGamma/0/lvl14/triangulation.png}
+    \label{fig:gamma0Triang}
+  \end{subfigure}
+  \begin{subfigure}{.32\linewidth}
+    \centering
+    \caption{$\gamma=0.5$}
+    \includegraphics[trim = 100 30 80 20, clip, width=\linewidth]
+      {pictures/chapExperiments/secExactSol/parGamma/5em1/lvl14/triangulation.png}
+    \label{fig:gammaDot5Triang}
+  \end{subfigure}
+  \begin{subfigure}{.32\linewidth}
+    \centering
+    \caption{$\gamma=1$}
+    \includegraphics[trim = 100 30 80 20, clip, width=\linewidth]
+      {pictures/chapExperiments/secExactSol/parGamma/1/lvl14/triangulation.png}
+    \label{fig:gammaDot5Triang}
+  \end{subfigure}
+  \caption{$\gamma$ Triangulierungen Plots.}
+  \label{fig:gammaTriangs}
+\end{figure}
 zu gamma (0, 0.5, 1) noch irgendwo ein Experiment mit Info, dass 0 und 1e-4 oder
 so was identisch sind
 
@@ -598,6 +645,8 @@ so was identisch sind
     die Plots für gamma = 1 entsprechen natürlich exact den Graphen aus
     \Cref{fig:f01Convergence}
 
+    wir können den Effekt auch in den Triangulierungen (vlt jeweils noch die
+    nrDof auslesen lassen) aus \Cref{fig:gammaTriangs} sehen
 
 das vielleicht auch doch erst im nächsten Abschnitt nachdem schon gesehen wurde,
 dass Raten für adaptiv und uniform gleich sind (da das der Fall ist, ist mit 
@@ -689,6 +738,7 @@ für die gilt $f_\textrm{HR}\in H^2_0$.
 \begin{figure}[p]
   \centering
   \begin{subfigure}[b]{.48\linewidth}
+    \centering
     \caption{$f_\textrm{HR}$}
     \includegraphics[trim = 40 30 30 30, clip, width=\linewidth]
       {pictures/chapExperiments/secExactSol/f04/inSi.png}
@@ -696,6 +746,7 @@ für die gilt $f_\textrm{HR}\in H^2_0$.
   \end{subfigure}
   \quad
   \begin{subfigure}[b]{.48\linewidth}
+    \centering
     \caption{$u_\textrm{HR}$}
     \includegraphics[trim = 40 30 30 30, clip, width=\linewidth]
       {pictures/chapExperiments/secExactSol/f04/exactSolution.png}
@@ -703,6 +754,7 @@ für die gilt $f_\textrm{HR}\in H^2_0$.
   \end{subfigure}
 
   \begin{subfigure}[b]{.48\linewidth}
+    \centering
     \caption{$f_\textrm{HR}$ entlang der x- und y-Achse}
     \includegraphics[trim = 50 30 50 20, clip, width=\linewidth]
       {pictures/chapExperiments/secExactSol/f04/inSiAxis.png}
@@ -710,6 +762,7 @@ für die gilt $f_\textrm{HR}\in H^2_0$.
   \end{subfigure}
   \quad
   \begin{subfigure}[b]{.48\linewidth}
+    \centering
     \caption{$u_\textrm{HR}$ entlang der x- und y-Achse}
     \includegraphics[trim = 50 30 50 20, clip, width=\linewidth]
       {pictures/chapExperiments/secExactSol/f04/exactSolutionAxis.png}
@@ -721,6 +774,7 @@ für die gilt $f_\textrm{HR}\in H^2_0$.
   \label{fig:f04Plots}
 \end{figure}
 \begin{figure}[p]
+  \centering
   \includegraphics[width=\linewidth]
     {pictures/chapExperiments/secExactSol/f04/conv.pdf}
   \caption{Ergebnisse der adaptiven und uniformen AFEM-Schleifen für das 
