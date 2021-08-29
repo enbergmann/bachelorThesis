@@ -1,2 +1,0 @@
-geometry,polygonMesh,initialRefinementLevel,useProlongation,inSiGradientKnown,exactSolutionKnown,uExact,useExactEnergy,exactEnergy,degree4Integrate,showPlots,figVisible,plotModeGrayscale,showProgress,plotGivenFunctions,refinementLevel4Plots,debugIfError,expName,dirInfoName,u0Mode,f,benchmark
-Square,0,0,1,0,0,,0,NaN,10,0,off,0,1,1,11,0,standard,cameraman,zeros,,standard_cameraman

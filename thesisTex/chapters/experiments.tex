@@ -906,6 +906,15 @@ der Verfeinerungsindikator wirkt.
 ==================
 cameraman 
 
+\begin{figure}[p]
+  \centering
+  \includegraphics[width=\linewidth]
+    {pictures/chapExperiments/secGrayscale/cam/conv.pdf}
+  \caption{Ergebnisse der adaptiven und uniformen AFEM-Schleifen für das 
+  Eingangssignal \texttt{cameraman}.}
+  \label{fig:camConvergence}
+\end{figure}
+
 konvergenzplot adptiv/uniform
 hier vielleicht gueb-Enc(ucr) plotten, mit dem Kommentar, dass dies uU
 eine gute approximation von gueb - E(u) = gueb-gleb-(E(u)-gleb) ist, da 
@@ -915,7 +924,48 @@ haben und in dem einen plot von f01, in dem gueb - E(u) geplottet war,
 
 für lvl 17 auf jeden fall nebenbeinander triangulierg | lösung auf der triang
 
+\begin{figure}[p]
+  \centering
+  \begin{subfigure}[b]{.48\linewidth}
+    \centering
+    \caption{Triangulierung Level 17}
+    \includegraphics[trim = 100 30 80 20, clip, width=\linewidth]
+      {pictures/chapExperiments/secGrayscale/cam/adaptive/lvl17/triangulation.png}
+    \label{fig:camLvl17Triang}
+  \end{subfigure}
+  \quad
+  \begin{subfigure}[b]{.48\linewidth}
+    \centering
+    \caption{Lösung Level 17}
+    \includegraphics[trim = 100 30 80 20, clip, width=\linewidth]
+      {pictures/chapExperiments/secGrayscale/cam/adaptive/lvl17/solutionGrayscale.png}
+    \label{fig:camLvl17Sol}
+  \end{subfigure}
+
+  \begin{subfigure}[b]{.48\linewidth}
+    \centering
+    \caption{Triangulierung Level 21}
+    \includegraphics[trim = 100 30 80 20, clip, width=\linewidth]
+      {pictures/chapExperiments/secGrayscale/cam/adaptive/lvl21/triangulation.png}
+    \label{fig:camLvl21Triang}
+  \end{subfigure}
+  \quad
+  \begin{subfigure}[b]{.48\linewidth}
+    \centering
+    \caption{Lösung Level 21}
+    \includegraphics[trim = 100 30 80 20, clip, width=\linewidth]
+      {pictures/chapExperiments/secGrayscale/cam/adaptive/lvl21/solutionGrayscale.png}
+    \label{fig:camLvl21Sol}
+  \end{subfigure}
+  \caption{Triangulierung und Lösung für Eingangssignal \texttt{cameraman}.}
+  \label{fig:camTriang}
+\end{figure}
+
 vielleicht auch als 4x4 mit darunter noch das gleiche für das letzte lvl 21
+hier noch die Freiheitsgrade ergänzen
+
+darüber reden, dass der schwarze rand den gewünschte effekt und damit weniger
+richtung rand verfeinert wird (was unnötig wäre, künstlich, weil 0 Randdaten)
 
 ==================
 
