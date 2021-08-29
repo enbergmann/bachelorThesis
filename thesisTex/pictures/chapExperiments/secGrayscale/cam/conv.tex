@@ -14,7 +14,7 @@
 \begin{tikzpicture}
   \begin{loglogaxis}[
     legend pos = north east, 
-    scale = 2, 
+    scale = 1.5, 
     xlabel = {Anzahl der Freiheitsgrade},
     ymajorgrids=true,
     legend entries = {
@@ -33,7 +33,7 @@
     \addlegendimage{no markers, ultra thick, orange}
 
     % adaptive 0.5
-    \addplot [solid, thick, blue, mark = *, mark options = {scale = .8}] 
+    \addplot [solid, ultra thick, blue, mark = *, mark options = {scale = .8}] 
     table[x = {nrDof}, y = {eta}] 
     {adaptive/lvl21/lvlOutput.csv}; 
 
@@ -46,7 +46,7 @@
     {adaptive/lvl21/lvlOutput.csv}; 
 
     % uniform 
-    \addplot [dashed, thick, blue, mark = diamond*, mark options = solid] 
+    \addplot [dashed, ultra thick, blue, mark = diamond*, mark options = solid] 
     table[x = {nrDof}, y = {eta}] 
     {uniform/lvl9/lvlOutput.csv}; 
 

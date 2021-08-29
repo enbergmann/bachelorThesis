@@ -266,18 +266,61 @@ etwa $10^6$ Freiheitsgraden.
     \hline
     \texttt{benchmark} & Abbildungen\\  
     \hline 
+    \texttt{denoiseAlpha100} &
+    \ref{fig:snr15alpha100}\\
+    \texttt{denoiseAlpha1000} &
+    \ref{fig:snr15alpha1000}\\
+    \texttt{denoiseAlpha2500} &
+    \ref{fig:snr15alpha2500}\\
+    \texttt{denoiseAlpha5000} &
+    \ref{fig:snr15alpha5000}\\
+    \texttt{denoiseAlpha10000} &
+    \ref{fig:snr15alpha10000}\\
+    \texttt{denoiseAlpha50000} &
+    \ref{fig:snr15alpha50000}\\
     \texttt{paramsTau\_f01\_0Dot1} &
-    \ref{fig:parTauMiscF}, \ref{fig:parTauConvergence}\\
+    \ref{fig:parTauMiscF}, \ref{fig:parTauConvergence},
+    \ref{fig:iterationEnergyOscillations}\\
     \texttt{paramsTau\_f01\_0Dot5} &
     \ref{fig:parTauMiscF}, \ref{fig:parTauConvergence}\\
     \texttt{standard\_f01} &
-    \ref{fig:parTauMiscF}, \ref{fig:parTauConvergence}\\
+    \ref{fig:parTauMiscF}, \ref{fig:parTauConvergence}, 
+    \ref{fig:iterationEnergyLevel}, \ref{fig:iterationTermination},
+    \ref{fig:f01Convergence}, \ref{fig:f01SolAdaptive},
+    \ref{fig:f01SupplementaryInfo}, \ref{fig:parGammaConvergence},
+    \ref{fig:gamma1Triang}, \ref{fig:inSiNrIterComparison}\\
     \texttt{paramsTau\_cameraman\_0Dot1} &
     \ref{fig:parTauMiscCam}\\
     \texttt{paramsTau\_cameraman\_0Dot5} &
     \ref{fig:parTauMiscCam} \\
     \texttt{standard\_cameraman} &
-    \ref{fig:parTauMiscCam}\\
+    \ref{fig:parTauMiscCam}, \ref{fig:camConvergence}, \ref{fig:camTriang}\\
+    \texttt{noTerminationTau\_maxIter1e5} &
+    \ref{fig:parTauNoConvergence}\\
+    \texttt{paramsEpsStop\_1em2} &
+    \ref{fig:parEpsStopConvergence}\\
+    \texttt{paramsEpsStop\_1em3} &
+    \ref{fig:parEpsStopConvergence}\\
+    \texttt{paramsEpsStop\_1em4} &
+    \ref{fig:parEpsStopConvergence}\\
+    \texttt{paramsEpsStop\_1em5} &
+    \ref{fig:parEpsStopConvergence}\\
+    \texttt{standardUniform\_f01} &
+    \ref{fig:f01Convergence}, \ref{fig:f01SupplementaryInfo}\\
+    \texttt{standard\_f01Alpha1e4} &
+    \ref{fig:f01LargeAlphaConvergence}, \ref{fig:inSiNrIterComparison}\\
+    \texttt{standardUniform\_f01Alpha1e4} &
+    \ref{fig:f01LargeAlphaConvergence}\\
+    \texttt{parGamma\_0} &
+    \ref{fig:parGammaConvergence}, \ref{fig:gamma0Triang}\\
+    \texttt{parGamma\_0Dot5} &
+    \ref{fig:parGammaConvergence}, \ref{fig:gammaDot5Triang}\\
+    \texttt{standard\_f04} &
+    \ref{fig:f04Convergence}, \ref{fig:inSiNrIterComparison}\\
+    \texttt{standardUniform\_f04} &
+    \ref{fig:f04Convergence}\\
+    \texttt{standardUniform\_cameraman} &
+    \ref{fig:camConvergence}\\
     \hline
   \end{tabular}
   \caption{Eingabe \texttt{benchmark} für \texttt{startAlgorithmCR} und die
@@ -672,7 +715,7 @@ Minimierer Beweis))
     \caption{$\gamma=1$}
     \includegraphics[trim = 100 30 80 20, clip, width=\linewidth]
       {pictures/chapExperiments/secExactSol/parGamma/1/lvl14/triangulation.png}
-    \label{fig:gammaDot5Triang}
+    \label{fig:gamma1Triang}
   \end{subfigure}
   \caption{$\gamma$ Triangulierungen Plots.}
   \label{fig:gammaTriangs}
@@ -1000,7 +1043,14 @@ plotbaren sachen für discont problem aussagt
 
 vielleicht auch nochmal triangulierungen, ähnliche freiheitsgrade für cont 
 und discont, die hoffenlich sehr ähnlich sein sollten (mglw geht sogar das 
-höchste level hierfür)
+höchste level hierfür), Triangulierung auf ähnliche Freiheitsgrade achten
+
+Triangulierung ja, Lösung nur, wenn die nicht einfach genau so aussehen, wie
+man es erwartet
+
+betonen, dass man als stückweisen Gradienten für die rechte seite der nicht 
+stetigen Variante schlicht 0 genommen hat, unabhänig davon, dass das
+kein schwacher gradient ist
 
 Für die Funktion
 \begin{align*}
