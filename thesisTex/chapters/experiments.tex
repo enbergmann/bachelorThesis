@@ -321,6 +321,18 @@ etwa $10^6$ Freiheitsgraden.
     \ref{fig:f04Convergence}\\
     \texttt{standardUniform\_cameraman} &
     \ref{fig:camConvergence}\\
+    \texttt{circleContinuousAdaptive} &
+    \ref{fig:circConvAdaptive}, \ref{fig:circContConvergence},
+    \ref{fig:circContLvl17Triang}, \ref{fig:circContFinalTriang},
+    \ref{fig:circContSol}, \ref{fig:circContSolAxis}\\
+    \texttt{circleDiscontinuousAdaptive} &
+    \ref{fig:circConvAdaptive}\\
+    \texttt{circleContinuousUniform} &
+    \ref{fig:circConvUniform}, \ref{fig:circContConvergence},
+    \ref{fig:circDiscLvl17Triang}, \ref{fig:circDiscFinalTriang},
+    \ref{fig:circDiscSol}, \ref{fig:circDiscSolAxis}\\
+    \texttt{circleDiscontinuousUniform} &
+    \ref{fig:circConvUniform}\\
     \hline
   \end{tabular}
   \caption{Eingabe \texttt{benchmark} für \texttt{startAlgorithmCR} und die
@@ -732,6 +744,10 @@ so was identisch sind
     wir können den Effekt auch in den Triangulierungen (vlt jeweils noch die
     nrDof auslesen lassen) aus \Cref{fig:gammaTriangs} sehen
 
+drüber nachdenken, ob hier gamma größe nochmal angeguckt werden könnte bei
+cont circle (vlt auch einfach nicht, ging ja nur um die allgemeine wahl für
+gamma, um eine entscheidung zu treffen, zuvor)
+
 das vielleicht auch doch erst im nächsten Abschnitt nachdem schon gesehen wurde,
 dass Raten für adaptiv und uniform gleich sind (da das der Fall ist, ist mit 
 'noch stärkerer' adaptivität keine Verbesserung mehr zu erwarten (suche das 
@@ -754,6 +770,18 @@ werden und andere nicht
 
 insgesamt nochmal den Verfeinerungsindikator analysieren und sagen,
 was da für die kleineren Werte passiert
+
+hier dann endlich ein beispiel, bei dem adaptivität besser ist, (sowohl
+etaJ als auch etaV, was sogar erwartbar ist, da es hier eine so klare 
+antwort gibt, wo man verfeinern möchte und wo nicht und das sieht man dann
+auch in den raten, die wären \ldots)
+
+das sich zwischen steig und unsteig nur der gueb-gleb graph unterscheidet 
+wird schlicht und ergreifend daran liegen, dass es die gleb aussage
+für unsteig (da nicht h10) nicht gibt und das nur berechnet wird, weil es halt 
+geht
+alles, was es für beide wirklich gibt (unklar, vlt nicht sagen,
+Verfeinerungsindikator folgt ja immer auch gleb oder sowas) ist gleich
 
 ==================
 
@@ -831,18 +859,18 @@ für die gilt $f_\textrm{HR}\in H^2_0$.
   \quad
   \begin{subfigure}[b]{.48\linewidth}
     \centering
-    \caption{$u_\textrm{HR}$}
-    \includegraphics[trim = 40 30 30 30, clip, width=\linewidth]
-      {pictures/chapExperiments/secExactSol/f04/exactSolution.png}
-    \label{fig:f04ExactSol}
-  \end{subfigure}
-
-  \begin{subfigure}[b]{.48\linewidth}
-    \centering
     \caption{$f_\textrm{HR}$ entlang der x- und y-Achse}
     \includegraphics[trim = 50 30 50 20, clip, width=\linewidth]
       {pictures/chapExperiments/secExactSol/f04/inSiAxis.png}
     \label{fig:f04InSiAxis}
+  \end{subfigure}
+
+  \begin{subfigure}[b]{.48\linewidth}
+    \centering
+    \caption{$u_\textrm{HR}$}
+    \includegraphics[trim = 40 30 30 30, clip, width=\linewidth]
+      {pictures/chapExperiments/secExactSol/f04/exactSolution.png}
+    \label{fig:f04ExactSol}
   \end{subfigure}
   \quad
   \begin{subfigure}[b]{.48\linewidth}
@@ -1010,47 +1038,14 @@ hier noch die Freiheitsgrade ergänzen
 darüber reden, dass der schwarze rand den gewünschte effekt und damit weniger
 richtung rand verfeinert wird (was unnötig wäre, künstlich, weil 0 Randdaten)
 
+selbst auf lvl 21 kann man. trotz closure, erahnen, wo die farbe sehr monoton 
+war und weniger verfeinert wurde, was gut ist, da man das genau so möchte
+
 ==================
 
 abschweif zu denoise example aus intro hier erklären
 
 ==================
-
-zum abschluss zu approximation von white circle mit stetigeer funktion (plots
-dementsprechend
-
-betonen, dass das natürlich kein Graufarbenbild ist, aber natürlich einfach
-ind das entsprechende Setting übertragen werden kann.
-Das abschließende Beispiel ist zwar dem Programm nicht als Graufarbenbild 
-gegeben, aber es ist ein simples Beispiel das entlang einer Teilmenge des
-$\Rbb^2$ unstetig. Plot. Und hier statt Plot entlang der Achen jeweils
-den Plot als Graufarbenbild. (sowohl für cont als discont Funktion)
-
-  - circle stuff, etas sind vergleichbar (was gut, weil so erwarte)
-
-diskontinuierliche function und eine stetige approximation dieser
-
-welche Plots: 
-alle sachen, die für cont und discont beide geplottet werden können, in einen
-plot. vielleicht nebeneinander mit subfigures, links adaptiv, rechts uniform.
-Falls die Sachen so gleich sind, wie sie hoffentlich sein sollten, wieder
-die hintere linie dick und die vordere weniger dick, wie den einen tau
-convergence plot. 
-als letztes, nachdem klargestellt wurde, dass alle Raten die für cont und
-discont plotbar sind im wesentlichen gleich sind, adaptiv/uniform standart plot
-für continuous plot, mit vermerk, dass dies möglicherweise etwas über die nicht
-plotbaren sachen für discont problem aussagt
-
-vielleicht auch nochmal triangulierungen, ähnliche freiheitsgrade für cont 
-und discont, die hoffenlich sehr ähnlich sein sollten (mglw geht sogar das 
-höchste level hierfür), Triangulierung auf ähnliche Freiheitsgrade achten
-
-Triangulierung ja, Lösung nur, wenn die nicht einfach genau so aussehen, wie
-man es erwartet
-
-betonen, dass man als stückweisen Gradienten für die rechte seite der nicht 
-stetigen Variante schlicht 0 genommen hat, unabhänig davon, dass das
-kein schwacher gradient ist
 
 Für die Funktion
 \begin{align*}
@@ -1118,6 +1113,179 @@ $u_\textrm{C}$ ist eine stetige Approximation von
   \end{cases}
 \end{align*}
 
+\begin{figure}[p]
+  \centering
+  \begin{subfigure}[b]{.48\linewidth}
+    \centering
+    \caption{Insi circle stetig entlang der Achsen}
+    \includegraphics[trim = 40 30 50 20, clip, width=\linewidth]
+      {pictures/chapExperiments/secGrayscale/circ/cont/inSiAxis.png}
+    \label{fig:circContInSiAxis}
+  \end{subfigure}
+  \quad
+  \begin{subfigure}[b]{.48\linewidth}
+    \centering
+    \caption{Exakte Lsg circle stetig entlang der Achsen}
+    \includegraphics[trim = 40 30 50 20, clip, width=\linewidth]
+      {pictures/chapExperiments/secGrayscale/circ/cont/exactSolutionAxis.png}
+    \label{fig:circContExactSolAxis}
+  \end{subfigure}
+  \caption{InSi und exakte Lösung circle stetig entlang der Achsen.}
+  \label{fig:circContPlotsAxis}
+\end{figure}
+
+\begin{figure}[p]
+  \centering
+  \begin{subfigure}[b]{.48\linewidth}
+    \centering
+    \caption{adaptive Konvergenz vergleich stetig und unstetig}
+    \includegraphics[width=\linewidth]
+      {pictures/chapExperiments/secGrayscale/circ/convAdap.pdf}
+    \label{fig:circConvAdaptive}
+  \end{subfigure}
+  \quad
+  \begin{subfigure}[b]{.48\linewidth}
+    \centering
+    \caption{uniforme Konvergenz vergleich stetig und unstetig}
+    \includegraphics[width=\linewidth]
+      {pictures/chapExperiments/secGrayscale/circ/convUnif.pdf}
+    \label{fig:circConvUniform}
+  \end{subfigure}
+  \caption{adptive und uniformer Vergleich für circle stetig und unstetig}
+  \label{fig:circConvComparison}
+\end{figure}
+
+\begin{figure}[p]
+  \centering
+  \includegraphics[width=\linewidth]
+    {pictures/chapExperiments/secGrayscale/circ/convCont.pdf}
+  \caption{Ergebnisse für Eingangssignal circle stetig.}
+  \label{fig:circContConvergence}
+\end{figure}
+
+\begin{figure}[p]
+  \centering
+  \begin{subfigure}[b]{.48\linewidth}
+    \centering
+    \caption{Triangulierung stetig Level 17}
+    \includegraphics[trim = 100 30 80 20, clip, width=\linewidth]
+      {pictures/chapExperiments/secGrayscale/circ/cont/adaptive/lvl17/triangulation.png}
+    \label{fig:circContLvl17Triang}
+  \end{subfigure}
+  \quad
+  \begin{subfigure}[b]{.48\linewidth}
+    \centering
+    \caption{Triangulierung unstetig Level 17}
+    \includegraphics[trim = 100 30 80 20, clip, width=\linewidth]
+      {pictures/chapExperiments/secGrayscale/circ/disc/adaptive/lvl17/triangulation.png}
+    \label{fig:circDiscLvl17Triang}
+  \end{subfigure}
+
+  \begin{subfigure}[b]{.48\linewidth}
+    \centering
+    \caption{Triangulierung stetig Level Final}
+    \includegraphics[trim = 100 30 80 20, clip, width=\linewidth]
+      {pictures/chapExperiments/secGrayscale/circ/cont/adaptive/lvl25/triangulation.png}
+    \label{fig:circContFinalTriang}
+  \end{subfigure}
+  \quad
+  \begin{subfigure}[b]{.48\linewidth}
+    \centering
+    \caption{Triangulierung unstetig Level Final}
+    \includegraphics[trim = 100 30 80 20, clip, width=\linewidth]
+      {pictures/chapExperiments/secGrayscale/circ/disc/adaptive/lvl23/triangulation.png}
+    \label{fig:circDiscFinalTriang}
+  \end{subfigure}
+  \caption{Triangulierung für InSi circle stetig und unstetig.}
+  \label{fig:circleTriang}
+\end{figure}
+
+\begin{figure}[p]
+  \centering
+  \begin{subfigure}[b]{.48\linewidth}
+    \centering
+    \caption{Lösung circ stetig}
+    \includegraphics[trim = 40 30 30 30, clip, width=\linewidth]
+      {pictures/chapExperiments/secGrayscale/circ/cont/adaptive/lvl25/solution.png}
+    \label{fig:circContSol}
+  \end{subfigure}
+  \quad
+  \begin{subfigure}[b]{.48\linewidth}
+    \centering
+    \caption{Lösuns stetig final entlang der Achsen}
+    \includegraphics[trim = 50 30 50 20, clip, width=\linewidth]
+      {pictures/chapExperiments/secGrayscale/circ/cont/adaptive/lvl25/solutionAxis.png}
+    \label{fig:circContSolAxis}
+  \end{subfigure}
+
+  \begin{subfigure}[b]{.48\linewidth}
+    \centering
+    \caption{Lösung circ unstetig}
+    \includegraphics[trim = 40 30 30 30, clip, width=\linewidth]
+      {pictures/chapExperiments/secGrayscale/circ/disc/adaptive/lvl23/solution.png}
+    \label{fig:circDiscSol}
+  \end{subfigure}
+  \quad
+  \begin{subfigure}[b]{.48\linewidth}
+    \centering
+    \caption{Lösuns unstetig final entlang der Achsen}
+    \includegraphics[trim = 50 30 50 20, clip, width=\linewidth]
+      {pictures/chapExperiments/secGrayscale/circ/disc/adaptive/lvl23/solutionAxis.png}
+    \label{fig:circDiscSolAxis}
+  \end{subfigure}
+  \caption{Lösung für Eingangssignal circle steig und unstetig.}
+  \label{fig:circleSol}
+\end{figure}
+
+\todo[inline]{circ cont insi für alpha 1e4 und beta 1/100 entlang der Achsen}
+\Cref{fig:circDiscSolAxis} natürlich Sprung bei 1/2, nur geplottet aus
+Implementierungsgründen. Es geht darum zu sehen, dass die ansonsten, insb
+die Höhen, gleich sind
+
+\Cref{fig:circConvComparison} vlt besser ohne Dreiecke, weil die sieht man
+ja alle dann in \Cref{fig:circContConvergence}.
+
+In \Cref{fig:circContPlotsAxis} sehen wir, wie nah diese stetige Funktion 
+an der unstetigen Indikatorfunktion für den Kreis liegt.
+Außerdem sehen wir dort auch wieder das erwarte Verhalten, dass das InSi
+alpha mal die exakte Lösung zu sein scheint, da alpha hier groß
+
+zum abschluss zu approximation von white circle mit stetigeer funktion (plots
+dementsprechend
+
+betonen, dass das natürlich kein Graufarbenbild ist, aber natürlich einfach
+ind das entsprechende Setting übertragen werden kann.
+Das abschließende Beispiel ist zwar dem Programm nicht als Graufarbenbild 
+gegeben, aber es ist ein simples Beispiel das entlang einer Teilmenge des
+$\Rbb^2$ unstetig. Plot. Und hier statt Plot entlang der Achen jeweils
+den Plot als Graufarbenbild. (sowohl für cont als discont Funktion)
+
+  - circle stuff, etas sind vergleichbar (was gut, weil so erwarte)
+
+diskontinuierliche function und eine stetige approximation dieser
+
+welche Plots: 
+alle sachen, die für cont und discont beide geplottet werden können, in einen
+plot. vielleicht nebeneinander mit subfigures, links adaptiv, rechts uniform.
+Falls die Sachen so gleich sind, wie sie hoffentlich sein sollten, wieder
+die hintere linie dick und die vordere weniger dick, wie den einen tau
+convergence plot. 
+als letztes, nachdem klargestellt wurde, dass alle Raten die für cont und
+discont plotbar sind im wesentlichen gleich sind, adaptiv/uniform standart plot
+für continuous plot, mit vermerk, dass dies möglicherweise etwas über die nicht
+plotbaren sachen für discont problem aussagt
+
+vielleicht auch nochmal triangulierungen, ähnliche freiheitsgrade für cont 
+und discont, die hoffenlich sehr ähnlich sein sollten (mglw geht sogar das 
+höchste level hierfür), Triangulierung auf ähnliche Freiheitsgrade achten
+
+Triangulierung ja, Lösung nur, wenn die nicht einfach genau so aussehen, wie
+man es erwartet
+
+betonen, dass man als stückweisen Gradienten für die rechte seite der nicht 
+stetigen Variante schlicht 0 genommen hat, unabhänig davon, dass das
+kein schwacher gradient ist
+
 
 \section{Fazit und Ausblick}
 
@@ -1153,3 +1321,5 @@ AUSBLICK (vielleicht in die Arbeit schreiben)
     
   Bartels Code anpassen und vergleicen
 
+BEI allen Triangulierungsbildern die Freiheitsgrade ergänzen, mglsweise auch
+bei allen Lösungsplots
