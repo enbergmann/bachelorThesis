@@ -20,7 +20,10 @@ Für jeden Aufruf der primalen-dualen Iteration wählen wir $\Lambda_0$ wie in
 Dabei konstruieren wir Probleme, bei denen die exakte Lösung bekannt ist,
 nach \Cref{sec:constructionInputSignal}. 
 Bei diesen ist ein Argument $r$ stets aus $[0,\infty)$.
-Als besonderes Augenemerk betrachten wir dabei zwei Eingangssignale.
+Als besonderes Augenemerk betrachten wir dabei zunächst zwei Eingangssignale,
+um in einigen Experimenten in \Cref{sec:choiceOfParameters} die Parameter für
+die primale-duale Iteration zu ermitteln, die in allen weiteren Experimenten
+genutzt werden sollen.
 Andere Funktionen werden wir bei Bedarf betrachten, um bestimmte Eigenschaften
 zu untersuchen im Vergleich zu diesen beiden Benchmark-Problemen.
 Für ein Experiment mit exakter Lösung betrachten wir für einen Parameter
@@ -77,6 +80,12 @@ Eingangssignal
     & \text{falls } r\in \left(\frac{5}{6}, \infty\right).
   \end{cases}
 \end{align}
+Das Eingangssignal $f_\alpha$ für zwei Wahlen von $\alpha$ und die exakte
+Lösung $u$ können in \Cref{fig:f01Plots} betrachtet werden.
+Wir können anhand von \Cref{fig:f01Plots} auch feststellen, dass für große
+$\alpha$ die Interpretation des ROF-Modells aus \Cref{chap:introduction}
+zutrifft, denn rein optisch gilt für $\alpha=10^4$ annähernd $f_\alpha=\alpha
+u$.
 Ebenfalls nach \Cref{sec:constructionInputSignal} können die schwachen
 Gradienten von $u$ und $f_\alpha$ bestimmt werden mithilfe der partiellen 
 Ableitungen
@@ -196,16 +205,10 @@ $\alpha=1$, also mit Eingangssignal $f_1$.
 Diese Wahl für $\alpha$ tätigen wir auch für die anderen Probleme mit 
 exakter Lösung, falls nichts anderes angegeben ist.
 
-Wir können anhand von \Cref{fig:f01Plots} auch feststellen, dass für das
-$\alpha$ die Interpretation des ROF-Modells aus \Cref{chap:introduction}
-zutrifft, denn rein optisch gilt für $\alpha=10^4$ annähernd $f_\alpha=\alpha
-u$.
-
 Für ein Problem mit unstetigem Eingangssignal legen wir besonderes
 Augenmerk auf das Graufarbenbild \texttt{cameraman} aus \cref{fig:cameraman}
 als Eingangssignal. 
-Wenn nicht anders angegeben, dann betrachten wir dieses Beispiel stets mit
-$\alpha=10^4$.
+Wir betrachten dieses Beispiel stets mit $\alpha=10^4$.
 Auch für dieses komplexere Beispiel, bei der selbst eine stückweise
 Beschreibung durch Polynome augenscheinlich nur schwer möglich ist, sowie in
 allen weiteren Experimenten haben selbst deutlich höhere Integrationsgrade als
@@ -245,13 +248,15 @@ Rotverfeinerung, zu sehen in \Cref{fig:triangSquare}.
 \end{figure}
 Führen wir ein Experiment mit adaptiver Netzverfeinerung durch, so wählen wir
 den Bulk-Parameter für den Mark-Schritt des AFEM-Algorithmus $\theta=0.5$ und
-$\gamma=1$.
+den Parameter $\gamma=1$ für den Verfeinerungsindikator aus 
+\Cref{def:refinementIndicator}.
+Außerdem betrachten wir zur Wahl des Parameters $\gamma$ auf dem
+Verfeinerungsindikator in \Cref{sec:experimentsWithExactSolution} ein
+Experiment.
 Auf die Wahl der Parameter $\tau$ und $\epsstop$ für die primale-duale
 Iteration werden wir im folgenden \Cref{sec:choiceOfParameters} eingehen.
-Zur Wahl des Parameters $\gamma$ auf dem Verfeinerungsindikator betrachten
-wir in \Cref{sec:experimentsWithExactSolution} ein Beispiel.
 Die maximale Iterationszahl ist, mit Ausnahme von einem Experimente in
-\Cref{sec:choiceOfParameters}, smit $10^{12}$ so gewählt, dass diese nie 
+\Cref{sec:choiceOfParameters}, mit $10^{12}$ so gewählt, dass diese nie 
 der Grund für das Beenden einer primalen-dualen Iteration ist, also stets das
 Abbruchkriterium aus \eqref{eq:terminationCriterion} für den Abbruch
 verantwortlich ist.
@@ -346,14 +351,20 @@ etwa $10^6$ Freiheitsgraden.
 \section{Wahl der Parameter für die primale-duale Iteration}
 \label{sec:choiceOfParameters}
 
+Die Experimente in diesem Abschnitt zur Ermittelung der Einstellungen
+für die primale-duale Iteration werden adaptiv durchgeführt und alle hier
+nicht aufgeführten Parameter werden gewählt wie im vorhergehenden Abschnitt
+beschrieben.
+Die Eingangssignale für die Experimente sind in der Beschreibung der 
+entsprechenden Abbildung angegeben.
+
 Zunächst interessiert und die Wahl des Parameters $\tau$ in 
 \Cref{alg:primalDualIteration}. 
-Diesen müssen wir nach \Cref{thm:convergenceIteration} in $(0,1]$ wählen um
+Diesen müssen wir nach \Cref{thm:convergenceIteration} in $(0,1]$ wählen, um
 Konvergenz der primalen-dualen Iteration zu garantieren.
-Der Parameter $\epsstop$ wird mit $10^{-4}$ gewählt. Diese Wahl wird 
-anschließend ebenfalls nochmal näher betrachtet. Außerdem wird $\theta=0.5$
-gewählt. Außerdem werden (ggf hier noch weitere nicht-standart params nennen 
-und deren Wahl).
+Der Parameter $\epsstop$ wird mit $10^{-4}$ gewählt. 
+Diese Wahl wird anschließend in diesem Abschnitt ebenfalls nochmal näher
+betrachtet. 
 \begin{figure}[p]
   \centering
   \begin{subfigure}[b]{.48\linewidth}
@@ -394,13 +405,14 @@ bei gleichen Ergebnissen für dieses $\tau$ die geringste Laufzeit hat.
 Ein mögliche Erklärung liefert der Beweis von \Cref{thm:convergenceIteration}.
 Die darin bewiesene \Cref{eq:upperBoundIterationError} impliziert für die
 Iterate $(u_j)_{j\in\Nbb}$ auf einem Level, dass
-\begin{align*}
+\begin{align}
+  \label{eq:nrIterationsInequality}
   \sum_{j=1}^\infty\Vert \ucrt - u_j \Vert^2 
   \leq
   \frac{1}{2\alpha\tau}
   \left(\vvvert \ucrt - u_0\vvvert^2_\nc 
   + \left\Vert \bar\Lambda_{0,\Tcal} - \Lambda_0\right\Vert^2\right). 
-\end{align*}
+\end{align}
 Die rechte Seite ist antiproportional zu $\tau>0$, womit womöglich
 die Folge $(\left\Vert \ucr - u_j\right\Vert)_{j\in\Nbb}$ schneller gegen $0$
 konvergiert und damit auch das Abbruchkriterium \eqref{eq:terminationCriterion}
@@ -451,8 +463,8 @@ entwickeln zu scheinen.
 Insbesondere bleibt festzuhalten, dass die von \Cref{thm:convergenceIteration}
 für $\tau\in(0,1]$ garantierte Konvergenz für $\tau=1.2$ nicht eintritt.
 
-Nun betrachen wir die Wahl des Parameteres $\epsstop$ für das Abbruchkriterium.
-Wieder wählen wir $\theta = 0.5$ und \ldots.
+Nun betrachen wir die Wahl des Parameteres $\epsstop$ für das Abbruchkriterium
+aus \eqref{eq:terminationCriterion}.
 \begin{figure}[p]
   \centering
   \includegraphics[width=\linewidth]
@@ -469,12 +481,13 @@ noch nicht einsetzt, scheint dies an einem zu frühen Abbruch der Iteration
 durch eine zu große Toleranz $\epsstop$ zu liegen. 
 Bei hohen Freiheitsgraden und einer entsprechend kleinen Netzweite muss
 also $\epsstop$ ausreichend klein gewählt werden.
-Da wir in den Experimenten  $10^6$ Freiheitsgrade nicht überschreiten und sich
-bis dahin die Ergebnisse für die Wahlen $10^{-4}$ und $10^{-5}$ kaum
-unterscheiden, die Wahl $10^{-5}$ aber eine länger Laufzeit verursacht, wählen
-wir als Standard $\epsstop=10^{-4}$.
+Da wir in den Experimenten  $10^6$ Freiheitsgrade nicht deutlich überschreiten
+und sich bis dahin die Ergebnisse für die Wahlen $10^{-4}$ und $10^{-5}$ kaum
+unterscheiden, die Wahl $10^{-5}$ aber eine wesentlich längere Laufzeit
+verursacht, wählen wir als Standard $\epsstop=10^{-4}$.
 Weiterhin bleibt festzuhalten, dass der Verfeinerungsindikator trotzdem noch
-passend Dreiecke auswählt und weiter fällt, auch bei stagnierendem Fehler.
+passend Dreiecke auswählt und weiter fällt, d.h. insbesondere nicht
+stagnariert, auch bei stagnierendem Fehler.
 
 
 \section{Experimente mit bekannter exakter Lösung}
@@ -687,7 +700,7 @@ unterscheidet, die Energiedifferenz ist (die konvergiert fur großes
 alpha nämlich mit 1 und nicht mit 1/2 wie bei alpha =1)
 
 Wir bemerken, dass das Eingangssignal so aussieht, wie $\alpha u$ mit $u$ aus
-Abbildung (f01ExactSol). Dies war nach der Theorie auch \Cref{chap:introduction}
+\Cref{fig:f01ExactSol}. Dies war nach der Theorie auch \Cref{chap:introduction}
 so zu erwarten.
 
 Wir sehen auch annähernd den erwarten Unterschied $h_T$ zwischen den Differenzen
@@ -1302,7 +1315,7 @@ Experimenten \ldots}
 ====================
 
 \Cref{fig:parTauNoConvergence} legt nahe, über nicht konstante Wahlen für
-$\tau nachzudenken$, die möglicherweise das alternierende Verhalten in
+$\tau$ nachzu\-denken, die mög\-lich\-er\-wei\-se das alternierende Verhalten in
 \Cref{fig:parTauNoConvergenceEnergy} verhindern könnte
 
 ====================
