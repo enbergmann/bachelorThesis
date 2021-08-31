@@ -68,7 +68,7 @@ Programms.
 So haben Änderungen am Programm häufig nur zur Folge, dass einige
 \texttt{structs} um Felder ergänzt werden müssen, während Methodenköpfe
 unverändert bleiben können.
-Das Eingangssignal $f$ und eventuell weitere Funktionen, wie etwa die exakte
+Das Eingangssignal $f$ und eventuell weitere Funktionen, wie die exakte
 Lösung $u$ von \Cref{prob:continuousProblem} oder die schwache Ableitung
 $\nabla f$ eines schwach differenzierbaren Eingangssignals, müssen in der
 Benchmark-Datei definiert werden, um sie dem Programm zu übergeben. 
@@ -133,7 +133,7 @@ genutzt werden, welche dafür die Matlab-Funktion \texttt{awgn} verwendet.
     der Lösung $u$ von \Cref{prob:continuousProblem} erstellt und gespeichert
     werden sollen, sonst \texttt{false}\\
     \texttt{refinementLevel4Plots}
-    & Anzahl der Rotverfeinerungen der geladenen Geometrie um Plots des
+    & Anzahl der Rotverfeinerungen der geladenen Geometrie, um Plots des
     Eingangssignal $f$ und, falls angegeben, der Lösung $u$ von
     \Cref{prob:continuousProblem} zu erstellen (Wahl irrelevant, falls
     \texttt{plotGivenFunctions==false})\\
@@ -641,7 +641,7 @@ Sei $T\in\Tcal$ mit $T=\conv\left\{P_1,P_2,P_3\right\}$.
 Da nach \Cref{eq:connectionCrBarycentric} die lokalen
 Crouzeix-Raviart-Basisfunktionen $\psi_{F}|_T$, $F\in\Ecal(T)$, darstellbar
 sind durch die baryzentrischen Koordinaten $\lambda_1,\lambda_2,\lambda_3\in
-P_1(T)$ aus \Cref{sec:crouzeixRaviartFunctions}, genügt es hier deren
+P_1(T)$ aus \Cref{sec:crouzeixRaviartFunctions}, genügt es hier, deren
 Berechnung zu diskutieren.
 Dafür betrachten wir das Referenzdreieck, das definiert ist durch
 \begin{align*}
@@ -656,7 +656,7 @@ Dafür betrachten wir das Referenzdreieck, das definiert ist durch
   \begin{pmatrix}
    0\\0 
   \end{pmatrix}
-  \right\},
+  \right\}\!,
 \end{align*}
 und mit der Matrix $B\coloneqq (P_1-P_3,P_2-P_3)$ die affine Transformation
 $p:\Tref \to T$, $x \mapsto Bx+P_3$. 
@@ -737,7 +737,7 @@ $p(t)\coloneqq [\vcr]_F\big(\xi(t)\big)$. Dann gilt
   \int_F |[\vcr]_F|\ds 
   = \int_0^2 |p(t)|\left|\xi'(t)\right|\dt
   = \frac{|F|}{2}\int_0^2 |p(t)|\dt\\
-  &= \frac{|F|}{2}\left(\int_0^1 |p(t)|\dt + \int_1^2 |p(t)|\dt\right).
+  &= \frac{|F|}{2}\left(\int_0^1 |p(t)|\dt + \int_1^2 |p(t)|\dt\right)\!.
 \end{align*}
 Da $\vcr\in\CR^1_0(\Tcal)$, ist $|p(\bullet)|$ auf $[0,1]$ und $[1,2]$ jeweils
 ein Polynom vom Grad $1$ mit $|p(1)|=\left|[\vcr]_F\big(\Mid(F)\big)\right|=0$. 
