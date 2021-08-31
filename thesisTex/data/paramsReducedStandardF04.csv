@@ -1,0 +1,2 @@
+geometry,polygonMesh,initialRefinementLevel,useProlongation,inSiGradientKnown,exactSolutionKnown,uExact,useExactEnergy,exactEnergy,degree4Integrate,showPlots,figVisible,plotModeGrayscale,showProgress,plotGivenFunctions,refinementLevel4Plots,debugIfError,expName,dirInfoName,u0Mode,f,gradF,benchmark
+BigSquare,0,0,1,1,1,,1,-0.3341058853792,10,0,off,0,1,1,9,0,standard,f04,zeros,,,standard_f04
