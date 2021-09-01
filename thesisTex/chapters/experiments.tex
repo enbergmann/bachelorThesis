@@ -20,6 +20,48 @@ Für jeden Aufruf der primalen-dualen Iteration wählen wir $\Lambda_0$ wie in
 Dabei konstruieren wir Probleme, bei denen die exakte Lösung bekannt ist,
 nach \Cref{sec:constructionInputSignal}. 
 Bei diesen ist ein Argument $r$ stets aus $[0,\infty)$.
+\begin{table}[p]
+  \centering
+  \begin{tabular}{c|c}
+    \hline 
+    Parametername & Standardwert\\
+    \hline 
+    \texttt{degree4Integrate}&
+    $10$\\
+    \texttt{geometry} &
+    \texttt{'BigSquare'} (\texttt{'Square'})\\
+    \texttt{parTheta} &
+    $0.5$\\
+    \texttt{minNrDof} &
+    $10^8$\\
+    \texttt{useProlongation} &
+    \texttt{true}\\
+    \texttt{parGamma} &
+    $1$\\
+    \texttt{u0Mode} &
+    \texttt{zeros}\\
+    \texttt{epsStop} &
+    $10^{-4}$\\
+    \texttt{parTau} &
+    $1$\\
+    \texttt{maxIter} &
+    $10^{12}$\\
+    \texttt{parAlpha} &
+    $1$ ($10^4$)\\
+    \hline
+  \end{tabular}
+  \caption{Parameter für Experiment mit Funktion als Eingangssignal, für welche
+  die exakte Lösung bekannt ist und in Klammern die Werte für ein 
+  Graufarbenbild als Eingangssignal, falls sich diese unterscheiden}
+  \label{tab:parameterStandardValues}
+\end{table} 
+Eine Übersicht über die Wahl aller für die Experimente relevanten Parameter aus
+den Tabellen \ref{tab:paramsMisc}--\ref{tab:paramsExperiment}, deren Wahl in
+diesem und den folgenden beiden Abschnitten \ref{sec:choiceOfParameters} und
+\ref{sec:experimentsWithExactSolution}, teilweise auch experimentell, begründet
+wird, ist in der Tabellen \ref{tab:parameterStandardValues} zu finden.
+Diese werden immer so gewählt, wenn nicht explizit etwas anderes angegeben
+wird.
 Als besonderes Augenemerk betrachten wir dabei zunächst zwei Eingangssignale,
 um in einigen Experimenten in \Cref{sec:choiceOfParameters} die Parameter für
 die primale-duale Iteration zu ermitteln, die in allen weiteren Experimenten
@@ -265,7 +307,7 @@ manuell oder durch Server beendet wird, bevor Sie durch erreichen
 der Freiheitsgrade beendet wird. Dies geschah in allen Experimenten bei 
 ungefähr $10^6$ Freiheitsgraden.
 
-\begin{table}
+\begin{table}[p]
   \centering
   \begin{tabular}{c|c}
     \hline
@@ -341,9 +383,7 @@ ungefähr $10^6$ Freiheitsgraden.
     \hline
   \end{tabular}
   \caption{Eingabe \texttt{benchmark} für \texttt{startAlgorithmCR} und die
-  Abbildungen, die auf den Ergebnissen des jeweiligen Experiments basieren. 
-  (Abschnittsweise diese Tabelle oder eine für alle Experimente? Reihenfolge
-  der Benchmarks in Nutzungsreihenfolge oder alphabetisch?)}
+  Abbildungen, die auf den Ergebnissen des jeweiligen Experiments basieren}
   \label{tab:usedBenchmarks}
 \end{table} 
 
@@ -594,9 +634,9 @@ theoretischen Kapiteln dieser Arbeit getätigten Aussagen.
   \label{fig:f01Convergence}
 \end{figure}
 \begin{figure}[p]
-\DTLloaddb{db}{data/currentDataReducedStandardF01LvlFinal.csv}
-\DTLassign{db}{1}{\nrDof=nrDof} 
-\DTLgdeletedb{db}
+  \DTLloaddb{db}{data/currentDataReducedStandardF01LvlFinal.csv}
+  \DTLassign{db}{1}{\nrDof=nrDof} 
+  \DTLgdeletedb{db}
   \centering
   \begin{subfigure}[b]{.48\linewidth}
     \centering
@@ -803,8 +843,8 @@ Insgesamt halten wir fest, dass die zu Beginn des Kapitels getroffene Wahl
 von $\gamma=1$ weiterhin sinnvoll bleibt, da so auch für den
 Verfeinerungsindikator eine Konvergenz zu erkennen ist, bzw. die besten
 Raten, bei keinem Einfluss auf den exakten Fehler.
-Auch hier möchten wir zum Abschluss kurz anmerken, dass
-\Cref{eq:expectedInequalities} für alle Wahlen von $\gamma$ gültig ist.
+Auch hier möchten wir zum Abschluss kurz anmerken, dass Ungleichung
+\eqref{eq:expectedInequalities} für alle Wahlen von $\gamma$ gültig ist.
 
 Nun wollen wir das Experiment zu \Cref{fig:f01Convergence} noch kurz mit
 $\alpha=10^4$ betrachten, das heißt insbesondere mit Eingangssignal
@@ -994,7 +1034,7 @@ Insgesamt vermuten wir, dass eine Iteration mit möglichst wenigen
 Iterationsschritten konstruiert wird, indem $\tau=1$ und $\alpha$ möglichst
 groß gewählt wird.
 Eine mögliche Erklärung dafür ist für den Parameter $\alpha$, dass
-nach \Cref{prob:disreteProblem} für sehr große $\alpha$ die Minimierung
+nach \Cref{prob:discreteProblem} für sehr große $\alpha$ die Minimierung
 des Funktionals $\Vert\bullet\Vert^2$ stark gewichtet ist und die 
 Minimerung der anderen Terme nicht so relevant ist.
 
@@ -1010,9 +1050,6 @@ Unser Hauptaugenmerk liegt auf dem Eingangssignal \texttt{cameraman} aus
 Insbesondere können wir an diesen Beispielen gut veranschaulichen, wie
 der Verfeinerungsindikator wirkt.
 
-==================
-cameraman 
-
 \begin{figure}[p]
   \centering
   \includegraphics[width=\linewidth]
@@ -1021,21 +1058,40 @@ cameraman
   Eingangssignal \texttt{cameraman}.}
   \label{fig:camConvergence}
 \end{figure}
-
-konvergenzplot adptiv/uniform
-hier vielleicht gueb-Enc(ucr) plotten, mit dem Kommentar, dass dies uU
-eine gute approximation von gueb - E(u) = gueb-gleb-(E(u)-gleb) ist, da 
-wir in allen anderen experimten die konvergenz von Enc(ucr) gegen E(u) gesehen
-haben und in dem einen plot von f01, in dem gueb - E(u) geplottet war,
- waren die raten entsprechend gleich (?)
-
-für lvl 17 auf jeden fall nebenbeinander triangulierg | lösung auf der triang
-
+In \Cref{fig:camConvergence} sehen wir für den Verfeinerungsindikator und
+den Volumenanteil die Rate $1$ und für den Sprunganteil die Rate $1/2$, wobei
+auch hier kein Unterschied in den Raten zwischen adaptiver und uniformer
+Netzverfeinerung festzustellen ist.
+Die Raten von $\etaV$ und $\etaJ$ stimmen mit den Raten überein, 
+die schon für das Experiment mit Eingangssignal $f_1$ in 
+\Cref{fig:f01Convergence} beobachtet wurde, wobei hier im Gegensatz zu diesem
+Experiment $\etaV$ dominiert und $\etaT$ entsprechend die Rate $1$ annimmt.
+Ansonsten nimmt $\etaV$, und somit auch $\etaT$, zu Beginn der AFEM-Routine
+deutlich höhere Werte an, vergleichbar mit dem Experiment mit in
+\Cref{fig:f01LargeAlphaConvergence} mit Eingangssignal $f_{10^4}$ und,
+ebenso wie hier, $\alpha=10^4$. 
+Die große Wahl von $\alpha$ scheint die großen Werte für $\etaV$ also zu
+beginnen, womöglich da die Eingangssignale hier deutlich höhere Werte annehmen
+als die Experimente mit $\alpha=1$.
+\begin{figure}[p]
+  \centering
+  \includegraphics[width=\linewidth]
+    {pictures/chapExperiments/secGrayscale/denoise/conv.pdf}
+  \caption{Konvergenz im Rauschunterdrückungs Beispiel für drei verschiedene
+  Werte von $\alpha$.}
+  \label{fig:denoiseConvergence}
+\end{figure}
+Diese Vermutung wird bekräftigt in \Cref{fig:denoiseConvergence}, in der wir
+zum Vergleich die Konvergenzgraphen zu \Cref{fig:exampleDenoising} angucken für
+$\alpha\in\{10^2,10^3,10^4\}$.
 \begin{figure}[p]
   \centering
   \begin{subfigure}[b]{.48\linewidth}
+    \DTLloaddb{db}{data/currentDataReducedCamLvl17.csv}
+    \DTLassign{db}{1}{\nrDof=nrDof} 
+    \DTLgdeletedb{db}
     \centering
-    \caption{Triangulierung Level 17}
+    \caption{$\text{nrDof} = \nrDof$ (Level 17)}
     \includegraphics[trim = 100 30 80 20, clip, width=\linewidth]
       {pictures/chapExperiments/secGrayscale/cam/adaptive/lvl17/triangulation.png}
     \label{fig:camLvl17Triang}
@@ -1050,8 +1106,11 @@ für lvl 17 auf jeden fall nebenbeinander triangulierg | lösung auf der triang
   \end{subfigure}
 
   \begin{subfigure}[b]{.48\linewidth}
+    \DTLloaddb{db}{data/currentDataReducedCamLvlFinal.csv}
+    \DTLassign{db}{1}{\nrDof=nrDof} 
+    \DTLgdeletedb{db}
     \centering
-    \caption{Triangulierung Level 21}
+    \caption{$\text{nrDof} = \nrDof$ (Level 21)}
     \includegraphics[trim = 100 30 80 20, clip, width=\linewidth]
       {pictures/chapExperiments/secGrayscale/cam/adaptive/lvl21/triangulation.png}
     \label{fig:camLvl21Triang}
@@ -1067,59 +1126,83 @@ für lvl 17 auf jeden fall nebenbeinander triangulierg | lösung auf der triang
   \caption{Triangulierung und Lösung für Eingangssignal \texttt{cameraman}.}
   \label{fig:camTriang}
 \end{figure}
+Zum Abschluss dieses Experiments noch eine Auswahl der entstandenden
+Triangulierungen und den entsprechenden Lösungen des adaptiven Algorithmus für
+das Eingangssignal \texttt{cameraman}, als Graufarbenplot aus der
+Vogelperspektie, in \Cref{fig:camTriang}.
+Wir sehen in \Cref{fig:camLvl17Triang} den Effekt des Verfeinerungsindikators
+gut, der zu den Unstetigkeiten hin verfeinert, die da besonders groß sind,
+wo die Farbkontraste deutlich sind. 
+Weiterhin ist zu erkennen, dass der graduelle Übergang zu schwarzem Rand
+den gewünschten Effekt hat, ein starke Verfeinerung am Rand, die aufgrund der 
+angenommenen Nullranddaten passieren würde, zu unterdrücken.
+Somit wird das Netz tatsächlich da fein, wo mehr Informationen benötigt werden,
+was am Rand nicht der Fall wäre.
+Auch in \Cref{fig:camLvl21Triang} kann man, trotz der hohen Anzahl
+an Freiheitsgade noch erkennen, wo es im Bild kaum Farbkontraste gibt und eine
+Verfeinerung deshalb nicht nötig ist.
 
-vielleicht auch als 4x4 mit darunter noch das gleiche für das letzte lvl 21
-hier noch die Freiheitsgrade ergänzen
-
-darüber reden, dass der schwarze rand den gewünschte effekt und damit weniger
-richtung rand verfeinert wird (was unnötig wäre, künstlich, weil 0 Randdaten)
-
-selbst auf lvl 21 kann man. trotz closure, erahnen, wo die farbe sehr monoton 
-war und weniger verfeinert wurde, was gut ist, da man das genau so möchte
-
-==================
-
-abschweif zu denoise example aus intro hier erklären
-
-==================
-
-Für die Funktion
+Da wir nun gesehen haben, dass die Raten für $\etaV$ und $\etaJ$ übereinstimmen
+mit den beobachteten Raten im vorherigen
+\Cref{sec:experimentsWithExactSolution}, interessiert uns ob noch weitere
+Raten vergleichbar sind. 
+Allerdings haben wir beim Eingangssignal \texttt{cameraman} das Problem,
+weder Gradienten noch die exakte Lösung zu kennen und so entsprechend keine
+der anderen Graphen plotten zu können.
+Deshalb betrachten wir ein weiteres Beispiel mit Unstetigkeitsmenge und 
+eine kontinuierliche Approximation dieser, für die wir nach
+\Cref{sec:constructionInputSignal} eine exakte Lösung kennen.
+Als unstetige Funktion, die als Graufarbenbild interpretiert einem 
+weißen Kreis mit Radius $1/2$ entspricht, betrachten wir die Funktion
+\begin{align*}
+  f_\textrm{DC}(r)\coloneqq 
+  \begin{cases}
+    10^4, 
+    & \text{falls } r\in \left[0,\frac{1}{2}\right]\!,\\
+    0, 
+    & \text{falls } r\in \left(\frac{1}{2},\infty\right)\!.
+  \end{cases}
+\end{align*}
+Betrachten wir nun die Funktion
 \begin{align*}
   u_\textrm{C}(r)\coloneqq 
   \begin{cases}
-    1, & \text{wenn } 0\leq r\leq\frac{1-\beta}{2},\\
-    -\frac{1}{\beta}r + \frac{1+\beta}{2\beta}, & 
-    \text{wenn } \frac{1-\beta}{2}\leq r\leq \frac{1+\beta}{2},\\
-    0, & \text{wenn } \frac{1+\beta}{2}\leq r,
+    1, 
+    & \text{falls } r\in \left[0,\frac{1-\beta}{2}\right]\!,\\
+    -\frac{1}{\beta}r + \frac{1+\beta}{2\beta}, 
+    & \text{falls } r\in \left(\frac{1-\beta}{2}, \frac{1+\beta}{2}\right]\!,\\
+    0,
+    & \text{falls } r\in \left(\frac{1+\beta}{2},\infty\right)\!,
   \end{cases}
 \end{align*}
-erhält man mit der Wahl
+erhalten wir mit der Wahl
 \begin{align*}
-  \sgn&(\partial_r u_\textrm{C}(r)) \\
+  \sgn(\partial_r u_\textrm{C}(r)) 
   &\coloneqq 
   \begin{cases}
-    \frac{4}{1-\beta}r\left(\frac{1}{1-\beta}r -1\right)\!, &
-    \text{wenn } 0\leq r\leq\frac{1-\beta}{2},\\
-    -1, & \text{wenn } \frac{1-\beta}{2}\leq r\leq \frac{1+\beta}{2},\\
+    \frac{4}{1-\beta}r\left(\frac{1}{1-\beta}r -1\right)\!, 
+    & \text{falls } r\in \left[0,\frac{1-\beta}{2}\right]\!,\\
+    -1,
+    & \text{falls } r\in \left(\frac{1-\beta}{2}, \frac{1+\beta}{2}\right]\!,\\
     \frac{4}{(\beta-1)^3}
-    \left( 4r^3-3(\beta+3)r^2 +6(\beta+1)r-3\beta-1\right)\!, & 
-    \text{wenn } \frac{1+\beta}{2}\leq r\leq 1,
+    \left( 4r^3-3(\beta+3)r^2 +6(\beta+1)r-3\beta-1\right)\!, 
+    & \text{falls } r\in \left(\frac{1+\beta}{2},\infty\right)\!,
   \end{cases}
 \end{align*}
 die rechte Seite
 \begin{align*}
   f_\textrm{C}(r)\coloneqq 
   \begin{cases}
-    \alpha - \frac{4}{1-\beta}\left(\frac{3}{1-\beta}r - 2\right)\!, &
-    \text{wenn } 0\leq r\leq\frac{1-\beta}{2},\\
-    -\frac{\alpha}{\beta}\left( r-\frac{1+\beta}{2} \right) +\frac{1}{r}, & 
-    \text{wenn } \frac{1-\beta}{2}\leq r\leq \frac{1+\beta}{2},\\
+    \alpha - \frac{4}{1-\beta}\left(\frac{3}{1-\beta}r - 2\right)\!, 
+    & \text{falls } r\in \left[0,\frac{1-\beta}{2}\right]\!,\\
+    -\frac{\alpha}{\beta}\left( r-\frac{1+\beta}{2} \right) +\frac{1}{r}, 
+    & \text{falls } r\in \left(\frac{1-\beta}{2}, \frac{1+\beta}{2}\right]\!,\\
     \frac{-4}{(\beta-1)^3}
-    \left( 16r^2 -9(\beta+3)r + 12(\beta+1) - \frac{3\beta+1}{r}\right)\!, & 
-    \text{wenn } \frac{1+\beta}{2}\leq r\leq 1.
+    \left( 16r^2 -9(\beta+3)r + 12(\beta+1) - \frac{3\beta+1}{r}\right)\!, 
+    & \text{falls } r\in \left(\frac{1+\beta}{2},\infty\right)\!.
   \end{cases}
 \end{align*}
-
+Die entsprechenden Ableitungen sind
 \begin{align*}
   \partial_r f_\textrm{C}(r) &= 
   \begin{cases}
@@ -1130,6 +1213,7 @@ die rechte Seite
     \text{wenn } \frac{1+\beta}{2}\leq r\leq 1,\\
   \end{cases}
 \end{align*}
+und
 \begin{align*}
   \partial_r u_\textrm{C}(r) &= 
   \begin{cases}
@@ -1139,16 +1223,13 @@ die rechte Seite
     0,&\text{wenn } \frac{1+\beta}{2}\leq r,
   \end{cases}
 \end{align*}
-
-$u_\textrm{C}$ ist eine stetige Approximation von
-\begin{align*}
-  u_\textrm{DC}(r)\coloneqq 
-  \begin{cases}
-    1, & \text{wenn } 0\leq r\leq\frac{1}{2},\\
-    0, & \text{wenn } \frac{1}{2}\leq r,
-  \end{cases}
-\end{align*}
-
+womit wir die Energie
+$
+\DTLloaddb{db}{data/paramsReducedCircleContinuous.csv}
+\DTLassign{db}{1}{\exactEnergy=exactEnergy} 
+\DTLgdeletedb{db}
+E(u)\approx\DTLround{\exactEnergy}{\exactEnergy}{\precDTL}\exactEnergy
+$ für das Experiment mit $\alpha=10^4$ und $\beta = 10^{-3}$ erhalten.
 \begin{figure}[p]
   \centering
   \begin{subfigure}[b]{.48\linewidth}
@@ -1169,7 +1250,12 @@ $u_\textrm{C}$ ist eine stetige Approximation von
   \caption{InSi und exakte Lösung circle stetig entlang der Achsen.}
   \label{fig:circContPlotsAxis}
 \end{figure}
-
+Augenscheinlich ist $f_\textrm{C}$ für diese Wahl von $\alpha$ und $\beta$ eine
+stetige Approximation von $f_\textrm{DC}$, wie in \Cref{fig:circContPlotsAxis}
+zu sehen ist.
+Außerdem sehen wir dort auch wieder für dieses große $\alpha$ das erwarte
+Verhalten, dass das Eingangssignal ungefähr gleich dem Produkt aus $\alpha$ und
+der exakten Lösung zu sein scheint, wie nach \Cref{chap:introduction} erwartet.
 \begin{figure}[p]
   \centering
   \begin{subfigure}[b]{.48\linewidth}
@@ -1190,15 +1276,9 @@ $u_\textrm{C}$ ist eine stetige Approximation von
   \caption{adptive und uniformer Vergleich für circle stetig und unstetig}
   \label{fig:circConvComparison}
 \end{figure}
-
-\begin{figure}[p]
-  \centering
-  \includegraphics[width=\linewidth]
-    {pictures/chapExperiments/secGrayscale/circ/convCont.pdf}
-  \caption{Ergebnisse für Eingangssignal circle stetig.}
-  \label{fig:circContConvergence}
-\end{figure}
-
+Zunächst sehen wir in \Cref{fig:circConvComparison} sowohl für adaptive
+als auch uniforme Netzverfeierung, dass es für die beiden Eingangssignal 
+keine deutlichen Unterschiede gibt. 
 \begin{figure}[p]
   \centering
   \begin{subfigure}[b]{.48\linewidth}
@@ -1235,7 +1315,6 @@ $u_\textrm{C}$ ist eine stetige Approximation von
   \caption{Triangulierung für InSi circle stetig und unstetig.}
   \label{fig:circleTriang}
 \end{figure}
-
 \begin{figure}[p]
   \centering
   \begin{subfigure}[b]{.48\linewidth}
@@ -1269,71 +1348,42 @@ $u_\textrm{C}$ ist eine stetige Approximation von
       {pictures/chapExperiments/secGrayscale/circ/disc/adaptive/lvl23/solutionAxis.png}
     \label{fig:circDiscSolAxis}
   \end{subfigure}
-  \caption{Lösung für Eingangssignal circle steig und unstetig.}
+  \caption{Lösung für Eingangssignal circle stetig und unstetig, wobei die
+  augenscheinliche Stetigkeit der Lösung für Eingangssignal $f_\textup{DC}$
+  bei $1/2$ nur durch den Plot bedingt ist.}
   \label{fig:circleSol}
 \end{figure}
-
-\todo[inline]{circ cont insi für alpha 1e4 und beta 1/100 entlang der Achsen}
-\Cref{fig:circDiscSolAxis} natürlich Sprung bei 1/2, nur geplottet aus
-Implementierungsgründen. Es geht darum zu sehen, dass die ansonsten, insb
-die Höhen, gleich sind
-
-\Cref{fig:circConvComparison} vlt besser ohne Dreiecke, weil die sieht man
-ja alle dann in \Cref{fig:circContConvergence}.
-
-In \Cref{fig:circContPlotsAxis} sehen wir, wie nah diese stetige Funktion 
-an der unstetigen Indikatorfunktion für den Kreis liegt.
-Außerdem sehen wir dort auch wieder das erwarte Verhalten, dass das InSi
-alpha mal die exakte Lösung zu sein scheint, da alpha hier groß
-
-zum abschluss zu approximation von white circle mit stetigeer funktion (plots
-dementsprechend
-
-betonen, dass das natürlich kein Graufarbenbild ist, aber natürlich einfach
-ind das entsprechende Setting übertragen werden kann.
-Das abschließende Beispiel ist zwar dem Programm nicht als Graufarbenbild 
-gegeben, aber es ist ein simples Beispiel das entlang einer Teilmenge des
-$\Rbb^2$ unstetig. Plot. Und hier statt Plot entlang der Achen jeweils
-den Plot als Graufarbenbild. (sowohl für cont als discont Funktion)
-
-  - circle stuff, etas sind vergleichbar (was gut, weil so erwarte)
-
-diskontinuierliche function und eine stetige approximation dieser
-
-hier dann endlich ein beispiel, bei dem adaptivität besser ist, (sowohl
-$\etaJ$ als auch $\etaV$, was sogar erwartbar ist, da es hier eine so klare 
-antwort gibt, wo man verfeinern möchte und wo nicht und das sieht man dann
-auch in den raten, die wären \ldots)
-
-das sich zwischen steig und unsteig nur der gueb-gleb graph unterscheidet 
-wird schlicht und ergreifend daran liegen, dass es die gleb aussage
-für unsteig (da nicht h10) nicht gibt und das nur berechnet wird, weil es halt 
-geht
-alles, was es für beide wirklich gibt (unklar, vlt nicht sagen,
-Verfeinerungsindikator folgt ja immer auch gleb oder sowas) ist gleich
-
-
-welche Plots: 
-alle sachen, die für cont und discont beide geplottet werden können, in einen
-plot. vielleicht nebeneinander mit subfigures, links adaptiv, rechts uniform.
-Falls die Sachen so gleich sind, wie sie hoffentlich sein sollten, wieder
-die hintere linie dick und die vordere weniger dick, wie den einen tau
-convergence plot. 
-als letztes, nachdem klargestellt wurde, dass alle Raten die für cont und
-discont plotbar sind im wesentlichen gleich sind, adaptiv/uniform standart plot
-für continuous plot, mit vermerk, dass dies möglicherweise etwas über die nicht
-plotbaren sachen für discont problem aussagt
-
-vielleicht auch nochmal triangulierungen, ähnliche freiheitsgrade für cont 
-und discont, die hoffenlich sehr ähnlich sein sollten (mglw geht sogar das 
-höchste level hierfür), Triangulierung auf ähnliche Freiheitsgrade achten
-
-Triangulierung ja, Lösung nur, wenn die nicht einfach genau so aussehen, wie
-man es erwartet
-
-betonen, dass man als stückweisen Gradienten für die rechte seite der nicht 
-stetigen Variante schlicht 0 genommen hat, unabhänig davon, dass das
-kein schwacher gradient ist
+% TODO Freiheitsgrade ergänzen bei den Triangulierungen sobald fertig,
+% außerdem auf vergleichbare Anzahl von Freiheitsgraden achten
+In \Cref{fig:circleTriang} (TODO update und Freiheitsgrade ergänzen) ist
+weiterhin zu sehen, dass auch der
+Verfeinerungsindikator beim adaptiven Algorithmus eine vergleichbare und
+erwarterte Verfeinerung zur Unstetigkeitsmenge vollzieht und die in
+\Cref{fig:circleSol} dargestellten Lösungen der adaptiven Algorithmen
+ähneln beide der exakten Lösung für das Eingangssignal $f_\textup{C}$
+aus \Cref{fig:circContExactSolAxis}.
+Insgesamt scheinen die Ergebnisse beider Experiment tatsächlich vergleichbar
+zu sein, weshalb wir nun das Experiment mit Eingangssignal $f_\textup{C}$
+mit $\alpha=10^4$ und $\beta=10^{-3}$ weiter untersuchen möchten.
+\begin{figure}[p]
+  \centering
+  \includegraphics[width=\linewidth]
+    {pictures/chapExperiments/secGrayscale/circ/convCont.pdf}
+  \caption{Ergebnisse für Eingangssignal circle stetig.}
+  \label{fig:circContConvergence}
+\end{figure}
+In \Cref{fig:circContConvergence} ist zu sehen, dass wir hier ein Experiment
+gefunden haben, bei der der adaptive Algorithmus bessere Raten erzielt
+für den Fehler, die exakte Energiedifferenz und $\etaJ$. 
+Der Verfeinerungsindikator und $\etaV$ und die von $\Egleb$ abhängigen Graphen
+scheinen die gleichen Raten zu haben, allerdings erzielt der adaptive
+Algorithmus deutlich geringere Werte.
+Dies wird bei diesem Beispiel daran liegen, dass es klar nur sinnvoll sein kann, 
+bei der Unstetigkeit zu verfeinern, welche von der Triangulierung 
+natürlich nicht perfekt aufgelöst werden kann.
+%TODO
+TODO alle Raten nocht mal aufschreiben und mit den bisherigen Experimenten 
+vergleichen und insbesondere $f_1$
 
 
 \section{Fazit und Ausblick}
