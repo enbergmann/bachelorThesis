@@ -14,64 +14,63 @@
 \begin{tikzpicture}
   \begin{loglogaxis}[
     legend pos = north east, 
-    scale = 1.5, 
+    scale = 1, 
     xlabel = {Anzahl der Freiheitsgrade},
     ymajorgrids=true,
     legend entries = {
-      adaptiv ($\theta = 0.5$),
-      uniform,
+      $\alpha=10^2$,
+      $\alpha=10^3$,
+      $\alpha=10^4$,
       $\eta_\mathcal{T}$,
       $\eta_{\textup{V},\mathcal{T}}$,
       $\eta_{\textup{J},\mathcal{T}}$,
       }
     ]
+    \addlegendimage{dotted, thick, mark=diamond*, mark options = solid}
     \addlegendimage{solid, thick, mark=*, mark options = {scale = .8}}
-    \addlegendimage{dashed, thick, mark=diamond*, mark options = solid}
+    \addlegendimage{dashed, thick, mark=square*, mark options = {scale = .8}}
     \addlegendimage{no markers, ultra thick, blue}
     \addlegendimage{no markers, ultra thick, cyan}
     \addlegendimage{no markers, ultra thick, magenta}
 
-    % adaptive 0.5
+    % alpha 1e2
+    \addplot [dotted, ultra thick, blue, mark = diamond*, mark options = solid] 
+    table[x = {nrDof}, y = {eta}] 
+    {alpha1e2/lvl18/lvlOutput.csv}; 
+
+    \addplot [dotted, thick, cyan, mark = diamond*, mark options = solid] 
+    table[x = {nrDof}, y = {etaVol}] 
+    {alpha1e2/lvl18/lvlOutput.csv}; 
+
+    \addplot [dotted, thick, magenta, mark = diamond*, mark options = solid] 
+    table[x = {nrDof}, y = {etaJumps}] 
+    {alpha1e2/lvl18/lvlOutput.csv}; 
+
+    % alpha 1e3
     \addplot [solid, ultra thick, blue, mark = *, mark options = {scale = .8}] 
     table[x = {nrDof}, y = {eta}] 
-    {adaptive/lvl21/lvlOutput.csv}; 
+    {alpha1e3/lvl19/lvlOutput.csv}; 
 
     \addplot [solid, thick, cyan, mark = *, mark options = {scale = .8}] 
     table[x = {nrDof}, y = {etaVol}] 
-    {adaptive/lvl21/lvlOutput.csv}; 
+    {alpha1e3/lvl19/lvlOutput.csv}; 
 
     \addplot [solid, thick, magenta, mark = *, mark options = {scale = .8}] 
     table[x = {nrDof}, y = {etaJumps}] 
-    {adaptive/lvl21/lvlOutput.csv}; 
+    {alpha1e3/lvl19/lvlOutput.csv}; 
 
-    % uniform 
-    \addplot [dashed, ultra thick, blue, mark = diamond*, mark options = solid] 
+    % alpha 1e4
+    \addplot [dashed, ultra thick, blue, mark = square*, mark options = {scale = .8}] 
     table[x = {nrDof}, y = {eta}] 
-    {uniform/lvl9/lvlOutput.csv}; 
+    {alpha1e4/lvl19/lvlOutput.csv}; 
 
-    \addplot [dashed, thick, cyan, mark = diamond*, mark options = solid] 
+    \addplot [dashed, thick, cyan, mark = square*, mark options = {scale = .8}] 
     table[x = {nrDof}, y = {etaVol}] 
-    {uniform/lvl9/lvlOutput.csv}; 
+    {alpha1e4/lvl19/lvlOutput.csv}; 
 
-    \addplot [dashed, thick, magenta, mark = diamond*, mark options = solid] 
+    \addplot [dashed, thick, magenta, mark = square*, mark options = {scale = .8}] 
     table[x = {nrDof}, y = {etaJumps}] 
-    {uniform/lvl9/lvlOutput.csv}; 
-
-    % eta
-    add slope triangle
-    \draw (axis cs:1e6, 1e2)
-                 -- (axis cs:1e6, 1e0) node [midway, right] {\scriptsize$1$}
-                 -- (axis cs:1e4, 1e2)
-                 -- cycle node [midway, above] {\scriptsize$1$}
-                 ;
-
-    % etaJ
-    add slope triangle
-    \draw (axis cs:1e5, 1e-2)
-                 -- (axis cs:1e3, 1e-2) node [midway, below] {\scriptsize$2$}
-                 -- (axis cs:1e3, 1e-1) node [midway, left] {\scriptsize$1$}
-                 -- cycle
-                 ;
+    {alpha1e4/lvl19/lvlOutput.csv}; 
 
   \end{loglogaxis}
 \end{tikzpicture}
