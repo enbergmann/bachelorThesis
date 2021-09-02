@@ -1359,10 +1359,12 @@ des Verfeinerungsindikators und seiner Anteile gibt.
 In \Cref{fig:circleTriang} (TODO update und Freiheitsgrade ergänzen) ist
 weiterhin zu sehen, dass auch der
 Verfeinerungsindikator beim adaptiven Algorithmus eine vergleichbare und
-erwarterte Verfeinerung zur Unstetigkeitsmenge vollzieht und die in
-\Cref{fig:circleSol} dargestellten Lösungen der adaptiven Algorithmen
-ähneln beide der exakten Lösung für das Eingangssignal $f_\textup{C}$
-aus \Cref{fig:circContExactSolAxis}.
+erwarterte Verfeinerung zur Unstetigkeitsmenge vollzieht bei
+Level 17 und sich die Verfeinerungen erst bei höheren Freiheitsgraden 
+unterscheiden. 
+Außerdem ähneln die in \Cref{fig:circleSol} dargestellten Lösungen der
+adaptiven Algorithmen beide der exakten Lösung für das Eingangssignal
+$f_\textup{C}$ aus \Cref{fig:circContExactSolAxis}.
 Insgesamt scheinen die Ergebnisse beider Experiment tatsächlich vergleichbar
 zu sein, weshalb wir nun das Experiment mit Eingangssignal $f_\textup{C}$
 mit $\alpha=10^4$ und $\beta=10^{-3}$ weiter untersuchen möchten.
@@ -1374,27 +1376,19 @@ mit $\alpha=10^4$ und $\beta=10^{-3}$ weiter untersuchen möchten.
   \label{fig:circContConvergence}
 \end{figure}
 In \Cref{fig:circContConvergence} ist zu sehen, dass wir hier ein Experiment
-gefunden haben, bei der der adaptive Algorithmus bessere Raten erzielt
-für den Fehler, die exakte Energiedifferenz und $\etaJ$. 
+gefunden haben, bei der der adaptive Algorithmus bessere Raten als
+der uniforme Algorithmus erzielt für den Fehler, die exakte Energiedifferenz
+und $\etaJ$, jeweils mit Rate $1/2$ statt $1$.
 Der Verfeinerungsindikator und $\etaV$ und die von $\Egleb$ abhängigen Graphen
-scheinen die gleichen Raten zu haben, allerdings erzielt der adaptive
+scheinen zwar die gleichen Raten zu haben, allerdings erzielt der adaptive
 Algorithmus deutlich geringere Werte.
-Dies wird bei diesem Beispiel daran liegen, dass es klar nur sinnvoll sein kann, 
-bei der Unstetigkeit zu verfeinern, welche von der Triangulierung 
+Dies wird bei diesem Beispiel daran liegen, dass es klar nur sinnvoll sein
+kann, bei der Unstetigkeit zu verfeinern, welche von der Triangulierung
 natürlich nicht perfekt aufgelöst werden kann.
-%TODO
-
-TODO alle Raten nocht mal aufschreiben und mit den bisherigen Experimenten 
-vergleichen und insbesondere $f_1$
-
-TODO wahrscheinlich lässt sich sagen, dass die Raten für nicht H10 Funktionen,
-also tatsächlich BV Funktionen, für adaptiv besser ist, als ist adaptiv 
-doch besser
-
-TODO Zeit von adaptiv und uniform vielleicht nochmal angucken im misc plot und,
-falls sich da was eindeutiges rausstellt, den Plot nochmal für andere
-Experimente erstellen um da eine Aussage zu treffen
-
+Diese Aussagen gelten demenstsprechend womöglich auch für $f_\textup{DC}$.
+Dies zeigt, dass für Eingangssignale, bei denen
+die Verfeinerung stark lokal sinnvoll ist, der adaptive Algorithmus 
+ein besseres Konvergenzverhalten hat als der uniforme.
 \begin{figure}[p]
   \centering
   \begin{subfigure}{.32\linewidth}
@@ -1422,41 +1416,55 @@ Experimente erstellen um da eine Aussage zu treffen
   Eingangssignale}
   \label{fig:miscInSi}
 \end{figure}
+Allerdings möchten wir an dieser Stelle auch festhalten, dass 
+der adaptive Algorithmus in den hier betrachteten Expererimenten mehr Level
+durchläuft und für Iterationen mit vergleichbar vielen Freiheitsgaden wie
+der uniforme Algorithmus in der Regel mehr Iterationen und damit mehr
+Zeit benötigt, insgesamt also mehr zeit benötigt, wie in \Cref{fig:miscInSi}
+für drei Eingangssignale und insbesondere das Eingangssignal $f_\textup{C}$
+zu sehen.
 
 
 \section{Fazit und Ausblick}
 
-aus altem Auswertungen.tex (neues: s. Storn, Puttkams)
+Wir konnten in dieser Arbeit die primale-duale Iteration aus
+\cite{Bar15} für eine nichtkonforme Formulierung des ROF-Modellproblems
+implementieren und in numerischen Experimenten untersuchen. 
+Die für die Implementierung dort garantierten Raten konnten wir deutlich 
+übertreffen, auch wenn hierbei angemerkt werden muss, dass wir in den
+entsprechenden Beispielen mit reguläreren Funktionen gerechnet haben
+als nur Funktionen beschränkter Variation.
+Ansonsten widersprachen die durch die Experimente getroffen Schlussfolgerungen
+keinen in dieser Arbeit getätigten theoretischen Aussagen.
+Weiterhin fanden wir experimentell Indizien, die für einige spezielle Wahlen
+von Parametern für die primale-duale Iteration sprechen, insbesondere
+für den Parameter $\tau$.
+Das einzige Beispiel, bei dem adaptive Netzverfeinerung in der 
+AFEM-Routine für einige Größen bessere Konvergenzraten erzielt als uniforme
+Netzverfeinerung, war ein Beispiel mit klar definierter Unstetigkeitsmenge.
+Ist Rechenzeit kein limitierender Faktor, ist davon auszugehen, dass für
+solche Beispiele der adaptive Algorithmus überlegen ist.
 
-In diesen Abschnitt werten wir die in \Cref{chap:experiments} erhaltenen
-Ergebnisse aus.
-
-\todo[inline]{folgendes weniger ausführlich einbringen, wohl
-auch eher im Auswertungskapitel ,,in Bartels wird in
-citeEntsprechendesLemma die garantierte Rate für \ldots bewiesen. In unseren
-Experimenten \ldots}
-
-====================
-
+Zum Schluss möchten wir noch einige Punkte nennen, die man als nächstes
+untersuchen könnte.
 \Cref{fig:parTauNoConvergence} legt nahe, über nicht konstante Wahlen für
 $\tau$ nachzu\-denken, die mög\-lich\-er\-wei\-se das alternierende Verhalten in
-\Cref{fig:parTauNoConvergenceEnergy} verhindern könnte
+\Cref{fig:parTauNoConvergenceEnergy} verhindern könnten.
+Außerdem können die Randdaten verallgemeinert werden, um so eine größere
+Menge von Beispielen betrachten zu können und insbesondere bei Bildern
+als Eingangssignal keinen schwarzen Rand mehr ergänznen zu müssen. 
+Das für diese Arbeit implemtierte Programm ist an einigen Stellen, zum Beispiel
+beim Aufstellen der rechten Seite des Gleichungssystems in der primalen-dualen
+Iteration, noch unter der Annahme optimiert, dass die Freiheitsgrade die inneren
+Kanten sind.  
+Dies kann aber auch aufgehoben werden.
+Weiterhin kann die in \cite{Bar15} gereichte Implementierung der primalen-dualen
+Iteration für die konforme Formulierung des ROF-Modellproblems angepasst werden,
+um sie vergleichbar zu machen mit der Implementierung in dieser Arbeit. 
+Kann man für diese noch einen Verfeinerungsindikator entwickeln, so könnte man
+diese auch in einen adaptiven Algorithmus implementieren für weitere Vergleiche.
+In der Theorie bleibt interessant, ob garantierte Konvergenzraten für unsere
+Implementierung bewiesen werden können.
 
-====================
-
-Punkte auf die bei den Auswertungen eingegangen werden sollte
-
-Raten
-
-Verfeinerungsindikator
-AUSBLICK (vielleicht in die Arbeit schreiben)
-  
-  Randdaten verallgemeinern
-    nochmal aufschreiben wo CR10 angenommen wird und eventuell darauf verweisen 
-    im Ausblick (bis dahin notieren welche Funktionen und in welchem Maß)
-    (in solvePrimalDualFormulation zum Erstellen der rechten Seite)
-    
-  Bartels Code anpassen und vergleicen
-
-BEI allen Triangulierungsbildern die Freiheitsgrade ergänzen, mglsweise auch
-bei allen Lösungsplots
+\todo[inline]{BEI allen Triangulierungsbildern die Freiheitsgrade ergänzen, mglsweise auch
+bei allen Lösungsplots}
