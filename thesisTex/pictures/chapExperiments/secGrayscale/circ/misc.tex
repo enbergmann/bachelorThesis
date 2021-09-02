@@ -13,21 +13,21 @@
 
 \begin{tikzpicture}
   \begin{loglogaxis}[
-    legend pos = south east, 
-    scale = 1.5, 
+    legend pos = north west, 
+    scale = 1, 
     xlabel = {Anzahl der Freiheitsgrade},
     ymajorgrids=true,
-    legend entries = {
-      adaptiv,
-      uniform,
-      Anzahl der Iterationen,
-      Zeit in Sekunden,
-      }
+    %legend entries = {
+    %  adaptiv,
+    %  uniform,
+    %  Anzahl der Iterationen,
+    %  Zeit in Sekunden,
+    %  }
     ]
-    \addlegendimage{solid, thick, mark=*, mark options = {scale = .8}}
-    \addlegendimage{dashed, thick, mark=diamond*, mark options = solid}
-    \addlegendimage{no markers, ultra thick, blue}
-    \addlegendimage{no markers, ultra thick, red}
+    %\addlegendimage{solid, thick, mark=*, mark options = {scale = .8}}
+    %\addlegendimage{dashed, thick, mark=diamond*, mark options = solid}
+    %\addlegendimage{no markers, ultra thick, blue}
+    %\addlegendimage{no markers, ultra thick, red}
 
     % adaptive
     \addplot [solid, thick, blue, mark = *, mark options = {scale = .8}] 
