@@ -1278,7 +1278,8 @@ der exakten Lösung zu sein scheint, wie nach \Cref{chap:introduction} erwartet.
 \end{figure}
 Zunächst sehen wir in \Cref{fig:circConvComparison} sowohl für adaptive
 als auch uniforme Netzverfeierung, dass es für die beiden Eingangssignal 
-keine deutlichen Unterschiede gibt. 
+bis $10^6$ Freiheitsgrade keine deutlichen Unterschiede im Verlauf
+des Verfeinerungsindikators und seiner Anteile gibt. 
 \begin{figure}[p]
   \centering
   \begin{subfigure}[b]{.48\linewidth}
@@ -1301,7 +1302,7 @@ keine deutlichen Unterschiede gibt.
     \centering
     \caption{Triangulierung stetig Level Final}
     \includegraphics[trim = 100 30 80 20, clip, width=\linewidth]
-      {pictures/chapExperiments/secGrayscale/circ/cont/adaptive/lvl25/triangulation.png}
+      {pictures/chapExperiments/secGrayscale/circ/cont/adaptive/lvl26/triangulation.png}
     \label{fig:circContFinalTriang}
   \end{subfigure}
   \quad
@@ -1309,7 +1310,7 @@ keine deutlichen Unterschiede gibt.
     \centering
     \caption{Triangulierung unstetig Level Final}
     \includegraphics[trim = 100 30 80 20, clip, width=\linewidth]
-      {pictures/chapExperiments/secGrayscale/circ/disc/adaptive/lvl23/triangulation.png}
+      {pictures/chapExperiments/secGrayscale/circ/disc/adaptive/lvl26/triangulation.png}
     \label{fig:circDiscFinalTriang}
   \end{subfigure}
   \caption{Triangulierung für InSi circle stetig und unstetig.}
@@ -1321,7 +1322,7 @@ keine deutlichen Unterschiede gibt.
     \centering
     \caption{Lösung circ stetig}
     \includegraphics[trim = 40 30 30 30, clip, width=\linewidth]
-      {pictures/chapExperiments/secGrayscale/circ/cont/adaptive/lvl25/solution.png}
+      {pictures/chapExperiments/secGrayscale/circ/cont/adaptive/lvl28/solution.png}
     \label{fig:circContSol}
   \end{subfigure}
   \quad
@@ -1329,7 +1330,7 @@ keine deutlichen Unterschiede gibt.
     \centering
     \caption{Lösuns stetig final entlang der Achsen}
     \includegraphics[trim = 50 30 50 20, clip, width=\linewidth]
-      {pictures/chapExperiments/secGrayscale/circ/cont/adaptive/lvl25/solutionAxis.png}
+      {pictures/chapExperiments/secGrayscale/circ/cont/adaptive/lvl28/solutionAxis.png}
     \label{fig:circContSolAxis}
   \end{subfigure}
 
@@ -1337,7 +1338,7 @@ keine deutlichen Unterschiede gibt.
     \centering
     \caption{Lösung circ unstetig}
     \includegraphics[trim = 40 30 30 30, clip, width=\linewidth]
-      {pictures/chapExperiments/secGrayscale/circ/disc/adaptive/lvl23/solution.png}
+      {pictures/chapExperiments/secGrayscale/circ/disc/adaptive/lvl26/solution.png}
     \label{fig:circDiscSol}
   \end{subfigure}
   \quad
@@ -1345,7 +1346,7 @@ keine deutlichen Unterschiede gibt.
     \centering
     \caption{Lösuns unstetig final entlang der Achsen}
     \includegraphics[trim = 50 30 50 20, clip, width=\linewidth]
-      {pictures/chapExperiments/secGrayscale/circ/disc/adaptive/lvl23/solutionAxis.png}
+      {pictures/chapExperiments/secGrayscale/circ/disc/adaptive/lvl26/solutionAxis.png}
     \label{fig:circDiscSolAxis}
   \end{subfigure}
   \caption{Lösung für Eingangssignal circle stetig und unstetig, wobei die
@@ -1382,8 +1383,17 @@ Dies wird bei diesem Beispiel daran liegen, dass es klar nur sinnvoll sein kann,
 bei der Unstetigkeit zu verfeinern, welche von der Triangulierung 
 natürlich nicht perfekt aufgelöst werden kann.
 %TODO
+
 TODO alle Raten nocht mal aufschreiben und mit den bisherigen Experimenten 
 vergleichen und insbesondere $f_1$
+
+TODO wahrscheinlich lässt sich sagen, dass die Raten für nicht H10 Funktionen,
+also tatsächlich BV Funktionen, für adaptiv besser ist, als ist adaptiv 
+doch besser
+
+TODO Zeit von adaptiv und uniform vielleicht nochmal angucken im misc plot und,
+falls sich da was eindeutiges rausstellt, den Plot nochmal für andere
+Experimente erstellen um da eine Aussage zu treffen
 
 
 \section{Fazit und Ausblick}

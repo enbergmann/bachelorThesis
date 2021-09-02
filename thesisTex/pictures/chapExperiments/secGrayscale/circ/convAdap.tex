@@ -1,0 +1,61 @@
+\documentclass[tikz]{standalone}
+\usepackage{amsmath, amsfonts, amssymb, amsthm, mathtools, mathabx}
+\usepackage{pgfplots, pgfplotstable}
+\usepackage{datatool}
+
+\pgfplotsset{compat=newest,
+	axis background/.style={fill=black!5!white},
+	grid style={densely dotted,semithick}
+  }
+
+\begin{document}
+\pgfplotstableset{col sep = comma}
+
+\begin{tikzpicture}
+  \begin{loglogaxis}[
+    legend pos = north east, 
+    scale = 1.5, 
+    xlabel = {Anzahl der Freiheitsgrade},
+    ymajorgrids=true,
+    legend entries = {
+      Eingangssignal $f_\textup{C}$,
+      Eingangssignal $f_\textup{DC}$,
+      $\eta_\mathcal{T}$,
+      $\eta_{\textup{V},\mathcal{T}}$,
+      $\eta_{\textup{J},\mathcal{T}}$,
+      }
+    ]
+    \addlegendimage{solid, thick, mark=*, mark options = {scale = .8}}
+    \addlegendimage{dashed, thick, mark=diamond*, mark options = solid}
+    \addlegendimage{no markers, ultra thick, blue}
+    \addlegendimage{no markers, ultra thick, cyan}
+    \addlegendimage{no markers, ultra thick, magenta}
+
+    % cont
+    \addplot [solid, ultra thick, blue, mark = *, mark options = {scale = .8}] 
+    table[x = {nrDof}, y = {eta}] 
+    {cont/adaptive/lvl28/lvlOutput.csv}; 
+
+    \addplot [solid, thick, cyan, mark = *, mark options = {scale = .8}] 
+    table[x = {nrDof}, y = {etaVol}] 
+    {cont/adaptive/lvl28/lvlOutput.csv}; 
+
+    \addplot [solid, thick, magenta, mark = *, mark options = {scale = .8}] 
+    table[x = {nrDof}, y = {etaJumps}] 
+    {cont/adaptive/lvl28/lvlOutput.csv}; 
+
+    % disc 
+    \addplot [dashed, ultra thick, blue, mark = diamond*, mark options = solid] 
+    table[x = {nrDof}, y = {eta}] 
+    {disc/adaptive/lvl26/lvlOutput.csv}; 
+
+    \addplot [dashed, thick, cyan, mark = diamond*, mark options = solid] 
+    table[x = {nrDof}, y = {etaVol}] 
+    {disc/adaptive/lvl26/lvlOutput.csv}; 
+
+    \addplot [dashed, thick, magenta, mark = diamond*, mark options = solid] 
+    table[x = {nrDof}, y = {etaJumps}] 
+    {disc/adaptive/lvl26/lvlOutput.csv}; 
+  \end{loglogaxis}
+\end{tikzpicture}
+\end{document}
