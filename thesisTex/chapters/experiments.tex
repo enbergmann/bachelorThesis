@@ -1,312 +1,71 @@
-\newcommand{\precDTL}{5} % TODO choose something larger than k for smallest 1e-k
-                         %      ever seen in plots
-In diesem abschließenden Kapitel möchten wir nun die in
-\Cref{chap:implementation} beschriebene Realisierung von
+In diesem abschließenden Kapitel möchten wir die Ergebnisse der in
+\Cref{chap:implementation} beschriebenen Realisierung von
 \Cref{alg:primalDualIteration} mit Abbruchkriterium
 \eqref{eq:terminationCriterion} im Solve-Schritt der AFEM-Schleife aus
-\Cref{fig:afemLoop} an einigen Benchmark-Problemen untersuchen.
-Dabei benutzen wir die Bezeichnungen aus \Cref{alg:primalDualIteration} und
-schreiben $\ucrt$ für $\ucr$ sowie $\bar\Lambda_{0,\Tcal}$ für $\bar\Lambda_0$
-aus \Cref{thm:convergenceIteration} bezüglich einer Triangulierung $\Tcal$ .
-Zunächst möchten wir alle Parameterwahlen aufführen, die in allen 
-Experimenten gleich gesetzt werden, sofern nicht anders angegeben.
-Als Startwert für die Iteration auf dem ersten Level wählen wir
-$u_0\equiv 0$ und auf den darauffolgenden Leveln eine Prolongation wie zum
-Ende von \Cref{sec:programFlow} beschrieben, womit die Wahl des Startwerts
-der ersten Levels keinen nennenswerten Einfluss auf die Dauer des Experiments
-oder die Güte der Ergebnisse hat. 
-Für jeden Aufruf der primalen-dualen Iteration wählen wir $\Lambda_0$ wie in
-\Cref{eq:choiceInitialDualVariableImplementation} angegeben.
-Dabei konstruieren wir Probleme, bei denen die exakte Lösung bekannt ist,
-nach \Cref{sec:constructionInputSignal}. 
-Bei diesen ist ein Argument $r$ stets aus $[0,\infty)$.
+\Cref{fig:afemLoop} untersuchen.
+Bezüglich einer Triangulierung $\Tcal$ schreiben wir dabei $\ucrt$ und
+$\bar\Lambda_{0,\Tcal}$ für $\ucr$ und $\bar\Lambda_0$ aus
+\Cref{thm:convergenceIteration} sowie $(\ujt, \Lambda_{j,\Tcal})_{j\in\Nbb}$
+für die Iterate $\left(u_j, \Lambda_j\right)_{j\in\Nbb}$  von
+\Cref{alg:primalDualIteration}.
+Zunächst möchten wir die Belegung für alle Parameter aus den Tabellen
+\ref{tab:paramsMisc}--\ref{tab:paramsExperiment}, die für ein Experiment
+relevant sind, festlegen.
+Die Wahlen von $\tau$ aus \Cref{alg:primalDualIteration} und von $\epsstop$ für
+das Abbruchkriterium \eqref{eq:terminationCriterion} begründen wir in
+\Cref{sec:choiceOfParameters} experimentell. 
+Außerdem untersuchen wir in \Cref{sec:experimentsWithExactSolution} die Wahl
+des Parameters $\gamma$ für den Verfeinerungsindikator aus
+\Cref{def:refinementIndicator}.
+Eine Übersicht über alle somit festgelegten Standardwerte ist in
+\Cref{tab:parameterStandardValues} zu finden. 
+Wir werden in einem Experiment die Wahl eines Parameters nur
+erwähnen, wenn diese vom Standardwert abweicht.
+In \Cref{tab:usedBenchmarks} wird für alle verwendeten Benchmark-Datein
+aufgelistet, für welche Abbildungen die Ergebnisse des entsprechenden
+Programmaufrufs genutzt wurden.
+
 \begin{table}[p]
   \centering
-  \begin{tabular}{c|c}
+  \begin{tabular}{c|p{9.5cm}}
     \hline 
     Parametername & Standardwert\\
     \hline 
     \texttt{degree4Integrate}&
     $10$\\
     \texttt{geometry} &
-    \texttt{'BigSquare'} (\texttt{'Square'})\\
-    \texttt{parTheta} &
+    \texttt{'BigSquare'} für Experimente mit bekannter exakter Lösung \newline
+    \texttt{'Square'} für Experimente mit Graufarbenbild als Eingangssignal\\
+    \texttt{initialRefinementLevel} &
+    $0$\\
+    \texttt{parTheta}, $\theta$ &
     $0.5$\\
     \texttt{minNrDof} &
     $10^8$\\
     \texttt{useProlongation} &
     \texttt{true}\\
-    \texttt{parGamma} &
+    \texttt{parGamma}, $\gamma$ &
     $1$\\
+    \texttt{d}, $d$ &
+    $2$\\
     \texttt{u0Mode} &
     \texttt{zeros}\\
-    \texttt{epsStop} &
+    \texttt{epsStop}, $\epsstop$ &
     $10^{-4}$\\
-    \texttt{parTau} &
+    \texttt{parTau}, $\tau$ &
     $1$\\
     \texttt{maxIter} &
     $10^{12}$\\
-    \texttt{parAlpha} &
-    $1$ ($10^4$)\\
+    \texttt{parAlpha}, $\alpha$ &
+    $\alpha$ für Experimente mit Eingangssignal $f_\alpha$\newline
+    $10^4$ für Experimente mit Eingangssignal \texttt{cameraman} \\
+    \texttt{parBeta}, $\beta$ &
+    $1$ für Experimente mit Eingangssignal $f_\alpha$\\
     \hline
   \end{tabular}
-  \caption{Parameter für Experiment mit Funktion als Eingangssignal, für welche
-  die exakte Lösung bekannt ist und in Klammern die Werte für ein 
-  Graufarbenbild als Eingangssignal, falls sich diese unterscheiden}
+  \caption{Wahl der relevanten Parameter für die Experimente}
   \label{tab:parameterStandardValues}
 \end{table} 
-Eine Übersicht über die Wahl aller für die Experimente relevanten Parameter aus
-den Tabellen \ref{tab:paramsMisc}--\ref{tab:paramsExperiment}, deren Wahl in
-diesem und den folgenden beiden Abschnitten \ref{sec:choiceOfParameters} und
-\ref{sec:experimentsWithExactSolution}, teilweise auch experimentell, begründet
-wird, ist in der Tabellen \ref{tab:parameterStandardValues} zu finden.
-Diese werden immer so gewählt, wenn nicht explizit etwas anderes angegeben
-wird.
-Als besonderes Augenemerk betrachten wir dabei zunächst zwei Eingangssignale,
-um in einigen Experimenten in \Cref{sec:choiceOfParameters} die Parameter für
-die primale-duale Iteration zu ermitteln, die in allen weiteren Experimenten
-genutzt werden sollen.
-Andere Funktionen werden wir bei Bedarf betrachten, um bestimmte Eigenschaften
-zu untersuchen im Vergleich zu diesen beiden Benchmark-Problemen.
-Für ein Experiment mit exakter Lösung betrachten wir für einen Parameter
-$\beta\geq 1/2$, wobei wir $\beta =1$ wählen, die Funktion
-\begin{align*}
-  u(r)&\coloneqq
-  \begin{cases}
-    1, 
-    & \text{falls } r\in \left[0,\frac{1}{6}\right]\!,\\
-    1+(6r-1)^\beta, 
-    & \text{falls } r\in \left(\frac{1}{6}, \frac{1}{3}\right]\!,\\
-    2, 
-    & \text{falls } r\in \left(\frac{1}{3}, \frac{1}{2}\right]\!,\\
-    2\left(\frac{5}{2}-3r\right)^\beta, 
-    & \text{falls } r\in \left(\frac{1}{2}, \frac{5}{6}\right]\!,\\
-    0, 
-    & \text{falls } r\in \left(\frac{5}{6}, \infty\right)\!,\\
-  \end{cases}
-\end{align*}
-und wählen
-\begin{align*}
-  \sgn\big(\partial_r u(r)\big) 
-  &\coloneqq
-  \begin{cases}
-    12r-36r^2, 
-    & \text{falls } r\in \left[0,\frac{1}{6}\right]\!,\\
-    1, 
-    & \text{falls } r\in \left(\frac{1}{6}, \frac{1}{3}\right]\!,\\
-    \cos(\pi(6r-2)), 
-    & \text{falls } r\in \left(\frac{1}{3}, \frac{1}{2}\right]\!,\\
-    -1, 
-    & \text{falls } r\in \left(\frac{1}{2}, \frac{5}{6}\right]\!,\\
-    -\frac{1+\cos(\pi(6r-5))}{2}, 
-    & \text{falls } r\in \left(\frac{5}{6}, \infty\right)\!.
-  \end{cases}
-\end{align*}
-Nach \Cref{eq:constructionInputSignal} ist $u$ mit dieser Wahl von
-$\sgn\big(\partial_r u\big)$ die Lösung von \Cref{prob:continuousProblem} mit
-Eingangssignal
-\begin{align}
-  \label{eq:inputSignalF01}
-  f_\alpha(r)
-  &=
-  \begin{cases}
-    \alpha-12(2-9r), 
-    & \text{falls } r\in \left[0,\frac{1}{6}\right]\!,\\
-    \alpha\left(1+(6r-1)^\beta\right)-\frac{1}{r}, 
-    & \text{falls } r\in \left(\frac{1}{6}, \frac{1}{3}\right]\!,\\
-    2\alpha+6\pi\sin(\pi(6r-2))-\frac{1}{r}\cos(\pi(6r-2)), 
-    & \text{falls } r\in \left(\frac{1}{3}, \frac{1}{2}\right]\!,\\
-    2\alpha\left(\frac{5}{2}-3r\right)^\beta+\frac{1}{r},
-    & \text{falls } r\in \left(\frac{1}{2}, \frac{5}{6}\right]\!,\\
-    -3\pi\sin(\pi(6r-5))+\frac{1+\cos(\pi(6r-5))}{2r}, 
-    & \text{falls } r\in \left(\frac{5}{6}, \infty\right)\!.
-  \end{cases}
-\end{align}
-Das Eingangssignal $f_\alpha$ für zwei Wahlen von $\alpha$ und die exakte
-Lösung $u$ können in \Cref{fig:f01Plots} betrachtet werden.
-Wir können anhand von \Cref{fig:f01Plots} auch feststellen, dass für große
-$\alpha$ die Interpretation des ROF-Modells aus \Cref{chap:introduction}
-zutrifft, denn rein optisch gilt für $\alpha=10^4$ annähernd $f_\alpha=\alpha
-u$.
-Ebenfalls nach \Cref{sec:constructionInputSignal} können die schwachen
-Gradienten von $u$ und $f_\alpha$ bestimmt werden mithilfe der partiellen 
-Ableitungen
-\begin{align*}
-  \partial_r f_\alpha(r)
-  &=
-  \begin{cases}
-    108,
-    & \text{falls } r\in\left[0,\frac{1}{6}\right]\!,\\
-    6\alpha\beta(6r-1)^{\beta-1} +\frac{1}{r^2}, 
-    & \text{falls } r\in\left(\frac{1}{6},\frac{1}{3}\right]\!,\\
-    \left(36\pi^2+\frac{1}{r^2}\right)\cos(\pi(6r-2))
-    + \frac{6\pi}{r}\sin(\pi(6r-2)), 
-    & \text{falls } r\in\left(\frac{1}{3},\frac{1}{2}\right]\!,\\
-    -\left(6\alpha\beta\left( \frac{5}{2}-3r \right)^{\beta-1}+
-    \frac{1}{r^2}\right),
-    & \text{falls } r\in\left(\frac{1}{2},\frac{5}{6}\right]\!,\\
-    -\left( \left( 18\pi^2+\frac{1}{2r^2} \right)\cos(\pi(6r-5))
-    +\frac{1}{2r^2} + \frac{3\pi}{r}\sin(\pi(6r-5))\right)\!, 
-    &\text{falls } r\in\left(\frac{5}{6},\infty\right)\!,
-  \end{cases}
-\end{align*}
-und 
-\begin{align*}
-  \partial_r u(r) 
-  &= 
-  \begin{cases}
-    0,
-    & \text{falls } r\in\left[0,\frac{1}{6}\right]\!,\\
-    6\beta(6r-1)^{\beta-1}, 
-    & \text{falls } r\in\left(\frac{1}{6},\frac{1}{3}\right]\!,\\
-    0, 
-    & \text{falls } r\in\left(\frac{1}{3},\frac{1}{2}\right]\!,\\
-    -6\beta\left( \frac{5}{2}-3r \right)^{\beta-1},
-    & \text{falls } r\in\left(\frac{1}{2},\frac{5}{6}\right]\!,\\
-    0,
-    &\text{falls } r\in\left(\frac{5}{6},\infty\right)\!.
-  \end{cases}
-\end{align*} 
-Durch Kenntnis des schwachen Gradienten von $u$ erhalten wir
-für die exakte Energie die Approximation
-$
-\DTLloaddb{db}{data/paramsReducedStandardF01.csv}
-\DTLassign{db}{1}{\exactEnergy=exactEnergy} 
-\DTLgdeletedb{db}
-E(u)\approx\DTLround{\exactEnergy}{\exactEnergy}{\precDTL}\exactEnergy
-$ für das Experiment mit $\alpha=1$ und
-$
-\DTLloaddb{db}{data/paramsReducedStandardF01Alpha1e4.csv}
-\DTLassign{db}{1}{\exactEnergy=exactEnergy} 
-\DTLgdeletedb{db}
-E(u)\approx\DTLround{\exactEnergy}{\exactEnergy}{\precDTL}\exactEnergy
-$ für das Experiment mit $\alpha=10^4$,
-mit denen wir die jeweiligen Ergebnisse der Experimente vergleichen können.
-\begin{figure}[p]
-  \centering
-  \begin{subfigure}[b]{.48\linewidth}
-    \centering
-    \caption{$f_1$}
-    \includegraphics[trim = 40 30 30 30, clip, width=\linewidth]
-      {pictures/chapExperiments/secGeneralInfo/f01Plots/inSi1.png}
-    \label{fig:f01InSi}
-  \end{subfigure}
-  \quad
-  \begin{subfigure}[b]{.48\linewidth}
-    \centering
-    \caption{$f_1$ entlang der x- und y-Achse}
-    \includegraphics[trim = 50 30 50 20, clip, width=\linewidth]
-      {pictures/chapExperiments/secGeneralInfo/f01Plots/inSi1Axis.png}
-    \label{fig:f01InSiAxis}
-  \end{subfigure}
-
-  \begin{subfigure}[b]{.48\linewidth}
-    \centering
-    \caption{$f_{10^4}$}
-    \includegraphics[trim = 40 30 30 30, clip, width=\linewidth]
-      {pictures/chapExperiments/secGeneralInfo/f01Plots/inSi1e4.png}
-    \label{fig:f01AlphaLargeInSi}
-  \end{subfigure}
-  \quad
-  \begin{subfigure}[b]{.48\linewidth}
-    \centering
-    \caption{$f_{10^4}$ entlang der x- und y-Achse}
-    \includegraphics[trim = 50 30 50 20, clip, width=\linewidth]
-      {pictures/chapExperiments/secGeneralInfo/f01Plots/inSi1e4Axis.png}
-    \label{fig:f01AlphaLargeInSiAxis}
-  \end{subfigure}
-
-  \begin{subfigure}[b]{.48\linewidth}
-    \centering
-    \caption{$u$}
-    \includegraphics[trim = 40 30 30 30, clip, width=\linewidth]
-      {pictures/chapExperiments/secGeneralInfo/f01Plots/exactSolution.png}
-    \label{fig:f01ExactSol}
-  \end{subfigure}
-  \quad
-  \begin{subfigure}[b]{.48\linewidth}
-    \centering
-    \caption{$u$ entlang der x- und y-Achse}
-    \includegraphics[trim = 50 30 50 20, clip, width=\linewidth]
-      {pictures/chapExperiments/secGeneralInfo/f01Plots/exactSolutionAxis.png}
-    \label{fig:f01ExactSolAxis}
-  \end{subfigure} 
-  \caption{Eingangssignal $f_\alpha$ und exakte Lösung $u$ sowie deren
-  Darstellungen entlang der x-Achse (blau) und der y-Achse (rot) für
-  $\alpha\in\{1,10^4\}$.}
-  \label{fig:f01Plots}
-\end{figure}
-Als initiale Geometrie, das heißt die Geometrie für das erste Level des
-AFEM-Al\-go\-rith\-mus, nutzen wir in den Experimenten mit exakter Lösung
-\texttt{BigSquare} des AFEM-Pakets ohne initiale Rotverfeinerung, zu sehen in
-\Cref{fig:triangBigSquare}, da diese den Einheitskreis, das heißt den Träger
-des Eingangssignals und der exakten Lösung nach
-\Cref{sec:constructionInputSignal}, enthält.
-Wenn nicht anders angegeben, dann betrachten wir dieses Beispiel stets mit
-$\alpha=1$, also mit Eingangssignal $f_1$. 
-Diese Wahl für $\alpha$ tätigen wir auch für die anderen Probleme mit 
-exakter Lösung, falls nichts anderes angegeben ist.
-
-Für ein Problem mit unstetigem Eingangssignal legen wir besonderes
-Augenmerk auf das Graufarbenbild \texttt{cameraman} aus \cref{fig:cameraman}
-als Eingangssignal. 
-Wir betrachten dieses Beispiel stets mit $\alpha=10^4$.
-Auch für dieses komplexere Beispiel, bei der selbst eine stückweise
-Beschreibung durch Polynome augenscheinlich nur schwer möglich ist, sowie in
-allen weiteren Experimenten haben selbst deutlich höhere Integrationsgrade als
-$10$ zu keinen veränderten Raten geführt. 
-Diese Wahl des Integrationsgrads erscheint daher als ausreichend.
-Da außerdem in dieser Implementierung darauf geachtet wurde, die
-\texttt{integrate} Methode des AFEM-Softwarepakets \cite{Car09} nicht während
-der primalen-dualen Iteration aufzurufen, hat eine möglicherweise zu hohe Wahl
-des Integrationsgrads keinen relevanten Effekt auf die Programmlaufzeit und
-kann somit ohne Sorge als 10 gewählt werden.
-Diese Wahl des Integrationsgrads gilt nur für die Methode \texttt{errorCRL2}
-des AFEM-Softwarepakets zur Berechnung des Fehlers nicht, da diese unverändert
-übernommen wurde und den Grad 12 nutzt.
-Fur Experiment mit Graufarbenbild als Eingangssignal nutzen wir als initiale
-Triangulierung \texttt{Square} des AFEM-Softwarepakets ohne initiale
-Rotverfeinerung, zu sehen in \Cref{fig:triangSquare}.
-
-\begin{figure}[p]
-  \centering
-  \begin{subfigure}[b]{.48\linewidth}
-    \centering
-    \caption{\texttt{BigSquare}}
-    \includegraphics[trim = 90 30 90 20, clip, width=\linewidth]
-      {pictures/chapExperiments/secGeneralInfo/bigSquareTriang.png}
-    \label{fig:triangBigSquare}
-  \end{subfigure}
-  \quad
-  \begin{subfigure}[b]{.48\linewidth}
-    \centering
-    \caption{\texttt{Square}}
-    \includegraphics[trim = 90 30 90 20, clip, width=\linewidth]
-      {pictures/chapExperiments/secGeneralInfo/squareTriang.png}
-    \label{fig:triangSquare}
-  \end{subfigure}
-  \caption{In den Experimenten genutzte initiale Triangulierungen.}
-  \label{fig:initialTriangulations}
-\end{figure}
-Führen wir ein Experiment mit adaptiver Netzverfeinerung durch, so wählen wir
-den Bulk-Parameter für den Mark-Schritt des AFEM-Algorithmus $\theta=0.5$ und
-den Parameter $\gamma=1$ für den Verfeinerungsindikator aus 
-\Cref{def:refinementIndicator}.
-Außerdem betrachten wir zur Wahl des Parameters $\gamma$ auf dem
-Verfeinerungsindikator in \Cref{sec:experimentsWithExactSolution} ein
-Experiment.
-Auf die Wahl der Parameter $\tau$ und $\epsstop$ für die primale-duale
-Iteration werden wir im folgenden \Cref{sec:choiceOfParameters} eingehen.
-Die maximale Iterationszahl ist, mit Ausnahme von einem Experimente in
-\Cref{sec:choiceOfParameters}, mit $10^{12}$ so gewählt, dass diese nie 
-der Grund für das Beenden einer primalen-dualen Iteration ist, also stets das
-Abbruchkriterium aus \eqref{eq:terminationCriterion} für den Abbruch
-verantwortlich ist.
-Die minimale Anzahl der Freiheitsgrade ist so gewählt, dass AFEM-Routine
-manuell oder durch Server beendet wird, bevor Sie durch erreichen 
-der Freiheitsgrade beendet wird. Dies geschah in allen Experimenten bei 
-ungefähr $10^6$ Freiheitsgraden.
-
 \begin{table}[p]
   \centering
   \begin{tabular}{c|c}
@@ -382,12 +141,239 @@ ungefähr $10^6$ Freiheitsgraden.
     \ref{fig:circConvUniform}\\
     \hline
   \end{tabular}
-  \caption{Eingabe \texttt{benchmark} für \texttt{startAlgorithmCR} und die
-  Abbildungen, die auf den Ergebnissen des jeweiligen Experiments basieren}
+  \caption{Eingabeparameter \texttt{benchmark} für \texttt{startAlgorithmCR},
+    um die Rechnung zu einem Experiment zu starten, und die Abbildungen, die
+    auf den Ergebnissen dieses Experiments basieren} 
   \label{tab:usedBenchmarks}
 \end{table} 
 
+Als Startwert für die primale-duale Iteration des ersten Levels der
+AFEM-Routine wählen wir $u_0\equiv 0$. 
+Für die Iteration der darauffolgenden Level wählen wir die zum Ende von
+\Cref{sec:programFlow} beschriebene Prolongation des Ergebnisses des
+jeweils vorherigen Levels.
+In allen Experimenten hatte dadurch die Wahl der Startwerts für die Iteration
+des ersten Levels keinen nennenswerten Einfluss auf die Dauer des Experiments
+oder die Güte der Ergebnisse. 
+Für jeden Aufruf der primalen-dualen Iteration auf einer Triangulierung $\Tcal$
+wählen wir dann $\Lambda_{0,\Tcal}$ wie in
+\Cref{eq:choiceInitialDualVariableImplementation} angegeben.
+Eingangssignale für Experimente, bei denen die exakte
+Lösung bekannt ist, konstruieren wir nach \Cref{sec:constructionInputSignal}.
+Die schwachen Ableitungen dieser Eingangssignale und der entsprechenden exakten
+Lösungen berechnen wir ebenfalls nach \Cref{sec:constructionInputSignal}.
+Dabei sei das Argument $r$ einer Funktion stets aus $[0,\infty)$.
+\begin{figure}[p]
+  \centering
+  \begin{subfigure}[b]{.48\linewidth}
+    \centering
+    \caption{\texttt{BigSquare}}
+    \includegraphics[trim = 90 30 90 20, clip, width=\linewidth]
+      {pictures/chapExperiments/secGeneralInfo/bigSquareTriang.png}
+    \label{fig:triangBigSquare}
+  \end{subfigure}
+  \quad
+  \begin{subfigure}[b]{.48\linewidth}
+    \centering
+    \caption{\texttt{Square}}
+    \includegraphics[trim = 90 30 90 20, clip, width=\linewidth]
+      {pictures/chapExperiments/secGeneralInfo/squareTriang.png}
+    \label{fig:triangSquare}
+  \end{subfigure}
+  \caption{Initiale Triangulierung für Experimente mit bekannter exakter Lösung
+    (a) und für Experimente mit Graufarbenbild als Eingangssignal (b)}
+  \label{fig:initialTriangulations}
+\end{figure}
+Als Geometrie für das erste Level des AFEM-Al\-go\-rith\-mus nutzen wir in
+Experimenten mit bekannter exakter Lösung die Triangulierung aus
+\Cref{fig:triangBigSquare} und in Experimenten mit einem Graufarbenbild als
+Eingangssignal die Triangulierung aus \Cref{fig:triangSquare}.
+Wir nutzen adaptive Netzverfeinerungen und dafür den Bulk-Parameter
+$\theta=0.5$ für den Mark-Schritt des AFEM-Algorithmus und dem Parameter
+$\gamma=1$ für den Verfeinerungsindikator aus \Cref{def:refinementIndicator}.
+Die maximale Iterationszahl wurde mit $10^{12}$ so gewählt, dass diese nie
+Grund für das Beenden der primalen-dualen Iteration war.
+Dementsprechend ist das Abbruchkriterium aus \eqref{eq:terminationCriterion}
+für den Abbruch der Iteration verantwortlich.
+Die minimale Anzahl der Freiheitsgrade, welche eine Triangulierung während der
+AFEM-Routine zum Abbrechen erreichen soll, ist mit $10^8$ so gewählt, dass die
+verfügbaren Ressourcen des verwendeten Rechners in der Regel ausgenutzt
+werden und die Rechnungen manuell beendet werden müssen.
+Dies geschah in allen Experimenten bei ungefähr $10^6$ Freiheitsgraden.
+Beispielrechnungen mit verschiedenen Eingangssignalen ergaben, dass deutlich
+höhere Integrationsgrade als $10$ zu keinen veränderten Konvergenzraten
+führen. 
+Diese Wahl des Integrationsgrads erscheint daher als ausreichend.
+Da außerdem die \texttt{integrate} Methode des AFEM-Softwarepakets \cite{Car09}
+nicht während der primalen-dualen Iteration aufgerufen werden muss, hat eine
+möglicherweise zu hohe Wahl des Integrationsgrads keinen signifikanten Einfluss
+auf die Programmlaufzeit.
+Nur die Methode \texttt{errorCRL2} des AFEM-Softwarepakets, die zur Berechnung
+des exakten $L^2$-Fehlers verwendet wird, nutzt den Integrationsgrad 12, da
+diese unverändert übernommen wurde.
 
+Nun möchten wir ein Eingangssignal definieren, welches in mehreren der
+folgenden Abschnitte verwendet wird.
+Sei $\beta\geq 1/2$, wobei wir stets $\beta=1$ wählen. 
+Wir betrachten die Funktion
+\begin{align*}
+  u(r)&\coloneqq
+  \begin{cases}
+    1, 
+    & \text{falls } r\in \left[0,\frac{1}{6}\right]\!,\\
+    1+(6r-1)^\beta, 
+    & \text{falls } r\in \left(\frac{1}{6}, \frac{1}{3}\right]\!,\\
+    2, 
+    & \text{falls } r\in \left(\frac{1}{3}, \frac{1}{2}\right]\!,\\
+    2\left(\frac{5}{2}-3r\right)^\beta, 
+    & \text{falls } r\in \left(\frac{1}{2}, \frac{5}{6}\right]\!,\\
+    0, 
+    & \text{falls } r\in \left(\frac{5}{6}, \infty\right)\!,\\
+  \end{cases}
+\end{align*}
+und wählen
+\begin{align*}
+  \sgn\big(\partial_r u(r)\big) 
+  &\coloneqq
+  \begin{cases}
+    12r-36r^2, 
+    & \text{falls } r\in \left[0,\frac{1}{6}\right]\!,\\
+    1, 
+    & \text{falls } r\in \left(\frac{1}{6}, \frac{1}{3}\right]\!,\\
+    \cos(\pi(6r-2)), 
+    & \text{falls } r\in \left(\frac{1}{3}, \frac{1}{2}\right]\!,\\
+    -1, 
+    & \text{falls } r\in \left(\frac{1}{2}, \frac{5}{6}\right]\!,\\
+    -\frac{1+\cos(\pi(6r-5))}{2}, 
+    & \text{falls } r\in \left(\frac{5}{6}, \infty\right)\!.
+  \end{cases}
+\end{align*}
+Nach \Cref{eq:constructionInputSignal} ist $u$ mit dieser Wahl von
+$\sgn\big(\partial_r u\big)$ die Lösung von \Cref{prob:continuousProblem} mit
+Eingangssignal
+\begin{align*}
+  f_\alpha(r)
+  &=
+  \begin{cases}
+    \alpha-12(2-9r), 
+    & \text{falls } r\in \left[0,\frac{1}{6}\right]\!,\\
+    \alpha\left(1+(6r-1)^\beta\right)-\frac{1}{r}, 
+    & \text{falls } r\in \left(\frac{1}{6}, \frac{1}{3}\right]\!,\\
+    2\alpha+6\pi\sin(\pi(6r-2))-\frac{1}{r}\cos(\pi(6r-2)), 
+    & \text{falls } r\in \left(\frac{1}{3}, \frac{1}{2}\right]\!,\\
+    2\alpha\left(\frac{5}{2}-3r\right)^\beta+\frac{1}{r},
+    & \text{falls } r\in \left(\frac{1}{2}, \frac{5}{6}\right]\!,\\
+    -3\pi\sin(\pi(6r-5))+\frac{1+\cos(\pi(6r-5))}{2r}, 
+    & \text{falls } r\in \left(\frac{5}{6}, \infty\right)\!.
+  \end{cases}
+\end{align*}
+Dieses Eingangssignal für zwei Wahlen von $\alpha$ und die exakte Lösung $u$
+von \Cref{prob:continuousProblem} mit Eingangssignal $f_\alpha$ können in
+\Cref{fig:f01Plots} betrachtet werden.
+Wir können anhand von \Cref{fig:f01Plots} ebenfalls den in
+\Cref{chap:introduction} beschriebenen Zusammenhang von
+\Cref{prob:continuousProblem} und dem ROF-Modell sehen, denn für $\alpha=10^4$
+scheint annähernd $f_\alpha=\alpha u$ zu gelten.
+\begin{figure}[p]
+  \centering
+  \begin{subfigure}[b]{.48\linewidth}
+    \centering
+    \caption{$f_1$}
+    \includegraphics[trim = 40 30 30 30, clip, width=\linewidth]
+      {pictures/chapExperiments/secGeneralInfo/f01Plots/inSi1.png}
+    \label{fig:f01InSi}
+  \end{subfigure}
+  \quad
+  \begin{subfigure}[b]{.48\linewidth}
+    \centering
+    \caption{$f_1$ entlang der x- und y-Achse}
+    \includegraphics[trim = 50 30 50 20, clip, width=\linewidth]
+      {pictures/chapExperiments/secGeneralInfo/f01Plots/inSi1Axis.png}
+    \label{fig:f01InSiAxis}
+  \end{subfigure}
+
+  \begin{subfigure}[b]{.48\linewidth}
+    \centering
+    \caption{$f_{10^4}$}
+    \includegraphics[trim = 40 30 30 30, clip, width=\linewidth]
+      {pictures/chapExperiments/secGeneralInfo/f01Plots/inSi1e4.png}
+    \label{fig:f01AlphaLargeInSi}
+  \end{subfigure}
+  \quad
+  \begin{subfigure}[b]{.48\linewidth}
+    \centering
+    \caption{$f_{10^4}$ entlang der x- und y-Achse}
+    \includegraphics[trim = 50 30 50 20, clip, width=\linewidth]
+      {pictures/chapExperiments/secGeneralInfo/f01Plots/inSi1e4Axis.png}
+    \label{fig:f01AlphaLargeInSiAxis}
+  \end{subfigure}
+
+  \begin{subfigure}[b]{.48\linewidth}
+    \centering
+    \caption{$u$}
+    \includegraphics[trim = 40 30 30 30, clip, width=\linewidth]
+      {pictures/chapExperiments/secGeneralInfo/f01Plots/exactSolution.png}
+    \label{fig:f01ExactSol}
+  \end{subfigure}
+  \quad
+  \begin{subfigure}[b]{.48\linewidth}
+    \centering
+    \caption{$u$ entlang der x- und y-Achse}
+    \includegraphics[trim = 50 30 50 20, clip, width=\linewidth]
+      {pictures/chapExperiments/secGeneralInfo/f01Plots/exactSolutionAxis.png}
+    \label{fig:f01ExactSolAxis}
+  \end{subfigure} 
+  \caption{Funktionen $f_\alpha$ und $u$ sowie deren
+  Darstellungen entlang der x-Achse (blau) und der y-Achse (rot) für
+  $\alpha\in\{1,10^4\}$.}
+  \label{fig:f01Plots}
+\end{figure}
+Die schwachen Gradienten von $u$ und $f_\alpha$ können bestimmt werden mithilfe
+der partiellen Ableitungen
+\begin{align*}
+  \partial_r f_\alpha(r)
+  &=
+  \begin{cases}
+    108,
+    & \text{falls } r\in\left[0,\frac{1}{6}\right]\!,\\
+    6\alpha\beta(6r-1)^{\beta-1} +\frac{1}{r^2}, 
+    & \text{falls } r\in\left(\frac{1}{6},\frac{1}{3}\right]\!,\\
+    \left(36\pi^2+\frac{1}{r^2}\right)\cos(\pi(6r-2))
+    + \frac{6\pi}{r}\sin(\pi(6r-2)), 
+    & \text{falls } r\in\left(\frac{1}{3},\frac{1}{2}\right]\!,\\
+    -\left(6\alpha\beta\left( \frac{5}{2}-3r \right)^{\beta-1}+
+    \frac{1}{r^2}\right),
+    & \text{falls } r\in\left(\frac{1}{2},\frac{5}{6}\right]\!,\\
+    -\left( \left( 18\pi^2+\frac{1}{2r^2} \right)\cos(\pi(6r-5))
+    +\frac{1}{2r^2} + \frac{3\pi}{r}\sin(\pi(6r-5))\right)\!, 
+    &\text{falls } r\in\left(\frac{5}{6},\infty\right)\!,
+  \end{cases}
+\end{align*}
+und 
+\begin{align*}
+  \partial_r u(r) 
+  &= 
+  \begin{cases}
+    0,
+    & \text{falls } r\in\left[0,\frac{1}{6}\right]\!,\\
+    6\beta(6r-1)^{\beta-1}, 
+    & \text{falls } r\in\left(\frac{1}{6},\frac{1}{3}\right]\!,\\
+    0, 
+    & \text{falls } r\in\left(\frac{1}{3},\frac{1}{2}\right]\!,\\
+    -6\beta\left( \frac{5}{2}-3r \right)^{\beta-1},
+    & \text{falls } r\in\left(\frac{1}{2},\frac{5}{6}\right]\!,\\
+    0,
+    &\text{falls } r\in\left(\frac{5}{6},\infty\right)\!.
+  \end{cases}
+\end{align*} 
+Durch Kenntnis des schwachen Gradienten von $u$ erhalten wir für das Experiment
+mit Eingangssignal $f_\alpha$ die Approximation $E(u)\approx -2.05803$ für
+$\alpha=1$ und $E(u)\approx -20\,580.34076$ für $\alpha=10^4$.
+Ein weiteres Eingangssignal, welches wir in mehreren der folgenden Abschnitte
+nutzen werden, ist das Graufarbenbild \texttt{cameraman} aus
+\cref{fig:cameraman}.
+
+%TODO Tcal ergänzen bei u_j, Graphen anpassen zu j-1 auf x-Achse
 \section{Wahl der Parameter für die primale-duale Iteration}
 \label{sec:choiceOfParameters}
 
@@ -530,11 +516,14 @@ passend Dreiecke auswählt und weiter fällt, d.h. insbesondere nicht
 stagnariert, auch bei stagnierendem Fehler.
 
 
+%\section{Eigenschaften der primalen-dualen Iteration}
+%\label{sec:experimentsWithExactSolution}
+
 \section{Experimente mit bekannter exakter Lösung}
 \label{sec:experimentsWithExactSolution}
 
 In diesem Abschnitt möchten wir nun anhand des Experiments mit Eingangssignal
-$f_1$ aus \Cref{eq:inputSignalF01} die Ergebnisse des Programms betrachten.
+$f_1$ aus eq:inputSignalF01 die Ergebnisse des Programms betrachten.
 Außerdem werden wir die Ergebnisse mit zwei weiteren Eingangssignalen,
 für die exakte Lösungen bekannt sind, vergleichen, um so weitere Aussagen
 über die Ergebnisse treffen zu können.
@@ -542,9 +531,6 @@ Die Wahl aller Parameter, die hier nicht noch einmal aufgeführt werden, ist
 im einleitenden Teil und dem vorherigen \Cref{sec:choiceOfParameters} 
 begründet worden.
 
-\DTLloaddb{db}{data/currentDataReducedParTau1em1Lvl1.csv}
-\DTLassign{db}{1}{\nrDof=nrDof} 
-\DTLgdeletedb{db}
 Zunächst möchten wir anhand der Experimente mit Eingangssignal $f_1$ einige
 Eigenschaften der primalen-dualen Iteration betrachten.
 \begin{figure}[p]
@@ -577,7 +563,7 @@ $E(u)$ mit zunehmender Anzahl von Freiheitsgraden ab.
 Anhand der Energieentwicklung des ersten Iterationsschritt aller abgebildeten
 Level, mit Ausnahme von Level 3, und insbesondere durch
 \Cref{fig:iterationEnergyOscillations}, die auf dem gleichen Experiment mit
-$\tau=10^{-1}$ basiert und Level 1 dieses Experiments mit \nrDof\ 
+$\tau=10^{-1}$ basiert und Level 1 dieses Experiments mit 33 
 Freiheitsgraden, ist aber auch klar erkennbar, dass die Energie der Iterate
 nicht monoton fallend von oben konvergiert.
 Dieses Verhalten könnte mit ein Grund dafür sein, dass die Anzahl der 
@@ -950,12 +936,7 @@ und
   \end{cases}
 \end{align*}
 Als exakte Energie erhalten wir
-$
-\DTLloaddb{db}{data/paramsReducedStandardF04.csv}
-\DTLassign{db}{1}{\exactEnergy=exactEnergy} 
-\DTLgdeletedb{db}
-E(u)\approx\DTLround{\exactEnergy}{\exactEnergy}{\precDTL}\exactEnergy.
-$
+$E(u)\approx -0.33411$
 Eingangssignal und exakte Lösung sind in \Cref{fig:f04Plots} zu sehen.
 \begin{figure}[p]
   \centering
@@ -1142,6 +1123,9 @@ Auch in \Cref{fig:camLvl21Triang} kann man, trotz der hohen Anzahl
 an Freiheitsgade noch erkennen, wo es im Bild kaum Farbkontraste gibt und eine
 Verfeinerung deshalb nicht nötig ist.
 
+\section{Stetige Approximation eines unstetigen Eingangssignals}
+Diese Experimente nutzen als die initiale Triangulierung aus
+\Cref{fig:triangBigSquare}.
 Da wir nun gesehen haben, dass die Raten für $\etaV$ und $\etaJ$ übereinstimmen
 mit den beobachteten Raten im vorherigen
 \Cref{sec:experimentsWithExactSolution}, interessiert uns ob noch weitere
@@ -1224,12 +1208,8 @@ und
   \end{cases}
 \end{align*}
 womit wir die Energie
-$
-\DTLloaddb{db}{data/paramsReducedCircleContinuous.csv}
-\DTLassign{db}{1}{\exactEnergy=exactEnergy} 
-\DTLgdeletedb{db}
-E(u)\approx\DTLround{\exactEnergy}{\exactEnergy}{\precDTL}\exactEnergy
-$ für das Experiment mit $\alpha=10^4$ und $\beta = 10^{-3}$ erhalten.
+$E(u)\approx -3\,924.37413$ für das Experiment mit $\alpha=10^4$ und $\beta =
+10^{-3}$ erhalten.
 \begin{figure}[p]
   \centering
   \begin{subfigure}[b]{.48\linewidth}
@@ -1284,7 +1264,7 @@ des Verfeinerungsindikators und seiner Anteile gibt.
   \centering
   \begin{subfigure}[b]{.48\linewidth}
     \centering
-    \caption{Triangulierung stetig Level 17}
+    \caption{Eingangssignal $f_\textup{C}$, Level 17}
     \includegraphics[trim = 100 30 80 20, clip, width=\linewidth]
       {pictures/chapExperiments/secGrayscale/circ/cont/adaptive/lvl17/triangulation.png}
     \label{fig:circContLvl17Triang}
@@ -1292,7 +1272,7 @@ des Verfeinerungsindikators und seiner Anteile gibt.
   \quad
   \begin{subfigure}[b]{.48\linewidth}
     \centering
-    \caption{Triangulierung unstetig Level 17}
+    \caption{Eingangssignal $f_\textup{DC}$, Level 17}
     \includegraphics[trim = 100 30 80 20, clip, width=\linewidth]
       {pictures/chapExperiments/secGrayscale/circ/disc/adaptive/lvl17/triangulation.png}
     \label{fig:circDiscLvl17Triang}
@@ -1300,7 +1280,7 @@ des Verfeinerungsindikators und seiner Anteile gibt.
 
   \begin{subfigure}[b]{.48\linewidth}
     \centering
-    \caption{Triangulierung stetig Level Final}
+    \caption{Eingangssignal $f_\textup{C}$, Level 26}
     \includegraphics[trim = 100 30 80 20, clip, width=\linewidth]
       {pictures/chapExperiments/secGrayscale/circ/cont/adaptive/lvl26/triangulation.png}
     \label{fig:circContFinalTriang}
@@ -1308,12 +1288,15 @@ des Verfeinerungsindikators und seiner Anteile gibt.
   \quad
   \begin{subfigure}[b]{.48\linewidth}
     \centering
-    \caption{Triangulierung unstetig Level Final}
+    \caption{Eingangssignal $f_\textup{DC}$, Level 26}
     \includegraphics[trim = 100 30 80 20, clip, width=\linewidth]
       {pictures/chapExperiments/secGrayscale/circ/disc/adaptive/lvl26/triangulation.png}
     \label{fig:circDiscFinalTriang}
   \end{subfigure}
-  \caption{Triangulierung für InSi circle stetig und unstetig.}
+  \caption{Triangulierungen für die Eingangssignale $f_\textup{C}$ und
+  $f_\textup{DC}$ für Level 17 und Level 26 des jeweiligen adaptiven
+  Algorithmus mit etwa 15\,000 Freiheitsgraden für Level 26 und etwa 400\,000
+  Freiheitsgraden für Level 26}
   \label{fig:circleTriang}
 \end{figure}
 \begin{figure}[p]
@@ -1417,7 +1400,7 @@ ein besseres Konvergenzverhalten hat als der uniforme.
   \label{fig:miscInSi}
 \end{figure}
 Allerdings möchten wir an dieser Stelle auch festhalten, dass 
-der adaptive Algorithmus in den hier betrachteten Expererimenten mehr Level
+der adaptive Algorithmus in den hier betrachteten Experimenten mehr Level
 durchläuft und für Iterationen mit vergleichbar vielen Freiheitsgaden wie
 der uniforme Algorithmus in der Regel mehr Iterationen und damit mehr
 Zeit benötigt, insgesamt also mehr zeit benötigt, wie in \Cref{fig:miscInSi}
@@ -1466,5 +1449,10 @@ diese auch in einen adaptiven Algorithmus implementieren für weitere Vergleiche
 In der Theorie bleibt interessant, ob garantierte Konvergenzraten für unsere
 Implementierung bewiesen werden können.
 
+Hatten bessere Raten für schwach differenzierbare Funktion. Erstrebenswert
+wäre das Untersuchen eines Beispiels, das tatsächlich nur BV ist aber
+eine exakte Lösung bekannt ist. Wir haben das hier nur approximativ gemacht
 \todo[inline]{BEI allen Triangulierungsbildern die Freiheitsgrade ergänzen, mglsweise auch
 bei allen Lösungsplots}
+die großen Bilder etwas kleiner einbinden, vielleicht auch immer so gucken,
+dass die Sachen noch auf eine Seite rutschen (-2 Seiten möglich)
