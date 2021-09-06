@@ -18,9 +18,11 @@
     xlabel = {$j$},
     ymajorgrids=true,
     legend entries = {
-      $\left\vvvert (u_j - u_{j-1})/\tau\right\vvvert_\textup{NC}$,
-      $\left\Vert (u_j - u_{j-1})/\tau\right\Vert$,
-      $\left|E_\textup{NC}(u_j) - E_\textup{NC}(u_{j-1})\right|$
+      $\left\vvvert (u_{j,\mathcal{T}} 
+        - u_{j-1,\mathcal{T}})/\tau\right\vvvert_\textup{NC}$,
+      $\left\Vert (u_{j,\mathcal{T}} - u_{j-1,\mathcal{T}})/\tau\right\Vert$,
+      $\left|E_\textup{NC}(u_{j,\mathcal{T}}) 
+        - E_\textup{NC}(u_{j-1,\mathcal{T}})\right|$
       }
     ]
     \addlegendimage{no markers, ultra thick, blue}
