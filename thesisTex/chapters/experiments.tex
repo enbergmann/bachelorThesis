@@ -69,7 +69,7 @@ Programmaufrufs genutzt wurden.
 \end{table} 
 \begin{table}[p]
   \centering
-  \begin{tabular}{c|c}
+  \begin{tabular}{c|p{8.7cm}}
     \hline
     \texttt{benchmark} & Abbildungen\\  
     \hline 
@@ -492,48 +492,84 @@ Abbruchkriterium \eqref{eq:terminationCriterion}.
   \label{fig:parEpsStopConvergence}
 \end{figure}
 Wie in \Cref{fig:parEpsStopConvergence} zu sehen, stagniert der exakte
-$L^2$-Fehler für $\epsstop=10^{-2}$ ab circa $10^4$ Freiheitsgraden bei $2\cdot
-10^{-2}$ und es lässt sich erahnen, dass dieser Effekt auch für
-$\epsstop=10^{-3}$ ab ungefähr $10^6$ Freiheitsgraden bei $4\cdot 10^{-3}$
-einsetzt. 
-Da für $\epsstop\in\{10^{-4},10^{-5}\}$ bis $10^6$ Freiheitsgrade dieses
+$L^2$-Fehler für $\epsstop=10^{-2}$ ab circa $10^4$ Freiheitsgraden und es
+lässt sich erahnen, dass dieser Effekt auch für $\epsstop=10^{-3}$ ab ungefähr
+$6\cdot 10^5$ Freiheitsgraden einsetzt.  
+Dabei ist der erreichte Fehler für $\epsstop=10^{-3}$ geringer als
+für $\epsstop=10^{-2}$.
+Da für $\epsstop\in\{10^{-5},10^{-4}\}$ bis $10^6$ Freiheitsgrade dieses
 Verhalten noch nicht zu sehen ist, scheint dies an einem zu frühen Abbruch der
 Iteration durch eine zu große Wahl von $\epsstop$ zu liegen. 
-Bei vielen Freiheitsgraden, das heißt bei kleinen Netzweiten, muss
-also $\epsstop$ ausreichend klein gewählt werden.
+Bei einer hohen Anzahl an Freiheitsgraden, das heißt bei kleinen Netzweiten,
+muss also $\epsstop$ ausreichend klein sein, um die beobachtete Stagnation
+des exakten Fehlers zu verhindern.
 Da wir bei den Experimenten in dieser Arbeit $10^6$ Freiheitsgrade nicht
 deutlich überschreiten und sich bis dahin die Ergebnisse für die Wahlen
-$10^{-4}$ und $10^{-5}$ in \Cref{fig:parEpsStopConvergence} kaum unterscheiden,
-die Wahl $\epsstop=10^{-5}$ aber eine wesentlich längere Laufzeit des Programms
-verursacht, begründen wir damit unsere Wahl $\epsstop=10^{-4}$.
-Es bleibt aber anzumerken, dass der Verfeinerungsindikator $\etaT$ für keine
-der Wahlen von $\epsstop$ stagniert. 
-%TODO
-Dies liegt womöglich daran, dass in
-seinen Anteilen $\etaV$ und $\etaJ$ die
-
-Nach Def des Verfeinerungsindikators gilt
-\begin{align*}
+$10^{-4}$ und $10^{-5}$ für $\epsstop$ in \Cref{fig:parEpsStopConvergence} kaum
+unterscheiden, die Wahl $\epsstop=10^{-5}$ aber eine wesentlich längere
+Laufzeit des Programms verursacht, begründen wir damit unsere Wahl
+$\epsstop=10^{-4}$.
+Allerdings bleibt anzumerken, dass der Verfeinerungsindikator $\etaT$ für alle
+getesteten Wahlen von $\epsstop$ weiter fällt. 
+Um dies zu untersuchen, betrachten wir die \Cref{def:refinementIndicator} von
+$\etaT$.
+Aus dieser folgt
+\begin{align}
+  \label{eq:etaEstimate}
   \etaT 
   \leq
   \max_{T\in\Tcal}|T|\Vert f-\alpha\ucrt\Vert^2
   + 2\max_{T\in\Tcal}|T|^{\gamma/2}\sum_{F\in\Ecal}\Vert[\ucrt]_F\Vert_{L^1(F)}.
-\end{align*}
-Das heißt obwohl nach Interpretation des ROF-Modells $\Vert f-\alpha\ucrt^2$
-stagniert für $\epsstop=10^{-2}$ nach unserer Beobachtung hier und 
-$\sum_{F\in\Ecal}\Vert[\ucrt]_F\Vert_{L^1(F)}$ ebenfalls wahrscheinlich 
-stagniert (vgl.  \Cref{fig:f01JumpTerms} aus
-\Cref{sec:experimentsWithExactSolution}), werden weiterhin Dreiecke markiert
-und damit wird $\max_{T\in\Tcal}\{|T|,|T|^{\gamma/2}\}$ (stimmt das? falls
-ja, in der Ungleichung eben vielleicht direkt so schreiben) weiterhin kleiner,
-womit $\etaT$ nicht stagniert.
-Dann sehen wir in den Bildern TODO (a) und (b), das vor Stagnation des Fehler
-die Verfeinerung von $\epsstop=10^{-2}$ und $\epsstop=10^{-4}$ bei gleichen
-Freiheitsgraden von etwa \ldots ähnlich aussehen,
-in (c) und (d) sehen wir dann aber, dass für $\epsstop =10^{-2}$, mehrere
-Level nach Stagnationsstart, bei nun \ldots Freiheitsgraden mehr
-der Flächeninhalt der Dreicke eine größere Rolle zu spielen scheint im
-Vergleich zu $10^{-4}$. 
+\end{align}
+Stagniert während der AFEM-Routine $\Vert u-\ucrt\Vert$, ist in Anbetracht
+der Interpretation des ROF-Modells aus \Cref{chap:introduction} nicht
+ausschließbar, dass $\Vert f-\alpha\ucrt\Vert^2$ ebenfalls stagniert.
+Außerdem können wir nach den Überlegungen, die zu \Cref{fig:f01JumpTerms} in
+\Cref{sec:experimentsWithExactSolution} aufgeschrieben werden, davon ausgehen,
+dass wahrscheinlich auch in den Experimenten aus
+\Cref{fig:parEpsStopConvergence} die Terme
+$\sum_{F\in\Ecal}\Vert[\ucrt]_F\Vert_{L^1(F)}$ im Verlauf des AFEM-Algorithmus
+nicht gegen $0$ konvergieren.
+Dennoch ist nach Ungleichung \eqref{eq:etaEstimate} die Konvergenz von $\etaT$
+gegen $0$ weiterhin möglich, solange die Flächen der Dreicke $T\in\Tcal$
+reduziert werden.  
+Insbesondere kann davon ausgegangen werden, dass, nach Eintreten der 
+beschriebenen Stagnation, der Flächeninhalt von Dreiecken beim Markieren durch 
+$\etaT$ zunehmend wichtiger wird.
+\begin{figure}[p]
+  \centering
+  \begin{subfigure}[b]{.48\linewidth}
+    \centering
+    \caption{$\epsstop=10^{-2}$}
+    \includegraphics[trim = 100 30 80 20, clip, width=\linewidth]
+      {pictures/chapExperiments/secParameters/parEpsStop/f01/1eM2/lvl15/triangulation.png}
+    \label{fig:triangEpsStop1em2}
+  \end{subfigure}
+  \quad
+  \begin{subfigure}[b]{.48\linewidth}
+    \centering
+    \caption{$\epsstop=10^{-5}$}
+    \includegraphics[trim = 100 30 80 20, clip, width=\linewidth]
+      {pictures/chapExperiments/secParameters/parEpsStop/f01/1eM5/lvl14/triangulation.png}
+    \label{fig:triangEpsStop1em5}
+  \end{subfigure}
+  \caption{Triangulierungen nach den Rechnungen mit verschiedenen Werten von
+    $\epsstop$ nach jeweils circa 620\,000 Freiheitsgraden für das
+    Eingangssignal $f_1$}
+  \label{fig:triangEpsStop}
+\end{figure}
+Diese Vermutung scheint von \Cref{fig:triangEpsStop} gestützt zu werden, in der
+wir sehen, dass bei einer vergleichbaren Anzahl von Freiheitsgraden der
+abgebildeten Triangulierungen die Fläche des größten Dreiecks in
+\Cref{fig:triangEpsStop1em2} zu $\epsstop=10^{-2}$ kleiner ist als die des
+größten Dreiecks in \Cref{fig:triangEpsStop1em5} zu $\epsstop=10^{-5}$. 
+Die vor Eintreten der Stagnation für $\epsstop\in\{10^{-3},10^{-2}\}$ im
+Vergleich zu $\epsstop\in\{10^{-5},10^{-4}\}$ größere
+Konvergenzgeschwindigkeit, die in \Cref{fig:parEpsStopConvergence} zu sehen
+ist, lässt die Annahme zu, dass 
+das Markieren von Dreiecken mit großer Fläche kurzzeitig eine effektive
+Verfeinerungsstrategie ist, insgesamt aber nicht zu geringeren exakten
+Fehlern führt.
 
 
 %\section{Eigenschaften der primalen-dualen Iteration}
@@ -542,6 +578,8 @@ Vergleich zu $10^{-4}$.
 \section{Experimente mit bekannter exakter Lösung}
 %\section{Experimente mit bekannter exakter Lösung und Konvergenz der Iteration}
 \label{sec:experimentsWithExactSolution}
+
+\subsection{Konvergenz der Iteration}
 
 In diesem Abschnitt möchten wir nun anhand des Experiments mit Eingangssignal
 $f_1$ aus eq:inputSignalF01 die Ergebnisse des Programms betrachten.
@@ -630,6 +668,7 @@ Die Differenz der nichtkonformen Energien zweiter Iterate scheint sich aber,
 aufgrund der teils starken Oszillationen, nur schlecht als alternatives
 Abbruchkriterium zu eignen, obwohl sie wie erwartet gegen $0$ konvergieren.
 
+\subsection{Konvergenz des AFEM-Algorithmus}
 Nun betrachten wir Konvergenzraten und überprüfen die Gültigkeit einiger in den
 theoretischen Kapiteln dieser Arbeit getätigten Aussagen.
 \begin{figure}[p]
