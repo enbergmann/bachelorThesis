@@ -131,13 +131,13 @@ Programmaufrufs genutzt wurden.
     \ref{fig:camConvergence}\\
     \texttt{circleContinuousAdaptive} &
     \ref{fig:circConvAdaptive}, \ref{fig:circContConvergence},
-    \ref{fig:circContLvl17Triang}, \ref{fig:circContFinalTriang},
+    \ref{fig:circContLvl17Triang}, %\ref{fig:circContFinalTriang},
     \ref{fig:circContSol}, \ref{fig:circContSolAxis}\\
     \texttt{circleDiscontinuousAdaptive} &
     \ref{fig:circConvAdaptive}\\
     \texttt{circleContinuousUniform} &
     \ref{fig:circConvUniform}, \ref{fig:circContConvergence},
-    \ref{fig:circDiscLvl17Triang}, \ref{fig:circDiscFinalTriang},
+    \ref{fig:circDiscLvl17Triang}, %\ref{fig:circDiscFinalTriang},
     \ref{fig:circDiscSol}, \ref{fig:circDiscSolAxis}\\
     \texttt{circleDiscontinuousUniform} &
     \ref{fig:circConvUniform}\\
@@ -660,7 +660,7 @@ Dies passt zur bekannten Theorie, da die Norm $\vvvert\bullet\vvvert_\NC$
 ungefähr so skaliert wie $h^{-1}\Vert\bullet\Vert$ (cf. \cite[Lemma 3.5, Lemma
 3.7]{Bar15}), wobei für das in \Cref{fig:iterationTerminationVariants} gezeigte
 Level ungefähr gilt $h\approx 10^{-2}$.
-Entsprechend ist davon auszugehen, dass bei Wahl dieses Abbruchkriteriums 
+Dementsprechend ist davon auszugehen, dass bei Wahl dieses Abbruchkriteriums 
 nur die Toleranz $\epsstop$ angepasst werden müsste.
 Die andere Variante zum Messen des Updates, das heißt der Betrag der Differenz
 der nichtkonformen Energien zweier Iterate, scheint sich aber,
@@ -669,6 +669,7 @@ Abbruchkriterium zu eignen.
 Abschließend können wir festhalten, dass sich demnach das von uns gewählte 
 Abbruchkriterium \eqref{eq:terminationCriterion} als sinnvoll erwiesen hat.
 
+%\vfill
 
 \section{Experimente mit bekannter exakter Lösung}
 \label{sec:experimentsWithExactSolution}
@@ -752,7 +753,7 @@ $\Enc(\ucrt)$, nicht gegen $E(u)$ konvergiert.
   \quad
   \begin{subfigure}[b]{.48\linewidth}
     \centering
-    \caption{Zwei Graphen und ihre Differenz}
+    \caption{Entwicklung der Energieschranken}
     \includegraphics[width=\linewidth]
       {pictures/chapExperiments/secExactSol/f01/energyDiffs.pdf}
     \label{fig:f01DiffGuebExactE}
@@ -887,7 +888,7 @@ Wir wählen für das Experiment $\alpha=1$ und erhalten für die Energie
 der exakten Lösung $E(u_\textup{HR})\approx -0.33411$.
 \begin{figure}[p]
   \centering
-  \begin{subfigure}[b]{.48\linewidth}
+  \begin{subfigure}[b]{.38\linewidth}
     \centering
     \caption{$f_\textrm{HR}$}
     \includegraphics[trim = 40 30 30 30, clip, width=\linewidth]
@@ -895,7 +896,7 @@ der exakten Lösung $E(u_\textup{HR})\approx -0.33411$.
     \label{fig:f04InSi}
   \end{subfigure}
   \quad
-  \begin{subfigure}[b]{.48\linewidth}
+  \begin{subfigure}[b]{.38\linewidth}
     \centering
     \caption{$f_\textrm{HR}$ entlang der x- und y-Achse}
     \includegraphics[trim = 50 30 50 20, clip, width=\linewidth]
@@ -903,7 +904,7 @@ der exakten Lösung $E(u_\textup{HR})\approx -0.33411$.
     \label{fig:f04InSiAxis}
   \end{subfigure}
 
-  \begin{subfigure}[b]{.48\linewidth}
+  \begin{subfigure}[b]{.38\linewidth}
     \centering
     \caption{$u_\textrm{HR}$}
     \includegraphics[trim = 40 30 30 30, clip, width=\linewidth]
@@ -911,7 +912,7 @@ der exakten Lösung $E(u_\textup{HR})\approx -0.33411$.
     \label{fig:f04ExactSol}
   \end{subfigure}
   \quad
-  \begin{subfigure}[b]{.48\linewidth}
+  \begin{subfigure}[b]{.38\linewidth}
     \centering
     \caption{$u_\textrm{HR}$ entlang der x- und y-Achse}
     \includegraphics[trim = 50 30 50 20, clip, width=\linewidth]
@@ -937,8 +938,11 @@ Allerdings stellen wir in \Cref{fig:f04Convergence} lediglich fest, dass im
 Vergleich zu \Cref{fig:f01Convergence} alle Graphen um einen Faktor von etwa
 $10^{1/2}$ nach unten verschoben sind.
 Insbesondere verändern sich die Konvergenzraten nicht.
-Eine noch stärkere Regularitätsanname verbessert die Raten also nicht weiter,
-es werden aber geringfügig kleinere Werte erreicht.
+Eine noch stärkere Regularitätsanname scheint die Raten also nicht weiter zu
+verbessern, es werden aber geringfügig kleinere Werte erreicht.
+Möglicherweise sind bei der hier benutzten Diskretisierung keine besseren Raten
+erreichbar und die Betrachtung einer Methode höherer Ordnung wäre dazu
+notwendig.
 
 Nun betrachten wir noch einmal das Eingangssignal $f_1$, um den Einfluss der
 Wahl von $\gamma\in(0,1]$ aus der \Cref{def:refinementIndicator} des
@@ -1007,7 +1011,7 @@ In \Cref{fig:gammaTriangs} ist die Wirkung des Verfeinerungsindikators gut zu
 erkennen. 
 Die Kantensprünge sind dort am größten, wo die Lösung $u$, und damit die
 meisten Iterate, nicht konstant sind.   
-Entsprechend wird mit kleinerem $\gamma$ stark dort verfeinert, wo die Lösung
+Dementsprechend wird mit kleinerem $\gamma$ stark dort verfeinert, wo die Lösung
 $u$ aus \Cref{fig:f01Plots} nicht konstant ist.
 Dies ist zu erkennen, obwohl die abgebildeten Triangulierungen für kleine
 $\gamma$ deutlich mehr Freiheitsgrade haben als für $\gamma=1$.
@@ -1062,56 +1066,67 @@ Die Ungleichung \eqref{eq:expectedInequalities} ist auch hier stets gültig,
 \section{Graufarbenbilder als Eingangssignale}
 \label{sec:grayscalePicturesAsInputSignal}
 
-In diesem Abschnitt wollen wir nun auch Beispiele untersuchen, bei denen
-der schwache Gradient des Eingangssignals sowie die exakte Lösung nicht bekannt
-sind und prüfen, welche Aussagen wir für diese treffen können.
-Unser Hauptaugenmerk liegt auf dem Eingangssignal \texttt{cameraman} aus
+In diesem Abschnitt wollen wir Ergebnisse von Experimenten untersuchen, bei
+denen als Eingangssignal ein
+Graufarbenbild nach \Cref{rem:grayscalePictureInputSignal} gegeben ist.
+Für diese Rechnungen sind entsprechend weder exakte Lösung noch die schwache
+Ableitung des Eingangssignals bekannt.
+Zunächst betrachten wir das Eingangssignal \texttt{cameraman} aus
 \Cref{fig:cameraman}. 
-Insbesondere können wir an diesen Beispielen gut veranschaulichen, wie
-der Verfeinerungsindikator wirkt.
-
 \begin{figure}[p]
   \centering
   \includegraphics[width=.8\linewidth]
     {pictures/chapExperiments/secGrayscale/cam/conv.pdf}
-  \caption{Ergebnisse der adaptiven und uniformen AFEM-Schleifen für das 
-  Eingangssignal \texttt{cameraman}.}
+  \caption{Ergebnisse der Rechnungen mit adaptiver und uniformer 
+    Netzverfeinerung für das Eingangssignal \texttt{cameraman}}
   \label{fig:camConvergence}
 \end{figure}
-In \Cref{fig:camConvergence} sehen wir für den Verfeinerungsindikator und
-den Volumenanteil die Rate $1$ und für den Sprunganteil die Rate $1/2$, wobei
-auch hier kein Unterschied in den Raten zwischen adaptiver und uniformer
-Netzverfeinerung festzustellen ist.
-Die Raten von $\etaV$ und $\etaJ$ stimmen mit den Raten überein, 
-die schon für das Experiment mit Eingangssignal $f_1$ in 
-\Cref{fig:f01Convergence} beobachtet wurde, wobei hier im Gegensatz zu diesem
-Experiment $\etaV$ dominiert und $\etaT$ entsprechend die Rate $1$ annimmt.
-Ansonsten nimmt $\etaV$, und somit auch $\etaT$, zu Beginn der AFEM-Routine
-deutlich höhere Werte an, vergleichbar mit dem Experiment mit in
-\Cref{fig:f01LargeAlphaConvergence} mit Eingangssignal $f_{10^4}$ und,
-ebenso wie hier, $\alpha=10^4$. 
-Die große Wahl von $\alpha$ scheint die großen Werte für $\etaV$ also zu
-beginnen, womöglich da die Eingangssignale hier deutlich höhere Werte annehmen
-als die Experimente mit $\alpha=1$.
+In \Cref{fig:camConvergence} sehen wir für den Verfeinerungsindikator $\etaT$
+und dessen Anteil $\etaV$ die Konvergenzrate $1$.
+Für den Anteil $\etaJ$ von $\etaT$ ist ungefähr die Rate $1/2$ zu erkennen, 
+wobei $\etaJ$ bei uniformer Netzverfeinerung für das letzte Level einen
+etwas größeren Wert annimmt als für das vorletzte.
+Ansonsten ist bei den Konvergenzraten kein Unterschied zwischen uniformer und
+adaptiver Netzverfeinerung festzustellen.
+Die Raten von $\etaV$ und $\etaJ$ stimmen mit den Raten überein, die schon beim
+Experiment mit Eingangssignal $f_1$ in \Cref{fig:f01Convergence} beobachtet
+wurden, wobei hier der Verfeinerungsindikator von $\etaV$ dominiert wird und
+nicht, wie beim Experiment mit Eingangssignal $f_1$, von $\etaJ$.
+Dementsprechend konvergiert hier $\etaT$ auch nicht mit der Rate 1/2, sondern
+mit der Rate $1$.
+Weiterhin nimmt $\etaV$, und somit auch $\etaT$, im Vergleich zur Rechnung mit
+Eingangssignal $f_1$ zu Beginn der AFEM-Routine deutlich höhere Werte an.
+Diese sind vergleichbar mit den beim Experiment mit Eingangssignal $f_{10^4}$
+in \Cref{fig:f01LargeAlphaConvergence}, bei dem ebenfalls $\alpha=10^4$ gewählt
+war, beobachteten Werten. 
+Bei einer Rechnung mit einem Eingangssignal $f$, bei dem $\alpha$ groß gewählt
+ist im Vergleich zu einem anderen Experiment, scheinen also auf den ersten
+Leveln der AFEM-Routine höhere Werte für $\etaV$ aufzutreten als in einem
+Experiment mit einer kleineren Wahl von $\alpha$.
 \begin{figure}[p]
   \centering
   \includegraphics[width=.8\linewidth]
     {pictures/chapExperiments/secGrayscale/denoise/conv.pdf}
-  \caption{Konvergenz im Rauschunterdrückungs Beispiel für drei verschiedene
-  Werte von $\alpha$.}
+  \caption{Ergebnisse der Rechnungen zu \Cref{fig:exampleDenoising} für drei
+    verschiedene Werte von $\alpha$}
   \label{fig:denoiseConvergence}
 \end{figure}
-Diese Vermutung wird bekräftigt in \Cref{fig:denoiseConvergence}, in der wir
-zum Vergleich die Konvergenzgraphen zu \Cref{fig:exampleDenoising} angucken für
-$\alpha\in\{10^2,10^3,10^4\}$.
+Dies wird bekräftigt in \Cref{fig:denoiseConvergence}, in der wir
+die Konvergenzgraphen zu \Cref{fig:exampleDenoising} vergleichen für
+$\alpha\in\{10^2,10^3,10^4\}$ und ebendieses Verhalten beobachten.
+Ein Grund dafür könnte sein, dass, wenn $\alpha$ groß gewählt wird, die Terme
+$\Vert f-\alpha \ucrt\Vert^2_{L^2(T)}$ im Anteil $\etaV$ des
+Verfeinerungsindikators aus \Cref{def:refinementIndicator} für viele Dreiecke
+$T\in\Tcal$ ebenfalls größere Werte annehmen als für ein Experiment mit einer
+kleineren Wahl für $\alpha$.
+Zum Abschluss diese Abschnitts möchten wir anhand des Beispiels mit
+Eingangssignal \texttt{cameraman} die Wirkung des Verfeinerungsindikators
+veranschaulichen.
 \begin{figure}[p]
   \centering
   \begin{subfigure}[b]{.48\linewidth}
-    \DTLloaddb{db}{data/currentDataReducedCamLvl17.csv}
-    \DTLassign{db}{1}{\nrDof=nrDof} 
-    \DTLgdeletedb{db}
     \centering
-    \caption{$\text{nrDof} = \nrDof$ (Level 17)}
+    \caption{Triangulierung Level 17}
     \includegraphics[trim = 100 30 80 20, clip, width=\linewidth]
       {pictures/chapExperiments/secGrayscale/cam/adaptive/lvl17/triangulation.png}
     \label{fig:camLvl17Triang}
@@ -1126,11 +1141,8 @@ $\alpha\in\{10^2,10^3,10^4\}$.
   \end{subfigure}
 
   \begin{subfigure}[b]{.48\linewidth}
-    \DTLloaddb{db}{data/currentDataReducedCamLvlFinal.csv}
-    \DTLassign{db}{1}{\nrDof=nrDof} 
-    \DTLgdeletedb{db}
     \centering
-    \caption{$\text{nrDof} = \nrDof$ (Level 21)}
+    \caption{Triangulierung Level 21}
     \includegraphics[trim = 100 30 80 20, clip, width=\linewidth]
       {pictures/chapExperiments/secGrayscale/cam/adaptive/lvl21/triangulation.png}
     \label{fig:camLvl21Triang}
@@ -1143,26 +1155,31 @@ $\alpha\in\{10^2,10^3,10^4\}$.
       {pictures/chapExperiments/secGrayscale/cam/adaptive/lvl21/solutionGrayscale.png}
     \label{fig:camLvl21Sol}
   \end{subfigure}
-  \caption{Triangulierung und Lösung für Eingangssignal \texttt{cameraman}.}
+  \caption{Triangulierung und diskrete Lösung, als Graufarbenplot aus der
+    Draufsicht, nach der Rechnung mit Eingangssignal \texttt{cameraman} für
+    Level 17 des AFEM-Algorithmus nach etwa 70\,000 Freiheitsgraden und für
+    Level 21 nach etwa 700\,000 Freiheitsgraden}
   \label{fig:camTriang}
 \end{figure}
-Zum Abschluss dieses Experiments noch eine Auswahl der entstandenden
-Triangulierungen und den entsprechenden Lösungen des adaptiven Algorithmus für
-das Eingangssignal \texttt{cameraman}, als Graufarbenplot aus der
-Vogelperspektie, in \Cref{fig:camTriang}.
-Wir sehen in \Cref{fig:camLvl17Triang} den Effekt des Verfeinerungsindikators
-gut, der zu den Unstetigkeiten hin verfeinert, die da besonders groß sind,
-wo die Farbkontraste deutlich sind. 
-Weiterhin ist zu erkennen, dass der graduelle Übergang zu schwarzem Rand
-den gewünschten Effekt hat, ein starke Verfeinerung am Rand, die aufgrund der 
-angenommenen Nullranddaten passieren würde, zu unterdrücken.
-Somit wird das Netz tatsächlich da fein, wo mehr Informationen benötigt werden,
-was am Rand nicht der Fall wäre.
-Auch in \Cref{fig:camLvl21Triang} kann man, trotz der hohen Anzahl
-an Freiheitsgade noch erkennen, wo es im Bild kaum Farbkontraste gibt und eine
-Verfeinerung deshalb nicht nötig ist.
+Wir sehen in \Cref{fig:camLvl17Triang} gut, dass dieser eine Verfeinerung zu
+den Unstetigkeiten bewirkt, insbesondere zu denen entlang deutlicher
+Farbkontraste.
+Außerdem ist zu erkennen, dass der hinzufügte graduelle Übergang zu schwarzem
+Rand für das Eingangssignal den gewünschten Effekt hat, eine starke
+Verfeinerung zum Rand, die aufgrund der angenommenen Nullranddaten passieren
+würde, zu verhindern.
+Somit wird tatsächlich dort stark verfeinert, wo mehr Informationen benötigt
+werden, was am Rand nicht der Fall wäre.
+Auch in \Cref{fig:camLvl21Triang} kann man, trotz der hohen Anzahl an
+Freiheitsgaden, noch erkennen, wo es im Bild kaum Farbkontraste gibt und eine
+Verfeinerung deshalb nicht unbedingt nötig ist.
+Die diskrete Lösung ähnelt dem Eingangssignal, was aufgrund der großen Wahl für
+$\alpha$ nach der Interpretation des ROF-Modellproblems aus
+\Cref{chap:introduction} zu erwarten war.
+
 
 \section{Stetige Approximation eines unstetigen Eingangssignals}
+
 Diese Experimente nutzen als die initiale Triangulierung aus
 \Cref{fig:triangBigSquare}.
 Da wir nun gesehen haben, dass die Raten für $\etaV$ und $\etaJ$ übereinstimmen
@@ -1319,22 +1336,22 @@ des Verfeinerungsindikators und seiner Anteile gibt.
       {pictures/chapExperiments/secGrayscale/circ/disc/adaptive/lvl17/triangulation.png}
     \label{fig:circDiscLvl17Triang}
   \end{subfigure}
-
-  \begin{subfigure}[b]{.48\linewidth}
-    \centering
-    \caption{Eingangssignal $f_\textup{C}$, Level 26}
-    \includegraphics[trim = 100 30 80 20, clip, width=\linewidth]
-      {pictures/chapExperiments/secGrayscale/circ/cont/adaptive/lvl26/triangulation.png}
-    \label{fig:circContFinalTriang}
-  \end{subfigure}
-  \quad
-  \begin{subfigure}[b]{.48\linewidth}
-    \centering
-    \caption{Eingangssignal $f_\textup{DC}$, Level 26}
-    \includegraphics[trim = 100 30 80 20, clip, width=\linewidth]
-      {pictures/chapExperiments/secGrayscale/circ/disc/adaptive/lvl26/triangulation.png}
-    \label{fig:circDiscFinalTriang}
-  \end{subfigure}
+%
+%  \begin{subfigure}[b]{.48\linewidth}
+%    \centering
+%    \caption{Eingangssignal $f_\textup{C}$, Level 26}
+%    \includegraphics[trim = 100 30 80 20, clip, width=\linewidth]
+%      {pictures/chapExperiments/secGrayscale/circ/cont/adaptive/lvl26/triangulation.png}
+%    \label{fig:circContFinalTriang}
+%  \end{subfigure}
+%  \quad
+%  \begin{subfigure}[b]{.48\linewidth}
+%    \centering
+%    \caption{Eingangssignal $f_\textup{DC}$, Level 26}
+%    \includegraphics[trim = 100 30 80 20, clip, width=\linewidth]
+%      {pictures/chapExperiments/secGrayscale/circ/disc/adaptive/lvl26/triangulation.png}
+%    \label{fig:circDiscFinalTriang}
+%  \end{subfigure}
   \caption{Triangulierungen für die Eingangssignale $f_\textup{C}$ und
   $f_\textup{DC}$ für Level 17 und Level 26 des jeweiligen adaptiven
   Algorithmus mit etwa 15\,000 Freiheitsgraden für Level 26 und etwa 400\,000
