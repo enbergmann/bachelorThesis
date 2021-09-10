@@ -1,0 +1,64 @@
+\documentclass[tikz]{standalone}
+\usepackage{amsmath, amsfonts, amssymb, amsthm, mathtools}
+\usepackage{pgfplots, pgfplotstable}
+\usepackage{datatool}
+
+\pgfplotsset{compat=newest,
+	axis background/.style={fill=black!5!white},
+	grid style={densely dotted,semithick}
+  }
+
+\begin{document}
+\pgfplotstableset{col sep = comma}
+
+\begin{tikzpicture}
+  \begin{loglogaxis}[
+    legend pos = north west, 
+    scale = 1.5, 
+    xlabel = {Anzahl der Freiheitsgrade},
+    ymajorgrids=true,
+    legend entries = {
+      Anzahl der Iterationen,
+      Zeit in Sekunden,
+      $\alpha = 10^2$,
+      $\alpha = 10^3$,
+      $\alpha = 10^4$
+      }
+    ]
+    \addlegendimage{solid, thick, mark=*, mark options = {scale = .8}}
+    \addlegendimage{dashed, thick, mark=diamond*, mark options = solid}
+    \addlegendimage{no markers, ultra thick, blue}
+    \addlegendimage{no markers, ultra thick, green}
+    \addlegendimage{no markers, ultra thick, red}
+
+    % 1e2
+    \addplot [solid, thick, blue, mark = *, mark options = {scale = .8}] 
+    table[x = {nrDof}, y = {nrIterations}] 
+    {1e2/lvl18/lvlOutput.csv}; 
+
+    \addplot [dashed, thick, blue, mark = diamond*, mark options = solid] 
+    table[x = {nrDof}, y = {time}] 
+    {1e2/lvl18/lvlOutput.csv}; 
+
+    % 1e3
+    \addplot [solid, thick, green, mark = *, mark options = {scale = .8}] 
+    table[x = {nrDof}, y = {nrIterations}] 
+    {1e3/lvl19/lvlOutput.csv}; 
+
+    \addplot [dashed, thick, green, mark = diamond*, mark options = solid] 
+    table[x = {nrDof}, y = {time}] 
+    {1e3/lvl19/lvlOutput.csv}; 
+
+    % 1e4
+    \addplot [solid, thick, red, mark = *, mark options = {scale = .8}] 
+    table[x = {nrDof}, y = {nrIterations}] 
+    {1e4/lvl19/lvlOutput.csv}; 
+
+    \addplot [dashed, thick, red, mark = diamond*, mark options = solid] 
+    table[x = {nrDof}, y = {time}] 
+    {1e4/lvl19/lvlOutput.csv}; 
+
+  \end{loglogaxis}
+\end{tikzpicture}
+\end{document}
+

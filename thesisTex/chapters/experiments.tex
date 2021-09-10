@@ -1027,9 +1027,10 @@ Werten von $\gamma$ bewirkt.
 Auch hier möchten wir anmerken, dass Ungleichung
 \eqref{eq:expectedInequalities} für alle Wahlen von $\gamma$ erfüllt ist.
 
-Zum Abschluss diese Abschnitts wollen wir die Experimente mit Eingangssignal
-$f_1$ aus \Cref{fig:f01Convergence} noch mit $\alpha=10^4$ betrachten, das
-heißt mit Eingangssignal $f_{10^4}$, und die Ergebnisse vergleichen.
+%\vspace{-.8mm}
+Als nächstes wollen wir die Experimente mit Eingangssignal $f_1$ aus
+\Cref{fig:f01Convergence} noch mit den Experimenten mit $\alpha=10^4$ und dem
+Eingangssignal $f_{10^4}$ vergleichen.
 \begin{figure}[p]
   \centering
   \includegraphics[width=.8\linewidth]
@@ -1038,8 +1039,10 @@ heißt mit Eingangssignal $f_{10^4}$, und die Ergebnisse vergleichen.
     Netzverfeinerung für das Eingangssignal $f_{10^4}$}
   \label{fig:f01LargeAlphaConvergence}
 \end{figure}
-Die Konvergenzraten in \Cref{fig:f01LargeAlphaConvergence} sind während eines
-vorasymptotischen Bereichs, der bei etwa $10^5$ Freiheitsgraden endet, größer.
+Die Konvergenzraten für die Experimente mit Eingangssignal $f_{10^4}$ in
+\Cref{fig:f01LargeAlphaConvergence} sind während eines vorasymptotischen
+Bereichs, der bei etwa $10^5$ Freiheitsgraden endet, größer als bei
+den Experimenten mit Eingangssignal $f_1$.
 Danach sehen wir bei allen Graphen, außer dem für $|E(u)-\Enc(\ucrt)|$, die
 anscheinend gleichen Raten, die wir schon in \Cref{fig:f01Convergence}
 beobachtetet haben. 
@@ -1060,7 +1063,33 @@ $f_1$.
 Die Iterationen auf den ersten Leveln der AFEM-Routine erreichen dann jeweils
 starke Reduktionen der betrachteten Terme und bedingen somit den
 vorasymptotischen Bereich.
-Die Ungleichung \eqref{eq:expectedInequalities} ist auch hier stets gültig,
+Die Ungleichung \eqref{eq:expectedInequalities} ist nach
+\Cref{fig:f01LargeAlphaConvergence} auch hier stets gültig.
+
+%\vspace{-.8mm}
+Zum Abschluss dieses Abschnitts möchten wir für die betrachteten Experimente
+mit den Eingangssignalen $f_1$, $f_{10^4}$ und $f_\textup{HR}$ die Anzahl der
+Iterationen vergleichen.
+\begin{figure}[p]
+  \centering
+  \includegraphics[width=.8\linewidth]
+    {pictures/chapExperiments/secConclusion/nrIterComp/exactSol/misc.pdf}
+  \caption{Anzahl der Iterationen und benötigte Zeit für die primalen-dualen
+    Iterationen während des AFEM-Algorithmus bei den Rechnungen mit $\alpha=1$
+    für die Eingangssignale $f_1$ und $f_\textup{HR}$ sowie bei der Rechnung mit
+    $\alpha=10^4$ für das Eingangssignal $f_{10^4}$} 
+  \label{fig:inSiNrIterComparison}
+\end{figure}
+In \Cref{fig:inSiNrIterComparison} ist zu erkennen, dass bis $10^6$
+Freiheitsgrade das Beispiel mit Eingangssignal $f_{10^4}$, welches im Gegensatz
+zu den anderen beiden Rechnungen den Parameter $\alpha=10^4$ nutzt, bei einer
+vergleichbaren Anzahl von Freiheitsgraden deutlich weniger Iterationen
+benötigt. 
+Auch dies stützt unsere Hypothese aus \Cref{sec:choiceOfParameters} zum
+Parmeter $\tau$, denn für den Parameter $\alpha$ lässt sich ebenfalls
+feststellen, dass sich die rechte Seite der Ungleichung
+\eqref{eq:nrIterationsInequality} antiproportional zu $\alpha$
+verhält, was weniger Iterationsschritte zur Folge haben sollte. 
 
 
 \section{Graufarbenbilder als Eingangssignale}
@@ -1111,14 +1140,32 @@ Experiment mit einer kleineren Wahl von $\alpha$.
     verschiedene Werte von $\alpha$}
   \label{fig:denoiseConvergence}
 \end{figure}
-Dies wird bekräftigt in \Cref{fig:denoiseConvergence}, in der wir
-die Konvergenzgraphen zu \Cref{fig:exampleDenoising} vergleichen für
-$\alpha\in\{10^2,10^3,10^4\}$ und ebendieses Verhalten beobachten.
+Dies wird bekräftigt in \Cref{fig:denoiseConvergence}, in der wir die
+Konvergenzgraphen zu den Experimenten aus \Cref{fig:exampleDenoising}
+vergleichen für $\alpha\in\{10^2,10^3,10^4\}$ und ebendieses Verhalten
+beobachten.
 Ein Grund dafür könnte sein, dass, wenn $\alpha$ groß gewählt wird, die Terme
 $\Vert f-\alpha \ucrt\Vert^2_{L^2(T)}$ im Anteil $\etaV$ des
 Verfeinerungsindikators aus \Cref{def:refinementIndicator} für viele Dreiecke
 $T\in\Tcal$ ebenfalls größere Werte annehmen als für ein Experiment mit einer
 kleineren Wahl für $\alpha$.
+\begin{figure}[p]
+  \centering
+  \includegraphics[width=.8\linewidth]
+    {pictures/chapExperiments/secConclusion/nrIterComp/grayscale/misc.pdf}
+  \caption{Anzahl der Iterationen und benötigte Zeit für die primalen-dualen
+    Iterationen während des AFEM-Algorithmus bei den Rechnungen zu
+    \Cref{fig:exampleDenoising} für drei verschiedene Werte von $\alpha$}  
+  \label{fig:denoiseNrIterComparison}
+\end{figure}
+Weiterhin können wir durch die benötigte Anzahl der Iterationen für jedes Level
+der Experimente zu \Cref{fig:exampleDenoising} in
+\Cref{fig:denoiseNrIterComparison} noch einmal unsere Hypothese aus 
+\Cref{sec:choiceOfParameters} zur Ungleichung \eqref{eq:nrIterationsInequality}
+stützen, denn auch in \Cref{fig:denoiseNrIterComparison} benötigt die
+primale-duale Iteration für eine größere Wahl von $\alpha$ weniger
+Iterationsschritte.
+
 Zum Abschluss diese Abschnitts möchten wir anhand des Beispiels mit
 Eingangssignal \texttt{cameraman} die Wirkung des Verfeinerungsindikators
 veranschaulichen.
@@ -1534,27 +1581,6 @@ unnötig wird und natürlich mehr Signale möglich sind
 
 ------
 
-Zum Abschluss dieses Abschnitts wollen wir die drei Eingangssignale
-$f_1$, $f_{10^4}$ und $f_\textup{HR}$ dieses Abschnitts in ihrem entsprechenden
-Setting in der Anzahl der Iterationen vergleichen.
-\begin{figure}[p]
-  \centering
-  \includegraphics[width=.8\linewidth]
-    {pictures/chapExperiments/secExactSol/nrIterComp/miscF.pdf}
-  \caption{Vergleich der Iterationen fur verschiedene Eingangssignale.}
-  \label{fig:inSiNrIterComparison}
-\end{figure}
-In \Cref{fig:inSiNrIterComparison} ist klar zu sehen, dass bis $10^6$
-Freiheitsgrade das Beispiel mit Eingangssignal $f_{10^4}$, welches im Gegensatz
-zu den anderen beiden Eingangssignalen den Parameter $\alpha=10^4$ nutzt,
-deutlich weniger Iterationen benötigt, dafür aber mehr Level in der
-AFEM-Routine durchläuft. 
-Auch dies stützt unsere Hypothese aus dem
-vorherigen \Cref{sec:choiceOfParameters} zum Parmeter $\tau$, denn
-auch hier lässt sich feststellen, dass sich die rechte Seite der Ungleichung
-\eqref{eq:nrIterationsInequality} antiproportional zur Größe von $\alpha$
-verhält, was weniger Iterationsschritte zur Folge haben sollte. 
-Dies ist ein zweites Indiz für die Gültigkeit der Hypothese. 
 Insgesamt vermuten wir, dass eine Iteration mit möglichst wenigen
 Iterationsschritten konstruiert wird, indem $\tau=1$ und $\alpha$ möglichst
 groß gewählt wird.
@@ -1562,4 +1588,3 @@ Eine mögliche Erklärung dafür ist für den Parameter $\alpha$, dass
 nach \Cref{prob:discreteProblem} für sehr große $\alpha$ die Minimierung
 des Funktionals $\Vert\bullet\Vert^2$ stark gewichtet ist und die 
 Minimerung der anderen Terme nicht so relevant ist.
-
