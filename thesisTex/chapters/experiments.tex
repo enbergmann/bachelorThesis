@@ -1085,11 +1085,17 @@ Freiheitsgrade das Beispiel mit Eingangssignal $f_{10^4}$, welches im Gegensatz
 zu den anderen beiden Rechnungen den Parameter $\alpha=10^4$ nutzt, bei einer
 vergleichbaren Anzahl von Freiheitsgraden deutlich weniger Iterationen
 benötigt. 
-Auch dies stützt unsere Hypothese aus \Cref{sec:choiceOfParameters} zum
-Parmeter $\tau$, denn für den Parameter $\alpha$ lässt sich ebenfalls
-feststellen, dass sich die rechte Seite der Ungleichung
-\eqref{eq:nrIterationsInequality} antiproportional zu $\alpha$
-verhält, was weniger Iterationsschritte zur Folge haben sollte. 
+Ähnlich zu \Cref{sec:choiceOfParameters} für den Parameter
+$\tau$ könnte auch hier Ungleichung \eqref{eq:nrIterationsInequality}, deren
+rechte Seite antiproportional zu $\alpha$ ist, der Grund für diese Beobachtung
+sein.
+%Auch dies stützt unsere Hypothese aus  zum
+%Parmeter $\tau$, denn für den Parameter $\alpha$ lässt sich ebenfalls
+%feststellen, dass sich die rechte Seite der Ungleichung
+%\eqref{eq:nrIterationsInequality} antiproportional zu $\alpha$
+%verhält, was weniger Iterationsschritte zur Folge haben sollte. 
+
+%\vfill
 
 
 \section{Graufarbenbilder als Eingangssignale}
@@ -1151,7 +1157,7 @@ $T\in\Tcal$ ebenfalls größere Werte annehmen als für ein Experiment mit einer
 kleineren Wahl für $\alpha$.
 \begin{figure}[p]
   \centering
-  \includegraphics[width=.8\linewidth]
+  \includegraphics[width=.5\linewidth]
     {pictures/chapExperiments/secConclusion/nrIterComp/grayscale/misc.pdf}
   \caption{Anzahl der Iterationen und benötigte Zeit für die primalen-dualen
     Iterationen während des AFEM-Algorithmus bei den Rechnungen zu
@@ -1171,7 +1177,7 @@ Eingangssignal \texttt{cameraman} die Wirkung des Verfeinerungsindikators
 veranschaulichen.
 \begin{figure}[p]
   \centering
-  \begin{subfigure}[b]{.48\linewidth}
+  \begin{subfigure}[b]{.39\linewidth}
     \centering
     \caption{Triangulierung Level 17}
     \includegraphics[trim = 100 30 80 20, clip, width=\linewidth]
@@ -1179,7 +1185,7 @@ veranschaulichen.
     \label{fig:camLvl17Triang}
   \end{subfigure}
   \quad
-  \begin{subfigure}[b]{.48\linewidth}
+  \begin{subfigure}[b]{.39\linewidth}
     \centering
     \caption{Lösung Level 17}
     \includegraphics[trim = 100 30 80 20, clip, width=\linewidth]
@@ -1187,7 +1193,7 @@ veranschaulichen.
     \label{fig:camLvl17Sol}
   \end{subfigure}
 
-  \begin{subfigure}[b]{.48\linewidth}
+  \begin{subfigure}[b]{.39\linewidth}
     \centering
     \caption{Triangulierung Level 21}
     \includegraphics[trim = 100 30 80 20, clip, width=\linewidth]
@@ -1195,7 +1201,7 @@ veranschaulichen.
     \label{fig:camLvl21Triang}
   \end{subfigure}
   \quad
-  \begin{subfigure}[b]{.48\linewidth}
+  \begin{subfigure}[b]{.39\linewidth}
     \centering
     \caption{Lösung Level 21}
     \includegraphics[trim = 100 30 80 20, clip, width=\linewidth]
@@ -1379,7 +1385,7 @@ Freiheitsgrade keine deutlichen Unterschiede in der Entwicklung des
 Verfeinerungsindikators und seiner Anteile gibt. 
 \begin{figure}[p]
   \centering
-  \begin{subfigure}[b]{.48\linewidth}
+  \begin{subfigure}[b]{.38\linewidth}
     \centering
     \caption{Eingangssignal $f_\textup{C}$}
     \includegraphics[trim = 100 30 80 20, clip, width=\linewidth]
@@ -1387,7 +1393,7 @@ Verfeinerungsindikators und seiner Anteile gibt.
     \label{fig:circContLvl17Triang}
   \end{subfigure}
   \quad
-  \begin{subfigure}[b]{.48\linewidth}
+  \begin{subfigure}[b]{.38\linewidth}
     \centering
     \caption{Eingangssignal $f_\textup{DC}$}
     \includegraphics[trim = 100 30 80 20, clip, width=\linewidth]
@@ -1503,7 +1509,7 @@ uniforme.
   \end{subfigure}
   \caption{Anzahl der Iterationen und benötigte Zeit für die primalen-dualen
     Iterationen während des AFEM-Algorithmus bei den Rechnungen
-    für die Eingangssignale $\fc$, $f_1$ und \texttt{cameraman}}
+    mit den Eingangssignalen $\fc$, $f_1$ und \texttt{cameraman}}
   \label{fig:miscInSi}
 \end{figure}
 Allerdings möchten wir an dieser Stelle auch festhalten, dass der adaptive
