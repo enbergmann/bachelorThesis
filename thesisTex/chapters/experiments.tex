@@ -1227,20 +1227,25 @@ $\alpha$ nach der Interpretation des ROF-Modellproblems aus
 
 \section{Stetige Approximation eines unstetigen Eingangssignals}
 
-Diese Experimente nutzen als die initiale Triangulierung aus
-\Cref{fig:triangBigSquare}.
-Da wir nun gesehen haben, dass die Raten für $\etaV$ und $\etaJ$ übereinstimmen
-mit den beobachteten Raten im vorherigen
-\Cref{sec:experimentsWithExactSolution}, interessiert uns ob noch weitere
-Raten vergleichbar sind. 
-Allerdings haben wir beim Eingangssignal \texttt{cameraman} das Problem,
-weder Gradienten noch die exakte Lösung zu kennen und so entsprechend keine
-der anderen Graphen plotten zu können.
-Deshalb betrachten wir ein weiteres Beispiel mit Unstetigkeitsmenge und 
-eine kontinuierliche Approximation dieser, für die wir nach
-\Cref{sec:constructionInputSignal} eine exakte Lösung kennen.
-Als unstetige Funktion, die als Graufarbenbild interpretiert einem 
-weißen Kreis mit Radius $1/2$ entspricht, betrachten wir die Funktion
+Im vorherigen \Cref{sec:grayscalePicturesAsInputSignal} konnten wir mangels
+bekannter exakter Lösungen und schwacher Gradienten der Eingangssignale für die
+Experimente nur die Konvergenzraten des Verfeinerungsindikators und seiner
+Anteile $\etaV$ und $\etaJ$ untersuchen.
+Da wir für $\etaV$ und $\etaJ$ die gleichen Raten wie für die Experimente in
+\Cref{sec:experimentsWithExactSolution} beobachten konnten, interessiert uns,
+ob andere Konvergenzraten ebenfalls vergleichbar sind zwischen Experimenten mit
+stetigen Eingangssignalen und solchen mit unstetigen Eingangssignalen.
+Deshalb möchten wir nun ein weiteres Beispiel mit einem unstetigen
+Eingangssignal, welches wir durch eine nach \Cref{sec:constructionInputSignal}
+konstruierte stetige Funktion approximieren können, betrachten.
+Für die Rechnungen mit dieser stetigen Approximation als Eingangssignal kennen
+wir die exakte Lösung sowie die schwachen Gradienten und können durch
+die Konvergenzraten der entsprechenden Graphen möglicherweise Rückschlüsse
+für die Raten der Rechnungen mit unstetigen Eingangssignalen ziehen.
+Wir nutzen für alle Experimente in diesem Abschnitt als initiale Triangulierung
+\texttt{BigSquare} aus \Cref{fig:triangBigSquare}.
+Als unstetiges Eingangssignal, das als Graufarbenbild interpretiert einem 
+weißen Kreis mit Radius $\frac{1}{2}$ entspricht, betrachten wir die Funktion
 \begin{align*}
   f_\textrm{DC}(r)\coloneqq 
   \begin{cases}
@@ -1250,7 +1255,7 @@ weißen Kreis mit Radius $1/2$ entspricht, betrachten wir die Funktion
     & \text{falls } r\in \left(\frac{1}{2},\infty\right)\!.
   \end{cases}
 \end{align*}
-Betrachten wir nun die Funktion
+Betrachten wir nun für einen Parameter $\beta\in(0,1)$ die Funktion
 \begin{align*}
   u_\textrm{C}(r)\coloneqq 
   \begin{cases}
@@ -1262,7 +1267,7 @@ Betrachten wir nun die Funktion
     & \text{falls } r\in \left(\frac{1+\beta}{2},\infty\right)\!,
   \end{cases}
 \end{align*}
-erhalten wir mit der Wahl
+so ist diese mit der Wahl
 \begin{align*}
   \sgn(\partial_r u_\textrm{C}(r)) 
   &\coloneqq 
@@ -1276,7 +1281,7 @@ erhalten wir mit der Wahl
     & \text{falls } r\in \left(\frac{1+\beta}{2},\infty\right)\!,
   \end{cases}
 \end{align*}
-die rechte Seite
+Lösung von \Cref{prob:continuousProblem} mit Eingangssignal
 \begin{align*}
   f_\textrm{C}(r)\coloneqq 
   \begin{cases}
@@ -1289,7 +1294,8 @@ die rechte Seite
     & \text{falls } r\in \left(\frac{1+\beta}{2},\infty\right)\!.
   \end{cases}
 \end{align*}
-Die entsprechenden Ableitungen sind
+Die schwachen Gradienten von $u_\textup{C}$ und $f_\textup{C}$ können durch die
+partiellen Ableitungen 
 \begin{align*}
   \partial_r f_\textrm{C}(r) &= 
   \begin{cases}
@@ -1313,14 +1319,14 @@ und
     & \text{falls } r\in \left(\frac{1+\beta}{2},\infty\right)\!,
   \end{cases}
 \end{align*}
-womit wir die Energie
-$E(u)\approx -3\,924.37413$ für das Experiment mit $\alpha=10^4$ und $\beta =
-10^{-3}$ erhalten.
+bestimmt werden.
+Wir wählen für unsere Experimente $\alpha = 10^4$ und $\beta = 10^{-3}$ und 
+erhalten damit als Energie der exakten Lösung $E(u)\approx -3\,924.37413$.
 \begin{figure}[p]
   \centering
   \begin{subfigure}[b]{.48\linewidth}
     \centering
-    \caption{Insi circle stetig entlang der Achsen}
+    \caption{$f_\textup{C}$ entlang der Achsen}
     \includegraphics[trim = 40 30 50 20, clip, width=\linewidth]
       {pictures/chapExperiments/secGrayscale/circ/cont/inSiAxis.png}
     \label{fig:circContInSiAxis}
@@ -1328,25 +1334,27 @@ $E(u)\approx -3\,924.37413$ für das Experiment mit $\alpha=10^4$ und $\beta =
   \quad
   \begin{subfigure}[b]{.48\linewidth}
     \centering
-    \caption{Exakte Lsg circle stetig entlang der Achsen}
+    \caption{$u_\textup{C}$ entlang der Achsen}
     \includegraphics[trim = 40 30 50 20, clip, width=\linewidth]
       {pictures/chapExperiments/secGrayscale/circ/cont/exactSolutionAxis.png}
     \label{fig:circContExactSolAxis}
   \end{subfigure}
-  \caption{InSi und exakte Lösung circle stetig entlang der Achsen.}
+  \caption{Funktionen $f_\textup{C}$ und $u_\textup{C}$ entlang der x-Achse
+    (blau) und der y-Achse (rot) für $\alpha = 10^4$ und $\beta = 10^{-3}$}
   \label{fig:circContPlotsAxis}
 \end{figure}
-Augenscheinlich ist $f_\textrm{C}$ für diese Wahl von $\alpha$ und $\beta$ eine
-stetige Approximation von $f_\textrm{DC}$, wie in \Cref{fig:circContPlotsAxis}
-zu sehen ist.
-Außerdem sehen wir dort auch wieder für dieses große $\alpha$ das erwarte
-Verhalten, dass das Eingangssignal ungefähr gleich dem Produkt aus $\alpha$ und
-der exakten Lösung zu sein scheint, wie nach \Cref{chap:introduction} erwartet.
+Augenscheinlich ist $f_\textrm{C}$ für diese Wahl von $\alpha$ und $\beta$
+tatsächlich eine stetige Approximation von $f_\textrm{DC}$, wie in
+\Cref{fig:circContInSiAxis} zu sehen ist.
+Außerdem sehen wir in \Cref{fig:circContPlotsAxis} für diese große Wahl von
+$\alpha$ noch einmal, dass das Eingangssignal $f_\textup{C}$ ungefähr gleich
+dem Produkt aus $\alpha$ und der exakten Lösung $u_\textup{C}$ zu sein scheint,
+wie wir nach \Cref{chap:introduction} erwartet haben.
 \begin{figure}[p]
   \centering
   \begin{subfigure}[b]{.48\linewidth}
     \centering
-    \caption{adaptive Konvergenz vergleich stetig und unstetig}
+    \caption{adaptiv}
     \includegraphics[width=\linewidth]
       {pictures/chapExperiments/secGrayscale/circ/convAdap.pdf}
     \label{fig:circConvAdaptive}
@@ -1354,23 +1362,26 @@ der exakten Lösung zu sein scheint, wie nach \Cref{chap:introduction} erwartet.
   \quad
   \begin{subfigure}[b]{.48\linewidth}
     \centering
-    \caption{uniforme Konvergenz vergleich stetig und unstetig}
+    \caption{uniform}
     \includegraphics[width=\linewidth]
       {pictures/chapExperiments/secGrayscale/circ/convUnif.pdf}
     \label{fig:circConvUniform}
   \end{subfigure}
-  \caption{adptive und uniformer Vergleich für circle stetig und unstetig}
+  \caption{Vergleich des Verfeinerungsindikators und seiner Anteile zwischen
+    den Rechnungen mit Eingangssignal $f_\textup{C}$ und $f_\textup{DC}$ bei
+    adaptiver (a) und uniformer (b) Netzverfeinerung}
   \label{fig:circConvComparison}
 \end{figure}
-Zunächst sehen wir in \Cref{fig:circConvComparison} sowohl für adaptive
-als auch uniforme Netzverfeierung, dass es für die beiden Eingangssignal 
-bis $10^6$ Freiheitsgrade keine deutlichen Unterschiede im Verlauf
-des Verfeinerungsindikators und seiner Anteile gibt. 
+Zunächst bestätigt \Cref{fig:circConvComparison} sowohl für adaptive
+als auch uniforme Netzverfeierung, dass es zwischen den Experimenten mit
+den Eingangssignalen $f_\textup{C}$ und $f_\textup{DC}$ bis etwa $10^6$
+Freiheitsgrade keine deutlichen Unterschiede in der Entwicklung des
+Verfeinerungsindikators und seiner Anteile gibt. 
 \begin{figure}[p]
   \centering
   \begin{subfigure}[b]{.48\linewidth}
     \centering
-    \caption{Eingangssignal $f_\textup{C}$, Level 17}
+    \caption{Eingangssignal $f_\textup{C}$}
     \includegraphics[trim = 100 30 80 20, clip, width=\linewidth]
       {pictures/chapExperiments/secGrayscale/circ/cont/adaptive/lvl17/triangulation.png}
     \label{fig:circContLvl17Triang}
@@ -1378,38 +1389,25 @@ des Verfeinerungsindikators und seiner Anteile gibt.
   \quad
   \begin{subfigure}[b]{.48\linewidth}
     \centering
-    \caption{Eingangssignal $f_\textup{DC}$, Level 17}
+    \caption{Eingangssignal $f_\textup{DC}$}
     \includegraphics[trim = 100 30 80 20, clip, width=\linewidth]
       {pictures/chapExperiments/secGrayscale/circ/disc/adaptive/lvl17/triangulation.png}
     \label{fig:circDiscLvl17Triang}
   \end{subfigure}
-%
-%  \begin{subfigure}[b]{.48\linewidth}
-%    \centering
-%    \caption{Eingangssignal $f_\textup{C}$, Level 26}
-%    \includegraphics[trim = 100 30 80 20, clip, width=\linewidth]
-%      {pictures/chapExperiments/secGrayscale/circ/cont/adaptive/lvl26/triangulation.png}
-%    \label{fig:circContFinalTriang}
-%  \end{subfigure}
-%  \quad
-%  \begin{subfigure}[b]{.48\linewidth}
-%    \centering
-%    \caption{Eingangssignal $f_\textup{DC}$, Level 26}
-%    \includegraphics[trim = 100 30 80 20, clip, width=\linewidth]
-%      {pictures/chapExperiments/secGrayscale/circ/disc/adaptive/lvl26/triangulation.png}
-%    \label{fig:circDiscFinalTriang}
-%  \end{subfigure}
-  \caption{Triangulierungen für die Eingangssignale $f_\textup{C}$ und
-  $f_\textup{DC}$ für Level 17 und Level 26 des jeweiligen adaptiven
-  Algorithmus mit etwa 15\,000 Freiheitsgraden für Level 26 und etwa 400\,000
-  Freiheitsgraden für Level 26}
+  \caption{Triangulierungen nach den Rechnungen mit Eingangssignal
+    $f_\textup{C}$ und $f_\textup{DC}$ für Level 17 des jeweiligen
+    AFEM-Algorithmus nach etwa 15\,000 Freiheitsgraden}
   \label{fig:circleTriang}
 \end{figure}
+In \Cref{fig:circleTriang} ist weiterhin zu sehen, dass der
+Verfeinerungsindikator bei den adaptiven Rechnungen mit den Eingangssignalen
+$\fc$ und $\fdc$ eine vergleichbare Netzverfeinerung zur Unstetigkeitsmenge
+der Funktion $\fdc$ bewirkt.
 \begin{figure}[p]
   \centering
   \begin{subfigure}[b]{.48\linewidth}
     \centering
-    \caption{Lösung circ stetig}
+    \caption{Lösung für $\fc$}
     \includegraphics[trim = 40 30 30 30, clip, width=\linewidth]
       {pictures/chapExperiments/secGrayscale/circ/cont/adaptive/lvl28/solution.png}
     \label{fig:circContSol}
@@ -1417,7 +1415,7 @@ des Verfeinerungsindikators und seiner Anteile gibt.
   \quad
   \begin{subfigure}[b]{.48\linewidth}
     \centering
-    \caption{Lösuns stetig final entlang der Achsen}
+    \caption{Lösung für $\fc$ entlang der Achsen}
     \includegraphics[trim = 50 30 50 20, clip, width=\linewidth]
       {pictures/chapExperiments/secGrayscale/circ/cont/adaptive/lvl28/solutionAxis.png}
     \label{fig:circContSolAxis}
@@ -1425,7 +1423,7 @@ des Verfeinerungsindikators und seiner Anteile gibt.
 
   \begin{subfigure}[b]{.48\linewidth}
     \centering
-    \caption{Lösung circ unstetig}
+    \caption{Lösung für $\fdc$}
     \includegraphics[trim = 40 30 30 30, clip, width=\linewidth]
       {pictures/chapExperiments/secGrayscale/circ/disc/adaptive/lvl26/solution.png}
     \label{fig:circDiscSol}
@@ -1433,51 +1431,53 @@ des Verfeinerungsindikators und seiner Anteile gibt.
   \quad
   \begin{subfigure}[b]{.48\linewidth}
     \centering
-    \caption{Lösuns unstetig final entlang der Achsen}
+    \caption{Lösung für $\fdc$ entlang der Achsen}
     \includegraphics[trim = 50 30 50 20, clip, width=\linewidth]
       {pictures/chapExperiments/secGrayscale/circ/disc/adaptive/lvl26/solutionAxis.png}
     \label{fig:circDiscSolAxis}
   \end{subfigure}
-  \caption{Lösung für Eingangssignal circle stetig und unstetig, wobei die
-  augenscheinliche Stetigkeit der Lösung für Eingangssignal $f_\textup{DC}$
-  bei $1/2$ nur durch den Plot bedingt ist.}
+  \caption{Diskrete Lösungen sowie deren Darstellungen entlang der x-Achse
+    (blau) und der y-Achse (rot) nach den Rechnungen mit den Eingangssignalen
+    $\fc$ und $\fdc$}
   \label{fig:circleSol}
 \end{figure}
-% TODO Freiheitsgrade ergänzen bei den Triangulierungen sobald fertig,
-% außerdem auf vergleichbare Anzahl von Freiheitsgraden achten
-In \Cref{fig:circleTriang} (TODO update und Freiheitsgrade ergänzen) ist
-weiterhin zu sehen, dass auch der
-Verfeinerungsindikator beim adaptiven Algorithmus eine vergleichbare und
-erwarterte Verfeinerung zur Unstetigkeitsmenge vollzieht bei
-Level 17 und sich die Verfeinerungen erst bei höheren Freiheitsgraden 
-unterscheiden. 
-Außerdem ähneln die in \Cref{fig:circleSol} dargestellten Lösungen der
-adaptiven Algorithmen beide der exakten Lösung für das Eingangssignal
-$f_\textup{C}$ aus \Cref{fig:circContExactSolAxis}.
-Insgesamt scheinen die Ergebnisse beider Experiment tatsächlich vergleichbar
-zu sein, weshalb wir nun das Experiment mit Eingangssignal $f_\textup{C}$
-mit $\alpha=10^4$ und $\beta=10^{-3}$ weiter untersuchen möchten.
+Außerdem ähneln die in \Cref{fig:circleSol} dargestellten diskreten Lösungen der
+Rechnungen mit den Eingangssignalen $\fc$ und $\fdc$ beide der exakten Lösung
+für das Eingangssignal $f_\textup{C}$ aus \Cref{fig:circContExactSolAxis}.
+Insgesamt scheinen sich die vergleichbaren Ergebnisse der Experimente mit den
+Eingangssignalen $\fc$ und $\fdc$ tatsächlich kaum zu unterscheiden.
+Entsprechend möchten wir nun die Experimente mit Eingangssignal $f_\textup{C}$
+untersuchen und gehen davon aus, dass die folgenden Beobachtungen ähnlich auch 
+für Experimente mit Eingangssignal $\fdc$ gültig sind.
 \begin{figure}[p]
   \centering
   \includegraphics[width=.8\linewidth]
     {pictures/chapExperiments/secGrayscale/circ/convCont.pdf}
-  \caption{Ergebnisse für Eingangssignal circle stetig.}
+  \caption{Ergebnisse der Rechnungen mit adaptiver und uniformer 
+    Netzverfeinerung für das Eingangssignal $\fc$}
   \label{fig:circContConvergence}
 \end{figure}
-In \Cref{fig:circContConvergence} ist zu sehen, dass wir hier ein Experiment
-gefunden haben, bei der der adaptive Algorithmus bessere Raten als
-der uniforme Algorithmus erzielt für den Fehler, die exakte Energiedifferenz
-und $\etaJ$, jeweils mit Rate $1/2$ statt $1$.
-Der Verfeinerungsindikator und $\etaV$ und die von $\Egleb$ abhängigen Graphen
-scheinen zwar die gleichen Raten zu haben, allerdings erzielt der adaptive
-Algorithmus deutlich geringere Werte.
-Dies wird bei diesem Beispiel daran liegen, dass es klar nur sinnvoll sein
-kann, bei der Unstetigkeit zu verfeinern, welche von der Triangulierung
-natürlich nicht perfekt aufgelöst werden kann.
-Diese Aussagen gelten demenstsprechend womöglich auch für $f_\textup{DC}$.
-Dies zeigt, dass für Eingangssignale, bei denen
-die Verfeinerung stark lokal sinnvoll ist, der adaptive Algorithmus 
-ein besseres Konvergenzverhalten hat als der uniforme.
+In \Cref{fig:circContConvergence} ist zu sehen, dass bei diesem Experiment die
+AFEM-Routine für die Fehlergraphen und den Anteil $\etaJ$ des
+Verfeinerungsindikators mit adaptiver Netzverfeinerung bessere Konvergenzraten
+erzielt als mit uniformer Netzverfeinerung.
+Bei adaptiver Netzverfeinerung sind die entsprechenden Konvergenzraten etwa 1,
+wobei die Rate für die Fehlergraphen sogar etwas größer zu sein scheint, und
+bei uniformer Netzverfeinerung sind die Raten circa 1/2.
+Dies wird bei diesem Beispiel daran liegen, dass eine starke Netzverfeinerung
+bei der Unstetigkeit hier sinnvoller ist als eine Verfeinerung dort,
+wo die Lösung konstant ist.
+Der Verfeinerungsindikator $\etaT$ und sein Anteil $\etaV$, jeweils mit Rate 1,
+sowie die von $\Egleb$ abhängigen Graphen, beide mit Rate 1/2, scheinen bei
+uniformer und adaptiver Netzverfeinerung zwar die gleichen Raten zu haben, aber
+bei adaptiver Netzverfeinerung deutlich geringere Werte zu erreichen.
+Ansonsten ähnelt das Konvergenzverhalten, insbesondere bei uniformer 
+Netzverfeinerung, dem bereits beim Experiment mit Eingangssignal $f_{10^4}$
+in \Cref{fig:f01LargeAlphaConvergence} beobachteten.
+Dies scheint daran zu liegen, dass dort ebenfalls $\alpha=10^4$ gewählt wurde.
+Abschließend können wir betonen, dass Experimente existieren, bei denen
+adaptive Netzverfeinerung ein besseres Konvergenzverhalten bewirkt als
+uniforme.
 \begin{figure}[p]
   \centering
   \begin{subfigure}{.32\linewidth}
@@ -1501,17 +1501,20 @@ ein besseres Konvergenzverhalten hat als der uniforme.
       {pictures/chapExperiments/secGrayscale/cam/misc.pdf}
     \label{fig:miscCam}
   \end{subfigure}
-  \caption{Anzahl Iterationen und benötigte levelweise Zeit für drei
-  Eingangssignale}
+  \caption{Anzahl der Iterationen und benötigte Zeit für die primalen-dualen
+    Iterationen während des AFEM-Algorithmus bei den Rechnungen
+    für die Eingangssignale $\fc$, $f_1$ und \texttt{cameraman}}
   \label{fig:miscInSi}
 \end{figure}
-Allerdings möchten wir an dieser Stelle auch festhalten, dass 
-der adaptive Algorithmus in den hier betrachteten Experimenten mehr Level
-durchläuft und für Iterationen mit vergleichbar vielen Freiheitsgaden wie
-der uniforme Algorithmus in der Regel mehr Iterationen und damit mehr
-Zeit benötigt, insgesamt also mehr zeit benötigt, wie in \Cref{fig:miscInSi}
-für drei Eingangssignale und insbesondere das Eingangssignal $f_\textup{C}$
-zu sehen.
+Allerdings möchten wir an dieser Stelle auch festhalten, dass der adaptive
+Algorithmus in den hier betrachteten Experimenten mehr Level durchläuft als der
+Algorithmus mit uniformer Netzverfeinerung und für Iterationen auf
+Triangulierungen mit vergleichbar vielen Freiheitsgaden in der Regel mehr
+Iterationsschritte ausführt. 
+Insgesamt benötigt ein Experiment bei adaptiver Netzverfeinerung also mehr Zeit
+als bei uniformer Netzverfeinerung, wie in \Cref{fig:miscInSi} für drei
+Eingangssignale und insbesondere das Eingangssignal $f_\textup{C}$ zu sehen
+ist.
 
 
 \section{Fazit und Ausblick}
@@ -1558,18 +1561,6 @@ Implementierung bewiesen werden können.
 Hatten bessere Raten für schwach differenzierbare Funktion. Erstrebenswert
 wäre das Untersuchen eines Beispiels, das tatsächlich nur BV ist aber
 eine exakte Lösung bekannt ist. Wir haben das hier nur approximativ gemacht
-\todo[inline]{BEI allen Triangulierungsbildern die Freiheitsgrade ergänzen,
-nicht aber bei den Lösungsplots}
-\todo[inline]{circ triang nur für Lvl 17 und Lvl 26 unterschlagen}
-\todo[inline]{falls fHR rauskommt, die Iterationsanzahl vergleiche der 
-Signale (mit fC) in das Fazit Kapitel um die Anzahl Iterationen Ungleichung
-noch weiter zu begründen. Schreibe dafür in die Auswertung, dass wir die
-Relevanz ebendieser Ungleichung vermuten und dann ergänze hier noch dieses
-Bild als weiteres Indiz, nur eben mit $\alpha$. Falls fHR drin blebt, kann
-da aber gesagt werden ,,wir sehen die gleichen Raten, allerdings können
-wir diese Funktion für eine weiter Abb gebrauchen}
-die großen Bilder etwas kleiner einbinden, vielleicht auch immer so gucken,
-dass die Sachen noch auf eine Seite rutschen (-2 Seiten möglich)
 
 \medskip
 
@@ -1580,7 +1571,13 @@ Randdaten verallgemeinern ist aber sinnvoll, da damit z.b der schwarze Rand
 unnötig wird und natürlich mehr Signale möglich sind
 
 ------
+Dabei muss die Unstetigkeit möglicherweise sehr lokal sein, da für
+cameraman noch keine Verbesserung zu sehen war
+------
 
+Hypthese ist, dass wenn die rechte Seite der Ungleichung klein ist, weniger
+Iterationen benötigt werden, was wir für $\tau$ und sogar $\alpha$ 
+bestätigen konnten.
 Insgesamt vermuten wir, dass eine Iteration mit möglichst wenigen
 Iterationsschritten konstruiert wird, indem $\tau=1$ und $\alpha$ möglichst
 groß gewählt wird.
@@ -1588,3 +1585,7 @@ Eine mögliche Erklärung dafür ist für den Parameter $\alpha$, dass
 nach \Cref{prob:discreteProblem} für sehr große $\alpha$ die Minimierung
 des Funktionals $\Vert\bullet\Vert^2$ stark gewichtet ist und die 
 Minimerung der anderen Terme nicht so relevant ist.
+
+darauf eingehen, dass bei bekannten Infos auf der rechten seite dann sogar
+berechnet werden kann, wie viele Iteration nötig sind (bzw ein Abbruch 
+formuliert werden kann)
