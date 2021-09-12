@@ -75,15 +75,18 @@ Programmaufrufs genutzt wurden.
     \texttt{benchmark} & Abbildungen\\  
     \hline 
     \texttt{denoiseAlpha100} &
-    \ref{fig:snr15alpha100}\\
+    \ref{fig:snr15alpha100}, \ref{fig:denoiseConvergence},
+    \ref{fig:denoiseNrIterComparison}\\
     \texttt{denoiseAlpha1000} &
-    \ref{fig:snr15alpha1000}\\
+    \ref{fig:snr15alpha1000}, \ref{fig:denoiseConvergence},
+    \ref{fig:denoiseNrIterComparison}\\
     \texttt{denoiseAlpha2500} &
     \ref{fig:snr15alpha2500}\\
     \texttt{denoiseAlpha5000} &
     \ref{fig:snr15alpha5000}\\
     \texttt{denoiseAlpha10000} &
-    \ref{fig:snr15alpha10000}\\
+    \ref{fig:snr15alpha10000}, \ref{fig:denoiseConvergence}, 
+    \ref{fig:denoiseNrIterComparison}\\
     \texttt{denoiseAlpha50000} &
     \ref{fig:snr15alpha50000}\\
     \texttt{paramsTau\_f01\_0Dot1} &
@@ -94,51 +97,56 @@ Programmaufrufs genutzt wurden.
     \texttt{standard\_f01} &
     \ref{fig:parTauMiscF}, \ref{fig:parTauConvergence}, 
     \ref{fig:iterationEnergyLevel}, \ref{fig:iterationTermination},
-    \ref{fig:f01Convergence}, \ref{fig:f01SolAdaptive},
+    \ref{fig:f01SolAdaptive}, \ref{fig:f01Convergence}, 
     \ref{fig:f01SupplementaryInfo}, \ref{fig:parGammaConvergence},
-    \ref{fig:gamma1Triang}, \ref{fig:inSiNrIterComparison}\\
+    \ref{fig:gamma1Triang}, \ref{fig:inSiNrIterComparison},
+    \ref{fig:miscF01}\\
     \texttt{paramsTau\_cameraman\_0Dot1} &
     \ref{fig:parTauMiscCam}\\
     \texttt{paramsTau\_cameraman\_0Dot5} &
     \ref{fig:parTauMiscCam} \\
     \texttt{standard\_cameraman} &
-    \ref{fig:parTauMiscCam}, \ref{fig:camConvergence}, \ref{fig:camTriang}\\
+    \ref{fig:parTauMiscCam}, \ref{fig:camConvergence}, \ref{fig:camTriang},
+    \ref{fig:miscCam}\\
     \texttt{noTerminationTau\_maxIter1e5} &
     \ref{fig:parTauNoConvergence}\\
     \texttt{paramsEpsStop\_1em2} &
-    \ref{fig:parEpsStopConvergence}\\
+    \ref{fig:parEpsStopConvergence}, \ref{fig:triangEpsStop1em2}\\
     \texttt{paramsEpsStop\_1em3} &
     \ref{fig:parEpsStopConvergence}\\
     \texttt{paramsEpsStop\_1em4} &
     \ref{fig:parEpsStopConvergence}\\
     \texttt{paramsEpsStop\_1em5} &
-    \ref{fig:parEpsStopConvergence}\\
+    \ref{fig:parEpsStopConvergence}, \ref{fig:triangEpsStop1em5}\\
     \texttt{standardUniform\_f01} &
-    \ref{fig:f01Convergence}, \ref{fig:f01SupplementaryInfo}\\
-    \texttt{standard\_f01Alpha1e4} &
-    \ref{fig:f01LargeAlphaConvergence}, \ref{fig:inSiNrIterComparison}\\
-    \texttt{standardUniform\_f01Alpha1e4} &
-    \ref{fig:f01LargeAlphaConvergence}\\
-    \texttt{parGamma\_0} &
-    \ref{fig:parGammaConvergence}, \ref{fig:gamma0Triang}\\
-    \texttt{parGamma\_0Dot5} &
-    \ref{fig:parGammaConvergence}, \ref{fig:gammaDot5Triang}\\
+    \ref{fig:f01Convergence}, \ref{fig:f01SupplementaryInfo},
+    \ref{fig:miscF01}\\
     \texttt{standard\_f04} &
     \ref{fig:f04Convergence}, \ref{fig:inSiNrIterComparison}\\
     \texttt{standardUniform\_f04} &
     \ref{fig:f04Convergence}\\
+    \texttt{paramsGamma\_0} &
+    \ref{fig:parGammaConvergence}, \ref{fig:gamma0Triang}\\
+    \texttt{paramsGamma\_1em2} &
+    \ref{fig:parGammaConvergence}\\
+    \texttt{paramsGamma\_0Dot5} &
+    \ref{fig:parGammaConvergence}, \ref{fig:gammaDot5Triang}\\
+    \texttt{standard\_f01Alpha1e4} &
+    \ref{fig:f01LargeAlphaConvergence}, \ref{fig:inSiNrIterComparison}\\
+    \texttt{standardUniform\_f01Alpha1e4} &
+    \ref{fig:f01LargeAlphaConvergence}\\
     \texttt{standardUniform\_cameraman} &
-    \ref{fig:camConvergence}\\
+    \ref{fig:camConvergence}, \ref{fig:miscCam}\\
     \texttt{circleContinuousAdaptive} &
-    \ref{fig:circConvAdaptive}, \ref{fig:circContConvergence},
-    \ref{fig:circContLvl17Triang}, %\ref{fig:circContFinalTriang},
-    \ref{fig:circContSol}, \ref{fig:circContSolAxis}\\
+    \ref{fig:circConvAdaptive}, \ref{fig:circContLvl17Triang},
+    \ref{fig:circContSol}, \ref{fig:circContSolAxis}, 
+    \ref{fig:circContConvergence}, \ref{fig:miscCircle}\\
     \texttt{circleDiscontinuousAdaptive} &
     \ref{fig:circConvAdaptive}\\
     \texttt{circleContinuousUniform} &
-    \ref{fig:circConvUniform}, \ref{fig:circContConvergence},
-    \ref{fig:circDiscLvl17Triang}, %\ref{fig:circDiscFinalTriang},
-    \ref{fig:circDiscSol}, \ref{fig:circDiscSolAxis}\\
+    \ref{fig:circConvUniform}, \ref{fig:circDiscLvl17Triang},
+    \ref{fig:circDiscSol}, \ref{fig:circDiscSolAxis},
+    \ref{fig:circContConvergence}, \ref{fig:miscCircle}\\
     \texttt{circleDiscontinuousUniform} &
     \ref{fig:circConvUniform}\\
     \hline
