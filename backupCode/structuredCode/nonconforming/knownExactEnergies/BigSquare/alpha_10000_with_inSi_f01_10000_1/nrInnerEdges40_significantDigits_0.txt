@@ -1,0 +1,2 @@
+nrInnerEdges   energy   significantDigits
+40   -20582.3829884706537995953112841   0
