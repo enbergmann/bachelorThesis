@@ -677,7 +677,7 @@ Abbruchkriterium zu eignen.
 Abschließend können wir festhalten, dass sich demnach das von uns gewählte 
 Abbruchkriterium \eqref{eq:terminationCriterion} als sinnvoll erwiesen hat.
 
-%\vfill
+\vfill
 
 \section{Experimente mit bekannter exakter Lösung}
 \label{sec:experimentsWithExactSolution}
@@ -1103,7 +1103,7 @@ sein.
 %\eqref{eq:nrIterationsInequality} antiproportional zu $\alpha$
 %verhält, was weniger Iterationsschritte zur Folge haben sollte. 
 
-%\vfill
+\vfill
 
 
 \section{Graufarbenbilder als Eingangssignale}
@@ -1533,73 +1533,83 @@ ist.
 
 \section{Fazit und Ausblick}
 
-Wir konnten in dieser Arbeit die primale-duale Iteration aus
-\cite{Bar15} für eine nichtkonforme Formulierung des ROF-Modellproblems
-implementieren und in numerischen Experimenten untersuchen. 
-Die für die Implementierung dort garantierten Raten konnten wir deutlich 
-übertreffen, auch wenn hierbei angemerkt werden muss, dass wir in den
-entsprechenden Beispielen mit reguläreren Funktionen gerechnet haben
-als nur Funktionen beschränkter Variation.
-Ansonsten widersprachen die durch die Experimente getroffen Schlussfolgerungen
-keinen in dieser Arbeit getätigten theoretischen Aussagen.
-Weiterhin fanden wir experimentell Indizien, die für einige spezielle Wahlen
-von Parametern für die primale-duale Iteration sprechen, insbesondere
-für den Parameter $\tau$.
-Das einzige Beispiel, bei dem adaptive Netzverfeinerung in der 
-AFEM-Routine für einige Größen bessere Konvergenzraten erzielt als uniforme
-Netzverfeinerung, war ein Beispiel mit klar definierter Unstetigkeitsmenge.
-Ist Rechenzeit kein limitierender Faktor, ist davon auszugehen, dass für
-solche Beispiele der adaptive Algorithmus überlegen ist.
+Wir konnten in dieser Arbeit die Konvergenz der primalen-dualen Iteration nach
+\cite{Bar15} für eine nichtkonforme, mit
+Crouzeix-Raviart-Finite-Elemente-Funktionen diskretisierte Formulierung des
+ROF-Modellproblems beweisen, den AFEM-Algorithmus mit dieser Iteration im
+\texttt{Solve}-Schritt implementieren und in numerischen Experimenten
+untersuchen. 
+Dabei konnten wir die garantierte Rate für das in \cite{Bar15} betrachte
+Problem übertreffen, auch wenn hierbei angemerkt werden muss, dass
+wir in den entsprechenden Beispielen regulärere Eingangssignale und exakte
+Lösungen betrachtet haben als lediglich Funktionen beschränkter Variation.
+Weiterhin konnten wir im Vergleich zu uniformer Netzverfeinerung die
+Verbesserung einiger Konvergenzraten bei adaptiver Netzverfeinerung für ein
+Problem feststellen, bei dem die Unstetigkeitsmenge des Eingangssignals entlang
+einer Teilmenge niedrigerer Dimension verlief, beziehungsweise ein
+lokal betragsgroßer schwacher Gradient in der stetigen Approximation des
+Eingangssignals auftrat, während dieses ansonsten nur konstante Werte annahm.
+Allerdings ging die Verbesserung der Ergebnisse bei adaptiver Netzverfeinerung
+mit einer erhöhten Rechenzeit einher.
+Ist Rechenzeit kein limitierender Faktor, dann ist dementsprechend davon
+auszugehen, dass bei solchen Experimenten adaptive Netzverfeinerung zu 
+bevorzugen ist.
+Die durch den benutzten Verfeinerungsindikator entstandenen adaptiven Netze
+entsprachen unseren Erwartungen und für dessen Konvergenzverhalten konnten
+wir Erklärungen finden.
+Außerdem konnten wir die Gültigkeit der Interpretation des ROF-Modellproblems
+aus \Cref{chap:introduction} in mehreren Experimenten erkennen.
+Beim Test unserer Implementation entwickelten wir die Hypothese, dass die Größe
+der rechten Seite der Ungleichung \eqref{eq:nrIterationsInequality} die
+benötigte Iterationzahl bis zum Erreichen des Abbruchkriteriums
+\eqref{eq:terminationCriterion} für die primale-duale Iteration beeinflusst.
+Demnach führt eine größere Wahl von $\tau$ und $\alpha$, wobei allerdings die
+Wahl von $\alpha$ das betrachtete Experiment verändert, zu weniger Iterationen.
+Diese Hypothese wird von unseren Beobachtungen zur Größe der Parameter $\tau$
+und $\alpha$ gestützt.
+Für die Wahl der Parameter $\gamma$ und $\epsstop$ konnten wir ebenfalls
+Empfehlungen formulieren.
+Weiterhin konnten theoretische Aussagen der Arbeit, insbesondere Ungleichung
+\eqref{eq:expectedInequalities} zur Abschätzung des exakten Fehlers durch von
+den garantierten Energieschranken abhängigen Ausdrücken, experimentell
+bestätigt werden.
 
-Zum Schluss möchten wir noch einige Punkte nennen, die man als nächstes
-untersuchen könnte.
-\Cref{fig:parTauNoConvergence} legt nahe, über nicht konstante Wahlen für
-$\tau$ nachzu\-denken, die mög\-lich\-er\-wei\-se das alternierende Verhalten in
-\Cref{fig:parTauNoConvergenceEnergy} verhindern könnten.
-Außerdem können die Randdaten verallgemeinert werden, um so eine größere
-Menge von Beispielen betrachten zu können und insbesondere bei Bildern
-als Eingangssignal keinen schwarzen Rand mehr ergänznen zu müssen. 
-Das für diese Arbeit implemtierte Programm ist an einigen Stellen, zum Beispiel
-beim Aufstellen der rechten Seite des Gleichungssystems in der primalen-dualen
-Iteration, noch unter der Annahme optimiert, dass die Freiheitsgrade die inneren
-Kanten sind.  
-Dies kann aber auch aufgehoben werden.
-Weiterhin kann die in \cite{Bar15} gereichte Implementierung der primalen-dualen
-Iteration für die konforme Formulierung des ROF-Modellproblems angepasst werden,
-um sie vergleichbar zu machen mit der Implementierung in dieser Arbeit. 
-Kann man für diese noch einen Verfeinerungsindikator entwickeln, so könnte man
-diese auch in einen adaptiven Algorithmus implementieren für weitere Vergleiche.
-In der Theorie bleibt interessant, ob garantierte Konvergenzraten für unsere
-Implementierung bewiesen werden können.
-
-Hatten bessere Raten für schwach differenzierbare Funktion. Erstrebenswert
-wäre das Untersuchen eines Beispiels, das tatsächlich nur BV ist aber
-eine exakte Lösung bekannt ist. Wir haben das hier nur approximativ gemacht
-
-\medskip
-
-L-Gebiet wurde versucht, aber eine Verfeinerung zu der Ecke ist nicht zu erwarten,
-kann aber noch probiert werden, wurde aber hier nicht, da die Resultate nicht 
-implizieren, dass irgendwelche stark anderen Ergebnisse zu erwarten sind.
-Randdaten verallgemeinern ist aber sinnvoll, da damit z.b der schwarze Rand
-unnötig wird und natürlich mehr Signale möglich sind
-
-------
-Dabei muss die Unstetigkeit möglicherweise sehr lokal sein, da für
-cameraman noch keine Verbesserung zu sehen war
-------
-
-Hypthese ist, dass wenn die rechte Seite der Ungleichung klein ist, weniger
-Iterationen benötigt werden, was wir für $\tau$ und sogar $\alpha$ 
-bestätigen konnten.
-Insgesamt vermuten wir, dass eine Iteration mit möglichst wenigen
-Iterationsschritten konstruiert wird, indem $\tau=1$ und $\alpha$ möglichst
-groß gewählt wird.
-Eine mögliche Erklärung dafür ist für den Parameter $\alpha$, dass
-nach \Cref{prob:discreteProblem} für sehr große $\alpha$ die Minimierung
-des Funktionals $\Vert\bullet\Vert^2$ stark gewichtet ist und die 
-Minimerung der anderen Terme nicht so relevant ist.
-
-darauf eingehen, dass bei bekannten Infos auf der rechten seite dann sogar
-berechnet werden kann, wie viele Iteration nötig sind (bzw ein Abbruch 
-formuliert werden kann)
+Zum Abschluss dieser Arbeit möchten wir noch mögliche nächste Schritte
+beschreiben.
+Zunächst kann das Programm erweitert werden, indem die Annahme, dass
+stets Nullranddaten vorliegen, aufgehoben wird. 
+Dieses ist an einigen Stellen, zum Beisiel beim Erstellen der rechten Seite des 
+Gleichungssystems während der primalen-dualen Iteration, noch unter ebendieser
+Annahme optimiert.
+Durch diese Erweiterung kann unter anderem bei Bildern als Eingangssignal auf
+das Hinzufügen eines Randes, um Nullranddaten zu garantieren, verzichtet
+werden.
+Weiterhin kann damit untersucht werden, ob für die Geometrie \texttt{Lshape}
+des AFEM-Softwarepakets ein Beispiel existiert, bei 
+dem mit adaptiver Netzerfeinerung stark an der einspringenden Ecke verfeinert 
+wird. 
+In der aktuellen Implementation wird bei Eingangssignalen ohne Nullranddaten
+an allen Kanten gleichermaßen verfeinert.
+Als Nächstes kann die Implementierung der primalen-dualen Iteration für die
+konforme Formulierung des ROF-Modellproblems aus \cite{Bar15} angepasst werden,
+um deren Ergebnisse besser mit den Resultaten unserer Implementierung 
+vergleichen zu können.
+Kann für die Implementierung in \cite{Bar15} außerdem ein
+Verfeinerungsindikator gefunden werden, so könnte diese ebenfalls im Rahmen des
+AFEM-Algorithmus realisiert werden, um das Konvergenzverhalten zu vergleichen.
+In der Theorie bleibt vor allem interessant, garantierte Konvergenzraten für
+unsere Implementierung zu beweisen.
+Zu diesem Zweck wäre die Konstruktion eines Beispiels mit bekannter
+exakter Lösung und einem Eingangssignal, welches von beschränkter Variation und
+nicht schwach differenzierbar ist, wichtig, um auch die Konvergenzraten
+für ein weniger reguläres Beispiel sehen zu können.
+Abschließend könnte auch die Wahl der Paramters $\tau$ weiter untersucht
+werden, denn die Frage, ob es sinnvolle Möglichkeiten gibt, $\tau$ nicht
+konstant zu wählen, bleibt offen.
+Damit könnte eventuell das Konvergenzverhalten der Iteration verbessert und
+somit die Anzahl der benötigten Iterationsschritte verringert werden.  Außerdem
+könnte die Toleranz $\epsstop$ für das Abbruchkriterium zum Beispiel abhängig
+von der Netzweite der Triangulierung gewählt werden, um sowohl die in einem
+Experiment dieser Arbeit beobachtete Stagnation des exakten Fehlers zu
+verhindern als auch die Iteration eines Levels nicht länger auszuführen als
+notwendig.
