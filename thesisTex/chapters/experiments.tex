@@ -23,7 +23,7 @@ Eine Übersicht über alle somit festgelegten Standardwerte ist in
 \Cref{tab:parameterStandardValues} zu finden. 
 Wir werden in einem Experiment die Wahl eines Parameters nur
 erwähnen, wenn diese vom Standardwert abweicht.
-In \Cref{tab:usedBenchmarks} wird für alle verwendeten Benchmark-Datein
+In \Cref{tab:usedBenchmarks} wird für alle verwendeten Benchmark-Dateien
 aufgelistet, für welche Abbildungen die Ergebnisse des entsprechenden
 Programmaufrufs genutzt wurden.
 
@@ -162,7 +162,7 @@ AFEM-Routine wählen wir $u_0\equiv 0$.
 Für die Iteration der darauffolgenden Level wählen wir die zum Ende von
 \Cref{sec:programFlow} beschriebene Prolongation des Ergebnisses des
 jeweils vorherigen Levels.
-In allen Experimenten hatte dadurch die Wahl der Startwerts für die Iteration
+In allen Experimenten hatte dadurch die Wahl des Startwerts für die Iteration
 des ersten Levels keinen nennenswerten Einfluss auf die Dauer des Experiments
 oder die Güte der Ergebnisse. 
 Für jeden Aufruf der primalen-dualen Iteration auf einer Triangulierung $\Tcal$
@@ -191,7 +191,8 @@ Dabei sei das Argument $r$ einer Funktion stets aus $[0,\infty)$.
     \label{fig:triangSquare}
   \end{subfigure}
   \caption{Initiale Triangulierung für Experimente mit bekannter exakter Lösung
-    (a) und für Experimente mit Graufarbenbild als Eingangssignal (b)}
+    (a) und initiale Triangulierung für Experimente mit Graufarbenbild als
+    Eingangssignal (b)}
   \label{fig:initialTriangulations}
 \end{figure}
 Als Geometrie für das erste Level des AFEM-Al\-go\-rith\-mus nutzen wir in
@@ -199,7 +200,7 @@ Experimenten mit bekannter exakter Lösung die Triangulierung aus
 \Cref{fig:triangBigSquare} und in Experimenten mit einem Graufarbenbild als
 Eingangssignal die Triangulierung aus \Cref{fig:triangSquare}.
 Wir nutzen adaptive Netzverfeinerungen und dafür den Bulk-Parameter
-$\theta=0.5$ für den Mark-Schritt des AFEM-Algorithmus und dem Parameter
+$\theta=0.5$ für den Mark-Schritt des AFEM-Algorithmus und den Parameter
 $\gamma=1$ für den Verfeinerungsindikator aus \Cref{def:refinementIndicator}.
 Die maximale Iterationszahl wurde mit $10^{12}$ so gewählt, dass diese nie
 Grund für das Beenden der primalen-dualen Iteration war.
@@ -214,7 +215,7 @@ Beispielrechnungen mit verschiedenen Eingangssignalen ergaben, dass deutlich
 höhere Integrationsgrade als $10$ zu keinen veränderten Konvergenzraten
 führen. 
 Diese Wahl des Integrationsgrads erscheint daher als ausreichend.
-Da außerdem die \texttt{integrate} Methode des AFEM-Softwarepakets \cite{Car09}
+Da außerdem die Methode \texttt{integrate} des AFEM-Softwarepakets \cite{Car09}
 nicht während der primalen-dualen Iteration aufgerufen werden muss, hat eine
 möglicherweise zu hohe Wahl des Integrationsgrads keinen signifikanten Einfluss
 auf die Programmlaufzeit.
@@ -414,7 +415,7 @@ für $\tau\in (0,1]$ garantieren können.
     $\tau$ für die Eingangssignale $f_1$ und \texttt{cameraman}} 
   \label{fig:parTauMisc}
 \end{figure}
-In \Cref{fig:parTauMisc} sehen wir, dass die Anzahlen der Iterationschritte,
+In \Cref{fig:parTauMisc} sehen wir, dass die Anzahlen der Iterationsschritte,
 und damit auch die Laufzeiten, der primalen-dualen Iterationen während der
 AFEM-Routine umso größer sind, je kleiner $\tau$ gewählt wird.
 \begin{figure}[p]
@@ -1537,7 +1538,7 @@ Wir konnten in dieser Arbeit die Konvergenz der primalen-dualen Iteration nach
 \cite{Bar15} für eine nichtkonforme, mit
 Crouzeix-Raviart-Finite-Elemente-Funktionen diskretisierte Formulierung des
 ROF-Modellproblems beweisen, den AFEM-Algorithmus mit dieser Iteration im
-\texttt{Solve}-Schritt implementieren und in numerischen Experimenten
+Solve-Schritt implementieren und in numerischen Experimenten
 untersuchen. 
 Dabei konnten wir die garantierte Rate für das in \cite{Bar15} betrachte
 Problem übertreffen, auch wenn hierbei angemerkt werden muss, dass
