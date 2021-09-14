@@ -423,7 +423,7 @@ AFEM-Routine umso größer sind, je kleiner $\tau$ gewählt wird.
   \includegraphics[width=.8\linewidth]
     {pictures/chapExperiments/secParameters/parTau/f01/convergenceF.pdf}
   \caption{Ergebnisse des Programms mit verschieden Werten von $\tau$ für das
-    Eingangangssignal $f_1$}
+    Eingangssignal $f_1$}
   \label{fig:parTauConvergence}
 \end{figure}
 Da sich die betrachteten Graphen in \Cref{fig:parTauConvergence} für die
@@ -431,7 +431,7 @@ verschiedenen Wahlen von $\tau$ nicht sichtbar unterscheiden, vermuten wir,
 dass die ideale Wahl für $\tau$ die maximale nach
 \Cref{thm:convergenceIteration} zulässige ist.
 Deshalb wählen wir für unsere Experimente $\tau=1$.
-Ein mögliche Erklärung für unsere Beobachtung liefert der Beweis von
+Eine mögliche Erklärung für unsere Beobachtung liefert der Beweis von
 \Cref{thm:convergenceIteration}.
 Die darin bewiesene Ungleichung \eqref{eq:upperBoundIterationError} impliziert
 \begin{align}
@@ -460,7 +460,7 @@ Konvergenz der primalen-dualen Iteration für $\tau>1$ nicht aus.
   \quad
   \begin{subfigure}[b]{.47\linewidth}
     \centering
-    \caption{Nichkonforme Energien}
+    \caption{Nichtkonforme Energien}
     \includegraphics[width=\linewidth]
       {pictures/chapExperiments/secParameters/parTau/f01NoConv/1Dot2/convEnergy.pdf}
     \label{fig:parTauNoConvergenceEnergy}
@@ -468,7 +468,7 @@ Konvergenz der primalen-dualen Iteration für $\tau>1$ nicht aus.
   \caption{Verschiedene Messungen der Updates (a) und Verlauf der nichtkonformen
     Energien der ersten $1000$ Iterate (b) der primalen-dualen Iteration auf
     der Triangulierung \texttt{BigSquare} aus \Cref{fig:triangBigSquare} mit
-    $\tau=1.2$ für das Eingangangssignal $f_1$}
+    $\tau=1.2$ für das Eingangssignal $f_1$}
   \label{fig:parTauNoConvergence}
 \end{figure}
 Wie aber in \Cref{fig:parTauNoConvergence} zu sehen, haben wir schon für
@@ -478,7 +478,7 @@ Dabei wurde die Iteration nach $10^5$ Schritten abgebrochen, da kein anderes
 Verhalten mehr zu erwarten war.
 Zusätzlich legitimiert wird der Abbruch nach $10^5$ Iterationen dadurch, dass
 in \Cref{fig:parTauMiscF} auf der gleichen Triangulierung für die
-suboptimale Wahl $\tau = 0.1$ weniger also $10^3$ Iterationen und für die Wahl
+suboptimale Wahl $\tau = 0.1$ weniger als $10^3$ Iterationen und für die Wahl
 $\tau=1$ sogar weniger als $10$ Iterationen benötigt wurden.
 Weiterhin zeigt \Cref{fig:parTauNoConvergenceUpdates}, dass auch für andere
 Varianten, den Unterschied zweier aufeinanderfolgender Iterate im
@@ -498,7 +498,7 @@ Abbruchkriterium \eqref{eq:terminationCriterion}.
   \includegraphics[width=.8\linewidth]
     {pictures/chapExperiments/secParameters/parEpsStop/f01/convergenceF.pdf}
   \caption{Ergebnisse des Programms mit verschieden Werten von $\epsstop$ für
-    das Eingangangssignal $f_1$}
+    das Eingangssignal $f_1$}
   \label{fig:parEpsStopConvergence}
 \end{figure}
 Wie in \Cref{fig:parEpsStopConvergence} zu sehen, stagniert der exakte
@@ -576,7 +576,7 @@ größten Dreiecks in \Cref{fig:triangEpsStop1em5} zu $\epsstop=10^{-5}$.
 Die vor Eintreten der Stagnation für $\epsstop\in\{10^{-3},10^{-2}\}$ im
 Vergleich zu $\epsstop\in\{10^{-5},10^{-4}\}$ größere
 Konvergenzgeschwindigkeit, die in \Cref{fig:parEpsStopConvergence} zu sehen
-ist, lässt die Annahme zu, dass das Verfeinerung von Dreiecken mit großer
+ist, lässt die Annahme zu, dass die Verfeinerung von Dreiecken mit großer
 Fläche kurzzeitig eine effektive Strategie ist, insgesamt aber nicht zu
 geringeren exakten Fehlern führt.
 
