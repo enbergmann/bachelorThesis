@@ -7,5 +7,9 @@ Parameters for experiments can be choosen in a benchmark file in
 ./code/nonconforming/benchmarks/.
 A blueprint for such a file is editable.m in said folder.
 
+Results will be saved in ./results/.
+
+Already existing results were not included in this submission.
+
 More information about the implementation can be found in
 bachelorThesisMain.pdf.
