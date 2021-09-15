@@ -14,7 +14,7 @@ function params = editable %#ok<*MSNU,FNDEF>
 %% PARAMETERS
   % misc. parameters (will affect performance)
   showPlots              = false; 
-  plotModeGrayscale      = true; % not effective if showPlots==false
+  plotModeGrayscale      = false; % not effective if showPlots==false
   showProgress           = true; 
   degree4Integrate       = 10; 
   plotGivenFunctions     = true;
@@ -39,7 +39,7 @@ function params = editable %#ok<*MSNU,FNDEF>
   maxIter = 1e12;
 
   % experiment parameters
-  useImage               = true;
+  useImage               = false;
   imageName              = 'f2bawgnSnr20cameraman.tif'; %#ok<NASGU> 
     % not effective if useImage==false
   parAlpha               = 1e0; 
