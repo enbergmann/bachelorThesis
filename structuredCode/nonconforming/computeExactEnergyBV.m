@@ -4,7 +4,7 @@ function computeExactEnergyBV(geometry, fStr, fStrParams, uStr, uStrParams, ...
 %% DOC
 % Computes and saves an approximation (at least up to precision minPrecision
 % and minNrInnerEdges inner edges) of the exact energy of a H^1_0 function u,
-% whose pointwise gradient is known, for a input signal f on a mesh given by
+% whose pointwise gradient is known, for an input signal f on a mesh given by
 % geometry.
 %
 % computeExactEnergyBV.m
